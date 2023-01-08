@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <?!= materializeCss ?>
+  </head>
+  <body>
+    <nav>
+      <a href="<?= startPageUrl ?>" target="_top">Back</a>
+    </nav>
+    <div class="agenda container col s1">
+      <input
+        value="<?!= rule ?>"
+        class="timepicker"
+        id="prefTime"
+        type="text"
+      />
+    </div>
+    <button id="btn">Run It!</button>
+    <?!= materializeJs ?>
+    <script>
+      <?!= dOMContentLoaded ?>
+    </script>
+    <input type="hidden" value="<?= startPageUrl ?>" id="breakUrl" />
+  </body>
+</html>

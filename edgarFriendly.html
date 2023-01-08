@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <? var style = styleHtml() ?>
+    <?!= style ?>
+  </head>
+  <body>
+    <nav>
+      <a href="<?= startPageUrl ?>" target="_top">Back</a>
+    </nav>
+    <div class="menu-img"><?!= rule ?></div>
+    <ul class="link-list min-list">
+      <li><div class="query-results"></div></li>
+    </ul>
+    <div>
+      <select id="edgarData">
+        <?!= opt ?>
+      </select>
+    </div>
+    <div class="search-box-outer container col s1">
+      <div class="search-box-inner container col s1">
+        <label>Search</label
+        ><input type="text" id="search" placeholder="type here.." />
+      </div>
+    </div>
+    <div id="data-table"></div>
+    <input type="hidden" value="<?= startPageUrl ?>" id="gamerUrl" />
+  </body>
+</html>
