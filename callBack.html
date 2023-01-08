@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html id="test">
+  <head>
+    <base id="pageTarget" target="_top" />
+    <?!= styleHtml() ?>
+    <?!= jsGameScripts() ?>
+  </head>
+  <body id="template">
+    <div class="row">
+      <nav class="col s3 menu z-depth-5 card-panel amber scale-out scale-in">
+        <a id="mainIndex" href="<?= getUrl(ScriptApp) ?>">Homepage</a><br />
+        <a id="checkOnDay" href="<?= getUrl(ScriptApp) ?>">Check Today SEC</a
+        ><br />
+        <a href='<?= getUrl(ScriptApp) + "?default=odd" ?>' target="_top"
+          >DCUO Artifact Breakthrough</a
+        ><br />
+        <a
+          href='<?= getUrl(ScriptApp) + "?default=ssChemical" ?>'
+          target="_blank"
+          >Check Today EPA</a
+        ><br />
+        <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' target="_parent"
+          >Homemade Games</a
+        ><br />
+        <a
+          href='<?= getUrl(ScriptApp) + "?default=ssFinance" ?>'
+          target="_blank"
+          >Company Info Table</a
+        ><br />
+        <a
+          href='<?= getUrl(ScriptApp) + "?default=ssUSCongress" ?>'
+          target="_top"
+          >Congress Legislation</a
+        ><br />
+      </nav>
+      <br />
+    </div>
+    <br />
+    <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
+      >update</a
+    >
+    <br />
+    <ul id="uldiv">
+      waiting...
+    </ul>
+    <div class="interface">
+      <a
+        href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>'
+        onclick="PageManager.setPageStart('Setup')"
+      >
+        <img src="" alt="setup" />
+        <div>
+          <h3>Setup</h3>
+        </div>
+      </a>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', <?!= appJs ?>)
+    </script>
+  </body>
+</html>
