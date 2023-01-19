@@ -165,18 +165,31 @@ function videoPage() {
 
 function videoSEC(e) {
   console.log(JSON.stringify(e));
-  const randomKey = Math.floor(Math.random() * Math.floor(11000)); // Math.floor(Math.random())
-  const uniqueKey = [
-    Utilities.jsonParse(
-      urlDataSource("https://www.sec.gov/files/company_tickers.json")
-    ),
-  ]
-    .entries()
-    .next().value;
-  const randomCo = uniqueKey[1][randomKey];
+  const uniqueCo = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  const uniqueCoArray = covArrays(uniqueCo);
+  const randomCoKey = Math.floor(
+    Math.random() * Math.floor(uniqueCoArray.length)
+  ); // Math.floor(Math.random());
+  const uniqueCoKey = [uniqueCo].entries().next().value;
+  const randomCo = uniqueCoKey[1][randomCoKey];
   const randomTitle = randomCo["title"];
   const randomTicker = randomCo["ticker"];
   const randomCIK = randomCo["cik_str"];
+  const uniqueVid = needPastTime(
+    `https://www.bing.com/search?q=${encodeURIComponent(
+      randomTitle
+    )}%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=CHROMIN`,
+    `v=`,
+    0,
+    11
+  );
+  // const randomVidKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
+  // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
+  // const uniqueVidKey = [videoPlaylist].entries().next().value;
+  // const randomVid = uniqueVidKey[1][randomVidKey];
+  // const randomVideo = Utilities.jsonStringify(randomVid["youtubeID"]);
   const html = contentApp(
     `<!DOCTYPE html>
       <html id="test">
@@ -185,10 +198,10 @@ function videoSEC(e) {
         </head>
         <body class="green">
           <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
-          <a href="https://flewis21.github.io/codepipeline/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
+          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
           <div><a href="https://www.sec.gov/edgar/browse/?CIK=<?!= myCIK ?>&owner=exclude" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTitle ?></h1></a></div>
           <div class="receipt red" id="vids">
-            <?!= videoPlayer(myTitle) ?>
+            <?!= videoPlayer(myVideo) ?>
           </div>
           <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
           <input class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div>
@@ -211,7 +224,12 @@ function videoSEC(e) {
           </script>
         </body>
       </html>`,
-    { myTitle: randomTitle, myTicker: randomTicker, myCIK: randomCIK }
+    {
+      myVideo: uniqueVid,
+      myTitle: randomTitle,
+      myTicker: randomTicker,
+      myCIK: randomCIK,
+    }
   ); //Global object closed
   return renderTemplate(html);
 } //webApp closed
