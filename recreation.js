@@ -1,5 +1,45 @@
-function youTube() {
-  content = contentFile("index");
+function youTube(searchWord, e) {
+  console.log(JSON.stringify(e));
+  var username = e.parameter["uname"] || searchWord;
+  const uniqueVid = needPastTime(
+    `https://www.bing.com/search?q=${encodeURIComponent(
+      username
+    )}%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=CHROMIN`,
+    `v=`,
+    0,
+    11
+  );
+  // const randomKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
+  // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
+  // const uniqueKey = [videoPlaylist].entries().next().value;
+  // const randomCo = uniqueKey[1][randomKey];
+  // const randomVideo = Utilities.jsonStringify(randomCo["youtubeID"]);
+  content = contentFile("index", {
+    myVideo: uniqueVid,
+    myTitle: username,
+    linkMaker: function () {
+      const serverSide = function (func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runAll(`boilerplate.${[func]}`, [args]);
+        });
+      };
+      serverSide(`getScriptUrl`, [])
+        .then((url) => {
+          window.open(url, `_self`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  });
   return renderTemplate(
     contentApp(content, {
       utf_8: '\n<meta charset="UTF-8">',
@@ -135,3 +175,21 @@ function youTube() {
     })
   );
 }
+
+var pastTime = function (url) {
+  const uniqueVid = needPastTime(
+    `https://www.bing.com/search?q=%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=PORE`,
+    `v=`,
+    0,
+    10
+  );
+  const randomKey = Math.floor(Math.random() * Math.floor(15)); // Math.floor(Math.random());
+  const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
+  // const randomKey = Math.floor(Math.random() * (Math.floor(10000)))// Math.floor(Math.random());
+  const uniqueKey = [videoPlaylist].entries().next().value;
+  console.log(uniqueKey[1][randomKey]);
+  const randomCo = uniqueKey[1][randomKey];
+  const randomTitle = randomCo["youtubeID"];
+  const randomTicker = randomCo["ticker"];
+  const randomCIK = randomCo["cik_str"];
+};
