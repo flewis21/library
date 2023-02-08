@@ -13,14 +13,16 @@ var createSheetHeader = function (headers) {
 };
 
 var driveUrls = function (fileX) {
-  var file = DriveApp.getRootFolder().getFilesByName(fileX);
-  if (file.hasNext()) {
-    console.log(file.next());
-    while (file.hasNext()) {
-      var url = file.next().getUrl();
+  if (typeof fileX !== "undefined") {
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    if (file.hasNext()) {
+      while (file.hasNext()) {
+        var url = file.next().getUrl();
+      }
+      return url;
+    } else {
+      return;
     }
-    // return url
-    console.log(url);
   } else {
     return;
   }
@@ -38,33 +40,42 @@ function spreadSheet() {
   return ss;
 }
 
-var spreadSheetCreate = function (fileX, sheetName, headers, data, col) {
+var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
   var ssApp = SpreadsheetApp;
-  if (typeof driveUrls(fileX) === "undefined") {
+  var nSs = driveUrls(fileX);
+  console.log("Google Drive Url " + nSs);
+  if (typeof nSs === "undefined") {
     var ss = ssApp.create(fileX);
-    var sheets = ss.getSheets();
-    sheets[0].activate();
-    var ws = sheets[0].setName(sheetName);
-    var mySheet = ss.setActiveSheet(ws);
-    mySheet.appendRow(headers);
-    var dataArray = testData(data);
-    mySheet.getRange(2, 1, dataArray.length, col).setValues(dataArray);
-    console.log(typeof fileX);
-    var url = driveUrls(fileX);
-    if (typeof url !== "undefined") {
+    var sheet = ss.getSheets()[0].activate();
+    console.log("Name of this sheet is " + sheet.getName());
+    var ws = sheet.setName(sheetName);
+    console.log("Sheet name changed to " + ws.getName());
+    console.log(ss.getActiveSheet().getName());
+    var headers = [];
+    testData(rowHeaders).map((h) => {
+      headers.push(h[0]);
+    });
+    ws.appendRow(headers);
+    var dataArray = [];
+    testData(data).forEach((o) => {
+      dataArray.push(o[0]);
+    });
+    col = ws.getDataRange().getNumColumns();
+    ws.getRange(2, 1, [dataArray].length, col).setValues([dataArray]);
+    console.log("New file named " + fileX + " created!");
+    if (typeof nSs !== "undefined") {
       var ss = ssApp.openByUrl(url);
-      ws = ws.getActiveSheet();
-      return ws.getRange(1, 1, ws.getLastRow(), col).getValues();
+      ws = ss.getActiveSheet();
+      return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();
     } else {
       return;
     }
   } else {
-    console.log(typeof fileX);
-    var url = driveUrls(fileX);
-    if (typeof url !== "undefined") {
-      var ss = ssApp.openByUrl(url);
-      ws = ws.getActiveSheet();
-      return ws.getRange(1, 1, ws.getLastRow(), col).getValues();
+    console.log(typeof nSs);
+    if (typeof nSs !== "undefined") {
+      var ss = ssApp.openByUrl(nSs);
+      ws = ss.getActiveSheet();
+      return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();
     } else {
       return;
     }

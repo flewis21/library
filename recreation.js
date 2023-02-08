@@ -1,47 +1,103 @@
-function youTube(searchWord, e) {
+function youTube(e) {
   console.log(JSON.stringify(e));
-  var username = e.parameter["uname"] || searchWord;
-  const uniqueVid = needPastTime(
-    `https://www.bing.com/search?q=${encodeURIComponent(
-      username
-    )}%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=CHROMIN`,
-    `v=`,
-    0,
-    11
-  );
+  var username = e.parameter["uname"] || `cornea transplant US, Atlanta, GA`;
+  // const uniqueVid = needPastTime(username);
   // const randomKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
   // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
   // const uniqueKey = [videoPlaylist].entries().next().value;
   // const randomCo = uniqueKey[1][randomKey];
   // const randomVideo = Utilities.jsonStringify(randomCo["youtubeID"]);
-  content = contentFile("index", {
-    myVideo: uniqueVid,
-    myTitle: username,
-    linkMaker: function () {
-      const serverSide = function (func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runAll(`boilerplate.${[func]}`, [args]);
-        });
-      };
-      serverSide(`getScriptUrl`, [])
-        .then((url) => {
-          window.open(url, `_self`);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  });
-  return renderTemplate(
-    contentApp(content, {
+  const content = contentApp(
+    `<!DOCTYPE html>
+<html lang="en" id="test">
+  <head>
+    <?!= styleHtml() ?>
+  </head>
+
+  <body class="blue" id="template">
+      <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><?!= rule() ?></div>
+      <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
+
+    <div>
+      <ul class="table-body menu-img z-depth-5">
+
+      </ul>
+
+    </div>
+    <div><a href="https://www.bing.com/search?q=${encodeURIComponent(
+      username
+    )}+site%3Aclubhouse.com&PC=U316&FORM=CHROMN" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?!= myTitle ?></h1></a></div>
+    <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+    <div class="container row s1 menu-img valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+    <div id="player1">
+      <?!= videoPlayer(myVideo) ?></div>
+    </div>
+     <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
+      <input class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div>
+      
+     <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
+      <input class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div>
+	
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
+    <script>document.addEventListener("DOMContentLoaded", appJs);
+      function appJs()
+      {// mod the array
+      let timePicker = document.getElementById('prefTime');
+      M.Timepicker.init(timePicker, { defaultTime: "now" });
+      google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
+      function populateDates(disabledDays) 
+      {let datePicker = document.getElementById('prefDate');
+      M.Datepicker.init(datePicker, 
+        {minDate: new Date(), setDefaultDate: true,
+        disableDayFn: 
+          function(day) 
+          {return disabledDays.indexOf(day.valueOf()) > -1;}});};}</script>
+    <script>document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
+      document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
+      document.querySelector("iframe").setAttribute("style", "color: blue; clear: both; text-align: center;");</script>
+    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+  </body>
+</html>`,
+    {
+      myVideo: username,
+      myTitle: username,
+      topScript: function () {
+        console.log(document.getElementById("test").innerHTML);
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  ()
+          // {
+          // console.log('Input Value:', textInput.value);
+          //  }, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("url").value;
+            var url = urlData.toString();
+          }
+          var uname = document.getElementById("username").value;
+          var linkHome = document.createElement("a");
+          var linkFollow = document.createElement("a");
+          linkHome.href = "https://flewis21.github.io/About-Me/";
+          linkFollow.href = url + "?uname=" + uname;
+          linkHome.id = "linkHOME";
+          linkFollow.id = "linkFOLLOW";
+          linkHome.target = "popup";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkHome);
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("linkHOME").click();
+        })();
+      },
       utf_8: '\n<meta charset="UTF-8">',
       viewport:
         '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
@@ -172,24 +228,7 @@ function youTube(searchWord, e) {
         };
         busyCalendar();
       },
-    })
+    }
   );
+  return renderTemplate(content);
 }
-
-var pastTime = function (url) {
-  const uniqueVid = needPastTime(
-    `https://www.bing.com/search?q=%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=PORE`,
-    `v=`,
-    0,
-    10
-  );
-  const randomKey = Math.floor(Math.random() * Math.floor(15)); // Math.floor(Math.random());
-  const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
-  // const randomKey = Math.floor(Math.random() * (Math.floor(10000)))// Math.floor(Math.random());
-  const uniqueKey = [videoPlaylist].entries().next().value;
-  console.log(uniqueKey[1][randomKey]);
-  const randomCo = uniqueKey[1][randomKey];
-  const randomTitle = randomCo["youtubeID"];
-  const randomTicker = randomCo["ticker"];
-  const randomCIK = randomCo["cik_str"];
-};

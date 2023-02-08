@@ -164,7 +164,7 @@ function videoPage() {
 }
 
 function videoSEC(e) {
-  console.log(JSON.stringify(e));
+  //console.log(JSON.stringify(e));
   const uniqueCo = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
@@ -177,59 +177,146 @@ function videoSEC(e) {
   const randomTitle = randomCo["title"];
   const randomTicker = randomCo["ticker"];
   const randomCIK = randomCo["cik_str"];
-  const uniqueVid = needPastTime(
-    `https://www.bing.com/search?q=${encodeURIComponent(
-      randomTitle
-    )}%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=CHROMIN`,
-    `v=`,
-    0,
-    11
-  );
+  // const uniqueVid = needPastTime(randomTitle);
   // const randomVidKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
   // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
   // const uniqueVidKey = [videoPlaylist].entries().next().value;
   // const randomVid = uniqueVidKey[1][randomVidKey];
   // const randomVideo = Utilities.jsonStringify(randomVid["youtubeID"]);
-  const html = contentApp(
-    `<!DOCTYPE html>
-      <html id="test">
-        <head>
-          <?!= styleHtml() ?>
-        </head>
-        <body class="green">
-          <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
-          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
-          <div><a href="https://www.sec.gov/edgar/browse/?CIK=<?!= myCIK ?>&owner=exclude" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTitle ?></h1></a></div>
-          <div class="receipt red" id="vids">
-            <?!= videoPlayer(myVideo) ?>
-          </div>
-          <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
-          <input class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div>
-          <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
-          <input class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div>
-          <script>document.addEventListener("DOMContentLoaded", appJS);
-            function appJS()
-              {// mod the array
-              let timePicker = document.getElementById('prefTime');
-              M.Timepicker.init(timePicker, { defaultTime: "now" });
-              google.script.run.withSuccessHandler(populateDates).runAll('app.busyDates', []);
-              function populateDates(disabledDays) 
-                {let datePicker = document.getElementById('prefDate');
-                  M.Datepicker.init(datePicker, 
-                    {minDate: new Date(), 
-                    setDefaultDate: true,
-                    disableDayFn: 
-                      function(day) 
-                        {return disabledDays.indexOf(day.valueOf()) > -1;}});};}
-          </script>
-        </body>
-      </html>`,
-    {
-      myVideo: uniqueVid,
-      myTitle: randomTitle,
-      myTicker: randomTicker,
-      myCIK: randomCIK,
+  var stkTicker = e.parameter["tick"] || randomTicker;
+  var cik = e.parameter["cik"] || randomCIK;
+  var percent = e.parameter["uname"] || randomTitle;
+  console.log([randomTitle].indexOf(e.parameter["uname"]));
+  var list = [];
+  if (
+    uniqueCoArray.find((w) => {
+      return w;
+    })
+  ) {
+    for (var i = 0; i < uniqueCoArray.length; i++) {
+      var received = uniqueCoArray[i].filter((f) => {
+        return f;
+      });
+      var result = received.find((w) => {
+        return w;
+      });
+      if (result) {
+        list.push([result]);
+        if (JSON.stringify(i) >= uniqueCoArray.length) {
+          break;
+        }
+      }
     }
-  ); //Global object closed
-  return renderTemplate(html);
+  } else {
+    list.push([percent]);
+  }
+  // console.log(list)
+  var breakUrl = getUrl(ScriptApp);
+  const html = HtmlService.createTemplate(`<!DOCTYPE html>
+    <html id="test">
+      <head>
+        <?!= styleHtml() ?>
+      </head>
+      <body class="green">
+        <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
+        <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
+        <div><a href="https://www.sec.gov/edgar/browse/?CIK=<?!= myCIK ?>&owner=exclude" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTicker ?></h1></a></div>
+        <div class="row">
+        <div class="col s12 push-s1 push-m1 push-l2">
+        <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+        <div class="col s12 receipt red" id="player1"><?!= videoPlayer(myVideo) ?></div></div></div></div>
+        <div class="row">
+        <div class="col s6 push-s1 push-m1 push-l2">
+        <div class="container agenda z-depth-5 pulse blue receipt">
+        <div class="col s12 receipt red">
+        <input class="left datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div></div></div></div>
+        <div class="row">
+        <div class="col s6 push-s1 push-m1 push-l2">
+        <div class="container agenda z-depth-5 pulse blue receipt">
+        <div class="col s12 receipt red">
+        <input class="right timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div></div></div></div>
+        <div class="row">
+        <div class="col s6 push-s1 push-m1 push-l2">
+        <div class="container">
+        <div class="col s12 receipt red">
+        <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+        </div></div></div></div>
+        <div class="row">
+        <div class="col s6 push-s1 push-m1 push-l2 truncate">
+        <div class="container dotted-border">
+        <div class="col s12 receipt red">
+          <ul class="darken-4 z-depth-5"><p id='list' class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"><?!= list ?></p></ul></div></div></div></div>
+        <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
+        <script>document.addEventListener("DOMContentLoaded", appJS);
+          function appJS()
+            {// mod the array
+            let timePicker = document.getElementById('prefTime');
+            M.Timepicker.init(timePicker, { defaultTime: "now" });
+            google.script.run.withSuccessHandler(populateDates).runAll('app.busyDates', []);
+            function populateDates(disabledDays) 
+              {let datePicker = document.getElementById('prefDate');
+                M.Datepicker.init(datePicker, 
+                  {minDate: new Date(), 
+                  setDefaultDate: true,
+                  disableDayFn: 
+                    function(day) 
+                      {return disabledDays.indexOf(day.valueOf()) > -1;}});};}
+        </script>
+        <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+      </body>
+    </html>`);
+  html.list = list
+    .map(function (r) {
+      return (
+        "<li>" +
+        `<a class="waves-effect waves-light btn" href="${breakUrl}?uname=${r[0]["title"]}&cik=${r[0]["cik_str"]}&tick=${r[0]["ticker"]}" target="_blank">` +
+        r[0]["ticker"] +
+        "</a>" +
+        "</li>"
+      );
+    })
+    .sort()
+    .join("");
+  html.breakUrl = breakUrl;
+  html.myVideo = percent;
+  html.myTitle = percent;
+  html.myTicker = stkTicker;
+  html.myCIK = cik;
+  const idArray = needPastTime(randomTitle);
+  const vidIdObject = covObjects(idArray, ["youTubeId"]);
+  const rdmVidId = Math.floor(Math.random() * Math.floor(vidIdObject.length));
+  html.myVidId = vidIdObject[rdmVidId]["youTubeId"];
+  html.topScript = function () {
+    //console.log(document.getElementById("test").innerHTML)
+    // Init a timeout variable to be used below
+    let timeout = null;
+    (() => {
+      // Clear the timeout if it has already been set.
+      // This will prevent the previous task from executing
+      // if it has been less than <MILLISECONDS>
+      // clearTimeout(timeout);
+      // Make a new timeout set to go off in 1000ms (1 second)
+      // timeout = setTimeout
+      // (function  ()
+      // {console.log('Input Value:', textInput.value);}, 5000)();
+      if (typeof url === "undefined") {
+        var urlData = document.getElementById("url").value;
+        var url = urlData.toString();
+      }
+      var uname = document.getElementById("username").value;
+      var linkHome = document.createElement("a");
+      var linkFollow = document.createElement("a");
+      linkHome.href = "https://flewis21.github.io/videoSEC/";
+      linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+      linkHome.id = "linkHOME";
+      linkFollow.id = "linkFOLLOW";
+      linkHome.target = "popup";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkHome);
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("linkHOME").click();
+    })();
+  }; //Global object closed
+  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services");
 } //webApp closed

@@ -10,7 +10,7 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-function doGet(e) {
+function epaData(e) {
   console.log(JSON.stringify(e));
   const randomKey = Math.floor(Math.random() * Math.floor(12000)); // Math.floor(Math.random())
   const uniqueKey = [
@@ -21,8 +21,7 @@ function doGet(e) {
     .entries()
     .next().value;
   const randomTitle = uniqueKey[1][randomKey]["title"];
-  const html = contentApp(
-    `<html id="test">
+  const html = HtmlService.createTemplate(`<html id="test">
       <head>
         <?!= styleHtml() ?>
       </head>
@@ -32,83 +31,79 @@ function doGet(e) {
             <?!= myRandoms ?>...
           </nav>
         </div>
-        <div id="vids">
-          <?!= videoPlayer(myRandoms) ?>
-        </div>
-        <div id="template1">
-         <?!= posHtml() ?>
-        </div>
-        <script>
-          document.addEventListener("DOMContentLoaded", <?!= jsApp ?>)
-        </script>
+        <div class="row">
+        <div class="col s12 push-s1 push-m1 push-l2">
+        <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+        <div class="col s12" id="player1">
+          <?!= videoPlayer(myRandoms) ?></div>
+        </div></div></div>
       </body>
-    </html>`,
-    {
-      vidApp: function () {
-        const serverSide = function (func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-              .withSuccessHandler((result) => {
-                resolve(result);
-              })
-              .withFailureHandler((error) => {
-                console.log(document.getElementById("test").innerHTML);
-                reject(error);
-              })
-              .runAll(`app.${[func]}`, [args]);
-          });
-        }; //serverSide closed
-        // VideoPlayer Widget
-        serverSide(`videoPlayer`, [`traffic`])
-          .then(async (videoSearch) => {
-            document.getElementById("vids").innerHTML = videoSearch;
-          }) //Global then closed
-          .catch((error) => {
-            console.log(error);
-          }); //Global catch closed
-      }, //vidApp closed
-      jsApp: function () {
-        const serverSide = function (func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-              .withSuccessHandler((result) => {
-                resolve(result);
-              })
-              .withFailureHandler((error) => {
-                console.log(document.getElementById("test").innerHTML);
-                reject(error);
-              })
-              .runAll(`app.${[func]}`, [args]);
-          });
-        }; //serverSide closed
-        serverSide("urlDataSource", [
-          "https://www.sec.gov/files/company_tickers.json",
-        ])
-          .then(async (res) => {
-            var input = [JSON.parse(res)];
-            for (var i = 0; i < input.length; i++) {
-              var randomKey = Math.floor(Math.random() * Math.floor(13000)); // Math.floor(Math.random())
-              var currentCik = await input[i][randomKey]["cik_str"];
-              var currentTicker = await input[i][randomKey]["ticker"];
-              var currentTitle = await input[i][randomKey]["title"];
-              var companyHtml = `
-                <div>
+    </html>`);
+  (html.vidApp = function () {
+    const serverSide = function (func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+          .withSuccessHandler((result) => {
+            resolve(result);
+          })
+          .withFailureHandler((error) => {
+            console.log(document.getElementById("test").innerHTML);
+            reject(error);
+          })
+          .runAll(`app.${[func]}`, [args]);
+      });
+    }; //serverSide closed
+    // VideoPlayer Widget
+    serverSide(`videoPlayer`, [`traffic`])
+      .then(async (videoSearch) => {
+        document.getElementById("vids").innerHTML = videoSearch;
+      }) //Global then closed
+      .catch((error) => {
+        console.log(error);
+      }); //Global catch closed
+  }), //vidApp closed
+    (html.jsApp = function () {
+      const serverSide = function (func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runAll(`App.${[func]}`, [args]);
+        });
+      }; //serverSide closed
+      serverSide("urlDataSource", [
+        "https://www.sec.gov/files/company_tickers.json",
+      ])
+        .then(async (res) => {
+          var input = [JSON.parse(res)];
+          for (var i = 0; i < input.length; i++) {
+            var randomKey = Math.floor(
+              Math.random() * Math.floor(input.length)
+            ); // Math.floor(Math.random())
+            var currentCik = await input[i][randomKey]["cik_str"];
+            var currentTicker = await input[i][randomKey]["ticker"];
+            var currentTitle = await input[i][randomKey]["title"];
+            var companyHtml = `<div>
                 <p><em> Hello Scroll!<em>, 
-                <br><span> <div id="searchMe">${await currentTitle}</div> <h2>${await currentTicker}</h2> is ready to trade. </span>
+                <br><span> <div id="searchMe">${currentTitle}</div> <h2>${currentTicker}</h2> is ready to trade. </span>
                 <br>Best Regards.
-                <br>P.S. <a href="https://www.sec.gov/edgar/browse/?CIK=${await currentCik}&owner=exclude" target="_blank">Click here for info!</a></p>
+                <br>P.S. <a href="https://www.sec.gov/edgar/browse/?CIK=${currentCik}&owner=exclude" target="_blank">Click here for info!</a></p>
                 </div>`;
-            }
-            document.getElementById("template1").innerHTML = companyHtml;
-          }) //Global then closed
-          .catch((error) => {
-            console.log(error);
-          }); //Global catch closed
-      }, //jsApp closed
-      myRandoms: randomTitle,
-    }
-  ); //Global object closed
-  return renderTemplate(html);
+          }
+          document.getElementById("template1").innerHTML = companyHtml;
+        }) //Global then closed
+        .catch((error) => {
+          console.log(error);
+        }); //Global catch closed
+    }), //jsApp closed
+    (html.myRandoms = randomTitle);
+  // })Global object closed
+  return renderTemplate(html.evaluate());
 } //webApp closed
 
 //  {cik_str: await currentCik,
