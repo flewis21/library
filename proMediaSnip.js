@@ -1,14 +1,15 @@
 var proMediaSnip = function (e) {
-  // var author = validGroup("f.")
-  // var myFileE = myFileJS(e)
+  console.log(Utilities.jsonStringify(e));
+  var today = new Date();
+  var rule = today.toDateString() + " - " + today.toTimeString();
   var gaming = jsGameScripts();
   var htmlCss = styleHtml();
-  var today = new Date();
   var chancing = breakthrough(e);
   var gamerUrl = getUrl(ScriptApp) + "?default";
   var backLinkUrl = getUrl(ScriptApp);
-  var media = videoPlayer("playlist", "UU6DOFpA9UCTgNwJiVX1IOpQ");
-  // var rule = today.toDateString() + " - " + today.toTimeString()
+  var media = e.parameter["uname"] || "the Rybka Twins";
+  // var author = validGroup("f.")
+  // var myFileE = myFileJS(e)
   // return renderTemplate(wwAccess("something", contentFile)("epaWebsite"
   //       , {
   // materializeCss: ("\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n"),
@@ -21,77 +22,164 @@ var proMediaSnip = function (e) {
   // rule: today.toDateString() + " - " + today.toTimeString(),
 
   //         }))
-  return renderTemplate(
-    wwAccess("test", contentFile)("callBack", {
-      misc: function (e) {
-        console.log(eval(e.target));
-        ("use strict");
-        console.log(document.getElementById("test").innerHTML)(
+  var html = HtmlService.createTemplate(`
+  <!DOCTYPE html>
+    <html id="test">
+      <head>
+        <base id="pageTarget" target="_top">
+        <?!= styleHtml() ?>
+        <?!= jsGameScripts() ?>
+      </head>
+      <body id="template">
+        <div class="row">
+          <nav class="col s3 menu z-depth-5 card-panel amber scale-out scale-in">
+            <a id="mainIndex" href='https://flewis21.github.io/About-Me/'>About Me</a><br />
+            <a id="checkOnDay" href='https://flewis21.github.io/videoSEC/'>SEC Videos Today</a><br />
+            <a href='https://flewis21.github.io/odd-chances/' target="_top">Numerological Numbers</a><br />
+            <a href='<?= getUrl(ScriptApp) + "?default=ssChemical" ?>' target="_blank">Check Today EPA</a><br />
+            <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' target="_parent">Homemade Games</a><br />
+            <a href='<?= getUrl(ScriptApp) + "?default=ssFinance" ?>' target="_blank">Company Info Table</a><br />
+            <a href='<?= getUrl(ScriptApp) + "?default=ssUSCongress" ?>' target="_top">Congress Legislation</a><br />
+          </nav><br />
+        </div>
+        <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in">
+        <a class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large" href="mailto: <?!= email() ?> ? {subject} = {subject}" class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank"> Contact Me</a>
+        <br>
+          <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'>update</a>
+        <br>
+          <ul id="uldiv">waiting...</ul>
+        <div class="interface">
+          <a href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>' onclick="PageManager.setPageStart('Setup')">
+            <img src="" alt="setup" />
+            <div>
+              <h3>Setup</h3>
+            </div>
+          </a>      
+        </div>
+    <iframe src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview" width="800" height="600" allow="autoplay"></iframe>
+      <?!= artifacts.evaluate().getContent() ?>
+        <script>document.addEventListener('DOMContentLoaded', <?!= misc ?>)</script>
+      </body>
+    </html>`);
+  html.misc = function (e) {
+    console.log(eval(e.target));
+    ("use strict");
+    console.log(document.getElementById("test").innerHTML)(
+      google.script.run
+        .withSuccessHandler(function (hasAccess) {
+          console.log(hasAccess);
           google.script.run
-            .withSuccessHandler(function (hasAccess) {
-              console.log(hasAccess);
-              google.script.run
-                .withSuccessHandler(function (author) {
-                  console.log(author);
-                })
-                .runAll("boilerplate.carbon", [
-                  "fabian.j.lewis.dontnent@gmail.com",
-                ]);
-              document.getElementById("uldiv").innerHTML = "";
+            .withSuccessHandler(function (author) {
+              console.log(author);
             })
-            .runAll("boilerplate.validate", [])
-        )();
-        var go = function () {
-          google.script.run
-            .withSuccessHandler(function () {})
-            .runAll("boilerplate.wwAccess", ["uiTest", "uiAccess"]);
-        };
-        document.getElementById("caller").onclick = go;
-      },
-      artifacts: contentApp(
-        '\n<nav>\n<a href="" target="_blank">Lab Results</a>\n<a href="chemo" target="_blank">Style</a>\n<a href="homeGame" target="_blank">Play</a>\n<a href="dcuo" target="_blank">Media</a>\n</nav>\n \n \n \n ',
-        {
-          media: media,
-          odd: chancing,
-          play: gaming,
-          htmlStyle: htmlCss,
-        }
-      ),
-      gamerUrl: gamerUrl,
-      backLinkUrl: backLinkUrl,
-      pagemanager: contentApp(
-        'let PageManager = {\n setPageStart: function(classType) {\n this.resetPager(classType);this.setPrePage();\n },\n resetPager: function(classType) {\n switch (classType) {\n case "Setup":\n pager = new Pager(classType);\n break;\n }\n let getInterface = document.querySelector(".interface");\n getInterface.innerHTML = \n },\n setPrePage: function() {\n }\n }\n '
-      ),
-      pager:
-        "let pager;\n var Pager = function(classType) {\n this.classType = classType;\n }\n ",
-      rule: rule,
-      website:
-        '\n * {\n box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;\n }\n ',
-      utf_8: '\n<meta charset="UTF-8">',
-      viewport:
-        '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
-      fontAwesome:
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
-      materializeCss:
-        '\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>\n',
-      materializeJs:
-        '\n  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>\n  ',
-      html: "\n html,\n body {\n height: 100%;\n }\n ",
-      main: "\n main {\n height: 92%;\n margin-top: 10px;\n }\n ",
-      body: "\n body {\n background-color: #ffc107;\n }\n ",
-      header:
-        "\n header {\n background-color: rgba(255,255,255,.1);\n color: #a7e1ee;\n font-size: smaller;\n }\n ",
-      header_h1:
-        '\n header h1 {\n font-family: "Montserrat", cursive;\n margin-left: 15px;\n }\n ',
-      menu: "\n .menu {\n flex-flow: row wrap;\n grid-column: 1;\n grid-row: 1;\n align-content: flex-start;\n z-index: 0;\n height: 100%;\n overflow: auto;\n }\n ",
-      menu_item:
-        "\n .menu-item {\n flex-flow: column nowrap;\n flex-basis: auto;\n flex-shrink: 0;\n margin: 5px;\n background: rgba(255, 255, 255, .05);\n width: 150px;\n }\n ",
-      menu_img:
-        "\n .menu-img {\n border-radius: 50%;\n max-width: 100%;\n height: auto;\n display: block;\n margin: auto;\n }\n ",
-      figcaption:
-        "\n figcaption {\n color: white;\n text-align: center;\n user-select: none;\n }\n ",
-      menu_itemHover:
-        "\n .menu-item:hover>.menu-img {\n transform: scale(1.03);\n }\n ",
-    })
-  ); //:contentFile("uiAccess")
+            .runAll("boilerplate.carbon", [
+              "fabian.j.lewis.dontnent@gmail.com",
+            ]);
+          document.getElementById("uldiv").innerHTML = "";
+        })
+        .runAll("boilerplate.validate", [])
+    )();
+    var go = function () {
+      google.script.run
+        .withSuccessHandler(function () {})
+        .runAll("boilerplate.wwAccess", ["uiTest", "uiAccess"]);
+    };
+    document.getElementById("caller").onclick = go;
+  };
+  html.artifacts = HtmlService.createTemplate(`
+    <nav>
+      <a href="" target="_blank">Lab Results</a>
+      <a href="chemo" target="_blank">Style</a>
+      <a href="homeGame" target="_blank">Play</a>
+      <a href="media" target="_blank">Media</a>
+    </nav>
+    <div class="row">
+    <div class ="col s12">
+    <div class="container">
+    <div class="col s12">
+      <?!= videoPlayer(media) ?>
+    </div></div></div></div>`);
+  html.artifacts.media = media;
+  html.artifacts.odd = chancing;
+  html.artifacts.play = gaming;
+  html.artifacts.htmlStyle = htmlCss;
+  html.gamerUrl = gamerUrl;
+  html.backLinkUrl = backLinkUrl;
+  html.pagemanager = HtmlService.createHtmlOutput(`
+    let PageManager = 
+      {setPageStart: 
+        function(classType) 
+          {this.resetPager(classType);
+          this.setPrePage();},
+      resetPager: 
+        function(classType) 
+          {switch (classType) 
+            {case "Setup": 
+              pager = new Pager(classType);
+              break;}
+      let getInterface = document.querySelector(".interface");
+      getInterface.innerHTML = },
+    setPrePage: function() {}}`);
+  html.pager = HtmlService.createHtmlOutput(`
+    let pager;
+    var Pager = 
+      function(classType) 
+        {this.classType = classType;}`);
+  html.rule = rule;
+  html.website = HtmlService.createHtmlOutput(`
+    * {box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto", sans-serif;}`);
+  html.utf_8 = HtmlService.createHtmlOutput(`<meta charset="UTF-8">`);
+  html.viewport = HtmlService.createHtmlOutput(`
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">`);
+  html.fontAwesome = HtmlService.createHtmlOutput(`
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />`);
+  html.materializeCss = HtmlService.createHtmlOutput(`
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`);
+  html.materializeJs = HtmlService.createHtmlOutput(
+    `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+  );
+  html.html = HtmlService.createHtmlOutput(`html, body {height: 100%;}`);
+  html.main = HtmlService.createHtmlOutput(
+    `main {height: 92%;margin-top: 10px;}`
+  );
+  html.body = HtmlService.createHtmlOutput(`body {background-color: #ffc107;}`);
+  html.header = HtmlService.createHtmlOutput(`
+    header {background-color: rgba(255,255,255,.1);
+    color: #a7e1ee;
+    font-size: smaller;}`);
+  html.header_h1 = HtmlService.createHtmlOutput(`
+    header h1 {font-family: "Montserrat", cursive;
+    margin-left: 15px;}`);
+  html.menu = HtmlService.createHtmlOutput(`
+    .menu {flex-flow: row wrap;
+          grid-column: 1;
+          grid-row: 1;
+          align-content: flex-start;
+          z-index: 0;
+          height: 100%;
+          overflow: auto;}`);
+  html.menu_item = HtmlService.createHtmlOutput(`
+    .menu-item {flex-flow: column nowrap;
+               flex-basis: auto;
+               flex-shrink: 0;
+               margin: 5px;
+               background: rgba(255, 255, 255, .05);
+               width: 150px;}`);
+  html.menu_img = HtmlService.createHtmlOutput(`
+    .menu-img {border-radius: 50%;
+              max-width: 100%;
+              height: auto;
+              display: block;
+              margin: auto;}`);
+  html.figcaption = HtmlService.createHtmlOutput(`
+    figcaption {color: white;
+               text-align: center;
+               user-select: none;}`);
+  html.menu_itemHover = HtmlService.createHtmlOutput(
+    `.menu-item:hover>.menu-img {transform: scale(1.03);}`
+  );
+  return wwAccess("test", renderTemplate, html.evaluate()); //:contentFile("uiAccess")
 };
