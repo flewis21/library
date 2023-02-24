@@ -1,3 +1,82 @@
+var opt = function (e) {
+  var url =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
+  var tmp = [];
+  let jsonData = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  var arrData = covArrays(jsonData);
+  // console.log(arrData.length)
+  let objParts = {};
+  for (var i = 0; i < arrData.length; i++) {
+    //Object.fromEntries(JSON.stringify(
+    for (var [key, { cik_str, ticker, title }] of Object.entries(arrData[i])) {
+      objParts[title] = key;
+      objParts[ticker] = key;
+      objParts[cik_str] = key;
+    } //.map(entry => [entry[1]]))
+  }
+  if (arrData) {
+    const keys = Object.keys(arrData);
+    keys.forEach(function (key) {
+      tmp[key] = arrData[key];
+    });
+  }
+  var jo = {};
+  var dataArray = [];
+  // var minData = [tmp][0].entries().next().value
+  var randNum = Math.floor(Math.random() * Math.floor(arrData.length)); // Math.floor(Math.random());
+  for (var i = 0, l = arrData.length; i < l; i++) {
+    //var dataRow = Utilities.jsonParse(arrData);
+    // console.log(typeof arrData[i]);
+    // console.log(arrData[i])
+    var record = {};
+    record["cik"] = arrData[i][0]["cik_str"];
+    record["ticker"] = arrData[i][0]["ticker"];
+    record["title"] = arrData[i][0]["title"];
+    dataArray.push(record);
+  }
+  jo.user = dataArray;
+  var coTable = jo.user.map((r) => {
+    return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
+      r["cik"]
+    }&owner=exclude" target="_blank">${
+      r["cik"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      url + encodeURIComponent(r["ticker"])
+    }" target="_blank">${
+      r["ticker"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      url + encodeURIComponent(r["title"])
+    }" target="_blank">${r["title"]}</a></td></tr>`;
+  });
+  console.log(coTable);
+  var result = JSON.stringify(coTable);
+  return renderTemplate(
+    HtmlService.createTemplate(
+      `
+   <?!= styleHtml().getContent() ?>
+   <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+    <thead>
+      <tr>
+        <th>SEC book reference</th>
+        <th>Stock Market book reference</th>
+        <th>Company Name</th>
+      </tr>
+    </thead>
+    <tbody id="test">
+    </tbody>
+   </table>   
+   <div class="truncate">
+   </div>
+   <script>
+    document.addEventListener("DOMContentLoaded", 
+function(){document.getElementById("test").innerHTML = ${result}})
+  </script>`
+    ).evaluate()
+  ).setTitle("Don'time Life Services");
+};
+
 var edgarData = function (jnsData) {
   // SEC Edgar Filings Widget
   let h = {};
@@ -139,3 +218,192 @@ var edgarData = function (jnsData) {
 
   return contentApp(html); //:contentFile('uiAccess');
 };
+
+function videoSEC(e) {
+  //console.log(JSON.stringify(e));
+  const uniqueCo = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  const uniqueCoArray = covArrays(uniqueCo);
+  console.log(uniqueCoArray.length);
+  console.log(typeof uniqueCoArray[0][0]["title"]);
+  console.log(uniqueCoArray[100][0]["title"]);
+  console.log(uniqueCoArray[100][0]);
+  console.log(Object.keys(uniqueCoArray[100][0]).values().next().value);
+  console.log(
+    Math.floor(
+      Math.random() * Math.floor(Object.keys(uniqueCoArray[100][0]).length)
+    )
+  );
+  console.log(
+    uniqueCoArray.find((r) => {
+      return r;
+    })[0]["title"]
+  );
+  console.log(
+    uniqueCoArray.filter((f, i) => {
+      return f[i];
+    })
+  );
+  console.log(
+    uniqueCoArray.find((r) => {
+      var keys = Object.entries(r);
+      // console.log(keys.length)
+      // console.log(keys[0][1]["title"])
+      for (var i = 0, l = keys.length; i < l; i++) {
+        return keys[0][1]["title"] === uniqueCoArray[100][0]["title"];
+      }
+    })[0]["cik_str"]
+  );
+  const randomCoKey = Math.floor(
+    Math.random() * Math.floor(uniqueCoArray.length)
+  ); // Math.floor(Math.random());
+  const uniqueCoKey = [uniqueCo].entries().next().value;
+  const randomCo = uniqueCoKey[1][randomCoKey];
+  const randomTitle = randomCo["title"];
+  const randomTicker = randomCo["ticker"];
+  const randomCIK = randomCo["cik_str"];
+  // const uniqueVid = needPastTime(randomTitle);
+  // const randomVidKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
+  // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
+  // const uniqueVidKey = [videoPlaylist].entries().next().value;
+  // const randomVid = uniqueVidKey[1][randomVidKey];
+  // const randomVideo = Utilities.jsonStringify(randomVid["youtubeID"]);
+  var stkTicker = e.parameter["tick"] || randomTicker;
+  var cik = e.parameter["cik"] || randomCIK;
+  var percent = e.parameter["uname"] || randomTitle;
+  var list = [];
+  if (
+    uniqueCoArray.find((w) => {
+      return w;
+    })
+  ) {
+    for (var i = 0; i < uniqueCoArray.length; i++) {
+      var received = uniqueCoArray[i].filter((f) => {
+        return f;
+      });
+      var result = received.find((w) => {
+        return w;
+      });
+      if (result) {
+        list.push([result]);
+        if (JSON.stringify(i) >= uniqueCoArray.length) {
+          break;
+        }
+      }
+    }
+  } else {
+    list.push([percent]);
+  }
+  // console.log(list)
+  var breakUrl = getUrl(ScriptApp);
+  const html = HtmlService.createTemplate(`
+    <!DOCTYPE html>
+      <html id="test">
+        <head>
+          <?!= styleHtml().getContent() ?>
+        </head>
+        <body class="green">
+          <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
+          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
+          <div><a href="https://www.sec.gov/edgar/browse/?CIK=<?!= myCIK ?>&owner=exclude" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTicker ?></h1></a></div>
+          <div class="row">
+          <div class="col s12 push-s1 push-m1 push-l2">
+          <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+          <div class="col s12 receipt red" id="player1"><?!= videoPlayer(myVideo) ?></div></div></div></div>
+          <div class="row">
+          <div class="col s6 push-s1 push-m1 push-l2">
+          <div class="container agenda z-depth-5 pulse blue receipt">
+          <div class="col s12 receipt red">
+          <input class="left datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div></div></div></div>
+          <div class="row">
+          <div class="col s6 push-s1 push-m1 push-l2">
+          <div class="container agenda z-depth-5 pulse blue receipt">
+          <div class="col s12 receipt red">
+          <input class="right timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div></div></div></div>
+          <div class="row">
+          <div class="col s6 push-s1 push-m1 push-l2">
+          <div class="container">
+          <div class="col s12 receipt red">
+          <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+          </div></div></div></div>
+          <div class="row">
+          <div class="col s6 push-s1 push-m1 push-l2 truncate">
+          <div class="container dotted-border">
+          <div class="col s12 receipt red">
+            <ul class="darken-4 z-depth-5"><p id='list' class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"><?!= list ?></p></ul></div></div></div></div>
+          <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
+          <script>document.addEventListener("DOMContentLoaded", appJS);
+            function appJS()
+              {// mod the array
+              let timePicker = document.getElementById('prefTime');
+              M.Timepicker.init(timePicker, { defaultTime: "now" });
+              google.script.run.withSuccessHandler(populateDates).runAll('app.busyDates', []);
+              function populateDates(disabledDays) 
+                {let datePicker = document.getElementById('prefDate');
+                  M.Datepicker.init(datePicker, 
+                    {minDate: new Date(), 
+                    setDefaultDate: true,
+                    disableDayFn: 
+                      function(day) 
+                        {return disabledDays.indexOf(day.valueOf()) > -1;}});};}
+          </script>
+          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+        </body>
+      </html>`);
+  html.list = list
+    .map(function (r) {
+      return (
+        "<li>" +
+        `<a class="waves-effect waves-light btn" href="${breakUrl}?uname=${r[0]["title"]}&cik=${r[0]["cik_str"]}&tick=${r[0]["ticker"]}" target="_blank">` +
+        r[0]["ticker"] +
+        "</a>" +
+        "</li>"
+      );
+    })
+    .sort()
+    .join("");
+  html.breakUrl = breakUrl;
+  html.myVideo = percent;
+  html.myTitle = percent;
+  html.myTicker = stkTicker;
+  html.myCIK = cik;
+  const idArray = needPastTime(randomTitle);
+  const vidIdObject = covObjects(idArray, ["youTubeId"]);
+  const rdmVidId = Math.floor(Math.random() * Math.floor(vidIdObject.length));
+  html.myVidId = vidIdObject[rdmVidId]["youTubeId"];
+  html.topScript = function () {
+    //console.log(document.getElementById("test").innerHTML)
+    // Init a timeout variable to be used below
+    let timeout = null;
+    (() => {
+      // Clear the timeout if it has already been set.
+      // This will prevent the previous task from executing
+      // if it has been less than <MILLISECONDS>
+      // clearTimeout(timeout);
+      // Make a new timeout set to go off in 1000ms (1 second)
+      // timeout = setTimeout
+      // (function  ()
+      // {console.log('Input Value:', textInput.value);}, 5000)();
+      if (typeof url === "undefined") {
+        var urlData = document.getElementById("url").value;
+        var url = urlData.toString();
+      }
+      var uname = document.getElementById("username").value;
+      var linkHome = document.createElement("a");
+      var linkFollow = document.createElement("a");
+      linkHome.href = "https://flewis21.github.io/videoSEC/";
+      linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+      linkHome.id = "linkHOME";
+      linkFollow.id = "linkFOLLOW";
+      linkHome.target = "popup";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkHome);
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("linkHOME");
+      document.getElementById("username").value = "";
+    })();
+  }; //Global object closed
+  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services");
+} //webApp closed

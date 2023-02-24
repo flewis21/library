@@ -163,8 +163,8 @@ var covObjects = function (rows, headings) {
 };
 
 function email() {
-  var emails = validate();
-  var emailsCount = validate().toString().split(",").length;
+  var emails = validateFiles();
+  var emailsCount = validateFiles().toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
@@ -209,36 +209,14 @@ var getSize = function (url, params) {
   };
 };
 
+var getScriptUrl = function () {
+  return ScriptApp.getService().getUrl();
+};
+
 var getUrl = function (appInterface) {
   var url = appInterface.getService().getUrl();
   return url;
 };
-
-function includeGS(file, argsArray) {
-  return {
-    appJS: async function () {
-      const serverSide = function (func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runAll(`boilerplate.${[func]}`, [args]);
-        });
-      };
-      try {
-        const content = await serverSide(file, argsArray);
-        return content;
-      } catch (error_1) {
-        console.log(error_1);
-      }
-    },
-  };
-}
 
 var include = function (file, argsObject) {
   const tmp = HtmlService.createHtmlOutputFromFile(file);
@@ -295,6 +273,47 @@ var includeBlob = function (file, argsObject) {
     .evaluate()
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 };
+
+var includeGSFile = function (file, argsArray) {
+  return renderTemplate(`<?!= appJS ?>`, {
+    appJS: async function () {
+      const serverSide = function (func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runAll(`boilerplate.${[func]}`, [args]);
+        });
+      };
+      try {
+        const content = await serverSide(file, argsArray);
+        return content;
+      } catch (error_1) {
+        console.log(error_1);
+      }
+    },
+  });
+};
+
+var includeGSBlob = function (blob, argsArray) {
+  return renderTemplate(`<?!= appJS ?>`, {
+    appJS: async function () {
+      try {
+        const content = await serverSide(blob, argsArray);
+        return content;
+      } catch (error_1) {
+        console.log(error_1);
+      }
+    },
+  });
+};
+
+var includeRunIt = () => {};
 
 var includeJs = function (blob, argsObject) {
   const tmp = HtmlService.createTemplate(blob);
@@ -438,7 +457,8 @@ var renderFile = function (file, argsObject) {
   // Route[file] = argsObject
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setTitle("Don'time Life Services");
 };
 
 var renderTemplate = function (blob, argsObject) {
@@ -455,7 +475,8 @@ var renderTemplate = function (blob, argsObject) {
   // Route[file] = argsObject
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setTitle("Don'time Life Services");
 };
 
 function rule() {

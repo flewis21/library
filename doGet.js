@@ -10,20 +10,20 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-function epaData(e) {
+function sheetWebsite(e) {
   console.log(JSON.stringify(e));
-  const randomKey = Math.floor(Math.random() * Math.floor(12000)); // Math.floor(Math.random())
-  const uniqueKey = [
-    Utilities.jsonParse(
-      urlDataSource("https://www.sec.gov/files/company_tickers.json")
-    ),
-  ]
-    .entries()
-    .next().value;
-  const randomTitle = uniqueKey[1][randomKey]["title"];
+  const uniqueKey = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  const uniqueCoArray = covArrays(uniqueKey);
+  const randomKey = Math.floor(
+    Math.random() * Math.floor(uniqueCoArray.length)
+  ); // Math.floor(Math.random())
+  const uniqueCoKey = [uniqueKey].entries().next().value;
+  const randomTitle = e || uniqueCoKey[1][randomKey]["title"];
   const html = HtmlService.createTemplate(`<html id="test">
       <head>
-        <?!= styleHtml() ?>
+        <?!= styleHtml().getContent() ?>
       </head>
       <body>
         <div>
@@ -37,8 +37,62 @@ function epaData(e) {
         <div class="col s12" id="player1">
           <?!= videoPlayer(myRandoms) ?></div>
         </div></div></div>
+        <span><input placeholder="foo..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="func" type="search" /></span>
+        <span><input placeholder="bar..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="args" type="search" /></span>
+        <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
+        <script>document.addEventListener("DOMContentLoaded", <?!= onPageLoad ?>)</script>
+        <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
       </body>
     </html>`);
+  html.onPageLoad = function () {
+    //var url = urlData.toString();
+    // var linkLoad = document.createElement("a");
+    // linkLoad.href = url + "?func=doGet&args=e";
+    // linkLoad.id = "linkLOAD";
+    // linkLoad.target = "popup";
+    // document.body.appendChild(linkLoad);
+    // document.getElementById("linkLOAD").click();
+  };
+  html.userClicked = function () {
+    //console.log(document.getElementById("test").innerHTML)
+    // Init a timeout variable to be used below
+    let timeout = null;
+    (() => {
+      // Clear the timeout if it has already been set.
+      // This will prevent the previous task from executing
+      // if it has been less than <MILLISECONDS>
+      // clearTimeout(timeout);
+      // Make a new timeout set to go off in 1000ms (1 second)
+      // timeout = setTimeout
+      // (function  ()
+      // {console.log('Input Value:', textInput.value);}, 5000)();
+      if (typeof url === "undefined") {
+        var urlData = document.getElementById("url").value;
+        var url = urlData.toString();
+      }
+      var func = document.getElementById("func").value;
+      var args = document.getElementById("args").value;
+      var linkHome = document.createElement("a");
+      var linkFollow = document.createElement("a");
+      linkHome.href = "https://flewis21.github.io/foobar/";
+      linkFollow.href =
+        url +
+        "?func=" +
+        encodeURIComponent(func) +
+        "&args=" +
+        encodeURIComponent(args);
+      linkHome.id = "linkHOME";
+      linkFollow.id = "linkFOLLOW";
+      linkHome.target = "popup";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkHome);
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("linkHOME");
+      document.getElementById("func").value = "";
+      document.getElementById("args").value = "";
+    })();
+  }; //Global object closed
   (html.vidApp = function () {
     const serverSide = function (func, args) {
       return new Promise((resolve, reject) => {
@@ -54,7 +108,7 @@ function epaData(e) {
       });
     }; //serverSide closed
     // VideoPlayer Widget
-    serverSide(`videoPlayer`, [`traffic`])
+    serverSide(`userClicked`, [`traffic`])
       .then(async (videoSearch) => {
         document.getElementById("vids").innerHTML = videoSearch;
       }) //Global then closed
@@ -103,8 +157,42 @@ function epaData(e) {
     }), //jsApp closed
     (html.myRandoms = randomTitle);
   // })Global object closed
-  return renderTemplate(html.evaluate());
+  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services");
 } //webApp closed
+
+var userClicked = function () {
+  //console.log(document.getElementById("test").innerHTML)
+  // Init a timeout variable to be used below
+  let timeout = null;
+  (() => {
+    // Clear the timeout if it has already been set.
+    // This will prevent the previous task from executing
+    // if it has been less than <MILLISECONDS>
+    // clearTimeout(timeout);
+    // Make a new timeout set to go off in 1000ms (1 second)
+    // timeout = setTimeout
+    // (function  ()
+    // {console.log('Input Value:', textInput.value);}, 5000)();
+    if (typeof url === "undefined") {
+      var urlData = document.getElementById("url").value;
+      var url = urlData.toString();
+    }
+    var uname = document.getElementById("username").value;
+    var linkHome = document.createElement("a");
+    var linkFollow = document.createElement("a");
+    linkHome.href = "https://flewis21.github.io/videoSEC/";
+    linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+    linkHome.id = "linkHOME";
+    linkFollow.id = "linkFOLLOW";
+    linkHome.target = "popup";
+    linkFollow.target = "_top";
+    document.body.appendChild(linkHome);
+    document.body.appendChild(linkFollow);
+    document.getElementById("linkFOLLOW").click();
+    document.getElementById("linkHOME");
+    document.getElementById("username").value = "";
+  })();
+}; //Global object closed
 
 //  {cik_str: await currentCik,
 //                             ticker: await currentTicker,
