@@ -1,3 +1,249 @@
+var edgarData = function (text) {
+  // SEC Edgar Filings Widget
+  let h = {};
+  var tmp = [];
+  let jsonData = Utilities.jsonParse([
+    urlDataSource(text, null, { muteHttpExceptions: true }),
+  ]);
+  let objParts = {};
+  for (var i = 0; i < jsonData.length; i++) {
+    //Object.fromEntries(JSON.stringify(
+    for (var [key, { title }] of Object.entries(jsonData[i])) {
+      objParts[title] = key;
+    }
+  } //.map(entry => [entry[1]]))
+  var arrData = covArrays(jsonData);
+  if (arrData) {
+    const keys = Object.keys(arrData);
+    keys.forEach(function (key) {
+      tmp[key] = arrData[key];
+    });
+  }
+  console.log(typeof [jsonData]);
+  console.log(objParts);
+  let o = jsonData;
+  for (let k of Object.keys(o)) {
+    let n = k.split(":")[0];
+    if (!h[n]) h[n] = [];
+    h[n].push(o[k]);
+    let a = Object.keys(h).map((k) => [k].concat(h[k]));
+    var result = JSON.stringify(a);
+    console.log(result.length);
+  }
+  var startPageUrl = getUrl(ScriptApp) + "?default";
+  var today = new Date();
+  var html = HtmlService.createTemplate(`
+  <!DOCTYPE html>
+    <html>
+      <head>
+        <base target="_top">
+      <? var style = styleHtml().getContent() ?> <?!= style ?>
+      </head>
+      <body>
+        <nav>
+          <a href="<?= getUrl(ScriptApp) ?>" target="_top">Back</a>
+        </nav>
+        <div class="menu-img"><?!= rule ?></div>
+          <ul class="link-list min-list">
+            <li><div class="query-results"></div></li>
+          </ul>
+        <div>
+          <select id="edgarData"><?!= opt ?></select>
+        </div>
+        <div class="search-box-outer container col s1">
+        <div class="search-box-inner container col s1">
+        <label>Search</label><input type="text" id="search" placeholder="type here.." >
+        <div id="data-table"></div>
+        <?!= dOMContentLoaded ?>
+      <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="gamerUrl" />
+      </body>
+    </html>`);
+  html.rule = today.toDateString() + " - " + today.toTimeString();
+  html.opt = tmp
+    .map(function (r) {
+      return "<option>" + Utilities.jsonStringify(r[1][2]) + "</option>";
+    })
+    .join("");
+  html.materializeCss = HtmlService.createHtmlOutput(
+    `
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`
+  ).getContent();
+  html.tabulatorCss = HtmlService.createHtmlOutput(
+    `
+    <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">`
+  ).getContent();
+  html.materializeJs = HtmlService.createHtmlOutput(
+    `
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+  ).getContent();
+  html.dOMContentLoaded = HtmlService.createHtmlOutput(
+    `
+    <script>
+      const elements = {};
+      document.addEventListener("DOMContentLoaded", 
+function() 
+  {var elems = document.querySelectorAll("select");
+  var instances = M.FormSelect.init(elems);});
+  </script>`
+  ).getContent();
+  html.loadData = HtmlService.createHtmlOutput(
+    `
+    <script>
+      document.addEventListener("DOMContentLoaded", loadData);
+function loadData() {tabulatorLoad();}
+    </script>`
+  ).getContent();
+  html.tabulatorLoad = HtmlService.createHtmlOutput(
+    `
+function tabulatorLoad() 
+  {elements.alerts = document.getElementById("alerts");
+  elements.search = document.getElementById("search");
+  elements.search.addEventListener("input", searchData);
+  const tabledata = ${JSON.stringify(text)};
+  const table = 
+    new Tabulator("#data-table", 
+                 {height:205,
+                 data:tabledata,
+                 layout:"fitColumns",
+                 responsiveLayout:"hide",
+                 pagination:"local",
+                 paginationSize:5,
+                 columns:
+                  [{title:"Central Index Key", 
+                    field:"cik_str", 
+                    editor:"list", 
+                    editorParams:{valuesLookup:"active", 
+                                  valuesLookupField:"id"}},
+                    {title:"Ticker Symbol", 
+                    field:"ticker", 
+                    editor:"list", 
+                    editorParams:{valuesLookup:"active", 
+                                  valuesLookupField:"ticker"}},
+                    {title:"Company or Fund name", 
+                    field:"title", 
+                    editor:"list", 
+                    editorParams:{valuesLookup:"active", 
+                                  valuesLookupField:"title"}},
+                    {title:"Task Progress", 
+                    field:"progress", 
+                    hozAlign:"left", 
+                    formatter:"progress", 
+                    editor:"input"},
+                    {title:"Complete", 
+                    field:"Complete", 
+                    width:90,  
+                    hozAlign:"center", 
+                    formatter:"tickCross", 
+                    sorter:"boolean", 
+                    editor:"input"},],});`
+  ).getContent();
+  html.rowClicked = HtmlService.createHtmlOutput(
+    `
+    //table.on("rowClick", 
+function(e, row){//alert("Row " + row.getData().id + " Clicked!!!!");//});`
+  ).getContent();
+  html.cellEdited = HtmlService.createHtmlOutput(
+    `
+    table.on("cellEdited", 
+function(cell){//cell - cell component
+              const field = cell._cell.column.field;
+              const id = cell._cell.row.data.id;
+              const val = cell._cell.value})`
+  ).getContent();
+  html.searchData = HtmlService.createHtmlOutput(
+    `
+function searchData(e) 
+  {table.setFilter("title","like", e.target.value);
+  google.script.run
+    .withSuccessHandler(egdarData)
+    .companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])}`
+  ).getContent();
+  html.companyInfo = HtmlService.createHtmlOutput(`
+function edgarData()companyInfo) {console.log(companyInfo);}`);
+  html.startPageUrl = startPageUrl;
+
+  return renderTemplate(html.evaluate()); //:contentFile('uiAccess');
+}; // edgarArray.push([result])
+// for (let k of Object.keys())
+// queO.push([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
+// if (o.hasOwnProperty(k))
+// {
+// let n = queO.split(":")[0];
+//   if (!h[n]) h[n] = [];
+// if (!h[keys]) h[keys] = [];
+// h[n].push(jsonData[k]);
+// h[keys].push(o[k]);
+// h[n].push(o);
+// }
+// console.log(h.length)
+// }
+// console.log(tmp.length)
+// console.log(jsonData.trim())
+// console.log([jsonData][0])
+// console.log(tmp)
+// var o = mapValues([forArray(jsonData)], 0)
+// var jsonValues = mapValues([forArray([splitNoX([testData(jsonData)], 1)])], 1);
+// var jsonKeys = mapValues([forArray([splitNoX([testData(jsonData)], 0)])], 0);
+// var testo = testObject(jsonValues, jsonKeys);
+// for (var i=0;0 < tmp.length; i++)
+// {
+//   let k = JSON.parse(jsonData)[i];
+//   o.push())
+// }
+// const testIndex = testArray(jsonData)
+// const testIndex = splitNoX(jsonData);
+// const arrayObjData = testArray(testIndex)
+// const objTest = forArray(testIndex);
+// const dataHeaders = mapValues(arrayObjData, 1)
+//  var queO = JSON.stringify([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
+// var edgarArray = []
+// let h = {};
+// for (var i=0;0 < tmp.length; i++)
+// {
+// }
+
+// if (result)
+// {
+// }
+
+// const spreadSheet = ssDatabase(["cik_str","ticker","title"], , spreadSheetCreate("edgarData"))
+// const jsonSheet = ;
+// const jsonData = [urlDataSource("https://www.sec.gov/files/company_tickers.json")]//mapValues([urlDataSource("https://www.sec.gov/files/company_tickers.json")], 5)//mapValues([JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json"))))], 0)//.entries()//mapValues([urlDataSource("https://www.sec.gov/files/company_tickers.json")], JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))//.map(obj => {})//))//))[1]//, 3)//)[1])//], 0)//covObjects(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[1])), [JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[1])])//JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[0])//sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1]))))[1]))//covObjects(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])), [JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])])//, "/")//, 0)//, 0)// , 0, "0", "/", 0)"
+// console.log(tmp)
+// const jsonDoc = ssDatabase("edgarData", [JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])], jsonData)
+//  edgarData = ("\n <?!= jsonData ?>\n   ")
+//  contentApp("\n <?!= html ?>\n  ", { html: "".concat(contentApp("\n  <head>\n  <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n  \n\n <?!= headerBottom ?>", { headerBottom: "".concat(contentApp("\n  </head>\n  \n\n  <?!= bodyTop ?>", { bodyTop: "".concat(contentApp("\n  <body>\n <ul class=\"link-list min-list\">\n <li><div class=\"query-results\"></div></li>\n  </ul>\n  <div class=\"search-box-outer container col s1\">\n  <div class=\"search-box-inner container col s1\">\n <label>Search</label><input type=\"text\" id=\"search\" placeholder=\"type here..\" >\n  \n\n <?!= divBottom ?>\n <?!= divBottom ?>\n \n <div id=\"data-table\"><?!= divBottom ?>\n  \n <script src=\"https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js\" integrity=\"sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"><?!= scriptBottom ?>\n  <script type=\"text/javascript\" src=\"https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js\"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>", { divBottom: "".concat(contentApp("\n  </div>\n "), ""), scriptTop: "".concat(contentApp("\n  <script>\n const elements = {}\n document.addEventListener(\"DOMContentLoaded\", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById(\"alerts\")\n elements.search = document.getElementById(\"search\")\n\n elements.search.addEventListener(\"input\", searchData)\n }\n const tabledata = \"".concat(JSON.stringify(jnsData), "\";\n  const table = new Tabulator(\"#data-table\", {\n    height:205,\n    data:tabledata,\n    layout:\"fitColumns\",\n    responsiveLayout:\"hide\",\n    pagination:\"local\",\n    paginationSize:5,\n    columns:[\n {title:\"Central Index Key\", field:\"cik_str\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"id\" }},\n        {title:\"Ticker Symbol\", field:\"ticker\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"ticker\" }},\n        {title:\"Company or Fund name\", field:\"title\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"title\" }},\n  {title:\"Task Progress\", field:\"progress\", hozAlign:\"left\", formatter:\"progress\", editor:\"input\"},\n  {title:\"Complete\", field:\"Complete\", width:90,  hozAlign:\"center\", formatter:\"tickCross\", sorter:\"boolean\", editor:\"input\"},\n     ],\n  });\n   //table.on(\"rowClick\", function(e, row){\n   //alert(\"Row \" + row.getData().id + \" Clicked!!!!\");\n  //});\n  \n table.on(\"cellEdited\", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter(\"title\",\"like\", e.target.value);\n google.script.run.withSuccessHandler(egdarData).companyName(\"https://www.sec.gov/files/company_tickers.json\", \"\", 1, 1, [[\"cik_str\"],[\"ticker\"],[\"title\"]])\n }\n\n function edgarData()companyInfo) {\n console.log(companyInfo);\n }\n  ")), ""), scriptBottom: "".concat(contentApp("\n  </script>\n"), ""), bodyBottom: "".concat(contentApp("\n  </body>\n"), "")}), "")}), "")}), "")})
+// const tickerValue = widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])
+// let search = tickerValue.filter(function(a) { return a[8]; } )
+// let search = widgetData(tickerValue.filter(function(a) { return a; } ), [JSON.stringify(tickerValue[0]["value"]["cik_str"]),JSON.stringify(tickerValue[0]["value"]["ticker"]),JSON.stringify(tickerValue[0]["value"]["title"])])[2]
+
+// console.log(edgarData("https://www.sec.gov/files/company_tickers.json", "Edgar",widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])).getContent())
+// console.log(widgetData(search["value"], [["cik_str"],["ticker"],["title"]]))
+
+//{
+// ("\n <div  id=\"table-body\"></div>\n  <script>\n  const mydata = \"".concat(JSON.stringify(testData("data")), "\" \n \n  const tbody = document.getElementById(\"table-body\")\n   const htmlBody = mydata.forEach(function(r) {\n   console.log(r)\n   console.log(mydata)\n   const link = document.createElement(\"a\");\n  link.textContent = ".concat("\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"", ";\n   tbody.innerHtml(link);\n  })\n   </script>\n  ")), { textContent: "\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"" });
+//}
+
+var epaA = function (epaAUrl) {
+  const epaA = splitNoX(urlDataSource(epaAUrl));
+  return epaA;
+};
+
+var epaB = function (epaBurl, epaC, uniA, epaBdelimiter) {
+  const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
+  return epaB;
+};
+
+var epaC = function (epaCurl, epaD, uniA, epaCdelimiter) {
+  const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
+  return epaC;
+};
+
+var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
+  const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
+  return epaD;
+};
+
 var opt = function (e) {
   var url =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
@@ -50,7 +296,6 @@ var opt = function (e) {
       url + encodeURIComponent(r["title"])
     }" target="_blank">${r["title"]}</a></td></tr>`;
   });
-  console.log(coTable);
   var result = JSON.stringify(coTable);
   return renderTemplate(
     HtmlService.createTemplate(
@@ -77,184 +322,53 @@ function(){document.getElementById("test").innerHTML = ${result}})
   ).setTitle("Don'time Life Services");
 };
 
-var edgarData = function (jnsData) {
-  // SEC Edgar Filings Widget
-  let h = {};
-  var tmp = [];
-  let jsonData = [
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ];
-  //console.log(
-  let objParts = {};
-  for (var i = 0; i < jsonData.length; i++) {
-    //Object.fromEntries(
-    //JSON.stringify(
-    for (var [key, { title }] of Object.entries(jsonData[i])) {
-      objParts[title] = key;
-    }
-    //.map(entry => [entry[1]])
-    //)
-  }
-  if (jsonData) {
-    const keys = Object.keys(jsonData);
-
-    keys.forEach(function (key) {
-      tmp[key] = jsonData[key];
-    });
-  }
-  console.log(typeof [jsonData]);
-  console.log(objParts);
-  // console.log(jsonData.trim())
-  // console.log([jsonData][0])
-  // console.log(tmp)
-  // var o = mapValues([forArray(jsonData)], 0)
-  // var jsonValues = mapValues([forArray([splitNoX([testData(jsonData)], 1)])], 1);
-  // var jsonKeys = mapValues([forArray([splitNoX([testData(jsonData)], 0)])], 0);
-  // var testo = testObject(jsonValues, jsonKeys);
-  // for (var i=0;0 < tmp.length; i++)
-  // {
-  //   let k = JSON.parse(jsonData)[i];
-  //   o.push())
-  // }
-  // const testIndex = testArray(jsonData)
-  // const testIndex = splitNoX(jsonData);
-  // const arrayObjData = testArray(testIndex)
-  // const objTest = forArray(testIndex);
-  // const dataHeaders = mapValues(arrayObjData, 1)
-  //  var queO = JSON.stringify([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
-  // var edgarArray = []
-  // let h = {};
-  // for (var i=0;0 < tmp.length; i++)
-  // {
-  let o = JSON.parse(jsonData);
-  // edgarArray.push([result])
-  // for (let k of Object.keys())
-  // queO.push([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
-  for (let k of Object.keys(o)) {
-    // if (o.hasOwnProperty(k))
-    // {
-    let n = k.split(":")[0];
-    // let n = queO.split(":")[0];
-    //   if (!h[n]) h[n] = [];
-    if (!h[n]) h[n] = [];
-    // if (!h[keys]) h[keys] = [];
-    h[n].push(o[k]);
-    // h[n].push(jsonData[k]);
-    // h[keys].push(o[k]);
-    // h[n].push(o);
-    // }
-  }
-  // console.log(h.length)
-  // }
-  // console.log(tmp.length)
-  let a = Object.keys(h).map((k) => [k].concat(h[k]));
-  var result = JSON.stringify(a);
-  console.log(result.length);
-  // }
-
-  // if (result)
-  // {
-  // }
-
-  // const spreadSheet = ssDatabase(["cik_str","ticker","title"], , spreadSheetCreate("edgarData"))
-  // const jsonSheet = ;
-  // const jsonData = [urlDataSource("https://www.sec.gov/files/company_tickers.json")]//mapValues([urlDataSource("https://www.sec.gov/files/company_tickers.json")], 5)//mapValues([JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json"))))], 0)//.entries()//mapValues([urlDataSource("https://www.sec.gov/files/company_tickers.json")], JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))//.map(obj => {})//))//))[1]//, 3)//)[1])//], 0)//covObjects(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[1])), [JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[1])])//JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[0]))))[0])//sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1]))))[1]))//covObjects(sliceValues(testData(urlDataSource("https://www.sec.gov/files/company_tickers.json")), JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])), [JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])])//, "/")//, 0)//, 0)// , 0, "0", "/", 0)"
-  // console.log(tmp)
-  // const jsonDoc = ssDatabase("edgarData", [JSON.parse(forHeaders(splitNoX(urlDataSource("https://www.sec.gov/files/company_tickers.json")))[1])], jsonData)
-  //  edgarData = ("\n <?!= jsonData ?>\n   ")
-  //  contentApp("\n <?!= html ?>\n  ", { html: "".concat(contentApp("\n  <head>\n  <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n  \n\n <?!= headerBottom ?>", { headerBottom: "".concat(contentApp("\n  </head>\n  \n\n  <?!= bodyTop ?>", { bodyTop: "".concat(contentApp("\n  <body>\n <ul class=\"link-list min-list\">\n <li><div class=\"query-results\"></div></li>\n  </ul>\n  <div class=\"search-box-outer container col s1\">\n  <div class=\"search-box-inner container col s1\">\n <label>Search</label><input type=\"text\" id=\"search\" placeholder=\"type here..\" >\n  \n\n <?!= divBottom ?>\n <?!= divBottom ?>\n \n <div id=\"data-table\"><?!= divBottom ?>\n  \n <script src=\"https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js\" integrity=\"sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"><?!= scriptBottom ?>\n  <script type=\"text/javascript\" src=\"https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js\"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>", { divBottom: "".concat(contentApp("\n  </div>\n "), ""), scriptTop: "".concat(contentApp("\n  <script>\n const elements = {}\n document.addEventListener(\"DOMContentLoaded\", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById(\"alerts\")\n elements.search = document.getElementById(\"search\")\n\n elements.search.addEventListener(\"input\", searchData)\n }\n const tabledata = \"".concat(JSON.stringify(jnsData), "\";\n  const table = new Tabulator(\"#data-table\", {\n    height:205,\n    data:tabledata,\n    layout:\"fitColumns\",\n    responsiveLayout:\"hide\",\n    pagination:\"local\",\n    paginationSize:5,\n    columns:[\n {title:\"Central Index Key\", field:\"cik_str\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"id\" }},\n        {title:\"Ticker Symbol\", field:\"ticker\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"ticker\" }},\n        {title:\"Company or Fund name\", field:\"title\", editor:\"list\", editorParams:{ valuesLookup:\"active\", valuesLookupField:\"title\" }},\n  {title:\"Task Progress\", field:\"progress\", hozAlign:\"left\", formatter:\"progress\", editor:\"input\"},\n  {title:\"Complete\", field:\"Complete\", width:90,  hozAlign:\"center\", formatter:\"tickCross\", sorter:\"boolean\", editor:\"input\"},\n     ],\n  });\n   //table.on(\"rowClick\", function(e, row){\n   //alert(\"Row \" + row.getData().id + \" Clicked!!!!\");\n  //});\n  \n table.on(\"cellEdited\", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter(\"title\",\"like\", e.target.value);\n google.script.run.withSuccessHandler(egdarData).companyName(\"https://www.sec.gov/files/company_tickers.json\", \"\", 1, 1, [[\"cik_str\"],[\"ticker\"],[\"title\"]])\n }\n\n function edgarData()companyInfo) {\n console.log(companyInfo);\n }\n  ")), ""), scriptBottom: "".concat(contentApp("\n  </script>\n"), ""), bodyBottom: "".concat(contentApp("\n  </body>\n"), "")}), "")}), "")}), "")})
-  // const tickerValue = widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])
-  // let search = tickerValue.filter(function(a) { return a[8]; } )
-  // let search = widgetData(tickerValue.filter(function(a) { return a; } ), [JSON.stringify(tickerValue[0]["value"]["cik_str"]),JSON.stringify(tickerValue[0]["value"]["ticker"]),JSON.stringify(tickerValue[0]["value"]["title"])])[2]
-
-  // console.log(edgarData("https://www.sec.gov/files/company_tickers.json", "Edgar",widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])).getContent())
-  // console.log(widgetData(search["value"], [["cik_str"],["ticker"],["title"]]))
-
-  //{
-  // ("\n <div  id=\"table-body\"></div>\n  <script>\n  const mydata = \"".concat(JSON.stringify(testData("data")), "\" \n \n  const tbody = document.getElementById(\"table-body\")\n   const htmlBody = mydata.forEach(function(r) {\n   console.log(r)\n   console.log(mydata)\n   const link = document.createElement(\"a\");\n  link.textContent = ".concat("\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"", ";\n   tbody.innerHtml(link);\n  })\n   </script>\n  ")), { textContent: "\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"" });
-  //}
-
-  var startPageUrl = getUrl(ScriptApp) + "?default";
-  var today = new Date();
-  html = "".concat(
-    contentFile(
-      "edgarFriendly",
-      {
-        rule: today.toDateString() + " - " + today.toTimeString(),
-        opt: tmp
-          .map(function (r) {
-            return "<option>" + r[0] + "</option>";
-          })
-          .join(""),
-        materializeCss:
-          '\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>\n',
-        tabulatorCss:
-          '\n  <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">',
-        materializeJs:
-          '\n  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>\n  ',
-        dOMContentLoaded:
-          "\n      const elements = {}\n      document.addEventListener(\"DOMContentLoaded\", loadData)\n  document.addEventListener('DOMContentLoaded', function() {\n    var elems = document.querySelectorAll('select');\n    var instances = M.FormSelect.init(elems, options);\n  });",
-        loadData:
-          "\n      function loadData() {\n        tabulatorLoad();\n      }",
-        tabulatorLoad:
-          '\n      function tabulatorLoad() {\n        elements.alerts = document.getElementById("alerts")\n        elements.search = document.getElementById("search")\n        elements.search.addEventListener("input", searchData)\n      const tabledata = "'.concat(
-            JSON.stringify(jnsData),
-            '";\n      const table = new Tabulator("#data-table", {\n        height:205,\n        data:tabledata,\n        layout:"fitColumns",\n        responsiveLayout:"hide",\n        pagination:"local",\n        paginationSize:5,\n        columns:[\n          {title:"Central Index Key", field:"cik_str", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"id" }},\n          {title:"Ticker Symbol", field:"ticker", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"ticker" }},\n          {title:"Company or Fund name", field:"title", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"title" }},\n          {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:"input"},\n          {title:"Complete", field:"Complete", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:"input"},\n          ],\n          });'
-          ),
-        rowClicked:
-          '\n    //table.on("rowClick", function(e, row){\n        //alert("Row " + row.getData().id + " Clicked!!!!");\n        //});',
-        cellEdited:
-          '\n        table.on("cellEdited", function(cell){\n          //cell - cell component\n        const field = cell._cell.column.field\n        const id = cell._cell.row.data.id\n        const val = cell._cell.value\n        })',
-        searchData:
-          '\n        function searchData(e) {\n        table.setFilter("title","like", e.target.value);\n        google.script.run.withSuccessHandler(egdarData).companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])\n        }',
-        companyInfo:
-          "\n        function edgarData()companyInfo) {\n          console.log(companyInfo);\n          }",
-        startPageUrl: startPageUrl,
-      },
-      ""
-    ),
-    ""
-  );
-
-  return contentApp(html); //:contentFile('uiAccess');
-};
-
 function videoSEC(e) {
-  //console.log(JSON.stringify(e));
+  var breakUrl = getUrl(ScriptApp);
   const uniqueCo = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
   const uniqueCoArray = covArrays(uniqueCo);
-  console.log(uniqueCoArray.length);
-  console.log(typeof uniqueCoArray[0][0]["title"]);
-  console.log(uniqueCoArray[100][0]["title"]);
-  console.log(uniqueCoArray[100][0]);
-  console.log(Object.keys(uniqueCoArray[100][0]).values().next().value);
-  console.log(
-    Math.floor(
-      Math.random() * Math.floor(Object.keys(uniqueCoArray[100][0]).length)
-    )
-  );
-  console.log(
-    uniqueCoArray.find((r) => {
-      return r;
-    })[0]["title"]
-  );
-  console.log(
-    uniqueCoArray.filter((f, i) => {
-      return f[i];
-    })
-  );
-  console.log(
-    uniqueCoArray.find((r) => {
-      var keys = Object.entries(r);
-      // console.log(keys.length)
-      // console.log(keys[0][1]["title"])
-      for (var i = 0, l = keys.length; i < l; i++) {
-        return keys[0][1]["title"] === uniqueCoArray[100][0]["title"];
-      }
-    })[0]["cik_str"]
-  );
+  var jo = {};
+  var dataArray = [];
+  // var minData = [tmp][0].entries().next().value
+  var randNum = Math.floor(Math.random() * Math.floor(uniqueCoArray.length)); // Math.floor(Math.random());
+  for (var i = 0, l = uniqueCoArray.length; i < l; i++) {
+    //var dataRow = Utilities.jsonParse(arrData);
+    // console.log(typeof arrData[i]);
+    // console.log(arrData[i])
+    var record = {};
+    record["cik"] = uniqueCoArray[i][0]["cik_str"];
+    record["ticker"] = uniqueCoArray[i][0]["ticker"];
+    record["title"] = uniqueCoArray[i][0]["title"];
+    dataArray.push(record);
+  }
+  jo.user = dataArray;
+  var coTable = jo.user.map((r) => {
+    return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
+      r["cik"]
+    }&owner=exclude" target="_blank">${
+      r["cik"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      breakUrl +
+      "?uname=" +
+      encodeURIComponent(r["title"]) +
+      "&cik=" +
+      encodeURIComponent(r["cik"]) +
+      "&tick=" +
+      encodeURIComponent(r["ticker"])
+    }" target="_blank">${
+      r["ticker"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      breakUrl +
+      "?uname=" +
+      encodeURIComponent(r["title"]) +
+      "&cik=" +
+      encodeURIComponent(r["cik"]) +
+      "&tick=" +
+      encodeURIComponent(r["ticker"])
+    }" target="_blank">${r["title"]}</a></td></tr>`;
+  });
+  var resultOpt = JSON.stringify(coTable);
   const randomCoKey = Math.floor(
     Math.random() * Math.floor(uniqueCoArray.length)
   ); // Math.floor(Math.random());
@@ -296,7 +410,6 @@ function videoSEC(e) {
     list.push([percent]);
   }
   // console.log(list)
-  var breakUrl = getUrl(ScriptApp);
   const html = HtmlService.createTemplate(`
     <!DOCTYPE html>
       <html id="test">
@@ -328,11 +441,22 @@ function videoSEC(e) {
           <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
           </div></div></div></div>
           <div class="row">
-          <div class="col s6 push-s1 push-m1 push-l2 truncate">
+          <div class="col s6 push-s1 push-m1 push-l2">
           <div class="container dotted-border">
           <div class="col s12 receipt red">
-            <ul class="darken-4 z-depth-5"><p id='list' class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"><?!= list ?></p></ul></div></div></div></div>
+            <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+              <thead>
+                <tr>
+                  <th>SEC book reference</th>
+                  <th>Stock Market book reference</th>
+                  <th>Company Name</th>
+                </tr>
+              </thead>
+              <tbody id='opt' class="amber darken-4 receipt scale-out">
+              </tbody>
+            </table></div></div></div></div>
           <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
+          <script>document.addEventListener("DOMContentLoaded", function(){document.getElementById("opt").innerHTML = ${resultOpt}})</script>
           <script>document.addEventListener("DOMContentLoaded", appJS);
             function appJS()
               {// mod the array
