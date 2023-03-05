@@ -1,9 +1,10 @@
 var devWebsite = function (e) {
   var webApp;
   var webTest;
-  var index = e.parameter["i"];
-  var query = e.parameter["q"];
-  switch (e.parameter["webTest"]) {
+  console.log(Utilities.jsonStringify(e));
+  var index = [e][0] || 0;
+  var query = [e][1] || 1;
+  switch ([e][2] || 2) {
     case "sec": // <!-----------------------------JSON API Results------------------------------!>
       // dataUrl = tabData("https://www.sec.gov/files/company_tickers.json", 0, [["id"],["ticker"],["title"]]);
       // webApp = edgarData("https://www.sec.gov/files/company_tickers.json", "SEC Edgar Data", dataUrl );
@@ -71,20 +72,24 @@ var devWebsite = function (e) {
       webApp.url = getUrl(ScriptApp);
       return contentApp(webApp); //:contentFile('uiAccess');
     default: // <!-----------------------------Default Website-------------------------------!>
-      const rowsDefault = testData(
-        jsonXpath("https://www.sec.gov/files/company_tickers.json")
-      );
+      const unData = Utilities.jsonParse([
+        urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+      ]);
+      const testUnData = untestedData(unData);
+      const jsonUnData = Utilities.jsonStringify(testUnData);
+      const rowsDefault = jsonXpath([jsonUnData]);
       let search = rowsDefault.filter(function (a) {
         return a[0] == query;
       });
-      // let searchEntries = search.values().next().value
-      // for (let key in search) {
-      // console.log(search.filter(function (a) { return a[1] == query; }))
-      // }
-      webApp = testJSON(
-        e,
-        testData(jsonXpath("https://www.sec.gov/files/company_tickers.json"))
-      );
+      let searchEntries = [search].values().next().value;
+      for (let key in search) {
+        console.log(
+          [search].filter(function (a) {
+            return a[1] == query;
+          })
+        );
+      }
+      webApp = testJSON(e, jsonXpath([jsonUnData]));
       webApp.content = jsonINIT(
         "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
       );
@@ -96,16 +101,21 @@ var devWebsite = function (e) {
       const groupsUrl = "https://groups.google.com/my-groups";
       const tweetUrl = "https://twitter.com/trchaury";
       const instaUrl = "https://www.instagram.com/flew72/";
-      const jsData = covObjects(
-        testData(jsonXpath("https://www.sec.gov/files/company_tickers.json")),
-        [["id"], ["ticker"], ["title"]]
-      );
+      const jsData = covObjects(testData([jsonUnData]), [
+        ["id"],
+        ["ticker"],
+        ["title"],
+      ]);
+      console.log(jsData);
       // const widgetData = JSON.stringify(covObjects(testData(jsData), [["id"],["ticker"],["title"]]));
       const baseUrl = getUrl(ScriptApp);
       const inventoryUrl =
         getUrl(ScriptApp) + "?webApp=request&sheetName=Inventory&headers=0&q="; //.concat(rows,);
+      console.log(rowsDefault[0]);
       const financeUrl =
-        getUrl(ScriptApp) + "?webApp=jsonXpath&q=".concat(rowsDefault[10][1]);
+        getUrl(ScriptApp) +
+        "?webApp=jsonXpath&q=" +
+        encodeURIComponent(rowsDefault[0][1]);
       navBar = navBar(
         baseUrl,
         "Social",
@@ -125,7 +135,7 @@ var devWebsite = function (e) {
         "Inventory",
         baseUrl,
         "Social"
-      );
+      ).getContent();
       dateTime = dateTime();
 
       // Header of Page
@@ -148,34 +158,36 @@ var devWebsite = function (e) {
       );
 
       // What Should Return
-      return contentApp("\n <?!= edgarData ?>\n  ", {
-        html: "\n ".concat(webApp, ""),
-        body: "\n ".concat(body, ""),
-        head: "\n ".concat(head, ""),
-        edgarData: "\n ".concat(
-          contentApp(
-            '\n  <?!= headerTop ?>\n  <meta charset="UTF-8"><?!= metaBottom ?>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"><?!= metaBottom ?>\n  <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"><?!= linkBottom ?>\n\n <?!= headerBottom ?>\n\n  <?!= bodyTop ?>\n\n  <div class="search-box-outer container col s1">\n  <div class="search-box-inner container col s1">\n <label>Search</label><input type="text" id="search" placeholder="type here.." >\n <?!= divBottom ?>\n <?!= divBottom ?>\n <div id="data-table"><?!= divBottom ?>\n <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"><?!= scriptBottom ?>\n  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n const elements = {}\n document.addEventListener("DOMContentLoaded", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById("alerts")\n elements.search = document.getElementById("search")\n\n elements.search.addEventListener("input", searchData)\n }\n const tabledata = <?!= widgetData ?>\n  const table = new Tabulator("#data-table", {\n    height:205,\n    data:tabledata,\n    layout:"fitColumns",\n responsiveLayout:"hide",\n    pagination:true,\n    paginationSize:5,\n    columns:[\n {title:"Central Index Key", field:"id", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"id" }},\n        {title:"Ticker Symbol", field:"ticker", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"ticker" }},\n        {title:"Company or Fund name", field:"title", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"title" }},\n  {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:"input"},\n  {title:"Complete", field:"Complete", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:"input"},\n     ],\n  });\n   //table.on("rowClick", function(e, row){\n   //alert("Row " + row.getData().id + " Clicked!!!!");\n  //});\n  \n table.on("cellEdited", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter("title","like", e.target.value);\n }\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>\n ',
-            {
-              widgetData: "".concat(widgetData, ""),
-              headerTop: "".concat(contentApp("\n  <head>\n  </head>\n"), ""),
-              metaBottom: "".concat(contentApp("\n  </meta>\n"), ""),
-              linkBottom: "".concat(contentApp("\n  </link>\n"), ""),
-              headerBottom: "".concat(contentApp("\n  </head>\n"), ""),
-              bodyTop: "".concat(contentApp("\n  <body>\n"), ""),
-              bodyBottom: "".concat(contentApp("\n  </body>\n"), ""),
-              divBottom: "".concat(contentApp("\n  </div>\n"), ""),
-              scriptTop: "".concat(contentApp("\n  <script>\n"), ""),
-              scriptBottom: "".concat(
-                contentApp("\n  </script>\n", {
-                  data: widgetData,
-                }),
-                ""
-              ),
-            }
+      return renderTemplate(
+        contentApp("\n <?!= edgarData ?>\n  ", {
+          html: "\n ".concat(webApp, ""),
+          body: "\n ".concat(body, ""),
+          head: "\n ".concat(head, ""),
+          edgarData: "\n ".concat(
+            contentApp(
+              '\n  <?!= headerTop ?>\n  <meta charset="UTF-8"><?!= metaBottom ?>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"><?!= metaBottom ?>\n  <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"><?!= linkBottom ?>\n\n <?!= headerBottom ?>\n\n  <?!= bodyTop ?>\n\n  <div class="search-box-outer container col s1">\n  <div class="search-box-inner container col s1">\n <label>Search</label><input type="text" id="search" placeholder="type here.." >\n <?!= divBottom ?>\n <?!= divBottom ?>\n <div id="data-table"><?!= divBottom ?>\n <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"><?!= scriptBottom ?>\n  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n const elements = {}\n document.addEventListener("DOMContentLoaded", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById("alerts")\n elements.search = document.getElementById("search")\n\n elements.search.addEventListener("input", searchData)\n }\n const tabledata = <?!= widgetData ?>\n  const table = new Tabulator("#data-table", {\n    height:205,\n    data:tabledata,\n    layout:"fitColumns",\n responsiveLayout:"hide",\n    pagination:true,\n    paginationSize:5,\n    columns:[\n {title:"Central Index Key", field:"id", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"id" }},\n        {title:"Ticker Symbol", field:"ticker", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"ticker" }},\n        {title:"Company or Fund name", field:"title", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"title" }},\n  {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:"input"},\n  {title:"Complete", field:"Complete", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:"input"},\n     ],\n  });\n   //table.on("rowClick", function(e, row){\n   //alert("Row " + row.getData().id + " Clicked!!!!");\n  //});\n  \n table.on("cellEdited", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter("title","like", e.target.value);\n }\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>\n ',
+              {
+                widgetData: "".concat(widgetData, ""),
+                headerTop: "".concat(contentApp("\n  <head>\n  </head>\n"), ""),
+                metaBottom: "".concat(contentApp("\n  </meta>\n"), ""),
+                linkBottom: "".concat(contentApp("\n  </link>\n"), ""),
+                headerBottom: "".concat(contentApp("\n  </head>\n"), ""),
+                bodyTop: "".concat(contentApp("\n  <body>\n"), ""),
+                bodyBottom: "".concat(contentApp("\n  </body>\n"), ""),
+                divBottom: "".concat(contentApp("\n  </div>\n"), ""),
+                scriptTop: "".concat(contentApp("\n  <script>\n"), ""),
+                scriptBottom: "".concat(
+                  contentApp("\n  </script>\n", {
+                    data: widgetData,
+                  }),
+                  ""
+                ),
+              }
+            ),
+            ""
           ),
-          ""
-        ),
-      }); //:contentFile('uiAccess');
+        })
+      ); //:contentFile('uiAccess');
       console.log(jsData);
   }
 };
