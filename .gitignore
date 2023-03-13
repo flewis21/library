@@ -74,6 +74,7 @@ typings/
 
 # clasp environment variables file
 .clasp.json
+appsscript.json
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
