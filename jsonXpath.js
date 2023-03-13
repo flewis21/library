@@ -92,21 +92,21 @@ function jsonFormatter() {
     } else if (typeof json === "object") {
       var tempArr = [];
       for (var obj in json) {
-        //console.log(obj)
-        //console.log(json[obj])
         tempArr.push([obj, json[obj]]);
         console.log(tempArr);
       }
       return tempArr;
     }
-    //console.log(pathArray);
-    //console.log(xpath);
   } catch (err) {
     return res.getContentText();
   }
 }
+//console.log(obj)
+//console.log(json[obj])
+//console.log(pathArray);
+//console.log(xpath);
 
-var jsonINIT = function (url, xparh, params) {
+var jsonINIT = function (json) {
   /**
    * Imports JSON data
    * @param url URL of JSON data as string
@@ -114,67 +114,59 @@ var jsonINIT = function (url, xparh, params) {
    *
    *  @customfunction
    */
-  // var res = UrlFetchApp.fetch(url);
-  // var content = res.getContentText();
   try {
-    var json = urlDataSource(url, params);
-    // if (typeof (json) === "undefined")
-    // {try
-    //       {var res = UrlFetchApp.fetch(url);
-    //       // console.log(UrlFetchApp.fetch(url));
-    //       return contentApp(res.getContentText());
-    //       // console.log(res.getContentText());}
-    //   catch (err)
-    //       {return "Invalid request";}}
-    // else if (typeof (json) === "object")
-    // {
-    // var pathArray = xpath.split("/");
-    // for (var i = 0; i < pathArray.length; i++)
-    //   {json = json[pathArray[i]];}
     var tempArr = [];
     for (var obj in json) {
       tempArr.push([obj, json[obj]]);
     }
-    return tempArr; //}
-    // else if (typeof (json) !== "object")
-    // {return "You have attempted to open " + typeof json + " as JSON";}
+    return tempArr;
   } catch (err) {
-    console.log(err + " " + url);
-    // console.log(url)
-    // var res = UrlFetchApp.fetch(url);
-    // console.log(UrlFetchApp.fetch(url));
-    // return contentApp(res.getContentText());
-    // console.log(res.getContentText());
+    console.log(err + " -:- " + url);
   }
 };
+//}
+// var res = UrlFetchApp.fetch(url);
+// var content = res.getContentText();
+//var json = urlDataSource(url, xpath, params);
+// if (typeof (json) === "undefined")
+// {try {var res = UrlFetchApp.fetch(url);
+//       // console.log(UrlFetchApp.fetch(url));
+//       return contentApp(res.getContentText());
+//       // console.log(res.getContentText());}
+//   catch (err) {return "Invalid request";}}
+// else if (typeof (json) === "object")
+// {var pathArray = xpath.split("/");
+// for (var i = 0; i < pathArray.length; i++)
+//   {json = json[pathArray[i]];}
+// else if (typeof (json) !== "object")
+// {return "You have attempted to open " + typeof json + " as JSON";}
+// console.log(url)
+// var res = UrlFetchApp.fetch(url);
+// console.log(UrlFetchApp.fetch(url));
+// return contentApp(res.getContentText());
+// console.log(res.getContentText());
 
-var jsonXpath = function (url, params, xpath) {
-  var dataXpath = jsonINIT(url, params, xpath);
-  // var dataString = JSON.stringify(dataXpath);
-  // var objXpath = JSON.parse(dataString);
-  // console.log(objXpath);
-  var jsonXpathDataRange = [];
-  var jsonValuesXpath = dataXpath;
-  for (var row in jsonValuesXpath) {
-    jsonXpathDataRange.push([]);
-    for (var col in jsonValuesXpath[row]) {
-      jsonXpathDataRange[row].push(jsonValuesXpath[row][col]);
-    }
-  }
-  var jsonXpathHeadings = jsonXpathDataRange[0].map(function (val) {
-    // console.log(val);
+var jsonXpath = function (jsonXpathDataRange) {
+  var jsonXpathNoHeaders = [jsonXpathDataRange].map(function (val) {
     return val.toString().toLowerCase();
   });
-  var jsonXpathNoHeaders = jsonXpathDataRange.slice(0);
   var jsonXpathRowsToReturn = jsonXpathNoHeaders.filter(function (a) {
     return a[0];
   });
-  var jsonXpathOutputQuery = covObjects(
-    jsonXpathRowsToReturn,
-    jsonXpathHeadings
-  );
   return jsonXpathRowsToReturn;
 };
+// var jsonXpathHeadings = jsonXpathDataRange.slice(0,1);
+// var jsonXpathOutputQuery = (covObjects(jsonXpathRowsToReturn, jsonXpathHeadings));
+// var dataXpath = [urlDataSource(url, params, xpath)];
+// var dataString = JSON.stringify(dataXpath);
+// var objXpath = JSON.parse(dataString);
+// console.log(objXpath);
+// var jsonXpathDataRange = testData(data);
+// var jsonValuesXpath = dataXpath;
+// for (var row in jsonValuesXpath)
+//   {jsonXpathDataRange.push([]);
+//   for (var col in jsonValuesXpath[row])
+//     {jsonXpathDataRange[row].push(jsonValuesXpath[row][col]);}}
 
 var objectHeaders = function (object, index) {
   var headerRow = object[index].map(function (val) {
@@ -205,9 +197,11 @@ var tabIndex = function (url, xpath, index, headers) {
   );
   return test;
 };
+
 var urlDataSource = function (url, xpath, params) {
   var res = UrlFetchApp.fetch(url, params);
   var content = res.getContentText();
+  return content;
   // if (typeof content === "object")
   // {var json = Utilities.jsonParse(content);
   // var pathArray = content.split("\n");
@@ -218,9 +212,7 @@ var urlDataSource = function (url, xpath, params) {
   // console.log([helpJSON].keys().next())
   // return json}
   // else
-  // {
-  console.log(typeof content);
-  return content;
+  // {console.log(typeof content)
   // console.log(res.getContentText());
   // }
 };

@@ -67,9 +67,8 @@ var cabDriver = function (e) {
     ws.appendRow([bodyJS]);
   })();
   console.log(apiPost);
-  return renderTemplate(
-    HtmlService.createTemplate(
-      `
+  return HtmlService.createTemplate(
+    `
     <div id="dev">
     </div>
     <script>
@@ -77,8 +76,7 @@ var cabDriver = function (e) {
         agendaCal.getContent()
       )}
     </script>`
-    ).evaluate()
-  );
+  ).getRawContent();
 };
 
 var createSheetHeader = function (headers) {
@@ -331,6 +329,7 @@ function seoSheet(searchString) {
   var randomSheetname = uniqueSeo[randomKey];
   var resData = uniqueSeo.slice(0);
   spreadSheetCreate(randomSheetname, "keywords", headers, resData);
+  return resData;
 }
 
 function spreadSheet() {
@@ -482,18 +481,23 @@ var taxiService = function () {
   });
 };
 
+function mis(text) {
+  return authLogic(text)
+    ? UrlFetchApp.fetch(encodeURI(text)).getContentText()
+    : UrlFetchApp.fetch(
+        encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
+      ).getContentText();
+}
+
 var tutorial = function (text) {
-  return renderTemplate(
-    HtmlService.createTemplate(
-      `
-  <script>document.getElementById("screen").innerHTML = ${urlDataSource(
-    encodeURI(text) ||
-      encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"),
-    null,
-    { muteHttpExceptions: true }
-  )}</script>`
-    ).evaluate()
-  );
+  var html = contentApp(`
+    <body id="screen"></body>
+    <script>document.getElementById("screen").innerHTML = ${urlDataSource(
+      encodeURI(text)
+    )} || ${urlDataSource(
+    encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
+  )} </script>`);
+  return html;
 };
 
 var urlSpreadSheet = function (url) {

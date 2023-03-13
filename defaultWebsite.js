@@ -286,32 +286,25 @@ var defaultWebsite = function (e) {
   }
 };
 
-var doGet = function (e) {
-  // case "request": // <!-----------------------------API Endpoint Page------------------------!>
-  var query = e || 0;
-  // console.log(query)
+var sheetWebsite = function (e) {
+  var query = [e][0] || 0;
   var urlSs =
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
   var urlWww =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
   var tmp = [];
-  var parameters = 1;
+  var parameters = [e][1] || 1;
   var sheetName = "Inventory";
   var sheet = ssGetSheetBySpreadsheetUrl(urlSs, sheetName).activate();
-  // let lastrow = sheet.getLastRow();
   var range = sheet.getDataRange();
   var data = range.getValues();
-  // console.log(data)
   var headings = data.slice(3, 4).toString().toLowerCase().split(",");
-  console.log(typeof headings + " - HEADINGS: " + headings[5]);
   var noHeaders = data.slice(4).map(function (val) {
     return val.toString().toLowerCase();
   });
-  console.log(noHeaders);
   var outputData = covObjects(noHeaders, headings);
   var output = JSON.stringify({ status: "success", data: outputData });
   var rows = [];
-  // let range = sheet.getRange(e.parameter['noheaders'],e.parameter['col'],lastrow,parameters);
   var values = range.getValues();
   for (var row in values) {
     rows.push([]);
@@ -319,116 +312,100 @@ var doGet = function (e) {
       rows[row].push(values[row][col]);
     }
   }
-  console.log(rows);
-  if (query != null) {
-    var rowsToReturn = rows.filter(function (a) {
-      return a[5] == query;
-    });
-    console.log(rowsToReturn[0]);
-    var outputQuery = covObjects(rowsToReturn, headings);
-    var arrData = covArrays(outputQuery);
-    // console.log(Utilities.jsonStringify(Object.entries([arrData])))
-    console.log("Array of Objects: " + Utilities.jsonStringify(arrData[0]));
-    let objParts = {};
-    for (var i = 0; i < arrData.length; i++) {
-      //Object.fromEntries(JSON.stringify(
-      for (var [key, { headings }] of Object.entries(arrData[i])) {
-        objParts[headings] = key;
-      } //.map(entry => [entry[1]]))
+  var rowsToReturn = splitArr(rows, 5, query);
+  var outputQuery = covObjects(rowsToReturn, headings);
+  var arrData = covArrays(outputQuery);
+  let objParts = {};
+  for (var i = 0; i < arrData.length; i++) {
+    for (var [key, { headings }] of Object.entries(arrData[i])) {
+      objParts[headings] = key;
     }
-    if (arrData) {
-      const keys = Object.keys(arrData);
-      keys.forEach(function (key) {
-        tmp[key] = arrData[key];
-      });
-    }
-    var jo = {};
-    var dataArray = [];
-    var randNum = Math.floor(Math.random() * Math.floor(arrData.length)); // Math.floor(Math.random());
-    for (var i = 0, l = arrData.length; i < l; i++) {
-      var record = {};
-      console.log(arrData[i]);
-      record["id"] = arrData[i][0]["sku"];
-      record["productName"] = arrData[i][0]["description"];
-      record["rand1"] = arrData[i][0]["total customer purchase"];
-      record["rand2"] = arrData[i][0]["qty offset"];
-      record["rand3"] = arrData[i][0]["estimated value"];
-      record["rand4"] = arrData[i][0]["supply processed "];
-      record["rand5"] = arrData[i][0]["pack size"];
-      record["rand6"] = arrData[i][0]["total supply available"];
-      record["rand7"] = arrData[i][0]["cost supply available"];
-      record["rand8"] = arrData[i][0]["current cost per item"];
-      record["rand9"] = arrData[i][0][" average cost over time"];
-      if (record["id"] !== "") {
-        dataArray.push(record);
-      }
-      // var minData = [tmp][0].entries().next().value
-      //var dataRow = Utilities.jsonParse(arrData);
-      // console.log(typeof arrData[i]);
-      // console.log(arrData[i])
-    }
-    jo.user = dataArray;
-    var coTable = jo.user.map((r) => {
-      return `<tr><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["id"])
-      }" target="_blank">${
-        r["id"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["productName"])
-      }" target="_blank">${
-        r["productName"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand1"])
-      }" target="_blank">${
-        r["rand1"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand2"])
-      }" target="_blank">${
-        r["rand2"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand3"])
-      }" target="_blank">${
-        r["rand3"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand4"])
-      }" target="_blank">${
-        r["rand4"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand5"])
-      }" target="_blank">${
-        r["rand5"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand6"])
-      }" target="_blank">${
-        r["rand6"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand7"])
-      }" target="_blank">${
-        r["rand7"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand8"])
-      }" target="_blank">${
-        r["rand8"]
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        urlWww + encodeURIComponent(r["rand9"])
-      }" target="_blank">${r["rand9"]}</a></td></tr>`;
-    });
-    var result = JSON.stringify(coTable);
-    console.log(result);
-    // webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({ data: coTable, error: false })).setMimeType(ContentService.MimeType.JSON).getContent());
   }
-  // let randomRequest = rowsToReturn[0][1][0];
-  // console.log(rowsToReturn[0]);
-  // webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({'data': rows, 'error': false})).setMimeType(ContentService.MimeType.JSON).getContent());
-  // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
+  if (arrData) {
+    const keys = Object.keys(arrData);
+    keys.forEach(function (key) {
+      tmp[key] = arrData[key];
+    });
+  }
+  var jo = {};
+  var dataArray = [];
+  for (var i = 0, l = arrData.length; i < l; i++) {
+    var record = {};
+    record["id"] = arrData[i][0]["sku"];
+    record["productName"] = arrData[i][0]["description"];
+    record["rand1"] = arrData[i][0]["total customer purchase"];
+    record["rand2"] = arrData[i][0]["qty offset"];
+    record["rand3"] = arrData[i][0]["estimated value"];
+    record["rand4"] = arrData[i][0]["supply processed "];
+    record["rand5"] = arrData[i][0]["pack size"];
+    record["rand6"] = arrData[i][0]["total supply available"];
+    record["rand7"] = arrData[i][0]["cost supply available"];
+    record["rand8"] = arrData[i][0]["current cost per item"];
+    record["rand9"] = arrData[i][0][" average cost over time"];
+    if (record["id"] !== "") {
+      dataArray.push(record);
+    }
+  }
+  var randNum = Math.floor(Math.random() * Math.floor(dataArray.length));
+  var searchString = dataArray[randNum]["productName"];
+  jo.user = dataArray;
+  var coTable = jo.user.map((r) => {
+    return `<tr><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["id"])
+    }" target="_blank">${
+      r["id"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["productName"])
+    }" target="_blank">${
+      r["productName"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand1"])
+    }" target="_blank">${
+      r["rand1"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand2"])
+    }" target="_blank">${
+      r["rand2"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand3"])
+    }" target="_blank">${
+      r["rand3"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand4"])
+    }" target="_blank">${
+      r["rand4"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand5"])
+    }" target="_blank">${
+      r["rand5"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand6"])
+    }" target="_blank">${
+      r["rand6"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand7"])
+    }" target="_blank">${
+      r["rand7"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand8"])
+    }" target="_blank">${
+      r["rand8"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      urlWww + encodeURIComponent(r["rand9"])
+    }" target="_blank">${r["rand9"]}</a></td></tr>`;
+  });
+  var result = JSON.stringify(coTable);
   baseUrl = getUrl(ScriptApp);
   inventoryUrl = getUrl(ScriptApp);
   financeUrl = getUrl(ScriptApp);
-  // return webApp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  return renderTemplate(
-    HtmlService.createTemplate(
-      `
-      <?!= renderFile("index").getContent(); ?>
+  return HtmlService.createTemplate(
+    `
+      <div class="row">
+      <div class="col s12 push-s1 push-m1 push-l2">
+      <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+      <div class="col s12" id="player1">
+        ${videoPlayer(searchString)}
+      </div></div></div></div>
       <h2 class="search-overlay__section-title">General Information</h2>
       <span><input placeholder="args..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
@@ -469,7 +446,7 @@ var doGet = function (e) {
           var linkHome = document.createElement("a");
           var linkFollow = document.createElement("a");
           linkHome.href = "https://flewis21.github.io/foobar/";
-          linkFollow.href = url + "?args=" + encodeURIComponent(args);
+          linkFollow.href = url + "?func=foo.sheetWebsite" + "&args=" + encodeURIComponent(args);
           linkHome.id = "linkHOME";
           linkFollow.id = "linkFOLLOW";
           linkHome.target = "popup";
@@ -485,6 +462,33 @@ var doGet = function (e) {
       <script>document.addEventListener("DOMContentLoaded", function()
         {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
       <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`
-    ).evaluate()
-  );
+  ).getRawContent();
 };
+// case "request": // <!-----------------------------API Endpoint Page------------------------!>
+// console.log(query)
+// let lastrow = sheet.getLastRow();
+// console.log(data)
+// console.log(noHeaders)
+// console.log(typeof headings + " - HEADINGS: " + headings[5])
+// let range = sheet.getRange(e.parameter['noheaders'],e.parameter['col'],lastrow,parameters);
+// console.log(rowsToReturn[0]);
+// console.log(Utilities.jsonStringify(Object.entries([arrData])))
+// Math.floor(Math.random());
+//.map(entry => [entry[1]]))
+// console.log(rows)
+//Object.fromEntries(JSON.stringify(
+// console.log(arrData[i]);
+// var minData = [tmp][0].entries().next().value
+//var dataRow = Utilities.jsonParse(arrData);
+// console.log(typeof arrData[i]);
+// console.log(arrData[i])
+// console.log(result)
+// webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({ data: coTable, error: false })).setMimeType(ContentService.MimeType.JSON).getContent());
+// let randomRequest = rowsToReturn[0][1][0];
+// console.log(rowsToReturn[0]);
+// if (query != null)
+//   {var rowsToReturn = rows.filter(function (a) { return a[5] == query; });}
+// webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({'data': rows, 'error': false})).setMimeType(ContentService.MimeType.JSON).getContent());
+// webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
+// return webApp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+// console.log("Array of Objects: " + Utilities.jsonStringify(arrData[0]))

@@ -323,6 +323,7 @@ function(){document.getElementById("test").innerHTML = ${result}})
 };
 
 function videoSEC(e) {
+  var usr = e;
   var breakUrl = getUrl(ScriptApp);
   const uniqueCo = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -377,15 +378,15 @@ function videoSEC(e) {
   const randomTitle = randomCo["title"];
   const randomTicker = randomCo["ticker"];
   const randomCIK = randomCo["cik_str"];
-  // const uniqueVid = needPastTime(randomTitle);
-  // const randomVidKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
-  // const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
-  // const uniqueVidKey = [videoPlaylist].entries().next().value;
-  // const randomVid = uniqueVidKey[1][randomVidKey];
-  // const randomVideo = Utilities.jsonStringify(randomVid["youtubeID"]);
-  var stkTicker = e.parameter["tick"] || randomTicker;
-  var cik = e.parameter["cik"] || randomCIK;
-  var percent = e.parameter["uname"] || randomTitle;
+  if (!usr["parameter"]) {
+    var stkTicker = [e][1] || randomTicker;
+    var cik = [e][2] || randomCIK;
+    var percent = [e][0] || randomTitle;
+  } else {
+    var stkTicker = e.parameter["tick"] || randomTicker;
+    var cik = e.parameter["cik"] || randomCIK;
+    var percent = e.parameter["uname"] || randomTitle;
+  }
   var list = [];
   if (
     uniqueCoArray.find((w) => {
@@ -419,7 +420,7 @@ function videoSEC(e) {
         <body class="green">
           <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
           <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
-          <div><a href="https://www.sec.gov/edgar/browse/?CIK=<?!= myCIK ?>&owner=exclude" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTicker ?></h1></a></div>
+          <div><a href="https://www.nasdaq.com/search?q=<?!= myTicker ?>&page=1&sort_by=relevence&langcode=en" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"><?!= myTicker ?></h1></a></div>
           <div class="row">
           <div class="col s12 push-s1 push-m1 push-l2">
           <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">

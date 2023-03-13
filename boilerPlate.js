@@ -1,124 +1,23 @@
 // Compiled using dontime 1.0.0 (TypeScript 4.7.4)
 
+// ---------------------------------------------------------------------------------------------------------------------
 function apiRedeplaoy() {
   var scriptKey = PropertiesService.getScriptProperties().getProperties();
   console.log(scriptKey);
   return scriptKey;
 }
 
+// The parameters ((class)) don't match the method signature for HtmlService.createTemplate.
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------------------------------------
 var companyName = function (companyNameUrl) {
   const companyNameSecData = epaA(AVar(companyNameUrl));
   const companyArray = testData(companyNameSecData);
   return companyArray;
-  // console.log(companyNameSecData)
-  // console.log(myObject)
 };
-
-var contentApp = function (blob, argsObject) {
-  const tmp = HtmlService.createTemplate(
-    ContentService.createTextOutput(blob)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent()
-  );
-  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-  // const argsObject = ContentService.createTextOutput({ args });
-  // if (argsObject) {
-  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-  // const keys = Object.keys(argsObject);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-
-var contentBlob = function (blob, argsObject) {
-  var tmp = HtmlService.createTemplate(blob);
-  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-  // const argsObject = ContentService.createTextOutput({ args });
-  // if (argsObject) {
-  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-  // const keys = Object.keys(argsObject);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-      // tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).getContent()
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-
-var contentTemplate = function (file, argsObject) {
-  var tmp = HtmlService.createTemplateFromFile(file);
-  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-  // const argsObject = ContentService.createTextOutput({ args });
-  // if (argsObject) {
-  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-  // const keys = Object.keys(argsObject);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-      // tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).setMimeType(ContentService.MimeType.JAVASCRIPT).getContent()
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-
-var contentFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(
-    ContentService.createTextOutput(file)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent()
-  );
-  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-  // const argsObject = ContentService.createTextOutput({ args });
-  // if (argsObject) {
-  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-  // const keys = Object.keys(argsObject);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
+// console.log(companyNameSecData)
+// console.log(myObject)
 
 var covArrays = function (
   objects //, cVar)
@@ -126,11 +25,11 @@ var covArrays = function (
   const dataArray = [];
   for (var obj in objects) {
     dataArray.push([objects[obj]]);
-    // console.log(JSON.stringify(dataArray[obj]))
   }
   return dataArray;
-  // console.log(dataArray)
 };
+// console.log(JSON.stringify(dataArray[obj]))
+// console.log(dataArray)
 
 var covertArr = function (objects) {
   var rows = [];
@@ -151,6 +50,112 @@ var covertArr = function (objects) {
   return temp;
 };
 
+// The parameters (number[]) don't match the method signature for HtmlService.createTemplate.
+// ---------------------------------------------------------------------------------------------------------------------
+
+var contentApp = function (blob, argsObject) {
+  const tmp = HtmlService.createTemplate(
+    ContentService.createTextOutput(blob)
+      .setMimeType(ContentService.MimeType.JSON)
+      .getContent()
+  );
+  if (argsObject) {
+    const keys = Object.keys(argsObject);
+    keys.forEach(function (key) {
+      tmp[key] = argsObject[key];
+    });
+  }
+  return tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();
+};
+// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+// const argsObject = ContentService.createTextOutput({ args });
+// if (argsObject) {
+// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+// const keys = Object.keys(argsObject);
+// tmp["list"] = htmlListArray;
+// END IF
+// Route[file] = argsObject
+// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+
+var contentBlob = function (blob, argsObject) {
+  var tmp = HtmlService.createTemplate(blob);
+  if (argsObject) {
+    var keys = Object.keys(argsObject);
+    keys.forEach(function (key) {
+      tmp[key] = argsObject[key];
+    });
+  }
+  return tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();
+};
+// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+// const argsObject = ContentService.createTextOutput({ args });
+// if (argsObject) {
+// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+// const keys = Object.keys(argsObject);
+// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).getContent()
+// tmp["list"] = htmlListArray;
+// END IF
+// Route[file] = argsObject
+// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+
+var contentTemplate = function (file, argsObject) {
+  var tmp = HtmlService.createTemplateFromFile(file);
+  if (argsObject) {
+    var keys = Object.keys(argsObject);
+    keys.forEach(function (key) {
+      tmp[key] = argsObject[key];
+    });
+  }
+  return tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();
+};
+// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+// const argsObject = ContentService.createTextOutput({ args });
+// if (argsObject) {
+// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+// const keys = Object.keys(argsObject);
+// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).setMimeType(ContentService.MimeType.JAVASCRIPT).getContent()
+// tmp["list"] = htmlListArray;
+// END IF
+// Route[file] = argsObject
+// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+
+var contentFile = function (file, argsObject) {
+  const tmp = HtmlService.createTemplateFromFile(
+    ContentService.createTextOutput(file)
+      .setMimeType(ContentService.MimeType.JSON)
+      .getContent()
+  );
+  if (argsObject) {
+    const keys = Object.keys(argsObject);
+    keys.forEach(function (key) {
+      tmp[key] = argsObject[key];
+    });
+  }
+  return tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();
+};
+// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+// const argsObject = ContentService.createTextOutput({ args });
+// if (argsObject) {
+// if (ContentService.createTextOutput(JSON.stringify({ argsObject }))
+//  .setMimeType(ContentService.MimeType.JSON).getContent())
+//  {const keys = Object.keys(argsObject);
+// tmp["list"] = htmlListArray;
+// END IF
+// Route[file] = argsObject
+// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+
 var covObjects = function (rows, headings) {
   var temp = rows.map(function (row) {
     var myObj = {};
@@ -168,26 +173,6 @@ function email() {
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
-
-var epaA = function (epaAUrl) {
-  const epaA = splitNoX(urlDataSource(epaAUrl));
-  return epaA;
-};
-
-var epaB = function (epaBurl, epaC, uniA, epaBdelimiter) {
-  const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
-  return epaB;
-};
-
-var epaC = function (epaCurl, epaD, uniA, epaCdelimiter) {
-  const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
-  return epaC;
-};
-
-var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
-  const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
-  return epaD;
-};
 
 var getEventValues = function (title, startTime, endTime, series) {
   var eventsDataRange = sliceValues(getValues(), 1);
@@ -443,42 +428,6 @@ function randomEmail() {
   return randomEmail;
 }
 
-var renderFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(file);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setTitle("Don'time Life Services");
-};
-
-var renderTemplate = function (blob, argsObject) {
-  const tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setTitle("Don'time Life Services");
-};
-
 function rule() {
   var today = new Date();
   var todayString = today.toDateString() + " - " + today.toTimeString();
@@ -526,6 +475,37 @@ var sliceValues = function (data, row) {
   var values = data.slice(row);
   return values;
 };
+
+var splitArr = function (rows, idx, query) {
+  return rows.filter(function (a) {
+    return a[idx] == query;
+  });
+};
+
+var splitArrHeadings = function (test) {
+  var headings = [];
+  for (var key in test) {
+    headings.push(key);
+  }
+  return headings;
+};
+
+var splitArrRange = function (test) {
+  var headings = [];
+  for (var key in test) {
+    headings.push(key);
+  }
+  var values = [];
+  for (var headings in test) {
+    values.push(test[headings]);
+  }
+  return values;
+};
+// var rows = [];
+// for (var row in values)
+//   {rows.push([]);
+//   for (var col in values[row])
+//     {rows[row].push(values[row][col]);}
 
 var splitNoX = function (content, pushIndex) {
   var json = content;
@@ -640,24 +620,47 @@ var testArray = function (content) {
   // console.log(tempArr)
 };
 
-var testData = function (data) {
+var testData = function (sourceData) {
   try {
     var myArray = [];
-    var sourceData = data;
     for (var row in sourceData) {
-      // console.log("row " + row)
       myArray.push([]);
       for (var col in sourceData[row]) {
-        // console.log("col " + col)
         myArray[row].push(sourceData[row][col]);
-        // console.log("myArray " + row + " " + "sourceData " + row + " " + col)
+        // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
       }
     }
     return myArray;
     console.log(myArray);
-  } catch {
-    return;
+  } catch (err) {
+    return err;
   }
+};
+
+var untestedData = function (arrData) {
+  const tmpArray = Object.entries(arrData);
+  const tmpKeys = Object.keys(tmpArray);
+  const tmpValues = Object.values(tmpArray);
+  let objTmpParts = {};
+  for (var i = 0, l = tmpKeys.length; i < l; i++) {
+    objTmpParts[tmpValues[i][0]] = tmpValues[i][1];
+  }
+  return objTmpParts;
+  let objParts = {};
+  for (var i = 0; i < [arrData].length; i++) {
+    //Object.fromEntries(JSON.stringify(
+    var heldKey = [arrData].keys();
+    for (const key of heldKey) {
+      return key;
+    }
+    var keyLog = heldKey.next().value;
+    for (var [key, { keyLog }] of Object.entries(arrData[i])) {
+      console.log(key);
+      objParts[keyLog] = key;
+    } //.map(entry => [entry[1]]))
+  }
+  console.log(objParts);
+  return objParts;
 };
 
 var testObject = function (dataArray, fVarHeaders) {
