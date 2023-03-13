@@ -41,16 +41,18 @@
       class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"
     >
       <a
-        class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in"
         href="mailto: <?!= email() ?> ? {subject} = {subject}"
+        class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in"
         target="-blank"
       >
         Contact Me</a
       >
-      <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
-        >update</a
-      >
     </div>
+    <br />
+    <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
+      >update</a
+    >
+    <br />
     <ul id="uldiv">
       waiting...
     </ul>
@@ -73,7 +75,7 @@
     ></iframe>
     <?!= artifacts ?>
     <script>
-      document.addEventListener("DOMContentLoaded", misc);
+      document.addEventListener('DOMContentLoaded', <?!= misc ?>)
     </script>
   </body>
 </html>
