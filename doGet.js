@@ -10,7 +10,7 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-function sheetWebsite(e) {
+function posHtml(e) {
   console.log(JSON.stringify(e));
   const uniqueKey = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -37,8 +37,6 @@ function sheetWebsite(e) {
         <div class="col s12" id="player1">
           <?!= videoPlayer(myRandoms) ?></div>
         </div></div></div>
-        <span><input placeholder="foo..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="func" type="search" /></span>
-        <span><input placeholder="bar..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="args" type="search" /></span>
         <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
         <script>document.addEventListener("DOMContentLoaded", <?!= onPageLoad ?>)</script>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
@@ -74,7 +72,7 @@ function sheetWebsite(e) {
       var args = document.getElementById("args").value;
       var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
-      linkHome.href = "https://flewis21.github.io/foobar/";
+      linkHome.href = url;
       linkFollow.href =
         url +
         "?func=" +
@@ -92,7 +90,7 @@ function sheetWebsite(e) {
       document.getElementById("func").value = "";
       document.getElementById("args").value = "";
     })();
-  }; //Global object closed
+  };
   (html.vidApp = function () {
     const serverSide = function (func, args) {
       return new Promise((resolve, reject) => {
@@ -157,7 +155,7 @@ function sheetWebsite(e) {
     }), //jsApp closed
     (html.myRandoms = randomTitle);
   // })Global object closed
-  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services");
+  return html.evaluate();
 } //webApp closed
 
 var userClicked = function () {

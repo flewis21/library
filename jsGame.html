@@ -11,9 +11,6 @@
     <?!= styleHtml() ?>
   </head>
   <body>
-    <nav>
-      <a href="<?= getUrl(ScriptApp) ?>" target="_top">Back</a>
-    </nav>
     <div class="header toolbar toolbar-icon">
       <p>Play the greatest RPG ever to be made!</p>
       <h2>Choose Your Character</h2>
@@ -75,12 +72,6 @@
     <div class="actions"></div>
     <div class="arena"></div>
     <div class="enemy"></div>
-    <script>
-      <?!= includeGS('testObject', ['test', ['array']])
-                .appJS()
-                .then(
-                  (result) => {return result})
-                  .catch((error) => {console.log(error)}) ?>
-    </script>
+    <script></script>
   </body>
 </html>

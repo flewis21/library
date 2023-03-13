@@ -8,11 +8,14 @@
   <body id="template">
     <div class="row">
       <nav class="col s3 menu z-depth-5 card-panel amber scale-out scale-in">
-        <a id="mainIndex" href="<?= getUrl(ScriptApp) ?>">Homepage</a><br />
-        <a id="checkOnDay" href="<?= getUrl(ScriptApp) ?>">Check Today SEC</a
+        <a id="mainIndex" href="https://flewis21.github.io/About-Me/"
+          >About Me</a
         ><br />
-        <a href='<?= getUrl(ScriptApp) + "?default=odd" ?>' target="_top"
-          >DCUO Artifact Breakthrough</a
+        <a id="checkOnDay" href="https://flewis21.github.io/videoSEC/"
+          >SEC Videos Today</a
+        ><br />
+        <a href="https://flewis21.github.io/odd-chances/" target="_top"
+          >Numerological Numbers</a
         ><br />
         <a
           href='<?= getUrl(ScriptApp) + "?default=ssChemical" ?>'
@@ -33,20 +36,28 @@
           >Congress Legislation</a
         ><br />
       </nav>
-      <br />
     </div>
-    <br />
-    <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
-      >update</a
+    <div
+      class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"
     >
-    <br />
+      <a
+        class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in"
+        href="mailto: <?!= email() ?> ? {subject} = {subject}"
+        target="-blank"
+      >
+        Contact Me</a
+      >
+      <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
+        >update</a
+      >
+    </div>
     <ul id="uldiv">
       waiting...
     </ul>
     <div class="interface">
       <a
         href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>'
-        onclick="PageManager.setPageStart('Setup')"
+        onclick='PageManager.setPageStart("Setup")'
       >
         <img src="" alt="setup" />
         <div>
@@ -54,8 +65,15 @@
         </div>
       </a>
     </div>
+    <iframe
+      src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview"
+      width="800"
+      height="600"
+      allow="autoplay"
+    ></iframe>
+    <?!= artifacts ?>
     <script>
-      document.addEventListener('DOMContentLoaded', <?!= appJs ?>)
+      document.addEventListener("DOMContentLoaded", misc);
     </script>
   </body>
 </html>

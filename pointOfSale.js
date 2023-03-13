@@ -1,5 +1,166 @@
-function posHtml() {
-  content =
-    '\n \n  \n  <!DOCTYPE html>\n \n  <html lang="en">\n \n  \n \n  <head>\n \n      <meta charset="UTF-8">\n \n      <meta name="viewport" content="width=device-width, initial-scale=1.0">\n \n      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />\n \n      <link rel="preconnect" href="https://fonts.googleapis.com">\n \n      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n \n      <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">\n <?!= styleHtml() ?>\n \n      <title>Restauraunt POS</title>\n \n  </head>\n \n  \n \n  <body>\n \n      <header>\n \n          <h1>Restaurant POS</h1>\n \n      </header>\n \n      <main class="main-container flex-row">\n \n          <section class="order flex-column">\n \n              <article class="receipt flex-column">\n \n                  <div class="company-info flex-column">\n \n                      <p id="company-name">The Awesome Cafe</p>\n \n                      <p id="company-address">123 Elm St.</p>\n \n                      <p id="company-city">New York, NY</p>\n \n                      <p id="company-phone">123-456-7890</p>\n \n                      <p id="invoice-number">Invoice #5050</p>\n \n                  </div>\n \n                  <div class="receipt-details">\n \n                      <table class="details-detail">\n \n                          <thead>\n \n                              <tr>\n \n                                  <td class="dotted-border" colspan="5"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td class="empty-border" colspan="5"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <th class="description">Description</th>\n \n                                  <th class="quantity">Qty</th>\n \n                                  <th class="price">Price</th>\n \n                                  <th class="subtotal">Sub</th>\n \n                                  <th class="delete">Del</th>                                \n \n                              </tr>                            \n \n                              <tr>\n \n                                  <td class="dotted-border" colspan="5"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td class="empty-border" colspan="5"></td>\n \n                              </tr>\n \n                          </thead>\n \n                          <tbody>\n \n                              <tr>\n \n                                  <td class="description">Fries</td>\n \n                                  <td class="quantity">1</td>\n \n                                  <td class="price">$12.99</td>\n \n                                  <td class="subtotal">$12.99</td>\n \n                                  <td class="delete"><i class="fa-solid fa-delete-left"></i></td>                                \n \n                              </tr>                            \n \n                          </tbody>\n \n                      </table>\n \n                  </div>\n \n                  <div class="receipt-summary">\n \n                      <table class="summary-table">\n \n                          <tbody class="summary-table" id="total-summary">\n \n                              <tr>\n \n                                  <td class="dotted-border" colspan="3"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td class="empty-border" colspan="3"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td>Subtotal:</td>\n \n                                  <td id="subtotal-summary">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td>Tax:</td>\n \n                                  <td id="subtotal-tax">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td>Grand Total:</td>\n \n                                  <td id="grandtotal-summary">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                          </tbody>\n \n                          <tbody class="summary-table" id="payment-summary">\n \n                              <tr>\n \n                                  <td>Amt Paid:</td>\n \n                                  <td id="amount-paid">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td id="tip-change-title">Change:</td>\n \n                                  <td id="tip-change-amount">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td>Payment Type:</td>\n \n                                  <td id="payment-type">$0.00</td>\n \n                                  <td></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td class="dotted-border" colspan="3"></td>\n \n                              </tr>\n \n                              <tr>\n \n                                  <td class="empty-border" colspan="3"></td>\n \n                              </tr>\n \n                          </tbody>\n \n                      </table>\n \n                  </div>\n \n                  <div class="reciept-footer flex-column">\n \n                      <p id="receipt-message">Thanks For Your Business</p>\n \n                      <p id="barcode">Barcode</p>                                        \n \n                  </div>\n \n              </article>\n \n              <div class="toolbar flex-row">\n \n                  <i class="fa-solid fa-money-bill-wave toolbar-icon"></i>\n \n                  <i class="fa-solid fa-credit-card toolbar-icon"></i>\n \n                  <i class="fa-solid fa-trash-can toolbar-icon"></i>\n \n              </div>\n \n          </section>\n \n          <section class="menu-payment grid">\n \n              <div class="menu flex-row" id="menu">\n \n                  <figure class="menu-item">\n \n                      <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>\n \n                      <figcaption>Fries</figcaption>\n \n                      <figcaption>$12.99</figcaption>                    \n \n                  </figure>\n \n                  <figure class="menu-item">\n \n                      <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>\n \n                      <figcaption>Fries</figcaption>\n \n                      <figcaption>$12.99</figcaption>\n \n                  </figure>\n \n                  <figure class="menu-item">\n \n                      <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>\n \n                      <figcaption>Fries</figcaption>\n \n                      <figcaption>$12.99</figcaption>\n \n                  </figure>\n \n                  <figure class="menu-item">\n \n                      <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>\n \n                      <figcaption>Fries</figcaption>\n \n                      <figcaption>$12.99</figcaption>\n \n                  </figure>\n \n              </div>\n \n          </section>        \n \n      </main>\n \n      \n \n  </body>\n \n  \n \n  </html>';
-  return contentApp(content); //:contentFile('uiAccess')
+function doGet() {
+  const content = HtmlService.createTemplate(`<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">
+        <title>Restauraunt POS</title>
+      </head>
+      <body class="blue">
+        <header>
+          <h1>Restaurant POS</h1>
+        </header>
+        <main class="main-container flex-row">
+          <section class="order flex-column">
+            <article class="receipt flex-column">
+              <div class="company-info flex-column">
+                <p id="company-name">The Awesome Cafe</p>
+                <p id="company-address">123 Elm St.</p>
+                <p id="company-city">New York, NY</p>
+                <p id="company-phone">123-456-7890</p>
+                <p id="invoice-number">Invoice #5050</p>
+              </div>
+              <div class="receipt-details">
+              <table class="details-detail">
+                <thead>
+                  <tr>
+                    <td class="dotted-border" colspan="5"></td>
+                  </tr>
+                  <tr>
+                    <td class="empty-border" colspan="5"></td>
+                  </tr>
+                  <tr>
+                    <th class="description">Description</th>
+                    <th class="quantity">Qty</th>
+                    <th class="price">Price</th>
+                    <th class="subtotal">Sub</th>
+                    <th class="delete">Del</th>
+                  </tr>
+                  <tr>
+                    <td class="dotted-border" colspan="5"></td>
+                  </tr>
+                  <tr>
+                    <td class="empty-border" colspan="5"></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="description">Fries</td>
+                    <td class="quantity">1</td>
+                    <td class="price">$12.99</td>
+                    <td class="subtotal">$12.99</td>
+                    <td class="delete"><i class="fa-solid fa-delete-left"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              <div class="receipt-summary">
+              <table class="summary-table">
+                <tbody class="summary-table" id="total-summary">
+                  <tr>
+                    <td class="dotted-border" colspan="3"></td>
+                  </tr>
+                  <tr>
+                    <td class="empty-border" colspan="3"></td>
+                  </tr>
+                  <tr>
+                    <td>Subtotal:</td>
+                    <td id="subtotal-summary">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Tax:</td>
+                    <td id="subtotal-tax">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Grand Total:</td>
+                    <td id="grandtotal-summary">$0.00</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+                <tbody class="summary-table" id="payment-summary">
+                  <tr>
+                    <td>Amt Paid:</td>
+                    <td id="amount-paid">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td id="tip-change-title">Change:</td>
+                    <td id="tip-change-amount">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Payment Type:</td>
+                    <td id="payment-type">$0.00</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td class="dotted-border" colspan="3"></td>
+                  </tr>
+                  <tr>
+                    <td class="empty-border" colspan="3"></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+              <div class="reciept-footer flex-column">
+                <p id="receipt-message">Thanks For Your Business</p>
+                <p id="barcode">Barcode</p>
+              </div>
+            </article>
+            <div class="toolbar flex-row">
+              <i class="fa-solid fa-money-bill-wave toolbar-icon"></i>
+              <i class="fa-solid fa-credit-card toolbar-icon"></i>
+              <i class="fa-solid fa-trash-can toolbar-icon"></i>
+            </div>
+          </section>
+          <section class="menu-payment grid">
+            <div class="menu flex-row" id="menu">
+              <figure class="menu-item">
+                <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>
+                <figcaption>
+                  Fries
+                </figcaption>
+                <figcaption>
+                  $12.99
+                </figcaption>
+              </figure>
+              <figure class="menu-item">
+                <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>
+                <figcaption>
+                  Fries
+                </figcaption>
+                <figcaption>
+                  $12.99
+                </figcaption>
+              </figure>
+              <figure class="menu-item">
+                <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>
+                <figcaption>
+                  Fries
+                </figcaption>
+                <figcaption>
+                  $12.99
+                </figcaption>
+              </figure>
+              <figure class="menu-item">
+                <iframe src="https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview" allow="autoplay" class="menu-img" style="width:150px;"></iframe>
+                <figcaption>
+                  Fries
+                </figcaption>
+                <figcaption>
+                  $12.99
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+        </main>
+      </body>
+    </html>`);
+  return content.getRawContent();
 }

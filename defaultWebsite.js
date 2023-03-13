@@ -400,68 +400,68 @@ var sheetWebsite = function (e) {
   financeUrl = getUrl(ScriptApp);
   return HtmlService.createTemplate(
     `
-      <div class="row">
-      <div class="col s12 push-s1 push-m1 push-l2">
-      <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
-      <div class="col s12" id="player1">
-        ${videoPlayer(searchString)}
-      </div></div></div></div>
-      <h2 class="search-overlay__section-title">General Information</h2>
-      <span><input placeholder="args..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
-      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Product Name</th>
-            <th>Inventory</th>
-            <th>In House</th>
-            <th>Est Value</th>
-            <th>Incoming</th>
-            <th>Quantity</th>
-            <th>Available</th>
-            <th>Price</th>
-            <th>Item Price</th>
-            <th>Price Change</th>
-          </tr>
-        </thead>
-        <tbody id="sheetWebsite">
-        </tbody>
-      </table>
-      <script>document.getElementById('invItem').addEventListener('change', userClicked)
-        function userClicked()
-          {// Init a timeout variable to be used below
-          let timeout = null;
-          (() => {// Clear the timeout if it has already been set.
-          // This will prevent the previous task from executing
-          // if it has been less than <MILLISECONDS>
-          // clearTimeout(timeout);
-          // Make a new timeout set to go off in 1000ms (1 second)
-          // timeout = setTimeout
-          // (function  () 
-            // {console.log('Input Value:', textInput.value);}, 5000)();
-          if (typeof url === "undefined")
-            {var urlData = document.getElementById("url").value;
-            var url = urlData.toString()}
-          var args = document.getElementById("invItem").value;
-          var linkHome = document.createElement("a");
-          var linkFollow = document.createElement("a");
-          linkHome.href = "https://flewis21.github.io/foobar/";
-          linkFollow.href = url + "?func=foo.sheetWebsite" + "&args=" + encodeURIComponent(args);
-          linkHome.id = "linkHOME";
-          linkFollow.id = "linkFOLLOW";
-          linkHome.target = "popup";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkHome);
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkHOME");
-          document.getElementById("invItem").value = "";})()}; //Global object closed
-      </script>
-      <script>document.querySelector(".search-overlay__section-title").setAttribute("style", "background-color: red;color: white;");</script>
-      <script>document.querySelector(".query-results").setAttribute("style", "background-color: red; color: yellow;");</script>
-      <script>document.addEventListener("DOMContentLoaded", function()
-        {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
-      <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`
+    <div class="row">
+    <div class="col s12 push-s1 push-m1 push-l2">
+    <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+    <div class="col s12" id="player1">
+      ${videoPlayer(searchString)}
+    </div></div></div></div>
+    <h2 class="search-overlay__section-title">General Information</h2>
+    <span><input placeholder="args..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
+    <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th>Inventory</th>
+          <th>In House</th>
+          <th>Est Value</th>
+          <th>Incoming</th>
+          <th>Quantity</th>
+          <th>Available</th>
+          <th>Price</th>
+          <th>Item Price</th>
+          <th>Price Change</th>
+        </tr>
+      </thead>
+      <tbody id="sheetWebsite">
+      </tbody>
+    </table>
+    <script>document.getElementById('invItem').addEventListener('change', userClicked)
+      function userClicked()
+        {// Init a timeout variable to be used below
+        let timeout = null;
+        (() => {// Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        // clearTimeout(timeout);
+        // Make a new timeout set to go off in 1000ms (1 second)
+        // timeout = setTimeout
+        // (function  () 
+          // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined")
+          {var urlData = document.getElementById("url").value;
+          var url = urlData.toString()}
+        var args = document.getElementById("invItem").value;
+        var linkHome = document.createElement("a");
+        var linkFollow = document.createElement("a");
+        linkHome.href = "https://flewis21.github.io/foobar/";
+        linkFollow.href = url + "?func=foo.sheetWebsite" + "&args=" + encodeURIComponent(args);
+        linkHome.id = "linkHOME";
+        linkFollow.id = "linkFOLLOW";
+        linkHome.target = "popup";
+        linkFollow.target = "_top";
+        document.body.appendChild(linkHome);
+        document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkHOME");
+        document.getElementById("invItem").value = "";})()}; //Global object closed
+    </script>
+    <script>document.querySelector(".search-overlay__section-title").setAttribute("style", "background-color: red;color: white;");</script>
+    <script>document.querySelector(".query-results").setAttribute("style", "background-color: red; color: yellow;");</script>
+    <script>document.addEventListener("DOMContentLoaded", function()
+      {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
+    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`
   ).getRawContent();
 };
 // case "request": // <!-----------------------------API Endpoint Page------------------------!>

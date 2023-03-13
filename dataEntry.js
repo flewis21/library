@@ -39,7 +39,6 @@ function createNewRecord() {
   console.log(delivery);
   const nextID = nextIDCell.getValue();
   fieldValues.push(nextID);
-
   // console.log(fieldValues);
   dataWS.appendRow(fieldValues);
   const idCell = formWS.getRange("C3");
@@ -187,4 +186,47 @@ function userSearch(findMe) {
                   })();
             })();
       })();
+}
+
+function pdfTimesheet() {
+  saveAsPDFToFolder(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "Timesheet"
+  );
+}
+
+function saveAsPDFToFolder(url, sheetname) {
+  const ss = urlSpreadSheet(url);
+  const sheets = ss.getSheets();
+  const ws = ssGetSheetBySpreadsheetUrl(url, sheetname);
+  const pdfFilename = ws.getSheetName();
+  const folders = DriveApp.getFolders();
+  const folderNames = folders.next().getName();
+  if (folderNames.includes(sheetname).valueOf() === false) {
+    folders.next().createFolder(sheetname);
+  }
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].getName().includes(pdfFilename) === false) {
+      sheets[i].hideSheet();
+      console.log(
+        "Is " +
+          sheets[i].getName() +
+          " hidden?" +
+          " " +
+          sheets[i].isSheetHidden()
+      );
+    } else {
+      sheets[i].showSheet();
+      console.log(
+        "Is " +
+          sheets[i].getName() +
+          " hidden?" +
+          " " +
+          sheets[i].isSheetHidden()
+      );
+    }
+  }
+  pdfFolder = DriveApp.getFoldersByName(sheetname).next();
+  const blob = ws.getParent().getBlob().getAs("Application/pdf");
+  pdfFolder.createFile(blob).setName(pdfFilename);
 }

@@ -1,46 +1,32 @@
 function authLogic(logic) {
-  let isValid = false;
-  if (typeof logic === "undefined") {
+  let isValid = true;
+  if (!logic) {
     isValid = false;
     return isValid;
-  } else if (typeof logic !== "undefined" && logic === false) {
-    isValid = false;
-  } else if (typeof logic !== "undefined" && logic === true) {
-    isValid = true;
   }
   return isValid;
 }
 
 // async function authPromise(promise)
-//                           {
-// let isValid = false;
+// {let isValid = false;
 // if (typeof promise === "undefined")
-//   {isValid = false
-//   console.log('promise === "undefined"')
-//   return isValid
-// } else if (typeof promise !== "undefined" && promise === false)
-//   {isValid = false;
-//   console.log('promise !== "undefined" && promise === false')
-//   return isValid
-// } else if (typeof promise !== "undefined" && promise === true)
-//   {isValid = true;
-//   console.log('promise !== "undefined" && promise === true')
-//   return isValid
-// }
-// return new Promise((reject, resolve) => {
-//       (isValid) => {
-// console.log('this is ' + isValid)
+// {isValid = false
+// console.log('promise === "undefined"')
+// return isValid} else if (typeof promise !== "undefined" && promise === false)
+// {isValid = false;
+// console.log('promise !== "undefined" && promise === false')
+// return isValid} else if (typeof promise !== "undefined" && promise === true)
+// {isValid = true;
+// console.log('promise !== "undefined" && promise === true')
+// return isValid}
+// return new Promise((reject, resolve) => {(isValid) => {console.log('this is ' + isValid)
 // if (!isValid)
-//   {reject(isValid);
-//   console.log(typeof isValid)
-// } else if (isValid)
-//   {resolve(isValid);
-//   console.log(typeof isValid)
-// }}
-//   console.log(isValid)
-//     });
-//     // return isValid;
-//                     }
+// {reject(isValid);
+// console.log(typeof isValid)} else if (isValid)
+// {resolve(isValid);
+// console.log(typeof isValid)}}
+// console.log(isValid)});
+// return isValid;}
 
 function getBreakthrough(e) {
   const list = (e) => {
@@ -87,13 +73,10 @@ function getBreakthrough(e) {
           // This will prevent the previous task from executing
           // if it has been less than <MILLISECONDS>
           // clearTimeout(timeout);
-
           // Make a new timeout set to go off in 1000ms (1 second)
           // timeout = setTimeout
           // (function  ()
-          // {
-          // console.log('Input Value:', textInput.value);
-          //  }, 5000)();
+          // {console.log('Input Value:', textInput.value);}, 5000)();
           if (typeof url === "undefined") {
             var urlData = document.getElementById("url").value;
             var url = urlData.toString();
@@ -132,7 +115,6 @@ function carbon(email) {
       // Access denied.
       return false;
     }
-
     // Access granted.
     // List all users with Editor permission.
     file
@@ -147,7 +129,7 @@ function carbon(email) {
         }
       });
     return isEditor;
-    console.log(isEditor)` ```;
+    console.log(isEditor);
   })();
   return emailList;
   console.log(emailList);
@@ -222,9 +204,7 @@ var congressLeg = function (e) {
             Charts.newDashboardPanel()
               .setDataTable(dataTableBuilder.build())
               .build(),
-            google.charts.load("current", {
-              packages: ["table"],
-            });
+            google.charts.load("current", { packages: ["table"] });
           google.charts.setOnLoadCallback(drawTable);
         },
         drawTable: function () {
@@ -258,21 +238,18 @@ var congressLeg = function (e) {
       });
       console.log(member);
     }
-
     return member;
     console.log(dashboard);
   })();
-  // return doGet("content", contentFile)("congressLeg"
-  // ,{
-  // gamerUrl:gamerUrl,
-  // congressData: congressInfoAPI(),
-  // civicData: civicInfoAPI()//"".concat(contentApp("\n  document.addEventListener('DOMContentLoaded', function() {\n   let getCivic = document.querySelector(\".civic\");\n   getCivic.textContent = <?!= data ?>;\n   })\n   ", {data: civicInfoAPI()}), "")
-  // });
 };
+// return doGet("content", contentFile)("congressLeg"
+// ,{
+// gamerUrl:gamerUrl,
+// congressData: congressInfoAPI(),
+// civicData: civicInfoAPI()//"".concat(contentApp("\n  document.addEventListener('DOMContentLoaded', function() {\n   let getCivic = document.querySelector(\".civic\");\n   getCivic.textContent = <?!= data ?>;\n   })\n   ", {data: civicInfoAPI()}), "")});
 
 function pill() {
   const Route = {};
-
   Route.path = function (route, callback) {
     Route[route] = callback;
   };
@@ -291,31 +268,39 @@ function pill() {
     dOMContentLoaded:
       '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\n    var elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
   });
-
-  return contentApp(pill); //:contentFile('uiAccess')
+  return contentApp(pill);
+  //:contentFile('uiAccess')
 }
 
 var runIt = function (e) {
   urlDataSource("https://www.sec.gov/files/company_tickers.json");
-
   if (e.parameter["default"] === "") {
-    return wwAccess("development", proMediaSnip)(e); //: contentFile("uiAccess");
+    return wwAccess("development", proMediaSnip)(e);
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "epa") {
-    return renderTemplate(wwAccess("epa", epaData)()); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("epa", epaData)());
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "edgar") {
-    return renderTemplate(wwAccess("edgar", edgarData)()); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("edgar", edgarData)());
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "odd") {
-    return renderTemplate(wwAccess("odd", breakthrough)(e)); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("odd", breakthrough)(e));
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "gamer") {
-    return renderTemplate(wwAccess("gamer", jsGameScripts)()); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("gamer", jsGameScripts)());
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "checkOD") {
-    return renderTemplate(wwAccess("checkOD", checkOnDay)()); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("checkOD", checkOnDay)());
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "usGov") {
-    return renderTemplate(wwAccess("usGov", congressLeg)()); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("usGov", congressLeg)());
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "jFun") {
-    return renderTemplate(wwAccess("jFun", jFundamentals)(e)); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("jFun", jFundamentals)(e));
+    //: contentFile("uiAccess");
   } else if (e.parameter["default"] === "ssTest") {
-    return renderTemplate(wwAccess("ssTest", superTest)(e)); //: contentFile("uiAccess");
+    return renderTemplate(wwAccess("ssTest", superTest)(e));
+    //: contentFile("uiAccess");
   } else {
     // Route.path("default", defaultWebsite);
     // Route.path("escape", escapedHTML);
@@ -332,39 +317,29 @@ var runIt = function (e) {
     // Route.path("default", HtmlService.createHtmlOutput);
     // Route.path("default", HtmlService.createHtmlOutput);
     return wwAccess(e.parameter["default"], defaultWebsite)(e);
-
-    //{ Route.path("jsonXpath", HtmlService.createHtmlOutput);
-    //}
-
-    // {if({ }typeof e.parameter["webApp"] === "undefined")
-    // { // <!----WebApp Website----!>
-
-    // Route.path("jsonXpath", HtmlService.createHtmlOutput)
-    // return
-
-    // }
-    // } else   return
-    // webAppUrls =
-    // runIt =
-
-    // return ss
   }
 };
+//{ Route.path("jsonXpath", HtmlService.createHtmlOutput);}
+// {if({ }typeof e.parameter["webApp"] === "undefined")
+// { <!----WebApp Website----!>
+// Route.path("jsonXpath", HtmlService.createHtmlOutput)
+// return}} else   return
+// webAppUrls =
+// runIt =
+// return ss
 
 function uiAccess() {
-  // const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
-  // const authStatus = authInfo.getAuthorizationStatus();
-  // const activeUser = Session.getActiveUser().getEmail();
-  // const effectiveUser = Session.getEffectiveUser().getEmail();
   const isValidEmail = authLogic(validGroup());
-  // const isValidGroup = authLogic(validGroup());
-  let htmlfile = isValidEmail ? "uiAccess" : "index";
-  htmlService = contentFile(htmlfile);
-
-  return contentFile("uiAccess"); //:contentFile('uiAccess');
+  return authLogic(isValidEmail) ? "uiAccess" : "index";
 }
+// const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
+// const authStatus = authInfo.getAuthorizationStatus();
+// const activeUser = Session.getActiveUser().getEmail();
+// const effectiveUser = Session.getEffectiveUser().getEmail();
+// const isValidGroup = authLogic(validGroup());
+//:contentFile('uiAccess');
 
-function validate() {
+function validateFiles() {
   // Grant or Deny access
   const emailList = (() => {
     var files = DriveApp.getFiles();
@@ -383,7 +358,6 @@ function validate() {
       // Access denied.
       return false;
     }
-
     // Access granted.
     // List all users with Editor permission.
     return file.getEditors().map((editor) => {
@@ -395,12 +369,41 @@ function validate() {
   console.log(emailList);
 }
 
+function validateFolders() {
+  // Grant or Deny access
+  const folderList = (() => {
+    const folders = DriveApp.getFolders();
+    const folderNames = folders.next().getName();
+    const sharedFolders = [];
+    try {
+      for (var i = 0; i < folderNames.length; i++) {
+        [folderNames].map((name) => {
+          if (sharedFolders.indexOf(name) === -1) {
+            sharedFolders.push(name);
+          }
+        });
+        folder = DriveApp.getFoldersByName(sharedFolders).next();
+      }
+    } catch (e) {
+      // Access denied.
+      return false;
+    }
+    // Access granted.
+    // List all users with Editor permission.
+    return folder.getEditors().map((editor) => {
+      return editor.getEmail();
+      console.log(editor.getEmail());
+    });
+  })();
+  // return emailList
+  console.log(folderList);
+}
+
 function validGroup() {
   const hasAccess = (() => {
     let isMemberOfGroup = false;
-    let emailList = validate();
+    let emailList = validateFiles();
     console.log(emailList);
-
     GroupsApp.getGroups()
       .map((group) => {
         return group.getEmail();
@@ -424,5 +427,5 @@ var wwAccess = function (rname, rfunction, args) {
   };
   Route.path(rname, rfunction);
   args = args || [];
-  return authLogic(validGroup()) ? Route[rname](args) : contentFile("uiAccess");
+  return Route[rname](args);
 };

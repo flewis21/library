@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <?!= utf_8 ?>
-    <?!= viewport ?>
-    <?!= fontAwesome ?>
-    <?!= googleApisCss ?>
-    <?!= googleApisIcon ?>
-    <?!= googleApis_preConnect ?>
+    <?!= styleHtml().getContent() ?>
     <base target="_self" />
-    <style>
-      <?!= website ?>
-    </style>
   </head>
   <body>
-    <a id="caller" href="<?= link ?>">update</a>
+    <a id="caller" href='<?!= getUrl(ScriptApp) + "?default=ssTest" ?>'
+      >update</a
+    >
     <br />
     <div id="div">waiting...</div>
     <script id="gold" type="text/javascript">

@@ -5,8 +5,8 @@ var testJSON = function (e, rows) {
     { first: "Joe", last: "Lewis" },
   ];
   const val = JSON.stringify(myOhj);
-  var query = rows[e.parameter["i"]][0];
-  console.log(query);
+  var query = rows;
+  // console.log(" QUERY -:_ " + query)
   if (query != null) {
     var rowsToReturn = rows.filter(function (a) {
       return a[0] == query;

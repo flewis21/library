@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html id="test">
   <head>
-    <?!= styleHtml() ?>
+    <?!= styleHtml().getContent() ?>
   </head>
   <body class="blue" id="template">
     <nav class="amber darken-4">
@@ -11,65 +11,16 @@
         >Blogger</a
       >
     </nav>
-    <div class="container row s1 valign-wrapper"><?!= rule() ?></div>
-    <div class="container row s1 valign-wrapper video-container black darken-4">
-      <div id="iframePlayer"></div>
+    <div class="row">
+      <div class="col s12 m12 m12 l12">
+        <div class="container row valign-wrapper"><?!= rule() ?></div>
+        <div class="container black darken-4 scale-transition">
+          <div class="col s12 l12" id="iframePlayer">
+            <?!= videoPlayer("*") ?>
+          </div>
+        </div>
+      </div>
     </div>
     <input type="hidden" value="startPageUrl" id="breakUrl" />
-    <script>
-      document.addEventListener('DOMContentLoaded', <?!= iframeCreate ?>)
-    </script>
-    <!-- <script>
-    tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    var iframePlayer
-    document.addEventListener('DOMContentLoaded', onYouTubeIframeAPIReady)
-   function onYouTubeIframeAPIReady() 
-            {iframePlayer = new YT.Player("iframePlayer", 
-                      {height: "505",  
-                      width: "585", 
-                      //  videoId: 'OTeQee-gxa4', 
-                      playerVars: 
-                            {"autoplay": 1,  
-                            "loop": 1,  
-                            "controls": 0,  
-                            "showinfo": 0,  
-                            "autohide": 1,  
-                            "playsinline": 1, 
-                            "mute": 1,
-                            "modestbranding": 1,  
-                            "vq": "hd1080", 
-                            "listType": 'playlist',
-                            "list": 'UU6DOFpA9UCTgNwJiVX1IOpQ', 
-                            },  
-                      events: 
-                            {"onReady": onPlayerReady,
-                            "onStateChange": onPlayerStateChange,  
-                            }
-                      });
-            }
-function onPlayerReady(event) 
-                  {event.target.playVideo();
-                  }
-  var done = false
-function onPlayerStateChange(event) 
-              {if (event.data == YT.PlayerState.PLAYING) 
-                  {setTimeout(playVideo);
-                  // done = true;
-                  }
-              }
-function stopVideo() 
-              {iframePlayer.stopVideo();
-              }
-function playVideo() 
-          {iframePlayer.playVideo();
-          }
-function nextVideo() 
-            {iframePlayer.nextVideo();
-            }
-  </script> -->
-    <script></script>
   </body>
 </html>

@@ -10,28 +10,19 @@
       >
     </nav>
     <div>
-      <p>
-        <em> Hello Scroll! </em>,
-        <br />
-        <span>
-          <?!= title ?>
-          <h2><?!= ticker ?></h2>
-          is ready to trade.
-        </span>
-        <br />
-        Best Regards.
-        <br />
-        P.S. Click
-        <a
-          href="https://www.sec.gov/edgar/browse/?CIK=<?!= cik_str ?>&owner=exclude"
-          target="_blank"
-        >
-          <?!= cik_str ?>
-        </a>
-        for Info at the SEC
-      </p>
+      <em> Hello Scroll!</em>,
+      <span> <?!= title ?> </span>
+      <h2><?!= ticker ?></h2>
+      <span> ready to trade. </span>
+      <span> Best Regards. </span>
+      <p>P.S. Click</p>
+      <a
+        href="https://www.sec.gov/edgar/browse/?CIK=<?!= cik_str ?>&owner=exclude"
+        target="_blank"
+        ><?!= cik_str ?></a
+      >
+      <p>for Info at the SEC</p>
     </div>
     <div><?!= relatedVideo ?></div>
-    <script></script>
   </body>
 </html>
