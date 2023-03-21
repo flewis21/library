@@ -1,11 +1,11 @@
 var breakthrough = function (e) {
   var username = e;
   if (!username["parameter"]) {
-    var percent = [e][0];
+    var percent = [e][0] || Math.floor(Math.random() * Math.floor(e.length));
   } else {
-    var percent = username["parameter"]["uname"] || [
-      Math.floor(Math.random() * Math.floor(Utilities.jsonStringify(e).length)),
-    ];
+    var percent =
+      username["parameter"]["args"] ||
+      Math.floor(Math.random() * Math.floor(e.length));
   }
   var list = [];
   if (0 < percent) {
@@ -30,9 +30,8 @@ var breakthrough = function (e) {
   } else {
     list.push([percent]).toString();
   }
-  // console.log(list)
-  var htmlCss = styleHtml().getContent();
-  var breakUrl = getUrl(ScriptApp);
+  var breakUrl =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.breakthrough&args=";
   var today = new Date();
   // var rule = today.toDateString() + " - " + today.toTimeString()
   var html = HtmlService.createTemplate(`
@@ -40,7 +39,6 @@ var breakthrough = function (e) {
       <html id="test">
         <head>
           <base target="_self"></base>
-          <?!= htmlStyle ?>
         </head>
         <body>
           <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><?!= rule() ?></div>
@@ -70,7 +68,7 @@ var breakthrough = function (e) {
                           // mod the array
                           let timePicker = document.getElementById('prefTime');
                           M.Timepicker.init(timePicker, { defaultTime: "now" });
-                  google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
+                  google.script.run.withSuccessHandler(populateDates).runAll('foo.busyDates', []);
                   function populateDates(disabledDays) 
                                                       {
                       let datePicker = document.getElementById('prefDate');
@@ -95,7 +93,7 @@ var breakthrough = function (e) {
     .map(function (r) {
       return (
         "<li>" +
-        `<a class="waves-effect waves-light btn" href="${breakUrl}?uname=${r[0]}" target="_blank">` +
+        `<a class="waves-effect waves-light btn" href="${breakUrl}${r[0]}" target="_blank">` +
         r[0] +
         "</a>" +
         "</li>"
@@ -104,7 +102,6 @@ var breakthrough = function (e) {
     .join("");
   // html.rule = rule;
   html.breakUrl = breakUrl;
-  html.htmlStyle = htmlCss;
   html.myVideo = percent;
   const idArray = needPastTime(percent);
   const vidIdObject = covObjects(idArray, ["youTubeId"]);
@@ -131,7 +128,8 @@ var breakthrough = function (e) {
       var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
       linkHome.href = "https://flewis21.github.io/odd-chances/";
-      linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+      linkFollow.href =
+        url + "?func=foo.breakthrough&args=" + encodeURIComponent(uname);
       linkHome.id = "linkHOME";
       linkFollow.id = "linkFOLLOW";
       linkHome.target = "popup";
@@ -143,5 +141,5 @@ var breakthrough = function (e) {
       document.getElementById("username").value = "";
     })();
   };
-  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services"); //:contentFile('uiAccess');
-};
+  return html.evaluate().getContent();
+}; //:contentFile('uiAccess');

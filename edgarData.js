@@ -322,9 +322,125 @@ function(){document.getElementById("test").innerHTML = ${result}})
   ).setTitle("Don'time Life Services");
 };
 
+var needCapital = function (searchString) {
+  const videoSearch = [
+    urlDataSource(
+      `https://www.bing.com/search?q=${encodeURIComponent(
+        searchString
+      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+      null,
+      { muteHttpExceptions: true }
+    ),
+  ];
+  const table = videoSearch
+    .slice(videoSearch.indexOf("SERP"))
+    .toString()
+    .split("SERP");
+  const pong = table.map((ping) => {
+    return ping.substring(0);
+  });
+  return pong.toString().split(",");
+};
+
+var oldSEC = function (rndTitle) {
+  var urlCompany =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPlayer&args=";
+  var urlTicker = "https://www.nasdaq.com/search?q=";
+  var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
+  const uniqueCo = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json", null, {
+      muteHttpExceptions: true,
+    }),
+  ]);
+  const titleKings = needCapital(rndTitle);
+  const uniqueCoArray = covArrays(uniqueCo);
+  const matches = [];
+  const alTheCo = uniqueCoArray.filter((ac) => {
+    if (
+      Utilities.jsonStringify(ac[0]["title"]).toLowerCase().includes(rndTitle)
+    )
+      matches.push(ac);
+  });
+  const titleMatches = [matches.toString().substring(titleKings)];
+  // console.log(Utilities.jsonStringify([titleMatches]))
+  var coTable = matches.map((r) => {
+    return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(
+      r[0]["ticker"]
+    )}&page=1&sort_by=relevence&langcode=en" target="_blank">${
+      r[0]["ticker"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(
+      r[0]["cik_str"]
+    )}&owner=exclude" target="_blank">${
+      r[0]["cik_str"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(
+      r[0]["title"]
+    )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
+  });
+  const result = Utilities.jsonStringify(coTable);
+  const randomCoKey = Math.floor(
+    Math.random() * Math.floor(uniqueCoArray.length)
+  ); // Math.floor(Math.random());
+  const uniqueCoKey = [uniqueCo].entries().next().value;
+  const randomCo = uniqueCoKey[1][randomCoKey];
+  const html = HtmlService.createTemplate(
+    `<body>
+      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+        <thead>
+          <tr>
+            <th>Ticker</th>
+            <th>Company Identification Key</th>
+            <th>Company Name</th>
+          </tr>
+        </thead>
+        <tbody id="epaData">
+        </tbody>
+      </table>
+      <div class="row">
+      <div class="col s6 push-s1 push-m1 push-l2">
+      <div class="container">
+      <div class="col s12 receipt red">
+      <span><input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+      </div></div></div></div>
+    </body>
+    <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
+    <script>document.addEventListener("DOMContentLoaded", function()
+      {document.getElementById("epaData").innerHTML = ${result};})</script>`
+  );
+  html.topScript = function () {
+    //console.log(document.getElementById("test").innerHTML)
+    // Init a timeout variable to be used below
+    let timeout = null;
+    (() => {
+      // Clear the timeout if it has already been set.
+      // This will prevent the previous task from executing
+      // if it has been less than <MILLISECONDS>
+      // clearTimeout(timeout);
+      // Make a new timeout set to go off in 1000ms (1 second)
+      // timeout = setTimeout
+      // (function  ()
+      // {console.log('Input Value:', textInput.value);}, 5000)();
+      if (typeof url === "undefined") {
+        var urlData = document.getElementById("url").value;
+        var url = urlData.toString();
+      }
+      var uname = document.getElementById("username").value;
+      var linkFollow = document.createElement("a");
+      linkFollow.href =
+        url + "?func=foo.oldSEC" + "&args=" + encodeURIComponent(uname);
+      linkFollow.id = "linkFOLLOW";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("username").value = "";
+    })();
+  }; //Global object closed
+  return html.evaluate().getContent();
+};
+
 function videoSEC(e) {
   var usr = e;
-  var breakUrl = getUrl(ScriptApp);
+  var breakUrl =
+    "https://script.google.com/macros/s/AKfycbxYHbjTo5aPK2FMm3mxy4IoVqpQOdGntrgSXO1jTbqXl1dyB73FMBjQ3NuYNuywLP0nJw/exec";
   const uniqueCo = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
@@ -379,9 +495,9 @@ function videoSEC(e) {
   const randomTicker = randomCo["ticker"];
   const randomCIK = randomCo["cik_str"];
   if (!usr["parameter"]) {
-    var stkTicker = [e][1] || randomTicker;
-    var cik = [e][2] || randomCIK;
-    var percent = [e][0] || randomTitle;
+    var percent = [e].toString().split(",")[0];
+    var stkTicker = [e].toString().split(",")[1];
+    var cik = [e].toString().split(",")[2];
   } else {
     var stkTicker = e.parameter["tick"] || randomTicker;
     var cik = e.parameter["cik"] || randomCIK;
@@ -414,9 +530,6 @@ function videoSEC(e) {
   const html = HtmlService.createTemplate(`
     <!DOCTYPE html>
       <html id="test">
-        <head>
-          <?!= styleHtml().getContent() ?>
-        </head>
         <body class="green">
           <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
           <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
@@ -463,7 +576,7 @@ function videoSEC(e) {
               {// mod the array
               let timePicker = document.getElementById('prefTime');
               M.Timepicker.init(timePicker, { defaultTime: "now" });
-              google.script.run.withSuccessHandler(populateDates).runAll('app.busyDates', []);
+              google.script.run.withSuccessHandler(populateDates).runAll('foo.busyDates', []);
               function populateDates(disabledDays) 
                 {let datePicker = document.getElementById('prefDate');
                   M.Datepicker.init(datePicker, 
@@ -518,7 +631,8 @@ function videoSEC(e) {
       var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
       linkHome.href = "https://flewis21.github.io/videoSEC/";
-      linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+      linkFollow.href =
+        url + "?func=foo.oldSEC" + "&args=" + encodeURIComponent(uname);
       linkHome.id = "linkHOME";
       linkFollow.id = "linkFOLLOW";
       linkHome.target = "popup";
@@ -530,5 +644,5 @@ function videoSEC(e) {
       document.getElementById("username").value = "";
     })();
   }; //Global object closed
-  return renderTemplate(html.evaluate()).setTitle("Don'time Life Services");
+  return html.evaluate().getContent();
 } //webApp closed

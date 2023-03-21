@@ -287,11 +287,17 @@ var defaultWebsite = function (e) {
 };
 
 var sheetWebsite = function (e) {
-  var query = [e][0] || 0;
+  var usr = e;
+  if (!usr["parameter"]) {
+    var query = [e][0] || Math.floor(Math.random() * Math.floor(e.length));
+  } else {
+    var query =
+      usr.parameter["args"] || Math.floor(Math.random() * Math.floor(e.length));
+  }
   var urlSs =
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
   var urlWww =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=";
   var tmp = [];
   var parameters = [e][1] || 1;
   var sheetName = "Inventory";
@@ -407,7 +413,7 @@ var sheetWebsite = function (e) {
       ${videoPlayer(searchString)}
     </div></div></div></div>
     <h2 class="search-overlay__section-title">General Information</h2>
-    <span><input placeholder="args..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
+    <span><input placeholder="args ex. 0, 1, 2..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
     <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
       <thead>
         <tr>

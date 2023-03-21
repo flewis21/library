@@ -386,5 +386,5 @@ function styleHtml() {
     }
   };
   content.startPageUrl = startPageUrl;
-  return renderTemplate(content.evaluate()); //:contentFile('uiAccess');
-}
+  return content.evaluate().getContent();
+} //:contentFile('uiAccess');

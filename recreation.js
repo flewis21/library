@@ -1,7 +1,16 @@
 function youTube(e) {
   var usr = e;
   if (!usr["parameter"]) {
-    var username = [e][0];
+    var username =
+      [e][0] ||
+      [`cornea transplant usa atlanta georgia kidney`].toString().split(" ")[
+        Math.floor(
+          Math.random() *
+            Math.floor(
+              [`cornea transplant US Atlanta GA`].toString().split(" ").length
+            )
+        )
+      ];
   } else {
     var username =
       usr["parameter"]["uname"] ||
@@ -61,7 +70,7 @@ function youTube(e) {
             {// mod the array
             let timePicker = document.getElementById('prefTime');
             M.Timepicker.init(timePicker, { defaultTime: "now" });
-            google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
+            google.script.run.withSuccessHandler(populateDates).runAll('foo.busyDates', []);
             function populateDates(disabledDays) 
             {let datePicker = document.getElementById('prefDate');
             M.Datepicker.init(datePicker, 
@@ -98,7 +107,7 @@ function youTube(e) {
       var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
       linkHome.href = "https://flewis21.github.io/About-Me/";
-      linkFollow.href = url + "?args=" + uname;
+      linkFollow.href = url + "?func=foo.youTube" + "&args=" + uname;
       linkHome.id = "linkHOME";
       linkFollow.id = "linkFOLLOW";
       linkHome.target = "popup";
@@ -329,5 +338,5 @@ function youTube(e) {
     };
     busyCalendar();
   };
-  return content.evaluate();
+  return content.evaluate().getContent();
 }

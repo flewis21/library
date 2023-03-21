@@ -109,6 +109,34 @@ var idSpreadSheet = function (id) {
   return ss;
 };
 
+function mis(text) {
+  return authLogic(text)
+    ? UrlFetchApp.fetch(encodeURI(text)).getContentText()
+    : UrlFetchApp.fetch(
+        encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
+      ).getContentText();
+}
+
+var misBing = function (searchString) {
+  const videoSearch = [
+    urlDataSource(
+      `https://www.bing.com/search?q=${encodeURIComponent(
+        searchString
+      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+      null,
+      { muteHttpExceptions: true }
+    ),
+  ];
+  const table = videoSearch
+    .slice(videoSearch.indexOf("SERP"))
+    .toString()
+    .split("SERP");
+  const pong = table.map((ping) => {
+    return ping.substring(0);
+  });
+  return pong.toString().split(",");
+};
+
 var proTest = function () {
   var headers = ["Medications", "Dosage"];
   var data = [
@@ -480,14 +508,6 @@ var taxiService = function () {
     console.log(`Server is running on http://${host}:${port}`);
   });
 };
-
-function mis(text) {
-  return authLogic(text)
-    ? UrlFetchApp.fetch(encodeURI(text)).getContentText()
-    : UrlFetchApp.fetch(
-        encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
-      ).getContentText();
-}
 
 var tutorial = function (text) {
   var html = contentApp(`

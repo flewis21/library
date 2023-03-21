@@ -136,12 +136,39 @@ var renderTemplate = function (blob, argsObject) {
                 text-align: center;
                 user-select: none;}
     .menu-item:hover>.menu-img {transform: scale(1.03);}
-    img {width: 160px;}</style></head><body>
+    img {width: 160px;}</style></head>
+    <body>
+      <div class="row">
+        <nav class="col s12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+            <div class="nav-wrapper deep-purple darken-1">
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.youTube&args=" target="_top">About-Me</a>
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=" target="_top">Store</a>
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldEPA&args=${
+                  [`ethyl zole zime anol hane leum ther`].toString().split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor(
+                          [`ethyl zole zime anol hane leum ther`]
+                            .toString()
+                            .split(" ").length
+                        )
+                    )
+                  ]
+                }" target="_top">Local Enviroment</a>
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.breakthrough&args=${Math.floor(
+                  Math.random() *
+                    Math.floor(Utilities.jsonStringify(argsObject).length)
+                )}" target="_top">Calculate</a>
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldSEC&args=" target="_top">Investors</a>
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_top">New</a>
+            </div>
+          </nav>
+      </div>
       <span><input placeholder="foo..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="func" type="search" /></span>
       <span><input placeholder="bar..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="args" type="search" /></span>
-</body>
-<script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
-<input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
+    </body>
+    <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
+    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
     {
       userClicked: function () {
         //console.log(document.getElementById("test").innerHTML)
