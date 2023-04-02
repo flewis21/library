@@ -10,7 +10,7 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-function posHtml(e) {
+function misBing(e) {
   console.log(JSON.stringify(e));
   const uniqueKey = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -23,20 +23,22 @@ function posHtml(e) {
   const randomTitle = e || uniqueCoKey[1][randomKey]["title"];
   const html = HtmlService.createTemplate(`<html id="test">
       <head>
-        <?!= styleHtml().getContent() ?>
       </head>
       <body>
-        <div>
-          <nav>
-            <?!= myRandoms ?>...
+      <div class="row">
+        <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+          <div class="container">
+            <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+              <?!= myRandoms ?>...
+            </div></div>
           </nav>
-        </div>
+      </div>
         <div class="row">
-        <div class="col s12 push-s1 push-m1 push-l2">
-        <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
-        <div class="col s12" id="player1">
-          <?!= videoPlayer(myRandoms) ?></div>
-        </div></div></div>
+        <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in ">
+        <div class="container video-container amber">
+        <div class="col s12 receipt amber" id="player1">
+          <?!= videoPlayer(myRandoms) ?>
+        </div></div></div></div>
         <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
         <script>document.addEventListener("DOMContentLoaded", <?!= onPageLoad ?>)</script>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
@@ -72,21 +74,16 @@ function posHtml(e) {
       var args = document.getElementById("args").value;
       var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
-      linkHome.href = url;
       linkFollow.href =
         url +
         "?func=" +
         encodeURIComponent(func) +
         "&args=" +
         encodeURIComponent(args);
-      linkHome.id = "linkHOME";
       linkFollow.id = "linkFOLLOW";
-      linkHome.target = "popup";
       linkFollow.target = "_top";
-      document.body.appendChild(linkHome);
       document.body.appendChild(linkFollow);
       document.getElementById("linkFOLLOW").click();
-      document.getElementById("linkHOME");
       document.getElementById("func").value = "";
       document.getElementById("args").value = "";
     })();
@@ -155,7 +152,7 @@ function posHtml(e) {
     }), //jsApp closed
     (html.myRandoms = randomTitle);
   // })Global object closed
-  return html.evaluate();
+  return html.evaluate().getContent();
 } //webApp closed
 
 var userClicked = function () {

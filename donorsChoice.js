@@ -13,21 +13,20 @@ var donorsChoice = function () {
   inventoryUrl =
     getUrl(ScriptApp) + "?webApp=request&sheetName=Inventory&headers=0&q="; //.concat(rows,);
   console.log(inventoryUrl);
-  financeUrl =
-    getUrl(ScriptApp) + "?webApp=jsonXpath&q=".concat(rowsDefault[10][1]);
+  financeUrl = getUrl(ScriptApp) + "?webApp=jsonXpath&q=".concat(rowsDefault);
   console.log(financeUrl);
-  return contentFile("index").setContent(
-    includeApp(
-      '<div class="clubhouse">'.concat(
-        webApp.content,
-        '</div><h2 class="search-overlay__section-title">General Information</h2><div class="navbar"><nav class="nav"><a href="'.concat(
-          financeUrl,
-          '" class="nav__link" data-link>Finance</a><a href="'.concat(
-            inventoryUrl,
-            '"  class="nav__link"  data-link>Inventory</a></nav></div><?!= include("index"); ?>'
-          )
-        )
-      )
-    )
-  ); //:contentFile('uiAccess');
+  return HtmlService.createTemplate(
+    `
+      <div class="clubhouse">${webApp.content}</div>
+        <h2 class="search-overlay__section-title">General Information</h2>
+      <div class="navbar">
+        <nav class="nav">
+          <a href="${financeUrl}" class="nav__link" data-link>Finance</a>
+          <a href="${inventoryUrl}" class="nav__link"  data-link>Inventory</a>
+        </nav>
+      </div>
+      <?!= includeBlob("index").getContent(); ?>`
+  )
+    .evaluate()
+    .getContent(); //:contentFile('uiAccess');
 };

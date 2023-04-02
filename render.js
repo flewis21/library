@@ -24,6 +24,7 @@ var renderTemplate = function (blob, argsObject) {
       tmp[key] = argsObject[key];
     });
   }
+  var funcCheck = appList();
   var html = contentApp(
     `
     <head>
@@ -139,10 +140,28 @@ var renderTemplate = function (blob, argsObject) {
     img {width: 160px;}</style></head>
     <body>
       <div class="row">
-        <nav class="col s12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
-            <div class="nav-wrapper deep-purple darken-1">
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.youTube&args=" target="_top">About-Me</a>
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=" target="_top">Store</a>
+        <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+          <div class="container">
+            <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.youTube&args=${
+                  [`(by Dontime Life Services)`].toString().split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor(
+                          [`(by Dontime Life Services)`].toString().split(" ")
+                            .length
+                        )
+                    )
+                  ]
+                }" target="_top">About-Me</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=${
+                  [`1 2 3 4 5`].toString().split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor([`1 2 3 4 5`].toString().split(" ").length)
+                    )
+                  ]
+                }" target="_top">Store</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldEPA&args=${
                   [`ethyl zole zime anol hane leum ther`].toString().split(" ")[
                     Math.floor(
@@ -154,23 +173,37 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_top">Local Enviroment</a>
+                }" target="_top">Local Enviroment</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.breakthrough&args=${Math.floor(
                   Math.random() *
                     Math.floor(Utilities.jsonStringify(argsObject).length)
-                )}" target="_top">Calculate</a>
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldSEC&args=" target="_top">Investors</a>
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_top">New</a>
-            </div>
+                )}" target="_top">Calculate</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.opt&args=${
+                  [`group bank semi fact bio science block chain space coin`]
+                    .toString()
+                    .split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor(
+                          [
+                            `group bank semi fact bio science block chain space coin`,
+                          ]
+                            .toString()
+                            .split(" ").length
+                        )
+                    )
+                  ]
+                }" target="_top">Investors</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_top">New</a><br />
+            </div></div>
           </nav>
       </div>
-      <span><input placeholder="foo..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="func" type="search" /></span>
-      <span><input placeholder="bar..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="args" type="search" /></span>
     </body>
-    <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
+    <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
+    <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
     {
-      userClicked: function () {
+      funcClicked: function () {
         //console.log(document.getElementById("test").innerHTML)
         // Init a timeout variable to be used below
         let timeout = null;
@@ -189,32 +222,123 @@ var renderTemplate = function (blob, argsObject) {
           }
           var func = document.getElementById("func").value;
           var args = document.getElementById("args").value;
-          var linkHome = document.createElement("a");
-          var linkFollow = document.createElement("a");
-          linkHome.href = url;
-          linkFollow.href =
-            url +
-            "?func=" +
-            encodeURIComponent(func) +
-            "&args=" +
-            encodeURIComponent(args);
-          linkHome.id = "linkHOME";
-          linkFollow.id = "linkFOLLOW";
-          linkHome.target = "popup";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkHome);
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkHOME");
-          document.getElementById("func").value = "";
-          document.getElementById("args").value = "";
+          if (typeof args !== "undefined") {
+            var linkFollow = document.createElement("a");
+            linkFollow.href =
+              url +
+              "?func=" +
+              encodeURIComponent(func) +
+              "&args=" +
+              encodeURIComponent(args);
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_top";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click();
+          }
+        })();
+      },
+      argsClicked: function () {
+        //console.log(document.getElementById("test").innerHTML)
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  ()
+          // {console.log('Input Value:', textInput.value);}, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("url").value;
+            var url = urlData.toString();
+          }
+          var func = document.getElementById("func").value;
+          var args = document.getElementById("args").value;
+          if (typeof func !== "undefined") {
+            var linkFollow = document.createElement("a");
+            linkFollow.href =
+              url +
+              "?func=" +
+              encodeURIComponent(func) +
+              "&args=" +
+              encodeURIComponent(args);
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_top";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click();
+          }
         })();
       },
     }
   );
   return tmp
     .evaluate()
+    .append(funcCheck)
     .append(html)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setTitle("Don'time Life Services");
+};
+
+var appList = function (e) {
+  var url =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.";
+  const matches = [];
+  for (var key in globalThis) {
+    if (typeof globalThis[key] == "function") {
+      matches.push(key);
+    }
+  }
+  var coTable = matches.map((r) => {
+    return `<option><a class="waves-effect waves-light btn" href="${url}${encodeURIComponent(
+      r
+    )}&args=" target="_blank">${r}</a></option>`;
+  });
+  const result = Utilities.jsonStringify(coTable);
+  const html = HtmlService.createTemplate(
+    `<div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container">
+    <div class="col s12 receipt deep-purple darken-1">
+    <span><input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+    </div></div></div></div>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container">
+    <div class="col s12 receipt deep-purple darken-1">
+    <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
+    <select id="appList" class="browser-default deep-purple darken-1">
+    </select>
+    </div></div></div></div>
+    <script>document.addEventListener("DOMContentLoaded", 
+function()
+  {document.getElementById("appList").innerHTML = ${result};
+  var elems = document.querySelectorAll('select');
+  var instances = M.FormSelect.init(elems);
+  document.getElementById("appList").selectedIndex = -1;})</script>
+    <script>document.getElementById("appList").addEventListener("change", foo)
+function foo(){
+  var bar = document.getElementById("username").value;
+  var foo = document.getElementById("appList").value
+  var linkFollow = document.createElement("a");
+  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" + bar;
+  linkFollow.id = "linkFOLLOW";
+  linkFollow.target = "_top";
+  document.body.appendChild(linkFollow);
+  document.getElementById("linkFOLLOW").click();
+  document.getElementById("appList").value = ""}</script>    
+    <script>document.getElementById("username").addEventListener("change", bar)
+function bar(){
+  var bar = document.getElementById("username").value;
+  var foo = document.getElementById("appList").value
+  if (indexOf(foo) !== -1){
+  var linkFollow = document.createElement("a");
+  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" + bar;
+  linkFollow.id = "linkFOLLOW";
+  linkFollow.target = "_top";
+  document.body.appendChild(linkFollow);
+  document.getElementById("linkFOLLOW").click();}}</script>`
+  );
+  return html.evaluate().getContent();
 };

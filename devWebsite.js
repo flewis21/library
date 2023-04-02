@@ -158,36 +158,34 @@ var devWebsite = function (e) {
       );
 
       // What Should Return
-      return renderTemplate(
-        contentApp("\n <?!= edgarData ?>\n  ", {
-          html: "\n ".concat(webApp, ""),
-          body: "\n ".concat(body, ""),
-          head: "\n ".concat(head, ""),
-          edgarData: "\n ".concat(
-            contentApp(
-              '\n  <?!= headerTop ?>\n  <meta charset="UTF-8"><?!= metaBottom ?>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"><?!= metaBottom ?>\n  <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"><?!= linkBottom ?>\n\n <?!= headerBottom ?>\n\n  <?!= bodyTop ?>\n\n  <div class="search-box-outer container col s1">\n  <div class="search-box-inner container col s1">\n <label>Search</label><input type="text" id="search" placeholder="type here.." >\n <?!= divBottom ?>\n <?!= divBottom ?>\n <div id="data-table"><?!= divBottom ?>\n <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"><?!= scriptBottom ?>\n  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n const elements = {}\n document.addEventListener("DOMContentLoaded", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById("alerts")\n elements.search = document.getElementById("search")\n\n elements.search.addEventListener("input", searchData)\n }\n const tabledata = <?!= widgetData ?>\n  const table = new Tabulator("#data-table", {\n    height:205,\n    data:tabledata,\n    layout:"fitColumns",\n responsiveLayout:"hide",\n    pagination:true,\n    paginationSize:5,\n    columns:[\n {title:"Central Index Key", field:"id", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"id" }},\n        {title:"Ticker Symbol", field:"ticker", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"ticker" }},\n        {title:"Company or Fund name", field:"title", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"title" }},\n  {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:"input"},\n  {title:"Complete", field:"Complete", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:"input"},\n     ],\n  });\n   //table.on("rowClick", function(e, row){\n   //alert("Row " + row.getData().id + " Clicked!!!!");\n  //});\n  \n table.on("cellEdited", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter("title","like", e.target.value);\n }\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>\n ',
-              {
-                widgetData: "".concat(widgetData, ""),
-                headerTop: "".concat(contentApp("\n  <head>\n  </head>\n"), ""),
-                metaBottom: "".concat(contentApp("\n  </meta>\n"), ""),
-                linkBottom: "".concat(contentApp("\n  </link>\n"), ""),
-                headerBottom: "".concat(contentApp("\n  </head>\n"), ""),
-                bodyTop: "".concat(contentApp("\n  <body>\n"), ""),
-                bodyBottom: "".concat(contentApp("\n  </body>\n"), ""),
-                divBottom: "".concat(contentApp("\n  </div>\n"), ""),
-                scriptTop: "".concat(contentApp("\n  <script>\n"), ""),
-                scriptBottom: "".concat(
-                  contentApp("\n  </script>\n", {
-                    data: widgetData,
-                  }),
-                  ""
-                ),
-              }
-            ),
-            ""
+      return contentApp("\n <?!= edgarData ?>\n  ", {
+        html: "\n ".concat(webApp, ""),
+        body: "\n ".concat(body, ""),
+        head: "\n ".concat(head, ""),
+        edgarData: "\n ".concat(
+          contentApp(
+            '\n  <?!= headerTop ?>\n  <meta charset="UTF-8"><?!= metaBottom ?>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"><?!= metaBottom ?>\n  <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"><?!= linkBottom ?>\n\n <?!= headerBottom ?>\n\n  <?!= bodyTop ?>\n\n  <div class="search-box-outer container col s1">\n  <div class="search-box-inner container col s1">\n <label>Search</label><input type="text" id="search" placeholder="type here.." >\n <?!= divBottom ?>\n <?!= divBottom ?>\n <div id="data-table"><?!= divBottom ?>\n <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"><?!= scriptBottom ?>\n  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"><?!= scriptBottom ?>\n  <?!= scriptTop ?>\n const elements = {}\n document.addEventListener("DOMContentLoaded", loadData)\n\n function loadData() {\n pageLoad();\n }\n function pageLoad() {\n elements.alerts = document.getElementById("alerts")\n elements.search = document.getElementById("search")\n\n elements.search.addEventListener("input", searchData)\n }\n const tabledata = <?!= widgetData ?>\n  const table = new Tabulator("#data-table", {\n    height:205,\n    data:tabledata,\n    layout:"fitColumns",\n responsiveLayout:"hide",\n    pagination:true,\n    paginationSize:5,\n    columns:[\n {title:"Central Index Key", field:"id", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"id" }},\n        {title:"Ticker Symbol", field:"ticker", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"ticker" }},\n        {title:"Company or Fund name", field:"title", editor:"list", editorParams:{ valuesLookup:"active", valuesLookupField:"title" }},\n  {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:"input"},\n  {title:"Complete", field:"Complete", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:"input"},\n     ],\n  });\n   //table.on("rowClick", function(e, row){\n   //alert("Row " + row.getData().id + " Clicked!!!!");\n  //});\n  \n table.on("cellEdited", function(cell){\n  //cell - cell component\n const field = cell._cell.column.field\n const id = cell._cell.row.data.id\n const val = cell._cell.value\n })\n  function searchData(e) {\n  table.setFilter("title","like", e.target.value);\n }\n <?!= scriptBottom ?>\n  <?!= bodyBottom ?>\n ',
+            {
+              widgetData: "".concat(widgetData, ""),
+              headerTop: "".concat(contentApp("\n  <head>\n  </head>\n"), ""),
+              metaBottom: "".concat(contentApp("\n  </meta>\n"), ""),
+              linkBottom: "".concat(contentApp("\n  </link>\n"), ""),
+              headerBottom: "".concat(contentApp("\n  </head>\n"), ""),
+              bodyTop: "".concat(contentApp("\n  <body>\n"), ""),
+              bodyBottom: "".concat(contentApp("\n  </body>\n"), ""),
+              divBottom: "".concat(contentApp("\n  </div>\n"), ""),
+              scriptTop: "".concat(contentApp("\n  <script>\n"), ""),
+              scriptBottom: "".concat(
+                contentApp("\n  </script>\n", {
+                  data: widgetData,
+                }),
+                ""
+              ),
+            }
           ),
-        })
-      ); //:contentFile('uiAccess');
+          ""
+        ),
+      }); //:contentFile('uiAccess');
       console.log(jsData);
   }
 };

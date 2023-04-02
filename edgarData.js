@@ -162,7 +162,7 @@ function searchData(e)
 function edgarData()companyInfo) {console.log(companyInfo);}`);
   html.startPageUrl = startPageUrl;
 
-  return renderTemplate(html.evaluate()); //:contentFile('uiAccess');
+  return html.evaluate().getContent(); //:contentFile('uiAccess');
 }; // edgarArray.push([result])
 // for (let k of Object.keys())
 // queO.push([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
@@ -244,84 +244,6 @@ var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
   return epaD;
 };
 
-var opt = function (e) {
-  var url =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
-  var tmp = [];
-  let jsonData = Utilities.jsonParse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ]);
-  var arrData = covArrays(jsonData);
-  // console.log(arrData.length)
-  let objParts = {};
-  for (var i = 0; i < arrData.length; i++) {
-    //Object.fromEntries(JSON.stringify(
-    for (var [key, { cik_str, ticker, title }] of Object.entries(arrData[i])) {
-      objParts[title] = key;
-      objParts[ticker] = key;
-      objParts[cik_str] = key;
-    } //.map(entry => [entry[1]]))
-  }
-  if (arrData) {
-    const keys = Object.keys(arrData);
-    keys.forEach(function (key) {
-      tmp[key] = arrData[key];
-    });
-  }
-  var jo = {};
-  var dataArray = [];
-  // var minData = [tmp][0].entries().next().value
-  var randNum = Math.floor(Math.random() * Math.floor(arrData.length)); // Math.floor(Math.random());
-  for (var i = 0, l = arrData.length; i < l; i++) {
-    //var dataRow = Utilities.jsonParse(arrData);
-    // console.log(typeof arrData[i]);
-    // console.log(arrData[i])
-    var record = {};
-    record["cik"] = arrData[i][0]["cik_str"];
-    record["ticker"] = arrData[i][0]["ticker"];
-    record["title"] = arrData[i][0]["title"];
-    dataArray.push(record);
-  }
-  jo.user = dataArray;
-  var coTable = jo.user.map((r) => {
-    return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
-      r["cik"]
-    }&owner=exclude" target="_blank">${
-      r["cik"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      url + encodeURIComponent(r["ticker"])
-    }" target="_blank">${
-      r["ticker"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      url + encodeURIComponent(r["title"])
-    }" target="_blank">${r["title"]}</a></td></tr>`;
-  });
-  var result = JSON.stringify(coTable);
-  return renderTemplate(
-    HtmlService.createTemplate(
-      `
-   <?!= styleHtml().getContent() ?>
-   <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-    <thead>
-      <tr>
-        <th>SEC book reference</th>
-        <th>Stock Market book reference</th>
-        <th>Company Name</th>
-      </tr>
-    </thead>
-    <tbody id="test">
-    </tbody>
-   </table>   
-   <div class="truncate">
-   </div>
-   <script>
-    document.addEventListener("DOMContentLoaded", 
-function(){document.getElementById("test").innerHTML = ${result}})
-  </script>`
-    ).evaluate()
-  ).setTitle("Don'time Life Services");
-};
-
 var needCapital = function (searchString) {
   const videoSearch = [
     urlDataSource(
@@ -344,7 +266,7 @@ var needCapital = function (searchString) {
 
 var oldSEC = function (rndTitle) {
   var urlCompany =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPlayer&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var urlTicker = "https://www.nasdaq.com/search?q=";
   var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
   const uniqueCo = Utilities.jsonParse([
@@ -384,6 +306,10 @@ var oldSEC = function (rndTitle) {
   const randomCo = uniqueCoKey[1][randomCoKey];
   const html = HtmlService.createTemplate(
     `<body>
+      <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      <div class="container">
+      <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
         <thead>
           <tr>
@@ -395,8 +321,9 @@ var oldSEC = function (rndTitle) {
         <tbody id="epaData">
         </tbody>
       </table>
+      </div></div></div></div>
       <div class="row">
-      <div class="col s6 push-s1 push-m1 push-l2">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
       <div class="container">
       <div class="col s12 receipt red">
       <span><input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
@@ -435,6 +362,115 @@ var oldSEC = function (rndTitle) {
     })();
   }; //Global object closed
   return html.evaluate().getContent();
+};
+
+var opt = function (searchString) {
+  var url =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
+  var tmp = [];
+  let jsonData = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  var arrData = covArrays(jsonData);
+  // console.log(arrData.length)
+  let objParts = {};
+  for (var i = 0; i < arrData.length; i++) {
+    //Object.fromEntries(JSON.stringify(
+    for (var [key, { cik_str, ticker, title }] of Object.entries(arrData[i])) {
+      objParts[title] = key;
+      objParts[ticker] = key;
+      objParts[cik_str] = key;
+    } //.map(entry => [entry[1]]))
+  }
+  if (arrData) {
+    const keys = Object.keys(arrData);
+    keys.forEach(function (key) {
+      tmp[key] = arrData[key];
+    });
+  }
+  var jo = {};
+  var dataArray = [];
+  // var minData = [tmp][0].entries().next().value
+  var randNum = Math.floor(Math.random() * Math.floor(arrData.length)); // Math.floor(Math.random());
+  for (var i = 0, l = arrData.length; i < l; i++) {
+    //var dataRow = Utilities.jsonParse(arrData);
+    // console.log(typeof arrData[i]);
+    // console.log(arrData[i])
+    var record = {};
+    record["cik"] = arrData[i][0]["cik_str"];
+    record["ticker"] = arrData[i][0]["ticker"];
+    record["title"] = arrData[i][0]["title"];
+    dataArray.push(record);
+  }
+  const matches = [];
+  const alTheCo = arrData
+    .sort((a, b) => a - b)
+    .filter((ac) => {
+      if (
+        Utilities.jsonStringify(ac[0]["title"])
+          .toLowerCase()
+          .includes(
+            searchString ||
+              [`group bank semi fact bio science block chain space coin`]
+                .toString()
+                .split(" ")[
+                Math.floor(
+                  Math.random() *
+                    Math.floor(
+                      [
+                        `group bank semi fact bio science block chain space coin`,
+                      ]
+                        .toString()
+                        .split(" ").length
+                    )
+                )
+              ]
+          )
+      )
+        matches.push(ac);
+    });
+  jo.user = dataArray;
+  var coTable = matches.map((r) => {
+    return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
+      r[0]["cik_str"]
+    }&owner=exclude" target="_blank">${
+      r[0]["cik_str"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="https://twitter.com/search?q=${encodeURIComponent(
+      r[0]["ticker"]
+    )}" target="_blank">${
+      r[0]["ticker"]
+    }</a></td><td><a class="waves-effect waves-light btn" href="https://twitter.com/search?q=${encodeURIComponent(
+      r[0]["title"]
+    )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
+  });
+  var result = JSON.stringify(coTable);
+  return HtmlService.createTemplate(
+    `
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container">
+    <div class="col s12 receipt red">
+   <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+    <thead>
+      <tr>
+        <th>SEC book reference</th>
+        <th>Stock Market book reference</th>
+        <th>Company Name</th>
+      </tr>
+    </thead>
+    <tbody id="test">
+    </tbody>
+   </table>   
+    </div></div></div></div>
+   <div class="truncate">
+   </div>
+   <script>
+    document.addEventListener("DOMContentLoaded", 
+function(){document.getElementById("test").innerHTML = ${result}})
+  </script>`
+  )
+    .evaluate()
+    .getContent();
 };
 
 function videoSEC(e) {

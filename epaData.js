@@ -172,7 +172,7 @@ var newEPAData = function (rawData) {
 
 var oldEPA = function (rndTitle) {
   var urlPlayer =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPlayer&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var urlProduct =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var urlEpaRegNo =
@@ -219,14 +219,16 @@ var oldEPA = function (rndTitle) {
   }
   // const uniqueCoArray = covArrays(uniqueCo["items"]);
   const matches = [];
-  const alTheCo = uniqueCoArray.filter((ac) => {
-    if (
-      !Utilities.jsonStringify(ac["registrationstatus"])
-        .toLowerCase()
-        .includes("cancelled")
-    )
-      matches.push(ac);
-  });
+  const alTheCo = uniqueCoArray
+    .sort((a, b) => a - b)
+    .filter((ac) => {
+      if (
+        !Utilities.jsonStringify(ac["registrationstatus"])
+          .toLowerCase()
+          .includes("cancelled")
+      )
+        matches.push(ac);
+    });
   const titleMatches = [matches.toString().substring(titleKings)];
   // console.log(Utilities.jsonStringify([titleMatches]))
   var coTable = matches.map((r) => {
@@ -326,7 +328,7 @@ var epaIng = function (e) {
   var urlCalendar =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dateTime&args=";
   var urlPlay =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPlayer&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var res = productIngName(e);
   var product =
     [e][0] ||
@@ -524,7 +526,7 @@ var epaData = function (e) {
   var urlCalendar =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dateTime&args=";
   var urlPlay =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPlayer&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var arrayMath = [`acme`];
   var product =
     [e][0] ||

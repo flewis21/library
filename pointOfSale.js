@@ -1,4 +1,4 @@
-function doGet() {
+function posHtml() {
   const content = HtmlService.createTemplate(`<!DOCTYPE html>
     <html lang="en">
       <head>

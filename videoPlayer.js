@@ -77,9 +77,12 @@ function videoPage(search) {
   var youPlayer = videoPlayer(search);
   var content = HtmlService.createTemplate(`
   ${
-    contentApp(`<?!= styleHtml().getContent() ?><?!= playerPlayer ?>`, {
-      playerPlayer: youPlayer,
-    })
+    contentApp(
+      `
+    <?!= styleHtml().getContent() ?>
+    <?!= playerPlayer ?>`,
+      { playerPlayer: youPlayer }
+    )
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
   return content.getRawContent();
@@ -114,11 +117,20 @@ function videoPlayer(searchString) {
     <base target="_parent">
   </head>
   <body  id="template">
-    <div><a href="${
-      url + encodeURIComponent(searchString)
-    }" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?= searchTtile ?></h1></a></div>
-    <div class="receipt container row s1 valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in">
-    <div id="player1"></div></div>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in">
+    <div class="container amber">
+    <div class="col s12 receipt amber">
+      <a href="${
+        url + encodeURIComponent(searchString)
+      }" target="_blank"><h1 class="push-s1 push-m1 push-l1 blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?= searchTtile ?></h1></a>
+    </div></div></div></div>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in">
+    <div class="container video-container amber">
+    <div class="col s12 receipt amber">
+      <div id="player1"></div>
+    </div></div></div></div>
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');

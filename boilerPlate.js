@@ -242,9 +242,11 @@ var includeApp = function (blob, argsObject) {
 };
 
 var includeBlob = function (file, argsObject) {
-  const temp = ContentService.createTextOutput(file);
+  const temp = ContentService.createTextOutput(
+    HtmlService.createTemplateFromFile(file).evaluate().getContent()
+  );
   const tmp = HtmlService.createTemplate(
-    temp.setMimeType(ContentService.MimeType.TEXT)
+    temp.setMimeType(ContentService.MimeType.TEXT).getContent()
   );
   if (argsObject) {
     const keys = Object.keys(argsObject);

@@ -92,11 +92,8 @@ var driveUrls = function (fileX) {
     var file = DriveApp.getRootFolder().getFilesByName(fileX);
     if (file.hasNext()) {
       while (file.hasNext()) {
-        var url = file.next().getUrl();
+        return file.next().getUrl();
       }
-      return url;
-    } else {
-      return;
     }
   } else {
     return;
@@ -117,24 +114,26 @@ function mis(text) {
       ).getContentText();
 }
 
-var misBing = function (searchString) {
-  const videoSearch = [
-    urlDataSource(
-      `https://www.bing.com/search?q=${encodeURIComponent(
-        searchString
-      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-      null,
-      { muteHttpExceptions: true }
-    ),
-  ];
-  const table = videoSearch
-    .slice(videoSearch.indexOf("SERP"))
-    .toString()
-    .split("SERP");
-  const pong = table.map((ping) => {
-    return ping.substring(0);
-  });
-  return pong.toString().split(",");
+var doGet = function (searchString) {
+  if (typeof searchString !== "undefined") {
+    const videoSearch = [
+      urlDataSource(
+        `https://www.bing.com/search?q=${encodeURIComponent(
+          searchString
+        )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+        null,
+        { muteHttpExceptions: true }
+      ),
+    ];
+    const table = videoSearch
+      .slice(videoSearch.indexOf("SERP"))
+      .toString()
+      .split("SERP");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    return pong.toString().split(",");
+  }
 };
 
 var proTest = function () {
@@ -367,11 +366,13 @@ function spreadSheet() {
 }
 
 var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
-  var ssApp = SpreadsheetApp;
+  console.log(fileX);
   var nSs = driveUrls(fileX);
   console.log("Google Drive Url " + nSs);
   if (typeof nSs === "undefined") {
+    var ssApp = SpreadsheetApp;
     var ss = ssApp.create(fileX);
+    console.log(ss.getName());
     var sheet = ss.getSheets()[0].activate();
     console.log("Name of this sheet is " + sheet.getName());
     var ws = sheet.setName(sheetName);
@@ -391,23 +392,18 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
     console.log(col);
     ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
     console.log("New file named " + fileX + " created!");
-    if (typeof nSs !== "undefined") {
-      var ss = ssApp.openByUrl(url);
-      ws = ss.getActiveSheet();
-      return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();
-    } else {
-      return;
-    }
+    return nSs;
   } else {
-    console.log(typeof nSs);
-    if (typeof nSs !== "undefined") {
-      var ss = ssApp.openByUrl(nSs);
-      ws = ss.getActiveSheet();
-      return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();
-    } else {
-      return;
-    }
+    return nSs;
   }
+  `else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);
+            ws = ss.getActiveSheet()
+    return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();
+    } else  
+    {console.log(typeof nSs);
+  if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(nSs);
+        ws = ss.getActiveSheet();
+return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();} `;
 };
 
 function ssActiveRange() {

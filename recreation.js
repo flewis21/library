@@ -52,7 +52,7 @@ function youTube(e) {
           <div class="row">
           <div class="col s8">
           <div class="container menu-img valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
-          <div class="col s12">
+          <div class="col s12 push-s1 push-m1 push-l2">
           <div id="player1">
             <?!= videoPlayer(myVideo) ?></div></div></div>
           </div></div>
