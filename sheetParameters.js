@@ -100,6 +100,24 @@ var driveUrls = function (fileX) {
   }
 };
 
+var formsUrls = function (fileX) {
+  if (typeof fileX !== "undefined") {
+    var tree = DriveApp.getFolders();
+    if (tree.hasNext()) {
+      while (tree.hasNext()) {
+        var file = tree.next().getFilesByName(fileX);
+        if (file.hasNext()) {
+          while (file.hasNext()) {
+            return file.next().getUrl();
+          }
+        }
+      }
+    }
+  } else {
+    return;
+  }
+};
+
 var idSpreadSheet = function (id) {
   var ssApp = SpreadsheetApp;
   var ss = ssApp.openById(id);
@@ -116,11 +134,30 @@ function mis(text) {
 
 var doGet = function (searchString) {
   if (typeof searchString !== "undefined") {
-    const videoSearch = [
+    const search = [
       urlDataSource(
         `https://www.bing.com/search?q=${encodeURIComponent(
           searchString
         )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+        null,
+        { muteHttpExceptions: true }
+      ),
+    ];
+    const table = search.slice(search.indexOf("SERP")).toString().split("SERP");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    return pong.toString().split(",");
+  }
+};
+
+var bingSWF = function (searchString) {
+  if (typeof searchString !== "undefined") {
+    const videoSearch = [
+      urlDataSource(
+        `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(
+          searchString
+        )}&PC=U316&top=50&skip=0&FORM=CHROMN`,
         null,
         { muteHttpExceptions: true }
       ),

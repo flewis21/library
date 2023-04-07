@@ -6,10 +6,9 @@ function needPastTime(searchString) {
   const videoSearch = urlDataSource(
     `https://www.bing.com/search?q=${encodeURIComponent(
       searchString
-    )}%20site%3Ayoutube.com+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-    null,
-    { muteHttpExceptions: true }
+    )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`
   );
+  // return videoSearch
   const vidsSearched = [];
   const vidValues = [];
   const uniqueVid = [];
@@ -37,6 +36,9 @@ function needPastTime(searchString) {
         vidObject[0].indexOf("inner") === -1 &&
         vidObject[0].indexOf("strong") === -1 &&
         vidObject[0].indexOf("ing") === -1 &&
+        vidObject[0].indexOf("brid") === -1 &&
+        vidObject[0].indexOf("ctrl") === -1 &&
+        vidObject[0].indexOf("location") === -1 &&
         vidObject[0].indexOf("ten") === -1 &&
         vidObject[0].indexOf("out") === -1 &&
         vidObject[0].indexOf("new") === -1 &&
@@ -52,7 +54,7 @@ function needPastTime(searchString) {
     });
   });
   //  console.log(uniqueVid)
-  return uniqueVid;
+  return uniqueVid.sort((a, b) => a - b);
 }
 
 var pastTime = function (url) {

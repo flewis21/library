@@ -163,11 +163,13 @@ var renderTemplate = function (blob, argsObject) {
                   ]
                 }" target="_top">Store</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldEPA&args=${
-                  [`ethyl zole zime anol hane leum ther`].toString().split(" ")[
+                  [`ethyl zole zime anol hane leum ther ide ine`]
+                    .toString()
+                    .split(" ")[
                     Math.floor(
                       Math.random() *
                         Math.floor(
-                          [`ethyl zole zime anol hane leum ther`]
+                          [`ethyl zole zime anol hane leum ther ide ine`]
                             .toString()
                             .split(" ").length
                         )
