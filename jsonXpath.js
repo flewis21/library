@@ -1,3 +1,25 @@
+var coUtility = function (rndClient) {
+  var client = rndClient;
+  var uniqueCo = [];
+  var coName = allInvestors(client.toString().toLowerCase());
+  console.log(coName);
+  if (typeof coName === "undefined") {
+    uniqueCo.push({
+      searchString: client.toString().toLowerCase(),
+      title: client.toString(),
+    });
+  } else {
+    uniqueCo.push({
+      rndCik: coName["cik"],
+      rndTicker: coName["ticker"],
+      rndTitle: coName["title"],
+      videoItemUrl: coName["youtubeUrl"],
+      secUrl: coName["edgarUrl"],
+    });
+  }
+  return uniqueCo;
+};
+
 var csvDataSource = function (url, params) {
   var content = UrlFetchApp.fetch(url, params);
   var res = content.getContentText();
@@ -35,6 +57,20 @@ var dataRowIndex = function (data, row, index) {
   // var tempObj = rowsToReturn(sliceArray, index);
   // return tempObj
   console.log(converted);
+};
+
+var dtlsCapital = function (url) {
+  const videoSearch = [
+    urlDataSource(url, null, { muteHttpExceptions: true, mode: "no-cors" }),
+  ];
+  const table = videoSearch
+    .slice(videoSearch.indexOf("SERP"))
+    .toString()
+    .split("SERP");
+  const pong = table.map((ping) => {
+    return ping.substring(0);
+  });
+  return pong.toString().split(",");
 };
 
 var forArray = function (arrayData) {
@@ -167,6 +203,26 @@ var jsonXpath = function (jsonXpathDataRange) {
 //   {jsonXpathDataRange.push([]);
 //   for (var col in jsonValuesXpath[row])
 //     {jsonXpathDataRange[row].push(jsonValuesXpath[row][col]);}}
+
+var needCapital = function (searchString) {
+  const videoSearch = [
+    urlDataSource(
+      `https://www.bing.com/search?q=${encodeURIComponent(
+        searchString
+      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+      null,
+      { muteHttpExceptions: true }
+    ),
+  ];
+  const table = videoSearch
+    .slice(videoSearch.indexOf("SERP"))
+    .toString()
+    .split("SERP");
+  const pong = table.map((ping) => {
+    return ping.substring(0);
+  });
+  return pong.toString().split(",");
+};
 
 var objectHeaders = function (object, index) {
   var headerRow = object[index].map(function (val) {

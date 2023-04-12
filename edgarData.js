@@ -1,3 +1,81 @@
+var allInvestors = function (coKey) {
+  var uniqueKey = Utilities.jsonParse([
+    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
+  ]);
+  var uniqueCoArray = covArrays(uniqueKey);
+  const matches = [];
+  uniqueCoArray
+    .sort((a, b) => a - b)
+    .filter((ac) => {
+      if (
+        Utilities.jsonStringify(ac[0]["title"])
+          .toLowerCase()
+          .includes(
+            coKey ||
+              [`group bank semi fact bio science block chain space coin`]
+                .toString()
+                .split(" ")
+                .sort((a, b) => a - b)[
+                Math.floor(
+                  Math.random() *
+                    Math.floor(
+                      [
+                        `group bank semi fact bio science block chain space coin`,
+                      ]
+                        .toString()
+                        .split(" ").length
+                    )
+                )
+              ]
+          )
+      )
+        matches.push(ac);
+    });
+  var randomKey = Math.floor(Math.random() * Math.floor(matches.length)); // Math.floor(Math.random())
+  var uniqueCoKey = [matches].entries().next().value;
+  if (uniqueCoKey[1].length === 0) {
+    return;
+  }
+  var randomTitle = uniqueCoKey[1][randomKey][0]["title"];
+  if (typeof formsUrls(randomTitle) !== "undefined") {
+    return dtlsMain(randomTitle);
+  }
+  var randomTicker = uniqueCoKey[1][randomKey][0]["ticker"];
+  var randomCik = uniqueCoKey[1][randomKey][0]["cik_str"];
+  //Youtube Widget
+  var idArray = needPastTime(randomTitle);
+  var randomPlaylist = [];
+  for (var i = 0; i < idArray.length; i++) {
+    const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
+    randomPlaylist.push(idArray[randomVidKey]);
+  }
+  var vidPlaylist = function () {
+    const randomVidKey = Math.floor(
+      Math.random() * Math.floor(randomPlaylist.length)
+    ); // Math.floor(Math.random());
+    var videoObject = covObjects(randomPlaylist, ["youtubeID"]);
+    var uniqueVidKey = [videoObject].entries().next().value;
+    var randomVid = uniqueVidKey[1][randomVidKey];
+    if (randomVid.length === 0) {
+      return;
+    }
+    var rVideo = randomVid["youtubeID"];
+    return rVideo;
+  };
+  var randomVideo = vidPlaylist();
+  var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+  // return misBing(randomVideo)
+  var secUrl =
+    "https://www.sec.gov/edgar/browse/?CIK=" + randomCik + "&owner=exclude";
+  return {
+    cik: randomCik,
+    ticker: randomTicker,
+    title: randomTitle,
+    videoUrl: youtubeUrl,
+    edgarUrl: secUrl,
+  };
+};
+
 var edgarData = function (text) {
   // SEC Edgar Filings Widget
   let h = {};
@@ -242,26 +320,6 @@ var epaC = function (epaCurl, epaD, uniA, epaCdelimiter) {
 var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
   const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
   return epaD;
-};
-
-var needCapital = function (searchString) {
-  const videoSearch = [
-    urlDataSource(
-      `https://www.bing.com/search?q=${encodeURIComponent(
-        searchString
-      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-      null,
-      { muteHttpExceptions: true }
-    ),
-  ];
-  const table = videoSearch
-    .slice(videoSearch.indexOf("SERP"))
-    .toString()
-    .split("SERP");
-  const pong = table.map((ping) => {
-    return ping.substring(0);
-  });
-  return pong.toString().split(",");
 };
 
 var oldSEC = function (rndTitle) {

@@ -100,24 +100,6 @@ var driveUrls = function (fileX) {
   }
 };
 
-var formsUrls = function (fileX) {
-  if (typeof fileX !== "undefined") {
-    var tree = DriveApp.getFolders();
-    if (tree.hasNext()) {
-      while (tree.hasNext()) {
-        var file = tree.next().getFilesByName(fileX);
-        if (file.hasNext()) {
-          while (file.hasNext()) {
-            return file.next().getUrl();
-          }
-        }
-      }
-    }
-  } else {
-    return;
-  }
-};
-
 var idSpreadSheet = function (id) {
   var ssApp = SpreadsheetApp;
   var ss = ssApp.openById(id);
@@ -211,9 +193,9 @@ var proTest = function () {
 function seoSheet(searchString) {
   var headers = ["keywords"];
   var data = urlDataSource(
-    `https://www.bing.com/search?q=${encodeURIComponent(
+    `https://www.twitter.com/search?q=${encodeURIComponent(
       searchString
-    )}%20site%3Atwitter.com+AND+*&PC=U316$top=100&$skip=0&FORM=CHROMIN`
+    )}%20+AND+*&PC=U316$top=100&$skip=0&FORM=CHROMIN`
   );
   const seoSearched = [];
   const seoValues = [];

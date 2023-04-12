@@ -174,6 +174,26 @@ function email() {
   return randomEmail;
 }
 
+var formsUrls = function (fileX) {
+  var treeRoot = DriveApp.getRootFolder().getFiles();
+  while (treeRoot.hasNext()) {
+    var trueName = treeRoot.next();
+    if (trueName.getName() === fileX) return trueName.getUrl();
+  }
+  var dataTree = [];
+  var tree = DriveApp.getFolders();
+  while (tree.hasNext()) {
+    dataTree.push(tree.next().getId());
+  }
+  for (i = 0, l = dataTree.length; i < l; i++) {
+    var numFolder = DriveApp.getFolderById(dataTree[i]).getFiles();
+    while (numFolder.hasNext()) {
+      var trueNumName = numFolder.next();
+      if (trueNumName.getName() === fileX) return trueNumName.getUrl();
+    }
+  }
+};
+
 var getEventValues = function (title, startTime, endTime, series) {
   var eventsDataRange = sliceValues(getValues(), 1);
   for (var i = 0; i < eventsDataRange.length; i++) {
@@ -429,6 +449,51 @@ function randomEmail() {
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
+
+var randomSubstance = function () {
+  var arrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "xe",
+    "j",
+    "q",
+    "z",
+  ];
+  var newArr = [];
+  for (var i = 0, l = 2; i < l; i++) {
+    newArr.push(
+      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+    );
+  }
+  var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
+  newArr
+    .map((w) => {
+      return w[0].toString();
+    })
+    .join("");
+  return randomWord;
+  console.log();
+};
 
 function rule() {
   var today = new Date();

@@ -39,6 +39,12 @@ function needPastTime(searchString) {
         vidObject[0].indexOf("brid") === -1 &&
         vidObject[0].indexOf("ctrl") === -1 &&
         vidObject[0].indexOf("location") === -1 &&
+        vidObject[0].indexOf("//") === -1 &&
+        vidObject[0].indexOf("Html") === -1 &&
+        vidObject[0].indexOf("data") === -1 &&
+        vidObject[0].indexOf("undefined") === -1 &&
+        vidObject[0].indexOf("/") === -1 &&
+        vidObject[0].indexOf("peri") === -1 &&
         vidObject[0].indexOf("ten") === -1 &&
         vidObject[0].indexOf("out") === -1 &&
         vidObject[0].indexOf("new") === -1 &&
@@ -81,7 +87,6 @@ function videoPage(search) {
   ${
     contentApp(
       `
-    <?!= styleHtml().getContent() ?>
     <?!= playerPlayer ?>`,
       { playerPlayer: youPlayer }
     )
@@ -100,6 +105,9 @@ function videoPlayer(searchString) {
     const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
     randomPlaylist.push(idArray[randomVidKey]);
   }
+  if (randomPlaylist.length === 0) {
+    return;
+  }
   const vidPlaylist = function () {
     const randomVidKey = Math.floor(
       Math.random() * Math.floor(randomPlaylist.length)
@@ -107,12 +115,19 @@ function videoPlayer(searchString) {
     const videoObject = covObjects(randomPlaylist, ["youtubeID"]);
     const uniqueVidKey = [videoObject].entries().next().value;
     const randomVid = uniqueVidKey[1][randomVidKey];
+    if (typeof randomVid === "undefined") {
+      return;
+    }
     const rVideo = randomVid["youtubeID"];
     return rVideo;
   };
   const randomVideo = vidPlaylist();
   const titleVar = Utilities.jsonStringify(searchString);
   const playListVar = Utilities.jsonStringify(randomPlaylist);
+  const videoTable = randomPlaylist.map((v) => {
+    return `<tr><td><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`;
+  });
+  const result = JSON.stringify(videoTable);
   const html = HtmlService.createTemplate(`<!DOCTYPE html>
 <html id="test">
   <head>
@@ -120,19 +135,44 @@ function videoPlayer(searchString) {
   </head>
   <body  id="template">
     <div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in">
-    <div class="container amber">
-    <div class="col s12 receipt amber">
-      <a href="${
-        url + encodeURIComponent(searchString)
-      }" target="_blank"><h1 class="push-s1 push-m1 push-l1 blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?= searchTtile ?></h1></a>
-    </div></div></div></div>
-    <div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in">
-    <div class="container video-container amber">
-    <div class="col s12 receipt amber">
-      <div id="player1"></div>
-    </div></div></div></div>
+        <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+          <div class="container">
+      <a href="${url + encodeURIComponent(searchString)}" target="_blank">
+        <h1 class="col s12 receipt nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01">
+      <?= searchTtile ?>
+    </h1></a></div></nav></div>
+      <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      <div class="container">
+      <div class="col s12 receipt red">
+      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Videos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="vertical-align: top">
+              <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                <tbody>
+                  <td>
+                    <div id="player1"></div>
+                  </td>
+                </tbody>
+              </table>
+            </td>
+            <td>
+              <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                <tbody id="reload02">
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div></div></div></div>
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -173,9 +213,11 @@ function videoPlayer(searchString) {
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) 
         {event.target.loadPlaylist(<?!= myPlayList ?>, ctr);
-        ctr++;          
+        ctr++;
         //event.target.loadVideoById({videoId: <?!= vidTubeId ?>});
         // console.log("videoId: " + ${randomVideo});
+        event.target.setShuffle()
+        event.target.setLoop()
         event.target.playVideo()}
 
       // 5. The API calls this function when the player's state changes.
@@ -184,8 +226,9 @@ function videoPlayer(searchString) {
       var done = false;
       function onPlayerStateChange(event) 
         {if (event.data == YT.PlayerState.UNSTARTED && !done)
-          {setTimeout(playVideo)        
+          {var youtubeID = event.target.getVideoUrl()
           changeBorderColor(event.data);
+          setTimeout(playVideo);
           // done = true;
         }
       else if (event.data == YT.PlayerState.ENDED && !done) 
@@ -223,6 +266,12 @@ function videoPlayer(searchString) {
           {document.getElementById('player1').style.borderColor = color;}}
       function stopVideo() 
         {player1.stopVideo();}
+      function getVideoUrl() 
+        {player1.getVideoUrl();}
+      function setLoop() 
+        {player1.setLoop(true);}
+      function setShuffle() 
+        {player1.setShuffle(true);}
       function playVideo() 
         {player1.playVideo();}
       function nextVideo() 
@@ -233,6 +282,8 @@ function videoPlayer(searchString) {
         {player1.destroy;
         onYouTubeIframeAPIReady();}
     </script>
+    <script>document.addEventListener("DOMContentLoaded", function()
+      {document.getElementById("reload02").innerHTML = ${result};})</script>
   </body>
 </html>`);
   html.vidTubeId = Utilities.jsonStringify(randomVideo);
