@@ -2,25 +2,22 @@
 <html>
   <head>
     <base target="_top" />
-    <?!= materializeCss ?>
   </head>
   <body>
     <nav>
-      <a href="<?= startPageUrl ?>" target="_top">Back</a>
+      <a href="#" target="_top">Back</a>
     </nav>
     <div class="agenda container col s1">
-      <input
-        value="<?!= rule ?>"
-        class="timepicker"
-        id="prefTime"
-        type="text"
-      />
+      <input value="" class="timepicker" id="prefTime" type="text" />
     </div>
     <button id="btn">Run It!</button>
-    <?!= materializeJs ?>
     <script>
-      <?!= dOMContentLoaded ?>
+      google.script.run.epaData();
+      google.script.run.withSuccessHandler(pageLink).getUrl();
+      google.script.withSuccessHandler(dateRule).run.rule();
+      document.getElementById("prefTime").value = dateRule;
+      document.getElementById("breakUrl").value = pageLink;
     </script>
-    <input type="hidden" value="<?= startPageUrl ?>" id="breakUrl" />
+    <input type="hidden" value="" id="breakUrl" />
   </body>
 </html>

@@ -1,19 +1,26 @@
 var coUtility = function (rndClient) {
   var client = rndClient;
   var uniqueCo = [];
-  var coName = allInvestors(client.toString().toLowerCase());
-  console.log(coName);
-  if (typeof coName === "undefined") {
+  if (typeof client !== "undefined") {
+    var coName = allInvestors(client.toString().toLowerCase());
+  } else {
+    var coName = allInvestors();
+  }
+  if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({
-      searchString: client.toString().toLowerCase(),
-      title: client.toString(),
+      rndTitle: coName["title"],
+      videoItem: coName["rndVideoId"],
+      videoItemUrl: coName["videoUrl"],
+      playlistArr: coName["videoPlaylist"],
     });
   } else {
     uniqueCo.push({
       rndCik: coName["cik"],
       rndTicker: coName["ticker"],
       rndTitle: coName["title"],
-      videoItemUrl: coName["youtubeUrl"],
+      videoItem: coName["rndVideoId"],
+      videoItemUrl: coName["videoUrl"],
+      playlistArr: coName["videoPlaylist"],
       secUrl: coName["edgarUrl"],
     });
   }

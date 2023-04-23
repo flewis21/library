@@ -1,11 +1,148 @@
+var rndCoin = function () {
+  // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
+  var trial = [];
+  var judge = 0;
+  var coinHead = 0;
+  var coinTail = 0;
+  var coin = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))];
+  if (coin === 1) {
+    coinHead++;
+    trial.push({
+      heads: coin,
+    });
+  } else {
+    coinTail++;
+    trial.push({
+      tails: coin,
+    });
+  }
+  while (coinHead !== coinTail) {
+    judge++;
+    coin = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))];
+    if (coin === 1) {
+      coinHead++;
+      trial.push({
+        heads: coin,
+      });
+    } else {
+      coinTail++;
+      trial.push({
+        tails: coin,
+      });
+    }
+    if (
+      (trial[0]["heads"] && trial[judge]["tails"]) ||
+      (trial[0]["tails"] && trial[judge]["heads"])
+    ) {
+      break;
+    } else {
+      for (var i = judge, l = trial.length; i < l; i++) {
+        console.log(Utilities.jsonStringify(trial[judge]));
+      }
+    }
+  }
+  var form = FormApp.create("Coin Toss");
+  var formUrl = form.getPublishedUrl();
+  trial.map((seo) => {
+    for (var key in seo) {
+      if (key === "heads") {
+        form.addSectionHeaderItem().setTitle(randomSubstance([key], 0, 1));
+      } else {
+        form.addSectionHeaderItem().setTitle(randomSubstance([key], 0, 1));
+      }
+    }
+  });
+  return dtlsCapital(formUrl);
+};
+
+var rndDice = function () {
+  // if ([0,1,2,3,4,5][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
+  var snakeEye = [];
+  var deuce = [];
+  var tre = [];
+  var four = [];
+  var five = [];
+  var six = [];
+  var dice = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))] * 3;
+  if (dice === 0) {
+    snakeEye.push(dice);
+  } else if (dice === 1) {
+    deuce.push(dice);
+  } else if (dice === 2) {
+    tre.push(dice);
+  } else if (dice === 3) {
+    four.push(dice);
+  } else if (dice === 4) {
+    five.push(dice);
+  } else {
+    six.push(dice);
+  }
+  while (
+    snakeEye.length !== deuce.length ||
+    snakeEye.length !== tre.length ||
+    snakeEye.length !== four.length ||
+    snakeEye.length !== five.length ||
+    snakeEye.length !== six.length
+  ) {
+    dice = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))] * 3;
+    if (dice === 0) {
+      snakeEye.push(dice);
+    } else if (dice === 1) {
+      deuce.push(dice);
+    } else if (dice === 2) {
+      tre.push(dice);
+    } else if (dice === 3) {
+      four.push(dice);
+    } else if (dice === 4) {
+      five.push(dice);
+    } else {
+      six.push(dice);
+    }
+    console.log(
+      snakeEye.length +
+        " " +
+        deuce.length +
+        " " +
+        tre.length +
+        " " +
+        four.length +
+        " " +
+        five.length +
+        " " +
+        six.length
+    );
+  }
+  var trial = [].concat(
+    snakeEye.length +
+      " " +
+      deuce.length +
+      " " +
+      tre.length +
+      " " +
+      four.length +
+      " " +
+      five.length +
+      " " +
+      six.length
+  );
+  snakeEye.length;
+  var form = FormApp.create("Dice");
+  var formUrl = form.getPublishedUrl();
+  trial.map((seo) => {
+    return form.addSectionHeaderItem().setTitle(randomSubstance([seo]));
+  });
+  return dtlsCapital(formUrl);
+};
+
 var breakthrough = function (e) {
   var username = e;
-  if (!username["parameter"]) {
-    var percent = [e][0] || Math.floor(Math.random() * Math.floor(e.length));
+  const data = coUtility(e || randomSubstance())[0];
+  if (!username) {
+    var percent = Math.floor(
+      Math.random() * Math.floor(data.playlistArr.length)
+    );
   } else {
-    var percent =
-      username["parameter"]["args"] ||
-      Math.floor(Math.random() * Math.floor(e.length));
+    var percent = username;
   }
   var list = [];
   if (0 < percent) {
@@ -20,7 +157,7 @@ var breakthrough = function (e) {
             " " +
             JSON.stringify(i) +
             " " +
-            "odds!",
+            "odds",
         ]);
         if (JSON.stringify(i) >= 100) {
           break;
@@ -31,7 +168,7 @@ var breakthrough = function (e) {
     list.push([percent]).toString();
   }
   var breakUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.breakthrough&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsCalculator&args=";
   var today = new Date();
   // var rule = today.toDateString() + " - " + today.toTimeString()
   var html = HtmlService.createTemplate(`
@@ -42,33 +179,32 @@ var breakthrough = function (e) {
         </head>
         <body>
           <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><?!= rule() ?></div>
-          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
         <div class="row">
-        <div class="col s12 push-s1 push-m1 push-l2">
-        <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
-        <div class="col s12" id="player1">
+        <div class="col s10 m12 l12">
+          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover btn-large receipt">Don'time Life Services!</h1></span></a>
+</div></div>
+        <div class="row">
+        <div class="col s10 card-panel l12 m12 push-s1">
+        <div class="video-container grey darken-4 z-depth-5">
+        <div class="col s12 l12 m12" id="player1">
           <?!= videoPlayer(myVideo) ?></div>
         </div></div></div>
+        <div class="row">
+        <div class="col s10 card-panel black l12 m12 push-s1">
+        <div class="container black darken-4 z-depth-5">
           <span><input placeholder="Event Horizon..." class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
-          <div class="dotted-border menu-img z-depth-5 btn-large card-panel amber z-depth-5">
-            <ul class="receipt_company_info_receipt_footer receipt breakthrough amber menu-img btn-large video-container valign-wrapper darken-4 z-depth-5 scale-in"><p id='list' class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"><?!= list ?></p></ul>
-          </div>
-        <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
-          <input class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div>
-          
-        <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
-          <input class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div>
+          </div></div></div>
 
           <!-- Compiled and minified JavaScript -->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
-          <script>document.addEventListener("DOMContentLoaded", appJS);
+          <script>document.addEventListener("DOMContentLoaded", 
             function appJS()
                       {
                           // mod the array
                           let timePicker = document.getElementById('prefTime');
                           M.Timepicker.init(timePicker, { defaultTime: "now" });
-                  google.script.run.withSuccessHandler(populateDates).runAll('foo.busyDates', []);
+                  google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
                   function populateDates(disabledDays) 
                                                       {
                       let datePicker = document.getElementById('prefDate');
@@ -83,7 +219,7 @@ var breakthrough = function (e) {
                                                     });
                                                       };
 
-                      }                    
+                      })                    
 
           </script>
           <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
@@ -125,18 +261,14 @@ var breakthrough = function (e) {
         var url = urlData.toString();
       }
       var uname = document.getElementById("username").value;
-      var linkHome = document.createElement("a");
       var linkFollow = document.createElement("a");
-      linkHome.href = "https://flewis21.github.io/odd-chances/";
       linkFollow.href =
-        url + "?func=foo.breakthrough&args=" + encodeURIComponent(uname);
-      linkHome.id = "linkHOME";
+        url +
+        "?func=boilerplate.dtlsCalculator&args=" +
+        encodeURIComponent(uname);
       linkFollow.id = "linkFOLLOW";
-      linkHome.target = "popup";
       linkFollow.target = "popup";
-      document.body.appendChild(linkHome);
       document.body.appendChild(linkFollow);
-      document.getElementById("linkHOME");
       document.getElementById("linkFOLLOW").click();
       document.getElementById("username").value = "";
     })();

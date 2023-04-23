@@ -2,8 +2,6 @@
 <html id="test">
   <head>
     <base id="pageTarget" target="_top" />
-    <?!= styleHtml() ?>
-    <?!= jsGameScripts() ?>
   </head>
   <body id="template">
     <div class="row">
@@ -17,31 +15,17 @@
         <a href="https://flewis21.github.io/odd-chances/" target="_top"
           >Numerological Numbers</a
         ><br />
-        <a
-          href='<?= getUrl(ScriptApp) + "?default=ssChemical" ?>'
-          target="_blank"
-          >Check Today EPA</a
-        ><br />
-        <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' target="_parent"
-          >Homemade Games</a
-        ><br />
-        <a
-          href='<?= getUrl(ScriptApp) + "?default=ssFinance" ?>'
-          target="_blank"
-          >Company Info Table</a
-        ><br />
-        <a
-          href='<?= getUrl(ScriptApp) + "?default=ssUSCongress" ?>'
-          target="_top"
-          >Congress Legislation</a
-        ><br />
+        <a href="#" target="_blank">Check Today EPA</a><br />
+        <a href="#" target="_parent">Homemade Games</a><br />
+        <a href="#" target="_blank">Company Info Table</a><br />
+        <a href="#" target="_top">Congress Legislation</a><br />
       </nav>
     </div>
     <div
       class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"
     >
       <a
-        href="mailto: <?!= email() ?> ? {subject} = {subject}"
+        href="#"
         class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in"
         target="-blank"
       >
@@ -49,18 +33,13 @@
       >
     </div>
     <br />
-    <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'
-      >update</a
-    >
+    <a id="caller" href="#">update</a>
     <br />
     <ul id="uldiv">
       waiting...
     </ul>
     <div class="interface">
-      <a
-        href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>'
-        onclick='PageManager.setPageStart("Setup")'
-      >
+      <a href="#" onclick='PageManager.setPageStart("Setup")'>
         <img src="" alt="setup" />
         <div>
           <h3>Setup</h3>
@@ -73,9 +52,11 @@
       height="600"
       allow="autoplay"
     ></iframe>
-    <?!= artifacts ?>
     <script>
-      document.addEventListener('DOMContentLoaded', <?!= misc ?>)
+      document.addEventListener(
+        "DOMContentLoaded",
+        google.script.run.proMediaSnip()
+      );
     </script>
   </body>
 </html>

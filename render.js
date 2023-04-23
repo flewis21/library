@@ -13,7 +13,7 @@ var renderFile = function (file, argsObject) {
   return tmp
     .evaluate()
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setTitle("Don'time Life Services");
+    .getContent();
 };
 
 var renderTemplate = function (blob, argsObject) {
@@ -153,7 +153,7 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_top">About-Me</a><br />
+                }" target="_blank">About-Me</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=${
                   [`1 2 3 4 5`].toString().split(" ")[
                     Math.floor(
@@ -161,7 +161,7 @@ var renderTemplate = function (blob, argsObject) {
                         Math.floor([`1 2 3 4 5`].toString().split(" ").length)
                     )
                   ]
-                }" target="_top">Store</a><br />
+                }" target="_blank">Store</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldEPA&args=${
                   [`ethyl zole zime anol hane leum ther ide ine`]
                     .toString()
@@ -175,11 +175,11 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_top">Local Enviroment</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.breakthrough&args=${Math.floor(
+                }" target="_blank">Local Enviroment</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsCalculator&args=${Math.floor(
                   Math.random() *
                     Math.floor(Utilities.jsonStringify(argsObject).length)
-                )}" target="_top">Calculate</a><br />
+                )}" target="_blank">Calculate</a><br />
                 <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.opt&args=${
                   [`group bank semi fact bio science block chain space coin`]
                     .toString()
@@ -195,8 +195,8 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_top">Investors</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_top">New</a><br />
+                }" target="_blank">Investors</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_blank">New</a><br />
             </div></div>
           </nav>
       </div>
@@ -283,7 +283,7 @@ var renderTemplate = function (blob, argsObject) {
     .setTitle("Don'time Life Services");
 };
 
-var appList = function (e) {
+var appList = function () {
   var url =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.";
   const matches = [];
@@ -313,6 +313,9 @@ var appList = function (e) {
     <select id="appList" class="browser-default deep-purple darken-1">
     </select>
     </div></div></div></div>
+    <input type="hidden" value="${
+      matches[Math.floor(Math.random() * Math.floor(matches.length))]
+    }"  id="hiddenfoo" />
     <script>document.addEventListener("DOMContentLoaded", 
 function()
   {document.getElementById("appList").innerHTML = ${result};
@@ -322,23 +325,41 @@ function()
     <script>document.getElementById("appList").addEventListener("change", foo)
 function foo(){
   var bar = document.getElementById("username").value;
-  var foo = document.getElementById("appList").value
+  var foo = document.getElementById("appList").value;
+    if (!bar) {
+
+  var linkFollow = document.createElement("a");
+  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=";
+  linkFollow.id = "linkFOLLOW";
+  linkFollow.target = "_blank";
+  document.body.appendChild(linkFollow);
+  document.getElementById("linkFOLLOW").click();}
+    if (bar) {
+
   var linkFollow = document.createElement("a");
   linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" + bar;
   linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_top";
+  linkFollow.target = "_blank";
   document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();
-  document.getElementById("appList").value = ""}</script>    
+  document.getElementById("linkFOLLOW").click();}}</script>    
     <script>document.getElementById("username").addEventListener("change", bar)
 function bar(){
   var bar = document.getElementById("username").value;
-  var foo = document.getElementById("appList").value
-  if (indexOf(foo) !== -1){
+  var foo = document.getElementById("appList").value;
+  if (!foo) {
   var linkFollow = document.createElement("a");
-  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" + bar;
+  linkFollow.href = ${Utilities.jsonStringify(
+    url
+  )} + "needCapital&args=" +  bar;
   linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_top";
+  linkFollow.target = "_blank";
+  document.body.appendChild(linkFollow);
+  document.getElementById("linkFOLLOW").click();}
+  if (foo) {
+  var linkFollow = document.createElement("a");
+  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" +  bar;
+  linkFollow.id = "linkFOLLOW";
+  linkFollow.target = "_blank";
   document.body.appendChild(linkFollow);
   document.getElementById("linkFOLLOW").click();}}</script>`
   );

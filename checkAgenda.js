@@ -1,4 +1,4 @@
-var checkOnDay = function () {
+var checkDay = function () {
   var testList = jsonXpath(
     `https://www.bing.com/search?q=site%3Ayoutube.com&PC=U316&FORM=CHROMN`
   );

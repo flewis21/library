@@ -1,7 +1,6 @@
 <html id="test">
   <head>
     <base target="_self" />
-    <?!= htmlStyle ?>
   </head>
   <body>
     <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt">
@@ -17,12 +16,14 @@
       ></a
     >
     <div>
-      <a href="https://www.youtube.com/watch?v=<?= myTitle ?>" target="_blank"
+      <a
+        href="https://www.youtube.com/watch?v=<?= coUtility()[0].rndTitle ?>"
+        target="_blank"
         ><h1
           class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"
           id="reload01"
         >
-          <?= myTitle ?>
+          <?= coUtility()[0].rndTitle ?>
         </h1></a
       >
     </div>
@@ -30,7 +31,7 @@
       class="container row s1 menu-img valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
     >
       <div id="player1">
-        <?!= videoPlayer(myVideo) ?>
+        <?!= videoPlayer(coUtility()[0].rndTitle) ?>
       </div>
     </div>
     <span
@@ -50,7 +51,7 @@
           id="list"
           class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"
         >
-          <?!= list ?>
+          <?!= coUtility()[0].playlistArr ?>
         </p>
       </ul>
     </div>
@@ -78,9 +79,6 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      document.getElementById('username').addEventListener('change', <?!= topScript ?>)
-    </script>
     <script>
       document.addEventListener("DOMContentLoaded", appJS);
       function appJS() {

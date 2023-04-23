@@ -17,7 +17,7 @@ function needPastTime(searchString) {
     for (var i = 1; i < idArray.length; i++) {
       const playId = idArray[i].toString().substring(0, 11);
       vidsSearched.push([playId]);
-      vidValues.push(playId.valueOf());
+      vidValues.push(console.log(playId.valueOf()));
     }
     // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
     // return v[0].valueOf();});
@@ -39,10 +39,12 @@ function needPastTime(searchString) {
         vidObject[0].indexOf("brid") === -1 &&
         vidObject[0].indexOf("ctrl") === -1 &&
         vidObject[0].indexOf("location") === -1 &&
+        vidObject[0].indexOf("wiki") === -1 &&
         vidObject[0].indexOf("//") === -1 &&
         vidObject[0].indexOf("Html") === -1 &&
         vidObject[0].indexOf("data") === -1 &&
         vidObject[0].indexOf("undefined") === -1 &&
+        vidObject[0].indexOf("client") === -1 &&
         vidObject[0].indexOf("/") === -1 &&
         vidObject[0].indexOf("peri") === -1 &&
         vidObject[0].indexOf("ten") === -1 &&
@@ -154,7 +156,7 @@ function videoPlayer(searchString) {
         </thead>
         <tbody>
           <tr>
-            <td style="vertical-align: top">
+            <td style="vertical-align: top;text-align: left">
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody>
                   <td>
@@ -163,7 +165,7 @@ function videoPlayer(searchString) {
                 </tbody>
               </table>
             </td>
-            <td>
+            <td style="text-align: right">>
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody id="reload02">
                 </tbody>

@@ -10,6 +10,17 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
+function doGet(e) {
+  var foobarr = e.parameter["func"] || "app.needBing";
+  var arr = [foobarr].toString().split(".");
+  var libName = arr[0];
+  var libFunc = arr[1];
+  args = e.parameter["args"] || ["", null, { muteHttpExceptions: true }];
+  return renderTemplate(contentApp(this[libName][libFunc].apply(this, args)), {
+    e: e,
+  });
+}
+
 function misBing(e) {
   console.log(JSON.stringify(e));
   const uniqueKey = Utilities.jsonParse([

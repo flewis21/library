@@ -5,29 +5,40 @@
   </head>
   <body>
     <nav>
-      <a href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>' target="_top"
-        >Back</a
-      >
+      <a href="#" target="_top">Back</a>
     </nav>
     <div>
       <p>
         <em> Hello Scroll!</em>, <br />
-        <span>
-          <?!= title ?>
-          <h2><?!= ticker ?></h2>
+        <span id="title">
+          <h2 id="ticker"></h2>
           is ready to trade. </span
         ><br />
         Best Regards. <br />
-        P.S. Click
-        <a
-          href="https://www.sec.gov/edgar/browse/?CIK=<?!= cik_str ?>&owner=exclude"
-          target="_blank"
-          ><?!= cik_str ?></a
-        >
-        for Info at the SEC
+        P.S. Click <a href="" target="_blank" id="cik"></a> for Info at the SEC
       </p>
     </div>
-    <div><?!= relatedVideo ?></div>
-    <script></script>
+    <div id="videoPage"><?!= videoPage() ?></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", doStuff);
+      function doStuff() {
+        google.script.run
+          .withSuccessHandler(coData)
+          .runAll("boilerplate.coUtility", []);
+        function coData(theData) {
+          console.log(theData);
+          document.getElementById("title").innerHTML = theData[0].rndTitle;
+          document.getElementById("ticker").innerHTML = theData[0].rndTicker;
+          document.getElementById("cik").href =
+            "https://www.sec.gov/edgar/browse/?CIK=" +
+            theData[0].rndCik +
+            "&owner=exclude";
+          document.getElementById("cik").innerHTML = theData[0].rndCik;
+          document.getElementById("videoPage").innerHTML = videoPage(
+            theData[0].rndTitle
+          );
+        }
+      }
+    </script>
   </body>
 </html>

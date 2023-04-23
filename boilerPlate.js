@@ -180,6 +180,37 @@ var formsUrls = function (fileX) {
     var trueName = treeRoot.next();
     if (trueName.getName() === fileX) return trueName.getUrl();
   }
+};
+
+var rndUrls = function () {
+  var treeRoot = DriveApp.getRootFolder().getFiles();
+  while (treeRoot.hasNext()) {
+    var trueName = treeRoot.next();
+    console.log(
+      trueName.getName() +
+        " || / || " +
+        trueName.getName()[
+          Object.keys(trueName.getName())[
+            Math.floor(
+              Math.random() * Math.floor(Object.keys(trueName.getName()).length)
+            )
+          ]
+        ]
+    );
+    var truArray = [];
+    for (var i = 0, l = trueName.getName().length; i < l; i++) {
+      console.log(truArray.push([trueName.getName()][i]));
+    }
+    if (trueName.getName()) return trueName.getUrl();
+  }
+};
+
+var formsUrlsGlobal = function (fileX) {
+  var treeRoot = DriveApp.getRootFolder().getFiles();
+  while (treeRoot.hasNext()) {
+    var trueName = treeRoot.next();
+    if (trueName.getName() === fileX) return trueName.getUrl();
+  }
   var dataTree = [];
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
@@ -450,8 +481,8 @@ function randomEmail() {
   return randomEmail;
 }
 
-var randomSubstance = function () {
-  var arrData = [
+var randomSubstance = function (importedData, index, loopLength) {
+  var arrData = importedData || [
     "e",
     "t",
     "a",
@@ -480,7 +511,9 @@ var randomSubstance = function () {
     "z",
   ];
   var newArr = [];
-  for (var i = 0, l = 2; i < l; i++) {
+  var i = index || 0;
+  var l = loopLength || 1;
+  for (i, l; i < l; i++) {
     newArr.push(
       arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
     );
