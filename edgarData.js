@@ -56,7 +56,8 @@ var allInvestors = function (rndKey) {
     const randomVidKey = Math.floor(
       Math.random() * Math.floor(randomPlaylist.length)
     ); // Math.floor(Math.random());
-    var videoObject = covObjects(randomPlaylist, ["youtubeID"]);
+    var playListSorted = randomPlaylist.sort((a, b) => a - b);
+    var videoObject = covObjects(playListSorted, ["youtubeID"]);
     if (typeof videoObject["youtubeID"] !== "undefined") {
       var uniqueVidKey = [videoObject].entries().next().value;
       var randomVid = uniqueVidKey[1][randomVidKey];
@@ -64,12 +65,11 @@ var allInvestors = function (rndKey) {
       return rVideo;
     }
   };
+  var sortaPlay = randomPlaylist.sort((a, b) => a - b);
   var randomVideo =
     vidPlaylist() ||
-    randomPlaylist[
-      Math.floor(Math.random() * Math.floor(randomPlaylist.length))
-    ];
-  var youtubeUrl = "https://www.youtube.com/watch?v=" + randomVideo;
+    sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
+  var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
   // return misBing(randomVideo)
   var secUrl =
     "https://www.sec.gov/edgar/browse/?CIK=" + randomCik + "&owner=exclude";
@@ -433,6 +433,7 @@ var oldSEC = function (rndTitle) {
 var opt = function (searchString) {
   var url =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
+  var optUrl = getUrl(ScriptApp) + "?func=seoSheet&args=";
   var tmp = [];
   let jsonData = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -501,13 +502,13 @@ var opt = function (searchString) {
       r[0]["cik_str"]
     }&owner=exclude" target="_blank">${
       r[0]["cik_str"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="https://twitter.com/search?q=${encodeURIComponent(
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      optUrl + encodeURIComponent(r[0]["ticker"])
+    }" target="_blank">${
       r[0]["ticker"]
-    )}" target="_blank">${
-      r[0]["ticker"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="https://twitter.com/search?q=${encodeURIComponent(
-      r[0]["title"]
-    )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
+    }</a></td><td><a class="waves-effect waves-light btn" href="${
+      optUrl + encodeURIComponent(r[0]["title"])
+    }" target="_blank">${r[0]["title"]}</a></td></tr>`;
   });
   var result = JSON.stringify(coTable);
   return HtmlService.createTemplate(

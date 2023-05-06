@@ -2,11 +2,56 @@
 <html>
   <head>
     <base target="_self" />
+    <style>
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: pink !important;
+        text-decoration: none !important;
+      }
+    </style>
   </head>
   <body>
-    <a id="caller" href="#">update</a>
+    <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt">
+      <?!= rule() ?>
+    </div>
+    <a id="caller" href="#" onclick="pageReset()">update</a>
     <br />
-    <div id="div">waiting...</div>
-    <script id="gold" type="text/javascript"></script>
+    <div id="drip">waiting...</div>
+    <script id="gold" type="text/javascript">
+      document.addEventListener("DOMContentLoaded", userClicked);
+
+      function pageReset() {
+        document.getElementById("drip").innerHTML = "waiting...";
+        userClicked();
+      }
+      function userClicked() {
+        var rndPage = [
+          `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
+        ]
+          .toString()
+          .split(" ")[
+          Math.floor(
+            Math.random() *
+              Math.floor(
+                [
+                  `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
+                ]
+                  .toString()
+                  .split(" ").length
+              )
+          )
+        ];
+        google.script.run
+          .withSuccessHandler(carosel)
+          .runBoilerplate("renderFile", [rndPage]);
+        function carosel(drop) {
+          document.getElementById("drip").innerHTML = drop;
+        }
+      }
+    </script>
   </body>
 </html>

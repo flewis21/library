@@ -6,6 +6,12 @@
   <body id="template">
     <div class="row">
       <nav class="col s3 menu z-depth-5 card-panel amber scale-out scale-in">
+        <a
+          id="main"
+          href="<?!= getUrl(ScriptApp) ?>?func=boilerplate.renderFile&args=callBack"
+          target="_top"
+          >Don'time Life Services</a
+        ><br />
         <a id="mainIndex" href="https://flewis21.github.io/About-Me/"
           >About Me</a
         ><br />
@@ -15,9 +21,17 @@
         <a href="https://flewis21.github.io/odd-chances/" target="_top"
           >Numerological Numbers</a
         ><br />
-        <a href="#" target="_blank">Check Today EPA</a><br />
-        <a href="#" target="_parent">Homemade Games</a><br />
-        <a href="#" target="_blank">Company Info Table</a><br />
+        <a href="https://flewis21.github.io/budget/" target="_blank"
+          >Check Today EPA</a
+        ><br />
+        <a href="https://flewis21.github.io/foobar/" target="_parent"
+          >Homemade Games</a
+        ><br />
+        <a
+          href="<?!= getUrl(ScriptApp) ?>?func=boilerplate.opt&args="
+          target="_blank"
+          >Company Info Table</a
+        ><br />
         <a href="#" target="_top">Congress Legislation</a><br />
       </nav>
     </div>
@@ -46,12 +60,22 @@
         </div>
       </a>
     </div>
-    <iframe
-      src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview"
-      width="800"
-      height="600"
-      allow="autoplay"
-    ></iframe>
+    <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 receipt deep-purple darken-1">
+            <iframe
+              class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large"
+              src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview"
+              width="800"
+              height="600"
+              allow="autoplay"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?!= seoSheet("the rybka twins") ?>
     <script>
       document.addEventListener(
         "DOMContentLoaded",

@@ -143,7 +143,7 @@ var renderTemplate = function (blob, argsObject) {
         <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
             <div class="col s12 receipt nav-wrapper deep-purple darken-1">
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.youTube&args=${
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=youTube&args=${
                   [`(by Dontime Life Services)`].toString().split(" ")[
                     Math.floor(
                       Math.random() *
@@ -153,16 +153,16 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_blank">About-Me</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.sheetWebsite&args=${
+                }" target="_top">About-Me</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=sheetWebsite&args=${
                   [`1 2 3 4 5`].toString().split(" ")[
                     Math.floor(
                       Math.random() *
                         Math.floor([`1 2 3 4 5`].toString().split(" ").length)
                     )
                   ]
-                }" target="_blank">Store</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.oldEPA&args=${
+                }" target="_top">Store</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=oldEPA&args=${
                   [`ethyl zole zime anol hane leum ther ide ine`]
                     .toString()
                     .split(" ")[
@@ -175,12 +175,11 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_blank">Local Enviroment</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsCalculator&args=${Math.floor(
-                  Math.random() *
-                    Math.floor(Utilities.jsonStringify(argsObject).length)
-                )}" target="_blank">Calculate</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.opt&args=${
+                }" target="_top">Local Enviroment</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args=${Math.floor(
+                  Math.random() * Math.floor(JSON.stringify(argsObject).length)
+                )}" target="_top">Calculate</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=opt&args=${
                   [`group bank semi fact bio science block chain space coin`]
                     .toString()
                     .split(" ")[
@@ -195,8 +194,8 @@ var renderTemplate = function (blob, argsObject) {
                         )
                     )
                   ]
-                }" target="_blank">Investors</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=" target="_blank">New</a><br />
+                }" target="_top">Investors</a><br />
+                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=appList&args=" target="_top">New</a><br />
             </div></div>
           </nav>
       </div>
@@ -284,84 +283,80 @@ var renderTemplate = function (blob, argsObject) {
 };
 
 var appList = function () {
-  var url =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.";
-  const matches = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      matches.push(key);
-    }
-  }
-  var coTable = matches.map((r) => {
-    return `<option><a class="waves-effect waves-light btn" href="${url}${encodeURIComponent(
-      r
-    )}&args=" target="_blank">${r}</a></option>`;
-  });
-  const result = Utilities.jsonStringify(coTable);
-  const html = HtmlService.createTemplate(
-    `<div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="container">
-    <div class="col s12 receipt deep-purple darken-1">
-    <span><input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
-    </div></div></div></div>
+  return HtmlService.createTemplate(
+    `
+  <? var url = getUrl(ScriptApp) + "?func=" ?>
+  <? var matches = [] ?>
+  <? for (var key in globalThis) { ?>
+  <? if (typeof globalThis[key] == "function") { ?>
+    <? matches.push(key) ?>
+    <? }} ?>
+<? var coTable = matches.map((r)=> { ?>
+      <? return "<option>" + r + "</option>" ?>
+      <? }).join("") ?>
+<? var result = JSON.stringify(coTable) ?>
+  <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 receipt deep-purple darken-1">
+            <span>
+              <input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="username" type="search"/>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="container">
-    <div class="col s12 receipt deep-purple darken-1">
-    <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
-    <select id="appList" class="browser-default deep-purple darken-1">
-    </select>
-    </div></div></div></div>
-    <input type="hidden" value="${
-      matches[Math.floor(Math.random() * Math.floor(matches.length))]
-    }"  id="hiddenfoo" />
-    <script>document.addEventListener("DOMContentLoaded", 
-function()
-  {document.getElementById("appList").innerHTML = ${result};
-  var elems = document.querySelectorAll('select');
-  var instances = M.FormSelect.init(elems);
-  document.getElementById("appList").selectedIndex = -1;})</script>
-    <script>document.getElementById("appList").addEventListener("change", foo)
-function foo(){
-  var bar = document.getElementById("username").value;
-  var foo = document.getElementById("appList").value;
-    if (!bar) {
-
-  var linkFollow = document.createElement("a");
-  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=";
-  linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_blank";
-  document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();}
-    if (bar) {
-
-  var linkFollow = document.createElement("a");
-  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" + bar;
-  linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_blank";
-  document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();}}</script>    
-    <script>document.getElementById("username").addEventListener("change", bar)
-function bar(){
-  var bar = document.getElementById("username").value;
-  var foo = document.getElementById("appList").value;
-  if (!foo) {
-  var linkFollow = document.createElement("a");
-  linkFollow.href = ${Utilities.jsonStringify(
-    url
-  )} + "needCapital&args=" +  bar;
-  linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_blank";
-  document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();}
-  if (foo) {
-  var linkFollow = document.createElement("a");
-  linkFollow.href = ${Utilities.jsonStringify(url)} + foo + "&args=" +  bar;
-  linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_blank";
-  document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();}}</script>`
-  );
-  return html.evaluate().getContent();
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 receipt deep-purple darken-1">
+            <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
+              <select id="appList" class="browser-default deep-purple darken-1"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="openBtn">
+      <button class="openButton" onclick="openTheForm()"><strong>Open Form</strong></button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", onPageLoad)
+      function onPageLoad() {
+        
+        document.getElementById("appList").innerHTML = <?= result ?>;
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+        document.getElementById("appList").selectedIndex = -1;}
+    </script>
+    <script>
+      function onUserClick() {
+      if (typeof url === "undefined")
+        {var url = <?= url ?>}
+        var bar = document.getElementById("username").value || "";
+        var foo = document.getElementById("appList").value || "needBing";
+        var linkFollow = document.createElement("a");
+        linkFollow.href = url + foo + "&args=" + bar;
+        linkFollow.id = "linkFOLLOW";
+        linkFollow.target = "_self";
+        document.body.appendChild(linkFollow);}
+    </script>
+    <script>
+      function openTheForm() {
+        
+        onUserClick()
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("username").value = ""
+        document.getElementById("appList").value = ""
+        document.getElementById("linkFOLLOW").remove()
+        var linkHome = document.createElement("a");
+        linkHome.href = url;
+        linkHome.id = "linkHOME";
+        linkHome.target = "_parent";
+        document.body.appendChild(linkHome);
+        document.getElementById("linkHOME").click()};
+    </script>
+  `
+  )
+    .evaluate()
+    .getContent();
 };

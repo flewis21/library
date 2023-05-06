@@ -213,13 +213,9 @@ var jsonXpath = function (jsonXpathDataRange) {
 
 var needCapital = function (searchString) {
   const videoSearch = [
-    urlDataSource(
-      `https://www.bing.com/search?q=${encodeURIComponent(
-        searchString
-      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-      null,
-      { muteHttpExceptions: true }
-    ),
+    urlDataSource(`https://flewis21.github.io/foobar`, null, {
+      muteHttpExceptions: true,
+    }),
   ];
   const table = videoSearch
     .slice(videoSearch.indexOf("SERP"))

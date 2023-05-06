@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <style>
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: white !important;
+        text-decoration: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <? var randomSECCo = coUtility("Converse Chuck Taylor All Star Low Top")[0] ?>
+    <? var myVid = randomSECCo.rndTitle ?>
+    <? var myVidId = randomSECCo.videoItem[0] || coUtility()[0].videoItem[0]?>
+    <? var infoLink = randomSECCo.videoItemUrl ?>
+    <nav></nav>
+    <button id="btn">reload</button>
+    <div id="challenge">
+      <div id="videoPage">
+        <? var form = FormApp.create(myVid.toUpperCase()) ?>
+        <? var formUrl = form.getPublishedUrl() ?>
+        <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(600).setVideoUrl(myVidId) ?>
+        <?!= seoSheet(myVid) ?>
+      </div>
+      <div><h3 style="font-weight: bold; text-align: left">$65.00</h3></div>
+      <div><p style="text-align: left">FREE SHIPPING</p></div>
+      <br />
+      <div>
+        <p style="text-align: left">
+          Ready to dress up and down, these classic canvas Chucks are an
+          everyday wardrobe staple.
+        </p>
+      </div>
+      <br />
+      <div>
+        <p style="text-align: left">
+          <a href="<?!= infoLink ?>" target="_top">More Information => </a>
+        </p>
+      </div>
+      <br />
+      <div>
+        <p style="font-weight: bold">Product details</p>
+      </div>
+      <br />
+      <ul class="browser-default">
+        <li class="browser-default">Lightweight, durable canvas sneaker</li>
+        <li class="browser-default !important">
+          Lightly padded footbed for added comfort
+        </li>
+        <li class="browser-default">Iconic Chuck Taylor ankle patch</li>
+      </ul>
+      <button>Add to cart</button>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", reloadthispage);
+      function reloadthispage() {
+      document.getElementById("btn").addEventListener("click",
+      function() {
+      google.script.run.withSuccessHandler(drip).runBoilerplate("renderFile", ["Section3.Challenge1"])
+      function drip(drop)  {
+
+      document.getElementById("challenge").innerHTML = drop}}}
+    </script>
+  </body>
+</html>

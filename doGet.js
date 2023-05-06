@@ -10,16 +10,30 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-function doGet(e) {
-  var foobarr = e.parameter["func"] || "app.needBing";
-  var arr = [foobarr].toString().split(".");
-  var libName = arr[0];
-  var libFunc = arr[1];
-  args = e.parameter["args"] || ["", null, { muteHttpExceptions: true }];
-  return renderTemplate(contentApp(this[libName][libFunc].apply(this, args)), {
+var doGet = function (e) {
+  var foobarr = e.parameter["func"] || "renderFile";
+  var libFunc = foobarr;
+  var rndPage = [
+    `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
+  ]
+    .toString()
+    .split(" ")[
+    Math.floor(
+      Math.random() *
+        Math.floor(
+          [
+            `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
+          ]
+            .toString()
+            .split(" ").length
+        )
+    )
+  ];
+  args = e.parameter["args"] || ["jFundamentals"];
+  return renderTemplate(contentApp(this[libFunc].apply(this, [args])), {
     e: e,
   });
-}
+};
 
 function misBing(e) {
   console.log(JSON.stringify(e));
@@ -32,6 +46,18 @@ function misBing(e) {
   ); // Math.floor(Math.random())
   const uniqueCoKey = [uniqueKey].entries().next().value;
   const randomTitle = e || uniqueCoKey[1][randomKey]["title"];
+  var randomSECCo = coUtility(randomTitle)[0];
+  var myVid = randomSECCo.rndTitle;
+  var myVidId = randomSECCo.videoItem[0] || coUtility()[0].videoItem[0];
+  var infoLink = randomSECCo.videoItemUrl;
+  var form = FormApp.create(myVid.toUpperCase());
+  var formUrl = form.getPublishedUrl();
+  form
+    .addVideoItem()
+    .setAlignment(FormApp.Alignment.CENTER)
+    .setWidth(612)
+    .setVideoUrl(myVidId);
+  var result = Utilities.jsonStringify(seoSheet(randomTitle));
   const html = HtmlService.createTemplate(`<html id="test">
       <head>
       </head>
@@ -46,13 +72,14 @@ function misBing(e) {
       </div>
         <div class="row">
         <div class="col s10 card-panel amber push-s1 push-m1 push-l1 receipt valign-wrapper z-depth-5 scale-transition scale-out scale-in ">
-        <div class="container video-container amber">
-        <div class="col s12 receipt amber" id="player1">
-          <?!= videoPlayer(myRandoms) ?>
+        <div class="container amber">
+        <div class="col s12 receipt deep-purple darken-1" id="player1">
         </div></div></div></div>
         <script>document.getElementById('func').addEventListener('change', <?!= userClicked ?>)</script>
         <script>document.addEventListener("DOMContentLoaded", <?!= onPageLoad ?>)</script>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+        <script>document.addEventListener("DOMContentLoaded", function()
+      {document.getElementById("player1").innerHTML = ${result};})</script>
       </body>
     </html>`);
   html.onPageLoad = function () {

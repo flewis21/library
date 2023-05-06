@@ -41,19 +41,28 @@ var dtls = function (func) {
 
 var dtlsCalculator = function (e) {
   var username = e;
-  const data = coUtility(e || randomSubstance())[0];
+  const data = coUtility(
+    randomSubstance(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], 0, 2)
+  )[0];
   const rndNumData = Math.floor(
     Math.random() * Math.floor(data.playlistArr.length)
   );
   if (!username) {
-    var percent = rndNumData;
+    var percent = data.rndTitle;
   } else {
     var percent = username;
   }
-  const form = FormApp.create(data.rndTitle);
-  form
-    .setTitle(data.rndTitle)
-    .setConfirmationMessage("Thanks for your feedback !!");
+  if (typeof username === "undefined") {
+    var form = FormApp.create(data.rndTitle);
+    form
+      .setTitle(data.rndTitle)
+      .setConfirmationMessage("Thanks for your feedback !!");
+  } else {
+    var form = FormApp.create(username);
+    form
+      .setTitle(username)
+      .setConfirmationMessage("Thanks for your feedback !!");
+  }
   var list = [];
   if (0 < percent) {
     for (var i = 0; 0 < percent; i++) {
@@ -69,7 +78,7 @@ var dtlsCalculator = function (e) {
             " " +
             "odds",
         ]);
-        if (JSON.stringify(i) >= 3) {
+        if (JSON.stringify(i) >= 10) {
           break;
         }
       }
@@ -78,7 +87,9 @@ var dtlsCalculator = function (e) {
     list.push([percent]).toString();
   }
   const breakUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsCalculator&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args=";
+  const vegasUrl =
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCapital&args=";
   const today = new Date();
   const rule = today.toDateString() + " - " + today.toTimeString();
   form.addSectionHeaderItem().setTitle(rule);
@@ -87,15 +98,18 @@ var dtlsCalculator = function (e) {
       Math.floor(Math.random() * Math.floor(data.playlistArr.length))
     ];
   var globalYoutubeUrl = "https://www.youtube.com/watch?v=";
-  form
-    .addVideoItem()
-    .setAlignment(FormApp.Alignment.CENTER)
-    .setWidth(360)
-    .setVideoUrl(videIdUrl)
-    .setHelpText(globalYoutubeUrl + videIdUrl);
+  if (typeof data.videoItem !== "undefined") {
+    form
+      .addVideoItem()
+      .setAlignment(FormApp.Alignment.CENTER)
+      .setWidth(360)
+      .setVideoUrl(data.videItemUrl)
+      .setHelpText(data.videItemUrl);
+  }
   const htmlList = list
     .map(function (r) {
       var rndFormArray = coUtility(r[0])[0];
+      var videoVegas = substanceVegas(null, 0, 11);
       var rndFormVideo =
         rndFormArray.playlistArr[
           Math.floor(
@@ -105,7 +119,7 @@ var dtlsCalculator = function (e) {
       return `${form
         .addSectionHeaderItem()
         .setTitle(r[0])
-        .setHelpText(globalYoutubeUrl + rndFormVideo)}\n\n\n\n`;
+        .setHelpText(vegasUrl + globalYoutubeUrl + videoVegas)}\n\n\n\n`;
     })
     .toString()
     .replace(/,/g, "");
@@ -131,9 +145,40 @@ var dtlsCalculator = function (e) {
   return html.evaluate().getContent();
 }; //:contentFile('uiAccess');
 
+var dtlsVegas = function () {
+  var rndId = substanceVegas(null, 0, 10);
+  var codedUrl = "https://www.youtube.com/watch?v=";
+  var form = FormApp.create(rndId);
+  var formUrl = form.getPublishedUrl();
+  form
+    .addVideoItem()
+    .setAlignment(FormApp.Alignment.CENTER)
+    .setWidth(612)
+    .setVideoUrl(rndId);
+  return seoCapital(formUrl);
+  var html = HtmlService.createTemplate(
+    `<html>
+      <body>
+        <div class="row">
+        <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container" style="clear: both">
+        <div class="col s12 receipt deep-purple darken-1">
+        <div id="vegas"></div>          
+        </div></div></div></div>
+        <script>document.addEventListener("DOMContentLoaded", lasVegas)
+        function lasVegas() {
+          
+          document.getElementById("vegas").innerHTML = ${result}
+        </script>
+      </body>
+    </html>`
+  );
+  return html.getRawContent();
+};
+
 var dtlsEnvironment = function (rndSubstance) {
   var dtlsUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPage&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args=";
   var arrayMath = [`${randomSubstance()} ${randomSubstance()}`];
   var product =
     rndSubstance ||
@@ -483,119 +528,76 @@ var dtlsMain = function (file) {
 };
 
 var dtlsStore = function (e) {
-  var urlSs =
-    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
-  var urlWww =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsEnvironment&args=";
-  var usr = e;
-  var dataUtility = coUtility(e || randomSubstance())[0];
-  if (!usr) {
-    var query = Math.floor(
-      Math.random() * Math.floor(dataUtility.playlistArr.length)
-    );
-  } else {
-    var query = usr;
-  }
-  var form = FormApp.create(dataUtility.rndTitle);
-  var tmp = [];
-  var parameters = [e][1] || 1;
-  var sheetName = "Inventory";
-  var sheet = ssGetSheetBySpreadsheetUrl(urlSs, sheetName).activate();
-  var range = sheet.getDataRange();
-  var data = range.getValues();
-  var headings = data.slice(3, 4).toString().toLowerCase().split(",");
-  var noHeaders = data.slice(4).map(function (val) {
-    return val.toString().toLowerCase();
-  });
-  var outputData = covObjects(noHeaders, headings);
-  var output = JSON.stringify({ status: "success", data: outputData });
-  var rows = [];
-  var values = range.getValues();
-  for (var row in values) {
-    rows.push([]);
-    for (var col in values[row]) {
-      rows[row].push(values[row][col]);
-    }
-  }
-  var rowsToReturn = rows.filter((r) => {
-    return r[5];
-  });
-  var outputQuery = covObjects(rowsToReturn, headings);
-  var arrData = covArrays(outputQuery);
-  let objParts = {};
-  for (var i = 0; i < arrData.length; i++) {
-    for (var [key, { headings }] of Object.entries(arrData[i])) {
-      objParts[headings] = key;
-    }
-  }
-  if (arrData) {
-    const keys = Object.keys(arrData);
-    keys.forEach(function (key) {
-      tmp[key] = arrData[key];
-    });
-  }
-  var jo = {};
-  var dataArray = [];
-  for (var i = 1, l = arrData.length; i < l; i++) {
-    var record = {};
-    record["id"] = arrData[i][0]["sku"];
-    record["productName"] = arrData[i][0]["description"];
-    record["rand1"] = arrData[i][0]["total customer purchase"];
-    record["rand2"] = arrData[i][0]["qty offset"];
-    record["rand3"] = arrData[i][0]["estimated value"];
-    record["rand4"] = arrData[i][0]["supply processed "];
-    record["rand5"] = arrData[i][0]["pack size"];
-    record["rand6"] = arrData[i][0]["total supply available"];
-    record["rand7"] = arrData[i][0]["cost supply available"];
-    record["rand8"] = arrData[i][0]["current cost per item"];
-    record["rand9"] = arrData[i][0][" average cost over time"];
-    if (record["id"] !== "") {
-      dataArray.push(record);
-    }
-  }
-  form
-    .setTitle(dataArray.length)
-    .setConfirmationMessage("Thanks for your feedback !!");
-  var productData = coUtility(
-    dataArray[Math.floor(Math.random() * Math.floor(dataArray.length))][
-      "productName"
-    ]
-  )[0];
-  var randNum = Math.floor(Math.random() * Math.floor(dataArray.length));
-  var searchString = dataArray[randNum]["productName"];
-  jo.user = dataArray;
-  var today = new Date();
-  var rule = today.toDateString() + " - " + today.toTimeString();
-  form.addSectionHeaderItem().setTitle(rule);
-  var coTable = jo.user
-    .map((r) => {
-      var productItemVideo = coUtility(r["productName"])[0];
-      return `${
-        form
-          .addSectionHeaderItem()
-          .setTitle(
-            r["productName"] + ": price: " + r["rand7"] + ": cpi: " + r["rand8"]
-          ) +
-        form
-          .addSectionHeaderItem()
-          .setHelpText(urlWww + encodeURIComponent(r["productName"]))
-      }\n\n\n\n`;
-    })
-    .toString()
-    .replace(/,/g, "");
-  const url = form.getPublishedUrl();
-  var result = JSON.stringify(coTable);
-  baseUrl = getUrl(ScriptApp);
-  inventoryUrl = getUrl(ScriptApp);
-  financeUrl = getUrl(ScriptApp);
   return HtmlService.createTemplate(
-    `<div class="row">
+    `
+  <? var urlSs = "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962" ?>
+  <? var sheetName = "Inventory" ?>
+  <? var sheet = ssGetSheetBySpreadsheetUrl(urlSs, sheetName).activate() ?>
+  <? var range = sheet.getDataRange() ?>
+  <? var data = range.getValues() ?>
+  <? var rows = [] ?>
+  <? var values = range.getValues() ?>
+  <? for (var row in values) { ?>
+    <? rows.push([]) ?>
+    <? for (var col in values[row]) { ?>
+      <? rows[row].push(values[row][col]) ?>
+      <? } ?>
+      <? } ?>
+  <? var rowsToReturn = rows.filter((r) => {return r[5]}) ?>
+  <? var headings = data.slice(3,4).toString().toLowerCase().split(",") ?>
+  <? var noHeaders = data.slice(4).map(function (val) { ?>
+      <? return val.toString().toLowerCase() ?>
+      <? }) ?>
+  <? var outputQuery = (covObjects(rowsToReturn, headings)) ?>
+  <? var arrData = covArrays(outputQuery) ?>
+  <? var jo = {}; ?>
+  <? var dataArray = []; ?>
+  <? for (var i = 1, l = arrData.length; i<l; i++) { ?>
+    <? var record = {} ?> 
+    <? record["id"] = arrData[i][0]["sku"]; ?>
+    <? record["productName"] = arrData[i][0]["description"]; ?>
+    <? record["rand1"] = arrData[i][0]["total customer purchase"]; ?>
+    <? record["rand2"] = arrData[i][0]["qty offset"]; ?> 
+    <? record["rand3"] = arrData[i][0]["estimated value"]; ?>
+    <? record["rand4"] = arrData[i][0]["supply processed "]; ?>
+    <? record["rand5"] = arrData[i][0]["pack size"]; ?>
+    <? record["rand6"] = arrData[i][0]["total supply available"]; ?>
+    <? record["rand7"] = arrData[i][0]["cost supply available"]; ?>
+    <? record["rand8"] = arrData[i][0]["current cost per item"]; ?>
+    <? record["rand9"] = arrData[i][0][" average cost over time"]; ?>
+    <? if (record["id"] !== "") { ?>
+      <? dataArray.push(record) ?>
+      <? } ?>
+      <? } ?>
+  <? var dataUtility = coUtility(${JSON.stringify(
+    e || randomSubstance(null, 0, 1)
+  )})[0] ?>
+  <? var form = FormApp.create(dataUtility.rndTitle) ?>
+  <? var url = form.getPublishedUrl(); ?>
+  <? form.setTitle(dataArray.length).setConfirmationMessage('Thanks for your feedback !!'); ?>  
+  <? var productData = coUtility(dataArray[Math.floor(Math.random() * (Math.floor(dataArray.length)))]["productName"])[0] ?>
+  <? var randNum = Math.floor(Math.random() * (Math.floor(dataArray.length))); ?>
+  <? var searchString = dataArray[randNum]["productName"] ?>
+  <? jo.user = dataArray; ?>
+  <? var today = new Date(); ?>
+  <? var rule = today.toDateString() + " - " + today.toTimeString() ?>
+  <? form.addSectionHeaderItem().setTitle(rule) ?>
+  <? var coTable = jo.user.map((r)=>{ ?>
+      <? var productItemVideo = coUtility(r["productName"])[0] ?>
+      <? form.addSectionHeaderItem().setTitle(r["productName"] + ": price: " + r["rand7"] + ": cpi: " + r["rand8"]) ?>
+      \n\n\n\n 
+      <? }).toString().replace(/,/g, "") ?>
+  <? var result = JSON.stringify(coTable); ?>
+  <? baseUrl = getUrl(ScriptApp); ?>
+  <? inventoryUrl = getUrl(ScriptApp); ?>
+  <? financeUrl = getUrl(ScriptApp); ?>
+  <div class="row">
     <div class="col s10 card-panel l12 m12 push-s1">
     <div class="video-container amber" style="clear: both">
     <div class="col s12 l12 m12 receipt deep-purple darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="${url}" 
+      src="<?!= url ?>" 
       width="100%"
       height="100%"
       allow="autoplay"
@@ -605,94 +607,62 @@ var dtlsStore = function (e) {
       allowfullscreen
       ></iframe>
     </div></div></div></div>`
-  ).getRawContent();
+  )
+    .evaluate()
+    .getContent();
 };
 
 var generalWorkInvoice = function (clientName) {
-  var rndClient = coUtility(clientName)[0];
-  var dtlsUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.videoPage&args=";
-  var form = FormApp.create(rndClient.rndTitle);
-  form
-    .addVideoItem()
-    .setAlignment(FormApp.Alignment.CENTER)
-    .setWidth(360)
-    .setVideoUrl(rndClient.videoItemUrl)
-    .setHelpText(rndClient.videoItemUrl);
-  form.addDateItem().setTitle("Invoice Date").setRequired(true);
-  form.addTextItem().setTitle("Car ").setRequired(true);
-  form.addTextItem().setTitle("Deliver/Pickup ").setRequired(true);
-  form.addTextItem().setTitle("Vin/STK # ").setRequired(true);
-  form.addTextItem().setTitle("Delivery Address ").setRequired(true);
-  form.addTextItem().setTitle("Labor ").setRequired(true);
-  form.addTextItem().setTitle("Gas ").setRequired(true);
-  form.addTextItem().setTitle("Total ").setRequired(false);
-  form.addTextItem().setTitle("Delivery Time ").setRequired(false);
-  form.addTextItem().setTitle("Pickup Address ").setRequired(false);
-  form
-    .addSectionHeaderItem()
-    .setTitle("Company Info")
-    .setHelpText(dtlsUrl + rndClient.rndTitle)
-    .setRequired(false);
-  if (typeof rndClient.rndTicker !== "undefined") {
-    form
-      .addSectionHeaderItem()
-      .setTitle(rndClient.rndTicker)
-      .setHelpText(rndClient.secUrl)
-      .setRequired(false);
-    form.addTextItem().setTitle("Industry").setRequired(true);
-    form.addTextItem().setTitle("Sector").setRequired(true);
-    form
-      .addParagraphTextItem()
-      .setTitle("Industry/Market Corrections")
-      .setRequired(false);
-    form.addParagraphTextItem().setTitle("News").setRequired(false);
-    form
-      .addParagraphTextItem()
-      .setTitle("Economic/Business Cycles")
-      .setRequired(false);
-    form.addTextItem().setTitle("Stock Price").setRequired(true);
-    form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-    form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-    form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
-    form.addTextItem().setTitle("Total Equity").setRequired(false);
-    form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Cash & Marketable Securities")
-      .setRequired(true);
-    form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-    form.addTextItem().setTitle("Inventories").setRequired(true);
-    form.addTextItem().setTitle("Long-term Investments").setRequired(false);
-    form.addTextItem().setTitle("Net PP&E").setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Current Financial Liabilities")
-      .setRequired(true);
-    form
-      .addTextItem()
-      .setTitle("Long-term Interest-bearing Debts")
-      .setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Current Year Total Earnings")
-      .setRequired(false);
-    form.addTextItem().setTitle("Base Year Total Earnings").setRequired(false);
-  }
-  form.addTextItem().setTitle("Your Name").setRequired(true);
-  form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-  form
-    .setTitle(rndClient.rndTitle)
-    .setConfirmationMessage("Thanks for your feedback !!");
-  var url = form.getPublishedUrl();
   return HtmlService.createTemplate(
-    `<div class="row">
+    `
+    <? var rndClient = coUtility(${JSON.stringify(clientName)})[0]; ?>
+    <? var dtlsUrl = "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args="; ?>
+    <?  var form = FormApp.create(rndClient.rndTitle);  ?>
+    <?  form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(rndClient.videoItemUrl).setHelpText(rndClient.videoItemUrl); ?>
+    <?  form.addDateItem().setTitle('Invoice Date').setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Car ").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Deliver/Pickup ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Vin/STK # ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Delivery Address ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Labor ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Gas ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Total ").setRequired(false) ?>
+    <?  form.addTextItem().setTitle("Delivery Time ").setRequired(false) ?>
+    <?  form.addTextItem().setTitle("Pickup Address ").setRequired(false) ?>
+    <?  form.addSectionHeaderItem().setTitle("Company Info").setHelpText(dtlsUrl + encodeURIComponent(rndClient.rndTitle)); ?>
+    <?  if (typeof rndClient.rndTicker !== "undefined") { ?>
+    <?  form.addSectionHeaderItem().setTitle(rndClient.rndTicker).setHelpText(rndClient.secUrl); ?>
+    <?  form.addTextItem().setTitle("Industry").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Sector").setRequired(true); ?>
+    <?  form.addParagraphTextItem().setTitle("Industry/Market Corrections").setRequired(false); ?>
+    <?  form.addParagraphTextItem().setTitle("News").setRequired(false); ?>
+    <?  form.addParagraphTextItem().setTitle("Economic/Business Cycles").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Stock Price").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Outstanding Shares").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Quarterly Earnings").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Annualized Net Income").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Total Equity").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Retained Earnings").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Cash & Marketable Securities").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Accounts Receivable").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Inventories").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Long-term Investments").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Net PP&E").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Current Financial Liabilities").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Long-term Interest-bearing Debts").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Current Year Total Earnings").setRequired(false); ?>
+    <?  form.addTextItem().setTitle("Base Year Total Earnings").setRequired(false);} ?>
+    <?  form.addTextItem().setTitle('Your Name').setRequired(true); ?>
+    <?  form.addParagraphTextItem().setTitle('Your Message').setRequired(true); ?>
+    <?  form.setTitle(rndClient.rndTitle).setConfirmationMessage('Thanks for your feedback !!'); ?>
+    <?  var url = form.getPublishedUrl(); ?>
+    <div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
     <div class="video-container" style="clear: both">
     <div class="col s12 receipt deep-purple darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="${url}" 
+      src="<?!= url ?>" 
       width="100%"
       height="100%"
       allow="autoplay"
@@ -701,7 +671,20 @@ var generalWorkInvoice = function (clientName) {
       frameborder="0"
       allowfullscreen
       ></iframe>
-    </div></div></div></div>`
+    </div></div></div></div>
+    <? var liveForm = FormApp.openById(form.getId()) ?>
+    <? var formResponses = liveForm.getResponses() ?>
+    <? for (var i = 0; i < formResponses.length; i++) { ?>
+    <? var formResponse = formResponses[i]; ?>
+    <? var itemResponses = formResponse.getItemResponses(); ?>
+    <? for (var j = 0; j < itemResponses.length; j++) { ?>
+      <? var itemResponse = itemResponses[j]; ?>
+      <? console.log('Response #%s to the question "%s" was "%s"', 
+         (i + 1).toString(), 
+         itemResponse.getItem().getTitle(), 
+          itemResponse.getResponse()); ?>
+    <? } ?>
+  <? } ?>`
   )
     .evaluate()
     .getContent();

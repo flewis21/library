@@ -207,7 +207,7 @@ var epaData = function (e) {
           document.getElementById("linkFOLLOW").click()
           document.getElementById("prefTime").value = "";})()});
       var elems = document.getElementById("prefTime");
-      var instances = M.FormSelect.init(elems, options);
+      var instances = M.FormSelect.init(elems);
       `
   ).getContent();
   html.materializeJs = HtmlService.createHtmlOutput(
@@ -482,15 +482,15 @@ var newEPAData = function (rawData) {
 
 var oldEPA = function (rndTitle) {
   var urlPlayer =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var urlProduct =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var urlEpaRegNo =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var urlCasNo =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var urlPcCode =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var arrayMath = [`acme`];
   var product =
     rndTitle ||
@@ -502,79 +502,95 @@ var oldEPA = function (rndTitle) {
   var test = productNamePartial(product);
   var test2 = productRegNo(test["eparegno"]);
   var uniqueCo = [];
-  for (var i = 0, l = test2["active_ingredients"].length; i < l; i++) {
-    if (test2["active_ingredients"][i]["active_ing"]) {
-      var pIName = productIngName(test2["active_ingredients"][i]["active_ing"]);
-      uniqueCo.push(pIName["items"]);
+  if (test2 && test2["active_ingredients"].length > 0) {
+    for (var i = 0, l = test2["active_ingredients"].length; i < l; i++) {
+      if (test2["active_ingredients"][i]["active_ing"]) {
+        var pIName = productIngName(
+          test2["active_ingredients"][i]["active_ing"]
+        );
+        uniqueCo.push(pIName["items"]);
+      }
+    }
+    var rndIng = Math.floor(
+      Math.random() * Math.floor(test2["active_ingredients"].length)
+    );
+    // var uniqueCo = productIngName(test2["active_ingredients"][rndIng]["active_ing"])
+    var productRnD =
+      test2["active_ingredients"][0]["active_ing"] ||
+      uniqueCo.toString().split(" ")[
+        Math.floor(
+          Math.random() * Math.floor(uniqueCo.toString().split(" ").length)
+        )
+      ];
+  } else {
+    for (var key in test) {
+      uniqueCo.push(test[key]);
     }
   }
-  var rndIng = Math.floor(
-    Math.random() * Math.floor(test2["active_ingredients"].length)
-  );
-  // var uniqueCo = productIngName(test2["active_ingredients"][rndIng]["active_ing"])
-  var productRnD =
-    test2["active_ingredients"][0]["active_ing"] ||
-    uniqueCo.toString().split(" ")[
-      Math.floor(
-        Math.random() * Math.floor(uniqueCo.toString().split(" ").length)
-      )
-    ];
-  // var randNum = Math.floor(Math.random() * (Math.floor(uniqueCo["items"].length)));
-  const titleKings = needCapital(rndTitle);
-  var uniqueCoArray = [];
-  for (var i = 0, l = uniqueCo.length; i < l; i++) {
-    uniqueCo[i].map((item) => {
-      uniqueCoArray.push(item);
-    });
-  }
-  // const uniqueCoArray = covArrays(uniqueCo["items"]);
-  const matches = [];
-  const alTheCo = uniqueCoArray
-    .sort((a, b) => a - b)
-    .filter((ac) => {
-      if (
-        !Utilities.jsonStringify(ac["registrationstatus"])
-          .toLowerCase()
-          .includes("cancelled")
-      )
-        matches.push(ac);
-    });
-  const titleMatches = [matches.toString().substring(titleKings)];
-  // console.log(Utilities.jsonStringify([titleMatches]))
-  var coTable = matches.map((r) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="${urlProduct}${encodeURIComponent(
-      r["productname"]
-    )}" target="_blank">${
-      r["productname"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-      r["eparegnumber"]
-    )}" target="_blank">${
-      r["eparegnumber"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-      r["registrationstatus"]
-    )}" target="_blank">${
-      r["registrationstatus"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlPlayer}${encodeURIComponent(
-      r["ingredientname"]
-    )}" target="_blank">${
-      r["ingredientname"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlCasNo}${encodeURIComponent(
-      r["casnumber"]
-    )}" target="_blank">${
-      r["casnumber"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlPcCode}${encodeURIComponent(
-      r["pccode"]
-    )}" target="_blank">${r["pccode"]}</a></td></tr>`;
-  });
-  const result = Utilities.jsonStringify(coTable);
-  const randomCoKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length)
-  ); // Math.floor(Math.random());
-  const uniqueCoKey = [uniqueCo].entries().next().value;
-  const randomCo = uniqueCoKey[1][randomCoKey];
-  const html = HtmlService.createTemplate(
-    `<body>
-      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+  if (uniqueCo.length > 0) {
+    // var randNum = Math.floor(Math.random() * (Math.floor(uniqueCo["items"].length)));
+    const titleKings = needCapital(rndTitle);
+    var uniqueCoArray = [];
+    for (var i = 0, l = uniqueCo.length; i < l; i++) {
+      uniqueCo[i].map((item) => {
+        uniqueCoArray.push(item);
+      });
+    }
+    // const uniqueCoArray = covArrays(uniqueCo["items"]);
+    const matches = [];
+    const alTheCo = uniqueCoArray
+      .sort((a, b) => a - b)
+      .filter((ac) => {
+        if (
+          !Utilities.jsonStringify(ac["registrationstatus"])
+            .toLowerCase()
+            .includes("cancelled")
+        )
+          matches.push(ac);
+      });
+    const titleMatches = [matches.toString().substring(titleKings)];
+    // console.log(Utilities.jsonStringify([titleMatches]))
+    var coTable = matches
+      .map((r) => {
+        return `<tr><td><a class="waves-effect waves-light btn" href="${urlProduct}${encodeURIComponent(
+          r["productname"]
+        )}" target="_blank">${
+          r["productname"]
+        }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
+          r["eparegnumber"]
+        )}" target="_blank">${
+          r["eparegnumber"]
+        }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
+          r["registrationstatus"]
+        )}" target="_blank">${
+          r["registrationstatus"]
+        }</a></td><td><a class="waves-effect waves-light btn" href="${urlPlayer}${encodeURIComponent(
+          r["ingredientname"]
+        )}" target="_blank">${
+          r["ingredientname"]
+        }</a></td><td><a class="waves-effect waves-light btn" href="${urlCasNo}${encodeURIComponent(
+          r["casnumber"]
+        )}" target="_blank">${
+          r["casnumber"]
+        }</a></td><td><a class="waves-effect waves-light btn" href="${urlPcCode}${encodeURIComponent(
+          r["pccode"]
+        )}" target="_blank">${r["pccode"]}</a></td></tr>`;
+      })
+      .toString()
+      .replace(/,/g, "");
+    const result = Utilities.jsonStringify(coTable);
+    const randomCoKey = Math.floor(
+      Math.random() * Math.floor(uniqueCoArray.length)
+    ); // Math.floor(Math.random());
+    const uniqueCoKey = [uniqueCo].entries().next().value;
+    const randomCo = uniqueCoKey[1][randomCoKey];
+    const html = HtmlService.createTemplate(
+      `<body>
+        <div class="row">
+        <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+        <div class="col s12 receipt red">
+        <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
         <thead>
           <tr>
             <th>Product Name</th>
@@ -588,8 +604,9 @@ var oldEPA = function (rndTitle) {
         <tbody id="epaData">
         </tbody>
       </table>
+      </div></div></div></div>
       <div class="row">
-      <div class="col s6 push-s1 push-m1 push-l2">
+      <div class="col s10 card-panel red push-s1 push-m1 push-l1">
       <div class="container">
       <div class="col s12 receipt red">
       <span><input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
@@ -598,36 +615,39 @@ var oldEPA = function (rndTitle) {
     <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
     <script>document.addEventListener("DOMContentLoaded", function()
       {document.getElementById("epaData").innerHTML = ${result};})</script>`
-  );
-  html.topScript = function () {
-    //console.log(document.getElementById("test").innerHTML)
-    // Init a timeout variable to be used below
-    let timeout = null;
-    (() => {
-      // Clear the timeout if it has already been set.
-      // This will prevent the previous task from executing
-      // if it has been less than <MILLISECONDS>
-      // clearTimeout(timeout);
-      // Make a new timeout set to go off in 1000ms (1 second)
-      // timeout = setTimeout
-      // (function  ()
-      // {console.log('Input Value:', textInput.value);}, 5000)();
-      if (typeof url === "undefined") {
-        var urlData = document.getElementById("url").value;
-        var url = urlData.toString();
-      }
-      var uname = document.getElementById("username").value;
-      var linkFollow = document.createElement("a");
-      linkFollow.href =
-        url + "?func=foo.oldEPA" + "&args=" + encodeURIComponent(uname);
-      linkFollow.id = "linkFOLLOW";
-      linkFollow.target = "_top";
-      document.body.appendChild(linkFollow);
-      document.getElementById("linkFOLLOW").click();
-      document.getElementById("username").value = "";
-    })();
-  }; //Global object closed
-  return html.evaluate().getContent();
+    );
+    html.topScript = function () {
+      //console.log(document.getElementById("test").innerHTML)
+      // Init a timeout variable to be used below
+      let timeout = null;
+      (() => {
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        // clearTimeout(timeout);
+        // Make a new timeout set to go off in 1000ms (1 second)
+        // timeout = setTimeout
+        // (function  ()
+        // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined") {
+          var urlData = document.getElementById("url").value;
+          var url = urlData.toString();
+        }
+        var uname = document.getElementById("username").value;
+        var linkFollow = document.createElement("a");
+        linkFollow.href =
+          url + "?func=foo.oldEPA" + "&args=" + encodeURIComponent(uname);
+        linkFollow.id = "linkFOLLOW";
+        linkFollow.target = "_top";
+        document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("username").value = "";
+      })();
+    }; //Global object closed
+    return html.evaluate().getContent();
+  } else {
+    return;
+  }
 };
 
 var productTime = function (product) {

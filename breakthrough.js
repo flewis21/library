@@ -239,10 +239,6 @@ var breakthrough = function (e) {
   // html.rule = rule;
   html.breakUrl = breakUrl;
   html.myVideo = percent;
-  const idArray = needPastTime(percent);
-  const vidIdObject = covObjects(idArray, ["youTubeId"]);
-  const rdmVidId = Math.floor(Math.random() * Math.floor(vidIdObject.length));
-  html.myTitle = vidIdObject[rdmVidId]["youTubeId"];
   html.topScript = function () {
     console.log(document.getElementById("test").innerHTML);
     // Init a timeout variable to be used below

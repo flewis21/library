@@ -4,7 +4,7 @@ function seoKeyword() {
 
 function needPastTime(searchString) {
   const videoSearch = urlDataSource(
-    `https://www.bing.com/search?q=${encodeURIComponent(
+    `http://www.bing.com/search?q=${encodeURIComponent(
       searchString
     )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`
   );
@@ -61,7 +61,7 @@ function needPastTime(searchString) {
       }
     });
   });
-  //  console.log(uniqueVid)
+  console.log(uniqueVid);
   return uniqueVid.sort((a, b) => a - b);
 }
 
@@ -99,7 +99,7 @@ function videoPage(search) {
 
 function videoPlayer(searchString) {
   var url =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.seoSheet&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=seoSheet&args=";
   //Youtube Widget
   const idArray = needPastTime(searchString);
   const randomPlaylist = [];

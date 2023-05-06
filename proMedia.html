@@ -4,6 +4,10 @@
     <base target="_top" />
   </head>
   <body class="blue" id="template">
+    <? var randomSECCo = coUtility("*")[0] ?>
+    <? var myVid = randomSECCo.rndTitle ?>
+    <? var myVidId = randomSECCo.videoItemUrl || coUtility()[0].videoItemUrl?>
+    <? var infoLink = randomSECCo.videoItemUrl ?>
     <nav class="amber darken-4">
       <a href="#" target="_top">Back</a>
       <a
@@ -16,7 +20,10 @@
         <div class="container row valign-wrapper"><?!= rule() ?></div>
         <div class="container black darken-4 scale-transition">
           <div class="col s12 l12" id="iframePlayer">
-            <?!= videoPlayer("*") ?>
+            <? var form = FormApp.create(myVid.toUpperCase()) ?>
+            <? var formUrl = form.getPublishedUrl() ?>
+            <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(myVidId) ?>
+            <?!= seoSheet(myVid) ?>
           </div>
         </div>
       </div>

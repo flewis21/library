@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" id="test">
   <body class="blue" id="template">
+    <? var randomSECCo = coUtility("Say it right! Nelly Furtado")[0] ?>
+    <? var myVid = randomSECCo.rndTitle ?>
+    <? var myVidId = randomSECCo.videoItemUrl || coUtility()[0].videoItemUrl?>
+    <? var infoLink = randomSECCo.videoItemUrl ?>
     <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt">
       <?!= rule() ?>
     </div>
@@ -17,14 +21,27 @@
     <div>
       <ul class="table-body menu-img z-depth-5"></ul>
     </div>
-    <div
-      class="container row s1 menu-img valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
-    >
-      <!-- <div id="player1"><?!= videoPlayer("number eleven digital media channel being creative Dontime Life Services") ?></div> -->
-      <div id="player1"><?!= videoPlayer("Say it right! Nelly Furtado") ?></div>
+    <div class="row">
+      <nav
+        class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in"
+        style="font-size: 30px"
+      >
+        <div class="container">
+          <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+            <div
+              class="container menu-img valign-wrapper grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
+            >
+              <? var form = FormApp.create(myVid.toUpperCase()) ?>
+              <? var formUrl = form.getPublishedUrl() ?>
+              <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(myVidId) ?>
+              <?!= seoSheet(myVid) ?>
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
     <div
-      class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt"
+      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
     >
       <input
         class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
@@ -35,7 +52,7 @@
     </div>
 
     <div
-      class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt"
+      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
     >
       <input
         class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
@@ -55,7 +72,7 @@
         M.Timepicker.init(timePicker, { defaultTime: "now" });
         google.script.run
           .withSuccessHandler(populateDates)
-          .runAll("foo.busyDates", []);
+          .runBoilerplate("busyDates", []);
         function populateDates(disabledDays) {
           let datePicker = document.getElementById("prefDate");
           M.Datepicker.init(datePicker, {

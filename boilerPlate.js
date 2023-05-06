@@ -528,6 +528,90 @@ var randomSubstance = function (importedData, index, loopLength) {
   console.log();
 };
 
+var substanceVegas = function (importedData, index, loopLength) {
+  var arrData = importedData || [
+    "e",
+    "E",
+    "t",
+    "T",
+    "a",
+    "A",
+    "o",
+    "O",
+    "n",
+    "N",
+    "r",
+    "R",
+    "i",
+    "I",
+    "s",
+    "S",
+    "h",
+    "H",
+    "d",
+    "D",
+    "l",
+    "L",
+    "f",
+    "F",
+    "c",
+    "C",
+    "m",
+    "M",
+    "u",
+    "U",
+    "g",
+    "G",
+    "y",
+    "Y",
+    "p",
+    "P",
+    "w",
+    "W",
+    "b",
+    "B",
+    "v",
+    "V",
+    "k",
+    "K",
+    "x",
+    "X",
+    "j",
+    "J",
+    "q",
+    "Q",
+    "z",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "_",
+  ];
+  var newArr = [];
+  var i = index || 0;
+  var l = loopLength || 1;
+  for (i, l; i < l; i++) {
+    newArr.push(
+      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+    );
+  }
+  var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
+  newArr
+    .map((w) => {
+      return w[0].toString();
+    })
+    .join("");
+  return randomWord;
+  console.log();
+};
+
 function rule() {
   var today = new Date();
   var todayString = today.toDateString() + " - " + today.toTimeString();
