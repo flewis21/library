@@ -23,7 +23,7 @@ function dataEntry() {
           contentApp(
             "<html id='test'>\n\n<body>\n<div class='container'>\n<h1>Hello</h1>\n<!--Ideally these elements aren't created until it's confirmed that the client supports video/camera, but for the sake of illustrating the elements involved, they are created with markup (not JavaScript)-->\n<video id='video' width='640' height='480' autoplay></video>\n<button id='snap'>Snap Photo</button>\n<canvas id='canvas' width='640' height='480'></canvas>\n<label>ID:</label><input type='text' id='id'><br>\n<label>Search:</label><input type='text' id='search'><br>\n<div class='row'>\n<select id='dynSearch'>\n<option disabled selected>Search</option>\n<option id='dynList'></option>\n</select>\n</div>\n<label>Date:</label><input type='text' id='date'>\n<label>Car:</label><input type='text' id='car'><br>\n<label>Delivery/Pickup:</label><input type='text' id='jobType'>\n<label>Vin/Stock:</label><input type='text' id='vin'><br>\n<label>Delivery Address:</label><input type='text' id='toAddress'>\n<label>Labor:</label><input type='text' id='lab'><br>\n<label>Pickup Address:</label><input type='text' id='fromAddress'>\n<label>Gas Money:</label><input type='text' id='gas'><br>\n<label>Trip Time:</label><input type='text' id='duration'><br>\n<label>Total:</label><input type='text' id='grandTotal'><br>\n<button id='btn'>Run It!</button>\n<script>\ndocument.addEventListener('DOMContentLoaded', <?!= runIt ?>);\n</script>\n</div>\n<input type='hidden' value='<?= breakUrl ?>' id='url' />\n</body>\n</html>\n",
             {
-              breakUrl: getUrl(ScriptApp) + "?default=ssDataEntry",
+              breakUrl: getUrl(ScriptApp),
               list: list.map(function (r) {
                 return r[0];
               }),
@@ -58,7 +58,7 @@ function dataEntry() {
                   var findMe = document.getElementById("search").value;
                   google.script.run
                     .withSuccessHandler(doStuff)
-                    .runAll("boilerplate.userSearch", [findMe]);
+                    .runBoilerpate("userSearch", [findMe]);
                   document.getElementById("search").value = "";
                   document.getElementById("dynList").innerHTML = "";
                 }
@@ -66,7 +66,7 @@ function dataEntry() {
                   var findMe = document.getElementById("search").value;
                   google.script.run
                     .withSuccessHandler(recordsFound)
-                    .runAll("boilerplate.userSearch", [findMe]);
+                    .runBoilerpate("userSearch", [findMe]);
                 }
                 var video = document.getElementById("video");
                 if (

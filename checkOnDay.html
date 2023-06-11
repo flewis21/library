@@ -6,9 +6,10 @@
   <body>
     <? var randomSECCo = coUtility()[0] ?>
     <? var myVid = randomSECCo.rndTitle ?>
+    <? var infoLink = randomSECCo.videoItemUrl ?>
     <nav>
       <a
-        href="<?!= getUrl(ScriptApp) ?>?func=boilerplate.renderFile&args=checkOnDay"
+        href="<?!= getUrl(ScriptApp) ?>?func=renderFile&args=checkOnDay"
         target="_top"
         >Company of the day!</a
       >
@@ -41,7 +42,7 @@
       </div>
     </div>
     <div id="videoPage">
-      <?!= seoSheet(myVid) ?>
+      <?!= generalWorkInvoice(myVid) ?>
     </div>
   </body>
 </html>

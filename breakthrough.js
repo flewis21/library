@@ -37,7 +37,7 @@ var rndCoin = function () {
       break;
     } else {
       for (var i = judge, l = trial.length; i < l; i++) {
-        console.log(Utilities.jsonStringify(trial[judge]));
+        console.log(JSON.stringify(trial[judge]));
       }
     }
   }
@@ -52,7 +52,7 @@ var rndCoin = function () {
       }
     }
   });
-  return dtlsCapital(formUrl);
+  return geneFrame(formUrl);
 };
 
 var rndDice = function () {
@@ -131,12 +131,12 @@ var rndDice = function () {
   trial.map((seo) => {
     return form.addSectionHeaderItem().setTitle(randomSubstance([seo]));
   });
-  return dtlsCapital(formUrl);
+  return geneFrame(formUrl);
 };
 
 var breakthrough = function (e) {
   var username = e;
-  const data = coUtility(e || randomSubstance())[0];
+  const data = needUtility(e || randomSubstance(null, 0, 1))[0];
   if (!username) {
     var percent = Math.floor(
       Math.random() * Math.floor(data.playlistArr.length)
@@ -168,7 +168,7 @@ var breakthrough = function (e) {
     list.push([percent]).toString();
   }
   var breakUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dtlsCalculator&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args=";
   var today = new Date();
   // var rule = today.toDateString() + " - " + today.toTimeString()
   var html = HtmlService.createTemplate(`
@@ -178,7 +178,6 @@ var breakthrough = function (e) {
           <base target="_self"></base>
         </head>
         <body>
-          <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><?!= rule() ?></div>
         <div class="row">
         <div class="col s10 m12 l12">
           <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover btn-large receipt">Don'time Life Services!</h1></span></a>
@@ -187,7 +186,7 @@ var breakthrough = function (e) {
         <div class="col s10 card-panel l12 m12 push-s1">
         <div class="video-container grey darken-4 z-depth-5">
         <div class="col s12 l12 m12" id="player1">
-          <?!= videoPlayer(myVideo) ?></div>
+          <?!= dtlsVegas(myVideo) ?></div>
         </div></div></div>
         <div class="row">
         <div class="col s10 card-panel black l12 m12 push-s1">
@@ -198,30 +197,6 @@ var breakthrough = function (e) {
           <!-- Compiled and minified JavaScript -->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
-          <script>document.addEventListener("DOMContentLoaded", 
-            function appJS()
-                      {
-                          // mod the array
-                          let timePicker = document.getElementById('prefTime');
-                          M.Timepicker.init(timePicker, { defaultTime: "now" });
-                  google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
-                  function populateDates(disabledDays) 
-                                                      {
-                      let datePicker = document.getElementById('prefDate');
-                      M.Datepicker.init(datePicker, 
-                                                    { 
-                          minDate: new Date(), setDefaultDate: true,
-                          disableDayFn: 
-                          function(day) 
-                                                      {
-                              return disabledDays.indexOf(day.valueOf()) > -1;
-                                                      }
-                                                    });
-                                                      };
-
-                      })                    
-
-          </script>
           <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
         </body>
     </html>`);
@@ -259,9 +234,7 @@ var breakthrough = function (e) {
       var uname = document.getElementById("username").value;
       var linkFollow = document.createElement("a");
       linkFollow.href =
-        url +
-        "?func=boilerplate.dtlsCalculator&args=" +
-        encodeURIComponent(uname);
+        url + "?func=dtlsCalculator&args=" + encodeURIComponent(uname);
       linkFollow.id = "linkFOLLOW";
       linkFollow.target = "popup";
       document.body.appendChild(linkFollow);

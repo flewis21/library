@@ -13,8 +13,10 @@
     <button id="btn">Run It!</button>
     <script>
       google.script.run.epaData();
-      google.script.run.withSuccessHandler(pageLink).getUrl();
-      google.script.withSuccessHandler(dateRule).run.rule();
+      google.script.run
+        .withSuccessHandler(pageLink)
+        .runBoilerplate("getUrl", []);
+      google.script.run.withSuccessHandler(dateRule).runBoilerplate("rule", []);
       document.getElementById("prefTime").value = dateRule;
       document.getElementById("breakUrl").value = pageLink;
     </script>

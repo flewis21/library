@@ -1,14 +1,21 @@
+<!DOCTYPE html>
 <html id="test">
   <head>
     <base target="_self" />
   </head>
   <body>
-    <? var randomSECCo = coUtility(randomSubstance(["0","1","2","3","4","5","6","7","8","9"], 0, 3))[0] ?>
+    <? var randomSECCo = needUtility()[0] ?>
     <? var myVid = randomSECCo.rndTitle ?>
-    <? var myVidId = randomSECCo.videoItemUrl ?>
-    <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt">
-      <?!= rule() ?>
-    </div>
+    <? var percent = randomSubstance(["0","1","2","3","4","5","6","7","8","9"], 0, 3) ?>
+    <? var list = [] ?>
+    <? if (0 < percent) { ?>
+    <? for (var i=0,l=percent;i<l; i++) { ?>
+    <? var result = JSON.stringify(i)*percent - Math.floor(JSON.stringify(i)*percent) ?>
+    <? if (result === 0) { ?>
+    <? list.push([JSON.stringify(i)*percent + " " + "out of" + " " + JSON.stringify(i) + " " + "odds"]) ?>
+    <? if (JSON.stringify(i) >= 100) {break}}}} else { ?>
+    <? list.push([percent]).toString() ?>
+    <? } ?>
     <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"
       ><span
         ><h1
@@ -20,7 +27,7 @@
     >
     <div>
       <a
-        href="https://www.youtube.com/watch?v=<?= randomSECCo.rndTitle ?>"
+        href="https://www.youtube.com/watch?v=<?= randomSECCo.videoItem ?>"
         target="_blank"
         ><h1
           class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt"
@@ -31,79 +38,47 @@
       >
     </div>
     <div class="menu-img container grey darken-4 z-depth-5">
-      <div id="videoPage">
-        <? var form = FormApp.create(myVid) ?>
-        <? var formUrl = form.getPublishedUrl() ?>
-        <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(600).setVideoUrl(myVidId) ?>
-        <?!= seoSheet(myVid) ?>
+      <div id="videoPage"></div>
+    </div>
+    <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 receipt deep-purple darken-1">
+            <span
+              ><input
+                placeholder="Event Horizon..."
+                class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large"
+                id="username"
+                type="search"
+            /></span>
+          </div>
+        </div>
       </div>
     </div>
-    <span
-      ><input
-        placeholder="Event Horizon..."
-        class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large"
-        id="username"
-        type="search"
-    /></span>
-    <div
-      class="dotted-border menu-img z-depth-5 btn-large card-panel amber z-depth-5"
-    >
-      <ul
-        class="hide-on-med-and-down receipt_company_info_receipt_footer receipt breakthrough amber menu-img btn-large video-container valign-wrapper darken-4 z-depth-5 scale-in"
-      >
-        <p
-          id="list"
-          class="toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"
-        >
-          <?!= randomSECCo.playlistArr.length ?>
-        </p>
-      </ul>
+    <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 menu-img receipt deep-purple darken-1">
+            <div
+              class="dotted-border menu-img z-depth-5 btn-large card-panel amber z-depth-5"
+            >
+              <ul
+                class="hide-on-med-and-down receipt_company_info_receipt_footer receipt breakthrough amber menu-img btn-large valign-wrapper darken-4 z-depth-5 scale-in"
+              >
+                <p
+                  id="list"
+                  class="col s12 toolbar toolbar-icon toolbar_iconHover amber darken-4 receipt scale-out"
+                >
+                  <?!= newList ?>
+                </p>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
-    >
-      <input
-        class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
-        id="prefDate"
-        type="text"
-        placeholder="Book a date"
-      />
-    </div>
-
-    <div
-      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
-    >
-      <input
-        class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
-        id="prefTime"
-        type="text"
-        placeholder="Book a time"
-      />
-    </div>
-
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", appJS);
-      function appJS() {
-        // mod the array
-        let timePicker = document.getElementById("prefTime");
-        M.Timepicker.init(timePicker, { defaultTime: "now" });
-        google.script.run
-          .withSuccessHandler(populateDates)
-          .runBoilerplate("busyDates", []);
-        function populateDates(disabledDays) {
-          let datePicker = document.getElementById("prefDate");
-          M.Datepicker.init(datePicker, {
-            minDate: new Date(),
-            setDefaultDate: true,
-            disableDayFn: function (day) {
-              return disabledDays.indexOf(day.valueOf()) > -1;
-            },
-          });
-        }
-      }
-    </script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
   </body>
 </html>

@@ -6,19 +6,25 @@ var dtls = function (func) {
     }
   }
   var rdmNumForName = Math.floor(Math.random() * Math.floor(appList.length));
-  var formName = func || appList[rdmNumForName];
-  if (typeof formsUrls(formName) !== "undefined") {
-    return dtlsMain(formName);
-  }
-  var form = FormApp.create(formName);
-  form.addParagraphTextItem().setHelpText(globalThis[formName].toString());
-  form.addTextItem().setTitle("Your Name").setRequired(true);
-  form.addDateItem().setTitle("Birth Date").setRequired(true);
-  form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-  form.setTitle(formName).setConfirmationMessage("Thanks for your feedback !!");
-  var url = form.getPublishedUrl();
-  return HtmlService.createTemplate(
-    `<div class="row">
+  var keysFunc = seoSheet(appList[rdmNumForName]).keyWords;
+  var formName =
+    func || keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))];
+  var form = formMaker(formName);
+  fileManager(formName, "Forms");
+  if (typeof form === "object") {
+    if (appList.indexOf(formName) !== -1) {
+      form.addParagraphTextItem().setHelpText(globalThis[formName].toString());
+    }
+    form.addTextItem().setTitle("Your Name").setRequired(true);
+    form.addDateItem().setTitle("Birth Date").setRequired(true);
+    form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+    form
+      .setTitle(formName)
+      .setConfirmationMessage("Thanks for your feedback !!");
+    var url = form.getPublishedUrl();
+
+    return HtmlService.createTemplate(
+      `<div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
     <div class="video-container" style="clear: both">
     <div class="col s12 receipt deep-purple darken-1">
@@ -34,14 +40,17 @@ var dtls = function (func) {
       allowfullscreen
       ></iframe>
     </div></div></div></div>`
-  )
-    .evaluate()
-    .getContent();
+    )
+      .evaluate()
+      .getContent();
+  } else {
+    return geneFrame(formName);
+  }
 };
 
 var dtlsCalculator = function (e) {
   var username = e;
-  const data = coUtility(
+  const data = needUtility(
     randomSubstance(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], 0, 2)
   )[0];
   const rndNumData = Math.floor(
@@ -53,12 +62,13 @@ var dtlsCalculator = function (e) {
     var percent = username;
   }
   if (typeof username === "undefined") {
-    var form = FormApp.create(data.rndTitle);
+    var form = formMaker(data.rndTitle);
     form
       .setTitle(data.rndTitle)
       .setConfirmationMessage("Thanks for your feedback !!");
   } else {
-    var form = FormApp.create(username);
+    var form = formMaker(username);
+    fileManager(username, "Forms");
     form
       .setTitle(username)
       .setConfirmationMessage("Thanks for your feedback !!");
@@ -89,26 +99,23 @@ var dtlsCalculator = function (e) {
   const breakUrl =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args=";
   const vegasUrl =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCapital&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsVegas&args=";
   const today = new Date();
   const rule = today.toDateString() + " - " + today.toTimeString();
   form.addSectionHeaderItem().setTitle(rule);
-  var videIdUrl =
-    data.playlistArr[
-      Math.floor(Math.random() * Math.floor(data.playlistArr.length))
-    ];
+  var videIdUrl = data.playlistArr[rndNumData];
   var globalYoutubeUrl = "https://www.youtube.com/watch?v=";
   if (typeof data.videoItem !== "undefined") {
     form
       .addVideoItem()
       .setAlignment(FormApp.Alignment.CENTER)
       .setWidth(360)
-      .setVideoUrl(data.videItemUrl)
-      .setHelpText(data.videItemUrl);
+      .setVideoUrl(globalYoutubeUrl + videIdUrl)
+      .setHelpText(globalYoutubeUrl + videIdUrl);
   }
   const htmlList = list
     .map(function (r) {
-      var rndFormArray = coUtility(r[0])[0];
+      var rndFormArray = needUtility(r[0])[0];
       var videoVegas = substanceVegas(null, 0, 11);
       var rndFormVideo =
         rndFormArray.playlistArr[
@@ -119,16 +126,18 @@ var dtlsCalculator = function (e) {
       return `${form
         .addSectionHeaderItem()
         .setTitle(r[0])
-        .setHelpText(vegasUrl + globalYoutubeUrl + videoVegas)}\n\n\n\n`;
+        .setHelpText(vegasUrl + globalYoutubeUrl + rndFormVideo)}\n\n\n\n`;
     })
     .toString()
     .replace(/,/g, "");
   const url = form.getPublishedUrl();
-  const html = HtmlService.createTemplate(
-    `<div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="video-container" style="clear: both">
-    <div class="col s12 receipt deep-purple darken-1">
+  // return geneFrame(url)
+  const html = HtmlService.createTemplate(`
+    <div class="row">
+    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s10 l10 m10 receipt black darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
       src="${url}" 
@@ -140,46 +149,16 @@ var dtlsCalculator = function (e) {
       frameborder="0"
       allowfullscreen
       ></iframe>
-    </div></div></div></div>`
-  );
+    </div></div></div></div></div>`);
   return html.evaluate().getContent();
 }; //:contentFile('uiAccess');
-
-var dtlsVegas = function () {
-  var rndId = substanceVegas(null, 0, 10);
-  var codedUrl = "https://www.youtube.com/watch?v=";
-  var form = FormApp.create(rndId);
-  var formUrl = form.getPublishedUrl();
-  form
-    .addVideoItem()
-    .setAlignment(FormApp.Alignment.CENTER)
-    .setWidth(612)
-    .setVideoUrl(rndId);
-  return seoCapital(formUrl);
-  var html = HtmlService.createTemplate(
-    `<html>
-      <body>
-        <div class="row">
-        <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-        <div class="container" style="clear: both">
-        <div class="col s12 receipt deep-purple darken-1">
-        <div id="vegas"></div>          
-        </div></div></div></div>
-        <script>document.addEventListener("DOMContentLoaded", lasVegas)
-        function lasVegas() {
-          
-          document.getElementById("vegas").innerHTML = ${result}
-        </script>
-      </body>
-    </html>`
-  );
-  return html.getRawContent();
-};
 
 var dtlsEnvironment = function (rndSubstance) {
   var dtlsUrl =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args=";
-  var arrayMath = [`${randomSubstance()} ${randomSubstance()}`];
+  var arrayMath = [
+    `${randomSubstance(null, 0, 2 * 3)} ${randomSubstance(null, 0, 3 * 5)}`,
+  ];
   var product =
     rndSubstance ||
     arrayMath
@@ -192,7 +171,28 @@ var dtlsEnvironment = function (rndSubstance) {
     ];
   var isProduct = formsUrls(product);
   if (typeof isProduct !== "undefined") {
-    return dtlsMain(product);
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return HtmlService.createTemplate(
+      `
+    <div class="row">
+    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s10 l10 m10 receipt black darken-1">
+    <iframe 
+      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+      src=${formUrl}
+      width="100%"
+      height="100%"
+      allow="autoplay"
+      allow="encrypted-media"
+      title="Dontime Life Website"
+      frameborder="0"
+      allowfullscreen
+      ></iframe>
+    </div></div></div></div>
+      `
+    ).getRawContent();
   }
   var data = coUtility(product)[0];
   if (typeof data.rndTitle !== "undefined") {
@@ -258,7 +258,7 @@ var dtlsEnvironment = function (rndSubstance) {
           .sort((a, b) => a - b)
           .filter((ac) => {
             if (
-              Utilities.jsonStringify(ac["eparegnumber"])
+              JSON.stringify(ac["eparegnumber"])
                 .toLowerCase()
                 .includes(test2["eparegno"])
             )
@@ -295,7 +295,8 @@ var dtlsEnvironment = function (rndSubstance) {
     var watchV = data.videoItem;
     var playVid = data.videoItemUrl;
   }
-  var form = FormApp.create(coInfo);
+  var form = formMaker(coInfo);
+  fileManager(coInfo, "Forms");
   form
     .addVideoItem()
     .setAlignment(FormApp.Alignment.CENTER)
@@ -386,6 +387,7 @@ var dtlsEnvironment = function (rndSubstance) {
   form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
   form.setTitle(coInfo).setConfirmationMessage("Thanks for your feedback !!");
   var url = form.getPublishedUrl();
+  return geneFrame(url);
   return HtmlService.createTemplate(
     `<div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
@@ -419,13 +421,9 @@ var dtlsInvestor = function (coKey) {
     }
   }
   if (typeof coData.rndTicker !== "undefined") {
-    var form = FormApp.create(coData.rndTitle);
-    form
-      .addVideoItem()
-      .setAlignment(FormApp.Alignment.CENTER)
-      .setHelpText(coData.videoItemUrl)
-      .setVideoUrl(coData.videoItemUrl)
-      .setWidth(360);
+    var form = formMaker(coData.rndTitle);
+    fileManager(coData.rndTitle, "Forms");
+    form.addParagraphTextItem().setTitle();
     form
       .addSectionHeaderItem()
       .setTitle(coData.rndTicker)
@@ -475,6 +473,7 @@ var dtlsInvestor = function (coKey) {
       .setTitle(coData.rndTitle)
       .setConfirmationMessage("Thanks for your feedback !!");
     var url = form.getPublishedUrl();
+    return geneFrame(url);
     return HtmlService.createTemplate(
       `<div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
@@ -500,18 +499,37 @@ var dtlsInvestor = function (coKey) {
   }
 };
 
-var dtlsMain = function (file) {
-  var fileX = formsUrls(file);
+var mainMan = function (mainFile) {
+  // var mainFile = "wild"
+  var stringSplit = mainFile.split(" ");
+  var lowerCaseS = [];
+  testData([stringSplit]).map((increase) => {
+    if (lowerCaseS.indexOf(increase) === -1) {
+      lowerCaseS.push(increase);
+    }
+  });
+  for (var i = 0, l = lowerCaseS.length; i < l; i++) {
+    if (typeof lowerCaseS[i] !== "undefined") {
+      var fileX = searchDataTree(mainFile);
+    }
+  }
   if (fileX) {
-    var url = FormApp.openByUrl(fileX).getPublishedUrl();
-    return HtmlService.createTemplate(
-      `<div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="video-container" style="clear: both">
-    <div class="col s12 receipt deep-purple darken-1">
+    var appType = fileX.split("/");
+    if (appType.indexOf("spreadsheets") === -1) {
+      var url = FormApp.openByUrl(fileX).getPublishedUrl();
+    }
+  }
+  return HtmlService.createTemplate(
+    contentApp(
+      `
+    <div class="row">
+    <div class="col s10 l12 m12 card-panel push-s1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s12 l12 m12 receipt black darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="${url}" 
+      src=<?= url ?>
       width="100%"
       height="100%"
       allow="autoplay"
@@ -520,16 +538,51 @@ var dtlsMain = function (file) {
       frameborder="0"
       allowfullscreen
       ></iframe>
-    </div></div></div></div>`
+    </div></div></div></div>
+    `,
+
+      { url: url }
+    )
+  )
+    .evaluate()
+    .getContent();
+};
+
+var dtlsMain = function (file) {
+  var isProduct = formsUrls(file);
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return HtmlService.createTemplate(
+      `
+    <div class="row">
+    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s10 l10 m10 receipt black darken-1">
+    <iframe 
+      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+      src=${formUrl}
+      width="100%"
+      height="100%"
+      allow="autoplay"
+      allow="encrypted-media"
+      title="Dontime Life Website"
+      frameborder="0"
+      allowfullscreen
+      ></iframe>
+    </div></div></div></div>
+      `
     )
       .evaluate()
       .getContent();
-  } else return;
+  }
 };
 
-var dtlsStore = function (e) {
+var dtlsStore = function (itemName) {
   return HtmlService.createTemplate(
-    `
+    contentApp(
+      `
   <? var urlSs = "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962" ?>
   <? var sheetName = "Inventory" ?>
   <? var sheet = ssGetSheetBySpreadsheetUrl(urlSs, sheetName).activate() ?>
@@ -569,22 +622,18 @@ var dtlsStore = function (e) {
       <? dataArray.push(record) ?>
       <? } ?>
       <? } ?>
-  <? var dataUtility = coUtility(${JSON.stringify(
-    e || randomSubstance(null, 0, 1)
-  )})[0] ?>
-  <? var form = FormApp.create(dataUtility.rndTitle) ?>
-  <? var url = form.getPublishedUrl(); ?>
-  <? form.setTitle(dataArray.length).setConfirmationMessage('Thanks for your feedback !!'); ?>  
-  <? var productData = coUtility(dataArray[Math.floor(Math.random() * (Math.floor(dataArray.length)))]["productName"])[0] ?>
+  <? var form = FormApp.create(sheetName) ?>
+  <? fileManager(sheetName, "Forms") ?>
+  <? var formUrl = form.getPublishedUrl(); ?>
+  <? form.setTitle(dataArray.length + " Items").setConfirmationMessage('Thanks for your feedback !!'); ?>
   <? var randNum = Math.floor(Math.random() * (Math.floor(dataArray.length))); ?>
   <? var searchString = dataArray[randNum]["productName"] ?>
   <? jo.user = dataArray; ?>
-  <? var today = new Date(); ?>
-  <? var rule = today.toDateString() + " - " + today.toTimeString() ?>
-  <? form.addSectionHeaderItem().setTitle(rule) ?>
   <? var coTable = jo.user.map((r)=>{ ?>
-      <? var productItemVideo = coUtility(r["productName"])[0] ?>
-      <? form.addSectionHeaderItem().setTitle(r["productName"] + ": price: " + r["rand7"] + ": cpi: " + r["rand8"]) ?>
+      <? form.addPageBreakItem().setTitle(r["productName"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Quantity: " + r["rand4"] + " set of " + r["rand5"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Price: " + r["rand7"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["rand8"]) ?>
       \n\n\n\n 
       <? }).toString().replace(/,/g, "") ?>
   <? var result = JSON.stringify(coTable); ?>
@@ -593,11 +642,12 @@ var dtlsStore = function (e) {
   <? financeUrl = getUrl(ScriptApp); ?>
   <div class="row">
     <div class="col s10 card-panel l12 m12 push-s1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
     <div class="video-container amber" style="clear: both">
     <div class="col s12 l12 m12 receipt deep-purple darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="<?!= url ?>" 
+      src=<?= formUrl ?> 
       width="100%"
       height="100%"
       allow="autoplay"
@@ -606,19 +656,114 @@ var dtlsStore = function (e) {
       frameborder="0"
       allowfullscreen
       ></iframe>
-    </div></div></div></div>`
+    </div></div></div></div>
+    `,
+      { item: itemName }
+    )
   )
     .evaluate()
     .getContent();
 };
 
+var dtlsPro = function (namedVar) {
+  var utilNeed = function (namedVar) {
+    return needUtility(randomSubstance(skyNeed(namedVar), 0, 4))[0].rndTitle;
+  };
+  var uti = sheetSeo(pastSeo(skyNeed(namedVar)));
+  uti.map((piece) => {
+    if (piece) {
+      return piece[0];
+    }
+  });
+  var rndUti = uti[randNum(uti)];
+  return dtlsVegas(rndUti);
+};
+
+var dtlsTv = function () {
+  var randomSECCo = needUtility(randomSubstance(null, 0, 7))[0];
+  var myVid = randomSECCo.rndTitle;
+  var infoLink = seoSheet(myVid).keyWords;
+  var pageArray = [];
+  infoLink.map((tv) => {
+    var plaListNum = Math.floor(Math.random() * Math.floor(tv.length));
+    var rndListItem = tv[plaListNum];
+    pageArray.push(rndListItem);
+  });
+  var story =
+    pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))];
+  dtlsVegas(story);
+};
+
+var dtlsVegas = function (rndId) {
+  // var rndId = "Converse Chuck Taylor All Star Low Top"
+  var rndTKey = seoSheet(rndId).keyWords;
+  var keyNum = Math.floor(Math.random() * Math.floor(rndTKey.length));
+  var ndT = rndTKey[keyNum].replace(/"'/g, "");
+  var ndTNum = Math.floor(Math.random() * Math.floor(ndT.length));
+  var util = ndT[ndTNum];
+  var ndtUtil = needUtility(util)[0];
+  var ndTArray = ndtUtil.playlistArr;
+  var form = formMaker(rndId.toUpperCase());
+  if (typeof form === "string") {
+    var formUrl = FormApp.openByUrl(form).getPublishedUrl();
+  } else {
+    fileManager(rndId.toUpperCase(), "Forms");
+    var rndVid =
+      ndTArray[Math.floor(Math.random() * Math.floor(ndTArray.length))];
+    form
+      .addVideoItem()
+      .setAlignment(FormApp.Alignment.CENTER)
+      .setWidth(612)
+      .setVideoUrl(rndVid);
+    form.addPageBreakItem().setTitle(rndVid);
+    var formUrl = form.getPublishedUrl();
+  }
+  var result = JSON.stringify(ndtUtil.rndTitle);
+  var html = HtmlService.createTemplate(
+    `<html>
+      <body>
+        <div class="row">
+        <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container" style="clear: both">
+        <div class="col s12 receipt deep-purple darken-1">
+        <div id="vegas"></div>          
+        </div></div></div></div>
+        <div class="row">
+        <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="video-container" style="clear: both">
+        <div class="col s12 receipt deep-purple darken-1">
+        <iframe 
+          class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+          src="${formUrl}" 
+          width="100%"
+          height="100%"
+          allow="autoplay"
+          allow="encrypted-media"
+          title="Dontime Life Website"
+          frameborder="0"
+          allowfullscreen
+          ></iframe>
+        </div></div></div></div>
+        <script>document.addEventListener("DOMContentLoaded", lasVegas)
+        function lasVegas() {
+          
+          document.getElementById("vegas").innerHTML = ${result}
+        </script>
+      </body>
+    </html>`
+  );
+  return html.getRawContent();
+};
+
 var generalWorkInvoice = function (clientName) {
   return HtmlService.createTemplate(
-    `
-    <? var rndClient = coUtility(${JSON.stringify(clientName)})[0]; ?>
+    contentApp(
+      `
+    <? var rndClient = coUtility(client)[0]; ?>
     <? var dtlsUrl = "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args="; ?>
-    <?  var form = FormApp.create(rndClient.rndTitle);  ?>
-    <?  form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(rndClient.videoItemUrl).setHelpText(rndClient.videoItemUrl); ?>
+    <?  var form = formMaker(rndClient.rndTitle);  ?>
+    <? fileManager(rndClient.rndTitle, "Forms") ?>
+    <?  form.addSectionHeaderItem().setTitle; ?>
     <?  form.addDateItem().setTitle('Invoice Date').setRequired(true); ?>
     <?  form.addTextItem().setTitle("Car ").setRequired(true); ?>
     <?  form.addTextItem().setTitle("Deliver/Pickup ").setRequired(true) ?>
@@ -657,9 +802,10 @@ var generalWorkInvoice = function (clientName) {
     <?  form.setTitle(rndClient.rndTitle).setConfirmationMessage('Thanks for your feedback !!'); ?>
     <?  var url = form.getPublishedUrl(); ?>
     <div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="video-container" style="clear: both">
-    <div class="col s12 receipt deep-purple darken-1">
+    <div class="col s10 l12 m12 card-panel push-s1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s12 l12 m12 receipt black darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
       src="<?!= url ?>" 
@@ -684,7 +830,60 @@ var generalWorkInvoice = function (clientName) {
          itemResponse.getItem().getTitle(), 
           itemResponse.getResponse()); ?>
     <? } ?>
-  <? } ?>`
+  <? } ?>`,
+      { client: clientName }
+    )
+  )
+    .evaluate()
+    .getContent();
+};
+
+var geneFrame = function (reference) {
+  return HtmlService.createTemplate(
+    contentApp(
+      `
+    <? var rndClient = function() { ?>
+    <?  return new Promise((resolve) => {resolve(formMaker(file))})} ?>
+    <? var clientRes = rndClient()
+    .then((resu) => {return resu})
+    .catch((err) => {console.log(err)}) ?>
+    <? var form = FormApp.openByUrl(JSON.stringify(formMaker(file))) ?>
+    <? var vidId = coUtility(file)[0].playlistArr ?>
+    <? if (vidId.length > 0) {?>
+    <? vidId.map((id)=>{return form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl("https://youtube.com/watch?v=" + id)})} ?>
+    <? var formUrl = form.getPublishedUrl() ?>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container" style="clear: both">
+    <div class="col s12 receipt deep-purple darken-1">
+    <div id="vegas"></div>          
+    </div></div></div></div>
+    <div class="row">
+    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+    <div class="container row valign-wrapper"><?!= rule() ?></div>
+    <div class="video-container grey" style="clear: both">
+    <div class="col s10 l10 m10 receipt black darken-1">
+    <iframe 
+      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+      src=<?= formUrl  ?>
+      width="100%"
+      height="100%"
+      allow="autoplay"
+      allow="encrypted-media"
+      title="Dontime Life Website"
+      frameborder="0"
+      allowfullscreen
+      ></iframe>
+    </div></div></div></div>
+    <script>document.addEventListener("DOMContentLoaded", lasVegas)
+    function lasVegas() {
+      
+      document.getElementById("vegas").innerHTML = <?= formsUrls(file) ?>
+      }</script>`,
+      {
+        file: reference,
+      }
+    )
   )
     .evaluate()
     .getContent();

@@ -11,13 +11,13 @@
       },
       {
         "userSymbol": "Calendar",
-        "version": "v3",
-        "serviceId": "calendar"
+        "serviceId": "calendar",
+        "version": "v3"
       },
       {
         "userSymbol": "Drive",
-        "version": "v2",
-        "serviceId": "drive"
+        "serviceId": "drive",
+        "version": "v2"
       }
     ],
     "libraries": [

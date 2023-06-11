@@ -1,5 +1,5 @@
 var allInvestors = function (rndKey) {
-  var uniqueKey = Utilities.jsonParse([
+  var uniqueKey = JSON.parse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
   var uniqueCoArray = covArrays(uniqueKey);
@@ -13,7 +13,7 @@ var allInvestors = function (rndKey) {
     .sort((a, b) => a - b)
     .filter((ac) => {
       if (
-        Utilities.jsonStringify(ac[0]["title"])
+        JSON.stringify(ac[0]["title"])
           .toLowerCase()
           .includes(
             coKey.toString().toLowerCase() ||
@@ -84,6 +84,45 @@ var allInvestors = function (rndKey) {
   };
 };
 
+var allTime = function (rndKey) {
+  var uniqueKey = [randomSubstance(null, 0, 4)];
+  var uniqueCoArray = covArrays(uniqueKey);
+  var coKey =
+    rndKey ||
+    uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
+  //Youtube Widget
+  var idArray = needPastTime(rndKey || coKey);
+  var randomPlaylist = [];
+  for (var i = 0, l = idArray.length; i < l; i++) {
+    const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
+    randomPlaylist.push(idArray[randomVidKey]);
+  }
+  var vidPlaylist = function () {
+    const randomVidKey = Math.floor(
+      Math.random() * Math.floor(randomPlaylist.length)
+    ); // Math.floor(Math.random());
+    var playListSorted = randomPlaylist.sort((a, b) => a - b);
+    var videoObject = covObjects(playListSorted, ["youtubeID"]);
+    if (typeof videoObject["youtubeID"] !== "undefined") {
+      var uniqueVidKey = [videoObject].entries().next().value;
+      var randomVid = uniqueVidKey[1][randomVidKey];
+      var rVideo = randomVid["youtubeID"];
+      return rVideo;
+    }
+  };
+  var sortaPlay = randomPlaylist.sort((a, b) => a - b);
+  var randomVideo =
+    vidPlaylist() ||
+    sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
+  var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+  return {
+    title: rndKey || coKey,
+    rndVideoId: randomVideo,
+    videoPlaylist: randomPlaylist,
+    videoUrl: youtubeUrl,
+  };
+};
+
 var edgarData = function (text) {
   // SEC Edgar Filings Widget
   let h = {};
@@ -123,7 +162,6 @@ var edgarData = function (text) {
     <html>
       <head>
         <base target="_top">
-      <? var style = styleHtml().getContent() ?> <?!= style ?>
       </head>
       <body>
         <nav>
@@ -147,7 +185,7 @@ var edgarData = function (text) {
   html.rule = today.toDateString() + " - " + today.toTimeString();
   html.opt = tmp
     .map(function (r) {
-      return "<option>" + Utilities.jsonStringify(r[1][2]) + "</option>";
+      return "<option>" + JSON.stringify(r[1][2]) + "</option>";
     })
     .join("");
   html.materializeCss = HtmlService.createHtmlOutput(
@@ -335,7 +373,7 @@ var oldSEC = function (rndTitle) {
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
   var urlTicker = "https://www.nasdaq.com/search?q=";
   var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
-  const uniqueCo = Utilities.jsonParse([
+  const uniqueCo = JSON.parse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json", null, {
       muteHttpExceptions: true,
     }),
@@ -344,9 +382,7 @@ var oldSEC = function (rndTitle) {
   const uniqueCoArray = covArrays(uniqueCo);
   const matches = [];
   const alTheCo = uniqueCoArray.filter((ac) => {
-    if (
-      Utilities.jsonStringify(ac[0]["title"]).toLowerCase().includes(rndTitle)
-    )
+    if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitle))
       matches.push(ac);
   });
   const titleMatches = [matches.toString().substring(titleKings)];
@@ -364,7 +400,7 @@ var oldSEC = function (rndTitle) {
       r[0]["title"]
     )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
   });
-  const result = Utilities.jsonStringify(coTable);
+  const result = JSON.stringify(coTable);
   const randomCoKey = Math.floor(
     Math.random() * Math.floor(uniqueCoArray.length)
   ); // Math.floor(Math.random());
@@ -419,7 +455,7 @@ var oldSEC = function (rndTitle) {
       var uname = document.getElementById("username").value;
       var linkFollow = document.createElement("a");
       linkFollow.href =
-        url + "?func=foo.oldSEC" + "&args=" + encodeURIComponent(uname);
+        url + "?func=oldSEC" + "&args=" + encodeURIComponent(uname);
       linkFollow.id = "linkFOLLOW";
       linkFollow.target = "_top";
       document.body.appendChild(linkFollow);
@@ -474,7 +510,7 @@ var opt = function (searchString) {
     .sort((a, b) => a - b)
     .filter((ac) => {
       if (
-        Utilities.jsonStringify(ac[0]["title"])
+        JSON.stringify(ac[0]["title"])
           .toLowerCase()
           .includes(
             searchString ||
@@ -558,12 +594,11 @@ function videoSEC() {
     <!DOCTYPE html>
       <html id="test">
         <body class="green">
-          <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><em><?!= rule() ?></em></div>
           <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
           <div class="row">
           <div class="col s10 card-panel red push-s1 push-m1 push-l1">
           <div class="video-container">
-          <div class="col s12 receipt red" id="player1"><?!= videoPlayer(myTitle) ?></div></div></div></div>
+          <div class="col s12 receipt red" id="player1"><?!= dtlsVegas(myTitle) ?></div></div></div></div>
           <div class="row">
           <div class="col s10 card-panel red push-s1 push-m1 push-l1">
           <div class="container">
@@ -581,21 +616,6 @@ function videoSEC() {
           <div class="col s12 receipt red">
           <input class="right timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div></div></div></div>
           <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
-          <script>document.addEventListener("DOMContentLoaded", appJS);
-            function appJS()
-              {// mod the array
-              let timePicker = document.getElementById('prefTime');
-              M.Timepicker.init(timePicker, { defaultTime: "now" });
-              google.script.run.withSuccessHandler(populateDates).runAll('app.busyDates', []);
-              function populateDates(disabledDays) 
-                {let datePicker = document.getElementById('prefDate');
-                  M.Datepicker.init(datePicker, 
-                    {minDate: new Date(), 
-                    setDefaultDate: true,
-                    disableDayFn: 
-                      function(day) 
-                        {return disabledDays.indexOf(day.valueOf()) > -1;}});};}
-          </script>
           <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
         </body>
       </html>`);
@@ -620,7 +640,7 @@ function videoSEC() {
       var uname = document.getElementById("username").value;
       var linkFollow = document.createElement("a");
       linkFollow.href =
-        url + "?func=app.dtlsInvestor" + "&args=" + encodeURIComponent(uname);
+        url + "?func=dtlsInvestor" + "&args=" + encodeURIComponent(uname);
       linkFollow.id = "linkFOLLOW";
       linkFollow.target = "_blank";
       document.body.appendChild(linkFollow);

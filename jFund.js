@@ -26,7 +26,7 @@ var jFund = function (e) {
       <base target="_self">
     </head>
     <body>
-          <a id="caller" href="<?= getUrl(ScriptApp) + "?default=ssTest" ?>">update</a>
+          <a id="caller" href="<?= getUrl(ScriptApp) ?>">update</a>
           <br>
           <div id="div">waiting...</div>
       <script id="gold" type="text/javascript">

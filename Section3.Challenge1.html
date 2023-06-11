@@ -15,18 +15,11 @@
     </style>
   </head>
   <body>
-    <? var randomSECCo = coUtility("Converse Chuck Taylor All Star Low Top")[0] ?>
-    <? var myVid = randomSECCo.rndTitle ?>
-    <? var myVidId = randomSECCo.videoItem[0] || coUtility()[0].videoItem[0]?>
+    <? var randomSECCo = needUtility("Converse Chuck Taylor All Star Low Top")[0] ?>
     <? var infoLink = randomSECCo.videoItemUrl ?>
-    <nav></nav>
-    <button id="btn">reload</button>
     <div id="challenge">
       <div id="videoPage">
-        <? var form = FormApp.create(myVid.toUpperCase()) ?>
-        <? var formUrl = form.getPublishedUrl() ?>
-        <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(600).setVideoUrl(myVidId) ?>
-        <?!= seoSheet(myVid) ?>
+        <?!= dtlsVegas("Converse Chuck Taylor All Star Low Top") ?>
       </div>
       <div><h3 style="font-weight: bold; text-align: left">$65.00</h3></div>
       <div><p style="text-align: left">FREE SHIPPING</p></div>
@@ -57,15 +50,5 @@
       </ul>
       <button>Add to cart</button>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", reloadthispage);
-      function reloadthispage() {
-      document.getElementById("btn").addEventListener("click",
-      function() {
-      google.script.run.withSuccessHandler(drip).runBoilerplate("renderFile", ["Section3.Challenge1"])
-      function drip(drop)  {
-
-      document.getElementById("challenge").innerHTML = drop}}}
-    </script>
   </body>
 </html>

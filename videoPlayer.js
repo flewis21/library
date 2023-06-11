@@ -17,7 +17,7 @@ function needPastTime(searchString) {
     for (var i = 1; i < idArray.length; i++) {
       const playId = idArray[i].toString().substring(0, 11);
       vidsSearched.push([playId]);
-      vidValues.push(console.log(playId.valueOf()));
+      vidValues.push(playId.valueOf());
     }
     // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
     // return v[0].valueOf();});
@@ -55,13 +55,14 @@ function needPastTime(searchString) {
         vidObject[0].indexOf("\\") === -1 &&
         vidObject[0].indexOf("get") === -1 &&
         vidObject[0].indexOf("&&") === -1 &&
+        vidObject[0].indexOf("b_cont") === -1 &&
         vidObject[0].indexOf(",") === -1
       ) {
         uniqueVid.push(vid);
       }
     });
   });
-  console.log(uniqueVid);
+  //  console.log(uniqueVid)
   return uniqueVid.sort((a, b) => a - b);
 }
 
@@ -84,7 +85,7 @@ var pastTime = function (url) {
 };
 
 function videoPage(search) {
-  var youPlayer = videoPlayer(search);
+  var youPlayer = geneFrame(seoPastTime(search).url);
   var content = HtmlService.createTemplate(`
   ${
     contentApp(
@@ -98,12 +99,20 @@ function videoPage(search) {
 }
 
 function videoPlayer(searchString) {
-  var url =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=seoSheet&args=";
+  //var url = seoSheet(encodeURIComponent(searchString)).url;
   //Youtube Widget
-  const idArray = needPastTime(searchString);
+  var uti = sheetSeo(pastSeo(skyNeed(`searchString`)));
+  const idArray = uti.map((piece) => {
+    console.log(typeof piece);
+    if (typeof piece === "undefined") {
+      console.log("it's " + typeof piece);
+      return;
+    } else {
+      return piece;
+    }
+  });
   const randomPlaylist = [];
-  for (var i = 0; i < idArray.length; i++) {
+  for (var i = 0, l = idArray.length; i < l; i++) {
     const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
     randomPlaylist.push(idArray[randomVidKey]);
   }
@@ -124,11 +133,18 @@ function videoPlayer(searchString) {
     return rVideo;
   };
   const randomVideo = vidPlaylist();
-  const titleVar = Utilities.jsonStringify(searchString);
-  const playListVar = Utilities.jsonStringify(randomPlaylist);
-  const videoTable = randomPlaylist.map((v) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`;
-  });
+  const titleVar = JSON.stringify(searchString);
+  const playListVar = JSON.stringify(randomPlaylist);
+  const videoTable = [randomPlaylist]
+    .map((v) => {
+      return `<tr><td>${geneFrame(
+        "https://www.youtube.com/watch?v=" + v[0]
+      )}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${
+        v[0]
+      }" target="_blank">${v[0]}</a></td></tr>`;
+    })
+    .toString()
+    .replace(/,/g, "");
   const result = JSON.stringify(videoTable);
   const html = HtmlService.createTemplate(`<!DOCTYPE html>
 <html id="test">
@@ -139,7 +155,7 @@ function videoPlayer(searchString) {
     <div class="row">
         <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
-      <a href="${url + encodeURIComponent(searchString)}" target="_blank">
+      <a href="${url}" target="_top">
         <h1 class="col s12 receipt nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01">
       <?= searchTtile ?>
     </h1></a></div></nav></div>
@@ -165,7 +181,7 @@ function videoPlayer(searchString) {
                 </tbody>
               </table>
             </td>
-            <td style="text-align: right">>
+            <td style="text-align: right">
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody id="reload02">
                 </tbody>
@@ -288,7 +304,7 @@ function videoPlayer(searchString) {
       {document.getElementById("reload02").innerHTML = ${result};})</script>
   </body>
 </html>`);
-  html.vidTubeId = Utilities.jsonStringify(randomVideo);
+  html.vidTubeId = JSON.stringify(randomVideo);
   html.researchId = randomVideo;
   html.searchTtile = searchString;
   html.myPlayList = [playListVar].sort((a, b) => a - b);
@@ -330,7 +346,7 @@ function iframeC() {
               console.log(document.getElementById("test").innerHTML);
               reject(error);
             })
-            .runAll(`boilerplate.${[func]}`, [args]);
+            .runBoilerplate([func], [args]);
         });
       };
     },

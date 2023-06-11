@@ -1,7 +1,7 @@
 var devWebsite = function (e) {
   var webApp;
   var webTest;
-  console.log(Utilities.jsonStringify(e));
+  console.log(JSON.stringify(e));
   var index = [e][0] || 0;
   var query = [e][1] || 1;
   switch ([e][2] || 2) {

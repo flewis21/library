@@ -2,9 +2,7 @@ var proMediaSnip = function (e) {
   var today = new Date();
   var rule = today.toDateString() + " - " + today.toTimeString();
   var gaming = jsGameScripts();
-  var htmlCss = styleHtml().getContent();
   var chancing = breakthrough(e);
-  var gamerUrl = getUrl(ScriptApp) + "?default";
   var backLinkUrl = getUrl(ScriptApp);
   var media = e || "the Rybka Twins";
   var html = HtmlService.createTemplate(`
@@ -21,19 +19,19 @@ var proMediaSnip = function (e) {
             <a id="checkOnDay" href='https://flewis21.github.io/videoSEC/'>SEC Videos Today</a><br />
             <a href='https://flewis21.github.io/odd-chances/' target="_top">Numerological Numbers</a><br />
             <a href='https://flewis21.github.io/budget/' target="_blank">Check Today EPA</a><br />
-            <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' target="_parent">Homemade Games</a><br />
-            <a href='<?= getUrl(ScriptApp) + "?default=ssFinance" ?>' target="_blank">Company Info Table</a><br />
-            <a href='<?= getUrl(ScriptApp) + "?default=ssUSCongress" ?>' target="_top">Congress Legislation</a><br />
+            <a href='<?= getUrl(ScriptApp) ?>' target="_parent">Homemade Games</a><br />
+            <a href='<?= getUrl(ScriptApp) ?>' target="_blank">Company Info Table</a><br />
+            <a href='<?= getUrl(ScriptApp) ?>' target="_top">Congress Legislation</a><br />
           </nav><br />
         </div>
         <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in">
         <a class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large" href="mailto: <?!= email() ?> ? {subject} = {subject}" class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank"> Contact Me</a>
         <br>
-          <a id="caller" href='<?= getUrl(ScriptApp) + "?default=ssCatch" ?>'>update</a>
+          <a id="caller" href='<?= getUrl(ScriptApp) ?>'>update</a>
         <br>
           <ul id="uldiv">waiting...</ul>
         <div class="interface">
-          <a href='<?= getUrl(ScriptApp) + "?default=ssJCalls" ?>' onclick="PageManager.setPageStart('Setup')">
+          <a href='<?= getUrl(ScriptApp) ?>' onclick="PageManager.setPageStart('Setup')">
             <img src="" alt="setup" />
             <div>
               <h3>Setup</h3>
@@ -51,14 +49,14 @@ var proMediaSnip = function (e) {
       .withSuccessHandler(function (hasAccess) {
         google.script.run
           .withSuccessHandler(function (author) {})
-          .runAll("boilerplate.carbon", ["fabian.j.lewis.dontnent@gmail.com"]);
+          .runBoilerplate("carbon", ["fabian.j.lewis.dontnent@gmail.com"]);
         document.getElementById("uldiv").innerHTML = "";
       })
-      .runAll("boilerplate.validate", [])();
+      .runBoilerplate("validate", [])();
     var go = function () {
       google.script.run
         .withSuccessHandler(function () {})
-        .runAll("boilerplate.wwAccess", ["uiTest", "uiAccess"]);
+        .runBoilerplate("wwAccess", ["uiTest", "uiAccess"]);
     };
     document.getElementById("caller").onclick = go;
   };
@@ -74,14 +72,13 @@ var proMediaSnip = function (e) {
     <div class ="col s12">
     <div class="container">
     <div class="col s12">
-      <?!= videoPlayer(media) ?>
+      <?!= geneFrame(seoPastTime(media).playList[0]) ?>
     </div></div></div></div>`
   ).getRawContent();
   html.artifacts.media = media;
   html.artifacts.odd = chancing;
   html.artifacts.play = gaming;
   html.artifacts.htmlStyle = htmlCss;
-  html.gamerUrl = gamerUrl;
   html.backLinkUrl = backLinkUrl;
   html.pagemanager = HtmlService.createHtmlOutput(
     `
@@ -189,7 +186,7 @@ var proMediaSnip = function (e) {
   html.menu_itemHover = HtmlService.createHtmlOutput(
     `.menu-item:hover>.menu-img {transform: scale(1.03);}`
   ).getContent();
-  return wwAccess("test", renderTemplate, html.evaluate());
+  return wwAccess("test", renderTemplate, html.evaluate().getContent());
 };
 // var author = validGroup("f.")
 // var myFileE = myFileJS(e)

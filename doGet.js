@@ -30,14 +30,35 @@ var doGet = function (e) {
     )
   ];
   args = e.parameter["args"] || ["jFundamentals"];
-  return renderTemplate(contentApp(this[libFunc].apply(this, [args])), {
-    e: e,
-  });
+  return renderTemplate(
+    contentApp(`<?!= appL ?>`, {
+      appL: this[libName][
+        foobarr ||
+          HtmlService.createHtmlOutput(
+            `
+              <script>
+                document.getElementById("appList").value
+              </script>
+              `
+          ).getContent()
+      ].apply(this, [
+        args ||
+          HtmlService.createHtmlOutput(
+            `
+              <script>
+                document.getElementById("username").value
+              </script>
+              `
+          ).getContent(),
+      ]),
+    }),
+    { e: e }
+  );
 };
 
 function misBing(e) {
   console.log(JSON.stringify(e));
-  const uniqueKey = Utilities.jsonParse([
+  const uniqueKey = JSON.parse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
   const uniqueCoArray = covArrays(uniqueKey);
@@ -50,14 +71,11 @@ function misBing(e) {
   var myVid = randomSECCo.rndTitle;
   var myVidId = randomSECCo.videoItem[0] || coUtility()[0].videoItem[0];
   var infoLink = randomSECCo.videoItemUrl;
-  var form = FormApp.create(myVid.toUpperCase());
+  var form = formMaker(myVid.toUpperCase());
+  fileManager(myVid.toUpperCase(), "Forms");
   var formUrl = form.getPublishedUrl();
-  form
-    .addVideoItem()
-    .setAlignment(FormApp.Alignment.CENTER)
-    .setWidth(612)
-    .setVideoUrl(myVidId);
-  var result = Utilities.jsonStringify(seoSheet(randomTitle));
+  form.addSectionHeaderItem().setTitle;
+  var result = JSON.stringify(seoSheet(randomTitle).keyWords);
   const html = HtmlService.createTemplate(`<html id="test">
       <head>
       </head>
@@ -137,7 +155,7 @@ function misBing(e) {
             console.log(document.getElementById("test").innerHTML);
             reject(error);
           })
-          .runAll(`app.${[func]}`, [args]);
+          .runBoilerplate([func], [args]);
       });
     }; //serverSide closed
     // VideoPlayer Widget
@@ -160,7 +178,7 @@ function misBing(e) {
               console.log(document.getElementById("test").innerHTML);
               reject(error);
             })
-            .runAll(`App.${[func]}`, [args]);
+            .runBoilerplate([func], [args]);
         });
       }; //serverSide closed
       serverSide("urlDataSource", [
@@ -214,7 +232,7 @@ var userClicked = function () {
     var linkHome = document.createElement("a");
     var linkFollow = document.createElement("a");
     linkHome.href = "https://flewis21.github.io/videoSEC/";
-    linkFollow.href = url + "?uname=" + encodeURIComponent(uname);
+    linkFollow.href = url + "?func=dtls&args=" + encodeURIComponent(uname);
     linkHome.id = "linkHOME";
     linkFollow.id = "linkFOLLOW";
     linkHome.target = "popup";

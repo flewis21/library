@@ -297,7 +297,7 @@ var sheetWebsite = function (e) {
   var urlSs =
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
   var urlWww =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var tmp = [];
   var parameters = [e][1] || 1;
   var sheetName = "Inventory";
@@ -407,7 +407,16 @@ var sheetWebsite = function (e) {
   return HtmlService.createTemplate(
     `
     <h2 class="search-overlay__section-title">General Information</h2>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container">
+    <div class="col s12 receipt red">
     <span><input placeholder="args ex. 1, 2...6" class="flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="invItem" type="search" /></span>
+    </div></div></div></div>
+    <div class="row">
+    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    <div class="container">
+    <div class="col s12 receipt red">
     <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
       <thead>
         <tr>
@@ -427,6 +436,7 @@ var sheetWebsite = function (e) {
       <tbody id="sheetWebsite">
       </tbody>
     </table>
+    </div></div></div></div>
     <script>document.getElementById('invItem').addEventListener('change', userClicked)
       function userClicked()
         {// Init a timeout variable to be used below
@@ -446,7 +456,7 @@ var sheetWebsite = function (e) {
         var linkHome = document.createElement("a");
         var linkFollow = document.createElement("a");
         linkHome.href = "https://flewis21.github.io/foobar/";
-        linkFollow.href = url + "?func=foo.sheetWebsite" + "&args=" + encodeURIComponent(args);
+        linkFollow.href = url + "?func=sheetWebsite" + "&args=" + encodeURIComponent(args);
         linkHome.id = "linkHOME";
         linkFollow.id = "linkFOLLOW";
         linkHome.target = "popup";

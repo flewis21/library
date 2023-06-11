@@ -167,6 +167,51 @@ var covObjects = function (rows, headings) {
   return temp;
 };
 
+var driveUrls = function (fileX) {
+  if (typeof fileX !== "undefined") {
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    if (file.hasNext()) {
+      while (file.hasNext()) {
+        return file.next().getUrl();
+      }
+    }
+  } else {
+    return;
+  }
+};
+
+var fileManager = function (fileX, folder, content, mimeType) {
+  if (typeof fileX !== "undefined") {
+    var folderId = folderIdGlobal(folder);
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    if (file.hasNext()) {
+      file.next().moveTo(DriveApp.getFolderById(folderId));
+      return;
+    } else {
+      // DriveApp.getFolderById(folderId).createFile(fileX,content,mimeType)
+      return dtlsMain(fileX);
+    }
+  } else {
+    return;
+  }
+};
+
+var sheetsFileManager = function (fileX, folder) {
+  if (typeof fileX !== "undefined") {
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    if (file.hasNext()) {
+      while (file.hasNext())
+        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder));
+      {
+        file.next().moveTo(myFolder);
+        return file.next().getUrl();
+      }
+    }
+  } else {
+    return;
+  }
+};
+
 function email() {
   var emails = validateFiles();
   var emailsCount = validateFiles().toString().split(",").length;
@@ -174,53 +219,13 @@ function email() {
   return randomEmail;
 }
 
-var formsUrls = function (fileX) {
-  var treeRoot = DriveApp.getRootFolder().getFiles();
-  while (treeRoot.hasNext()) {
-    var trueName = treeRoot.next();
-    if (trueName.getName() === fileX) return trueName.getUrl();
-  }
-};
-
-var rndUrls = function () {
-  var treeRoot = DriveApp.getRootFolder().getFiles();
-  while (treeRoot.hasNext()) {
-    var trueName = treeRoot.next();
-    console.log(
-      trueName.getName() +
-        " || / || " +
-        trueName.getName()[
-          Object.keys(trueName.getName())[
-            Math.floor(
-              Math.random() * Math.floor(Object.keys(trueName.getName()).length)
-            )
-          ]
-        ]
-    );
-    var truArray = [];
-    for (var i = 0, l = trueName.getName().length; i < l; i++) {
-      console.log(truArray.push([trueName.getName()][i]));
-    }
-    if (trueName.getName()) return trueName.getUrl();
-  }
-};
-
-var formsUrlsGlobal = function (fileX) {
-  var treeRoot = DriveApp.getRootFolder().getFiles();
-  while (treeRoot.hasNext()) {
-    var trueName = treeRoot.next();
-    if (trueName.getName() === fileX) return trueName.getUrl();
-  }
-  var dataTree = [];
+var folderIdGlobal = function (folderX) {
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
-    dataTree.push(tree.next().getId());
-  }
-  for (i = 0, l = dataTree.length; i < l; i++) {
-    var numFolder = DriveApp.getFolderById(dataTree[i]).getFiles();
-    while (numFolder.hasNext()) {
-      var trueNumName = numFolder.next();
-      if (trueNumName.getName() === fileX) return trueNumName.getUrl();
+    var id = tree.next().getId();
+    var myFolder = DriveApp.getFolderById(id).getName();
+    if (folderX === myFolder) {
+      return id;
     }
   }
 };
@@ -481,8 +486,15 @@ function randomEmail() {
   return randomEmail;
 }
 
+var randNum = function (namedVar) {
+  var len = namedVar.length;
+  var rnd = Math.random();
+  var res = Math.floor(rnd * Math.floor(len));
+  return res;
+};
+
 var randomSubstance = function (importedData, index, loopLength) {
-  var arrData = importedData || [
+  var arrData = [
     "e",
     "t",
     "a",
@@ -515,7 +527,12 @@ var randomSubstance = function (importedData, index, loopLength) {
   var l = loopLength || 1;
   for (i, l; i < l; i++) {
     newArr.push(
-      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+      [importedData].sort((a, b) => a - b)[
+        Math.floor(Math.random() * arrData.length)
+      ] ||
+        arrData.sort((a, b) => a - b)[
+          Math.floor(Math.random() * arrData.length)
+        ]
     );
   }
   var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
@@ -528,88 +545,27 @@ var randomSubstance = function (importedData, index, loopLength) {
   console.log();
 };
 
-var substanceVegas = function (importedData, index, loopLength) {
-  var arrData = importedData || [
-    "e",
-    "E",
-    "t",
-    "T",
-    "a",
-    "A",
-    "o",
-    "O",
-    "n",
-    "N",
-    "r",
-    "R",
-    "i",
-    "I",
-    "s",
-    "S",
-    "h",
-    "H",
-    "d",
-    "D",
-    "l",
-    "L",
-    "f",
-    "F",
-    "c",
-    "C",
-    "m",
-    "M",
-    "u",
-    "U",
-    "g",
-    "G",
-    "y",
-    "Y",
-    "p",
-    "P",
-    "w",
-    "W",
-    "b",
-    "B",
-    "v",
-    "V",
-    "k",
-    "K",
-    "x",
-    "X",
-    "j",
-    "J",
-    "q",
-    "Q",
-    "z",
-    "Z",
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "_",
-  ];
-  var newArr = [];
-  var i = index || 0;
-  var l = loopLength || 1;
-  for (i, l; i < l; i++) {
-    newArr.push(
-      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+var rndUrls = function () {
+  var treeRoot = DriveApp.getRootFolder().getFiles();
+  while (treeRoot.hasNext()) {
+    var trueName = treeRoot.next();
+    console.log(
+      trueName.getName() +
+        " || / || " +
+        trueName.getName()[
+          Object.keys(trueName.getName())[
+            Math.floor(
+              Math.random() * Math.floor(Object.keys(trueName.getName()).length)
+            )
+          ]
+        ]
     );
+    var truArray = [];
+    for (var i = 0, l = trueName.getName().length; i < l; i++) {
+      console.log(truArray.push([trueName.getName()][i]));
+    }
+    if (trueName.getName()) return trueName.getUrl();
   }
-  var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
-  newArr
-    .map((w) => {
-      return w[0].toString();
-    })
-    .join("");
-  return randomWord;
-  console.log();
 };
 
 function rule() {
@@ -746,6 +702,90 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   }
 };
 
+var substanceVegas = function (importedData, index, loopLength) {
+  var arrData = importedData || [
+    "e",
+    "E",
+    "t",
+    "T",
+    "a",
+    "A",
+    "o",
+    "O",
+    "n",
+    "N",
+    "r",
+    "R",
+    "i",
+    "I",
+    "s",
+    "S",
+    "h",
+    "H",
+    "d",
+    "D",
+    "l",
+    "L",
+    "f",
+    "F",
+    "c",
+    "C",
+    "m",
+    "M",
+    "u",
+    "U",
+    "g",
+    "G",
+    "y",
+    "Y",
+    "p",
+    "P",
+    "w",
+    "W",
+    "b",
+    "B",
+    "v",
+    "V",
+    "k",
+    "K",
+    "x",
+    "X",
+    "j",
+    "J",
+    "q",
+    "Q",
+    "z",
+    "Z",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "_",
+  ];
+  var newArr = [];
+  var i = index || 0;
+  var l = loopLength || 1;
+  for (i, l; i < l; i++) {
+    newArr.push(
+      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+    );
+  }
+  var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
+  newArr
+    .map((w) => {
+      return w[0].toString();
+    })
+    .join("");
+  return randomWord;
+  console.log();
+};
+
 var tabField = function (url, xpath, index) {
   var test = dataHeadings(splitX(urlDataSource(url), xpath))[index];
   return test;
@@ -753,7 +793,7 @@ var tabField = function (url, xpath, index) {
 
 var tagBuilder = function (content) {
   const htmlBody = contentApp(content);
-  return renderTemplate(htmlBody);
+  return htmlBody;
 };
 
 var tempArrayNoX = function (url, indexParsed, index) {

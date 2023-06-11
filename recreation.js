@@ -28,7 +28,6 @@ function youTube(e) {
           <base target="_top  "></base>
         </head>
         <body class="blue" id="template">
-            <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt"><?!= rule() ?></div>
             <label for="hubMain">Main Page</label><a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="hubMain">Don'time Life Services!</h1></span></a>
 
           <div>
@@ -45,9 +44,9 @@ function youTube(e) {
           <span><input placeholder="About me?..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span></div></div>
           <div class="row">
           <div class="col s8">
-          <div class="container menu-img valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
-          <div class="col s12 push-s1 push-m1 push-l2">
-          <div id="player1"><?!= videoPlayer(myVideo) ?></div>
+          <div class="menu-img valign-wrapper grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
+          <div class="col s12">
+          <div id="player1"><?!= dtls(myVideo) ?></div>
           </div></div></div></div>
           <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in receipt">
             <input class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div>
@@ -58,19 +57,6 @@ function youTube(e) {
           <!-- Compiled and minified JavaScript -->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
           <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
-          <script>document.addEventListener("DOMContentLoaded", appJs);
-            function appJs()
-            {// mod the array
-            let timePicker = document.getElementById('prefTime');
-            M.Timepicker.init(timePicker, { defaultTime: "now" });
-            google.script.run.withSuccessHandler(populateDates).runAll('boilerplate.busyDates', []);
-            function populateDates(disabledDays) 
-            {let datePicker = document.getElementById('prefDate');
-            M.Datepicker.init(datePicker, 
-              {minDate: new Date(), setDefaultDate: true,
-              disableDayFn: 
-                function(day) 
-                {return disabledDays.indexOf(day.valueOf()) > -1;}});};}</script>
           <script>document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");</script>
           <script>document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");</script>
           <script>document.querySelector("iframe").setAttribute("style", "color: blue; clear: both; text-align: center;");</script>
@@ -98,9 +84,9 @@ function youTube(e) {
       }
       var uname = document.getElementById("username").value;
       var linkFollow = document.createElement("a");
-      linkFollow.href = url + "?func=boilerplate.youTube" + "&args=" + uname;
+      linkFollow.href = url + "?func=youTube" + "&args=" + uname;
       linkFollow.id = "linkFOLLOW";
-      linkFollow.target = "_popup";
+      linkFollow.target = "_top";
       document.body.appendChild(linkFollow);
       document.getElementById("linkFOLLOW").click();
       document.getElementById("username").value = "";

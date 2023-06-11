@@ -4,10 +4,10 @@
     <base target="_top" />
   </head>
   <body class="blue" id="template">
-    <? var randomSECCo = coUtility("*")[0] ?>
+    <? var randomSECCo = needUtility(randomSubstance(null,0,7))[0] ?>
     <? var myVid = randomSECCo.rndTitle ?>
-    <? var myVidId = randomSECCo.videoItemUrl || coUtility()[0].videoItemUrl?>
-    <? var infoLink = randomSECCo.videoItemUrl ?>
+    <? var myVidId = randomSECCo.videoItemUrl || needUtility()[0].videoItemUrl?>
+    <? var infoLink = seoSheet(myVid).keyWords ?>
     <nav class="amber darken-4">
       <a href="#" target="_top">Back</a>
       <a
@@ -17,13 +17,18 @@
     </nav>
     <div class="row">
       <div class="col s12 m12 m12 l12">
-        <div class="container row valign-wrapper"><?!= rule() ?></div>
         <div class="container black darken-4 scale-transition">
           <div class="col s12 l12" id="iframePlayer">
-            <? var form = FormApp.create(myVid.toUpperCase()) ?>
-            <? var formUrl = form.getPublishedUrl() ?>
-            <? form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(myVidId) ?>
-            <?!= seoSheet(myVid) ?>
+            <? var pageArray = [] ?>
+            <? var page = infoLink.map((tv) =>
+            { ?>
+            <? var listItem = seoPastTime(tv).playList ?>
+            <? var plaListNum = Math.floor(Math.random() * Math.floor(tv.length)) ?>
+            <? var rndListItem = tv[plaListNum] ?>
+            <? pageArray.push(rndListItem) ?>
+            <? }) ?>
+            <? var story = pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))] ?>
+            <?!= dtlsVegas(story) ?>
           </div>
         </div>
       </div>

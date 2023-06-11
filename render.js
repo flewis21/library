@@ -25,8 +25,11 @@ var renderTemplate = function (blob, argsObject) {
     });
   }
   var funcCheck = appList();
+  var schedule = dateTime(new Date());
+  // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
   var html = contentApp(
     `
+  <html id="test">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -139,70 +142,139 @@ var renderTemplate = function (blob, argsObject) {
     .menu-item:hover>.menu-img {transform: scale(1.03);}
     img {width: 160px;}</style></head>
     <body>
-      <div class="row">
-        <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
-          <div class="container">
-            <div class="col s12 receipt nav-wrapper deep-purple darken-1">
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=youTube&args=${
-                  [`(by Dontime Life Services)`].toString().split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor(
-                          [`(by Dontime Life Services)`].toString().split(" ")
-                            .length
-                        )
-                    )
-                  ]
-                }" target="_top">About-Me</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=sheetWebsite&args=${
-                  [`1 2 3 4 5`].toString().split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor([`1 2 3 4 5`].toString().split(" ").length)
-                    )
-                  ]
-                }" target="_top">Store</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=oldEPA&args=${
-                  [`ethyl zole zime anol hane leum ther ide ine`]
-                    .toString()
-                    .split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor(
-                          [`ethyl zole zime anol hane leum ther ide ine`]
-                            .toString()
-                            .split(" ").length
-                        )
-                    )
-                  ]
-                }" target="_top">Local Enviroment</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args=${Math.floor(
-                  Math.random() * Math.floor(JSON.stringify(argsObject).length)
-                )}" target="_top">Calculate</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=opt&args=${
-                  [`group bank semi fact bio science block chain space coin`]
-                    .toString()
-                    .split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor(
-                          [
-                            `group bank semi fact bio science block chain space coin`,
-                          ]
-                            .toString()
-                            .split(" ").length
-                        )
-                    )
-                  ]
-                }" target="_top">Investors</a><br />
-                <a href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=appList&args=" target="_top">New</a><br />
-            </div></div>
-          </nav>
-      </div>
+    <? var invArray = ["group bank semi fact bio science block chain space coin"] ?>
+    <? var calcArray = ["0 1 2 3 4 5 6 7 8 9"].toString().split(" ") ?>
+    <? var epaArray = ["ethyl zole zime anol hane leum ther ide ine"].toString().split(" ") ?>
+    <? var shopArray = ["1 2 3 4 5"].toString().split(" ") ?>
+    <? var meArray = ["by Dontime Life Services"].toString().split(" ") ?>
+    <? var invArray = ["group bank semi fact bio science block chain space coin"].toString().split(" ") ?>
+    <?  var irResearch = invArray[Math.floor(Math.random() * Math.floor(invArray.length))] ?>
+    <? var calcRes = JSON.stringify(Math.floor(Math.random() * Math.floor(calcArray.length))) ?>
+    <? var epaResearch = epaArray[Math.floor(Math.random() * Math.floor(epaArray.length))] ?>
+    <? var shopResearch = shopArray[Math.floor(Math.random() * Math.floor(shopArray.length))] ?>
+    <? var aboutMeSearch = meArray[Math.floor(Math.random() * Math.floor(meArray.length))] ?>
+  <div id="aboutmediv"></div>
+  <div id="shopstorediv"></div>
+  <div id="secenvdiv"></div>
+  <div id="calculatediv"></div>
+  <div id="investdiv"></div>
+  <div id="rndnewdiv"></div>
     </body>
+    <script>
+      function aboutMeSearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("rndCoin", [])
+            .then((search) => {
+              document.getElementById("aboutmediv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+    </script>
+    <script>
+      function shopResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(error)
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("dtlsStore", [])
+            .then((search) => {
+              document.getElementById("shopstorediv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+    </script>
+    <script>
+      function secResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("rndCoin", [])
+            .then((search) => {
+              document.getElementById("secenvdiv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+    </script>
+    <script>
+      function calcResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("breakthrough", [])
+            .then((search) => {
+              document.getElementById("calculatediv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+    </script>
+    <script>
+      function investResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("rndCoin", [])
+            .then((search) => {
+              document.getElementById("investdiv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+</script>
+    <script>
+      function newResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(error)
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            var bar = document.getElementById("username").value;
+            serverside("generalWorkInvoice", [bar])
+            .then((search) => {
+              document.getElementById("rndnewdiv").innerHTML = search})
+            .catch((error) => {
+              console.log(error)
+            })}
+    </script>
     <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
     <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
-    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
+    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+    </html>`,
     {
       funcClicked: function () {
         //console.log(document.getElementById("test").innerHTML)
@@ -278,85 +350,116 @@ var renderTemplate = function (blob, argsObject) {
     .evaluate()
     .append(funcCheck)
     .append(html)
+    .append(schedule)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setTitle("Don'time Life Services");
 };
 
-var appList = function () {
+var appList = function (e) {
   return HtmlService.createTemplate(
     `
-  <? var url = getUrl(ScriptApp) + "?func=" ?>
-  <? var matches = [] ?>
-  <? for (var key in globalThis) { ?>
-  <? if (typeof globalThis[key] == "function") { ?>
-    <? matches.push(key) ?>
-    <? }} ?>
-<? var coTable = matches.map((r)=> { ?>
-      <? return "<option>" + r + "</option>" ?>
-      <? }).join("") ?>
-<? var result = JSON.stringify(coTable) ?>
+  <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
+    <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div class="col s12 receipt deep-purple darken-1">
+            <div id="nbEngine" for="uiApp"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   <div class="row">
       <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
         <div class="container">
           <div class="col s12 receipt deep-purple darken-1">
             <span>
-              <input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="username" type="search"/>
+              <input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/>
             </span>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-        <div class="container">
-          <div class="col s12 receipt deep-purple darken-1">
-            <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
-              <select id="appList" class="browser-default deep-purple darken-1"></select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="openBtn">
-      <button class="openButton" onclick="openTheForm()"><strong>Open Form</strong></button>
-    </div>
     <script>
-        document.addEventListener("DOMContentLoaded", onPageLoad)
-      function onPageLoad() {
-        
-        document.getElementById("appList").innerHTML = <?= result ?>;
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-        document.getElementById("appList").selectedIndex = -1;}
+      document.getElementById("uiApp").addEventListener("change", research)
+      function research() {
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+              console.log(error)
+              console.log(document.getElementById("test").innerHTML)
+              reject(error)})
+          .runBoilerplate([func], [args])})};
+      var bar = document.getElementById("uiApp").value || "";
+      // Process the user's input.
+      if (confirm("Search for " + bar + " ?")) {
+      serverside("dtlsMain", bar)
+      .then((html) => {
+          // User clicked "No" or X in the title bar.
+          document.getElementById("nbEngine").innerHTML = html;})
+      .catch((er) => {
+        console.log(er)})}
+      else {
+      serverside("needBing", bar)
+      .then((search) => {
+          // User clicked "Yes".
+          document.getElementById("nbEngine").innerHTML = search;})
+      .catch((er) => {
+        console.log(er)})}}
     </script>
     <script>
-      function onUserClick() {
-      if (typeof url === "undefined")
-        {var url = <?= url ?>}
-        var bar = document.getElementById("username").value || "";
-        var foo = document.getElementById("appList").value || "needBing";
+      function onUserClick(bar) {
+        var foo = "dtlsMain";
         var linkFollow = document.createElement("a");
-        linkFollow.href = url + foo + "&args=" + bar;
+        linkFollow.href = <?= appUrl ?> + foo + "&args=" + bar;
         linkFollow.id = "linkFOLLOW";
-        linkFollow.target = "_self";
+        linkFollow.target = "_child";
         document.body.appendChild(linkFollow);}
     </script>
     <script>
-      function openTheForm() {
+      function openTheForm(bar) {
         
-        onUserClick()
+        onUserClick(bar)
         document.getElementById("linkFOLLOW").click();
-        document.getElementById("username").value = ""
-        document.getElementById("appList").value = ""
-        document.getElementById("linkFOLLOW").remove()
-        var linkHome = document.createElement("a");
-        linkHome.href = url;
-        linkHome.id = "linkHOME";
-        linkHome.target = "_parent";
-        document.body.appendChild(linkHome);
-        document.getElementById("linkHOME").click()};
+        document.getElementById("uiApp").value = ""
+        document.getElementById("linkFOLLOW").remove()};
     </script>
   `
   )
     .evaluate()
     .getContent();
 };
+// <div class="row">
+//   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+//     <div class="container">
+//       <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+//           <a href="#" onclick="aboutMeSearch()" target="_self" id="aboutme">About-Me</a><br />
+//           <a href="#" onclick="shopResearch()" id="shopstore">Store</a><br />
+//           <a href="#" onclick="secResearch()" id="secenv">Local Enviroment</a><br />
+//           <a href="#" onclick="calcResearch()" id="calculate">Calculate</a><br />
+//           <a href="#" onclick="investResearch()" id="invest">Investors</a><br />
+//           <a href="#" onclick="newResearch()" id="rndnew">New</a><br />
+//       </div></div>
+//     </nav>
+// </div>
+// <div class="row">
+//   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+//     <div class="container">
+//       <div class="col s12 receipt deep-purple darken-1">
+//         <div id="dlts"></div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// <div class="row">
+//   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+//     <div class="container">
+//       <div class="col s12 receipt deep-purple darken-1">
+//         <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
+//           <select id="appList" class="browser-default deep-purple darken-1"></select>
+//       </div>
+//     </div>
+//   </div>
+// </div>

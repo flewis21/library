@@ -16,7 +16,7 @@ var finTechWebsite = function () {
   console.log(financeUrl);
   return contentFile("index").setContent(
     includeApp(
-      '<!-- \n                    <?!= include("index"); ?> -->\n                    <h1 class="search-overlay__section-title">General Information</h1>\n                    <ul class="link-list min-list">\n                     <li><div class="query-results"><a target="_blank" href="https://www.sec.gov/edgar/browse/?CIK='.concat(
+      '<!-- \n                    <?!= include("index"); ?> -->\n                    <h1 class="search-overlay__section-title">General Information</h1>\n                    <ul class="link-list min-list">\n                     <li><div class="query-results"><a target="_top" href="https://www.sec.gov/edgar/browse/?CIK='.concat(
         rowsXpath[0][0],
         '&owner=exclude">'.concat(
           rowsXpath[0][2],

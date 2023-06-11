@@ -117,7 +117,7 @@ var jsonDataX = function (data) {
   return returnData;
 };
 
-function jsonFormatter() {
+async function jsonFormatter() {
   var res = UrlFetchApp.fetch(
     "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1"
   );
@@ -125,8 +125,10 @@ function jsonFormatter() {
   try {
     var json = JSON.parse(content);
     console.log(typeof json);
-    var xpath = "items/0/sites";
-    var pathArray = xpath.split("/");
+    var xpath = ["items/0/sites"];
+    var pathArray = xpath.map((ppls) => {
+      return ppls.split("/");
+    });
     for (var i = 0; i < pathArray.length; i++) {
       json = json[pathArray[i]];
     }
@@ -138,7 +140,7 @@ function jsonFormatter() {
         tempArr.push([obj, json[obj]]);
         console.log(tempArr);
       }
-      return tempArr;
+      return JSON.stringify(tempArr);
     }
   } catch (err) {
     return res.getContentText();
@@ -225,6 +227,43 @@ var needCapital = function (searchString) {
     return ping.substring(0);
   });
   return pong.toString().split(",");
+};
+
+var needUtility = function (rndClient) {
+  var client = rndClient;
+  var uniqueCo = [];
+  if (typeof client !== "undefined") {
+    var improvedTitle = seoSheet(client).keyWords.map((r) => {
+      for (var i = 0, l = r.length; i < l; i++) {
+        if ([r].indexOf(",") === -1) {
+          if ((i = 1)) break;
+        }
+      }
+      return r;
+    });
+    var coName = allTime(improvedTitle[0].toString().toLowerCase());
+  } else {
+    var coName = allTime();
+  }
+  if (typeof coName["cik"] === "undefined") {
+    uniqueCo.push({
+      rndTitle: coName["title"],
+      videoItem: coName["rndVideoId"],
+      videoItemUrl: coName["videoUrl"],
+      playlistArr: coName["videoPlaylist"],
+    });
+  } else {
+    uniqueCo.push({
+      rndCik: coName["cik"],
+      rndTicker: coName["ticker"],
+      rndTitle: coName["title"],
+      videoItem: coName["rndVideoId"],
+      videoItemUrl: coName["videoUrl"],
+      playlistArr: coName["videoPlaylist"],
+      secUrl: coName["edgarUrl"],
+    });
+  }
+  return uniqueCo;
 };
 
 var objectHeaders = function (object, index) {

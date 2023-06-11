@@ -7,7 +7,7 @@ var checkDay = function () {
   var emailsCount = validate().toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   var currentEmail = randomEmail;
-  var startPageUrl = getUrl(ScriptApp) + "?default";
+  var startPageUrl = getUrl(ScriptApp);
   var input = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
   // console.log(input)
   for (var i = 0; i < input.length; i++) {

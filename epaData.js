@@ -1,12 +1,12 @@
 var epaData = function (e) {
   var urlProduct =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=App.epaData&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";
   var urlIngredient =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=App.epaIng&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaIng&args=";
   var urlCalendar =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=App.dateTime&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dateTime&args=";
   var urlPlay =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=App.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var rndMathArr = [
     `${randomSubstance(null, null, 2)} ${randomSubstance(null, null, 2)}`,
   ];
@@ -149,7 +149,7 @@ var epaData = function (e) {
         <div class="col s10 card-panel l12 m12 push-s1">
         <div class="video-container grey darken-4 z-depth-5">
         <div class="col s12 l12 m12" id="player1">
-          <?!= videoPlayer(myVideo) ?></div>
+          <?!= dtls(myVideo) ?></div>
         </div></div></div>
         </div>
         <div class="row">
@@ -200,7 +200,7 @@ var epaData = function (e) {
                                             }
           var product = document.getElementById("prefTime").value;
           var linkFollow = document.createElement("a");
-          linkFollow.href = url + "?func=App.dtlsEnvironment" + "&args=" + encodeURIComponent(product);
+          linkFollow.href = url + "?func=dtlsEnvironment" + "&args=" + encodeURIComponent(product);
           linkFollow.id = "linkFOLLOW";
           linkFollow.target = "_blank";
           document.body.appendChild(linkFollow);
@@ -269,13 +269,13 @@ var epaData = function (e) {
 
 var epaIng = function (e) {
   var urlProduct =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.epaData&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";
   var urlIngredient =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.epaIng&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaIng&args=";
   var urlCalendar =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.dateTime&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dateTime&args=";
   var urlPlay =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
   var res = productIngName(e);
   var product =
     [e][0] ||
@@ -336,7 +336,7 @@ var epaIng = function (e) {
         <div class="col s9 l12 m12 push-s1 push-m1 push-l2">
         <div class="container row valign-wrapper video-container grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt">
         <div class="col s12 l12 m12" id="player1">
-          <?!= videoPlayer(myVideo) ?></div>
+          <?!= geneFrame(seoSheet(myVideo).url) ?></div>
         </div></div></div>
         <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
           <thead>
@@ -436,7 +436,7 @@ var epaIng = function (e) {
           var linkHome = document.createElement("a");
           var linkFollow = document.createElement("a");
           linkHome.href = "https://flewis21.github.io/budget/";
-          linkFollow.href = url + "?func=foo.epaData"+ "&args=" + encodeURIComponent(product);
+          linkFollow.href = url + "?func=epaData"+ "&args=" + encodeURIComponent(product);
           linkHome.id = "linkHOME";
           linkFollow.id = "linkFOLLOW";
           linkHome.target = "popup";
@@ -636,7 +636,7 @@ var oldEPA = function (rndTitle) {
         var uname = document.getElementById("username").value;
         var linkFollow = document.createElement("a");
         linkFollow.href =
-          url + "?func=foo.oldEPA" + "&args=" + encodeURIComponent(uname);
+          url + "?func=oldEPA" + "&args=" + encodeURIComponent(uname);
         linkFollow.id = "linkFOLLOW";
         linkFollow.target = "_top";
         document.body.appendChild(linkFollow);

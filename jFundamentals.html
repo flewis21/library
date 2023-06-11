@@ -15,42 +15,40 @@
     </style>
   </head>
   <body>
-    <div class="toolbar toolbar_icon toolbar_iconHover scale-out receipt">
-      <?!= rule() ?>
-    </div>
-    <a id="caller" href="#" onclick="pageReset()">update</a>
+    <a id="caller" href="#" onclick="userClicked()">update</a>
     <br />
     <div id="drip">waiting...</div>
-    <script id="gold" type="text/javascript">
+    <script>
       document.addEventListener("DOMContentLoaded", userClicked);
-
-      function pageReset() {
-        document.getElementById("drip").innerHTML = "waiting...";
-        userClicked();
-      }
+      var rndPage = [
+        `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
+      ]
+        .toString()
+        .split(" ")[
+        Math.floor(
+          Math.random() *
+            Math.floor(
+              [
+                `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
+              ]
+                .toString()
+                .split(" ").length
+            )
+        )
+      ];
       function userClicked() {
-        var rndPage = [
-          `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
-        ]
-          .toString()
-          .split(" ")[
-          Math.floor(
-            Math.random() *
-              Math.floor(
-                [
-                  `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
-                ]
-                  .toString()
-                  .split(" ").length
-              )
-          )
-        ];
+        document.getElementById("drip").innerHTML =
+          "waiting for " + rndPage + "...";
         google.script.run
-          .withSuccessHandler(carosel)
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
           .runBoilerplate("renderFile", [rndPage]);
-        function carosel(drop) {
+        function done(drop) {
           document.getElementById("drip").innerHTML = drop;
         }
+      }
+      function error(er) {
+        console.log(er);
       }
     </script>
   </body>

@@ -1,5 +1,5 @@
 function jsGameScripts() {
-  var gamerUrl = getUrl(ScriptApp) + "?default";
+  var gamerUrl = getUrl(ScriptApp);
   var html = HtmlService.createTemplate(`
   <html id="test">
   <head>
@@ -8,7 +8,6 @@ function jsGameScripts() {
     <meta name="description" content="Example meta description.">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-    <?!= styleHtml() ?>
   </head>
   <body>
     <div class="header toolbar toolbar-icon">
@@ -16,28 +15,28 @@ function jsGameScripts() {
       <h2>Choose Your Character</h2>
     </div>
     <div class="interface dotted_border">
-      <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' onclick="GameManager.setGameStart('Warrior')">
+      <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Warrior')">
         <img src="" alt="warrior">
         <div>
           <h3>Warrior</h3> 
           <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
         </div>
       </a>
-      <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' onclick="GameManager.setGameStart('Rouge')">
+      <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Rouge')">
         <img src="" alt="rouge">
         <div>
           <h3 class="header h1">Rouge</h3> 
           <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
         </div>
       </a>
-      <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' onclick="GameManager.setGameStart('Mage')">
+      <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Mage')">
         <img src="" alt="mage">
         <div>
           <h3>Mage</h3> 
           <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
         </div>
       </a>
-      <a href='<?= getUrl(ScriptApp) + "?default=ssGamer" ?>' onclick="GameManager.setGameStart('Hunter')">
+      <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Hunter')">
         <img src="" alt="hunter">
         <div>
           <h3>Hunter</h3> 
