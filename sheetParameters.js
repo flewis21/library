@@ -578,9 +578,11 @@ var seoFactor = function (data) {
   return [idArray].toString().replace(/,/g, "");
 };
 
-var seoPastTime = function (searchString) {
+var seoPastTime = function (searchString, time) {
   var uniqueVid = seoYoutube(searchString);
   var fndOrd = uniqueVid.filter((vidObject) => {
+    var elaspeTime = new Date() - time;
+    var timeToExecute = maxTime - elaspeTime;
     if (vidObject.length === 11) {
       if (
         vidObject !== '"' &&
@@ -626,6 +628,8 @@ var seoPastTime = function (searchString) {
         vidObject.indexOf("new") === -1 &&
         vidObject.indexOf("]") === -1 &&
         vidObject.indexOf("[") === -1 &&
+        vidObject.indexOf("a.severity") === -1 &&
+        vidObject.indexOf("cont") === -1 &&
         vidObject.indexOf("\\") === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
@@ -634,9 +638,19 @@ var seoPastTime = function (searchString) {
         return vidObject;
       }
     }
+    console.log(
+      "vidObject: " +
+        vidObject +
+        "\nelaspeTime: " +
+        elaspeTime +
+        "\ntimeToExecute: " +
+        timeToExecute
+    );
   });
   const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
   var rndRes = fndOrd.filter((test) => {
+    var elaspeTime = new Date() - time;
+    var timeToExecute = maxTime - elaspeTime;
     for (var i = 0, l = randomKey; i < l; i++) {
       if (
         test.indexOf("false") === -1 &&
@@ -664,6 +678,14 @@ var seoPastTime = function (searchString) {
         return test[i];
       }
     }
+    console.log(
+      "test: " +
+        test +
+        "\nelaspeTime: " +
+        elaspeTime +
+        "\ntimeToExecute: " +
+        timeToExecute
+    );
   });
   // var form = formMaker(searchString)
   // fileManager(searchString, "Forms")
@@ -802,7 +824,7 @@ var seoSheet = function (searchString) {
   });
   // var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
   // var randomSheetname = searchString || rndRes[sheetRndKey]
-  var resData = [rndRes].slice(0);
+  var resData = rndRes.slice(0);
   var reSearch = resData.toString().replace(/,/g, " ").split(" ");
   // var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
   // var randomFormname = searchString || rndRes[formRndKey]

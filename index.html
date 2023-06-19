@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" id="test">
   <body class="blue" id="template">
-    <? var randomSECCo = needUtility("Say it right Nelly Furtado")[0] ?>
-    <? var myVid = randomSECCo.rndTitle ?>
-    <? var myVidId = randomSECCo.videoItemUrl || needUtility()[0].videoItemUrl ?>
-    <? var infoLink = seoSheet(myVid).keyWords ?>
     <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"
       ><span
         ><h1
@@ -26,37 +22,13 @@
       <div class="container">
         <div class="col s12 receipt nav-wrapper deep-purple darken-1">
           <div
-            class="container menu-img valign-wrapper grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
+            class="container menu-img grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
           >
-            <? infoLink.map((tv) =>
-            { ?>
-            <? geneFrame(tv)}) ?>
+            <?!= dtlsMain("Furtado") ?>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
-    >
-      <input
-        class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
-        id="prefDate"
-        type="text"
-        placeholder="Book a date"
-      />
-    </div>
-
-    <div
-      class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt"
-    >
-      <input
-        class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in"
-        id="prefTime"
-        type="text"
-        placeholder="Book a time"
-      />
-    </div>
-
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>

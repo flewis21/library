@@ -19,11 +19,10 @@ var companyName = function (companyNameUrl) {
 // console.log(companyNameSecData)
 // console.log(myObject)
 
-var covArrays = function (
-  objects //, cVar)
-) {
+var covArrays = function (objects) {
   const dataArray = [];
   for (var obj in objects) {
+    console.log(obj);
     dataArray.push([objects[obj]]);
   }
   return dataArray;
@@ -48,7 +47,7 @@ var covertArr = function (objects) {
   var temp = mapValues(sliceValues(rows, 1), 0);
   console.log(temp);
   return temp;
-};
+}; //, cVar)
 
 // The parameters (number[]) don't match the method signature for HtmlService.createTemplate.
 // ---------------------------------------------------------------------------------------------------------------------
@@ -180,12 +179,23 @@ var driveUrls = function (fileX) {
   }
 };
 
-var fileManager = function (fileX, folder, content, mimeType) {
+var fileManager = function (fileX, folder, time, content, mimeType) {
   if (typeof fileX !== "undefined") {
-    var folderId = folderIdGlobal(folder);
+    var folderId = folderIdGlobal(folder, time);
     var file = DriveApp.getRootFolder().getFilesByName(fileX);
-    if (file.hasNext()) {
-      file.next().moveTo(DriveApp.getFolderById(folderId));
+    var elaspeTime = new Date() - time;
+    var myFile = file.next();
+    var timeToExecute = maxTime - elaspeTime;
+    console.log(
+      "myFile: " +
+        myFile.getName() +
+        "\nelaspeTime: " +
+        elaspeTime +
+        "\ntimeToExecute: " +
+        timeToExecute
+    );
+    if (myFile) {
+      myFile.moveTo(DriveApp.getFolderById(folderId));
       return;
     } else {
       // DriveApp.getFolderById(folderId).createFile(fileX,content,mimeType)
@@ -201,7 +211,7 @@ var sheetsFileManager = function (fileX, folder) {
     var file = DriveApp.getRootFolder().getFilesByName(fileX);
     if (file.hasNext()) {
       while (file.hasNext())
-        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder));
+        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder, time));
       {
         file.next().moveTo(myFolder);
         return file.next().getUrl();
@@ -219,11 +229,22 @@ function email() {
   return randomEmail;
 }
 
-var folderIdGlobal = function (folderX) {
+var folderIdGlobal = function (folderX, time) {
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
-    var id = tree.next().getId();
+    var elaspeTime = new Date() - time;
+    var timeToExecute = maxTime - elaspeTime;
+    var myId = tree.next();
+    var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
+    console.log(
+      "myFolder: " +
+        myFolder +
+        "\nelaspeTime: " +
+        elaspeTime +
+        "\ntimeToExecute: " +
+        timeToExecute
+    );
     if (folderX === myFolder) {
       return id;
     }
@@ -493,7 +514,7 @@ var randNum = function (namedVar) {
   return res;
 };
 
-var randomSubstance = function (importedData, index, loopLength) {
+var randomSubstance = function (index, loopLength, importedData) {
   var arrData = [
     "e",
     "t",
@@ -525,23 +546,34 @@ var randomSubstance = function (importedData, index, loopLength) {
   var newArr = [];
   var i = index || 0;
   var l = loopLength || 1;
+  // console.log(importedData.sort((a, b) => a - b))
+  // console.log(arrData.sort((a, b) => a - b))
   for (i, l; i < l; i++) {
-    newArr.push(
-      [importedData].sort((a, b) => a - b)[
-        Math.floor(Math.random() * arrData.length)
-      ] ||
+    if (typeof importedData !== "undefined") {
+      newArr.push(
+        importedData.sort((a, b) => a - b)[
+          Math.floor(Math.random() * importedData.length)
+        ]
+      );
+    } else {
+      newArr.push(
         arrData.sort((a, b) => a - b)[
           Math.floor(Math.random() * arrData.length)
         ]
-    );
+      );
+    }
   }
-  var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
-  newArr
-    .map((w) => {
-      return w[0].toString();
-    })
-    .join("");
-  return randomWord;
+  var sortNewArr = newArr.sort((a, b) => a - b)[
+    Math.floor(Math.random() * newArr.length)
+  ];
+  // console.log(sortNewArr)
+  // var thisNewArr = sortNewArr.map((w) => {
+  // return w[0].toString()}
+  // ).join("")
+  // var randomWord = sortNewArr.toString().replace(/'"/g,"").replace(/,/g ,"")
+  // console.log(thisNewArr)
+  // console.log(randomWord)
+  return sortNewArr;
   console.log();
 };
 
@@ -848,18 +880,21 @@ var testData = function (sourceData) {
   try {
     var myArray = [];
     for (var row in sourceData) {
+      console.log(row);
       myArray.push([]);
       for (var col in sourceData[row]) {
+        console.log(col);
         myArray[row].push(sourceData[row][col]);
-        // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
       }
     }
     return myArray;
     console.log(myArray);
   } catch (err) {
+    console.log(err);
     return err;
   }
 };
+// console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 
 var untestedData = function (arrData) {
   const tmpArray = Object.entries(arrData);

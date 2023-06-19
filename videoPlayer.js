@@ -85,7 +85,11 @@ var pastTime = function (url) {
 };
 
 function videoPage(search) {
-  var youPlayer = geneFrame(seoPastTime(search).url);
+  // var search = "NEWMONT Corp. DE"
+  var res = seoSheet(search).keyWords;
+  var resRnd = Math.floor(Math.random() * Math.floor(res.length));
+  var content = res[resRnd];
+  var youPlayer = dtlsMain(content);
   var content = HtmlService.createTemplate(`
   ${
     contentApp(

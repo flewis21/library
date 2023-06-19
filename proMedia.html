@@ -4,7 +4,7 @@
     <base target="_top" />
   </head>
   <body class="blue" id="template">
-    <? var randomSECCo = needUtility(randomSubstance(null,0,7))[0] ?>
+    <? var randomSECCo = needUtility(randomSubstance(0,7))[0] ?>
     <? var myVid = randomSECCo.rndTitle ?>
     <? var myVidId = randomSECCo.videoItemUrl || needUtility()[0].videoItemUrl?>
     <? var infoLink = seoSheet(myVid).keyWords ?>
@@ -28,7 +28,7 @@
             <? pageArray.push(rndListItem) ?>
             <? }) ?>
             <? var story = pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))] ?>
-            <?!= dtlsVegas(story) ?>
+            <?!= dtlsMain(story) ?>
           </div>
         </div>
       </div>

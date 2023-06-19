@@ -85,13 +85,18 @@ var allInvestors = function (rndKey) {
 };
 
 var allTime = function (rndKey) {
-  var uniqueKey = [randomSubstance(null, 0, 4)];
-  var uniqueCoArray = covArrays(uniqueKey);
-  var coKey =
-    rndKey ||
+  var uniqueKey = [randomSubstance(0, 4)];
+  var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
+  var rndCoObjects =
+    uniqueCoObjects[
+      Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
+    ];
+  var uniqueCoArray = covArrays(rndCoObjects);
+  var rndCoArray =
     uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
+  var coKey = rndKey || rndCoArray;
   //Youtube Widget
-  var idArray = needPastTime(rndKey || coKey);
+  var idArray = seoPastTime(coKey);
   var randomPlaylist = [];
   for (var i = 0, l = idArray.length; i < l; i++) {
     const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());

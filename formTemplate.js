@@ -51,7 +51,7 @@ var dtls = function (func) {
 var dtlsCalculator = function (e) {
   var username = e;
   const data = needUtility(
-    randomSubstance(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], 0, 2)
+    randomSubstance(0, 2, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
   )[0];
   const rndNumData = Math.floor(
     Math.random() * Math.floor(data.playlistArr.length)
@@ -579,6 +579,131 @@ var dtlsMain = function (file) {
   }
 };
 
+var dtlsPro = function (namedVar) {
+  var utilNeed = function (namedVar) {
+    return needUtility(randomSubstance(skyNeed(namedVar), 0, 4))[0].rndTitle;
+  };
+  var uti = sheetSeo(pastSeo(skyNeed(namedVar)));
+  uti.map((piece) => {
+    if (piece) {
+      return piece[0];
+    }
+  });
+  var rndUti = uti[randNum(uti)];
+  return dtlsVegas(rndUti);
+};
+
+var somMainFunc = async function (e) {
+  var elaspedTime = new Date() - start;
+  var timeToExecute = maxTime - elaspedTime;
+  while (timeToExecute > 0.3 * 60 * 1000) {
+    console.log(timeToExecute);
+    dtlsSomeFunction("It's who you know");
+    if (elaspedTime <= 0.3 * 60 * 1000) {
+      console.log("Six minutes");
+    }
+    if (elaspedTime == 1 * 60 * 1000) {
+      console.log("Five minutes remainig");
+    }
+    if (elaspedTime == 2 * 60 * 1000) {
+      console.log("Four minutes remainig");
+    }
+    if (elaspedTime == 3 * 60 * 1000) {
+      console.log("Three minutes remainig");
+    }
+    if (elaspedTime == 4 * 60 * 1000) {
+      console.log("Two minutes remainig");
+    }
+    if (elaspedTime == 5 * 60 * 1000) {
+      console.log("One minute remainig");
+    }
+    if (elaspedTime >= maxTime) {
+      console.log("maximum execution time exceeded");
+    }
+  }
+};
+
+var dtlsSomeFunction = function (e) {
+  var time = start;
+  var uniqueKey = [randomSubstance(0, 4)];
+  var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
+  var rndCoObjects =
+    uniqueCoObjects[
+      Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
+    ];
+  var uniqueCoArray = covArrays(rndCoObjects);
+  var rndCoArray =
+    uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
+  var coKey = "Your my Inspiration" || rndCoArray;
+
+  //Youtube Widget
+  var idArray = seoPastTime(coKey, time);
+  var covIdArray = covArrays(idArray);
+  // console.log(covIdArray[0][0].map((e)=>{return e[0]}))
+  var form = formMaker(coKey.toUpperCase(), time);
+  if (typeof form === "object") {
+    fileManager(coKey.toUpperCase(), "Forms", time);
+    covIdArray[0][0].map((d) => {
+      while (d) {
+        var elaspedTime = new Date() - time;
+        var timeToExecute = maxTime - elaspedTime;
+        form.addPageBreakItem().setTitle(coKey);
+        form
+          .addSectionHeaderItem()
+          .setTitle("https://youtube.com/watch?v=" + d);
+        form
+          .addVideoItem()
+          .setAlignment(FormApp.Alignment.CENTER)
+          .setWidth(612)
+          .setVideoUrl("https://youtube.com/watch?v=" + d);
+        if (
+          timeToExecute <= 6 * 60 * 1000 &&
+          timeToExecute >= 5.98 * 60 * 1000
+        ) {
+          console.log("Time limit six minutes");
+        }
+        if (
+          timeToExecute <= 5 * 60 * 1000 &&
+          timeToExecute >= 4.98 * 60 * 1000
+        ) {
+          console.log("Time limit five minutes");
+        }
+        if (
+          timeToExecute <= 4 * 60 * 1000 &&
+          timeToExecute >= 3.98 * 60 * 1000
+        ) {
+          console.log("Time limit four minutes");
+        }
+        if (
+          timeToExecute <= 3 * 60 * 1000 &&
+          timeToExecute >= 2.98 * 60 * 1000
+        ) {
+          console.log("Time limit three minutes");
+        }
+        if (
+          timeToExecute <= 2 * 60 * 1000 &&
+          timeToExecute >= 1.98 * 60 * 1000
+        ) {
+          console.log("Time limit two minutes");
+        }
+        if (
+          timeToExecute <= 1 * 60 * 1000 &&
+          timeToExecute >= 0.98 * 60 * 1000
+        ) {
+          console.log("Time limit one minute");
+        }
+        if (timeToExecute <= 0.1 * 60 * 1000) {
+          console.log(timeToExecute.valueOf());
+          break;
+        }
+        return;
+      }
+      return;
+    });
+  }
+  return covIdArray;
+};
+
 var dtlsStore = function (itemName) {
   return HtmlService.createTemplate(
     contentApp(
@@ -663,20 +788,6 @@ var dtlsStore = function (itemName) {
   )
     .evaluate()
     .getContent();
-};
-
-var dtlsPro = function (namedVar) {
-  var utilNeed = function (namedVar) {
-    return needUtility(randomSubstance(skyNeed(namedVar), 0, 4))[0].rndTitle;
-  };
-  var uti = sheetSeo(pastSeo(skyNeed(namedVar)));
-  uti.map((piece) => {
-    if (piece) {
-      return piece[0];
-    }
-  });
-  var rndUti = uti[randNum(uti)];
-  return dtlsVegas(rndUti);
 };
 
 var dtlsTv = function () {

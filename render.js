@@ -360,18 +360,27 @@ var appList = function (e) {
     `
   <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
     <div class="row">
-      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      <form action="/search" class="row s12 card-panel amber">
+        <ul class="browser-default">
+          <header class="valign-wrapper container row s12 deep-purple darken-1">
+            <nav role="navigation" class="nav-wrapper browser-default" id="naEngine" for="uiApp"></nav>
+          </header>
+        </ul>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col s12 m12 l12 card-panel amber">
         <div class="container">
-          <div class="col s12 receipt deep-purple darken-1">
+          <div class="col s12 m12 l12 deep-purple darken-1">
             <div id="nbEngine" for="uiApp"></div>
           </div>
         </div>
       </div>
     </div>
   <div class="row">
-      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      <div class="col s12 m12 l12 card-panel amber">
         <div class="container">
-          <div class="col s12 receipt deep-purple darken-1">
+          <div class="col s12 m12 l12 receipt deep-purple darken-1">
             <span>
               <input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/>
             </span>
@@ -380,6 +389,7 @@ var appList = function (e) {
       </div>
     </div>
     <script>
+      document.addEventListener("DOMContentLoaded", research)
       document.getElementById("uiApp").addEventListener("change", research)
       function research() {
       function serverside(func, args) {
@@ -393,21 +403,20 @@ var appList = function (e) {
               reject(error)})
           .runBoilerplate([func], [args])})};
       var bar = document.getElementById("uiApp").value || "";
-      // Process the user's input.
-      if (confirm("Search for " + bar + " ?")) {
       serverside("dtlsMain", bar)
       .then((html) => {
+        if (html){
           // User clicked "No" or X in the title bar.
-          document.getElementById("nbEngine").innerHTML = html;})
+          document.getElementById("nbEngine").innerHTML = html;}})
       .catch((er) => {
-        console.log(er)})}
-      else {
+        console.log(er)})
       serverside("needBing", bar)
       .then((search) => {
           // User clicked "Yes".
-          document.getElementById("nbEngine").innerHTML = search;})
+          document.getElementById("naEngine").innerHTML = search;})
       .catch((er) => {
-        console.log(er)})}}
+        console.log(er)})
+        document.getElementById("uiApp").value = ""}
     </script>
     <script>
       function onUserClick(bar) {

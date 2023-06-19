@@ -136,7 +136,7 @@ var rndDice = function () {
 
 var breakthrough = function (e) {
   var username = e;
-  const data = needUtility(e || randomSubstance(null, 0, 1))[0];
+  const data = needUtility(e || randomSubstance(0, 1))[0];
   if (!username) {
     var percent = Math.floor(
       Math.random() * Math.floor(data.playlistArr.length)
@@ -186,7 +186,7 @@ var breakthrough = function (e) {
         <div class="col s10 card-panel l12 m12 push-s1">
         <div class="video-container grey darken-4 z-depth-5">
         <div class="col s12 l12 m12" id="player1">
-          <?!= dtlsVegas(myVideo) ?></div>
+          <?!= dtlsMain(myVideo) ?></div>
         </div></div></div>
         <div class="row">
         <div class="col s10 card-panel black l12 m12 push-s1">

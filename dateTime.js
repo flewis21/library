@@ -58,9 +58,9 @@ function dateTime(date) {
     </head>
     <body>
       <div class="row">
-        <div class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+        <div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
-            <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+            <div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1">
               <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt">
               <input  placeholder=<?!= ph ?> class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" /></div>
             </div>
@@ -82,9 +82,9 @@ function dateTime(date) {
     </head>
     <body>
       <div class="row">
-        <div class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+        <div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
-            <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+            <div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1">
               <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt">
               <input placeholder=<?!= ph ?> class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" /></div>
             </div>

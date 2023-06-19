@@ -16,6 +16,13 @@
     <? if (JSON.stringify(i) >= 100) {break}}}} else { ?>
     <? list.push([percent]).toString() ?>
     <? } ?>
+    <? var newList = [] ?>
+    <? for (var i=0,l=list.length;i<l;i++) {
+        newList.push("<li>" + '<a
+      class="waves-effect waves-light btn"
+      href="https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dtlsCalculator&args="
+      >' + list[i] + "</a
+    >") } ?>
     <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"
       ><span
         ><h1

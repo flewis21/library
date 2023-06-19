@@ -235,13 +235,18 @@ var needUtility = function (rndClient) {
   if (typeof client !== "undefined") {
     var improvedTitle = seoSheet(client).keyWords.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
-        if ([r].indexOf(",") === -1) {
+        if (r.indexOf(",") === -1 && r.indexOf("can\u0027t") === -1) {
           if ((i = 1)) break;
         }
       }
       return r;
     });
-    var coName = allTime(improvedTitle[0].toString().toLowerCase());
+    var title2 = improvedTitle.slice(1).map((l) => {
+      return l;
+    });
+    var rndTitle2 =
+      title2[Math.floor(Math.random() * Math.floor(title2.length))];
+    var coName = allTime(rndTitle2.toLowerCase() || "");
   } else {
     var coName = allTime();
   }
@@ -296,7 +301,7 @@ var tabIndex = function (url, xpath, index, headers) {
   return test;
 };
 
-var urlDataSource = function (url, xpath, params) {
+var urlDataSource = function (url, params, xpath) {
   var res = UrlFetchApp.fetch(url, params);
   var content = res.getContentText();
   return content;
