@@ -102,7 +102,7 @@ var forObjects = function (data, delimiter) {
   for (var i = 0; i < data.length; i++) {
     json = covObjects(
       objectHeaders(data, JSON.stringify(i))[1],
-      objectHeaders(data, JSON.stringify(i))[0]
+      objectHeaders(data, JSON.stringify(i))[0],
     );
   }
   return json;
@@ -119,7 +119,7 @@ var jsonDataX = function (data) {
 
 async function jsonFormatter() {
   var res = UrlFetchApp.fetch(
-    "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1"
+    "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1",
   );
   var content = res.getContentText();
   try {
@@ -229,26 +229,36 @@ var needCapital = function (searchString) {
   return pong.toString().split(",");
 };
 
-var needUtility = function (rndClient) {
+var needUtility = function (rndClient, time) {
   var client = rndClient;
   var uniqueCo = [];
   if (typeof client !== "undefined") {
-    var improvedTitle = seoSheet(client).keyWords.map((r) => {
+    var seoTitle = seoSheet(client, time).keyWords;
+    var improvedTitle = seoTitle.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
+        // var elaspeTime = new Date() - time
+        // console.log("r[i]: " + r[i] + "\nelaspeTime: " + elaspeTime)
         if (r.indexOf(",") === -1 && r.indexOf("can\u0027t") === -1) {
-          if ((i = 1)) break;
+          if (i == 1) {
+            break;
+          }
         }
       }
       return r;
     });
-    var title2 = improvedTitle.slice(1).map((l) => {
+    var titleSlice = improvedTitle.slice(1);
+    var title2 = titleSlice.map((l) => {
       return l;
     });
-    var rndTitle2 =
-      title2[Math.floor(Math.random() * Math.floor(title2.length))];
-    var coName = allTime(rndTitle2.toLowerCase() || "");
+    if (title2.length > 0) {
+      var rndTitle2 =
+        title2[Math.floor(Math.random() * Math.floor(title2.length))];
+      var coName = allTime(rndTitle2.toLowerCase(), time);
+    } else {
+      var coName = allTime(null, time);
+    }
   } else {
-    var coName = allTime();
+    var coName = allTime(null, time);
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({
@@ -288,7 +298,7 @@ var rowsToReturn = function (data, index) {
 var tabData = function (url, xpath, headers) {
   var test = covObjects(
     jsonDataX(sliceValues(jsonXpath(url, xpath), 0)),
-    dataHeadings(testData(headers))
+    dataHeadings(testData(headers)),
   );
   return test;
 };
@@ -296,12 +306,12 @@ var tabData = function (url, xpath, headers) {
 var tabIndex = function (url, xpath, index, headers) {
   var test = covObjects(
     jsonDataX(sliceValues(jsonXpath(url, xpath), 0)[index]),
-    dataHeadings(testData(headers))
+    dataHeadings(testData(headers)),
   );
   return test;
 };
 
-var urlDataSource = function (url, params, xpath) {
+var urlDataSource = function (url, params, time, xpath) {
   var res = UrlFetchApp.fetch(url, params);
   var content = res.getContentText();
   return content;

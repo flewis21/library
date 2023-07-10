@@ -9,10 +9,10 @@ var bingSWF = function (searchString) {
     const videoSearch = [
       urlDataSource(
         `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(
-          searchString
+          searchString,
         )}&PC=U316&top=50&skip=0&FORM=CHROMN`,
         null,
-        { muteHttpExceptions: true }
+        { muteHttpExceptions: true },
       ),
     ];
     const table = videoSearch
@@ -31,21 +31,21 @@ var cabDriver = function (e) {
   var agendaCal = (function (request) {
     var events = CalendarApp.getEvents(
       new Date(Number([request][0]) * 1000),
-      new Date(Number([request][1]) * 1000)
+      new Date(Number([request][1]) * 1000),
     );
     var result = { available: events.length == 0 };
     return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(
-      ContentService.MimeType.JSON
+      ContentService.MimeType.JSON,
     );
   })();
   var xkcdRSS = (function (e) {
     var feed = UrlFetchApp.fetch("http://xkcd.com/rss.xml").getContentText();
     feed = feed.replace(
       /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
-      "$1" + new Array(10).join("&lt;br /&gt;") + "$2"
+      "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
     );
     return ContentService.createTextOutput(feed).setMimeType(
-      ContentService.MimeType.RSS
+      ContentService.MimeType.RSS,
     );
   })();
   console.log(xkcdRSS.getContent());
@@ -63,14 +63,14 @@ var cabDriver = function (e) {
   })[dataRandomLength];
   console.log(headers);
   var headersRandomLength = Math.floor(
-    Math.random() * Math.floor(headers.length)
+    Math.random() * Math.floor(headers.length),
   );
   var dataBody = data.map((r) => {
     return covArrays([[r][0]])[0];
   });
   console.log(dataBody);
   var dataBodyRandomLength = Math.floor(
-    Math.random() * Math.floor(dataBody.length)
+    Math.random() * Math.floor(dataBody.length),
   );
   var randomSsName = headers[headersRandomLength];
   var randomSheetName = headers[headersRandomLength];
@@ -78,7 +78,7 @@ var cabDriver = function (e) {
     randomSsName,
     randomSheetName,
     headers,
-    dataBody
+    dataBody,
   );
   var ssUrl = driveUrls(randomSsName);
   var ws = ssGetSheetBySpreadsheetUrl(ssUrl, randomSheetName);
@@ -95,9 +95,9 @@ var cabDriver = function (e) {
     </div>
     <script>
       document.getElementById("dev").textContent = ${JSON.stringify(
-        agendaCal.getContent()
+        agendaCal.getContent(),
       )}
-    </script>`
+    </script>`,
   ).getRawContent();
 };
 
@@ -105,10 +105,10 @@ var classifiedCapital = function (searchString) {
   const videoSearch = [
     urlDataSource(
       `https://www.bing.com/search?q=${encodeURIComponent(
-        searchString
+        searchString,
       )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   const table = videoSearch
@@ -123,7 +123,7 @@ var classifiedCapital = function (searchString) {
 
 var classifiedSheet = function (searchString) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
-    searchString
+    searchString,
   )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var headers = ["keywords"];
   var data = urlDataSource(rndSearch);
@@ -320,10 +320,10 @@ var classifiedSheet = function (searchString) {
     </script>
     <script>document.addEventListener("DOMContentLoaded", function()
           {document.getElementById("seoData").innerHTML = ${JSON.stringify(
-            searchesCapital
+            searchesCapital,
           )};})</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
-        `
+        `,
   );
   html.dOMContentLoaded = HtmlService.createHtmlOutput(
     `document.addEventListener("DOMContentLoaded", 
@@ -364,7 +364,7 @@ var classifiedSheet = function (searchString) {
           document.getElementById("prefTime").value = "";})()});
       var elems = document.getElementById("prefTime");
       var instances = M.FormSelect.init(elems, options);
-      `
+      `,
   ).getContent();
   return html.evaluate().getContent();
 };
@@ -387,7 +387,7 @@ function mis(text) {
   return authLogic(text)
     ? UrlFetchApp.fetch(encodeURI(text)).getContentText()
     : UrlFetchApp.fetch(
-        encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
+        encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"),
       ).getContentText();
 }
 
@@ -396,10 +396,10 @@ var needBing = function (searchString) {
     const search = [
       urlDataSource(
         `https://www.bing.com/search?q=${encodeURIComponent(
-          searchString
+          searchString,
         )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
         null,
-        { muteHttpExceptions: true }
+        { muteHttpExceptions: true },
       ),
     ];
     const table = search.slice(search.indexOf("SERP")).toString().split("SERP");
@@ -412,7 +412,7 @@ var needBing = function (searchString) {
 
 var needPong = function (searchString) {
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(
-    searchString
+    searchString,
   )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
   var txt = seoBites(searchString, seoFactor(data).split(","));
@@ -420,8 +420,107 @@ var needPong = function (searchString) {
   return JSON.stringify(txt);
 };
 
-var pastSeo = function (namedVar) {
-  return seoPastTime([namedVar].join("")).playList[randNum(namedVar)];
+var pastSeo = function (namedVar, time) {
+  var seoPlaylist = seoPastTime([namedVar].join(""), time).playList;
+  var form = formMaker([namedVar].join("").toUpperCase(), time);
+  if (typeof form === "object") {
+    fileManager([namedVar].join("").toUpperCase(), "Forms", time);
+    seoPlaylist.map((d) => {
+      while (d) {
+        var elaspedTime = new Date() - time;
+        var timeToExecute = maxTime - elaspedTime;
+        form.addPageBreakItem().setTitle([namedVar].join(""));
+        form
+          .addSectionHeaderItem()
+          .setTitle("https://youtube.com/watch?v=" + d);
+        form
+          .addVideoItem()
+          .setAlignment(FormApp.Alignment.CENTER)
+          .setWidth(612)
+          .setVideoUrl("https://youtube.com/watch?v=" + d);
+        if (
+          timeToExecute <= 6 * 60 * 1000 &&
+          timeToExecute >= 5.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit six minutes",
+          );
+        }
+        if (
+          timeToExecute <= 5 * 60 * 1000 &&
+          timeToExecute >= 4.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit five minutes",
+          );
+        }
+        if (
+          timeToExecute <= 4 * 60 * 1000 &&
+          timeToExecute >= 3.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit four minutes",
+          );
+        }
+        if (
+          timeToExecute <= 3 * 60 * 1000 &&
+          timeToExecute >= 2.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit three minutes",
+          );
+        }
+        if (
+          timeToExecute <= 2 * 60 * 1000 &&
+          timeToExecute >= 1.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit two minutes",
+          );
+        }
+        if (
+          timeToExecute <= 1 * 60 * 1000 &&
+          timeToExecute >= 0.98 * 60 * 1000
+        ) {
+          console.log(
+            "that function: " +
+              arguments.callee.caller.name +
+              "\nthis function: " +
+              arguments.callee.name +
+              "\nTime limit one minute",
+          );
+        }
+        if (timeToExecute <= 0.1 * 60 * 1000) {
+          console.log(timeToExecute.valueOf());
+          break;
+        }
+        return;
+      }
+      return;
+    });
+  }
+  var rndParam = randNum(seoPlaylist);
+  return seoPlaylist[rndParam];
 };
 
 var proTest = function () {
@@ -459,22 +558,38 @@ var proTest = function () {
   //  console.log(uniqueVid)
 };
 
-var rndString = function (inputArray) {
-  return randomSubstance(inputArray, 0, 2);
+var rndString = function (inputArray, time) {
+  var str = randomSubstance(0, 2, inputArray, time);
+  return str;
 };
 
-var seoBites = function (searchString, idArray) {
+var seoBites = function (searchString, idArray, time) {
   const uniqueSeo = [];
   const searchWords = [searchString]
     .toString()
     .split(" ")
     .map((l) => {
+      var elaspeTime = new Date() - time;
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nl: " +
+          l +
+          "\nelaspeTime: " +
+          elaspeTime,
+      );
       return l;
     });
   for (var i = 0, l = searchWords.length; i < l; i++) {
     idArray.map((w) => {
+      // var elaspeTime = new Date() - time
+      // console.log("w: \nelaspeTime: " + elaspeTime)
       if (w !== "") {
         if (w.indexOf(w[0].includes(searchWords[i])) !== -1) {
+          // var elaspeTime = new Date() - time
+          // console.log("w: \nelaspeTime: " + elaspeTime)
           uniqueSeo.push(w);
         }
       }
@@ -499,36 +614,79 @@ var seoCapital = function (url) {
   });
   const html = HtmlService.createTemplate(
     `
-    <div class="row">
-    <div class="col s10 card-panel l12 m12 push-s1">
-    <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
-    <div class="col s12 l12 m12">
-    <div class="black" id="seoData">
-      <?!= pong ?>
-    </div></div></div></div></div>
-    <div class="row">
-    <div class="col s10 card-panel l12 m12 push-s1">
-    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
-    <div class="col s12 l12 m12">
-    <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="prefTime"  type="search" />
-    </div></div></div></div>
-    <script>
-      <?!= dOMContentLoaded ?>
-    </script>
-    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
-        `
+    <html id="test">
+      <head>
+        <base target="_top">
+        <meta charset="utf-8">
+        <meta name="description" content="Example meta description.">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+      </head>
+      <body>
+      <div class="row">
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div class="video-container grey" style="clear: both">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=${url}
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="prefTime"  type="search" onchange="capChange()" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        <?!= research.getContent() ?>
+      </script>
+      <script>
+        function capChange() {
+
+          var cap = document.getElementById("prefTime").value
+          console.log(cap)
+
+        }
+      </script>
+      <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
+      </body>
+    </html>
+        `,
   );
   html.pong = pong.toString().split(",");
   html.research = HtmlService.createHtmlOutput(`
-  document.addEventListener("DOMContentLoaded", 
+  document.getElementById("prefTime").addEventListener("change", 
     function() {
-      document.getElementById("prefTime").value
+      var cap = document.getElementById("prefTime").value
+      console.log(cap)
     })`);
-  html.dOMContentLoaded = HtmlService.createHtmlOutput(
-    `document.addEventListener("DOMContentLoaded", 
-    function() 
-      {let timePicker = document.getElementById("breakUrl");
-      M.Timepicker.init(timePicker, { defaultTime: "now" })})
+  html.prefTimeChange = HtmlService.createHtmlOutput(`
       document.getElementById("prefTime").addEventListener("change", 
         function()
           {//console.log(document.getElementById("test").innerHTML)
@@ -553,34 +711,41 @@ var seoCapital = function (url) {
             var url = urlData.toString()
                                             }
           var prodSearch = document.getElementById("prefTime").value 
-          var product = <?!= seoSheet(prodSearch).url ?>;
-          console.log(typeof product.split(" ") + " || || " + product.split(" ").map((r) => {return '"' + r + '"' }) + url+"?func=seoSheet"+"&args="+encodeURIComponent(product))
           var linkFollow = document.createElement("a");
-          linkFollow.href = url + "?func=dtls" + "&args=" + encodeURIComponent(product);
+          linkFollow.href = url + "?func=seoCapital" + "&args=" + encodeURIComponent());
           linkFollow.id = "linkFOLLOW";
           linkFollow.target = "_top";
           document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();})()});
-      var elems = document.getElementById("prefTime");
-      var instances = M.FormSelect.init(elems, options);
-      `
-  ).getContent();
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("prefTime").value = ""})()});
+      `);
+  html.dOMContentLoaded =
+    HtmlService.createHtmlOutput(`document.addEventListener("DOMContentLoaded", 
+    function() 
+      {let timePicker = document.getElementById("breakUrl");
+      M.Timepicker.init(timePicker, { defaultTime: "now" })})
+      var elems = document.getElementById("breakUrl");
+      var instances = M.FormSelect.init(elems);
+      `);
+  console.log(eval(html.research));
   return html.evaluate().getContent();
 };
 
-var seoFactor = function (data) {
+var seoFactor = function (data, time) {
   var idArray = [];
   data.map((seoData) => {
+    // var elaspeTime = new Date() - time
+    // console.log("seoData: \nelaspeTime: " + elaspeTime)
     idArray.push(
-      seoData.slice(seoData.indexOf("<div>")).toString().split("</div>")
+      seoData.slice(seoData.indexOf("<div>")).toString().split("</div>"),
     );
   });
   return [idArray].toString().replace(/,/g, "");
 };
 
 var seoPastTime = function (searchString, time) {
-  var uniqueVid = seoYoutube(searchString);
-  var fndOrd = uniqueVid.filter((vidObject) => {
+  var uniqueVid = seoYoutube(searchString, time);
+  var sorFndOrd = uniqueVid.filter((vidObject) => {
     var elaspeTime = new Date() - time;
     var timeToExecute = maxTime - elaspeTime;
     if (vidObject.length === 11) {
@@ -627,10 +792,15 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf("out") === -1 &&
         vidObject.indexOf("new") === -1 &&
         vidObject.indexOf("]") === -1 &&
+        vidObject.indexOf("localStorag") === -1 &&
+        vidObject.indexOf("t.loadEvent") === -1 &&
         vidObject.indexOf("[") === -1 &&
         vidObject.indexOf("a.severity") === -1 &&
         vidObject.indexOf("cont") === -1 &&
         vidObject.indexOf("\\") === -1 &&
+        vidObject.indexOf("JSON.parse(") === -1 &&
+        vidObject.indexOf("_w._sydConv") === -1 &&
+        vidObject.indexOf("o.Prefetchi") === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
         vidObject.indexOf(",") === -1
@@ -638,263 +808,305 @@ var seoPastTime = function (searchString, time) {
         return vidObject;
       }
     }
-    console.log(
-      "vidObject: " +
-        vidObject +
-        "\nelaspeTime: " +
-        elaspeTime +
-        "\ntimeToExecute: " +
-        timeToExecute
-    );
+    // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
   });
-  const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-  var rndRes = fndOrd.filter((test) => {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
-    for (var i = 0, l = randomKey; i < l; i++) {
-      if (
-        test.indexOf("false") === -1 &&
-        test.indexOf("var") === -1 &&
-        test.indexOf("=") === -1 &&
-        test.indexOf(".") === -1 &&
-        test.indexOf("(") === -1 &&
-        test.indexOf(")") === -1 &&
-        test.indexOf("_") === -1 &&
-        test.indexOf(";") === -1 &&
-        test.indexOf('"') === -1 &&
-        test.indexOf("Error") === -1 &&
-        test.indexOf("error") === -1 &&
-        test.indexOf("Codes") === -1 &&
-        test.indexOf("siz23") === -1 &&
-        test.indexOf(":") === -1 &&
-        test.indexOf("{}") === -1 &&
-        test.indexOf("}") === -1 &&
-        test.indexOf("<") === -1 &&
-        test.indexOf(">") === -1
-      ) {
-        if (JSON.stringify(i) >= 3) {
-          break;
+  var i = 0;
+  var l = sorFndOrd.length;
+  for (i, l; i < l; i++) {
+    var fndOrd = [];
+    sorFndOrd.sort((a, b) => {
+      if (a !== b && fndOrd.indexOf(a) === -1) {
+        if (fndOrd.indexOf(a) > -1) {
+          return;
         }
-        return test[i];
-      }
-    }
-    console.log(
-      "test: " +
-        test +
-        "\nelaspeTime: " +
-        elaspeTime +
-        "\ntimeToExecute: " +
-        timeToExecute
-    );
-  });
-  // var form = formMaker(searchString)
-  // fileManager(searchString, "Forms")
-  // var lowerCaseS = seoSheet(searchString).keyWords
-  // lowerCaseS.map((b) => {
-  // console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-  // return form.addVideoItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(needUtility(b)[0].videoItemUrl)})
-  // var formUrl = form.getPublishedUrl()
-  var rndSort = [];
-  for (var i = 0, l = rndRes.length; i < l; i++) {
-    rndSort.push(
-      rndRes.filter((o) => {
-        return o !== rndRes[i];
-      })
-    );
-  }
-  var rndKind = rndSort.toString().split(" ").reverse().pop().split(",");
-  return {
-    playList: rndKind.sort((a, b) => a - b),
-    // url: formUrl
-  };
-};
+        {
+        }
 
-var seoSheet = function (searchString) {
-  var uniqueSeo = seoTwitter(searchString);
-  // var headers = ["keywords"]
+        fndOrd.push(a);
+      } else if (b !== a && fndOrd.indexOf(b) === -1) {
+        if (fndOrd.indexOf(b) > -1) {
+          return;
+        }
+        {
+        }
+
+        fndOrd.push(b);
+      }
+    });
+  }
+  // console.log(fndOrd)
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (
+          test.indexOf("false") === -1 &&
+          test.indexOf("var") === -1 &&
+          test.indexOf("=") === -1 &&
+          test.indexOf(".") === -1 &&
+          test.indexOf("(") === -1 &&
+          test.indexOf(")") === -1 &&
+          test.indexOf("_") === -1 &&
+          test.indexOf(";") === -1 &&
+          test.indexOf('"') === -1 &&
+          test.indexOf("Error") === -1 &&
+          test.indexOf("error") === -1 &&
+          test.indexOf("Codes") === -1 &&
+          test.indexOf("siz23") === -1 &&
+          test.indexOf(":") === -1 &&
+          test.indexOf("{}") === -1 &&
+          test.indexOf("}") === -1 &&
+          test.indexOf("<") === -1 &&
+          test.indexOf(">") === -1
+        ) {
+          if (JSON.stringify(i) >= 3) {
+            break;
+          }
+          return test[i];
+        }
+      }
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    });
+    var rndSort = [];
+    for (var i = 0, l = rndRes.length; i < l; i++) {
+      var sorRes = rndRes.filter((o) => {
+        return o !== rndRes[i];
+      });
+      rndSort.push(sorRes);
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+    return {
+      playList: rndRes.sort((a, b) => a - b),
+    };
+  }
+};
+// var form = formMaker(searchString)
+// fileManager(searchString, "Forms")
+// var lowerCaseS = seoSheet(searchString).keyWords
+// lowerCaseS.map((b) => {
+// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
+// return form.addVideoItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(needUtility(b)[0].videoItemUrl)})
+// var formUrl = form.getPublishedUrl()
+// url: formUrl
+
+var seoSheet = function (searchString, time) {
+  var uniqueSeo = seoTwitter(searchString, time);
   var fndOrd = uniqueSeo
     .toString()
     .split(" ")
     .filter((p) => {
+      var elaspeTime = new Date() - time;
+      // console.log("p: " + p + "\nelaspeTime: " + elaspeTime)
       if (p.length > 3 && p.length < 18) {
         return p[0] !== "<";
       }
     });
-  const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-  var rndRes = fndOrd.filter((test) => {
-    for (var i = 0, l = randomKey; i < l; i++) {
-      if (
-        test.indexOf("false") === -1 &&
-        test.indexOf("var") === -1 &&
-        test.indexOf("=") === -1 &&
-        test.indexOf(".") === -1 &&
-        test.indexOf("(") === -1 &&
-        test.indexOf(")") === -1 &&
-        test.indexOf("_") === -1 &&
-        test.indexOf(";") === -1 &&
-        test.indexOf('"') === -1 &&
-        test.indexOf("Error") === -1 &&
-        test.indexOf("error") === -1 &&
-        test.indexOf("Codes") === -1 &&
-        test.indexOf("siz23") === -1 &&
-        test.indexOf(":") === -1 &&
-        test.indexOf("{}") === -1 &&
-        test.indexOf("}") === -1 &&
-        test.indexOf("<") === -1 &&
-        test.indexOf(">") === -1 &&
-        test.indexOf("0?void") === -1 &&
-        test.indexOf("12H7a3") === -1 &&
-        test.indexOf("6H13ZM7") === -1 &&
-        test.indexOf("2zm0") === -1 &&
-        test.indexOf("null") === -1 &&
-        test.indexOf("return") === -1 &&
-        test.indexOf("%eSearch") === -1 &&
-        test.indexOf("#fbpgdg") === -1 &&
-        test.indexOf("fbpkgiid") === -1 &&
-        test.indexOf("'undefined'") === -1 &&
-        test.indexOf("bepcfg") === -1 &&
-        test.indexOf("instanceof") === -1 &&
-        test.indexOf("passed") === -1 &&
-        test.indexOf("element") === -1 &&
-        test.indexOf("0v2ZM3") === -1 &&
-        test.indexOf("1-1-1H0a3") === -1 &&
-        test.indexOf("13V3H0v10h2Zm1") === -1 &&
-        test.indexOf("14H3v2h10v-2ZM2") === -1 &&
-        test.indexOf("serp") === -1 &&
-        test.indexOf("Identity") === -1 &&
-        test.indexOf("else") === -1 &&
-        test.indexOf("errd") === -1 &&
-        test.indexOf("'Ref") === -1 &&
-        test.indexOf("Rewards") === -1 &&
-        test.indexOf("payload") === -1 &&
-        test.indexOf("eventData") === -1 &&
-        test.indexOf("else") === -1 &&
-        test.indexOf("root") === -1 &&
-        test.indexOf("'noresult'") === -1 &&
-        test.indexOf("muid") === -1 &&
-        test.indexOf("payload") === -1 &&
-        test.indexOf("eventObj") === -1 &&
-        test.indexOf("eventType") === -1 &&
-        test.indexOf("handler") === -1 &&
-        test.indexOf("throw") === -1 &&
-        test.indexOf("remove") === -1 &&
-        test.indexOf("typeof") === -1 &&
-        test.indexOf("failed") === -1 &&
-        test.indexOf("removed") === -1 &&
-        test.indexOf("from") === -1 &&
-        test.indexOf("your") === -1 &&
-        test.indexOf("Init") === -1 &&
-        test.indexOf("parachuteSuccess") === -1 &&
-        test.indexOf("contentType") === -1 &&
-        test.indexOf("postBody") === -1 &&
-        test.indexOf("quick") === -1 &&
-        test.indexOf("execute") === -1 &&
-        test.indexOf("bind") === -1 &&
-        test.indexOf("toggle") === -1 &&
-        test.indexOf("true") === -1 &&
-        test.indexOf("callback") === -1 &&
-        test.indexOf("load") === -1 &&
-        test.indexOf("allow-popups") === -1 &&
-        test.indexOf("allow-same-origin") === -1 &&
-        test.indexOf("config") === -1 &&
-        test.indexOf("match") === -1 &&
-        test.indexOf("name") === -1 &&
-        test.indexOf("accLinkParams") === -1 &&
-        test.indexOf("successFunc") === -1 &&
-        test.indexOf("status") === -1 &&
-        test.indexOf("timestamp") === -1 &&
-        test.indexOf("impressionGuid") === -1 &&
-        test.indexOf("eventToLog") === -1 &&
-        test.indexOf("pageType") === -1 &&
-        test.indexOf("explicitTimeStamp") === -1 &&
-        test.indexOf("DynScopesDropdown") === -1 &&
-        test.indexOf("AwayTimeThreshold") === -1 &&
-        test.indexOf("contains") === -1 &&
-        test.indexOf("these") === -1 &&
-        test.indexOf("logEvent") === -1 &&
-        test.indexOf("search") === -1 &&
-        test.indexOf("eventName") === -1
-      ) {
-        if (JSON.stringify(i) >= 3) {
-          break;
+  if (fndOrd.length > 0) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (
+          test.indexOf("false") === -1 &&
+          test.indexOf("var") === -1 &&
+          test.indexOf("=") === -1 &&
+          test.indexOf(".") === -1 &&
+          test.indexOf("(") === -1 &&
+          test.indexOf(")") === -1 &&
+          test.indexOf("_") === -1 &&
+          test.indexOf(";") === -1 &&
+          test.indexOf('"') === -1 &&
+          test.indexOf("Error") === -1 &&
+          test.indexOf("error") === -1 &&
+          test.indexOf("Codes") === -1 &&
+          test.indexOf("siz23") === -1 &&
+          test.indexOf(":") === -1 &&
+          test.indexOf("{}") === -1 &&
+          test.indexOf("}") === -1 &&
+          test.indexOf("<") === -1 &&
+          test.indexOf(">") === -1 &&
+          test.indexOf("0?void") === -1 &&
+          test.indexOf("12H7a3") === -1 &&
+          test.indexOf("6H13ZM7") === -1 &&
+          test.indexOf("2zm0") === -1 &&
+          test.indexOf("null") === -1 &&
+          test.indexOf("return") === -1 &&
+          test.indexOf("%eSearch") === -1 &&
+          test.indexOf("#fbpgdg") === -1 &&
+          test.indexOf("fbpkgiid") === -1 &&
+          test.indexOf("'undefined'") === -1 &&
+          test.indexOf("bepcfg") === -1 &&
+          test.indexOf("instanceof") === -1 &&
+          test.indexOf("passed") === -1 &&
+          test.indexOf("element") === -1 &&
+          test.indexOf("0v2ZM3") === -1 &&
+          test.indexOf("1-1-1H0a3") === -1 &&
+          test.indexOf("13V3H0v10h2Zm1") === -1 &&
+          test.indexOf("14H3v2h10v-2ZM2") === -1 &&
+          test.indexOf("serp") === -1 &&
+          test.indexOf("Identity") === -1 &&
+          test.indexOf("else") === -1 &&
+          test.indexOf("errd") === -1 &&
+          test.indexOf("'Ref") === -1 &&
+          test.indexOf("Rewards") === -1 &&
+          test.indexOf("payload") === -1 &&
+          test.indexOf("eventData") === -1 &&
+          test.indexOf("else") === -1 &&
+          test.indexOf("root") === -1 &&
+          test.indexOf("'noresult'") === -1 &&
+          test.indexOf("muid") === -1 &&
+          test.indexOf("payload") === -1 &&
+          test.indexOf("eventObj") === -1 &&
+          test.indexOf("eventType") === -1 &&
+          test.indexOf("handler") === -1 &&
+          test.indexOf("throw") === -1 &&
+          test.indexOf("remove") === -1 &&
+          test.indexOf("typeof") === -1 &&
+          test.indexOf("failed") === -1 &&
+          test.indexOf("removed") === -1 &&
+          test.indexOf("from") === -1 &&
+          test.indexOf("your") === -1 &&
+          test.indexOf("Init") === -1 &&
+          test.indexOf("parachuteSuccess") === -1 &&
+          test.indexOf("contentType") === -1 &&
+          test.indexOf("postBody") === -1 &&
+          test.indexOf("quick") === -1 &&
+          test.indexOf("execute") === -1 &&
+          test.indexOf("bind") === -1 &&
+          test.indexOf("toggle") === -1 &&
+          test.indexOf("true") === -1 &&
+          test.indexOf("callback") === -1 &&
+          test.indexOf("load") === -1 &&
+          test.indexOf("allow-popups") === -1 &&
+          test.indexOf("allow-same-origin") === -1 &&
+          test.indexOf("config") === -1 &&
+          test.indexOf("match") === -1 &&
+          test.indexOf("name") === -1 &&
+          test.indexOf("accLinkParams") === -1 &&
+          test.indexOf("successFunc") === -1 &&
+          test.indexOf("status") === -1 &&
+          test.indexOf("timestamp") === -1 &&
+          test.indexOf("impressionGuid") === -1 &&
+          test.indexOf("eventToLog") === -1 &&
+          test.indexOf("pageType") === -1 &&
+          test.indexOf("explicitTimeStamp") === -1 &&
+          test.indexOf("DynScopesDropdown") === -1 &&
+          test.indexOf("AwayTimeThreshold") === -1 &&
+          test.indexOf("contains") === -1 &&
+          test.indexOf("these") === -1 &&
+          test.indexOf("logEvent") === -1 &&
+          test.indexOf("search") === -1 &&
+          test.indexOf("eventName") === -1
+        ) {
+          if (JSON.stringify(i) >= 3) {
+            break;
+          }
+          return test[i];
         }
-        return test[i];
       }
-    }
-  });
-  // var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
-  // var randomSheetname = searchString || rndRes[sheetRndKey]
-  var resData = rndRes.slice(0);
-  var reSearch = resData.toString().replace(/,/g, " ").split(" ");
-  // var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
-  // var randomFormname = searchString || rndRes[formRndKey]
-  var stringSplit = searchString.split(" ");
+      var elaspeTime = new Date() - time;
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime)
+    });
+    var resData = rndRes.slice(0);
+    var reSearch = resData.toString().replace(/,/g, " ").split(" ");
+  }
+  var stringSplit = [searchString].toString().split(" ");
   var lowerCaseS = [];
-  testData([stringSplit]).map((increase) => {
+  testData([stringSplit], time).map((increase) => {
+    var elaspeTime = new Date() - time;
+    console.log(
+      "that function: " +
+        arguments.callee.caller.name +
+        "\nthis function: " +
+        arguments.callee.name +
+        "\nincrease: " +
+        increase +
+        "\nelaspeTime: " +
+        elaspeTime,
+    );
     if (lowerCaseS.indexOf(increase) === -1) {
       lowerCaseS.push(increase);
     }
   });
-  reSearch.map((seo) => {
-    var lowerCaseResearch = seo.toLowerCase();
-    for (var i = 0, l = lowerCaseS.length; i < l; i++) {
-      if (typeof lowerCaseS[0][i] !== "undefined") {
-        var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
-        if (lowerCaseResearch.includes(lowerCaseSearchString)) {
-          if (lowerCaseS.indexOf(seo) === -1) {
-            lowerCaseS.push(seo);
+  if (reSearch) {
+    reSearch.map((seo) => {
+      var elaspeTime = new Date() - time;
+      // console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime)
+      var lowerCaseResearch = seo.toLowerCase();
+      for (var i = 0, l = lowerCaseS.length; i < l; i++) {
+        if (typeof lowerCaseS[0][i] !== "undefined") {
+          var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
+          if (lowerCaseResearch.includes(lowerCaseSearchString)) {
+            if (lowerCaseS.indexOf(seo) === -1) {
+              var elaspeTime = new Date() - time;
+              // console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime)
+              lowerCaseS.push(seo);
+            }
           }
         }
       }
-    }
-  });
-  // var form = formMaker(randomFormname)
-  // fileManager(randomFormname, "Forms")
-  // var ss = sheetsMaker(randomFormname)
-  // fileManager(randomFormname, "Sheets")
-  // if (typeof form === "object") {
-  // var headForms = []
-  // lowerCaseS.map((b) => {
-  // if (globalThis[b]) {
-  // console.log(globalThis[b].toString())
-  // console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-  // headForms.push(b)
-  // return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(globalThis[b].toString())
-  // }
-  // else {
-  // console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-  // headForms.push(b)
-  // return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(b)
-  // }
-  // })
-  // form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
-  // var formUrl = form.getPublishedUrl()
-  // }
-  // else {
-  // var formUrl = form
-  // }
+    });
+  }
   return {
-    // url: formUrl,
     keyWords: lowerCaseS,
   };
 };
+// var headers = ["keywords"]
+// var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
+// var randomSheetname = searchString || rndRes[sheetRndKey]
+// var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
+// var randomFormname = searchString || rndRes[formRndKey]
+// var form = formMaker(randomFormname)
+// fileManager(randomFormname, "Forms")
+// var ss = sheetsMaker(randomFormname)
+// fileManager(randomFormname, "Sheets")
+// if (typeof form === "object") {
+// var headForms = []
+// lowerCaseS.map((b) => {
+// if (globalThis[b]) {
+// console.log(globalThis[b].toString())
+// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
+// headForms.push(b)
+// return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(globalThis[b].toString())
+// }
+// else {
+// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
+// headForms.push(b)
+// return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(b)
+// }
+// })
+// form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
+// var formUrl = form.getPublishedUrl()
+// }
+// else {
+// var formUrl = form
+// }
+// url: formUrl,
 
-var seoTwitter = function (searchString) {
+var seoTwitter = function (searchString, time) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
-    searchString
+    searchString,
   )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
-  var idArray = seoFactor(data).split("\n");
-  var uniqueSeo = seoBites(searchString, idArray);
+  var data = [
+    urlDataSource(rndSearch, null, { muteHttpExceptions: true }, time),
+  ];
+  var idArray = seoFactor(data, time).split("\n");
+  var uniqueSeo = seoBites(searchString, idArray, time);
   return uniqueSeo;
 };
 
-var seoYoutube = function (searchString) {
+var seoYoutube = function (searchString, time) {
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(
-    searchString
+    searchString,
   )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
-  var idArray = vidFactor(data);
+  var data = [
+    urlDataSource(rndSearch, null, { muteHttpExceptions: true }, time),
+  ];
+  var idArray = vidFactor(data, time);
   return idArray;
 };
 
@@ -906,10 +1118,23 @@ var sheetsMaker = function (fileName) {
   return newFile;
 };
 
-var sheetSeo = function (namedVar) {
+var sheetSeo = function (namedVar, time) {
   var pageArray = [];
-  seoSheet(namedVar).keyWords.map((tv) => {
-    pageArray.push(pastSeo(tv));
+  var seoArray = seoSheet(namedVar, time).keyWords;
+  seoArray.map((tv) => {
+    var elaspeTime = new Date() - time;
+    console.log(
+      "that function: " +
+        arguments.callee.caller.name +
+        "\nthis function: " +
+        arguments.callee.name +
+        "\ntv: " +
+        tv +
+        "\nelaspeTime: " +
+        elaspeTime,
+    );
+    var newSeo = pastSeo(tv, time);
+    pageArray.push(newSeo);
   });
   return pageArray;
 };
@@ -924,15 +1149,16 @@ var sheetsUrls = function (fileX) {
   }
 };
 
-var skyNeed = function (namedVar) {
-  var wanVar = wanUtil(namedVar);
-  return needUtility(
-    randomSubstance(
-      [wanVar].sort((a, b) => a - b),
-      0,
-      3
-    )
-  )[0].rndTitle;
+var skyNeed = function (namedVar, time) {
+  var wanVar = wanUtil(namedVar, time);
+  var rndVar = randomSubstance(
+    0,
+    3,
+    [wanVar].sort((a, b) => a - b),
+    time,
+  );
+  var rndSeo = needUtility(rndVar, time)[0].rndTitle;
+  return rndSeo;
 };
 
 function spreadSheet() {
@@ -949,9 +1175,23 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
     var ss = fileMakerSheets(SpreadsheetApp, fileX);
     console.log(ss.getName());
     var sheet = ss.getSheets()[0].activate();
-    console.log("Name of this sheet is " + sheet.getName());
+    console.log(
+      "that function: " +
+        arguments.callee.caller.name +
+        "\nthis function: " +
+        arguments.callee.name +
+        "\nName of this sheet is " +
+        sheet.getName(),
+    );
     var ws = sheet.setName(sheetName);
-    console.log("Sheet name changed to " + ws.getName());
+    console.log(
+      "that function: " +
+        arguments.callee.caller.name +
+        "\nthis function: " +
+        arguments.callee.name +
+        "\nSheet name changed to " +
+        ws.getName(),
+    );
     console.log(ss.getActiveSheet().getName());
     var headers = [];
     rowHeaders.map((h) => {
@@ -966,7 +1206,15 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
     var col = ws.getDataRange().getNumColumns();
     console.log(col);
     ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
-    console.log("New file named " + fileX + " created!");
+    console.log(
+      "that function: " +
+        arguments.callee.caller.name +
+        "\nthis function: " +
+        arguments.callee.name +
+        "\nNew file named " +
+        fileX +
+        " created!",
+    );
     return nSs;
   } else {
     return nSs;
@@ -1076,7 +1324,9 @@ function ssSheetName() {
 var taxiService = function () {
   const server = http.createServer(requestListener);
   server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
+    console.log(
+      `"that function: " + arguments.callee.caller.name + "\nthis function: " + ${arguments.callee.name} + "\nServer is running on http://${host}:${port}`,
+    );
   });
 };
 
@@ -1084,10 +1334,10 @@ var tutorial = function (text) {
   var html = contentApp(`
     <body id="screen"></body>
     <script>document.getElementById("screen").innerHTML = ${urlDataSource(
-      encodeURI(text)
+      encodeURI(text),
     )} || ${urlDataSource(
-    encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/")
-  )} </script>`);
+      encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"),
+    )} </script>`);
   return html;
 };
 
@@ -1097,20 +1347,26 @@ var urlSpreadSheet = function (url) {
   return ss;
 };
 
-var vidFactor = function (data) {
+var vidFactor = function (data, time) {
   var dataArray = [];
   var idArray = [];
   data.map((vidData) => {
+    // var elaspeTime = new Date() - time
+    // console.log("vidData: \nelaspeTime: " + elaspeTime)
     dataArray.push(vidData.slice(vidData.indexOf(`v=`)).toString().split(`v=`));
   });
   for (var i = 0, l = dataArray[0].length; i < l; i++) {
+    // var elaspeTime = new Date() - time
+    // console.log("dataArray[0][i]: " + dataArray[0][i] + "\nelaspeTime: " + elaspeTime)
     idArray.push(dataArray[0][i].toString().substring(0, 11));
   }
   return idArray;
 };
 
-var wanUtil = function (namedVar) {
-  return needUtility(rndString(namedVar))[0].rndTitle;
+var wanUtil = function (namedVar, time) {
+  var strVar = rndString(namedVar, time);
+  var wanVar = needUtility(strVar, time)[0].rndTitle;
+  return wanVar;
 };
 
 var wsSIPOC = function (fileName, col) {

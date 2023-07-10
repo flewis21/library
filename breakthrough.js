@@ -109,7 +109,7 @@ var rndDice = function () {
         " " +
         five.length +
         " " +
-        six.length
+        six.length,
     );
   }
   var trial = [].concat(
@@ -123,7 +123,7 @@ var rndDice = function () {
       " " +
       five.length +
       " " +
-      six.length
+      six.length,
   );
   snakeEye.length;
   var form = FormApp.create("Dice");
@@ -139,7 +139,7 @@ var breakthrough = function (e) {
   const data = needUtility(e || randomSubstance(0, 1))[0];
   if (!username) {
     var percent = Math.floor(
-      Math.random() * Math.floor(data.playlistArr.length)
+      Math.random() * Math.floor(data.playlistArr.length),
     );
   } else {
     var percent = username;

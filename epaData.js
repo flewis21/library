@@ -14,7 +14,7 @@ var epaData = function (e) {
     [e][0] ||
     rndMathArr.toString().split(" ")[
       Math.floor(
-        Math.random() * Math.floor(rndMathArr.toString().split(" ").length)
+        Math.random() * Math.floor(rndMathArr.toString().split(" ").length),
       )
     ];
   var rndMathTest = productNamePartial(rndMathProduct);
@@ -32,7 +32,7 @@ var epaData = function (e) {
         [e][0] ||
         arrayMath.toString().split(" ")[
           Math.floor(
-            Math.random() * Math.floor(arrayMath.toString().split(" ").length)
+            Math.random() * Math.floor(arrayMath.toString().split(" ").length),
           )
         ];
       var test = productNamePartial(encodeURIComponent(product));
@@ -69,7 +69,7 @@ var epaData = function (e) {
               }
             }
             var randNum = Math.floor(
-              Math.random() * Math.floor(ingArray.length)
+              Math.random() * Math.floor(ingArray.length),
             );
             var headings = splitArrHeadings(ingArray[randNum]);
             var range = splitArrRange(ingArray[randNum]);
@@ -115,10 +115,10 @@ var epaData = function (e) {
             // var t4 = newEPAData(productIngName(test2["active_ingredients"][0]["active_ing"]));
             var ing2name = ingArray[randNum]["productname"] || product;
             var test5 = productChemCode(
-              test2["active_ingredients"][0]["pc_code"]
+              test2["active_ingredients"][0]["pc_code"],
             );
             var test6 = productAbstractNum(
-              test2["active_ingredients"][0]["cas_number"]
+              test2["active_ingredients"][0]["cas_number"],
             );
             var statusDate = ingArray[randNum]["productstatusdate"];
             var nameStatus = ingArray[randNum]["productnamestatus"];
@@ -168,7 +168,7 @@ var epaData = function (e) {
     </html>`);
   html.materializeCss = HtmlService.createHtmlOutput(
     `
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`,
   ).getContent();
   html.dOMContentLoaded = HtmlService.createHtmlOutput(
     `document.addEventListener("DOMContentLoaded", 
@@ -208,11 +208,11 @@ var epaData = function (e) {
           document.getElementById("prefTime").value = "";})()});
       var elems = document.getElementById("prefTime");
       var instances = M.FormSelect.init(elems);
-      `
+      `,
   ).getContent();
   html.materializeJs = HtmlService.createHtmlOutput(
     `
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
   ).getContent();
   html.rule = rule;
   html.ex1 = timeNow;
@@ -363,7 +363,7 @@ var epaIng = function (e) {
     </html>`);
   html.materializeCss = HtmlService.createHtmlOutput(
     `
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`,
   ).getContent();
   html.dOMContentLoaded = HtmlService.createHtmlOutput(
     `document.addEventListener("DOMContentLoaded", 
@@ -448,11 +448,11 @@ var epaIng = function (e) {
           document.getElementById("prefTime").value = "";})()});
       var elems = document.getElementById("prefTime");
       var instances = M.FormSelect.init(elems, options);
-      `
+      `,
   ).getContent();
   html.materializeJs = HtmlService.createHtmlOutput(
     `
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
   ).getContent();
   html.rule = rule;
   html.ex1 = timeNow;
@@ -468,7 +468,7 @@ var epaIng = function (e) {
 var newEPAData = function (rawData) {
   const uniqueCoArray = covArrays(rawData["items"]);
   const randomCoKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length)
+    Math.random() * Math.floor(uniqueCoArray.length),
   ); // Math.floor(Math.random());
   const uniqueCoKey = [rawData].entries().next().value;
   var reference = uniqueCoKey[1]["first"]?.["$ref"] || randomCoKey;
@@ -496,7 +496,7 @@ var oldEPA = function (rndTitle) {
     rndTitle ||
     arrayMath.toString().split(" ")[
       Math.floor(
-        Math.random() * Math.floor(arrayMath.toString().split(" ").length)
+        Math.random() * Math.floor(arrayMath.toString().split(" ").length),
       )
     ];
   var test = productNamePartial(product);
@@ -506,20 +506,20 @@ var oldEPA = function (rndTitle) {
     for (var i = 0, l = test2["active_ingredients"].length; i < l; i++) {
       if (test2["active_ingredients"][i]["active_ing"]) {
         var pIName = productIngName(
-          test2["active_ingredients"][i]["active_ing"]
+          test2["active_ingredients"][i]["active_ing"],
         );
         uniqueCo.push(pIName["items"]);
       }
     }
     var rndIng = Math.floor(
-      Math.random() * Math.floor(test2["active_ingredients"].length)
+      Math.random() * Math.floor(test2["active_ingredients"].length),
     );
     // var uniqueCo = productIngName(test2["active_ingredients"][rndIng]["active_ing"])
     var productRnD =
       test2["active_ingredients"][0]["active_ing"] ||
       uniqueCo.toString().split(" ")[
         Math.floor(
-          Math.random() * Math.floor(uniqueCo.toString().split(" ").length)
+          Math.random() * Math.floor(uniqueCo.toString().split(" ").length),
         )
       ];
   } else {
@@ -553,34 +553,34 @@ var oldEPA = function (rndTitle) {
     var coTable = matches
       .map((r) => {
         return `<tr><td><a class="waves-effect waves-light btn" href="${urlProduct}${encodeURIComponent(
-          r["productname"]
+          r["productname"],
         )}" target="_blank">${
           r["productname"]
         }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-          r["eparegnumber"]
+          r["eparegnumber"],
         )}" target="_blank">${
           r["eparegnumber"]
         }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-          r["registrationstatus"]
+          r["registrationstatus"],
         )}" target="_blank">${
           r["registrationstatus"]
         }</a></td><td><a class="waves-effect waves-light btn" href="${urlPlayer}${encodeURIComponent(
-          r["ingredientname"]
+          r["ingredientname"],
         )}" target="_blank">${
           r["ingredientname"]
         }</a></td><td><a class="waves-effect waves-light btn" href="${urlCasNo}${encodeURIComponent(
-          r["casnumber"]
+          r["casnumber"],
         )}" target="_blank">${
           r["casnumber"]
         }</a></td><td><a class="waves-effect waves-light btn" href="${urlPcCode}${encodeURIComponent(
-          r["pccode"]
+          r["pccode"],
         )}" target="_blank">${r["pccode"]}</a></td></tr>`;
       })
       .toString()
       .replace(/,/g, "");
     const result = Utilities.jsonStringify(coTable);
     const randomCoKey = Math.floor(
-      Math.random() * Math.floor(uniqueCoArray.length)
+      Math.random() * Math.floor(uniqueCoArray.length),
     ); // Math.floor(Math.random());
     const uniqueCoKey = [uniqueCo].entries().next().value;
     const randomCo = uniqueCoKey[1][randomCoKey];
@@ -614,7 +614,7 @@ var oldEPA = function (rndTitle) {
     </body>
     <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
     <script>document.addEventListener("DOMContentLoaded", function()
-      {document.getElementById("epaData").innerHTML = ${result};})</script>`
+      {document.getElementById("epaData").innerHTML = ${result};})</script>`,
     );
     html.topScript = function () {
       //console.log(document.getElementById("test").innerHTML)
@@ -656,7 +656,7 @@ var productTime = function (product) {
   var test3 = productFullName(test["productname"]);
   var test4 = productIngName(test2["active_ingredients"][0]["active_ing"]);
   var t4 = newEPAData(
-    productIngName(test2["active_ingredients"][0]["active_ing"])
+    productIngName(test2["active_ingredients"][0]["active_ing"]),
   );
   var test5 = productChemCode(test2["active_ingredients"][0]["pc_code"]);
   var test6 = productAbstractNum(test2["active_ingredients"][0]["cas_number"]);
@@ -683,7 +683,7 @@ var productRegNo = function (eparegno) {
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno,
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
@@ -707,7 +707,7 @@ var productDistNum = function (distno) {
       "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
         encodeURIComponent(distno),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ]);
   return newEPAData(rawData);
@@ -719,7 +719,7 @@ var productFullName = function (productName) {
       "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
         encodeURIComponent(productName),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ]);
   return newEPAData(rawData);
@@ -731,7 +731,7 @@ var productNamePartial = function (productName) {
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/riname/" +
         productName,
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
@@ -755,7 +755,7 @@ var productNamePartialV2 = function (productName) {
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
         encodeURIComponent(productName),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ]);
   return newEPAData(rawData);
@@ -767,7 +767,7 @@ var productNumPartial = function (productNum) {
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
         encodeURIComponent(productNum),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ]);
   return newEPAData(rawData);
@@ -779,7 +779,7 @@ var productNumPartialV2 = function (productNum) {
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
         encodeURIComponent(productNum),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ]);
   return newEPAData(rawData);
@@ -791,7 +791,7 @@ var productIngName = function (ingredient) {
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
         ingredient,
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
@@ -815,7 +815,7 @@ var productChemCode = function (code) {
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
         encodeURIComponent(code),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
@@ -839,7 +839,7 @@ var productAbstractNum = function (abstract) {
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
         encodeURIComponent(abstract),
       null,
-      { muteHttpExceptions: true }
+      { muteHttpExceptions: true },
     ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {

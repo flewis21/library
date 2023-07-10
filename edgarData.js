@@ -28,10 +28,10 @@ var allInvestors = function (rndKey) {
                         `group bank semi fact bio science block chain space coin`,
                       ]
                         .toString()
-                        .split(" ").length
-                    )
+                        .split(" ").length,
+                    ),
                 )
-              ]
+              ],
           )
       )
         matches.push(ac);
@@ -48,13 +48,13 @@ var allInvestors = function (rndKey) {
   var randomPlaylist = [];
   for (var i = 0; i < idArray.length; i++) {
     const randomVidKey = Math.floor(
-      Math.random() * Math.floor([idArray].length)
+      Math.random() * Math.floor([idArray].length),
     ); // Math.floor(Math.random());
     randomPlaylist.push(idArray[randomVidKey]);
   }
   var vidPlaylist = function () {
     const randomVidKey = Math.floor(
-      Math.random() * Math.floor(randomPlaylist.length)
+      Math.random() * Math.floor(randomPlaylist.length),
     ); // Math.floor(Math.random());
     var playListSorted = randomPlaylist.sort((a, b) => a - b);
     var videoObject = covObjects(playListSorted, ["youtubeID"]);
@@ -84,19 +84,19 @@ var allInvestors = function (rndKey) {
   };
 };
 
-var allTime = function (rndKey) {
-  var uniqueKey = [randomSubstance(0, 4)];
-  var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
+var allTime = function (rndKey, time) {
+  var uniqueKey = [randomSubstance(0, 4, null, time)];
+  var uniqueCoObjects = covObjects(uniqueKey, ["allTime"], time);
   var rndCoObjects =
     uniqueCoObjects[
       Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
     ];
-  var uniqueCoArray = covArrays(rndCoObjects);
+  var uniqueCoArray = covArrays(rndCoObjects, time);
   var rndCoArray =
     uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
   var coKey = rndKey || rndCoArray;
   //Youtube Widget
-  var idArray = seoPastTime(coKey);
+  var idArray = seoPastTime(coKey, time).playList;
   var randomPlaylist = [];
   for (var i = 0, l = idArray.length; i < l; i++) {
     const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
@@ -104,7 +104,7 @@ var allTime = function (rndKey) {
   }
   var vidPlaylist = function () {
     const randomVidKey = Math.floor(
-      Math.random() * Math.floor(randomPlaylist.length)
+      Math.random() * Math.floor(randomPlaylist.length),
     ); // Math.floor(Math.random());
     var playListSorted = randomPlaylist.sort((a, b) => a - b);
     var videoObject = covObjects(playListSorted, ["youtubeID"]);
@@ -195,15 +195,15 @@ var edgarData = function (text) {
     .join("");
   html.materializeCss = HtmlService.createHtmlOutput(
     `
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`,
   ).getContent();
   html.tabulatorCss = HtmlService.createHtmlOutput(
     `
-    <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">`
+    <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">`,
   ).getContent();
   html.materializeJs = HtmlService.createHtmlOutput(
     `
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
   ).getContent();
   html.dOMContentLoaded = HtmlService.createHtmlOutput(
     `
@@ -213,14 +213,14 @@ var edgarData = function (text) {
 function() 
   {var elems = document.querySelectorAll("select");
   var instances = M.FormSelect.init(elems);});
-  </script>`
+  </script>`,
   ).getContent();
   html.loadData = HtmlService.createHtmlOutput(
     `
     <script>
       document.addEventListener("DOMContentLoaded", loadData);
 function loadData() {tabulatorLoad();}
-    </script>`
+    </script>`,
   ).getContent();
   html.tabulatorLoad = HtmlService.createHtmlOutput(
     `
@@ -264,12 +264,12 @@ function tabulatorLoad()
                     hozAlign:"center", 
                     formatter:"tickCross", 
                     sorter:"boolean", 
-                    editor:"input"},],});`
+                    editor:"input"},],});`,
   ).getContent();
   html.rowClicked = HtmlService.createHtmlOutput(
     `
     //table.on("rowClick", 
-function(e, row){//alert("Row " + row.getData().id + " Clicked!!!!");//});`
+function(e, row){//alert("Row " + row.getData().id + " Clicked!!!!");//});`,
   ).getContent();
   html.cellEdited = HtmlService.createHtmlOutput(
     `
@@ -277,7 +277,7 @@ function(e, row){//alert("Row " + row.getData().id + " Clicked!!!!");//});`
 function(cell){//cell - cell component
               const field = cell._cell.column.field;
               const id = cell._cell.row.data.id;
-              const val = cell._cell.value})`
+              const val = cell._cell.value})`,
   ).getContent();
   html.searchData = HtmlService.createHtmlOutput(
     `
@@ -285,7 +285,7 @@ function searchData(e)
   {table.setFilter("title","like", e.target.value);
   google.script.run
     .withSuccessHandler(egdarData)
-    .companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])}`
+    .companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])}`,
   ).getContent();
   html.companyInfo = HtmlService.createHtmlOutput(`
 function edgarData()companyInfo) {console.log(companyInfo);}`);
@@ -394,20 +394,20 @@ var oldSEC = function (rndTitle) {
   // console.log(Utilities.jsonStringify([titleMatches]))
   var coTable = matches.map((r) => {
     return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(
-      r[0]["ticker"]
+      r[0]["ticker"],
     )}&page=1&sort_by=relevence&langcode=en" target="_blank">${
       r[0]["ticker"]
     }</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(
-      r[0]["cik_str"]
+      r[0]["cik_str"],
     )}&owner=exclude" target="_blank">${
       r[0]["cik_str"]
     }</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(
-      r[0]["title"]
+      r[0]["title"],
     )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
   });
   const result = JSON.stringify(coTable);
   const randomCoKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length)
+    Math.random() * Math.floor(uniqueCoArray.length),
   ); // Math.floor(Math.random());
   const uniqueCoKey = [uniqueCo].entries().next().value;
   const randomCo = uniqueCoKey[1][randomCoKey];
@@ -438,7 +438,7 @@ var oldSEC = function (rndTitle) {
     </body>
     <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
     <script>document.addEventListener("DOMContentLoaded", function()
-      {document.getElementById("epaData").innerHTML = ${result};})</script>`
+      {document.getElementById("epaData").innerHTML = ${result};})</script>`,
   );
   html.topScript = function () {
     //console.log(document.getElementById("test").innerHTML)
@@ -529,10 +529,10 @@ var opt = function (searchString) {
                         `group bank semi fact bio science block chain space coin`,
                       ]
                         .toString()
-                        .split(" ").length
-                    )
+                        .split(" ").length,
+                    ),
                 )
-              ]
+              ],
           )
       )
         matches.push(ac);
@@ -575,7 +575,7 @@ var opt = function (searchString) {
    <script>
     document.addEventListener("DOMContentLoaded", 
 function(){document.getElementById("test").innerHTML = ${result}})
-  </script>`
+  </script>`,
   )
     .evaluate()
     .getContent();
@@ -587,7 +587,7 @@ function videoSEC() {
   ]);
   const uniqueCoArray = covArrays(uniqueCo);
   const randomCoKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length)
+    Math.random() * Math.floor(uniqueCoArray.length),
   ); // Math.floor(Math.random());
   var sectionCo = [uniqueCoArray[randomCoKey][0]["title"]]
     .toString()

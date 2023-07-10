@@ -14,23 +14,23 @@ const fieldRange = [
 function createNewRecord() {
   const settingsWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Settings"
+    "Invoice Settings",
   );
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Form"
+    "Invoice Form",
   );
   const dataWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "General Work Invoice"
+    "General Work Invoice",
   );
   const delivery = Math.ceil(
     Math.ceil(
       minutePoint(
         formWS.getRange("C14").getValue(),
-        formWS.getRange("C12").getValue()
-      )
-    ) / 60
+        formWS.getRange("C12").getValue(),
+      ),
+    ) / 60,
   );
   const deliveryCell = formWS.getRange("C17");
   deliveryCell.setValue(delivery);
@@ -61,15 +61,15 @@ function createNewRecord() {
 function saveRecord() {
   const settingsWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Settings"
+    "Invoice Settings",
   );
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Form"
+    "Invoice Form",
   );
   const dataWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "General Work Invoice"
+    "General Work Invoice",
   );
   const idCell = formWS.getRange("C3");
   const id = idCell.getValue();
@@ -91,7 +91,7 @@ function saveRecord() {
               const nextID = nextIDCell.getValue();
               const row = cellFound.getRow();
               const fieldValues = fieldRange.map((f) =>
-                formWS.getRange(f).getValue()
+                formWS.getRange(f).getValue(),
               );
               fieldValues.push(id);
               console.log(fieldValues);
@@ -107,11 +107,11 @@ function saveRecord() {
 function searchRecords() {
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Form"
+    "Invoice Form",
   );
   const dataWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "General Work Invoice"
+    "General Work Invoice",
   );
   const idCell = formWS.getRange("C3");
   const searchCell = formWS.getRange("C6");
@@ -127,7 +127,7 @@ function searchRecords() {
 function userClicked() {
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Invoice Form"
+    "Invoice Form",
   );
   const search = formWS.getRange("C6").getValue();
   return authLogic(typeof search !== "undefined")
@@ -143,7 +143,7 @@ function userClicked() {
 function userSearch(findMe) {
   const dataWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "General Work Invoice"
+    "General Work Invoice",
   );
   const data = sliceValues(dataWS.getDataRange().getValues(), 1);
   const carsList = data.map(function (r) {
@@ -191,7 +191,7 @@ function userSearch(findMe) {
 function pdfTimesheet() {
   saveAsPDFToFolder(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Timesheet"
+    "Timesheet",
   );
 }
 
@@ -213,7 +213,7 @@ function saveAsPDFToFolder(url, sheetname) {
           sheets[i].getName() +
           " hidden?" +
           " " +
-          sheets[i].isSheetHidden()
+          sheets[i].isSheetHidden(),
       );
     } else {
       sheets[i].showSheet();
@@ -222,7 +222,7 @@ function saveAsPDFToFolder(url, sheetname) {
           sheets[i].getName() +
           " hidden?" +
           " " +
-          sheets[i].isSheetHidden()
+          sheets[i].isSheetHidden(),
       );
     }
   }

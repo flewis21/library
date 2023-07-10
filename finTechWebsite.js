@@ -1,12 +1,12 @@
 var finTechWebsite = function () {
   const rowsXpath = testData(
-    jsonXpath("https://www.sec.gov/files/company_tickers.json")
+    jsonXpath("https://www.sec.gov/files/company_tickers.json"),
   );
   webApp = testJSON(
-    testData(jsonXpath("https://www.sec.gov/files/company_tickers.json"))
+    testData(jsonXpath("https://www.sec.gov/files/company_tickers.json")),
   );
   webApp.content = jsonINIT(
-    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
+    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
   );
   baseUrl = getUrl(ScriptApp);
   console.log(baseUrl);
@@ -24,11 +24,11 @@ var finTechWebsite = function () {
             rowsXpath,
             'document.addEventListener("DOMContentLoaded", function() {\n                    const tbody = document.getElementById("table-body");\n                    data.forEach(function(r) {\n                    console.log(data)\n                    const link = document.createElement("a");\n                    link.textContent = ` value=${r[1]} target="_blank" href="https://www.sec.gov/edgar/browse/?CIK=${r[0][0]}&owner=exclude"`;\n                    tbody.appendChild(link);\n                    })\n                    });\n                    </script>\n                    <div class="clubhouse">'.concat(
               webApp.content,
-              '</div>\n                    <script>\n                    document.querySelector(".search-overlay__section-title").setAttribute("style", "background-color: red;color: white;")\n                    document.querySelector(".query-results").setAttribute("style", "background-color: red; color: yellow;")\n                    </script>\n                    '
-            )
-          )
-        )
-      )
-    )
+              '</div>\n                    <script>\n                    document.querySelector(".search-overlay__section-title").setAttribute("style", "background-color: red;color: white;")\n                    document.querySelector(".query-results").setAttribute("style", "background-color: red; color: yellow;")\n                    </script>\n                    ',
+            ),
+          ),
+        ),
+      ),
+    ),
   ); //:contentFile('uiAccess');
 };

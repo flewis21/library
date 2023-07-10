@@ -2,7 +2,7 @@ var endPoint = function (end, return_type) {
   var pathEnd = DistanceProject.GOOGLEMAPS(
     "4510 Split Creek Dr, Douglasville, Ga, 30135",
     end,
-    return_type
+    return_type,
   );
   return pathEnd;
 };
@@ -166,7 +166,7 @@ var startPoint = function (start, return_type) {
   var pathStart = DistanceProject.GOOGLEMAPS(
     start,
     "4510 Split Creek Dr, Douglasville, Ga, 30135",
-    return_type
+    return_type,
   );
   return pathStart;
 };

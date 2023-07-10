@@ -3,7 +3,7 @@ function dataEntry() {
     ? (function () {
         const ws = ssGetSheetBySpreadsheetUrl(
           "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-          "General Work Invoice"
+          "General Work Invoice",
         );
         const car = ws
           .getRange(2, 2, ws.getRange("B2").getDataRegion().getLastRow(), 1)
@@ -94,8 +94,8 @@ function dataEntry() {
                     context.drawImage(video, 0, 0, 640, 480);
                   });
               },
-            }
-          )
+            },
+          ),
         );
       })()
     : (function () {

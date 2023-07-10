@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html id="test">
   <head>
     <meta charset="utf-8" />
@@ -86,10 +86,10 @@
                           n[e] = r;
                         }))
                       : console.error(
-                          "setting a Configurable requires a model to set its initial properties"
+                          "setting a Configurable requires a model to set its initial properties",
                         )
                     : console.error(
-                        "setting a Configurable requires an object as input"
+                        "setting a Configurable requires an object as input",
                       );
                 };
               },
@@ -128,7 +128,7 @@
                 function c(t) {
                   if (!t)
                     throw new Error(
-                      "All info objects require an agent identifier!"
+                      "All info objects require an agent identifier!",
                     );
                   if (!a[t])
                     throw new Error("Info for " + t + " was never set");
@@ -137,7 +137,7 @@
                 function u(t, e) {
                   if (!t)
                     throw new Error(
-                      "All info objects require an agent identifier!"
+                      "All info objects require an agent identifier!",
                     );
                   (a[t] = new i.I(e, o)), (0, r.Qy)(t, a[t], "info");
                 }
@@ -181,25 +181,25 @@
                 function c(t) {
                   if (!t)
                     throw new Error(
-                      "All configuration objects require an agent identifier!"
+                      "All configuration objects require an agent identifier!",
                     );
                   if (!a[t])
                     throw new Error(
-                      "Configuration for " + t + " was never set"
+                      "Configuration for " + t + " was never set",
                     );
                   return a[t];
                 }
                 function u(t, e) {
                   if (!t)
                     throw new Error(
-                      "All configuration objects require an agent identifier!"
+                      "All configuration objects require an agent identifier!",
                     );
                   (a[t] = new i.I(e, o)), (0, r.Qy)(t, a[t], "config");
                 }
                 function s(t, e) {
                   if (!t)
                     throw new Error(
-                      "All configuration objects require an agent identifier!"
+                      "All configuration objects require an agent identifier!",
                     );
                   var n = c(t);
                   if (n) {
@@ -279,7 +279,7 @@
                 function b(t) {
                   if (!t)
                     throw new Error(
-                      "All runtime objects require an agent identifier!"
+                      "All runtime objects require an agent identifier!",
                     );
                   if (!w[t])
                     throw new Error("Runtime for " + t + " was never set");
@@ -288,7 +288,7 @@
                 function O(t, e) {
                   if (!t)
                     throw new Error(
-                      "All runtime objects require an agent identifier!"
+                      "All runtime objects require an agent identifier!",
                     );
                   var n, a;
                   (w[t] = new d.I(
@@ -316,7 +316,7 @@
                         y.addEventListener &&
                         !/CriOS/.test(navigator.userAgent),
                       userAgent: r,
-                    })
+                    }),
                   )),
                     (0, l.Qy)(t, w[t], "runtime");
                 }
@@ -346,7 +346,7 @@
                     var e = this;
                     if ("object" != typeof t)
                       return console.error(
-                        "shared context requires an object as input"
+                        "shared context requires an object as input",
                       );
                     (this.sharedContext = {}),
                       Object.assign(this.sharedContext, r),
@@ -671,12 +671,12 @@
                               : 0 === c[u].indexOf("p=")
                               ? ";" ===
                                   (i = c[u].substring(2)).charAt(
-                                    i.length - 1
+                                    i.length - 1,
                                   ) && (i = i.substr(0, i.length - 1))
                               : 0 === c[u].indexOf("r=") &&
                                 ";" ===
                                   (n = c[u].substring(2)).charAt(
-                                    n.length - 1
+                                    n.length - 1,
                                   ) &&
                                 (n = n.substr(0, n.length - 1));
                           if (n) {
@@ -958,13 +958,13 @@
                         (console &&
                           console.warn &&
                           console.warn(
-                            'An obfuscation replacement rule contains a "regex" value with an invalid type (must be a string or RegExp)'
+                            'An obfuscation replacement rule contains a "regex" value with an invalid type (must be a string or RegExp)',
                           ),
                         (n = !0))
                       : (console &&
                           console.warn &&
                           console.warn(
-                            'An obfuscation replacement rule was detected missing a "regex" value.'
+                            'An obfuscation replacement rule was detected missing a "regex" value.',
                           ),
                         (n = !0));
                     var i = t[r].replacement;
@@ -973,7 +973,7 @@
                       (console &&
                         console.warn &&
                         console.warn(
-                          'An obfuscation replacement rule contains a "replacement" value with an invalid type (must be a string)'
+                          'An obfuscation replacement rule contains a "replacement" value with an invalid type (must be a string)',
                         ),
                       (e = !0));
                   }
@@ -1049,9 +1049,9 @@
                       (((a = {})[t] = Object.assign(
                         {},
                         s,
-                        (((i = {})[n] = e), i)
+                        (((i = {})[n] = e), i),
                       )),
-                      a)
+                      a),
                     )),
                     c
                   );
@@ -1066,7 +1066,7 @@
                     (e = t.info || {}),
                     (t.info = Object.assign(
                       { beacon: i.beacon, errorBeacon: i.errorBeacon },
-                      e
+                      e,
                     )),
                     (function () {
                       var t = o(),
@@ -1152,7 +1152,7 @@
               return Promise.all(
                 Object.keys(i.f).reduce(function (e, n) {
                   return i.f[n](t, e), e;
-                }, [])
+                }, []),
               );
             }),
             (i.u = function (t) {
@@ -1209,7 +1209,7 @@
                   },
                   p = setTimeout(
                     l.bind(null, void 0, { type: "timeout", target: c }),
-                    12e4
+                    12e4,
                   );
                 (c.onerror = l.bind(null, c.onerror)),
                   (c.onload = l.bind(null, c.onload)),
@@ -1262,7 +1262,7 @@
                         }
                       },
                       "chunk-" + e,
-                      e
+                      e,
                     );
                   }
               };
@@ -1432,7 +1432,7 @@
                             },
                             function (t) {
                               r("throw", t, a, c);
-                            }
+                            },
                           )
                         : e.resolve(d).then(
                             function (t) {
@@ -1440,7 +1440,7 @@
                             },
                             function (t) {
                               return r("throw", t, a, c);
-                            }
+                            },
                           );
                     }
                     c(u.arg);
@@ -1469,7 +1469,7 @@
                         return d;
                       (e.method = "throw"),
                         (e.arg = new TypeError(
-                          "The iterator does not provide a 'throw' method"
+                          "The iterator does not provide a 'throw' method",
                         ));
                     }
                     return d;
@@ -1494,7 +1494,7 @@
                       : i
                     : ((e.method = "throw"),
                       (e.arg = new TypeError(
-                        "iterator result is not an object"
+                        "iterator result is not an object",
                       )),
                       (e.delegate = null),
                       d);
@@ -1653,7 +1653,7 @@
                           } else {
                             if (!u)
                               throw new Error(
-                                "try statement without catch or finally"
+                                "try statement without catch or finally",
                               );
                             if (this.prev < o.finallyLoc)
                               return r(o.finallyLoc);
@@ -1785,7 +1785,7 @@
                               (e.t0 = e.catch(2)),
                               console.error(
                                 "Failed to successfully load all aggregators. Aborting...\n",
-                                e.t0
+                                e.t0,
                               ),
                               s.ee.abort();
                           case 15:
@@ -1795,7 +1795,7 @@
                     },
                     e,
                     null,
-                    [[2, 11]]
+                    [[2, 11]],
                   );
                 })),
                 function () {
@@ -1835,7 +1835,7 @@
               function P(t) {
                 if (!t)
                   throw new Error(
-                    "All loader-config objects require an agent identifier!"
+                    "All loader-config objects require an agent identifier!",
                   );
                 if (!_[t])
                   throw new Error("LoaderConfig for " + t + " was never set");
@@ -1889,14 +1889,14 @@
                           ["load", t],
                           void 0,
                           void 0,
-                          this.ee
+                          this.ee,
                         );
                     }),
                     (i.measureDomContentLoaded = function () {
                       (0, S.B)(
                         this.agentIdentifier,
                         "domContent",
-                        (0, O.zO)() + (0, O.os)()
+                        (0, O.zO)() + (0, O.os)(),
                       );
                     }),
                     r
@@ -1939,7 +1939,7 @@
                       return (function (t) {
                         if (void 0 === t)
                           throw new ReferenceError(
-                            "this hasn't been initialised - super() hasn't been called"
+                            "this hasn't been initialised - super() hasn't been called",
                           );
                         return t;
                       })(r);
@@ -1951,7 +1951,7 @@
                         function () {
                           var t;
                           return (t = r).perfObserver.apply(t, arguments);
-                        }
+                        },
                       );
                       try {
                         r.performanceObserver.observe({
@@ -1962,7 +1962,7 @@
                         function () {
                           var t;
                           return (t = r).lcpObserver.apply(t, arguments);
-                        }
+                        },
                       );
                       try {
                         r.lcpPerformanceObserver.observe({
@@ -1973,7 +1973,7 @@
                         function () {
                           var t;
                           return (t = r).clsObserver.apply(t, arguments);
-                        }
+                        },
                       );
                       try {
                         r.clsPerformanceObserver.observe({
@@ -1997,10 +1997,10 @@
                             var t;
                             return (t = r).captureInteraction.apply(
                               t,
-                              arguments
+                              arguments,
                             );
                           },
-                          (0, e.m)(!1)
+                          (0, e.m)(!1),
                         );
                       });
                     }
@@ -2009,7 +2009,7 @@
                         var t;
                         return (t = r).captureVisibilityChange.apply(
                           t,
-                          arguments
+                          arguments,
                         );
                       }),
                       "addEventListener" in document &&
@@ -2023,7 +2023,7 @@
                               ? i("hidden")
                               : i("visible");
                           },
-                          (0, e.m)(!1)
+                          (0, e.m)(!1),
                         ),
                       r
                     );
@@ -2039,7 +2039,7 @@
                         !1 !==
                         (0, x.Mt)(
                           this.agentIdentifier,
-                          "page_view_timing.enabled"
+                          "page_view_timing.enabled",
                         )
                       );
                     }),
@@ -2052,7 +2052,7 @@
                               ["fp", Math.floor(t.startTime)],
                               void 0,
                               void 0,
-                              n.ee
+                              n.ee,
                             )
                           : "first-contentful-paint" === t.name &&
                             (0, w.p)(
@@ -2060,7 +2060,7 @@
                               ["fcp", Math.floor(t.startTime)],
                               void 0,
                               void 0,
-                              n.ee
+                              n.ee,
                             );
                       });
                     }),
@@ -2112,7 +2112,7 @@
                             ["fi", e, n],
                             void 0,
                             void 0,
-                            this.ee
+                            this.ee,
                           );
                       }
                     }),
@@ -2124,7 +2124,7 @@
                           [this.pageHiddenTime],
                           void 0,
                           void 0,
-                          this.ee
+                          this.ee,
                         ));
                     }),
                     i
@@ -2149,7 +2149,7 @@
                         return !0;
                       if (
                         document.querySelector(
-                          "[data-reactroot], [data-reactid]"
+                          "[data-reactroot], [data-reactid]",
                         )
                       )
                         return !0;
@@ -2172,10 +2172,10 @@
                         return (
                           !!window.angular ||
                           !!document.querySelector(
-                            ".ng-binding, [ng-app], [data-ng-app], [ng-controller], [data-ng-controller], [ng-repeat], [data-ng-repeat]"
+                            ".ng-binding, [ng-app], [data-ng-app], [ng-controller], [data-ng-controller], [ng-repeat], [data-ng-repeat]",
                           ) ||
                           !!document.querySelector(
-                            'script[src*="angular.js"], script[src*="angular.min.js"]'
+                            'script[src*="angular.js"], script[src*="angular.min.js"]',
                           )
                         );
                       } catch (t) {
@@ -2230,11 +2230,11 @@
                           var t;
                           return (t = n).recordSupportability.apply(
                             t,
-                            arguments
+                            arguments,
                           );
                         },
                         void 0,
-                        n.ee
+                        n.ee,
                       ),
                       (0, q.X)(
                         "record-custom",
@@ -2243,7 +2243,7 @@
                           return (t = n).recordCustom.apply(t, arguments);
                         },
                         void 0,
-                        n.ee
+                        n.ee,
                       ),
                       n
                     );
@@ -2270,18 +2270,18 @@
                     (i.singleChecks = function () {
                       var t = this;
                       this.recordSupportability(
-                        "Generic/Version/" + J.q + "/Detected"
+                        "Generic/Version/" + J.q + "/Detected",
                       ),
                         u(function () {
                           Y().forEach(function (e) {
                             t.recordSupportability(
-                              "Framework/" + e + "/Detected"
+                              "Framework/" + e + "/Detected",
                             );
                           });
                         }),
                         Q.T.isFileProtocol() &&
                           (this.recordSupportability(
-                            "Generic/FileProtocol/Detected"
+                            "Generic/FileProtocol/Detected",
                           ),
                           (Q.T.supportabilityMetricSent = !0));
                       var e = (0, K.$c)(this.agentIdentifier);
@@ -2290,7 +2290,7 @@
                         e.length > 0 &&
                           !(0, K.Ng)(e) &&
                           this.recordSupportability(
-                            "Generic/Obfuscate/Invalid"
+                            "Generic/Obfuscate/Invalid",
                           );
                     }),
                     r
@@ -2332,7 +2332,7 @@
                           },
                           function (t) {
                             throw (e.emit(r + "end", [t], a), t);
-                          }
+                          },
                         )
                       );
                     });
@@ -2484,7 +2484,7 @@
                       "webkitRequestAnimationFrame",
                       "msRequestAnimationFrame",
                     ],
-                    "raf-"
+                    "raf-",
                   ),
                   e.on("raf-start", function (t) {
                     t[0] = n(t[0], "fn-");
@@ -2693,7 +2693,7 @@
                     var r = (function (t) {
                         if (void 0 === t)
                           throw new ReferenceError(
-                            "this hasn't been initialised - super() hasn't been called"
+                            "this hasn't been initialised - super() hasn't been called",
                           );
                         return t;
                       })(n),
@@ -2718,8 +2718,13 @@
                           (r.skipNext -= 1);
                       }),
                       r.ee.on("internal-error", function (t) {
-                        (0,
-                        w.p)("ierr", [t, (0, O.zO)(), !0], void 0, void 0, r.ee);
+                        (0, w.p)(
+                          "ierr",
+                          [t, (0, O.zO)(), !0],
+                          void 0,
+                          void 0,
+                          r.ee,
+                        );
                       });
                     var o = window.onerror;
                     window.onerror = function () {
@@ -2745,9 +2750,9 @@
                             ],
                             void 0,
                             void 0,
-                            n.ee
+                            n.ee,
                           );
-                        }
+                        },
                       );
                     } catch (t) {}
                     try {
@@ -2779,7 +2784,7 @@
                             [t, (0, O.zO)(), !0],
                             void 0,
                             void 0,
-                            this.ee
+                            this.ee,
                           );
                         } catch (t) {}
                       }
@@ -2870,7 +2875,7 @@
                               c,
                               n,
                               r,
-                              i
+                              i,
                             ))),
                         ((t.sameOrigin && !this.excludeNewrelicHeader()) ||
                           (!t.sameOrigin &&
@@ -2882,7 +2887,7 @@
                             c,
                             n,
                             r,
-                            i
+                            i,
                           )),
                         u
                       );
@@ -2895,7 +2900,7 @@
                       e,
                       n,
                       r,
-                      i
+                      i,
                     ) {
                       return (
                         i + "@nr=0-1-" + n + "-" + r + "-" + t + "----" + e
@@ -2923,10 +2928,10 @@
                       if (
                         ((0, x.Mt)(
                           this.agentIdentifier,
-                          "distributed_tracing"
+                          "distributed_tracing",
                         ) &&
                           (n = (0, x.P_)(
-                            this.agentIdentifier
+                            this.agentIdentifier,
                           ).distributed_tracing),
                         t.sameOrigin)
                       )
@@ -2948,28 +2953,28 @@
                     (e.isDtEnabled = function () {
                       var t = (0, x.Mt)(
                         this.agentIdentifier,
-                        "distributed_tracing"
+                        "distributed_tracing",
                       );
                       return !!t && !!t.enabled;
                     }),
                     (e.excludeNewrelicHeader = function () {
                       var t = (0, x.Mt)(
                         this.agentIdentifier,
-                        "distributed_tracing"
+                        "distributed_tracing",
                       );
                       return !!t && !!t.exclude_newrelic_header;
                     }),
                     (e.useNewrelicHeaderForCors = function () {
                       var t = (0, x.Mt)(
                         this.agentIdentifier,
-                        "distributed_tracing"
+                        "distributed_tracing",
                       );
                       return !!t && !1 !== t.cors_use_newrelic_header;
                     }),
                     (e.useTraceContextHeadersForCors = function () {
                       var t = (0, x.Mt)(
                         this.agentIdentifier,
-                        "distributed_tracing"
+                        "distributed_tracing",
                       );
                       return !!t && !!t.cors_use_tracecontext_headers;
                     }),
@@ -3000,7 +3005,7 @@
                       ? (function (t) {
                           if (void 0 === t)
                             throw new ReferenceError(
-                              "this hasn't been initialised - super() hasn't been called"
+                              "this hasn't been initialised - super() hasn't been called",
                             );
                           return t;
                         })(r)
@@ -3032,7 +3037,7 @@
                                 function (e) {
                                   E(n, t);
                                 },
-                                (0, e.m)(!1)
+                                (0, e.m)(!1),
                               ),
                               (Ft.I && (Ft.I > 34 || Ft.I < 10)) ||
                                 t.addEventListener(
@@ -3040,7 +3045,7 @@
                                   function (t) {
                                     n.lastSize = t.loaded;
                                   },
-                                  (0, e.m)(!1)
+                                  (0, e.m)(!1),
                                 );
                           }
                           function a(t) {
@@ -3059,18 +3064,18 @@
                               o.newrelicHeader &&
                                 (n.setRequestHeader(
                                   "newrelic",
-                                  o.newrelicHeader
+                                  o.newrelicHeader,
                                 ),
                                 (a = !0)),
                                 o.traceContextParentHeader &&
                                   (n.setRequestHeader(
                                     "traceparent",
-                                    o.traceContextParentHeader
+                                    o.traceContextParentHeader,
                                   ),
                                   o.traceContextStateHeader &&
                                     n.setRequestHeader(
                                       "tracestate",
-                                      o.traceContextStateHeader
+                                      o.traceContextStateHeader,
                                     ),
                                   (a = !0)),
                                 a && (this.dt = o);
@@ -3105,7 +3110,7 @@
                               r.addEventListener(
                                 Wt[u],
                                 this.listener,
-                                (0, e.m)(!1)
+                                (0, e.m)(!1),
                               );
                           }
                           function s(t, e, n) {
@@ -3152,7 +3157,7 @@
                               n.emit(
                                 "xhr-cb-time",
                                 [(0, O.zO)() - this.xhrCbStart, this.onload, e],
-                                e
+                                e,
                               );
                           }
                           function m(t) {
@@ -3198,12 +3203,12 @@
                                 e.traceContextParentHeader &&
                                   (t.set(
                                     "traceparent",
-                                    e.traceContextParentHeader
+                                    e.traceContextParentHeader,
                                   ),
                                   e.traceContextStateHeader &&
                                     t.set(
                                       "tracestate",
-                                      e.traceContextStateHeader
+                                      e.traceContextStateHeader,
                                     ),
                                   (n = !0)),
                                 n
@@ -3260,7 +3265,7 @@
                                 this.endTime,
                                 "fetch",
                               ],
-                              this
+                              this,
                             );
                           }
                           function b(t) {
@@ -3279,7 +3284,7 @@
                                 r(
                                   "xhr",
                                   [e, n, this.startTime, this.endTime, "xhr"],
-                                  this
+                                  this,
                                 ));
                             }
                           }
@@ -3310,7 +3315,7 @@
                             })(e, t.lastSize);
                             if ((n && (t.metrics.rxSize = n), t.sameOrigin)) {
                               var r = e.getResponseHeader(
-                                "X-NewRelic-App-Data"
+                                "X-NewRelic-App-Data",
                               );
                               r && (t.params.cat = r.split(", ").pop());
                             }
@@ -3378,7 +3383,7 @@
                       return (function (t) {
                         if (void 0 === t)
                           throw new ReferenceError(
-                            "this hasn't been initialised - super() hasn't been called"
+                            "this hasn't been initialised - super() hasn't been called",
                           );
                         return t;
                       })(r);
@@ -3391,7 +3396,7 @@
                           [window.performance.getEntriesByType("resource")],
                           void 0,
                           void 0,
-                          i
+                          i,
                         ),
                         window.performance.clearResourceTimings)
                       )
@@ -3403,7 +3408,7 @@
                           window.performance.removeEventListener(
                             "webkitresourcetimingbufferfull",
                             o,
-                            !1
+                            !1,
                           );
                         } catch (t) {}
                     }
@@ -3423,30 +3428,54 @@
                             [n, e, this.bstStart, (0, O.zO)()],
                             void 0,
                             void 0,
-                            i
+                            i,
                           );
                       }),
                       r.timerEE.on(ae, function (t, e, n) {
                         (this.bstStart = (0, O.zO)()), (this.bstType = n);
                       }),
                       r.timerEE.on(ce, function (t, e) {
-                        (0,
-                        w.p)(ue, [e, this.bstStart, (0, O.zO)(), this.bstType], void 0, void 0, i);
+                        (0, w.p)(
+                          ue,
+                          [e, this.bstStart, (0, O.zO)(), this.bstType],
+                          void 0,
+                          void 0,
+                          i,
+                        );
                       }),
                       r.rafEE.on(ae, function () {
                         this.bstStart = (0, O.zO)();
                       }),
                       r.rafEE.on(ce, function (t, e) {
-                        (0,
-                        w.p)(ue, [e, this.bstStart, (0, O.zO)(), "requestAnimationFrame"], void 0, void 0, i);
+                        (0, w.p)(
+                          ue,
+                          [
+                            e,
+                            this.bstStart,
+                            (0, O.zO)(),
+                            "requestAnimationFrame",
+                          ],
+                          void 0,
+                          void 0,
+                          i,
+                        );
                       }),
                       r.ee.on(se + ie, function (t) {
                         (this.time = (0, O.zO)()),
                           (this.startPath = location.pathname + location.hash);
                       }),
                       r.ee.on(se + oe, function (t) {
-                        (0,
-                        w.p)("bstHist", [location.pathname + location.hash, this.startPath, this.time], void 0, void 0, i);
+                        (0, w.p)(
+                          "bstHist",
+                          [
+                            location.pathname + location.hash,
+                            this.startPath,
+                            this.time,
+                          ],
+                          void 0,
+                          void 0,
+                          i,
+                        );
                       }),
                       (0, $t.W)()
                         ? ((0, w.p)(
@@ -3454,7 +3483,7 @@
                             [window.performance.getEntriesByType("resource")],
                             void 0,
                             void 0,
-                            i
+                            i,
                           ),
                           (function () {
                             var t = new PerformanceObserver(function (t, e) {
@@ -3470,18 +3499,18 @@
                             ? window.performance.addEventListener(
                                 ne,
                                 o,
-                                (0, e.m)(!1)
+                                (0, e.m)(!1),
                               )
                             : window.performance.addEventListener(
                                 "webkitresourcetimingbufferfull",
                                 o,
-                                (0, e.m)(!1)
+                                (0, e.m)(!1),
                               )),
                       document.addEventListener("scroll", r.noOp, (0, e.m)(!1)),
                       document.addEventListener(
                         "keypress",
                         r.noOp,
-                        (0, e.m)(!1)
+                        (0, e.m)(!1),
                       ),
                       document.addEventListener("click", r.noOp, (0, e.m)(!1)),
                       r
@@ -3535,7 +3564,7 @@
                       (function (t, e) {
                         if (!t)
                           throw new Error(
-                            "All loader-config objects require an agent identifier!"
+                            "All loader-config objects require an agent identifier!",
                           );
                         (_[t] = new E.I(e, j)),
                           (0, g.Qy)(t, _[t], "loader_config");
@@ -3558,7 +3587,7 @@
                           ],
                           function (t, n) {
                             e[n] = u(i, n, !0, "api");
-                          }
+                          },
                         ),
                           (e.addPageAction = u(i, "addPageAction", !0)),
                           (e.setCurrentRouteName = u(i, "routeName", !0)),
@@ -3581,9 +3610,9 @@
                                   jsAttributes: Object.assign(
                                     {},
                                     o.jsAttributes,
-                                    ((r = {}), (r[e] = n), r)
+                                    ((r = {}), (r[e] = n), r),
                                   ),
-                                })
+                                }),
                               ),
                               u(i, "setCustomAttribute", !0, "api")()
                             );
@@ -3602,14 +3631,14 @@
                                 [(0, O.zO)(), t, i],
                                 o,
                                 void 0,
-                                n
+                                n,
                               ),
                               function () {
                                 if (
                                   (r.emit(
                                     (a ? "" : "no-") + "fn-start",
                                     [(0, O.zO)(), o, a],
-                                    i
+                                    i,
                                   ),
                                   a)
                                 )
@@ -3626,7 +3655,7 @@
                                             ? new Error(t)
                                             : t,
                                         ],
-                                        i
+                                        i,
                                       ),
                                       t)
                                     );
@@ -3645,14 +3674,14 @@
                                 ["API/" + e + "/called"],
                                 void 0,
                                 void 0,
-                                n
+                                n,
                               ),
                               (0, w.p)(
                                 t + e,
                                 [(0, O.zO)()].concat(v()(arguments)),
                                 r ? null : this,
                                 i,
-                                n
+                                n,
                               ),
                               r ? void 0 : this
                             );
@@ -3660,11 +3689,11 @@
                         }
                         (0, b.D)(
                           "actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(
-                            ","
+                            ",",
                           ),
                           function (t, e) {
                             c[e] = u(o, e);
-                          }
+                          },
                         ),
                           (e.noticeError = function (t, e) {
                             "string" == typeof t && (t = new Error(t)),
@@ -3673,14 +3702,14 @@
                                 ["API/noticeError/called"],
                                 void 0,
                                 void 0,
-                                n
+                                n,
                               ),
                               (0, w.p)(
                                 "err",
                                 [t, (0, O.zO)(), !1, e],
                                 void 0,
                                 void 0,
-                                n
+                                n,
                               );
                           });
                       })(t.Z),
@@ -3846,7 +3875,7 @@
                     function () {
                       a.go();
                     },
-                    !1
+                    !1,
                   )
                 : window.attachEvent &&
                   window.attachEvent("onload", function () {
@@ -3859,7 +3888,7 @@
               100,
               "r",
               "QSI_S_ZN_37xWsbwLQWWzZFr",
-              "https://zn37xwsbwlqwwzzfr-uscisomnichannel.gov1.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_37xWsbwLQWWzZFr"
+              "https://zn37xwsbwlqwwzzfr-uscisomnichannel.gov1.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_37xWsbwLQWWzZFr",
             ).start();
           } catch (i) {}
         })();

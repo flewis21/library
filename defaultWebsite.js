@@ -55,15 +55,15 @@ var defaultWebsite = function (e) {
     case "iframeJSON": // <!---------------------JSON API Results--------------------------!>
       webApp = HtmlService.createHtmlOutput(
         jsonINIT(
-          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
-        )
+          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
+        ),
       );
       webApp.url = getUrl(ScriptApp);
       return renderTemplate(
         contentApp(
           '\n   <body id="test">                 \n<h2 class="search-overlay__section-title">\n  General Information\n</h2>\n<ul class="link-list min-list">\n <li>\n    <a href="#">'.concat(
             webApp.getContent(),
-            '</a>\n </li>\n</ul>\n<div class="container row s1 valign-wrapper video-container black darken-4">\n  <div id="player1"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player2"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player3"></div>\n<script>\n document.addEventListener("DOMContentLoaded", <?!= appJs ?>);\n</script>\n</div>\n </body>\n                              '
+            '</a>\n </li>\n</ul>\n<div class="container row s1 valign-wrapper video-container black darken-4">\n  <div id="player1"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player2"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player3"></div>\n<script>\n document.addEventListener("DOMContentLoaded", <?!= appJs ?>);\n</script>\n</div>\n </body>\n                              ',
           ),
           {
             menu: "\n .menu {\n flex-flow: row wrap;\n grid-column: 1;\n grid-row: 1;\n align-content: flex-start;\n z-index: 0;\n height: 100%;\n overflow: auto;\n }\n ",
@@ -71,8 +71,8 @@ var defaultWebsite = function (e) {
             appJs: function () {
               console.log(document.getElementById("test").innerHTML);
             },
-          }
-        )
+          },
+        ),
       ); //:contentFile('uiAccess');
     //         case "jsonSECEdgar": // <!-----------------------JSON API Results-------------------------!>
     //             // webApp = jsonINIT("https://ordspub.epa.gov/ords/pesticides/ppls/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/pplstxt/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + e.parameter["product"], "items/" + e.parameter["result"] + "/productname"), "items/0/active_ingredients/0/active_ing"), "items/0/eparegnumber"));
@@ -256,7 +256,7 @@ var defaultWebsite = function (e) {
       // }
       webApp = testJSON(
         e,
-        testData(jsonXpath("https://www.sec.gov/files/company_tickers.json"))
+        testData(jsonXpath("https://www.sec.gov/files/company_tickers.json")),
       );
       // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
       // webApp.gov = jsonINIT("https://status.login.gov/");
@@ -276,10 +276,10 @@ var defaultWebsite = function (e) {
           contentApp(
             '"'.concat(
               navBar(baseUrl, "Finance"),
-              '"</div><div class="clubhouse"></div>'
-            )
+              '"</div><div class="clubhouse"></div>',
+            ),
           ),
-          ""
+          "",
         ),
       }); //:contentFile('uiAccess');
     // return render("\n                    <?!= include(\"index\"); ?>\n                    <div class=\"navbar\">\n                    <nav class=\"nav\">\n                    <a href=\"".concat(financeUrl, "\" class=\"nav__link\" data-link>Finance</a>\n                    <a href=\"".concat(inventoryUrl, "\"  class=\"nav__link\"  data-link>Inventory</a>\n                    </nav>\n                    </div>\n                    <h2 class=\"search-overlay__section-title\">General Information</h2>\n                    <div class=\"container row s1 valign-wrapper video-container black darken-4\">\n                      <div id=\"player1\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player2\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player3\"></div>\n                    </div>\n                    <div class=\"clubhouse\">".concat(webApp.content, "</div>\n                              "))));
@@ -471,7 +471,7 @@ var sheetWebsite = function (e) {
     <script>document.querySelector(".query-results").setAttribute("style", "background-color: red; color: yellow;");</script>
     <script>document.addEventListener("DOMContentLoaded", function()
       {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
-    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`
+    <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
   ).getRawContent();
 };
 // case "request": // <!-----------------------------API Endpoint Page------------------------!>

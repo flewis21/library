@@ -73,7 +73,7 @@ var proMediaSnip = function (e) {
     <div class="container">
     <div class="col s12">
       <?!= geneFrame(seoPastTime(media).playList[0]) ?>
-    </div></div></div></div>`
+    </div></div></div></div>`,
   ).getRawContent();
   html.artifacts.media = media;
   html.artifacts.odd = chancing;
@@ -95,14 +95,14 @@ var proMediaSnip = function (e) {
               break;}
       let getInterface = document.querySelector(".interface");
       getInterface.innerHTML = },
-    setPrePage: function() {}}`
+    setPrePage: function() {}}`,
   ).getContent();
   html.pager = HtmlService.createHtmlOutput(
     `
     let pager;
     var Pager = 
       function(classType) 
-        {this.classType = classType;}`
+        {this.classType = classType;}`,
   ).getContent();
   html.rule = rule;
   html.website = HtmlService.createHtmlOutput(
@@ -110,45 +110,45 @@ var proMediaSnip = function (e) {
     * {box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Roboto", sans-serif;}`
+      font-family: "Roboto", sans-serif;}`,
   ).getContent();
   html.utf_8 = HtmlService.createHtmlOutput(
-    `<meta charset="UTF-8">`
+    `<meta charset="UTF-8">`,
   ).getContent();
   html.viewport = HtmlService.createHtmlOutput(
     `
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">`
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">`,
   ).getContent();
   html.fontAwesome = HtmlService.createHtmlOutput(
     `
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />`
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />`,
   ).getContent();
   html.materializeCss = HtmlService.createHtmlOutput(
     `
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>`,
   ).getContent();
   html.materializeJs = HtmlService.createHtmlOutput(
-    `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`
+    `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
   ).getContent();
   html.html = HtmlService.createHtmlOutput(
-    `html, body {height: 100%;}`
+    `html, body {height: 100%;}`,
   ).getContent();
   html.main = HtmlService.createHtmlOutput(
-    `main {height: 92%;margin-top: 10px;}`
+    `main {height: 92%;margin-top: 10px;}`,
   ).getContent();
   html.body = HtmlService.createHtmlOutput(
-    `body {background-color: #ffc107;}`
+    `body {background-color: #ffc107;}`,
   ).getContent();
   html.header = HtmlService.createHtmlOutput(
     `
     header {background-color: rgba(255,255,255,.1);
     color: #a7e1ee;
-    font-size: smaller;}`
+    font-size: smaller;}`,
   ).getContent();
   html.header_h1 = HtmlService.createHtmlOutput(
     `
     header h1 {font-family: "Montserrat", cursive;
-    margin-left: 15px;}`
+    margin-left: 15px;}`,
   ).getContent();
   html.menu = HtmlService.createHtmlOutput(
     `
@@ -158,7 +158,7 @@ var proMediaSnip = function (e) {
           align-content: flex-start;
           z-index: 0;
           height: 100%;
-          overflow: auto;}`
+          overflow: auto;}`,
   ).getContent();
   html.menu_item = HtmlService.createHtmlOutput(
     `
@@ -167,7 +167,7 @@ var proMediaSnip = function (e) {
                flex-shrink: 0;
                margin: 5px;
                background: rgba(255, 255, 255, .05);
-               width: 150px;}`
+               width: 150px;}`,
   ).getContent();
   html.menu_img = HtmlService.createHtmlOutput(
     `
@@ -175,16 +175,16 @@ var proMediaSnip = function (e) {
               max-width: 100%;
               height: auto;
               display: block;
-              margin: auto;}`
+              margin: auto;}`,
   ).getContent();
   html.figcaption = HtmlService.createHtmlOutput(
     `
     figcaption {color: white;
                text-align: center;
-               user-select: none;}`
+               user-select: none;}`,
   ).getContent();
   html.menu_itemHover = HtmlService.createHtmlOutput(
-    `.menu-item:hover>.menu-img {transform: scale(1.03);}`
+    `.menu-item:hover>.menu-img {transform: scale(1.03);}`,
   ).getContent();
   return wwAccess("test", renderTemplate, html.evaluate().getContent());
 };

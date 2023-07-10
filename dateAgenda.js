@@ -72,7 +72,7 @@ async function agendaDates() {
   Date.UTC(1970, 0, 1);
   var ss = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Schedules"
+    "Schedules",
   );
   var lr = ss.getLastRow();
   var aData = ss.getDataRange().getValues();
@@ -178,7 +178,7 @@ function dateAgenda() {
   // var ws = idSpreadSheet("1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=1223141535");
   var sheetJSONSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "Schedules"
+    "Schedules",
   );
   var range = sheetJSONSheet.getDataRange();
   var data = range.getValues();

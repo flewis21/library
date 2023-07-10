@@ -5,8 +5,8 @@ function seoKeyword() {
 function needPastTime(searchString) {
   const videoSearch = urlDataSource(
     `http://www.bing.com/search?q=${encodeURIComponent(
-      searchString
-    )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`
+      searchString,
+    )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
   );
   // return videoSearch
   const vidsSearched = [];
@@ -71,7 +71,7 @@ var pastTime = function (url) {
     `https://www.bing.com/search?q=%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=PORE`,
     `v=`,
     0,
-    10
+    10,
   );
   const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid.length)); // Math.floor(Math.random());
   const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
@@ -95,7 +95,7 @@ function videoPage(search) {
     contentApp(
       `
     <?!= playerPlayer ?>`,
-      { playerPlayer: youPlayer }
+      { playerPlayer: youPlayer },
     )
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
@@ -125,7 +125,7 @@ function videoPlayer(searchString) {
   }
   const vidPlaylist = function () {
     const randomVidKey = Math.floor(
-      Math.random() * Math.floor(randomPlaylist.length)
+      Math.random() * Math.floor(randomPlaylist.length),
     ); // Math.floor(Math.random());
     const videoObject = covObjects(randomPlaylist, ["youtubeID"]);
     const uniqueVidKey = [videoObject].entries().next().value;
@@ -142,7 +142,7 @@ function videoPlayer(searchString) {
   const videoTable = [randomPlaylist]
     .map((v) => {
       return `<tr><td>${geneFrame(
-        "https://www.youtube.com/watch?v=" + v[0]
+        "https://www.youtube.com/watch?v=" + v[0],
       )}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${
         v[0]
       }" target="_blank">${v[0]}</a></td></tr>`;

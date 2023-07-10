@@ -53,10 +53,10 @@ var jFund = function (e) {
                     " has " +
                     dynObj.friends.length +
                     " friends and his best friend is " +
-                    dynObj.friends[dynObj.friends.length - 1]
+                    dynObj.friends[dynObj.friends.length - 1],
                 );
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.challenges[2]) {
@@ -103,7 +103,7 @@ var jFund = function (e) {
                 (fabian.age = fabian.calcAge()),
                   console.log(fabian.getSummary());
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.challenges[3]) {
@@ -156,7 +156,7 @@ var jFund = function (e) {
                       bmiJohn.name.last +
                       "'s BMI of " +
                       bmiJohn.bmi +
-                      " ."
+                      " .",
                   );
                 } else {
                   console.log(
@@ -171,12 +171,12 @@ var jFund = function (e) {
                       bmiMark.name.last +
                       "'s BMI of " +
                       bmiMark.bmi +
-                      " ."
+                      " .",
                   );
                 }
                 console.log(bmiJohn, bmiMark);
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.challenges[0]) {
@@ -211,7 +211,7 @@ var jFund = function (e) {
                 console.log(bills, tips);
                 console.log(totals);
               },
-            }
+            },
           );
           return html;
         }
@@ -253,7 +253,7 @@ var jFund = function (e) {
                 ];
                 console.log(ages);
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.lessons[0]) {
@@ -276,7 +276,7 @@ var jFund = function (e) {
                   "First name " +
                     fabian["first_" + nameKey] +
                     " and last name " +
-                    fabian["last_" + nameKey]
+                    fabian["last_" + nameKey],
                 );
                 console.log(
                   "First name " +
@@ -284,22 +284,22 @@ var jFund = function (e) {
                     nameKey +
                     " and last name " +
                     fabian.last_ +
-                    nameKey
+                    nameKey,
                 );
                 var interestedIn = prompt(
                   "What do you want to know about this webmaster? Choose between first name, last name, age, job and friends. " +
-                    fabian["last_" + nameKey]
+                    fabian["last_" + nameKey],
                 );
                 if (!fabian[interestedIn]) {
                   console.log(
-                    "referenceError: " + interestedIn + " is undefined!"
+                    "referenceError: " + interestedIn + " is undefined!",
                   );
                 } else {
                   console.log(fabian[interestedIn]);
                 }
                 console.log(fabian);
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.lessons[2]) {
@@ -344,7 +344,7 @@ var jFund = function (e) {
                   console.log(data);
                 }
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.objects.lessons[1]) {
@@ -378,18 +378,18 @@ var jFund = function (e) {
                   "First name " +
                     fabian["first_" + nameKey] +
                     " and last name " +
-                    fabian["last_" + nameKey]
+                    fabian["last_" + nameKey],
                 );
                 console.log(fabian.age);
                 // console.log("First name " + fabian.first_+nameKey + " and last name " + fabian.last_+nameKey);
 
                 var interestedIn = prompt(
                   "What do you want to know about this webmaster? Choose between first name, last name, age, job and friends. " +
-                    fabian["last_" + nameKey]
+                    fabian["last_" + nameKey],
                 );
                 if (!fabian[interestedIn]) {
                   console.log(
-                    "referenceError: " + interestedIn + " is undefined!"
+                    "referenceError: " + interestedIn + " is undefined!",
                   );
                   console.log(fabian["age"]);
                 } else {
@@ -399,7 +399,7 @@ var jFund = function (e) {
 
                 console.log(fabian);
               },
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.miscellaneous.section[0]) {
@@ -428,7 +428,7 @@ var jFund = function (e) {
                 }
               },
               home: "?default=jFunc&sect=test",
-            }
+            },
           );
           return html;
         } else if (fx === objMaster.miscellaneous.section[1]) {
@@ -438,11 +438,11 @@ var jFund = function (e) {
               misc: function test(e) {
                 console.log(eval(e.target));
                 ("use strict");
-                var ssTest = googlw.script.run.withSuccessHandler(function (
-                  writer
-                ) {}).test;
+                var ssTest = googlw.script.run.withSuccessHandler(
+                  function (writer) {},
+                ).test;
               },
-            }
+            },
           );
           return html;
         }
@@ -472,7 +472,7 @@ var jFund = function (e) {
       flex_row: "\n .flex-row {\n display: flex;\n flex-direction: row;\n }\n ",
       flex_column:
         "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
-    }
+    },
   );
   return result;
 };
@@ -500,7 +500,7 @@ var superTest = function (e) {
         document.getElementById("caller").onclick = go;
       },
       link: getUrl(ScriptApp) + "?default=ssTest",
-    }
+    },
   );
   return html;
 };

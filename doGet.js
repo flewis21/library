@@ -25,8 +25,8 @@ var doGet = function (e) {
             `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
           ]
             .toString()
-            .split(" ").length
-        )
+            .split(" ").length,
+        ),
     )
   ];
   args = e.parameter["args"] || ["jFundamentals"];
@@ -39,7 +39,7 @@ var doGet = function (e) {
               <script>
                 document.getElementById("appList").value
               </script>
-              `
+              `,
           ).getContent()
       ].apply(this, [
         args ||
@@ -48,11 +48,11 @@ var doGet = function (e) {
               <script>
                 document.getElementById("username").value
               </script>
-              `
+              `,
           ).getContent(),
       ]),
     }),
-    { e: e }
+    { e: e },
   );
 };
 
@@ -63,7 +63,7 @@ function misBing(e) {
   ]);
   const uniqueCoArray = covArrays(uniqueKey);
   const randomKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length)
+    Math.random() * Math.floor(uniqueCoArray.length),
   ); // Math.floor(Math.random())
   const uniqueCoKey = [uniqueKey].entries().next().value;
   const randomTitle = e || uniqueCoKey[1][randomKey]["title"];
@@ -188,7 +188,7 @@ function misBing(e) {
           var input = [JSON.parse(res)];
           for (var i = 0; i < input.length; i++) {
             var randomKey = Math.floor(
-              Math.random() * Math.floor(input.length)
+              Math.random() * Math.floor(input.length),
             ); // Math.floor(Math.random())
             var currentCik = await input[i][randomKey]["cik_str"];
             var currentTicker = await input[i][randomKey]["ticker"];

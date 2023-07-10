@@ -1,5 +1,63 @@
 // Compiled using dontime 1.0.0 (TypeScript 4.7.4)
 
+var appSort = function (numIndex, time) {
+  var titleArray = [];
+  for (var key in globalThis) {
+    var elaspeTime = new Date() - start;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    if (typeof globalThis[key] == "function") {
+      titleArray.push(key);
+    }
+  }
+
+  var arrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var freqArray = [];
+  var i = 0;
+  var l = arrData.length;
+  for (i, l; i < l; i++) {
+    titleArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === arrData[numIndex || i]) {
+        if (freqArray.indexOf(a) > -1) {
+          return;
+        }
+        {
+        }
+        freqArray.push(a);
+        return a - b;
+      }
+    });
+  }
+  return freqArray;
+};
+
 // ---------------------------------------------------------------------------------------------------------------------
 function apiRedeplaoy() {
   var scriptKey = PropertiesService.getScriptProperties().getProperties();
@@ -19,10 +77,11 @@ var companyName = function (companyNameUrl) {
 // console.log(companyNameSecData)
 // console.log(myObject)
 
-var covArrays = function (objects) {
+var covArrays = function (objects, time) {
   const dataArray = [];
   for (var obj in objects) {
-    console.log(obj);
+    var elaspeTime = new Date() - time;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nobj: " +  obj + "\nelaspeTime: " + elaspeTime)
     dataArray.push([objects[obj]]);
   }
   return dataArray;
@@ -56,7 +115,7 @@ var contentApp = function (blob, argsObject) {
   const tmp = HtmlService.createTemplate(
     ContentService.createTextOutput(blob)
       .setMimeType(ContentService.MimeType.JSON)
-      .getContent()
+      .getContent(),
   );
   if (argsObject) {
     const keys = Object.keys(argsObject);
@@ -131,7 +190,7 @@ var contentFile = function (file, argsObject) {
   const tmp = HtmlService.createTemplateFromFile(
     ContentService.createTextOutput(file)
       .setMimeType(ContentService.MimeType.JSON)
-      .getContent()
+      .getContent(),
   );
   if (argsObject) {
     const keys = Object.keys(argsObject);
@@ -155,11 +214,67 @@ var contentFile = function (file, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var covObjects = function (rows, headings) {
+var coSort = function (time) {
+  var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
+  var uniqueKey = JSON.parse(data);
+  var titleArray = [];
+  for (var key in uniqueKey) {
+    var elaspeTime = new Date() - start;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    titleArray.push(uniqueKey[key]["title"]);
+  }
+  {
+  }
+  var arrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var freqArray = [];
+  var i = 0;
+  var l = arrData.length;
+  for (i, l; i < l; i++) {
+    var sorArray = titleArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === arrData[i]) {
+        freqArray.push(a);
+        return a - b;
+      }
+    });
+  }
+  return freqArray;
+};
+
+var covObjects = function (rows, headings, time) {
   var temp = rows.map(function (row) {
     var myObj = {};
     headings.forEach(function (heading, index) {
-      myObj[heading] = row[index];
+      var elaspeTime = new Date() - time;
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+      myObj[heading] = [row][index];
     });
     return myObj;
   });
@@ -179,21 +294,23 @@ var driveUrls = function (fileX) {
   }
 };
 
+function email() {
+  var emails = validateFiles();
+  var emailsCount = validateFiles().toString().split(",").length;
+  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+  return randomEmail;
+}
+
 var fileManager = function (fileX, folder, time, content, mimeType) {
   if (typeof fileX !== "undefined") {
     var folderId = folderIdGlobal(folder, time);
-    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    var file = DriveApp.getRootFolder().getFilesByName(
+      DriveApp.getFileById(fileX).getName(),
+    );
     var elaspeTime = new Date() - time;
     var myFile = file.next();
     var timeToExecute = maxTime - elaspeTime;
-    console.log(
-      "myFile: " +
-        myFile.getName() +
-        "\nelaspeTime: " +
-        elaspeTime +
-        "\ntimeToExecute: " +
-        timeToExecute
-    );
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (myFile) {
       myFile.moveTo(DriveApp.getFolderById(folderId));
       return;
@@ -206,29 +323,6 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
   }
 };
 
-var sheetsFileManager = function (fileX, folder) {
-  if (typeof fileX !== "undefined") {
-    var file = DriveApp.getRootFolder().getFilesByName(fileX);
-    if (file.hasNext()) {
-      while (file.hasNext())
-        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder, time));
-      {
-        file.next().moveTo(myFolder);
-        return file.next().getUrl();
-      }
-    }
-  } else {
-    return;
-  }
-};
-
-function email() {
-  var emails = validateFiles();
-  var emailsCount = validateFiles().toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
-  return randomEmail;
-}
-
 var folderIdGlobal = function (folderX, time) {
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
@@ -237,14 +331,7 @@ var folderIdGlobal = function (folderX, time) {
     var myId = tree.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
-    console.log(
-      "myFolder: " +
-        myFolder +
-        "\nelaspeTime: " +
-        elaspeTime +
-        "\ntimeToExecute: " +
-        timeToExecute
-    );
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (folderX === myFolder) {
       return id;
     }
@@ -320,10 +407,10 @@ var includeApp = function (blob, argsObject) {
 
 var includeBlob = function (file, argsObject) {
   const temp = ContentService.createTextOutput(
-    HtmlService.createTemplateFromFile(file).evaluate().getContent()
+    HtmlService.createTemplateFromFile(file).evaluate().getContent(),
   );
   const tmp = HtmlService.createTemplate(
-    temp.setMimeType(ContentService.MimeType.TEXT).getContent()
+    temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
   );
   if (argsObject) {
     const keys = Object.keys(argsObject);
@@ -470,7 +557,7 @@ var productDist = function (
   eVar,
   fVar,
   iVar,
-  jVar
+  jVar,
 ) {
   const productDistEpaData =
     // epaA(
@@ -490,7 +577,7 @@ var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
   const productNameEpaData = epaD(
     AVar(epaDaVar),
     BVar(epaDbVar),
-    CVar(epaDcVar)
+    CVar(epaDcVar),
   )[DVar(dVar)][EVar(eVar)][FVar(fVar)];
   return productNameEpaData;
 };
@@ -514,68 +601,62 @@ var randNum = function (namedVar) {
   return res;
 };
 
-var randomSubstance = function (index, loopLength, importedData) {
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "xe",
-    "j",
-    "q",
-    "z",
-  ];
+var randomSubstance = function (index, loopLength, importedData, time) {
+  var arrData = coSort(time);
   var newArr = [];
   var i = index || 0;
   var l = loopLength || 1;
   // console.log(importedData.sort((a, b) => a - b))
   // console.log(arrData.sort((a, b) => a - b))
-  for (i, l; i < l; i++) {
-    if (typeof importedData !== "undefined") {
-      newArr.push(
-        importedData.sort((a, b) => a - b)[
+  if (importedData) {
+    for (i, l; i < l; i++) {
+      var elaspeTime = new Date() - time;
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof importedData: " +  typeof importedData + "\nelaspeTime: " + elaspeTime)
+      if (
+        typeof importedData !== "undefined" &&
+        typeof importedData !== "string"
+      ) {
+        var myImportData = importedData.sort((a, b) => a - b)[
           Math.floor(Math.random() * importedData.length)
-        ]
-      );
-    } else {
-      newArr.push(
-        arrData.sort((a, b) => a - b)[
-          Math.floor(Math.random() * arrData.length)
-        ]
-      );
+        ];
+        newArr.push(myImportData);
+        var elaspeTime = new Date() - time;
+        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
+      } else if (
+        typeof importedData !== "undefined" &&
+        typeof importedData === "string"
+      ) {
+        var myImportData = [importedData].sort((a, b) => a - b)[
+          Math.floor(Math.random() * [importedData].length)
+        ];
+        newArr.push(myImportData);
+        var elaspeTime = new Date() - time;
+        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
+      }
+    }
+  } else {
+    for (i, l; i < l; i++) {
+      var myArrData = arrData.sort((a, b) => a - b)[
+        Math.floor(Math.random() * arrData.length)
+      ];
+      newArr.push(myArrData);
+      var elaspeTime = new Date() - time;
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
   var sortNewArr = newArr.sort((a, b) => a - b)[
     Math.floor(Math.random() * newArr.length)
   ];
-  // console.log(sortNewArr)
-  // var thisNewArr = sortNewArr.map((w) => {
-  // return w[0].toString()}
-  // ).join("")
-  // var randomWord = sortNewArr.toString().replace(/'"/g,"").replace(/,/g ,"")
-  // console.log(thisNewArr)
-  // console.log(randomWord)
   return sortNewArr;
   console.log();
 };
+// console.log(sortNewArr)
+// var thisNewArr = sortNewArr.map((w) => {
+// return w[0].toString()}
+// ).join("")
+// var randomWord = sortNewArr.toString().replace(/'"/g,"").replace(/,/g ,"")
+// console.log(thisNewArr)
+// console.log(randomWord)
 
 var rndUrls = function () {
   var treeRoot = DriveApp.getRootFolder().getFiles();
@@ -587,10 +668,11 @@ var rndUrls = function () {
         trueName.getName()[
           Object.keys(trueName.getName())[
             Math.floor(
-              Math.random() * Math.floor(Object.keys(trueName.getName()).length)
+              Math.random() *
+                Math.floor(Object.keys(trueName.getName()).length),
             )
           ]
-        ]
+        ],
     );
     var truArray = [];
     for (var i = 0, l = trueName.getName().length; i < l; i++) {
@@ -642,6 +724,22 @@ function shareDrive() {
         console.log("Drive has no files");
       })();
 }
+
+var sheetsFileManager = function (fileX, folder) {
+  if (typeof fileX !== "undefined") {
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
+    if (file.hasNext()) {
+      while (file.hasNext())
+        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder, time));
+      {
+        file.next().moveTo(myFolder);
+        return file.next().getUrl();
+      }
+    }
+  } else {
+    return;
+  }
+};
 
 var sliceValues = function (data, row) {
   var values = data.slice(row);
@@ -805,7 +903,7 @@ var substanceVegas = function (importedData, index, loopLength) {
   var l = loopLength || 1;
   for (i, l; i < l; i++) {
     newArr.push(
-      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)]
+      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)],
     );
   }
   var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
@@ -843,7 +941,7 @@ var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
   const testIndex = splitX(
     JSON.parse(sliceValues(jsonData, indexParsed)),
     xpath,
-    delimiter
+    delimiter,
   );
   // const arrayObjData = testArray(testIndex)
   const objTest = forArray(testIndex);
@@ -876,14 +974,34 @@ var testArray = function (content) {
   // console.log(tempArr)
 };
 
-var testData = function (sourceData) {
+var testData = function (sourceData, time) {
   try {
     var myArray = [];
     for (var row in sourceData) {
-      console.log(row);
+      var elaspeTime = new Date() - time;
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nrow: " +
+          row +
+          "\nelaspeTime: " +
+          elaspeTime,
+      );
       myArray.push([]);
       for (var col in sourceData[row]) {
-        console.log(col);
+        var elaspeTime = new Date() - time;
+        console.log(
+          "that function: " +
+            arguments.callee.caller.name +
+            "\nthis function: " +
+            arguments.callee.name +
+            "\ncol: " +
+            col +
+            "\nelaspeTime: " +
+            elaspeTime,
+        );
         myArray[row].push(sourceData[row][col]);
       }
     }

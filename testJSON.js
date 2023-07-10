@@ -13,10 +13,10 @@ var testJSON = function (e, rows) {
     });
     return (webApp = HtmlService.createTemplate(
       ContentService.createTextOutput(
-        JSON.stringify({ data: rowsToReturn, error: false })
+        JSON.stringify({ data: rowsToReturn, error: false }),
       )
         .setMimeType(ContentService.MimeType.JSON)
-        .getContent()
+        .getContent(),
     ));
   }
   return val;

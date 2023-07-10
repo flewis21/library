@@ -12,7 +12,7 @@ var devWebsite = function (e) {
         edgarData(
           "https://www.sec.gov/files/company_tickers.json",
           "Edgar",
-          dateTime().getContent()
+          dateTime().getContent(),
         ).getContent(),
         epaA(
           "https://ordspub.epa.gov/ords/pesticides/ppls/",
@@ -26,13 +26,13 @@ var devWebsite = function (e) {
                 "product",
                 "items/",
                 "result",
-                "/productname"
+                "/productname",
               ),
-              "items/0/active_ingredients/0/active_ing"
+              "items/0/active_ingredients/0/active_ing",
             ),
-            "items/0/eparegnumber"
-          )
-        )
+            "items/0/eparegnumber",
+          ),
+        ),
       );
       webApp.url = getUrl(ScriptApp);
       return contentApp(webApp); //:contentFile('uiAccess');
@@ -45,7 +45,7 @@ var devWebsite = function (e) {
         edgarData(
           "https://www.sec.gov/files/company_tickers.json",
           "Edgar",
-          dateTime().getContent()
+          dateTime().getContent(),
         ).getContent(),
         epaA(
           "https://ordspub.epa.gov/ords/pesticides/ppls/",
@@ -59,15 +59,15 @@ var devWebsite = function (e) {
                 "items/",
                 6,
                 "/productname",
-                "/"
+                "/",
               ),
               "items/0/active_ingredients/0/active_ing",
-              "/"
+              "/",
             ),
             "items/0/eparegnumber",
-            "/"
-          )
-        )
+            "/",
+          ),
+        ),
       );
       webApp.url = getUrl(ScriptApp);
       return contentApp(webApp); //:contentFile('uiAccess');
@@ -86,15 +86,15 @@ var devWebsite = function (e) {
         console.log(
           [search].filter(function (a) {
             return a[1] == query;
-          })
+          }),
         );
       }
       webApp = testJSON(e, jsonXpath([jsonUnData]));
       webApp.content = jsonINIT(
-        "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
+        "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
       );
       webApp.thrift = jsonINIT(
-        "https://drive.google.com/drive/u/0/shared-with-me"
+        "https://drive.google.com/drive/u/0/shared-with-me",
       );
       const bloggerUrl =
         "https://www.blogger.com/blog/posts/3269360121752133428";
@@ -134,13 +134,13 @@ var devWebsite = function (e) {
         inventoryUrl,
         "Inventory",
         baseUrl,
-        "Social"
+        "Social",
       ).getContent();
       dateTime = dateTime();
 
       // Header of Page
       const head = includeApp(
-        '\n  <head>\n  <base target="_parent"></base>\n  <meta charset="UTF-8"></meta>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>\n <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>\n  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" srel="stylesheet"></link>\n <meta content="739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com" name="google-signin-client_id"></meta>\n <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>\n  <script async="" defer="" src="https://apis.google.com/js/platform.js"></script>\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>\n  <style>\n .search-box-outer {\n margin-bottom:1rem;\n }\n\n .search-box-inner{\n  padding:0.5rem;\n }\n\n .search-box-inner input{\n  color: #fff;\n  padding:0.5rem;\n  border: 1px solid #3FB449;\n border-radius:0.5rem;\n  }\n\n .search-box-inner label{\n  color: #fff;\n  margin-right:0.5rem;\n  padding:0.5rem;\n  }\n  </style>\n\n  </head>\n '
+        '\n  <head>\n  <base target="_parent"></base>\n  <meta charset="UTF-8"></meta>\n  <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>\n <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>\n  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" srel="stylesheet"></link>\n <meta content="739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com" name="google-signin-client_id"></meta>\n <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>\n  <script async="" defer="" src="https://apis.google.com/js/platform.js"></script>\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>\n  <style>\n .search-box-outer {\n margin-bottom:1rem;\n }\n\n .search-box-inner{\n  padding:0.5rem;\n }\n\n .search-box-inner input{\n  color: #fff;\n  padding:0.5rem;\n  border: 1px solid #3FB449;\n border-radius:0.5rem;\n  }\n\n .search-box-inner label{\n  color: #fff;\n  margin-right:0.5rem;\n  padding:0.5rem;\n  }\n  </style>\n\n  </head>\n ',
       );
 
       // Body of Page
@@ -154,7 +154,7 @@ var devWebsite = function (e) {
           edgarData: "\n ".concat(edgarData, ""),
           dateTime: "\n ".concat(dateTime, ""),
           head: "".concat(head, ""),
-        }
+        },
       );
 
       // What Should Return
@@ -179,11 +179,11 @@ var devWebsite = function (e) {
                 contentApp("\n  </script>\n", {
                   data: widgetData,
                 }),
-                ""
+                "",
               ),
-            }
+            },
           ),
-          ""
+          "",
         ),
       }); //:contentFile('uiAccess');
       console.log(jsData);

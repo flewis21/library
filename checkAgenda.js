@@ -1,6 +1,6 @@
 var checkDay = function () {
   var testList = jsonXpath(
-    `https://www.bing.com/search?q=site%3Ayoutube.com&PC=U316&FORM=CHROMN`
+    `https://www.bing.com/search?q=site%3Ayoutube.com&PC=U316&FORM=CHROMN`,
   );
   console.log(testList);
   var emails = validate();
@@ -31,11 +31,11 @@ var checkDay = function () {
   var openTheForm = contentFile("popUpOpen", {
     openPopup: "".concat(
       'function openTheForm() {\n  document.getElementById("popupForm").style.display = "block";\n}',
-      ""
+      "",
     ),
     closePopup: "".concat(
       'function closeTheForm() {\n  document.getElementById("popupForm").style.display = "none";\n}',
-      ""
+      "",
     ),
     startPageUrl: startPageUrl,
   });

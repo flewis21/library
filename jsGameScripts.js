@@ -80,7 +80,7 @@ function(classType)
         <p>Health: " + gamer.health + "</p>";},
       setPreFight: 
 function() 
-  {}}`
+  {}}`,
   ).getContent();
   html.gamer = HtmlService.createHtmlOutput(
     `
@@ -92,7 +92,7 @@ function(classType, health, mana, strength, agility, speed)
   this.mana = mana;
   this.strength = strength;
   this.agility = agility;
-  this.speed = speed;}`
+  this.speed = speed;}`,
   ).getContent();
   html.enemy = HtmlService.createHtmlOutput(
     `
@@ -104,7 +104,7 @@ function(enemyType, health, mana, strength, agility, speed)
   this.mana = mana;
   this.strength = strength;
   this.agility = agility;
-  this.speed = speed;}`
+  this.speed = speed;}`,
   ).getContent();
   html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();
   html.gamerUrl = gamerUrl;

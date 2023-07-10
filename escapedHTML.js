@@ -51,7 +51,7 @@ var escapedHTML = function (e) {
           {
             product: product,
             result: result,
-          }
+          },
         ); //:contentFile('uiAccess');
 
       case "epa": // <!----------------------------------JSON API Results------------------------------------!>
@@ -73,7 +73,7 @@ var escapedHTML = function (e) {
           '\n  <? var webAppUrls = navBar("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "Pesticides"); ?>\n  <?!= webAppUrls ?>\n  <? var webApp = edgarData(covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), "items", "/")), [["key"], ["value"]])) ?>\n  <?!= webApp ?>\n  ',
           {
             product: product,
-          }
+          },
         ); //:contentFile('uiAccess');
 
       case "tech": // <!----------------------------JSON API Results--------------------------------!>
@@ -89,7 +89,7 @@ var escapedHTML = function (e) {
 
         return contentApp(
           '\n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar"); ?>\n  <?!= webAppUrls ?>\n <? var webApp = edgarData(widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])); ?>\n  <?!= webApp ?>\n  ',
-          {}
+          {},
         ); //:contentFile('uiAccess');
 
       default: // <!-------------------------------------Default Website-------------------------------------!>
@@ -107,7 +107,7 @@ var escapedHTML = function (e) {
           sheetName,
           sheetName,
           ["data"],
-          [["a"], ["b"], ["c"], ["d"], ["e"], ["f"], ["g"], ["h"], ["i"]]
+          [["a"], ["b"], ["c"], ["d"], ["e"], ["f"], ["g"], ["h"], ["i"]],
         );
 
         if (typeof ss === "string") {
@@ -134,7 +134,7 @@ var escapedHTML = function (e) {
             data[Math.floor(Math.random() * Math.floor(username.length))].map(
               function (val) {
                 return val.toString().toLowerCase();
-              }
+              },
             );
         } else {
           var headings =
@@ -144,7 +144,7 @@ var escapedHTML = function (e) {
             data[Math.floor(Math.random() * Math.floor(username.length))].map(
               function (val) {
                 return val.toString().toLowerCase();
-              }
+              },
             );
         }
 
@@ -193,12 +193,12 @@ var escapedHTML = function (e) {
         } else {
           inventoryApp = contentApp(
             "\n <h1>Funny Story, <?!= data ?> </h1>\n  `<h1>Ha Ha LOL</h1>\n  ",
-            { data: "Die Without You! " }
+            { data: "Die Without You! " },
           );
         }
 
         inventoryApp.content = jsonINIT(
-          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
+          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
         );
 
         const bloggerUrl =
@@ -226,9 +226,9 @@ var escapedHTML = function (e) {
         const dataO = covArrays(
           companyName(
             "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
-              product
+              product,
           ),
-          1
+          1,
         );
 
         const rowsO = testData(dataO[0]);
@@ -237,7 +237,7 @@ var escapedHTML = function (e) {
           sheetName,
           sheetName,
           ["data"],
-          testData(sliceValues(dataSheetName.split("/")))
+          testData(sliceValues(dataSheetName.split("/"))),
         );
 
         listType = "playlist";
@@ -280,7 +280,7 @@ var escapedHTML = function (e) {
         <div class="row">
         <div class="container col s12">
         <div class="container col s12">
-        <p id="p1">`
+        <p id="p1">`,
             ),
             ssO: ssO,
             rowsO: rowsO,
@@ -289,7 +289,7 @@ var escapedHTML = function (e) {
             product: product,
             listType: listType,
             list: list,
-          }
+          },
         ); //:contentFile('uiAccess');
     }
   } else {
@@ -311,7 +311,7 @@ var escapedHTML = function (e) {
           {
             product: product,
             result: result,
-          }
+          },
         ); //:contentFile('uiAccess');
 
       case "epa": // <!----------------------------------JSON API Results------------------------------------!>
@@ -333,7 +333,7 @@ var escapedHTML = function (e) {
           '\n  <? var webAppUrls = navBar("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "Pesticides"); ?>\n  <?!= webAppUrls ?>\n  <? var webApp = edgarData(covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), "items", "/")), [["key"], ["value"]])) ?>\n  <?!= webApp ?>\n  ',
           {
             product: product,
-          }
+          },
         ); //:contentFile('uiAccess');
 
       case "tech": // <!----------------------------JSON API Results--------------------------------!>
@@ -349,7 +349,7 @@ var escapedHTML = function (e) {
 
         return contentApp(
           '\n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar"); ?>\n  <?!= webAppUrls ?>\n <? var webApp = edgarData(widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])); ?>\n  <?!= webApp ?>\n  ',
-          {}
+          {},
         ); //:contentFile('uiAccess');
 
       default: // <!-------------------------------------Default Website-------------------------------------!>
@@ -402,12 +402,12 @@ var escapedHTML = function (e) {
         } else {
           inventoryApp = contentApp(
             "\n <h1>Funny Story, <?!= data ?> </h1>\n  `<h1>Ha Ha LOL</h1>\n  ",
-            { data: "Die Without You! " }
+            { data: "Die Without You! " },
           );
         }
 
         inventoryApp.content = jsonINIT(
-          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
+          "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
         );
 
         const bloggerUrl =
@@ -435,15 +435,15 @@ var escapedHTML = function (e) {
         const dataO = covArrays(
           companyName(
             "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
-              product
+              product,
           ),
-          1
+          1,
         );
 
         const rowsO = testData(dataO[0]);
 
         const ssO = spreadSheetCreate(
-          testData(sliceValues(dataSheetName.split("/")))
+          testData(sliceValues(dataSheetName.split("/"))),
         );
 
         listType = "playlist";
@@ -458,7 +458,7 @@ var escapedHTML = function (e) {
           '\n  \n  <? var properties = properties ?>\n  <?!= properties ?>\n  \n  <script>\n  document.getElementById("");\n  }\n </script>\n \n  <? var productNameEpaData = JSON.stringify(productName("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "items", "/", 0, 1, "productname")); ?>\n  <?!= productNameEpaData ?>\n  </p>\n  </div>\n </div>\n </div>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <span><p id="p2" style="border-width:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>\n <? var runIt = ssDatabase(rowsO, ssO); ?>\n  <?!= runIt ?>\n  </strong></p></span>\n  </div>\n </div>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <span><p id="p2" style="border-width:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>\n <? var productDistEpaData = JSON.stringify(covArrays(companyName("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), 1)); ?>\n  <?!= productDistEpaData ?>\n  </strong></p></span>\n  </div>\n </div>\n <? var yourVideos = dtls(listType); ?>\n   <?!= yourVideos ?>\n  <? var calendarDays = dateTime(); ?>\n  <?!= calendarDays ?>\n  ',
           {
             properties: contentApp(
-              '\n \n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar", "https://avaddc.com/agency/the-paul-rue-agency/4022/", "Defensive Driving"); ?>\n  <?!= webAppUrls ?>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <p id="p1">\n  '
+              '\n \n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar", "https://avaddc.com/agency/the-paul-rue-agency/4022/", "Defensive Driving"); ?>\n  <?!= webAppUrls ?>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <p id="p1">\n  ',
             ),
             ssO: ssO,
             rowsO: rowsO,
@@ -467,7 +467,7 @@ var escapedHTML = function (e) {
             product: product,
             listType: listType,
             list: list,
-          }
+          },
         ); //:contentFile('uiAccess');
     }
   }

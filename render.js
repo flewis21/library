@@ -31,8 +31,10 @@ var renderTemplate = function (blob, argsObject) {
     `
   <html id="test">
     <head>
+      <base target="_top">
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <meta content="739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com" name="google-signin-client_id"></meta>
@@ -159,7 +161,6 @@ var renderTemplate = function (blob, argsObject) {
   <div id="calculatediv"></div>
   <div id="investdiv"></div>
   <div id="rndnewdiv"></div>
-    </body>
     <script>
       function aboutMeSearch() {
            function serverside(func, args) {
@@ -274,7 +275,8 @@ var renderTemplate = function (blob, argsObject) {
     <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
     <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-    </html>`,
+    </body>
+  </html>`,
     {
       funcClicked: function () {
         //console.log(document.getElementById("test").innerHTML)
@@ -344,7 +346,7 @@ var renderTemplate = function (blob, argsObject) {
           }
         })();
       },
-    }
+    },
   );
   return tmp
     .evaluate()
@@ -358,84 +360,254 @@ var renderTemplate = function (blob, argsObject) {
 var appList = function (e) {
   return HtmlService.createTemplate(
     `
-  <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
-    <div class="row">
-      <form action="/search" class="row s12 card-panel amber">
-        <ul class="browser-default">
-          <header class="valign-wrapper container row s12 deep-purple darken-1">
-            <nav role="navigation" class="nav-wrapper browser-default" id="naEngine" for="uiApp"></nav>
-          </header>
-        </ul>
-      </form>
-    </div>
-    <div class="row">
-      <div class="col s12 m12 l12 card-panel amber">
-        <div class="container">
-          <div class="col s12 m12 l12 deep-purple darken-1">
-            <div id="nbEngine" for="uiApp"></div>
+  <html id="test">
+    <head>
+      <base target="_top">
+      <meta charset="utf-8">
+      <meta name="description" content="Example meta description.">
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    </head>
+    <body>
+    <? var appList = appSort(9) ?>
+    <? var dropList = appList.map((item) => {
+        return "<option>" + item + "</option>"
+
+    }).join("") ?>
+    <? var result = JSON.stringify(dropList) ?>
+    <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
+      <div class="row">
+        <div class="col s12 m12 l12 card-panel amber">
+          <div class="container">
+            <div class="col s12 m12 l12 deep-purple darken-1">
+              <div id="naMain"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <div class="row">
-      <div class="col s12 m12 l12 card-panel amber">
-        <div class="container">
-          <div class="col s12 m12 l12 receipt deep-purple darken-1">
-            <span>
-              <input placeholder="Your Search Here Ex. apple,orange..." class="menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/>
-            </span>
+      <div class="row">
+        <div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+          <div class="container">
+            <div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1">
+              <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt">
+                <span>
+                  <input placeholder="Your Search Here Ex. apple,orange..." class="flow-text menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", research)
-      document.getElementById("uiApp").addEventListener("change", research)
-      function research() {
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler((result) => {
-              resolve(result)})
-          .withFailureHandler((error) => {
-              console.log(error)
-              console.log(document.getElementById("test").innerHTML)
-              reject(error)})
-          .runBoilerplate([func], [args])})};
-      var bar = document.getElementById("uiApp").value || "";
-      serverside("dtlsMain", bar)
-      .then((html) => {
-        if (html){
-          // User clicked "No" or X in the title bar.
-          document.getElementById("nbEngine").innerHTML = html;}})
-      .catch((er) => {
-        console.log(er)})
-      serverside("needBing", bar)
-      .then((search) => {
-          // User clicked "Yes".
-          document.getElementById("naEngine").innerHTML = search;})
-      .catch((er) => {
-        console.log(er)})
-        document.getElementById("uiApp").value = ""}
-    </script>
-    <script>
-      function onUserClick(bar) {
-        var foo = "dtlsMain";
-        var linkFollow = document.createElement("a");
-        linkFollow.href = <?= appUrl ?> + foo + "&args=" + bar;
-        linkFollow.id = "linkFOLLOW";
-        linkFollow.target = "_child";
-        document.body.appendChild(linkFollow);}
-    </script>
-    <script>
-      function openTheForm(bar) {
+      <div class="row">
+        <div class="col s12 m12 l12 card-panel amber">
+          <div class="container">
+            <div class="col s12 m12 l12 deep-purple darken-1">
+              <div id="nbPro"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12 l12 card-panel amber">
+          <div class="container">
+            <div class="col s12 m12 l12 deep-purple darken-1">
+              <div id="ncPort"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 m12 l12 card-panel amber">
+          <div class="container">
+            <div class="col s12 m12 l12 deep-purple darken-1">
+              <div id="ndType"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.getElementById("uiApp").addEventListener("change", research)
+        function research() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
+        var bar = document.getElementById("uiApp").value || "";
+        serverside("dtlsMain", bar,"videoForms")
+        .then((vid) => {
+
         
-        onUserClick(bar)
-        document.getElementById("linkFOLLOW").click();
-        document.getElementById("uiApp").value = ""
-        document.getElementById("linkFOLLOW").remove()};
-    </script>
-  `
+          if (vid) {
+
+          
+            serverside("seoCapital", vid) 
+              .then((html) => {
+
+              
+                if (html) {
+
+                
+                  // User clicked "No" or X in the title bar.
+                  document.getElementById("naMain").innerHTML = html;}
+                })
+            }
+          })
+        .catch((er) => {
+
+        
+          console.log(er)})
+        serverside("dtlsPro", bar)
+        .then((vid) => {
+
+        
+          if (vid) {
+
+          
+            serverside("seoCapital", vid) 
+              .then((html) => {
+
+              
+                if (html) {
+
+                
+                  // User clicked "No" or X in the title bar.
+                  document.getElementById("nbPro").innerHTML = html;}
+                })
+            }
+          })
+        .catch((er) => {
+
+        
+          console.log(er)})
+        serverside("portBing", bar)
+        .then((vid) => {
+
+        
+          if (vid) {
+
+          
+            serverside("seoCapital", vid) 
+              .then((html) => {
+
+              
+                if (html) {
+
+                
+                  // User clicked "No" or X in the title bar.
+                  document.getElementById("ncPort").innerHTML = html;}
+                })
+            }
+          })
+        .catch((er) => {
+
+        
+          console.log(er)})
+        serverside("dtlsMain", bar,"docForms")
+        .then((vid) => {
+
+        
+          if (vid) {
+
+          
+            serverside("seoCapital", vid) 
+              .then((html) => {
+
+              
+                if (html) {
+
+                
+                  // User clicked "No" or X in the title bar.
+                  document.getElementById("ndType").innerHTML = html;}
+                })
+            }
+          else {
+
+            serverside("filetypeBing")
+            .then((vid) => {
+
+            
+              if (vid) {
+
+              
+                serverside("seoCapital", vid) 
+                  .then((html) => {
+
+                  
+                    if (html) {
+
+                    
+                      // User clicked "No" or X in the title bar.
+                      document.getElementById("ndType").innerHTML = html;}
+                    })
+              }
+            })
+          }
+        })
+        .catch((er) => {
+
+        
+          console.log(er)})
+          document.getElementById("uiApp").value = ""}
+      </script>
+      <script>
+        function onUserClick(bar) {
+          var foo = "seoCapital";
+          var linkFollow = document.createElement("a");
+          linkFollow.href = <?= appUrl ?> + foo + "&args=" + bar;
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_child";
+          document.body.appendChild(linkFollow);}
+      </script>
+      <script>
+        function openTheForm(bar) {
+          
+          onUserClick(bar)
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("uiApp").value = ""
+          document.getElementById("linkFOLLOW").remove()};
+      </script>
+      <script>
+        function capChange() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
+          var cap = document.getElementById("prefTime").value 
+          console.log(cap)
+          serverside("dtlsPro", cap)
+          .then((cChange) => {
+              if (cChange) {
+            var linkFollow = document.createElement("a");
+            linkFollow.href = cChange;
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_child";
+            document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("prefTime").value = ""
+          document.getElementById("linkFOLLOW").remove()}
+                  
+          })
+          .catch((er) => {
+
+            console.log(er)
+
+          })}
+      </script>
+    </body>
+  </html>
+  `,
   )
     .evaluate()
     .getContent();

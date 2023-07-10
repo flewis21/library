@@ -155,7 +155,7 @@ var congressLeg = function (e) {
       "usCongress",
       ["Last Name", "First Name", "Party", "Leadership Role"],
       testData(covertArr(data)),
-      2
+      2,
     );
     // return data
     // var chart = Charts.newDashboardPanel().setDataTable(data)
@@ -216,7 +216,7 @@ var congressLeg = function (e) {
               .data.addColumn("string", "Leadership Role")
               .data.addRows([this.tableSs()]);
             var table = new google.visualization.Table(
-              document.getElementById("table_div")
+              document.getElementById("table_div"),
             );
             table.draw(data, {
               showRowNumber: true,
@@ -231,7 +231,7 @@ var congressLeg = function (e) {
             "usCongress",
             ["Last Name", "First Name", "Party", "Leadership Role"],
             ssData,
-            4
+            4,
           );
           return myTable;
         },
