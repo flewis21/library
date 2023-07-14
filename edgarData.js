@@ -84,8 +84,8 @@ var allInvestors = function (rndKey) {
   };
 };
 
-var allTime = function (rndKey, time) {
-  var uniqueKey = [randomSubstance(0, 4, null, time)];
+var allTime = function (rndKey, arrD, time) {
+  var uniqueKey = [randomSubstance(0, 4, null, arrD, time)];
   var uniqueCoObjects = covObjects(uniqueKey, ["allTime"], time);
   var rndCoObjects =
     uniqueCoObjects[
@@ -96,11 +96,19 @@ var allTime = function (rndKey, time) {
     uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
   var coKey = rndKey || rndCoArray;
   //Youtube Widget
-  var idArray = seoPastTime(coKey, time).playList;
+  var seoArray = seoPastTime([coKey].join(""), time);
+  if (!seoArray.playList.length > 0) {
+    var seoArray = seoPastTime(null, time);
+  }
+  var idArray = seoArray.playList;
   var randomPlaylist = [];
   for (var i = 0, l = idArray.length; i < l; i++) {
     const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
-    randomPlaylist.push(idArray[randomVidKey]);
+    randomPlaylist.push(
+      idArray.forEach((rp) => {
+        return rp[randomVidKey];
+      }),
+    );
   }
   var vidPlaylist = function () {
     const randomVidKey = Math.floor(
@@ -655,3 +663,139 @@ function videoSEC() {
   }; //Global object closed
   return html.evaluate().getContent();
 } //webApp closed
+
+var stockHistory = function (e, time) {
+  var arrData = allInvestors(e, time);
+  Utilities.sleep(2000);
+  // var dataTitle = [arrData.title]
+  // var coData = randomUtility(e, dataTitle)
+  var utilNeed = arrData.title;
+  var yahooNeed = arrData.ticker;
+  var cokey = e || utilNeed;
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    var survey = seoCapital(formUrl);
+  } else {
+    var uti = bingSWF([cokey].join(""));
+    var form = formMaker([cokey].join("").toUpperCase(), "docForms", time);
+    if (typeof form === "object") {
+      // fileManager(form.getId(), "docForms", time)
+
+      uti.map((piece) => {
+        while (piece) {
+          if (piece) {
+            if (piece.indexOf("https://") > -1) {
+              var elaspeTime = new Date() - time;
+              var timeToExecute = maxTime - elaspeTime;
+              // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+              form.addPageBreakItem().setTitle([cokey].join(""));
+              form.addSectionHeaderItem().setTitle(piece);
+              if (
+                timeToExecute <= 6 * 60 * 1000 &&
+                timeToExecute >= 5.98 * 60 * 1000
+              ) {
+                console.log(
+                  "that function: " +
+                    arguments.callee.caller.name +
+                    "\nthis function: " +
+                    arguments.callee.name +
+                    "\nTime limit six minutes",
+                );
+              }
+              if (
+                timeToExecute <= 5 * 60 * 1000 &&
+                timeToExecute >= 4.98 * 60 * 1000
+              ) {
+                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
+              }
+              if (
+                timeToExecute <= 4 * 60 * 1000 &&
+                timeToExecute >= 3.98 * 60 * 1000
+              ) {
+                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
+              }
+              if (
+                timeToExecute <= 3 * 60 * 1000 &&
+                timeToExecute >= 2.98 * 60 * 1000
+              ) {
+                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
+              }
+              if (
+                timeToExecute <= 2 * 60 * 1000 &&
+                timeToExecute >= 1.98 * 60 * 1000
+              ) {
+                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
+              }
+              if (
+                timeToExecute <= 1 * 60 * 1000 &&
+                timeToExecute >= 0.98 * 60 * 1000
+              ) {
+                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
+              }
+              if (timeToExecute <= 0.05 * 60 * 1000) {
+                console.log(
+                  "piece: " +
+                    piece[0] +
+                    "\ntimeToExecute: " +
+                    timeToExecute.valueOf(),
+                );
+                return;
+              }
+              return piece[0];
+            }
+          }
+          return;
+        }
+      });
+      var formUrl = form.getPublishedUrl();
+      var survey = seoCapital(formUrl);
+    }
+  }
+  // var arrTickerData = yahooSort(yahooNeed, time)
+  // var price = JSON.parse(arrTickerData.price)
+  // var markTime = new Date(JSON.parse(arrTickerData.time)).toLocaleTimeString()
+  // var currency = arrTickerData.currency[0]
+  // var currencySymbol = arrTickerData.currencySymbol[0]
+  // var freeTime = markTime.toLocaleTimeString()
+
+  // var data = JSON.parse(arrTickerData)
+  // var res = JSON.stringify(
+  //   {
+
+  //     price,
+  //     markTime,
+  //     currency,
+  //     currencySymbol
+
+  //   }
+  //   )
+
+  var html = HtmlService.createTemplate(
+    `
+      <html id="test">
+      
+        <head>
+        
+          <base target="_top">
+          <meta charset="utf-8">
+          <meta name="description" content="Example meta description.">
+          <meta name=viewport content="width=device-width, initial-scale=1">
+          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+        
+        </head>
+      
+      <body>
+      
+
+
+      
+      </body>
+      </html>
+
+  `,
+  );
+  console.log(eval(html));
+  return html.evaluate().append(survey).getContent();
+};

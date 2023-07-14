@@ -229,10 +229,12 @@ var needCapital = function (searchString) {
   return pong.toString().split(",");
 };
 
-var needUtility = function (rndClient, time) {
+var needUtility = function (rndClient, arrD, time) {
   var client = rndClient;
+  console.log(typeof [client].join("") + " " + [client].join("").length);
   var uniqueCo = [];
-  if (typeof client !== "undefined") {
+  if (typeof client !== "undefined" && [client].join("").length > 0) {
+    console.log(client.length + " is greater than " + 0);
     var seoTitle = seoSheet(client, time).keyWords;
     var improvedTitle = seoTitle.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
@@ -253,12 +255,12 @@ var needUtility = function (rndClient, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      var coName = allTime(rndTitle2.toLowerCase(), time);
+      var coName = allTime(rndTitle2.toLowerCase(), [null], time);
     } else {
-      var coName = allTime(null, time);
+      var coName = allTime(null, arrD, time);
     }
   } else {
-    var coName = allTime(null, time);
+    var coName = allTime(null, arrD, time);
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({

@@ -653,7 +653,7 @@ var seoCapital = function (url) {
                   <div class="col s10 card-panel l12 m12 push-s1">
                     <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
                       <div class="col s12 l12 m12">
-                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="prefTime"  type="search" onchange="capChange()" />
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="prefTime"  type="search" />
                       </div>
                     </div>
                   </div>
@@ -816,6 +816,14 @@ var seoPastTime = function (searchString, time) {
     var fndOrd = [];
     sorFndOrd.sort((a, b) => {
       if (a !== b && fndOrd.indexOf(a) === -1) {
+        if (fndOrd.indexOf(a) > -1) {
+          return;
+        }
+        {
+        }
+
+        fndOrd.push(a);
+      } else if (a === b && fndOrd.indexOf(a) === -1) {
         if (fndOrd.indexOf(a) > -1) {
           return;
         }

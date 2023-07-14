@@ -420,11 +420,71 @@ var appList = function (e) {
         <div class="col s12 m12 l12 card-panel amber">
           <div class="container">
             <div class="col s12 m12 l12 deep-purple darken-1">
-              <div id="ndType"></div>
+              <div id="neApi"></div>
             </div>
           </div>
         </div>
       </div>
+      <script>
+       
+
+      var oneTime = 1 * 59.9 * 1000
+      var twoTime = 2 * 59.9 * 1000
+      var threeTime = 3 * 59.9 * 1000
+      var fourTime = 4 * 59.9 * 1000
+      var fiveTime = 5 * 59.9 * 1000
+      var maxTime = 6 * 59.9 * 1000
+      document.addEventListener("DOMContentLoaded", stockAPI) 
+      document.getElementById("uiApp").addEventListener("change", stockAPI)
+        function stockAPI() {
+          function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler((result) => {
+                  resolve(result)})
+              .withFailureHandler((error) => {
+                  console.log(error)
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})};
+              var start = (new Date())
+          serverside("stockHistory")
+          .then((html) => {
+            var elaspeTime = new Date() - start
+            var timeToExecute = maxTime - elaspeTime
+            if (timeToExecute < oneTime) {
+
+            
+            console.log(elaspeTime)
+              
+
+              }
+          
+            if (html) {
+
+            
+              // User clicked "No" or X in the title bar.
+              document.getElementById("neApi").innerHTML = html;
+              const results = document.getElementById("prefTime")
+              results.addEventListener("change",(e) => 
+              {
+
+                  // console.log(e.target.value)
+                  capChange(e.target.value)
+
+                  
+              })
+              }
+            })
+          .catch((er) => {
+
+          
+            console.log(er)})
+         
+
+        }
+       
+      </script>
       <script>
         document.getElementById("uiApp").addEventListener("change", research)
         function research() {
@@ -508,56 +568,11 @@ var appList = function (e) {
 
         
           console.log(er)})
-        serverside("dtlsMain", bar,"docForms")
-        .then((vid) => {
-
-        
-          if (vid) {
-
-          
-            serverside("seoCapital", vid) 
-              .then((html) => {
-
-              
-                if (html) {
-
-                
-                  // User clicked "No" or X in the title bar.
-                  document.getElementById("ndType").innerHTML = html;}
-                })
-            }
-          else {
-
-            serverside("filetypeBing")
-            .then((vid) => {
-
-            
-              if (vid) {
-
-              
-                serverside("seoCapital", vid) 
-                  .then((html) => {
-
-                  
-                    if (html) {
-
-                    
-                      // User clicked "No" or X in the title bar.
-                      document.getElementById("ndType").innerHTML = html;}
-                    })
-              }
-            })
-          }
-        })
-        .catch((er) => {
-
-        
-          console.log(er)})
           document.getElementById("uiApp").value = ""}
       </script>
       <script>
         function onUserClick(bar) {
-          var foo = "seoCapital";
+          var foo = "videoPage";
           var linkFollow = document.createElement("a");
           linkFollow.href = <?= appUrl ?> + foo + "&args=" + bar;
           linkFollow.id = "linkFOLLOW";
@@ -573,7 +588,7 @@ var appList = function (e) {
           document.getElementById("linkFOLLOW").remove()};
       </script>
       <script>
-        function capChange() {
+        function capChange(cap) {
         function serverside(func, args) {
           return new Promise((resolve, reject) => {
             google.script.run
@@ -584,18 +599,19 @@ var appList = function (e) {
                 console.log(document.getElementById("test").innerHTML)
                 reject(error)})
             .runBoilerplate([func], [args])})};
-          var cap = document.getElementById("prefTime").value 
-          console.log(cap)
+          // var cap = document.getElementById("prefTime").value
+          document.getElementById("prefTime").value = "" 
+          // console.log(cap)
           serverside("dtlsPro", cap)
           .then((cChange) => {
               if (cChange) {
+                // console.log(cChange)
             var linkFollow = document.createElement("a");
             linkFollow.href = cChange;
             linkFollow.id = "linkFOLLOW";
             linkFollow.target = "_child";
             document.body.appendChild(linkFollow);
           document.getElementById("linkFOLLOW").click();
-          document.getElementById("prefTime").value = ""
           document.getElementById("linkFOLLOW").remove()}
                   
           })

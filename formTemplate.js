@@ -544,12 +544,8 @@ var dtlsMain = function (file, folderX) {
 var dtlsPro = function (e) {
   var time = start;
   // var e = "instagram"
-  var utilNeed = (function (e) {
-    // var utilStr = skyNeed(namedVar, time)
-    // var utilSubst = randomSubstance(0,4,namedVar,time)
-    var rndUtil = needUtility([e].join(""), time)[0].rndTitle;
-    return rndUtil;
-  })();
+  var arrData = coSort(time).title;
+  var utilNeed = randomUtility(e, arrData);
   var cokey = e || utilNeed;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
@@ -898,14 +894,10 @@ var dtlsVegas = function (rndId) {
 var filetypeBing = function (e) {
   var time = start;
   // var namedVar = "pred"
-  var utilNeed = (function (e) {
-    // var utilStr = skyNeed(namedVar, time)
-    // var utilSubst = randomSubstance(0,4,namedVar,time)
-    var rndUtil = needUtility([e].join(""), time)[0].rndTitle;
-    return rndUtil;
-  })();
+  var arrData = coSort(time).ticker;
+  var utilNeed = randomUtility(e, arrData);
   var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join().toLowerCase(), "docForms");
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -914,7 +906,7 @@ var filetypeBing = function (e) {
   // var utiStr = skyNeed(cokey, time)
   // var utiSeo = pastSeo(utiStr, time)
   var uti = bingSWF([cokey].join(""));
-  var form = formMaker([cokey].join().toUpperCase(), "docForms", time);
+  var form = formMaker([cokey].join("").toUpperCase(), "docForms", time);
   if (typeof form === "object") {
     // fileManager(form.getId(), "docForms", time)
 
@@ -925,7 +917,7 @@ var filetypeBing = function (e) {
             var elaspeTime = new Date() - time;
             var timeToExecute = maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-            form.addPageBreakItem().setTitle([cokey].join());
+            form.addPageBreakItem().setTitle([cokey].join(""));
             form.addSectionHeaderItem().setTitle(piece);
             if (
               timeToExecute <= 6 * 60 * 1000 &&
@@ -988,6 +980,7 @@ var filetypeBing = function (e) {
     return formUrl;
   }
   var rndUti = uti[randNum(uti)];
+  return [cokey].join("");
 };
 
 var generalWorkInvoice = function (clientName) {
@@ -1176,14 +1169,10 @@ var mainMan = function (mainFile) {
 var portBing = function (e) {
   var time = start;
   // var namedVar = "pred"
-  var utilNeed = (function (e) {
-    // var utilStr = skyNeed(namedVar, time)
-    // var utilSubst = randomSubstance(0,4,namedVar,time)
-    var rndUtil = needUtility([e].join(""), time)[0].rndTitle;
-    return rndUtil;
-  })();
+  var arrData = coSort(time).title;
+  var utilNeed = randomUtility(e, arrData);
   var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join().toLowerCase(), "webForms");
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -1192,7 +1181,7 @@ var portBing = function (e) {
   // var utiStr = skyNeed(cokey, time)
   // var utiSeo = pastSeo(utiStr, time)
   var uti = needBing([cokey].join(""));
-  var form = formMaker([cokey].join().toUpperCase(), "webForms", time);
+  var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
   if (typeof form === "object") {
     // fileManager(form.getId(), "webForms", time)
 
@@ -1203,7 +1192,7 @@ var portBing = function (e) {
             var elaspeTime = new Date() - time;
             var timeToExecute = maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-            form.addPageBreakItem().setTitle([cokey].join());
+            form.addPageBreakItem().setTitle([cokey].join(""));
             form.addSectionHeaderItem().setTitle(piece);
             if (
               timeToExecute <= 6 * 60 * 1000 &&
