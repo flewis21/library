@@ -377,10 +377,42 @@ var appList = function (e) {
     <? var result = JSON.stringify(dropList) ?>
     <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
       <div class="row">
-        <div class="col s12 m12 l12 card-panel amber">
-          <div class="container">
-            <div class="col s12 m12 l12 deep-purple darken-1">
-              <div id="naMain"></div>
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div id="indexDiv" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=""
+                            id="indexRes"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="homeIndex"  type="search" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -399,91 +431,393 @@ var appList = function (e) {
         </div>
       </div>
       <div class="row">
-        <div class="col s12 m12 l12 card-panel amber">
-          <div class="container">
-            <div class="col s12 m12 l12 deep-purple darken-1">
-              <div id="nbPro"></div>
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div id="tubeDiv" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=""
+                            id="tubeRes"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="tubeSearch"  type="search" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col s12 m12 l12 card-panel amber">
-          <div class="container">
-            <div class="col s12 m12 l12 deep-purple darken-1">
-              <div id="ncPort"></div>
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div id="bingDiv" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=""
+                            id="bingRes"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="bingSearch"  type="search" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col s12 m12 l12 card-panel amber">
-          <div class="container">
-            <div class="col s12 m12 l12 deep-purple darken-1">
-              <div id="neApi"></div>
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div id="busDiv" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=""
+                            id="busRes"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <script>
-       
 
-      var oneTime = 1 * 59.9 * 1000
-      var twoTime = 2 * 59.9 * 1000
-      var threeTime = 3 * 59.9 * 1000
-      var fourTime = 4 * 59.9 * 1000
-      var fiveTime = 5 * 59.9 * 1000
-      var maxTime = 6 * 59.9 * 1000
-      document.addEventListener("DOMContentLoaded", stockAPI) 
-      document.getElementById("uiApp").addEventListener("change", stockAPI)
-        function stockAPI() {
-          function serverside(func, args) {
-            return new Promise((resolve, reject) => {
-              google.script.run
-              .withSuccessHandler((result) => {
-                  resolve(result)})
-              .withFailureHandler((error) => {
-                  console.log(error)
-                  console.log(document.getElementById("test").innerHTML)
-                  reject(error)})
-              .runBoilerplate([func], [args])})};
-              var start = (new Date())
-          serverside("stockHistory")
-          .then((html) => {
-            var elaspeTime = new Date() - start
-            var timeToExecute = maxTime - elaspeTime
-            if (timeToExecute < oneTime) {
-
-            
-            console.log(elaspeTime)
-              
-
-              }
+        document.addEventListener("DOMContentLoaded", homeChange) 
+        function homeChange() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
           
-            if (html) {
+          const htmlStructure = document.getElementById("indexDiv").innerHTML
+          const results = document.getElementById("homeIndex")
+          const strValue = results.value
+          if (!strValue) {
 
-            
-              // User clicked "No" or X in the title bar.
-              document.getElementById("neApi").innerHTML = html;
-              const results = document.getElementById("prefTime")
-              results.addEventListener("change",(e) => 
-              {
+            serverside("dtlsPict")
+            .then((stream) => {
 
-                  // console.log(e.target.value)
-                  capChange(e.target.value)
+              if (stream) {
 
-                  
-              })
+                document.getElementById("indexRes").src = stream
+
               }
+              else {
+
+                document.getElementById("indexDiv").innerHTML = ""
+
+              }
+
             })
-          .catch((er) => {
+            .catch((er) => {
 
+              console.log(er)
+              document.getElementById("indexDiv").innerHTML = ""
+
+            })
+
+          }
+          results.addEventListener("change",(e) => 
+          {
+
+              var cap = e.target.value
+              document.getElementById("homeIndex").value = ""
+              serverside("dtlsPict", cap)
+              .then((vid) => {
+
+              
+                if (vid) {
+
+                      
+                        // User clicked "No" or X in the title bar.
+                        document.getElementById("indexDiv").innerHTML = htmlStructure
+                        document.getElementById("indexRes").src = vid;}
+                })
+              .catch((er) => {
+
+              
+                console.log(er)})
+
+              
+          })}
+      </script>
+      <script>
+
+        document.addEventListener("DOMContentLoaded", proChange) 
+        function proChange() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
           
-            console.log(er)})
-         
+          const htmlStructure = document.getElementById("tubeDiv").innerHTML
+          const results = document.getElementById("tubeSearch")
+          const strValue = results.value
+          if (!strValue) {
 
-        }
-       
+            serverside("dtlsPict")
+            .then((stream) => {
+
+              if (stream) {
+
+                document.getElementById("tubeRes").src = stream
+
+              }
+              else {
+
+                document.getElementById("tubeDiv").innerHTML = ""
+
+              }
+
+            })
+            .catch((er) => {
+
+              console.log(er)
+              document.getElementById("tubeDiv").innerHTML = ""
+
+            })
+
+          }
+          results.addEventListener("change",(e) => 
+          {
+
+              var cap = e.target.value
+              document.getElementById("tubeSearch").value = ""
+              serverside("dtlsPro", cap)
+              .then((vid) => {
+
+              
+                if (vid) {
+
+                      
+                        // User clicked "No" or X in the title bar.
+                        document.getElementById("tubeDiv").innerHTML = htmlStructure
+                        document.getElementById("tubeRes").src = vid;}
+                })
+              .catch((er) => {
+
+              
+                console.log(er)})
+
+              
+          })}
+      </script>
+      <script>
+
+        document.addEventListener("DOMContentLoaded", portChange) 
+        function portChange() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
+          
+          const htmlStructure = document.getElementById("bingDiv").innerHTML
+          const results = document.getElementById("bingSearch")
+          const strValue = results.value
+          if (!strValue) {
+
+            serverside("dtlsPict")
+            .then((stream) => {
+
+              if (stream) {
+
+                document.getElementById("bingRes").src = stream
+
+              }
+              else {
+
+                document.getElementById("bingDiv").innerHTML = ""
+
+              }
+
+            })
+            .catch((er) => {
+
+              console.log(er)
+              document.getElementById("bingDiv").innerHTML = ""
+
+            })
+
+          }
+          results.addEventListener("change",(e) => 
+          {
+
+              var cap = e.target.value
+              document.getElementById("bingSearch").value = ""
+              serverside("portBing", cap)
+              .then((vid) => {
+
+              
+                if (vid) {
+
+                      
+                        // User clicked "No" or X in the title bar.
+                        document.getElementById("bingDiv").innerHTML = htmlStructure
+                        document.getElementById("bingRes").src = vid;}
+                })
+              .catch((er) => {
+
+              
+                console.log(er)})
+
+              
+          })}
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", capChange) 
+        function capChange() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+                resolve(result)})
+            .withFailureHandler((error) => {
+                console.log(error)
+                console.log(document.getElementById("test").innerHTML)
+                reject(error)})
+            .runBoilerplate([func], [args])})};
+
+          const htmlStructure = document.getElementById("busDiv").innerHTML
+          const results = document.getElementById("busSearch")
+          const strValue = results.value
+          if (!strValue) {
+
+            serverside("dtlsPict")
+            .then((stream) => {
+
+              if (stream) {
+
+                document.getElementById("busRes").src = stream
+
+              }
+              else {
+
+                document.getElementById("busDiv").innerHTML = ""
+
+              }
+
+            })
+            .catch((er) => {
+
+              console.log(er)
+              document.getElementById("busDiv").innerHTML = ""
+
+            })
+
+          }
+          results.addEventListener("change",(e) => 
+          {
+
+              var cap = e.target.value
+              document.getElementById("busSearch").value = ""
+              serverside("stockHistory", cap)
+              .then((html) => {
+                if (html) {
+
+                
+                  // User clicked "No" or X in the title bar.
+                  document.getElementById("busDiv").innerHTML = htmlStructure
+                  document.getElementById("busRes").src = html;
+                  }
+                })
+              .catch((er) => {
+
+              
+                console.log(er)})
+
+              
+          })}
       </script>
       <script>
         document.getElementById("uiApp").addEventListener("change", research)
@@ -499,76 +833,84 @@ var appList = function (e) {
                 reject(error)})
             .runBoilerplate([func], [args])})};
         var bar = document.getElementById("uiApp").value || "";
-        serverside("dtlsMain", bar,"videoForms")
-        .then((vid) => {
+        document.getElementById("uiApp").value = ""
 
-        
-          if (vid) {
-
-          
-            serverside("seoCapital", vid) 
-              .then((html) => {
-
-              
-                if (html) {
-
+        serverside("dtlsMain", bar)
+        .then((cChange) => {
+            if (cChange) {
+              // console.log(cChange)
+          var linkFollow = document.createElement("a");
+          linkFollow.href = cChange;
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_child";
+          document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkFOLLOW").remove()}
                 
-                  // User clicked "No" or X in the title bar.
-                  document.getElementById("naMain").innerHTML = html;}
-                })
-            }
-          })
+        })
         .catch((er) => {
 
-        
-          console.log(er)})
+          console.log(er)
+
+        })
+
         serverside("dtlsPro", bar)
-        .then((vid) => {
-
-        
-          if (vid) {
-
-          
-            serverside("seoCapital", vid) 
-              .then((html) => {
-
-              
-                if (html) {
-
+        .then((cChange) => {
+            if (cChange) {
+              // console.log(cChange)
+          var linkFollow = document.createElement("a");
+          linkFollow.href = cChange;
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_child";
+          document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkFOLLOW").remove()}
                 
-                  // User clicked "No" or X in the title bar.
-                  document.getElementById("nbPro").innerHTML = html;}
-                })
-            }
-          })
+        })
         .catch((er) => {
 
-        
-          console.log(er)})
+          console.log(er)
+
+        })
+
         serverside("portBing", bar)
-        .then((vid) => {
-
-        
-          if (vid) {
-
-          
-            serverside("seoCapital", vid) 
-              .then((html) => {
-
-              
-                if (html) {
-
+        .then((cChange) => {
+            if (cChange) {
+              // console.log(cChange)
+          var linkFollow = document.createElement("a");
+          linkFollow.href = cChange;
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_child";
+          document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkFOLLOW").remove()}
                 
-                  // User clicked "No" or X in the title bar.
-                  document.getElementById("ncPort").innerHTML = html;}
-                })
-            }
-          })
+        })
         .catch((er) => {
 
-        
-          console.log(er)})
-          document.getElementById("uiApp").value = ""}
+          console.log(er)
+
+        })
+
+        serverside("stockHistory", bar)
+        .then((cChange) => {
+            if (cChange) {
+              // console.log(cChange)
+          var linkFollow = document.createElement("a");
+          linkFollow.href = cChange;
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_child";
+          document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkFOLLOW").remove()}
+                
+        })
+        .catch((er) => {
+
+          console.log(er)
+
+        })
+        }
       </script>
       <script>
         function onUserClick(bar) {
@@ -586,40 +928,6 @@ var appList = function (e) {
           document.getElementById("linkFOLLOW").click();
           document.getElementById("uiApp").value = ""
           document.getElementById("linkFOLLOW").remove()};
-      </script>
-      <script>
-        function capChange(cap) {
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-                resolve(result)})
-            .withFailureHandler((error) => {
-                console.log(error)
-                console.log(document.getElementById("test").innerHTML)
-                reject(error)})
-            .runBoilerplate([func], [args])})};
-          // var cap = document.getElementById("prefTime").value
-          document.getElementById("prefTime").value = "" 
-          // console.log(cap)
-          serverside("dtlsPro", cap)
-          .then((cChange) => {
-              if (cChange) {
-                // console.log(cChange)
-            var linkFollow = document.createElement("a");
-            linkFollow.href = cChange;
-            linkFollow.id = "linkFOLLOW";
-            linkFollow.target = "_child";
-            document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkFOLLOW").remove()}
-                  
-          })
-          .catch((er) => {
-
-            console.log(er)
-
-          })}
       </script>
     </body>
   </html>

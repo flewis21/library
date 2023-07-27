@@ -89,6 +89,17 @@ var covArrays = function (objects, time) {
 // console.log(JSON.stringify(dataArray[obj]))
 // console.log(dataArray)
 
+var covSheetArrays = function (myArray) {
+  var sheetArray = [];
+  for (var key in myArray) {
+    sheetArray.push([]);
+    for (var val in myArray[key]) {
+      sheetArray[key].push([myArray[key][val]]);
+    }
+  }
+  return sheetArray;
+};
+
 var covertArr = function (objects) {
   var rows = [];
   for (var key in objects) {
@@ -303,6 +314,7 @@ var coSort = function (time) {
   }
   {
   }
+
   var cikArrData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   var titleArrData = [
     "e",
@@ -384,6 +396,30 @@ var covObjects = function (rows, headings, time) {
     });
     return myObj;
   });
+  return temp;
+};
+
+var convertToObjects = function (rows, headings, time) {
+  var temp = rows.reduce(
+    function (ctx, row) {
+      ctx.objects.push(
+        ctx.headings.reduce(function (item, heading, index) {
+          var elaspeTime = new Date() - time;
+          // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+          item[heading] = row[index];
+          return item;
+        }, {}),
+      );
+      var myObj = {};
+      headings.forEach(function (heading, index) {
+        var elaspeTime = new Date() - time;
+        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+        myObj[heading] = [row][index];
+      });
+      return ctx;
+    },
+    { objects: [], headings },
+  ).objects;
   return temp;
 };
 

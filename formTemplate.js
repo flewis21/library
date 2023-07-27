@@ -498,8 +498,8 @@ var dtlsInvestor = function (coKey) {
   }
 };
 
-var dtlsMain = function (file, folderX) {
-  var isProduct = formsUrls(file, folderX);
+var dtlsMain = function (file) {
+  var isProduct = formsUrls(file, "Forms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -561,6 +561,7 @@ var dtlsPro = function (e) {
   if (typeof form === "object") {
     // fileManager(form.getId(), "videoForms", time)
 
+    form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
         if (piece) {
@@ -576,6 +577,104 @@ var dtlsPro = function (e) {
             .setAlignment(FormApp.Alignment.CENTER)
             .setWidth(612)
             .setVideoUrl("https://youtube.com/watch?v=" + piece);
+          if (
+            timeToExecute <= 6 * 60 * 1000 &&
+            timeToExecute >= 5.98 * 60 * 1000
+          ) {
+            console.log(
+              "that function: " +
+                arguments.callee.caller.name +
+                "\nthis function: " +
+                arguments.callee.name +
+                "\nTime limit six minutes",
+            );
+          }
+          if (
+            timeToExecute <= 5 * 60 * 1000 &&
+            timeToExecute >= 4.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
+          }
+          if (
+            timeToExecute <= 4 * 60 * 1000 &&
+            timeToExecute >= 3.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
+          }
+          if (
+            timeToExecute <= 3 * 60 * 1000 &&
+            timeToExecute >= 2.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
+          }
+          if (
+            timeToExecute <= 2 * 60 * 1000 &&
+            timeToExecute >= 1.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
+          }
+          if (
+            timeToExecute <= 1 * 60 * 1000 &&
+            timeToExecute >= 0.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
+          }
+          if (timeToExecute <= 0.05 * 60 * 1000) {
+            console.log(
+              "piece: " +
+                piece[0] +
+                "\ntimeToExecute: " +
+                timeToExecute.valueOf(),
+            );
+            return;
+          }
+          return piece[0];
+        }
+        return;
+      }
+    });
+    var formUrl = form.getPublishedUrl();
+    return formUrl;
+  }
+  var rndUti = uti[randNum(uti)];
+};
+
+var dtlsPict = function (e) {
+  var time = start;
+  // var e = "instagram"
+  var arrData = coSort(time).title;
+  var utilNeed = randomUtility(e, arrData).title;
+  var cokey = e || utilNeed[0];
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  // var utiStr = skyNeed(cokey, time)
+  // var utiSeo = pastSeo(utiStr, time)
+  var uti = seoPictTime([cokey].join(""), time).playList;
+  var form = formMaker([cokey].join("").toUpperCase(), "pictForms", time);
+
+  if (typeof form === "object") {
+    // fileManager(form.getId(), "videoForms", time)
+
+    form.setCollectEmail(true);
+    uti.map((piece) => {
+      while (piece) {
+        if (piece) {
+          var elaspeTime = new Date() - time;
+          var timeToExecute = maxTime - elaspeTime;
+          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+          form.addPageBreakItem().setTitle([cokey].join(""));
+          form.addSectionHeaderItem().setTitle([piece].join("").split('"'));
+
+          form
+            .addImageItem()
+            .setTitle(cokey + " storyboard")
+            .setImage(UrlFetchApp.fetch([piece].join("").split('"')[1]))
+            .setWidth(1012)
+            .setAlignment(FormApp.Alignment.CENTER);
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000
@@ -729,7 +828,7 @@ var dtlsSomeFunction = function (e) {
   return covIdArray;
 };
 
-var dtlsStore = function (itemName) {
+var dtlsStore = function (itemName, time) {
   return HtmlService.createTemplate(
     contentApp(
       `
@@ -772,8 +871,7 @@ var dtlsStore = function (itemName) {
       <? dataArray.push(record) ?>
       <? } ?>
       <? } ?>
-  <? var form = FormApp.create(sheetName) ?>
-  <? fileManager(sheetName, "Forms") ?>
+  <? var form = formMaker([sheetName].join("").toUpperCase(), "inventoryForms", time) ?>
   <? var formUrl = form.getPublishedUrl(); ?>
   <? form.setTitle(dataArray.length + " Items").setConfirmationMessage('Thanks for your feedback !!'); ?>
   <? var randNum = Math.floor(Math.random() * (Math.floor(dataArray.length))); ?>
@@ -790,23 +888,47 @@ var dtlsStore = function (itemName) {
   <? baseUrl = getUrl(ScriptApp); ?>
   <? inventoryUrl = getUrl(ScriptApp); ?>
   <? financeUrl = getUrl(ScriptApp); ?>
-  <div class="row">
-    <div class="col s10 card-panel l12 m12 push-s1">
-    <div class="container row valign-wrapper"><?!= rule() ?></div>
-    <div class="video-container amber" style="clear: both">
-    <div class="col s12 l12 m12 receipt deep-purple darken-1">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src=<?= formUrl ?> 
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div></div>
+      <div class="row">
+        <div class="col s10 card-panel l12 m12 push-s1">
+          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+            <div class="col s12 l12 m12">
+              <div class="black" id="seoData">
+                <div class="row">
+                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+                      <div class="video-container grey" style="clear: both">
+                        <div class="col s10 l10 m10 receipt black darken-1">
+                          <iframe 
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                            src=<?= formUrl ?>
+                            id="busRes"
+                            width="100%"
+                            height="100%"
+                            allow="autoplay"
+                            allow="encrypted-media"
+                            title="Dontime Life Website"
+                            frameborder="0"
+                            allowfullscreen
+                            ></iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col s10 card-panel l12 m12 push-s1">
+                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
+                      <div class="col s12 l12 m12">
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     `,
       { item: itemName },
     ),
@@ -910,6 +1032,10 @@ var filetypeBing = function (e) {
   if (typeof form === "object") {
     // fileManager(form.getId(), "docForms", time)
 
+    form.addTextItem().setTitle("Your Name").setRequired(true);
+    form.addDateItem().setTitle("Birth Date").setRequired(true);
+    form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+    form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
         if (piece) {
@@ -1185,6 +1311,7 @@ var portBing = function (e) {
   if (typeof form === "object") {
     // fileManager(form.getId(), "webForms", time)
 
+    form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
         if (piece) {

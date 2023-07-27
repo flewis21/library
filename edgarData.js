@@ -3,11 +3,21 @@ var allInvestors = function (rndKey) {
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
   ]);
   var uniqueCoArray = covArrays(uniqueKey);
-  var coKey =
-    rndKey ||
-    uniqueCoArray[
-      Math.floor(Math.random() * Math.floor(uniqueCoArray.length))
-    ][0]["title"];
+  var coArray = [`bank semi fact bio science chain space coin`];
+  var hCodedCo = coArray
+    .toString()
+    .split(" ")
+    .sort((a, b) => {
+      a - b;
+    })[
+    Math.floor(Math.random() * Math.floor(coArray.toString().split(" ").length))
+  ];
+  var myCoArray = uniqueCoArray.filter((co) => {
+    return co[0]["title"].includes(hCodedCo);
+  });
+  var rndArrayNum = Math.floor(Math.random() * Math.floor(myCoArray.length));
+  var rndTitleVested = myCoArray[rndArrayNum][0]["title"];
+  var coKey = rndKey || rndTitleVested;
   const matches = [];
   uniqueCoArray
     .sort((a, b) => a - b)
@@ -15,26 +25,16 @@ var allInvestors = function (rndKey) {
       if (
         JSON.stringify(ac[0]["title"])
           .toLowerCase()
-          .includes(
-            coKey.toString().toLowerCase() ||
-              [`group bank semi fact bio science block chain space coin`]
-                .toString()
-                .split(" ")
-                .sort((a, b) => a - b)[
-                Math.floor(
-                  Math.random() *
-                    Math.floor(
-                      [
-                        `group bank semi fact bio science block chain space coin`,
-                      ]
-                        .toString()
-                        .split(" ").length,
-                    ),
-                )
-              ],
-          )
-      )
+          .includes(coKey.toString().toLowerCase())
+      ) {
         matches.push(ac);
+      } else if (
+        JSON.stringify(ac[0]["title"])
+          .toLowerCase()
+          .includes(rndTitleVested.toString().toLowerCase())
+      ) {
+        matches.push(ac);
+      }
     });
   if (matches.length !== 0) {
     var randomKey = Math.floor(Math.random() * Math.floor(matches.length)); // Math.floor(Math.random())
@@ -665,13 +665,13 @@ function videoSEC() {
 } //webApp closed
 
 var stockHistory = function (e, time) {
+  // var e = "hitachi"
   var arrData = allInvestors(e, time);
-  Utilities.sleep(2000);
   // var dataTitle = [arrData.title]
   // var coData = randomUtility(e, dataTitle)
-  var utilNeed = arrData.title;
+  var cokey = arrData.title;
   var yahooNeed = arrData.ticker;
-  var cokey = e || utilNeed;
+  var coHelpText = arrData.edgarUrl;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string") {
@@ -683,6 +683,13 @@ var stockHistory = function (e, time) {
     if (typeof form === "object") {
       // fileManager(form.getId(), "docForms", time)
 
+      form.addTextItem().setTitle("Stock Price").setRequired(true);
+      form
+        .addTextItem()
+        .setTitle("Outstanding Shares")
+        .setRequired(true)
+        .setHelpText(coHelpText);
+      form.setCollectEmail(true);
       uti.map((piece) => {
         while (piece) {
           if (piece) {
@@ -690,8 +697,11 @@ var stockHistory = function (e, time) {
               var elaspeTime = new Date() - time;
               var timeToExecute = maxTime - elaspeTime;
               // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-              form.addPageBreakItem().setTitle([cokey].join(""));
+              form.addPageBreakItem().setTitle([yahooNeed].join(""));
               form.addSectionHeaderItem().setTitle(piece);
+              form
+                .setTitle(arrData.rndTitle)
+                .setConfirmationMessage("Thanks for your feedback !!");
               if (
                 timeToExecute <= 6 * 60 * 1000 &&
                 timeToExecute >= 5.98 * 60 * 1000
@@ -797,5 +807,6 @@ var stockHistory = function (e, time) {
   `,
   );
   console.log(eval(html));
+  return formUrl;
   return html.evaluate().append(survey).getContent();
 };

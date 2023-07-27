@@ -902,6 +902,148 @@ var seoPastTime = function (searchString, time) {
 // var formUrl = form.getPublishedUrl()
 // url: formUrl
 
+var seoPictTime = function (searchString, time) {
+  // var searchString = "Drones"
+  var uniqueVid = seoPictures(searchString, time);
+  var sorFndOrd = uniqueVid.filter((vidObject) => {
+    var elaspeTime = new Date() - time;
+    var timeToExecute = maxTime - elaspeTime;
+    var i = 0;
+    var l = [vidObject].join("").split(" ").length;
+    for (i, l; i < l; i++) {
+      var res = [vidObject].join("").split(" ")[i];
+      if (res.indexOf("https") > -1 && res.indexOf("<!DOCTYPE html>") === -1) {
+        return vidObject;
+      }
+    }
+
+    // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+  });
+  var fndOrd = [];
+  var i = 0;
+  var l = sorFndOrd.length;
+  for (i, l; i < l; i++) {
+    sorFndOrd.sort((a, b) => {
+      // console.log(a)
+      if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
+        if (fndOrd.indexOf(a) > -1) {
+          return;
+        }
+        {
+        }
+
+        fndOrd.push(a);
+      }
+    });
+  }
+  // console.log(fndOrd)
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (test.indexOf("tse4.mm.bing.net") > -1) {
+          if (JSON.stringify(i) >= 3) {
+            break;
+          }
+          var imgUrl = [test].join("").split('"')[1];
+          return imgUrl;
+        }
+      }
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    });
+    var rndSort = [];
+    for (var i = 0, l = rndRes.length; i < l; i++) {
+      var sorRes = rndRes.filter((o) => {
+        return o !== rndRes[i];
+      });
+      rndSort.push(sorRes);
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+    return {
+      playList: rndRes.sort((a, b) => a - b),
+    };
+  }
+};
+// var form = formMaker(searchString)
+// fileManager(searchString, "Forms")
+// var lowerCaseS = seoSheet(searchString).keyWords
+// lowerCaseS.map((b) => {
+// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
+// return form.addVideoItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(needUtility(b)[0].videoItemUrl)})
+// var formUrl = form.getPublishedUrl()
+// url: formUrl
+
+var pictBing = function (searchString, time) {
+  // var searchString =  "Drones"
+  if (typeof searchString !== "undefined") {
+    const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
+      searchString,
+    )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const search = [
+      urlDataSource(rndSearch, { muteHttpExceptions: true }, time),
+    ];
+    // var i = 0
+    // var l = [search].join("").split(" ").length
+    // for (i,l;i<l;i++) {
+
+    // var res = [search].join("").split(" ")[i]
+    // if (res.indexOf("https") > -1) {
+
+    // console.log(res)
+
+    // }
+
+    // }
+    const table = search
+      .slice(search.indexOf("src2="))
+      .toString()
+      .split("src2=");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    var fndOrd = pong.toString().split(",");
+  }
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      var e = 0;
+      var q = randomKey;
+      for (var e, q; e < q; i++) {
+        var ans = test.indexOf("https://tse1.mm.bing.net/th?q=") > -1;
+        // console.log(ans)
+        if (ans === true) {
+          // if ( JSON.stringify(i) !== JSON.stringify(l)) {break}
+          return test;
+        }
+      }
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    });
+    var rndSort = [];
+    var i = 0;
+    var l = rndRes.length;
+    for (var i, l; i < l; i++) {
+      var sorRes = rndRes.filter((o) => {
+        return o !== rndRes[i];
+      });
+      rndSort.push(sorRes);
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+    return {
+      playList: rndRes.sort((a, b) => a - b),
+    };
+  }
+};
+
 var seoSheet = function (searchString, time) {
   var uniqueSeo = seoTwitter(searchString, time);
   var fndOrd = uniqueSeo
@@ -1099,12 +1241,43 @@ var seoTwitter = function (searchString, time) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
     searchString,
   )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var data = [
-    urlDataSource(rndSearch, null, { muteHttpExceptions: true }, time),
-  ];
+  var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   var idArray = seoFactor(data, time).split("\n");
   var uniqueSeo = seoBites(searchString, idArray, time);
   return uniqueSeo;
+};
+
+var seoPictures = function (searchString, time) {
+  var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
+    searchString,
+  )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
+  // var i = 0
+  // var l = [data].join("").split(" ").length
+  // for (i,l;i<l;i++) {
+
+  // var res = [data].join("").split(" ")[i]
+  // if (res.indexOf("https") > -1) {
+
+  // console.log(res)
+
+  // }
+
+  // }
+  var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
+  return uniqueSeo;
+};
+
+var pictFactor = function (data, time) {
+  var idArray = [];
+  data.map((seoData) => {
+    // var elaspeTime = new Date() - time
+    // console.log("seoData: \nelaspeTime: " + elaspeTime)
+    idArray.push(
+      seoData.slice(seoData.indexOf("src2=")).toString().split("src2="),
+    );
+  });
+  return [idArray].toString().replace(/,/g, "");
 };
 
 var seoYoutube = function (searchString, time) {
