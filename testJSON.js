@@ -19,5 +19,7 @@ var testJSON = function (e, rows) {
         .getContent(),
     ));
   }
-  return val;
+  return {
+    myTest: val,
+  };
 };

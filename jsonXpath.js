@@ -28,32 +28,37 @@ var coUtility = function (rndClient) {
 };
 
 var csvDataSource = function (url, params) {
-  var content = UrlFetchApp.fetch(url, params);
-  var res = content.getContentText();
-  // console.log(res[0])
-  var lines = res.split("\n");
+  if (url) {
+    var content = UrlFetchApp.fetch(url, params);
+    var res = content.getContentText();
+    // console.log(res[0])
+    var lines = res.split("\n");
 
-  var result = [];
+    var result = [];
 
-  // NOTE: If your columns contain commas in their values, you'll need
-  // to deal with those before doing the next step
-  // (you might convert them to &&& or something, then covert them back later)
-  // jsfiddle showing the issue https://jsfiddle.net/
-  var headers = lines[0].split(",");
+    // NOTE: If your columns contain commas in their values, you'll need
+    // to deal with those before doing the next step
+    // (you might convert them to &&& or something, then covert them back later)
+    // jsfiddle showing the issue https://jsfiddle.net/
+    var headers = lines[0].split(",");
 
-  for (var i = 1; i < lines.length; i++) {
-    var obj = {};
-    var currentline = lines[i].split(",");
+    for (var i = 1; i < lines.length; i++) {
+      var obj = {};
+      var currentline = lines[i].split(",");
 
-    for (var j = 0; j < headers.length; j++) {
-      obj[headers[j]] = currentline[j];
+      for (var j = 0; j < headers.length; j++) {
+        obj[headers[j]] = currentline[j];
+      }
+
+      result.push(obj);
     }
 
-    result.push(obj);
+    //return result; //JavaScript object
+    return {
+      myCSV: result,
+    };
+    //JSON
   }
-
-  //return result; //JavaScript object
-  return result; //JSON
 };
 
 var dataRowIndex = function (data, row, index) {
@@ -234,7 +239,7 @@ var needUtility = function (rndClient, arrD, time) {
   console.log(typeof [client].join("") + " " + [client].join("").length);
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
-    console.log(client.length + " is greater than " + 0);
+    console.log([client].join("").length + " is greater than " + 0);
     var seoTitle = seoSheet(client, time).keyWords;
     var improvedTitle = seoTitle.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
@@ -255,7 +260,7 @@ var needUtility = function (rndClient, arrD, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      var coName = allTime(rndTitle2.toLowerCase(), [null], time);
+      var coName = allTime(rndTitle2.toLowerCase(), arrD, time);
     } else {
       var coName = allTime(null, arrD, time);
     }
@@ -291,10 +296,14 @@ var objectHeaders = function (object, index) {
 };
 
 var rowsToReturn = function (data, index) {
-  var rowsToReturn = data.filter(function (a) {
-    return a[index];
-  });
-  return rowsToReturn;
+  if (data) {
+    var rowsToReturn = data.filter(function (a) {
+      return a[index];
+    });
+    return {
+      myData: rowsToReturn,
+    };
+  }
 };
 
 var tabData = function (url, xpath, headers) {
@@ -313,10 +322,27 @@ var tabIndex = function (url, xpath, index, headers) {
   return test;
 };
 
+var udsCache = function (content) {
+  var data = JSON.parse(content);
+  if (data) {
+    for (var key in data) {
+      var foo = data[key]["title"];
+      var bar = data[key];
+      var cached = sCache.get(foo);
+      if (cached != null) {
+        return cached;
+      }
+      var expiration = 600;
+      sCache.putAll(bar, expiration);
+    }
+  }
+};
+
 var urlDataSource = function (url, params, time, xpath) {
   var res = UrlFetchApp.fetch(url, params);
   var content = res.getContentText();
   return content;
+
   // if (typeof content === "object")
   // {var json = Utilities.jsonParse(content);
   // var pathArray = content.split("\n");

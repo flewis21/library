@@ -1,19 +1,35 @@
 var renderFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(file);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
+  if (file) {
+    const tmp = HtmlService.createTemplateFromFile(file);
+    if (argsObject) {
+      const keys = Object.keys(argsObject);
 
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
 
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
+      // tmp["list"] = htmlListArray;
+    } // END IF
+    // Route[file] = argsObject
+    var html = contentApp(`  <html id="boilerplateRenderFile">
+    <head>
+      <base target="_top">
+      <meta charset="utf-8">
+      <meta name="renderFile" content="Boilerplate Render File">
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    </head>
+    <body>
+    </body>
+    </html>
+`);
+    return tmp
+      .evaluate()
+      .append(html)
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .setTitle("Don'time Life Services")
+      .getContent();
+  }
 };
 
 var renderTemplate = function (blob, argsObject) {
@@ -29,10 +45,11 @@ var renderTemplate = function (blob, argsObject) {
   // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
   var html = contentApp(
     `
-  <html id="test">
+  <html id="renderTemplate">
     <head>
       <base target="_top">
       <meta charset="UTF-8">
+      <meta name="renderTemplate" content="Boilerplate Render Template">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -142,7 +159,9 @@ var renderTemplate = function (blob, argsObject) {
                 text-align: center;
                 user-select: none;}
     .menu-item:hover>.menu-img {transform: scale(1.03);}
-    img {width: 160px;}</style></head>
+    img {width: 160px;}
+    </style>
+    </head>
     <body>
     <? var invArray = ["group bank semi fact bio science block chain space coin"] ?>
     <? var calcArray = ["0 1 2 3 4 5 6 7 8 9"].toString().split(" ") ?>
@@ -360,11 +379,11 @@ var renderTemplate = function (blob, argsObject) {
 var appList = function (e) {
   return HtmlService.createTemplate(
     `
-  <html id="test">
+  <html id="appList">
     <head>
       <base target="_top">
       <meta charset="utf-8">
-      <meta name="description" content="Example meta description.">
+      <meta name="appList" content="Boilerplate Function List">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     </head>
@@ -376,6 +395,7 @@ var appList = function (e) {
     }).join("") ?>
     <? var result = JSON.stringify(dropList) ?>
     <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
+    <nav>
       <div class="row">
         <div class="col s10 card-panel l12 m12 push-s1">
           <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
@@ -417,6 +437,7 @@ var appList = function (e) {
           </div>
         </div>
       </div>
+    </nav>
       <div class="row">
         <div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
@@ -430,6 +451,7 @@ var appList = function (e) {
           </div>
         </div>
       </div>
+    <nav>
       <div class="row">
         <div class="col s10 card-panel l12 m12 push-s1">
           <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
@@ -553,6 +575,7 @@ var appList = function (e) {
           </div>
         </div>
       </div>
+    </nav>
       <script>
 
         document.addEventListener("DOMContentLoaded", homeChange) 
@@ -573,17 +596,19 @@ var appList = function (e) {
           const strValue = results.value
           if (!strValue) {
 
+            document.getElementById("indexDiv").innerHTML = "... Loading"
             serverside("dtlsPict")
             .then((stream) => {
 
               if (stream) {
 
+                document.getElementById("indexDiv").innerHTML = htmlStructure
                 document.getElementById("indexRes").src = stream
 
               }
               else {
 
-                document.getElementById("indexDiv").innerHTML = ""
+                document.getElementById("indexDiv").innerHTML =  JSON.stringify(er)
 
               }
 
@@ -591,7 +616,7 @@ var appList = function (e) {
             .catch((er) => {
 
               console.log(er)
-              document.getElementById("indexDiv").innerHTML = ""
+              document.getElementById("indexDiv").innerHTML = JSON.stringify(er)
 
             })
 
@@ -601,6 +626,7 @@ var appList = function (e) {
 
               var cap = e.target.value
               document.getElementById("homeIndex").value = ""
+              document.getElementById("indexDiv").innerHTML = "... waiting for " + cap
               serverside("dtlsPict", cap)
               .then((vid) => {
 
@@ -615,7 +641,9 @@ var appList = function (e) {
               .catch((er) => {
 
               
-                console.log(er)})
+                console.log(er)
+                document.getElementById("indexDiv").innerHTML = JSON.stringify(er)
+                })
 
               
           })}
@@ -640,17 +668,19 @@ var appList = function (e) {
           const strValue = results.value
           if (!strValue) {
 
+            document.getElementById("tubeDiv").innerHTML = "... Loading"
             serverside("dtlsPict")
             .then((stream) => {
 
               if (stream) {
 
+                document.getElementById("tubeDiv").innerHTML = htmlStructure
                 document.getElementById("tubeRes").src = stream
 
               }
               else {
 
-                document.getElementById("tubeDiv").innerHTML = ""
+                document.getElementById("tubeDiv").innerHTML =  JSON.stringify(er)
 
               }
 
@@ -658,7 +688,7 @@ var appList = function (e) {
             .catch((er) => {
 
               console.log(er)
-              document.getElementById("tubeDiv").innerHTML = ""
+              document.getElementById("tubeDiv").innerHTML =  JSON.stringify(er)
 
             })
 
@@ -668,10 +698,10 @@ var appList = function (e) {
 
               var cap = e.target.value
               document.getElementById("tubeSearch").value = ""
+              document.getElementById("tubeDiv").innerHTML = "... waiting for " + cap
               serverside("dtlsPro", cap)
               .then((vid) => {
 
-              
                 if (vid) {
 
                       
@@ -682,7 +712,9 @@ var appList = function (e) {
               .catch((er) => {
 
               
-                console.log(er)})
+                console.log(er)
+                document.getElementById("tubeDiv").innerHTML =  JSON.stringify(er)
+                })
 
               
           })}
@@ -707,17 +739,19 @@ var appList = function (e) {
           const strValue = results.value
           if (!strValue) {
 
+            document.getElementById("bingDiv").innerHTML = "... Loading"
             serverside("dtlsPict")
             .then((stream) => {
 
               if (stream) {
 
+                document.getElementById("bingDiv").innerHTML = htmlStructure
                 document.getElementById("bingRes").src = stream
 
               }
               else {
 
-                document.getElementById("bingDiv").innerHTML = ""
+                document.getElementById("bingDiv").innerHTML =  JSON.stringify(er)
 
               }
 
@@ -725,7 +759,7 @@ var appList = function (e) {
             .catch((er) => {
 
               console.log(er)
-              document.getElementById("bingDiv").innerHTML = ""
+              document.getElementById("bingDiv").innerHTML =  JSON.stringify(er)
 
             })
 
@@ -735,6 +769,7 @@ var appList = function (e) {
 
               var cap = e.target.value
               document.getElementById("bingSearch").value = ""
+              document.getElementById("bingDiv").innerHTML = "... waiting for " + cap
               serverside("portBing", cap)
               .then((vid) => {
 
@@ -749,7 +784,9 @@ var appList = function (e) {
               .catch((er) => {
 
               
-                console.log(er)})
+                console.log(er)
+                document.getElementById("bingDiv").innerHTML =  JSON.stringify(er)
+                })
 
               
           })}
@@ -773,17 +810,19 @@ var appList = function (e) {
           const strValue = results.value
           if (!strValue) {
 
+            document.getElementById("busDiv").innerHTML = "... Loading"
             serverside("dtlsPict")
             .then((stream) => {
 
               if (stream) {
 
+                document.getElementById("busDiv").innerHTML = htmlStructure
                 document.getElementById("busRes").src = stream
 
               }
               else {
 
-                document.getElementById("busDiv").innerHTML = ""
+                document.getElementById("busDiv").innerHTML =  JSON.stringify(er)
 
               }
 
@@ -791,7 +830,7 @@ var appList = function (e) {
             .catch((er) => {
 
               console.log(er)
-              document.getElementById("busDiv").innerHTML = ""
+              document.getElementById("busDiv").innerHTML =  JSON.stringify(er)
 
             })
 
@@ -801,6 +840,7 @@ var appList = function (e) {
 
               var cap = e.target.value
               document.getElementById("busSearch").value = ""
+              document.getElementById("busDiv").innerHTML = "... waiting for " + cap
               serverside("stockHistory", cap)
               .then((html) => {
                 if (html) {
@@ -814,7 +854,9 @@ var appList = function (e) {
               .catch((er) => {
 
               
-                console.log(er)})
+                console.log(er)
+                document.getElementById("busDiv").innerHTML =  JSON.stringify(er)
+                })
 
               
           })}

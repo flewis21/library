@@ -5,7 +5,8 @@ var threeTime = 3 * 59.9 * 1000;
 var fourTime = 4 * 59.9 * 1000;
 var fiveTime = 5 * 59.9 * 1000;
 var maxTime = 6 * 59.9 * 1000;
-var cache = CacheService.getScriptCache();
+// Gets a cache that is common to all users of the script
+var sCache = CacheService.getScriptCache();
 
 var formMaker = function (fileName, folderX, time) {
   if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
@@ -19,39 +20,44 @@ var formMaker = function (fileName, folderX, time) {
 };
 
 var formsUrls = function (fileX, folderX, time) {
+  if ([fileX].join("").length > 0) {
+    var search = [fileX].join("");
+    var searchFileStr = search.toLowerCase().split(" ");
+    var i = 0;
+    var l = searchFileStr.length;
+  }
   if (typeof folderX !== "undefined") {
     try {
       // First execution
       var dataTree = [];
       var treeList = [];
-      var currentFolder = DriveApp.getFolderById(
-        DriveApp.getFoldersByName(folderX).next().getId(),
-      );
-      console.log(currentFolder.getName());
-      var currentFolderFiles = currentFolder.getFiles();
+      var eFolder = DriveApp.getFoldersByName(folderX).next();
+      var eFoldId = eFolder.getId();
+      var folderFiles = eFolder.getFiles();
+      // var currentFolderFiles = DriveApp.getFolderById(eFoldId).getFiles();
       // var treeRoot = DriveApp.getFolderById(DriveApp.getFoldersByName("Forms").next().getId()).getFiles();
-      while (currentFolderFiles.hasNext()) {
-        var subFiles = currentFolderFiles.next();
-        treeList.push(subFiles.getUrl());
+      while (folderFiles.hasNext()) {
+        var allFiles = folderFiles.next();
+        var currentFileName = allFiles.getName();
+        var fileUrl = allFiles.getUrl();
+        // treeList.push(fileUrl)
         // var fileX = "eas"
         // if (subFiles.getName().toLowerCase().split(" ").indexOf(fileX) > -1)
-        if (
-          subFiles
-            .getName()
-            .toLowerCase()
-            .split(" ")
-            .toString()
-            .includes(fileX) ||
-          subFiles.getName().toLowerCase().indexOf(fileX) > -1
-        ) {
-          console.log(
-            fileX +
-              " " +
-              subFiles.getName().toLowerCase().split(" ").indexOf(fileX) +
-              " " +
-              subFiles.getName().toLowerCase().split(" "),
-          );
-          dataTree.push(subFiles.getUrl());
+        var currentFileStr = currentFileName.toLowerCase().split(" ");
+        var fileXIndex = [];
+        for (i, l; i < l; i++) {
+          var sfi = searchFileStr[i];
+          var fxi = currentFileStr.indexOf(sfi);
+          if (fxi > -1) {
+            var myObj = convertToObjects([[fxi]], [sfi])[0];
+          }
+          fileXIndex.push(myObj);
+        }
+        var fileXIndexLen = fileXIndex.join("").length;
+        var fileXincluded = currentFileName.toLowerCase().includes(search);
+        if (fileXincluded || fileXIndexLen > 0) {
+          // console.log(fileX + " " + DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" ").indexOf(fileX) + " " +  DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" "))
+          dataTree.push(allFiles.getUrl());
         }
       }
       // if (fileX) {
@@ -59,8 +65,8 @@ var formsUrls = function (fileX, folderX, time) {
       //   if (gf.toLowerCase().substring(fileX.toLowerCase()))
       //   return gf})
       //   console.log(typeof formFile[0])}
-      var filed =
-        dataTree[Math.floor(Math.random() * Math.floor(dataTree.length))];
+      var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
+      var filed = dataTree[rndFiled];
       //  || treeList[Math.floor(Math.random() * (Math.floor(treeList.length)))]
       return filed;
     } catch (err) {

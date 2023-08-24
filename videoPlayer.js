@@ -55,6 +55,7 @@ function needPastTime(searchString) {
         vidObject[0].indexOf("\\") === -1 &&
         vidObject[0].indexOf("get") === -1 &&
         vidObject[0].indexOf("&&") === -1 &&
+        vidObject[0].indexOf("a.severity") === -1 &&
         vidObject[0].indexOf("b_cont") === -1 &&
         vidObject[0].indexOf(",") === -1
       ) {

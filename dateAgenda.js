@@ -209,11 +209,13 @@ var dateFunction = function (series) {
 
 var dateModel = function (days) {
   var uniqueDays = [];
-  days.forEach(function (d) {
-    if (uniqueDays.indexOf(d) === -1) {
-      uniqueDays.push(d);
-    }
-  });
+  if (days) {
+    days.forEach(function (d) {
+      if (uniqueDays.indexOf(d) === -1) {
+        uniqueDays.push(d);
+      }
+    });
+  }
   return uniqueDays;
 };
 
@@ -226,7 +228,9 @@ var flatten = function (input) {
   for (let data of input) {
     stocks = stocks.concat(flatten(data));
   }
-  return stocks;
+  return {
+    myStock: stocks,
+  };
 };
 
 var getCalendarBusyDays = function (dates) {
@@ -267,7 +271,9 @@ var raise = function (acc, item) {
   if (Array.isArray(item)) {
     return item.reduce(raise, acc);
   }
-  return [...acc, item];
+  return {
+    myItem: [...acc, item],
+  };
 };
 
 var lower = function (array, callback, initial) {
@@ -276,7 +282,9 @@ var lower = function (array, callback, initial) {
     acc = callback(acc, array[i], i, array);
     comsole.log(acc);
   }
-  return acc;
+  return {
+    myCall: acc,
+  };
 };
 
 var randomDay = function (disabledDays) {

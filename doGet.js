@@ -11,8 +11,10 @@ var buildTags = function (posHtml) {
 };
 
 var doGet = function (e) {
-  var foobarr = e.parameter["func"] || "renderFile";
-  var libFunc = foobarr;
+  if (e) {
+    var foobarr = e.parameter["func"];
+  }
+  var libFunc = foobarr || "renderFile";
   var rndPage = [
     `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
   ]
@@ -29,34 +31,38 @@ var doGet = function (e) {
         ),
     )
   ];
-  args = e.parameter["args"] || ["jFundamentals"];
+  if (e) {
+    var barArgs = e.parameter["args"];
+  }
+  args = barArgs || ["jFundamentals"];
   return renderTemplate(
     contentApp(`<?!= appL ?>`, {
-      appL: this[libName][
-        foobarr ||
-          HtmlService.createHtmlOutput(
-            `
+      appL:
+        libFunc ||
+        HtmlService.createHtmlOutput(
+          `
               <script>
                 document.getElementById("appList").value
               </script>
               `,
-          ).getContent()
-      ].apply(this, [
-        args ||
-          HtmlService.createHtmlOutput(
-            `
+        )
+          .getContent()
+          .apply(this, [
+            args ||
+              HtmlService.createHtmlOutput(
+                `
               <script>
                 document.getElementById("username").value
               </script>
               `,
-          ).getContent(),
-      ]),
+              ).getContent(),
+          ]),
     }),
     { e: e },
   );
 };
 
-function misBing(e) {
+function misBing(e, time) {
   console.log(JSON.stringify(e));
   const uniqueKey = JSON.parse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -69,12 +75,12 @@ function misBing(e) {
   const randomTitle = e || uniqueCoKey[1][randomKey]["title"];
   var randomSECCo = coUtility(randomTitle)[0];
   var myVid = randomSECCo.rndTitle;
-  var myVidId = randomSECCo.videoItem[0] || coUtility()[0].videoItem[0];
+  var myVidId = randomSECCo.videoItem || coUtility()[0].videoItem;
   var infoLink = randomSECCo.videoItemUrl;
-  var form = formMaker(myVid.toUpperCase());
-  fileManager(myVid.toUpperCase(), "Forms");
+  var form = formMaker(myVid.toUpperCase(), "Forms", time);
+  // fileManager(myVid.toUpperCase(), "Forms", time)
   var formUrl = form.getPublishedUrl();
-  form.addSectionHeaderItem().setTitle;
+  form.addSectionHeaderItem();
   var result = JSON.stringify(seoSheet(randomTitle).keyWords);
   const html = HtmlService.createTemplate(`<html id="test">
       <head>

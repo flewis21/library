@@ -1,11 +1,11 @@
 function dateTime(date) {
   // Date and Time Picker Widget
   var dateTime = HtmlService.createTemplate(`
-  <html id="test">
+  <html id="dateTime">
     <head>
       <base target="_top">
       <meta charset="utf-8">
-      <meta name="description" content="Example meta description.">
+      <meta name="dateTime" content="Boilerplate Date and Time Function">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     </head>
@@ -60,11 +60,11 @@ function dateTime(date) {
   dateTime.timePicker = HtmlService.createHtmlOutput(
     contentApp(
       `
-  <html id="test">
+  <html id="dateTimeTimePicker">
     <head>
       <base target="_top">
       <meta charset="utf-8">
-      <meta name="description" content="Example meta description.">
+      <meta name="dateTimeTimePicker" content="Boilerplate dateTime function Time Picker">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>
@@ -91,11 +91,11 @@ function dateTime(date) {
   dateTime.datePicker = HtmlService.createHtmlOutput(
     contentApp(
       `
-  <html id="test">
+  <html id="dateTimeDatePicker">
     <head>
       <base target="_top">
       <meta charset="utf-8">
-      <meta name="description" content="Example meta description.">
+      <meta name="dateTimeDatePicker" content="Boilerplate dateTime function Date Picker">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>

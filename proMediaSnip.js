@@ -78,7 +78,7 @@ var proMediaSnip = function (e) {
   html.artifacts.media = media;
   html.artifacts.odd = chancing;
   html.artifacts.play = gaming;
-  html.artifacts.htmlStyle = htmlCss;
+  // html.artifacts.htmlStyle = htmlCss;
   html.backLinkUrl = backLinkUrl;
   html.pagemanager = HtmlService.createHtmlOutput(
     `

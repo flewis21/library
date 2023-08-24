@@ -225,6 +225,33 @@ var contentFile = function (file, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
+var convertToObjects = function (rows, headings, time) {
+  var temp = rows.reduce(
+    function (ctx, row) {
+      ctx.objects.push(
+        ctx.headings.reduce(function (item, heading, index) {
+          var elaspeTime = new Date() - time;
+          // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+          item[heading] = row[index];
+          return item;
+        }, {}),
+      );
+      var myObj = {};
+      headings.forEach(function (heading, index) {
+        var elaspeTime = new Date() - time;
+        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+        myObj[heading] = [row][index];
+      });
+      return ctx;
+    },
+    {
+      objects: [],
+      headings,
+    },
+  ).objects;
+  return temp;
+};
+
 var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
   var tickerFreqArray = [];
 
@@ -387,52 +414,17 @@ var coSort = function (time) {
 };
 
 var covObjects = function (rows, headings, time) {
-  var temp = rows.map(function (row) {
-    var myObj = {};
-    headings.forEach(function (heading, index) {
-      var elaspeTime = new Date() - time;
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
-      myObj[heading] = [row][index];
-    });
-    return myObj;
-  });
-  return temp;
-};
-
-var convertToObjects = function (rows, headings, time) {
-  var temp = rows.reduce(
-    function (ctx, row) {
-      ctx.objects.push(
-        ctx.headings.reduce(function (item, heading, index) {
-          var elaspeTime = new Date() - time;
-          // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
-          item[heading] = row[index];
-          return item;
-        }, {}),
-      );
+  if (rows) {
+    var temp = rows.map(function (row) {
       var myObj = {};
       headings.forEach(function (heading, index) {
         var elaspeTime = new Date() - time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
         myObj[heading] = [row][index];
       });
-      return ctx;
-    },
-    { objects: [], headings },
-  ).objects;
-  return temp;
-};
-
-var driveUrls = function (fileX) {
-  if (typeof fileX !== "undefined") {
-    var file = DriveApp.getRootFolder().getFilesByName(fileX);
-    if (file.hasNext()) {
-      while (file.hasNext()) {
-        return file.next().getUrl();
-      }
-    }
-  } else {
-    return;
+      return myObj;
+    });
+    return temp;
   }
 };
 
@@ -442,43 +434,6 @@ function email() {
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
-
-var fileManager = function (fileX, folder, time, content, mimeType) {
-  if (typeof fileX !== "undefined") {
-    var folderId = folderIdGlobal(folder, time);
-    var file = DriveApp.getRootFolder().getFilesByName(
-      DriveApp.getFileById(fileX).getName(),
-    );
-    var elaspeTime = new Date() - time;
-    var myFile = file.next();
-    var timeToExecute = maxTime - elaspeTime;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-    if (myFile) {
-      myFile.moveTo(DriveApp.getFolderById(folderId));
-      return;
-    } else {
-      // DriveApp.getFolderById(folderId).createFile(fileX,content,mimeType)
-      return dtlsMain(fileX);
-    }
-  } else {
-    return;
-  }
-};
-
-var folderIdGlobal = function (folderX, time) {
-  var tree = DriveApp.getFolders();
-  while (tree.hasNext()) {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
-    var myId = tree.next();
-    var id = myId.getId();
-    var myFolder = DriveApp.getFolderById(id).getName();
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-    if (folderX === myFolder) {
-      return id;
-    }
-  }
-};
 
 var getEventValues = function (title, startTime, endTime, series) {
   var eventsDataRange = sliceValues(getValues(), 1);
@@ -548,23 +503,25 @@ var includeApp = function (blob, argsObject) {
 };
 
 var includeBlob = function (file, argsObject) {
-  const temp = ContentService.createTextOutput(
-    HtmlService.createTemplateFromFile(file).evaluate().getContent(),
-  );
-  const tmp = HtmlService.createTemplate(
-    temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
-  );
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  if (file) {
+    const temp = ContentService.createTextOutput(
+      HtmlService.createTemplateFromFile(file).evaluate().getContent(),
+    );
+    const tmp = HtmlService.createTemplate(
+      temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
+    );
+    if (argsObject) {
+      const keys = Object.keys(argsObject);
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
+      // tmp["list"] = htmlListArray;
+    } // END IF
+    // Route[file] = argsObject
+    return tmp
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
 };
 
 var includeGSFile = function (file, argsArray) {
@@ -584,8 +541,10 @@ var includeGSFile = function (file, argsArray) {
         });
       };
       try {
-        const content = await serverSide(file, argsArray);
-        return content;
+        if (file) {
+          const content = await serverSide(file, argsArray);
+          return content;
+        }
       } catch (error_1) {
         console.log(error_1);
       }
@@ -661,33 +620,35 @@ var openRange = function (row, stampRow) {
 };
 
 var prepareDataBrain = function (data, ratio = 29) {
-  return data.map((row) => {
-    const rings = Object.values(row).slice(0, 1);
-    const values = Object.values(row).slice(1);
-    authLogic(values[values.indexOf("M")] === "M")
-      ? (function () {
-          const male = values.splice(values.indexOf("M"), 1);
-          values.splice(0, 0, male[0]);
-        })()
-      : authLogic(values[values.indexOf("F")] === "F")
-      ? (function () {
-          const female = values.splice(values.indexOf("F"), 1);
-          values.splice(0, 0, female[0]);
-        })()
-      : authLogic(values[values.indexOf("I")] === "I")
-      ? (function () {
-          const inConclusive = values.splice(values.indexOf("I"), 1);
-          values.splice(0, 0, inConclusive[0]);
-        })()
-      : (function () {
-          return;
-        })();
-    values[0] = sexToNumber(values[0]);
-    return {
-      input: values,
-      output: [rings[0] / ratio],
-    };
-  });
+  if (data) {
+    return data.map((row) => {
+      const rings = Object.values(row).slice(0, 1);
+      const values = Object.values(row).slice(1);
+      authLogic(values[values.indexOf("M")] === "M")
+        ? (function () {
+            const male = values.splice(values.indexOf("M"), 1);
+            values.splice(0, 0, male[0]);
+          })()
+        : authLogic(values[values.indexOf("F")] === "F")
+        ? (function () {
+            const female = values.splice(values.indexOf("F"), 1);
+            values.splice(0, 0, female[0]);
+          })()
+        : authLogic(values[values.indexOf("I")] === "I")
+        ? (function () {
+            const inConclusive = values.splice(values.indexOf("I"), 1);
+            values.splice(0, 0, inConclusive[0]);
+          })()
+        : (function () {
+            return;
+          })();
+      values[0] = sexToNumber(values[0]);
+      return {
+        input: values,
+        output: [rings[0] / ratio],
+      };
+    });
+  }
 };
 
 var productDist = function (
@@ -737,10 +698,12 @@ function randomEmail() {
 }
 
 var randNum = function (namedVar) {
-  var len = namedVar.length;
-  var rnd = Math.random();
-  var res = Math.floor(rnd * Math.floor(len));
-  return res;
+  if (namedVar) {
+    var len = namedVar.length;
+    var rnd = Math.random();
+    var res = Math.floor(rnd * Math.floor(len));
+    return res;
+  }
 };
 
 var randomSubstance = function (index, loopLength, importedData, arrD, time) {
@@ -775,7 +738,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       }
     }
-  } else {
+  } else if (typeof arrD !== "undefined") {
     for (i, l; i < l; i++) {
       var myArrData = arrD.sort((a, b) => a - b)[
         Math.floor(Math.random() * arrD.length)
@@ -785,11 +748,15 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
-  var sortNewArr = newArr.sort((a, b) => a - b)[
-    Math.floor(Math.random() * newArr.length)
-  ];
-  return sortNewArr;
-  console.log();
+  if (newArr) {
+    var sortNewArr = newArr.sort((a, b) => a - b)[
+      Math.floor(Math.random() * newArr.length)
+    ];
+    return {
+      myNewArr: sortNewArr,
+    };
+    console.log();
+  }
 };
 // console.log(sortNewArr)
 // var thisNewArr = sortNewArr.map((w) => {
@@ -803,7 +770,6 @@ var randomUtility = function (e, arrD, time) {
   // var utilStr = skyNeed(namedVar, time)
   // var utilSubst = randomSubstance(0,4,namedVar,time)
   var rndObj = needUtility([e].join(" "), arrD, time)[0];
-
   return {
     playlist: rndObj.playlistArr,
     cik: rndObj.rndCik,
@@ -813,30 +779,6 @@ var randomUtility = function (e, arrD, time) {
     youtubeID: rndObj.videoItem,
     youtubVideo: rndObj.videoItemUrl,
   };
-};
-
-var rndUrls = function () {
-  var treeRoot = DriveApp.getRootFolder().getFiles();
-  while (treeRoot.hasNext()) {
-    var trueName = treeRoot.next();
-    console.log(
-      trueName.getName() +
-        " || / || " +
-        trueName.getName()[
-          Object.keys(trueName.getName())[
-            Math.floor(
-              Math.random() *
-                Math.floor(Object.keys(trueName.getName()).length),
-            )
-          ]
-        ],
-    );
-    var truArray = [];
-    for (var i = 0, l = trueName.getName().length; i < l; i++) {
-      console.log(truArray.push([trueName.getName()][i]));
-    }
-    if (trueName.getName()) return trueName.getUrl();
-  }
 };
 
 function rule() {
@@ -860,47 +802,11 @@ var sexToNumber = function (sex) {
   }
 };
 
-function shareDrive() {
-  var dApp = DriveApp;
-  var folderIter = dApp.getFolders();
-  var driveFiles = [];
-  while (folderIter.hasNext()) {
-    var folder = folderIter.next();
-    var filesIter = folder.getFiles();
-    while (filesIter.hasNext()) {
-      var file = filesIter.next();
-      driveFiles.push([file.getName()]);
-    }
-  }
-  authLogic(driveFiles !== "")
-    ? (function () {
-        //return driveFiles
-        console.log(driveFiles);
-      })()
-    : (function () {
-        console.log("Drive has no files");
-      })();
-}
-
-var sheetsFileManager = function (fileX, folder) {
-  if (typeof fileX !== "undefined") {
-    var file = DriveApp.getRootFolder().getFilesByName(fileX);
-    if (file.hasNext()) {
-      while (file.hasNext())
-        var myFolder = DriveApp.getFolderById(folderIdGlobal(folder, time));
-      {
-        file.next().moveTo(myFolder);
-        return file.next().getUrl();
-      }
-    }
-  } else {
-    return;
-  }
-};
-
 var sliceValues = function (data, row) {
-  var values = data.slice(row);
-  return values;
+  if (data) {
+    var values = data.slice(row);
+    return values;
+  }
 };
 
 var splitArr = function (rows, idx, query) {
@@ -968,12 +874,14 @@ var splitNoX = function (content, pushIndex) {
 };
 
 var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
-  var json = splitXContent;
-  var pathArray = splitXXpath.split(splitXDelimiter);
-  console.log(pathArray);
-  for (var i = 0; i < pathArray.length; i++) {
-    json = json[pathArray[i]];
-    console.log(json);
+  if (splitXContent) {
+    var json = splitXContent;
+    var pathArray = splitXXpath.split(splitXDelimiter);
+    console.log(pathArray);
+    for (var i = 0; i < pathArray.length; i++) {
+      json = json[pathArray[i]];
+      console.log(json);
+    }
   }
   if (typeof json === "undefined") {
     return "Invalid request";
@@ -1073,9 +981,14 @@ var substanceVegas = function (importedData, index, loopLength) {
   console.log();
 };
 
-var tabField = function (url, xpath, index) {
-  var test = dataHeadings(splitX(urlDataSource(url), xpath))[index];
-  return test;
+var tabField = function (url, xpath, index, time) {
+  if (url) {
+    var data = [urlDataSource(url), { muteHttpExceptions: true }, time];
+    var test = dataHeadings(splitX(data, xpath))[index];
+    return {
+      myTab: test,
+    };
+  }
 };
 
 var tagBuilder = function (content) {
@@ -1206,6 +1119,9 @@ var testObject = function (dataArray, fVarHeaders) {
 function userSite() {
   var website = SitesApp.getSites();
   console.log(website);
+  return {
+    mySites: website,
+  };
 }
 
 var yahooSort = function (ticker, time) {

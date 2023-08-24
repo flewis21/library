@@ -52,7 +52,7 @@ var rndCoin = function () {
       }
     }
   });
-  return geneFrame(formUrl);
+  return seoCapital(formUrl);
 };
 
 var rndDice = function () {
@@ -134,9 +134,12 @@ var rndDice = function () {
   return geneFrame(formUrl);
 };
 
-var breakthrough = function (e) {
+var breakthrough = function (e, time) {
   var username = e;
-  const data = needUtility(e || randomSubstance(0, 1))[0];
+  var userData = allInvestors(e, null, time);
+  var arrD = [userData.title].join("").split(" ");
+  var userKey = randomSubstance(0, 1, null, arrD, time).myNewArr;
+  const data = needUtility(username || userKey, arrD, time)[0];
   if (!username) {
     var percent = Math.floor(
       Math.random() * Math.floor(data.playlistArr.length),

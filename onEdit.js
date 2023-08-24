@@ -34,26 +34,30 @@ var minutePoint = function (start, end) {
 };
 
 var onEdit = function (e) {
-  // stampRow(e);
-  // stampRowItems(e);
-  // stampRowRecieve(e);
-  // stampRowInventoryCheck(e);
-  // stampRowSales(e);
-  searchEdit(e);
+  if (e) {
+    // stampRow(e);
+    // stampRowItems(e);
+    // stampRowRecieve(e);
+    // stampRowInventoryCheck(e);
+    // stampRowSales(e);
+    searchEdit(e);
+  }
 };
 
 var searchEdit = function (e) {
-  authLogic(e.range.getA1Notation() !== "C6")
-    ? (() => {
-        return;
-      })()
-    : authLogic(e.source.getSheetName() !== "Invoice Form")
-    ? (() => {
-        return;
-      })()
-    : (() => {
-        searchRecords();
-      })();
+  if (e) {
+    return authLogic(e.range.getA1Notation() !== "C6")
+      ? (() => {
+          return;
+        })()
+      : authLogic(e.source.getSheetName() !== "Invoice Form")
+      ? (() => {
+          return;
+        })()
+      : (() => {
+          searchRecords();
+        })();
+  }
 };
 
 var openR = function (row, stampRow) {
@@ -62,104 +66,114 @@ var openR = function (row, stampRow) {
   return range;
 };
 
-var stampRow = function (rowS1, colS1, colS2) {
-  var col = e.range.getColumn();
-  var row = e.range.getRow();
-  var startRow = rowS1;
-  var ws = ssSheet().getName();
-  console.log(ws);
-  if (
-    col !== colS1 &&
-    col !== colS2 &&
-    row >= startRow &&
-    e.source.getActiveSheet().getName() === ws
-  ) {
-    if (e.source.getActiveSheet().getRange(row, colS1).getValue() === "") {
-      openR(row, colS1);
-    } else {
-      openR(row, colS2);
+var stampRow = function (rowS1, colS1, colS2, e) {
+  if (e) {
+    var col = e.range.getColumn();
+    var row = e.range.getRow();
+    var startRow = rowS1;
+    var ws = ssSheet().getName();
+    console.log(ws);
+    if (
+      col !== colS1 &&
+      col !== colS2 &&
+      row >= startRow &&
+      e.source.getActiveSheet().getName() === ws
+    ) {
+      if (e.source.getActiveSheet().getRange(row, colS1).getValue() === "") {
+        openR(row, colS1);
+      } else {
+        openR(row, colS2);
+      }
     }
   }
 };
 
 var stampRowItems = function (e) {
-  var col = e.range.getColumn();
-  var row = e.range.getRow();
-  var startRow = 2;
-  var ws = "Items";
-  if (
-    col !== 4 &&
-    col !== 5 &&
-    row >= startRow &&
-    e.source.getActiveSheet().getName() === ws
-  ) {
-    if (e.source.getActiveSheet().getRange(row, 4).getValue() === "") {
-      lockR(row, 4);
-    } else {
-      lockR(row, 5);
+  if (e) {
+    var col = e.range.getColumn();
+    var row = e.range.getRow();
+    var startRow = 2;
+    var ws = "Items";
+    if (
+      col !== 4 &&
+      col !== 5 &&
+      row >= startRow &&
+      e.source.getActiveSheet().getName() === ws
+    ) {
+      if (e.source.getActiveSheet().getRange(row, 4).getValue() === "") {
+        lockR(row, 4);
+      } else {
+        lockR(row, 5);
+      }
     }
+    return;
   }
-  return;
 };
 
 var stampRowRecieve = function (e) {
-  var col = e.range.getColumn();
-  var row = e.range.getRow();
-  var startRow = 2;
-  var ws = "Recieve";
-  if (
-    col !== 9 &&
-    col !== 10 &&
-    row >= startRow &&
-    e.source.getActiveSheet().getName() === ws
-  ) {
-    if (e.source.getActiveSheet().getRange(row, 9).getValue() === "") {
-      lockR(row, 9);
-    } else {
-      lockR(row, 10);
+  if (e) {
+    var col = e.range.getColumn();
+    var row = e.range.getRow();
+    var startRow = 2;
+    var ws = "Recieve";
+    if (
+      col !== 9 &&
+      col !== 10 &&
+      row >= startRow &&
+      e.source.getActiveSheet().getName() === ws
+    ) {
+      if (e.source.getActiveSheet().getRange(row, 9).getValue() === "") {
+        lockR(row, 9);
+      } else {
+        lockR(row, 10);
+      }
     }
+    return;
   }
-  return;
 };
 
 var stampRowSales = function (e) {
-  var col = e.range.getColumn();
-  var row = e.range.getRow();
-  var startRow = 2;
-  var ws = "Sales";
-  if (
-    col !== 6 &&
-    col !== 7 &&
-    row >= startRow &&
-    e.source.getActiveSheet().getName() === ws
-  ) {
-    if (e.source.getActiveSheet().getRange(row, 6).getValue() === "") {
-      lockR(row, 6);
-    } else {
-      lockR(row, 7);
+  if (e) {
+    var col = e.range.getColumn();
+    var row = e.range.getRow();
+    var startRow = 2;
+    var ws = "Sales";
+    if (
+      col !== 6 &&
+      col !== 7 &&
+      row >= startRow &&
+      e.source.getActiveSheet().getName() === ws
+    ) {
+      if (e.source.getActiveSheet().getRange(row, 6).getValue() === "") {
+        lockR(row, 6);
+      } else {
+        lockR(row, 7);
+      }
     }
+    return;
   }
-  return;
 };
 
 var stampRowInventoryCheck = function (e) {
-  var col = e.range.getColumn();
-  var row = e.range.getRow();
-  var startRow = 2;
-  var ws = "Inventory Check";
-  if (
-    col !== 4 &&
-    col !== 5 &&
-    row >= startRow &&
-    e.source.getActiveSheet().getName() === ws
-  ) {
-    if (e.source.getActiveSheet().getRange(row, 4).getValue() === "") {
-      lockR(row, 4);
-    } else {
-      lockR(row, 5);
+  if (e) {
+    var col = e.range.getColumn();
+    var row = e.range.getRow();
+    var startRow = 2;
+    var ws = "Inventory Check";
+    if (
+      col !== 4 &&
+      col !== 5 &&
+      row >= startRow &&
+      e.source.getActiveSheet().getName() === ws
+    ) {
+      if (e.source.getActiveSheet().getRange(row, 4).getValue() === "") {
+        lockR(row, 4);
+      } else {
+        lockR(row, 5);
+      }
     }
+    return;
   }
-  return;
 };
 
 var startPoint = function (start, return_type) {

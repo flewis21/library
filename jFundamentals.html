@@ -1,11 +1,23 @@
 <!doctype html>
-<html>
+<html id="jFundamentals">
   <head>
     <base target="_self" />
+    <meta
+      name="jFundamentals"
+      content="Boilerplate JavaScript Fundamental Course"
+    />
     <style>
       a:link,
       a:visited {
         color: black !important;
+        text-decoration: none !important;
+        flex-flow: row wrap !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        align-content: flex-start !important;
+        z-index: 0 !important;
+        height: 100% !important;
+        overflow: auto !important;
       }
       a:hover,
       a:active {
@@ -15,35 +27,44 @@
     </style>
   </head>
   <body>
-    <a id="caller" href="#" onclick="userClicked()">update</a>
+    <nav>
+      <a id="requestor" href="#" onclick="navAway()">Load</a>
+      <a id="caller" href="#" onclick="updatePage()">Reload</a>
+    </nav>
     <br />
     <div id="drip">waiting...</div>
-    <script>
-      document.addEventListener("DOMContentLoaded", userClicked);
-      var rndPage = [
+    <script id="jFundamentalsScript1">
+      document.addEventListener("DOMContentLoaded", updatePage);
+      var htmFileList = [
         `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
       ]
         .toString()
-        .split(" ")[
-        Math.floor(
-          Math.random() *
-            Math.floor(
-              [
-                `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
-              ]
-                .toString()
-                .split(" ").length,
-            ),
-        )
-      ];
+        .split(" ");
+      var rndPage =
+        htmFileList[Math.floor(Math.random() * Math.floor(htmFileList.length))];
       console.log(rndPage + "...");
-      function userClicked() {
+      function updatePage() {
         document.getElementById("drip").innerHTML =
-          "waiting for " + rndPage + "...";
+          "waiting for " + newPage + "...";
         google.script.run
           .withSuccessHandler(done)
           .withFailureHandler(error)
-          .runBoilerplate("renderFile", [rndPage]);
+          .runBoilerplate("renderFile", [newPage]);
+        function done(drop) {
+          document.getElementById("drip").innerHTML = drop;
+        }
+      }
+      function navAway() {
+        var newPage =
+          htmFileList[
+            Math.floor(Math.random() * Math.floor(htmFileList.length))
+          ];
+        document.getElementById("drip").innerHTML =
+          "waiting for " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("renderFile", [newPage]);
         function done(drop) {
           document.getElementById("drip").innerHTML = drop;
         }

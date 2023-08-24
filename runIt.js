@@ -1,9 +1,9 @@
 function authLogic(logic) {
-  let isValid = true;
   if (!logic) {
-    isValid = false;
+    let isValid = false;
     return isValid;
   }
+  let isValid = true;
   return isValid;
 }
 
@@ -416,7 +416,9 @@ function validGroup() {
       });
     return isMemberOfGroup;
   })();
-  return hasAccess;
+  return {
+    acc: hasAccess,
+  };
   console.log(groupEmailList);
 }
 

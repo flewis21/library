@@ -1,11 +1,11 @@
 function jsGameScripts() {
   var gamerUrl = getUrl(ScriptApp);
   var html = HtmlService.createTemplate(`
-  <html id="test">
+  <html id="jsGameScripts">
   <head>
     <base target="_top"></base>
     <meta charset="utf-8">
-    <meta name="description" content="Example meta description.">
+    <meta name="jsGameScripts" content="Boilerplate Script Game">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
   </head>

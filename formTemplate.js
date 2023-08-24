@@ -1,4 +1,5 @@
-var dtls = function (func) {
+var dtls = function (callFunc, time) {
+  // var callFunc = storeFunction.name
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -8,12 +9,108 @@ var dtls = function (func) {
   var rdmNumForName = Math.floor(Math.random() * Math.floor(appList.length));
   var keysFunc = seoSheet(appList[rdmNumForName]).keyWords;
   var formName =
-    func || keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))];
-  var form = formMaker(formName, "Forms");
-  if (typeof form === "object") {
-    if (appList.indexOf(formName) !== -1) {
-      form.addParagraphTextItem().setHelpText(globalThis[formName].toString());
+    callFunc.name ||
+    keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))][0];
+  if (
+    [appList].join().toLowerCase().includes([formName].join("").toLowerCase())
+  ) {
+    var jsFunc = globalThis[formName]();
+    var isProduct = formsUrls([formName].join("").toLowerCase(), "Forms");
+    console.log(typeof isProduct);
+    if (typeof isProduct === "string") {
+      var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+      return formUrl;
     }
+    var form = formMaker([formName].join("").toUpperCase(), "Forms");
+    if (typeof form === "object") {
+      form.setCollectEmail(true);
+      if (
+        [appList]
+          .join()
+          .toLowerCase()
+          .includes([formName].join("").toLowerCase())
+      ) {
+        form
+          .addParagraphTextItem()
+          .setHelpText(globalThis[formName].toString());
+      }
+      jsFunc.map((piece) => {
+        while (piece) {
+          if (piece) {
+            var elaspeTime = new Date() - time;
+            var timeToExecute = maxTime - elaspeTime;
+            // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+            form.addPageBreakItem().setTitle([formName].join(""));
+            // form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
+            form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
+            if (
+              timeToExecute <= 6 * 60 * 1000 &&
+              timeToExecute >= 5.98 * 60 * 1000
+            ) {
+              console.log(
+                "that function: " +
+                  arguments.callee.caller.name +
+                  "\nthis function: " +
+                  arguments.callee.name +
+                  "\nTime limit six minutes",
+              );
+            }
+            if (
+              timeToExecute <= 5 * 60 * 1000 &&
+              timeToExecute >= 4.98 * 60 * 1000
+            ) {
+              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
+            }
+            if (
+              timeToExecute <= 4 * 60 * 1000 &&
+              timeToExecute >= 3.98 * 60 * 1000
+            ) {
+              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
+            }
+            if (
+              timeToExecute <= 3 * 60 * 1000 &&
+              timeToExecute >= 2.98 * 60 * 1000
+            ) {
+              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
+            }
+            if (
+              timeToExecute <= 2 * 60 * 1000 &&
+              timeToExecute >= 1.98 * 60 * 1000
+            ) {
+              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
+            }
+            if (
+              timeToExecute <= 1 * 60 * 1000 &&
+              timeToExecute >= 0.98 * 60 * 1000
+            ) {
+              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
+            }
+            if (timeToExecute <= 0.05 * 60 * 1000) {
+              console.log(
+                "piece: " +
+                  piece[0] +
+                  "\ntimeToExecute: " +
+                  timeToExecute.valueOf(),
+              );
+              return;
+            }
+            return piece[0];
+          }
+          return;
+        }
+      });
+      var formUrl = form.getPublishedUrl();
+      return formUrl;
+    }
+  }
+  var isProduct = formsUrls([formName].join("").toLowerCase(), "Forms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  var form = formMaker([formName].join("").toUpperCase(), "Forms");
+  if (typeof form === "object") {
     form.addTextItem().setTitle("Your Name").setRequired(true);
     form.addDateItem().setTitle("Birth Date").setRequired(true);
     form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
@@ -541,202 +638,6 @@ var dtlsMain = function (file) {
   }
 };
 
-var dtlsPro = function (e) {
-  var time = start;
-  // var e = "instagram"
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData);
-  var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var uti = seoPastTime([cokey].join(""), time).playList;
-  var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);
-
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "videoForms", time)
-
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          form
-            .addSectionHeaderItem()
-            .setTitle("https://youtube.com/watch?v=" + piece);
-          form
-            .addVideoItem()
-            .setAlignment(FormApp.Alignment.CENTER)
-            .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + piece);
-          if (
-            timeToExecute <= 6 * 60 * 1000 &&
-            timeToExecute >= 5.98 * 60 * 1000
-          ) {
-            console.log(
-              "that function: " +
-                arguments.callee.caller.name +
-                "\nthis function: " +
-                arguments.callee.name +
-                "\nTime limit six minutes",
-            );
-          }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
-          if (timeToExecute <= 0.05 * 60 * 1000) {
-            console.log(
-              "piece: " +
-                piece[0] +
-                "\ntimeToExecute: " +
-                timeToExecute.valueOf(),
-            );
-            return;
-          }
-          return piece[0];
-        }
-        return;
-      }
-    });
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
-  }
-  var rndUti = uti[randNum(uti)];
-};
-
-var dtlsPict = function (e) {
-  var time = start;
-  // var e = "instagram"
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
-  var cokey = e || utilNeed[0];
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var uti = seoPictTime([cokey].join(""), time).playList;
-  var form = formMaker([cokey].join("").toUpperCase(), "pictForms", time);
-
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "videoForms", time)
-
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          form.addSectionHeaderItem().setTitle([piece].join("").split('"'));
-
-          form
-            .addImageItem()
-            .setTitle(cokey + " storyboard")
-            .setImage(UrlFetchApp.fetch([piece].join("").split('"')[1]))
-            .setWidth(1012)
-            .setAlignment(FormApp.Alignment.CENTER);
-          if (
-            timeToExecute <= 6 * 60 * 1000 &&
-            timeToExecute >= 5.98 * 60 * 1000
-          ) {
-            console.log(
-              "that function: " +
-                arguments.callee.caller.name +
-                "\nthis function: " +
-                arguments.callee.name +
-                "\nTime limit six minutes",
-            );
-          }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
-          if (timeToExecute <= 0.05 * 60 * 1000) {
-            console.log(
-              "piece: " +
-                piece[0] +
-                "\ntimeToExecute: " +
-                timeToExecute.valueOf(),
-            );
-            return;
-          }
-          return piece[0];
-        }
-        return;
-      }
-    });
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
-  }
-  var rndUti = uti[randNum(uti)];
-};
-
 var dtlsSomeFunction = function (e) {
   var time = start;
   var uniqueKey = [randomSubstance(0, 4)];
@@ -832,56 +733,15 @@ var dtlsStore = function (itemName, time) {
   return HtmlService.createTemplate(
     contentApp(
       `
-  <? var urlSs = "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962" ?>
-  <? var sheetName = "Inventory" ?>
-  <? var sheet = ssGetSheetBySpreadsheetUrl(urlSs, sheetName).activate() ?>
-  <? var range = sheet.getDataRange() ?>
-  <? var data = range.getValues() ?>
-  <? var rows = [] ?>
-  <? var values = range.getValues() ?>
-  <? for (var row in values) { ?>
-    <? rows.push([]) ?>
-    <? for (var col in values[row]) { ?>
-      <? rows[row].push(values[row][col]) ?>
-      <? } ?>
-      <? } ?>
-  <? var rowsToReturn = rows.filter((r) => {return r[5]}) ?>
-  <? var headings = data.slice(3,4).toString().toLowerCase().split(",") ?>
-  <? var noHeaders = data.slice(4).map(function (val) { ?>
-      <? return val.toString().toLowerCase() ?>
-      <? }) ?>
-  <? var outputQuery = (covObjects(rowsToReturn, headings)) ?>
-  <? var arrData = covArrays(outputQuery) ?>
-  <? var jo = {}; ?>
-  <? var dataArray = []; ?>
-  <? for (var i = 1, l = arrData.length; i<l; i++) { ?>
-    <? var record = {} ?> 
-    <? record["id"] = arrData[i][0]["sku"]; ?>
-    <? record["productName"] = arrData[i][0]["description"]; ?>
-    <? record["rand1"] = arrData[i][0]["total customer purchase"]; ?>
-    <? record["rand2"] = arrData[i][0]["qty offset"]; ?> 
-    <? record["rand3"] = arrData[i][0]["estimated value"]; ?>
-    <? record["rand4"] = arrData[i][0]["supply processed "]; ?>
-    <? record["rand5"] = arrData[i][0]["pack size"]; ?>
-    <? record["rand6"] = arrData[i][0]["total supply available"]; ?>
-    <? record["rand7"] = arrData[i][0]["cost supply available"]; ?>
-    <? record["rand8"] = arrData[i][0]["current cost per item"]; ?>
-    <? record["rand9"] = arrData[i][0][" average cost over time"]; ?>
-    <? if (record["id"] !== "") { ?>
-      <? dataArray.push(record) ?>
-      <? } ?>
-      <? } ?>
-  <? var form = formMaker([sheetName].join("").toUpperCase(), "inventoryForms", time) ?>
+  <? var form = formMaker([item].join("").toUpperCase(), "inventoryForms", allTime) ?>
   <? var formUrl = form.getPublishedUrl(); ?>
-  <? form.setTitle(dataArray.length + " Items").setConfirmationMessage('Thanks for your feedback !!'); ?>
-  <? var randNum = Math.floor(Math.random() * (Math.floor(dataArray.length))); ?>
-  <? var searchString = dataArray[randNum]["productName"] ?>
-  <? jo.user = dataArray; ?>
-  <? var coTable = jo.user.map((r)=>{ ?>
-      <? form.addPageBreakItem().setTitle(r["productName"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Quantity: " + r["rand4"] + " set of " + r["rand5"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Price: " + r["rand7"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["rand8"]) ?>
+  <? var jo = storeFunction(); ?>
+  <? form.setTitle(jo.length + " Items").setConfirmationMessage('Thanks for your feedback !!'); ?>
+  <? var coTable = jo.map((r)=>{ ?>
+      <? form.addPageBreakItem().setTitle(r["Description"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Quantity: " + r["QTY"] + " set of " + r["Pack Size"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Price: " + r["TOTAL COST"]) ?>
+      <? form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["COST PER PIECE"]) ?>
       \n\n\n\n 
       <? }).toString().replace(/,/g, "") ?>
   <? var result = JSON.stringify(coTable); ?>
@@ -930,7 +790,10 @@ var dtlsStore = function (itemName, time) {
         </div>
       </div>
     `,
-      { item: itemName },
+      {
+        item: itemName || "SHOPPING LIST",
+        allTime: time,
+      },
     ),
   )
     .evaluate()
@@ -1244,144 +1107,54 @@ var geneFrame = function (reference) {
 };
 
 var mainMan = function (mainFile) {
-  // var mainFile = "wild"
-  var stringSplit = mainFile.split(" ");
-  var lowerCaseS = [];
-  testData([stringSplit]).map((increase) => {
-    if (lowerCaseS.indexOf(increase) === -1) {
-      lowerCaseS.push(increase);
-    }
-  });
-  for (var i = 0, l = lowerCaseS.length; i < l; i++) {
-    if (typeof lowerCaseS[i] !== "undefined") {
-      var fileX = searchDataTree(mainFile);
-    }
-  }
-  if (fileX) {
-    var appType = fileX.split("/");
-    if (appType.indexOf("spreadsheets") === -1) {
-      var url = FormApp.openByUrl(fileX).getPublishedUrl();
-    }
-  }
-  return HtmlService.createTemplate(
-    contentApp(
-      `
-    <div class="row">
-    <div class="col s10 l12 m12 card-panel push-s1">
-    <div class="container row valign-wrapper"><?!= rule() ?></div>
-    <div class="video-container grey" style="clear: both">
-    <div class="col s12 l12 m12 receipt black darken-1">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src=<?= url ?>
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div></div>
-    `,
-
-      { url: url },
-    ),
-  )
-    .evaluate()
-    .getContent();
-};
-
-var portBing = function (e) {
-  var time = start;
-  // var namedVar = "pred"
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData);
-  var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var uti = needBing([cokey].join(""));
-  var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "webForms", time)
-
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          if (piece.indexOf("https://") > -1) {
-            var elaspeTime = new Date() - time;
-            var timeToExecute = maxTime - elaspeTime;
-            // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-            form.addPageBreakItem().setTitle([cokey].join(""));
-            form.addSectionHeaderItem().setTitle(piece);
-            if (
-              timeToExecute <= 6 * 60 * 1000 &&
-              timeToExecute >= 5.98 * 60 * 1000
-            ) {
-              console.log(
-                "that function: " +
-                  arguments.callee.caller.name +
-                  "\nthis function: " +
-                  arguments.callee.name +
-                  "\nTime limit six minutes",
-              );
-            }
-            if (
-              timeToExecute <= 5 * 60 * 1000 &&
-              timeToExecute >= 4.98 * 60 * 1000
-            ) {
-              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-            }
-            if (
-              timeToExecute <= 4 * 60 * 1000 &&
-              timeToExecute >= 3.98 * 60 * 1000
-            ) {
-              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-            }
-            if (
-              timeToExecute <= 3 * 60 * 1000 &&
-              timeToExecute >= 2.98 * 60 * 1000
-            ) {
-              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-            }
-            if (
-              timeToExecute <= 2 * 60 * 1000 &&
-              timeToExecute >= 1.98 * 60 * 1000
-            ) {
-              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-            }
-            if (
-              timeToExecute <= 1 * 60 * 1000 &&
-              timeToExecute >= 0.98 * 60 * 1000
-            ) {
-              // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-            }
-            if (timeToExecute <= 0.05 * 60 * 1000) {
-              console.log(
-                "piece: " +
-                  piece[0] +
-                  "\ntimeToExecute: " +
-                  timeToExecute.valueOf(),
-              );
-              return;
-            }
-            return piece[0];
-          }
-        }
-        return;
+  if (mainFile) {
+    // var mainFile = "wild"
+    var stringSplit = mainFile.split(" ");
+    var lowerCaseS = [];
+    testData([stringSplit]).map((increase) => {
+      if (lowerCaseS.indexOf(increase) === -1) {
+        lowerCaseS.push(increase);
       }
     });
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
+    for (var i = 0, l = lowerCaseS.length; i < l; i++) {
+      if (typeof lowerCaseS[i] !== "undefined") {
+        var fileX = searchDataTree(mainFile);
+      }
+    }
+    if (fileX) {
+      var appType = fileX.split("/");
+      if (appType.indexOf("spreadsheets") === -1) {
+        var url = FormApp.openByUrl(fileX).getPublishedUrl();
+      }
+    }
+    return HtmlService.createTemplate(
+      contentApp(
+        `
+      <div class="row">
+      <div class="col s10 l12 m12 card-panel push-s1">
+      <div class="container row valign-wrapper"><?!= rule() ?></div>
+      <div class="video-container grey" style="clear: both">
+      <div class="col s12 l12 m12 receipt black darken-1">
+      <iframe 
+        class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+        src=<?= url ?>
+        width="100%"
+        height="100%"
+        allow="autoplay"
+        allow="encrypted-media"
+        title="Dontime Life Website"
+        frameborder="0"
+        allowfullscreen
+        ></iframe>
+      </div></div></div></div>
+      `,
+
+        { url: url },
+      ),
+    )
+      .evaluate()
+      .getContent();
   }
-  var rndUti = uti[randNum(uti)];
 };
 
 var somMainFunc = async function (e) {

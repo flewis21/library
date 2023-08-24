@@ -4,25 +4,45 @@ function activeSsId() {
   return id;
 }
 
-var bingSWF = function (searchString) {
+var bingSWF = function (searchString, time) {
+  // var searchString = "oa"
   if (typeof searchString !== "undefined") {
-    const videoSearch = [
-      urlDataSource(
-        `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(
-          searchString,
-        )}&PC=U316&top=50&skip=0&FORM=CHROMN`,
-        null,
-        { muteHttpExceptions: true },
-      ),
+    var searchString = `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(
+      searchString,
+    )}&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var data = [
+      urlDataSource(searchString, { muteHttpExceptions: true }, time),
     ];
-    const table = videoSearch
-      .slice(videoSearch.indexOf("SERP"))
-      .toString()
-      .split("SERP");
+    var resDATA = data.indexOf("SERP");
+    var dataSplit = data.slice(resDATA).toString().split("SERP");
+    var httpIndex = [dataSplit].join("").indexOf("https");
+    var bill = [dataSplit].join("").split("https");
+    var playBill = [bill].join("").split(" ");
+    const table = data.slice(data.indexOf("SERP")).toString().split("SERP");
     const pong = table.map((ping) => {
       return ping.substring(0);
     });
-    return pong.toString().split(",");
+    return {
+      myPong: pong.toString().split(","),
+      myPlay: playBill,
+    };
+  }
+};
+
+var bingNeed = function (searchString, time) {
+  if (typeof searchString !== "undefined") {
+    // const videoSearch = [urlDataSource(`https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(searchString)}&PC=U316&top=50&skip=0&FORM=CHROMN`, null, {muteHttpExceptions:true})];
+    const search = `https://www.bing.com/search?q=${encodeURIComponent(
+      searchString,
+    )}%20intitle%3A - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const data = [urlDataSource(search, { muteHttpExceptions: true }, time)];
+    const table = data.slice(data.indexOf("SERP")).toString().split("SERP");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    return {
+      myPong: pong.toString().split(","),
+    };
   }
 };
 
@@ -101,15 +121,12 @@ var cabDriver = function (e) {
   ).getRawContent();
 };
 
-var classifiedCapital = function (searchString) {
+var classifiedCapital = function (searchString, time) {
+  const searchStr = `https://www.bing.com/search?q=${encodeURIComponent(
+    searchString,
+  )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   const videoSearch = [
-    urlDataSource(
-      `https://www.bing.com/search?q=${encodeURIComponent(
-        searchString,
-      )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-      null,
-      { muteHttpExceptions: true },
-    ),
+    urlDataSource(searchStr, { muteHttpExceptions: true }, time),
   ];
   const table = videoSearch
     .slice(videoSearch.indexOf("SERP"))
@@ -118,15 +135,17 @@ var classifiedCapital = function (searchString) {
   const pong = table.map((ping) => {
     return ping.substring(0);
   });
-  return pong.toString().split(",");
+  return {
+    myPong: pong.toString().split(","),
+  };
 };
 
-var classifiedSheet = function (searchString) {
+var classifiedSheet = function (searchString, time) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
     searchString,
   )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var headers = ["keywords"];
-  var data = urlDataSource(rndSearch);
+  var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   const seoSearched = [];
   const seoValues = [];
   const uniqueSeo = [];
@@ -370,17 +389,21 @@ var classifiedSheet = function (searchString) {
 };
 
 var createSheetHeader = function (headers) {
-  var headings = data[headers].map(function (val) {
-    console.log(val);
-    return val.toString().toLowerCase();
-  });
-  return headings;
+  if (headers) {
+    var headings = data[headers].map(function (val) {
+      console.log(val);
+      return val.toString().toLowerCase();
+    });
+    return headings;
+  }
 };
 
 var idSpreadSheet = function (id) {
   var ssApp = SpreadsheetApp;
-  var ss = ssApp.openById(id);
-  return ss;
+  if (id) {
+    var ss = ssApp.openById(id);
+    return ss;
+  }
 };
 
 function mis(text) {
@@ -391,22 +414,47 @@ function mis(text) {
       ).getContentText();
 }
 
-var needBing = function (searchString) {
+var needBing = function (searchString, time) {
+  // var searchString = "Just married"
   if (typeof searchString !== "undefined") {
-    const search = [
-      urlDataSource(
-        `https://www.bing.com/search?q=${encodeURIComponent(
-          searchString,
-        )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-        null,
-        { muteHttpExceptions: true },
-      ),
-    ];
-    const table = search.slice(search.indexOf("SERP")).toString().split("SERP");
-    const pong = table.map((ping) => {
-      return ping.substring(0);
+    const search = `http://www.bing.com/search?q=${encodeURIComponent(
+      searchString,
+    )}%20intitle%3A - Search - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const data = [urlDataSource(search, { muteHttpExceptions: true }, time)];
+    var resDATA = data.indexOf("SERP");
+    var dataSplit = data.slice(resDATA).toString().split("SERP");
+    var httpIndex = [dataSplit].join("").indexOf("https");
+    var bill = [dataSplit].join("").split("https");
+    var playBill = [bill].join("").split(" ");
+    const table = [];
+    data.map((point) => {
+      var resSERP = point.indexOf("SERP");
+      var serpSplit = point.slice(resSERP).toString().split("SERP");
+      table.push(serpSplit);
+      // var resSrc2 = point.indexOf("src2=")
+      // var srcSplit = point.slice(resSrc2).toString().split("src2=")
+      // table.push(srcSplit)
     });
-    return pong.toString().split(",");
+    var pong = [];
+    var i = 0;
+    var l = table.length;
+    for (i, l; i < l; i++) {
+      var tableTennis = table[i].map((ping) => {
+        if ([ping][i]) {
+          var ball = [ping].join("").indexOf("https");
+          var tennisBall = [ball].join("").split(" ");
+
+          if (ball > -1) {
+            return ping.substring(ball);
+          }
+        }
+      });
+      pong.push(tableTennis);
+    }
+    return {
+      myPing: pong.toString().split(","),
+      myPlay: playBill,
+    };
   }
 };
 
@@ -417,7 +465,9 @@ var needPong = function (searchString) {
   var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
   var txt = seoBites(searchString, seoFactor(data).split(","));
   console.log(txt.length);
-  return JSON.stringify(txt);
+  return {
+    myTxt: JSON.stringify(txt),
+  };
 };
 
 var pastSeo = function (namedVar, time) {
@@ -523,6 +573,72 @@ var pastSeo = function (namedVar, time) {
   return seoPlaylist[rndParam];
 };
 
+var pictBing = function (searchString, time) {
+  // var searchString =  "Drones"
+  if (typeof searchString !== "undefined") {
+    const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
+      searchString,
+    )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const search = [
+      urlDataSource(rndSearch, { muteHttpExceptions: true }, time),
+    ];
+    // var i = 0
+    // var l = [search].join("").split(" ").length
+    // for (i,l;i<l;i++) {
+
+    // var res = [search].join("").split(" ")[i]
+    // if (res.indexOf("https") > -1) {
+
+    // console.log(res)
+
+    // }
+
+    // }
+    const table = search
+      .slice(search.indexOf("src2="))
+      .toString()
+      .split("src2=");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    var fndOrd = pong.toString().split(",");
+  }
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      var e = 0;
+      var q = randomKey;
+      for (var e, q; e < q; i++) {
+        var ans = test.indexOf("https://tse1.mm.bing.net/th?q=") > -1;
+        // console.log(ans)
+        if (ans === true) {
+          // if ( JSON.stringify(i) !== JSON.stringify(l)) {break}
+          return test;
+        }
+      }
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    });
+    var rndSort = [];
+    var i = 0;
+    var l = rndRes.length;
+    for (var i, l; i < l; i++) {
+      var sorRes = rndRes.filter((o) => {
+        return o !== rndRes[i];
+      });
+      rndSort.push(sorRes);
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+    return {
+      playList: rndRes.sort((a, b) => a - b),
+    };
+  }
+};
+
 var proTest = function () {
   var headers = ["Medications", "Dosage"];
   var data = [
@@ -543,7 +659,15 @@ var proTest = function () {
   const randomKey = Math.floor(Math.random() * Math.floor(data.length)); // Math.floor(Math.random());
   var randomSheetname = data[randomKey];
   var resData = data.slice(0);
-  spreadSheetCreate(randomSheetname, `Medications`, headers, resData);
+  var sheetUrl = spreadSheetCreate(
+    randomSheetname,
+    `Medications`,
+    headers,
+    resData,
+  ).myFileX;
+  var sheetType = typeof sheetUrl;
+  var viewUrl = SpreadsheetApp.openByUrl(sheetUrl).getUrl();
+  return viewUrl;
   //var dataSS = ssGetSheetBySpreadsheetUrl("https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962", "Timesheet");
   //    var sData = dataSS.getDataRange().getValues();
   //    var headers = sData.map((r) => {return r}).splice(0,2)[1];
@@ -614,11 +738,11 @@ var seoCapital = function (url) {
   });
   const html = HtmlService.createTemplate(
     `
-    <html id="test">
+    <html id="seoCapital">
       <head>
         <base target="_top">
         <meta charset="utf-8">
-        <meta name="description" content="Example meta description.">
+        <meta name="seoCapital" content="Boilerplate SEO Capital">
         <meta name=viewport content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
       </head>
@@ -631,11 +755,12 @@ var seoCapital = function (url) {
                 <div class="row">
                   <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
                     <div class="container row valign-wrapper"><?!= rule() ?></div>
-                      <div class="video-container grey" style="clear: both">
+                      <div id="divSEOC" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
                         <div class="col s10 l10 m10 receipt black darken-1">
                           <iframe 
                             class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
                             src=${url}
+                            id="w3Res"
                             width="100%"
                             height="100%"
                             allow="autoplay"
@@ -653,7 +778,7 @@ var seoCapital = function (url) {
                   <div class="col s10 card-panel l12 m12 push-s1">
                     <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
                       <div class="col s12 l12 m12">
-                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="prefTime"  type="search" />
+                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="w3Search"  type="search" />
                       </div>
                     </div>
                   </div>
@@ -663,17 +788,6 @@ var seoCapital = function (url) {
           </div>
         </div>
       </div>
-      <script>
-        <?!= research.getContent() ?>
-      </script>
-      <script>
-        function capChange() {
-
-          var cap = document.getElementById("prefTime").value
-          console.log(cap)
-
-        }
-      </script>
       <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
       </body>
     </html>
@@ -744,103 +858,109 @@ var seoFactor = function (data, time) {
 };
 
 var seoPastTime = function (searchString, time) {
-  var uniqueVid = seoYoutube(searchString, time);
-  var sorFndOrd = uniqueVid.filter((vidObject) => {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
-    if (vidObject.length === 11) {
-      if (
-        vidObject !== '"' &&
-        vidObject.toLowerCase !== "http" &&
-        vidObject.toLowerCase !== "result" &&
-        vidObject.toLowerCase !== "content" &&
-        vidObject.toLowerCase !== "data" &&
-        vidObject.toLowerCase !== "length" &&
-        vidObject.toLowerCase !== "ajax" &&
-        vidObject.toLowerCase !== "if" &&
-        vidObject.toLowerCase !== "attrib" &&
-        vidObject.toLowerCase !== "get" &&
-        vidObject.toLowerCase !== "null" &&
-        vidObject.toLowerCase !== "saving" &&
-        vidObject.toLowerCase !== "location" &&
-        vidObject.toLowerCase !== "has" &&
-        vidObject.toLowerCase !== "query" &&
-        vidObject.toLowerCase !== "res" &&
-        vidObject.toLowerCase !== "acc" &&
-        vidObject.toLowerCase !== "hybrid" &&
-        vidObject.toLowerCase !== "amp" &&
-        vidObject.indexOf("=") === -1 &&
-        vidObject.indexOf("query") === -1 &&
-        vidObject.indexOf(";") === -1 &&
-        vidObject.indexOf("ajax") === -1 &&
-        vidObject.indexOf("whole") === -1 &&
-        vidObject.indexOf("inner") === -1 &&
-        vidObject.indexOf("strong") === -1 &&
-        vidObject.indexOf("ing") === -1 &&
-        vidObject.indexOf("brid") === -1 &&
-        vidObject.indexOf("ctrl") === -1 &&
-        vidObject.indexOf("location") === -1 &&
-        vidObject.indexOf("wiki") === -1 &&
-        vidObject.indexOf("//") === -1 &&
-        vidObject.indexOf("Html") === -1 &&
-        vidObject.indexOf("data") === -1 &&
-        vidObject.indexOf("undefined") === -1 &&
-        vidObject.indexOf("client") === -1 &&
-        vidObject.indexOf("/") === -1 &&
-        vidObject.indexOf("peri") === -1 &&
-        vidObject.indexOf("ten") === -1 &&
-        vidObject.indexOf("out") === -1 &&
-        vidObject.indexOf("new") === -1 &&
-        vidObject.indexOf("]") === -1 &&
-        vidObject.indexOf("localStorag") === -1 &&
-        vidObject.indexOf("t.loadEvent") === -1 &&
-        vidObject.indexOf("[") === -1 &&
-        vidObject.indexOf("a.severity") === -1 &&
-        vidObject.indexOf("cont") === -1 &&
-        vidObject.indexOf("\\") === -1 &&
-        vidObject.indexOf("JSON.parse(") === -1 &&
-        vidObject.indexOf("_w._sydConv") === -1 &&
-        vidObject.indexOf("o.Prefetchi") === -1 &&
-        vidObject.indexOf("get") === -1 &&
-        vidObject.indexOf("&&") === -1 &&
-        vidObject.indexOf(",") === -1
-      ) {
-        return vidObject;
+  while (typeof fndOrd !== "object") {
+    var uniqueVid = seoYoutube(searchString, time).myIdArr;
+    var sorFndOrd = uniqueVid.filter((vidObject) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      if (vidObject.length === 11) {
+        if (
+          vidObject !== '"' &&
+          vidObject.toLowerCase !== "http" &&
+          vidObject.toLowerCase !== "result" &&
+          vidObject.toLowerCase !== "content" &&
+          vidObject.toLowerCase !== "data" &&
+          vidObject.toLowerCase !== "length" &&
+          vidObject.toLowerCase !== "ajax" &&
+          vidObject.toLowerCase !== "if" &&
+          vidObject.toLowerCase !== "attrib" &&
+          vidObject.toLowerCase !== "get" &&
+          vidObject.toLowerCase !== "null" &&
+          vidObject.toLowerCase !== "saving" &&
+          vidObject.toLowerCase !== "location" &&
+          vidObject.toLowerCase !== "has" &&
+          vidObject.toLowerCase !== "query" &&
+          vidObject.toLowerCase !== "res" &&
+          vidObject.toLowerCase !== "acc" &&
+          vidObject.toLowerCase !== "hybrid" &&
+          vidObject.toLowerCase !== "amp" &&
+          vidObject.indexOf("=") === -1 &&
+          vidObject.indexOf("query") === -1 &&
+          vidObject.indexOf(";") === -1 &&
+          vidObject.indexOf("ajax") === -1 &&
+          vidObject.indexOf("whole") === -1 &&
+          vidObject.indexOf("inner") === -1 &&
+          vidObject.indexOf("strong") === -1 &&
+          vidObject.indexOf("ing") === -1 &&
+          vidObject.indexOf("brid") === -1 &&
+          vidObject.indexOf("ctrl") === -1 &&
+          vidObject.indexOf("location") === -1 &&
+          vidObject.indexOf("wiki") === -1 &&
+          vidObject.indexOf("//") === -1 &&
+          vidObject.indexOf("Html") === -1 &&
+          vidObject.indexOf("data") === -1 &&
+          vidObject.indexOf("undefined") === -1 &&
+          vidObject.indexOf("client") === -1 &&
+          vidObject.indexOf("/") === -1 &&
+          vidObject.indexOf("peri") === -1 &&
+          vidObject.indexOf("ten") === -1 &&
+          vidObject.indexOf("out") === -1 &&
+          vidObject.indexOf("new") === -1 &&
+          vidObject.indexOf("]") === -1 &&
+          vidObject.indexOf("localStorag") === -1 &&
+          vidObject.indexOf("t.loadEvent") === -1 &&
+          vidObject.indexOf("[") === -1 &&
+          vidObject.indexOf("a.severity") === -1 &&
+          vidObject.indexOf("cont") === -1 &&
+          vidObject.indexOf("\\") === -1 &&
+          vidObject.indexOf("JSON.parse(") === -1 &&
+          vidObject.indexOf("_w._sydConv") === -1 &&
+          vidObject.indexOf("o.Prefetchi") === -1 &&
+          vidObject.indexOf("get") === -1 &&
+          vidObject.indexOf("&&") === -1 &&
+          vidObject.indexOf(",") === -1
+        ) {
+          return vidObject;
+        }
       }
-    }
-    // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-  });
-  var i = 0;
-  var l = sorFndOrd.length;
-  for (i, l; i < l; i++) {
-    var fndOrd = [];
-    sorFndOrd.sort((a, b) => {
-      if (a !== b && fndOrd.indexOf(a) === -1) {
-        if (fndOrd.indexOf(a) > -1) {
-          return;
-        }
-        {
-        }
-
-        fndOrd.push(a);
-      } else if (a === b && fndOrd.indexOf(a) === -1) {
-        if (fndOrd.indexOf(a) > -1) {
-          return;
-        }
-        {
-        }
-
-        fndOrd.push(a);
-      } else if (b !== a && fndOrd.indexOf(b) === -1) {
-        if (fndOrd.indexOf(b) > -1) {
-          return;
-        }
-        {
-        }
-
-        fndOrd.push(b);
-      }
+      // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     });
+    var i = 0;
+    var l = sorFndOrd.length;
+    for (i, l; i < l; i++) {
+      var fndOrd = [];
+      sorFndOrd.sort((a, b) => {
+        if (a !== b && fndOrd.indexOf(a) === -1) {
+          if (fndOrd.indexOf(a) > -1) {
+            return;
+          }
+          {
+          }
+
+          fndOrd.push(a);
+        } else if (a === b && fndOrd.indexOf(a) === -1) {
+          if (fndOrd.indexOf(a) > -1) {
+            return;
+          }
+          {
+          }
+
+          fndOrd.push(a);
+        } else if (b !== a && fndOrd.indexOf(b) === -1) {
+          if (fndOrd.indexOf(b) > -1) {
+            return;
+          }
+          {
+          }
+
+          fndOrd.push(b);
+        }
+      });
+    }
+    if (typeof fndOrd === "object") {
+      // console.log(seoArray.playList)
+      break;
+    }
   }
   // console.log(fndOrd)
   if (fndOrd) {
@@ -978,76 +1098,10 @@ var seoPictTime = function (searchString, time) {
 // var formUrl = form.getPublishedUrl()
 // url: formUrl
 
-var pictBing = function (searchString, time) {
-  // var searchString =  "Drones"
-  if (typeof searchString !== "undefined") {
-    const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
-      searchString,
-    )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    const search = [
-      urlDataSource(rndSearch, { muteHttpExceptions: true }, time),
-    ];
-    // var i = 0
-    // var l = [search].join("").split(" ").length
-    // for (i,l;i<l;i++) {
-
-    // var res = [search].join("").split(" ")[i]
-    // if (res.indexOf("https") > -1) {
-
-    // console.log(res)
-
-    // }
-
-    // }
-    const table = search
-      .slice(search.indexOf("src2="))
-      .toString()
-      .split("src2=");
-    const pong = table.map((ping) => {
-      return ping.substring(0);
-    });
-    var fndOrd = pong.toString().split(",");
-  }
-  if (fndOrd) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-    var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
-      var e = 0;
-      var q = randomKey;
-      for (var e, q; e < q; i++) {
-        var ans = test.indexOf("https://tse1.mm.bing.net/th?q=") > -1;
-        // console.log(ans)
-        if (ans === true) {
-          // if ( JSON.stringify(i) !== JSON.stringify(l)) {break}
-          return test;
-        }
-      }
-      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-    });
-    var rndSort = [];
-    var i = 0;
-    var l = rndRes.length;
-    for (var i, l; i < l; i++) {
-      var sorRes = rndRes.filter((o) => {
-        return o !== rndRes[i];
-      });
-      rndSort.push(sorRes);
-    }
-    var sorKind = rndSort.toString().split(" ");
-    var revKind = sorKind.reverse();
-    var popKind = revKind.pop();
-    var rndKind = popKind.split(",");
-    return {
-      playList: rndRes.sort((a, b) => a - b),
-    };
-  }
-};
-
 var seoSheet = function (searchString, time) {
   var uniqueSeo = seoTwitter(searchString, time);
   var fndOrd = uniqueSeo
-    .toString()
+    .join()
     .split(" ")
     .filter((p) => {
       var elaspeTime = new Date() - time;
@@ -1164,24 +1218,25 @@ var seoSheet = function (searchString, time) {
     var resData = rndRes.slice(0);
     var reSearch = resData.toString().replace(/,/g, " ").split(" ");
   }
-  var stringSplit = [searchString].toString().split(" ");
+  var stringSplit = [searchString].join("");
   var lowerCaseS = [];
-  testData([stringSplit], time).map((increase) => {
-    var elaspeTime = new Date() - time;
-    console.log(
-      "that function: " +
-        arguments.callee.caller.name +
-        "\nthis function: " +
-        arguments.callee.name +
-        "\nincrease: " +
-        increase +
-        "\nelaspeTime: " +
-        elaspeTime,
-    );
-    if (lowerCaseS.indexOf(increase) === -1) {
+  var testString = testData([stringSplit], time);
+  if (lowerCaseS.indexOf(testString[0]) === -1) {
+    testString.map((increase) => {
+      var elaspeTime = new Date() - time;
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nincrease: " +
+          increase +
+          "\nelaspeTime: " +
+          elaspeTime,
+      );
       lowerCaseS.push(increase);
-    }
-  });
+    });
+  }
   if (reSearch) {
     reSearch.map((seo) => {
       var elaspeTime = new Date() - time;
@@ -1250,7 +1305,7 @@ var seoTwitter = function (searchString, time) {
 var seoPictures = function (searchString, time) {
   var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
     searchString,
-  )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  )}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   // var i = 0
   // var l = [data].join("").split(" ").length
@@ -1277,7 +1332,9 @@ var pictFactor = function (data, time) {
       seoData.slice(seoData.indexOf("src2=")).toString().split("src2="),
     );
   });
-  return [idArray].toString().replace(/,/g, "");
+  return {
+    myIdArr: [idArray].toString().replace(/,/g, ""),
+  };
 };
 
 var seoYoutube = function (searchString, time) {
@@ -1288,15 +1345,20 @@ var seoYoutube = function (searchString, time) {
     urlDataSource(rndSearch, null, { muteHttpExceptions: true }, time),
   ];
   var idArray = vidFactor(data, time);
-  return idArray;
+  return {
+    myIdArr: idArray,
+  };
 };
 
-var sheetsMaker = function (fileName) {
-  if (typeof sheetsUrls(fileName) !== "undefined") {
-    return sheetsUrls(fileName);
+var sheetsMaker = function (fileName, folderX, time) {
+  if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
+    return formsUrls(fileName, folderX, time);
   }
-  var newFile = SpreadsheetApp.create(fileName);
-  return newFile;
+  if (fileName !== "") {
+    var newFile = SpreadsheetApp.create(fileName);
+    sheetsFileManager(newFile.getId(), folderX, time);
+    return newFile;
+  }
 };
 
 var sheetSeo = function (namedVar, time) {
@@ -1348,57 +1410,72 @@ function spreadSheet() {
   return ss;
 }
 
-var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data) {
+var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
   console.log(fileX);
-  var nSs = sheetsUrls(fileX);
+  var nSs = formsUrls(fileX, "Sheets");
   console.log("Google Drive Url " + nSs);
   if (typeof nSs === "undefined") {
-    var ss = fileMakerSheets(SpreadsheetApp, fileX);
-    console.log(ss.getName());
-    var sheet = ss.getSheets()[0].activate();
-    console.log(
-      "that function: " +
-        arguments.callee.caller.name +
-        "\nthis function: " +
-        arguments.callee.name +
-        "\nName of this sheet is " +
-        sheet.getName(),
-    );
-    var ws = sheet.setName(sheetName);
-    console.log(
-      "that function: " +
-        arguments.callee.caller.name +
-        "\nthis function: " +
-        arguments.callee.name +
-        "\nSheet name changed to " +
-        ws.getName(),
-    );
-    console.log(ss.getActiveSheet().getName());
-    var headers = [];
-    rowHeaders.map((h) => {
-      headers.push(h);
-    });
-    ws.appendRow(headers);
-    var dataArray = [];
-    data.forEach((o) => {
-      dataArray.push([o].toString().split(" "));
-    });
-    console.log(dataArray + " : " + dataArray.length);
-    var col = ws.getDataRange().getNumColumns();
-    console.log(col);
-    ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
-    console.log(
-      "that function: " +
-        arguments.callee.caller.name +
-        "\nthis function: " +
-        arguments.callee.name +
-        "\nNew file named " +
-        fileX +
-        " created!",
-    );
-    return nSs;
+    if (fileX) {
+      var ss = sheetsMaker(fileX, "Sheets", time);
+      console.log(ss.getName());
+      var sheet = ss.getSheets()[0].activate();
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nName of this sheet is " +
+          sheet.getName(),
+      );
+      var ws = sheet.setName(sheetName);
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nSheet name changed to " +
+          ws.getName(),
+      );
+      console.log(ss.getActiveSheet().getName());
+      var headers = [];
+      rowHeaders.map((h) => {
+        headers.push(h);
+      });
+      ws.appendRow(headers);
+      var dataArray = [];
+      data.map((o) => {
+        var sheetCol = [o].join("").split(",");
+        var sheetArr = sheetCol.map((arr) => {
+          return [arr];
+        });
+        dataArray.push(sheetArr);
+      });
+      var dataCol = dataArray;
+      var daLen = dataArray.length;
+      console.log(dataArray + " : " + daLen);
+      var dRange = ws.getDataRange().getValues();
+      var col = dRange[0].length;
+      console.log(col);
+      ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
+      var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();
+      console.log(
+        "that function: " +
+          arguments.callee.caller.name +
+          "\nthis function: " +
+          arguments.callee.name +
+          "\nNew file named " +
+          fileX +
+          " created!",
+      );
+      var newFile = formsUrls(fileX, "Sheets");
+      return {
+        myFileX: newFile,
+      };
+    }
   } else {
-    return nSs;
+    return {
+      myFileX: formsUrls(fileX, "Sheets"),
+    };
   }
   `else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);
             ws = ss.getActiveSheet()
@@ -1412,17 +1489,21 @@ return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();} `;
 
 function ssActiveRange() {
   var sheet = ssSheet();
-  var data = sheet.getActiveRange();
-  return data;
+  if (sheet) {
+    var data = sheet.getActiveRange();
+    return data;
+  }
 }
 
 var ssCell = function (column, rowOffSet, colOffSet) {
   var sheet = ssSheet();
-  var data = sheet
-    .getRange(sheet.getMaxRows(), column)
-    .getNextDataCell(SpreadsheetApp.Direction.UP)
-    .offset(rowOffSet, colOffSet);
-  return data;
+  if (sheet) {
+    var data = sheet
+      .getRange(sheet.getMaxRows(), column)
+      .getNextDataCell(SpreadsheetApp.Direction.UP)
+      .offset(rowOffSet, colOffSet);
+    return data;
+  }
 };
 
 var ssDatabase = function (file, sheet, col, headers, data) {
@@ -1442,64 +1523,84 @@ var ssDatabase = function (file, sheet, col, headers, data) {
 
 function ssDataRange() {
   var sheet = ssSheet();
-  var data = sheet.getDataRange().getValues();
-  return data;
+  if (sheet) {
+    var data = sheet.getDataRange().getValues();
+    return data;
+  }
 }
 
 var ssGetSheet = function (sheetname) {
   var ss = spreadSheet();
-  var sheet = ss.getSheetByName(sheetname);
-  return sheet;
+  if (ss) {
+    var sheet = ss.getSheetByName(sheetname);
+    return sheet;
+  }
 };
 
 var ssGetSheetBySpreadsheetId = function (id, sheetname) {
-  var ss = idSpreadSheet(id);
-  var sheet = ss.getSheetByName(sheetname);
-  return sheet;
+  if (id) {
+    var ss = idSpreadSheet(id);
+    var sheet = ss.getSheetByName(sheetname);
+    return sheet;
+  }
 };
 
 var ssGetSheetBySpreadsheetUrl = function (url, sheetname) {
-  var ss = urlSpreadSheet(url);
-  var sheet = ss.getSheetByName(sheetname);
-  return sheet;
+  if (url) {
+    var ss = urlSpreadSheet(url);
+    var sheet = ss.getSheetByName(sheetname);
+    return sheet;
+  }
 };
 
 var ssSetName = function (randomSheet, sheetname) {
-  var sheetName = idSpreadSheet(randomSheet.getId())
-    .getSheetByName("sheet1")
-    .setName(sheetname);
-  var sheet = idSpreadSheet(randomSheet.getId()).getSheetByName(sheetName);
-  return sheet;
+  if (randomSheet) {
+    var sheetName = idSpreadSheet(randomSheet.getId())
+      .getSheetByName("sheet1")
+      .setName(sheetname);
+    var sheet = idSpreadSheet(randomSheet.getId()).getSheetByName(sheetName);
+    return sheet;
+  }
 };
 
 function ssSetSheet() {
   var ss = spreadSheet();
-  var sheet = ss.setActiveSheet();
-  return sheet;
+  if (ss) {
+    var sheet = ss.setActiveSheet();
+    return sheet;
+  }
 }
 
 var ssSetSheetBySpreadsheetId = function (id) {
-  var ss = idSpreadSheet(id);
-  var sheet = ss.setActiveSheet();
-  return sheet;
+  if (id) {
+    var ss = idSpreadSheet(id);
+    var sheet = ss.setActiveSheet();
+    return sheet;
+  }
 };
 
 var ssSetSheetBySpreadsheetUrl = function (url) {
-  var ss = urlSpreadSheet(url);
-  var sheet = ss.setActiveSheet();
-  return sheet;
+  if (url) {
+    var ss = urlSpreadSheet(url);
+    var sheet = ss.setActiveSheet();
+    return sheet;
+  }
 };
 
 function ssSheet() {
   var ss = spreadSheet();
-  var sheet = ss.getActiveSheet();
-  return sheet;
+  if (ss) {
+    var sheet = ss.getActiveSheet();
+    return sheet;
+  }
 }
 
 function ssSheetName() {
   var sheet = ssSheet();
-  var sheetName = sheet.getSheetName();
-  return sheetName;
+  if (sheet) {
+    var sheetName = sheet.getSheetName();
+    return sheetName;
+  }
 }
 
 var taxiService = function () {
