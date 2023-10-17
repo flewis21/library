@@ -18,6 +18,12 @@ var renderFile = function (file, argsObject) {
       <meta name="renderFile" content="Boilerplate Render File">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+      <style>
+        a:link, a:visited {color:black !important;}
+        a:hover, a:active{ 
+          color:white  !important;
+          text-decoration:none  !important;}
+      </style>
     </head>
     <body>
     </body>
@@ -27,7 +33,6 @@ var renderFile = function (file, argsObject) {
       .evaluate()
       .append(html)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setTitle("Don'time Life Services")
       .getContent();
   }
 };
@@ -386,6 +391,12 @@ var appList = function (e) {
       <meta name="appList" content="Boilerplate Function List">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+      <style>
+        a:link, a:visited {color:black !important;}
+        a:hover, a:active{ 
+          color:white  !important;
+          text-decoration:none  !important;}
+      </style>
     </head>
     <body>
     <? var appList = appSort(9) ?>
@@ -1010,3 +1021,13 @@ var appList = function (e) {
 //     </div>
 //   </div>
 // </div>
+
+var gsFiles = function () {
+  var gsFileList = [];
+  for (var key in globalThis) {
+    if (typeof globalThis[key] == "function") {
+      gsFileList.push(key);
+    }
+  }
+  return gsFileList;
+};

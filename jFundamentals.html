@@ -28,8 +28,15 @@
   </head>
   <body>
     <nav>
+      <a href="<?!= getUrl(ScriptApp) ?>" target="_top">Back</a>
       <a id="requestor" href="#" onclick="navAway()">Load</a>
       <a id="caller" href="#" onclick="updatePage()">Reload</a>
+      <a
+        href="https://www.blogger.com/blog/post/preview/2987570271158753052/1793164690968958582"
+        target="_blank"
+        >Blogger</a
+      >
+      <a href="https://www.aicinsuranceschools.com/" target="_top">CE</a>
     </nav>
     <br />
     <div id="drip">waiting...</div>
@@ -40,25 +47,25 @@
       ]
         .toString()
         .split(" ");
-      var rndPage =
-        htmFileList[Math.floor(Math.random() * Math.floor(htmFileList.length))];
+      var htmNum = function () {
+        return Math.floor(Math.random() * Math.floor(htmFileList.length));
+      };
+      var rndPage = htmFileList[htmNum()];
       console.log(rndPage + "...");
       function updatePage() {
         document.getElementById("drip").innerHTML =
-          "waiting for " + newPage + "...";
+          "waiting for " + rndPage + "...";
         google.script.run
           .withSuccessHandler(done)
           .withFailureHandler(error)
-          .runBoilerplate("renderFile", [newPage]);
+          .runBoilerplate("renderFile", [rndPage]);
         function done(drop) {
           document.getElementById("drip").innerHTML = drop;
         }
       }
       function navAway() {
-        var newPage =
-          htmFileList[
-            Math.floor(Math.random() * Math.floor(htmFileList.length))
-          ];
+        var newPage = htmFileList[htmNum()];
+        rndPage = newPage;
         document.getElementById("drip").innerHTML =
           "waiting for " + newPage + "...";
         google.script.run

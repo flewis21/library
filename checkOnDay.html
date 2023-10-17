@@ -1,9 +1,24 @@
 <!doctype html>
-<html>
+<html id="checkOnDay">
   <head>
     <base target="_top" />
+    <meta name="checkOnDay" content="Boilerplate Agenda" />
+    <style>
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: white !important;
+        text-decoration: none !important;
+      }
+      body: {
+        background: blue !important;
+      }
+    </style>
   </head>
-  <body>
+  <body class="blue">
     <? var randomSECCo = coUtility()[0] ?> <? var myVid = randomSECCo.rndTitle
     ?> <? var infoLink = randomSECCo.videoItemUrl ?>
     <nav>

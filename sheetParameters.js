@@ -723,19 +723,9 @@ var seoBites = function (searchString, idArray, time) {
 };
 
 var seoCapital = function (url) {
-  const videoSearch = [
-    urlDataSource(url || getUrl(ScriptApp), null, {
-      muteHttpExceptions: true,
-      mode: "no-cors",
-    }),
-  ];
-  const table = videoSearch
-    .slice(videoSearch.indexOf("SERP"))
-    .toString()
-    .split("SERP");
-  const pong = table.map((ping) => {
-    return ping.substring(0);
-  });
+  // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
+  // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
+  // const pong = table.map((ping)=>{return ping.substring(0)})
   const html = HtmlService.createTemplate(
     `
     <html id="seoCapital">
@@ -747,38 +737,31 @@ var seoCapital = function (url) {
         <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
       </head>
       <body>
-      <div class="row">
-        <div class="col s10 card-panel l12 m12 push-s1">
-          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
-            <div class="col s12 l12 m12">
-              <div class="black" id="seoData">
-                <div class="row">
-                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
-                    <div class="container row valign-wrapper"><?!= rule() ?></div>
-                      <div id="divSEOC" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
-                        <div class="col s10 l10 m10 receipt black darken-1">
-                          <iframe 
-                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-                            src=${url}
-                            id="w3Res"
-                            width="100%"
-                            height="100%"
-                            allow="autoplay"
-                            allow="encrypted-media"
-                            title="Dontime Life Website"
-                            frameborder="0"
-                            allowfullscreen
-                            ></iframe>
+      <nav>
+        <div class="row">
+          <div class="col s10 card-panel l12 m12 push-s1">
+            <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
+              <div class="col s12 l12 m12">
+                <div class="black" id="seoData">
+                  <div class="row">
+                    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
+                      <div class="container row valign-wrapper"><?!= rule() ?></div>
+                        <div id="divSEOC" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                          <div class="col s10 l10 m10 receipt black darken-1">
+                            <iframe 
+                              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+                              src=${url}
+                              id="w3Res"
+                              width="100%"
+                              height="100%"
+                              allow="autoplay"
+                              allow="encrypted-media"
+                              title="Dontime Life Website"
+                              frameborder="0"
+                              allowfullscreen
+                              ></iframe>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col s10 card-panel l12 m12 push-s1">
-                    <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container">
-                      <div class="col s12 l12 m12">
-                        <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="w3Search"  type="search" />
                       </div>
                     </div>
                   </div>
@@ -787,21 +770,21 @@ var seoCapital = function (url) {
             </div>
           </div>
         </div>
-      </div>
+      </nav>
       <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
       </body>
     </html>
         `,
   );
-  html.pong = pong.toString().split(",");
+  // html.pong = pong.toString().split(",");
   html.research = HtmlService.createHtmlOutput(`
-  document.getElementById("prefTime").addEventListener("change", 
+  document.getElementById("w3Search").addEventListener("change", 
     function() {
-      var cap = document.getElementById("prefTime").value
+      var cap = document.getElementById("w3Search").value
       console.log(cap)
     })`);
   html.prefTimeChange = HtmlService.createHtmlOutput(`
-      document.getElementById("prefTime").addEventListener("change", 
+      document.getElementById("w3Search").addEventListener("change", 
         function()
           {//console.log(document.getElementById("test").innerHTML)
           // Init a timeout variable to be used below
@@ -824,14 +807,14 @@ var seoCapital = function (url) {
             var urlData = document.getElementById("breakUrl").value;
             var url = urlData.toString()
                                             }
-          var prodSearch = document.getElementById("prefTime").value 
+          var prodSearch = document.getElementById("w3Search").value 
           var linkFollow = document.createElement("a");
           linkFollow.href = url + "?func=seoCapital" + "&args=" + encodeURIComponent());
           linkFollow.id = "linkFOLLOW";
           linkFollow.target = "_top";
           document.body.appendChild(linkFollow);
           document.getElementById("linkFOLLOW").click();
-          document.getElementById("prefTime").value = ""})()});
+          document.getElementById("w3Search").value = ""})()});
       `);
   html.dOMContentLoaded =
     HtmlService.createHtmlOutput(`document.addEventListener("DOMContentLoaded", 
@@ -841,7 +824,49 @@ var seoCapital = function (url) {
       var elems = document.getElementById("breakUrl");
       var instances = M.FormSelect.init(elems);
       `);
-  console.log(eval(html.research));
+  html.recentSearch =
+    HtmlService.createHtmlOutput(`document.addEventListener("DOMContentLoaded", homeW3) 
+      function homeW3() {
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+              console.log(error)
+              console.log(document.getElementById("test").innerHTML)
+              reject(error)})
+          .runBoilerplate([func], [args])})};
+        
+        const htmlStructure = document.getElementById("divSEOC").innerHTML
+        const results = document.getElementById("w3Search")
+        const strValue = results.value
+        results.addEventListener("change",(e) => 
+        {
+
+            var cap = e.target.value
+            document.getElementById("w3Search").value = ""
+            document.getElementById("divSEOC").innerHTML = "... waiting for " + cap
+            serverside("portBing", cap)
+            .then((vid) => {
+
+            
+              if (vid) {
+
+                    
+                      document.getElementById("divSEOC").innerHTML = htmlStructure
+                      document.getElementById("w3Res").src = vid;}
+              })
+            .catch((er) => {
+
+            
+              console.log(er)
+              document.getElementById("divSEOC").innerHTML = JSON.stringify(er)
+              })
+
+            
+        })}`);
+  console.log(eval(html.recentSearch));
   return html.evaluate().getContent();
 };
 

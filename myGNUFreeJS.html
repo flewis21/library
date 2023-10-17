@@ -1,12 +1,242 @@
-<input
-  class="datepicker menu-img z-depth-5 card-panel red scale-transition scale-out scale-in"
-  id="prefDate"
-  type="text"
-/>
-<div id="template"></div>
-<script>
-  document.addEventListener("DOMContentLoaded", google.script.run.myFileJS());
-</script>
-<script id="gold" type="text/javascript">
-  document.addEventListener("DOMContentLoaded", google.script.run.myFileJS());
-</script>
+<!doctype html>
+<html id="myGNUFreeJS">
+  <head>
+    <base target="_self" />
+    <meta name="myGNUFreeJS" content="Boilerplate Linux Template" />
+    <style>
+      a:link,
+      a:visited {
+        color: black !important;
+        text-decoration: none !important;
+        flex-flow: row wrap !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        align-content: flex-start !important;
+        z-index: 0 !important;
+        height: 100% !important;
+        overflow: auto !important;
+      }
+      a:hover,
+      a:active {
+        color: pink !important;
+        text-decoration: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a id="userClickedNext" href="#" onclick="nextFunc()">Load</a>
+      <a id="userClickedAgain" href="#" onclick="againFunc">Reload</a>
+    </nav>
+    <input
+      class="datepicker menu-img z-depth-5 card-panel red scale-transition scale-out scale-in"
+      id="prefDate"
+      type="text"
+    />
+    <div id="template"></div>
+    <script>
+      document.addEventListener(
+        "DOMContentLoaded",
+        google.script.run.myFileJS(),
+      );
+    </script>
+    <script id="gold" type="text/javascript">
+      document.addEventListener(
+        "DOMContentLoaded",
+        google.script.run.myFileJS(),
+      );
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", updateFunc);
+      function updateFunc() {
+        google.script.run.withSuccessHandler(htmNum).runBoilerplate("gsFiles");
+        function htmNum(drop) {
+          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+          var rndFunc = drop[rndNumDrop];
+          console.log(rndFunc + "...");
+          document.getElementById("template").innerHTML =
+            "waiting for " + rndFunc + "...";
+          google.script.run
+            .withSuccessHandler(allCap)
+            .withFailureHandler(error)
+            .runBoilerplate(rndFunc);
+          function allCap(droplet) {
+            if (droplet.length === 99) {
+              google.script.run
+                .withSuccessHandler(doCap)
+                .runBoilerplate("seoCapital", droplet);
+              function doCap(myFile) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(myFile);
+              }
+            } else {
+              document.getElementById("template").innerHTML =
+                JSON.stringify(droplet);
+            }
+          }
+          function error(er) {
+            console.log(er);
+            document.getElementById("template").innerHTML = JSON.stringify(er);
+          }
+          document
+            .getElementById("userClickedAgain")
+            .addEventListener("click", function () {
+              document.getElementById("template").innerHTML =
+                "waiting for " + rndFunc + "...";
+              google.script.run
+                .withSuccessHandler(oneCap)
+                .runBoilerplate(rndFunc);
+              function oneCap(dropClick) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(dropClick);
+              }
+            });
+        }
+      }
+      function navAway() {
+        var newPage = gsFileList[htmNum()];
+        rndPage = newPage;
+        document.getElementById("template").innerHTML =
+          "waiting for " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("contentApp", [newPage]);
+        function done(drop) {
+          document.getElementById("template").innerHTML = drop;
+        }
+      }
+      function error(er) {
+        console.log(er);
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", nextFunc);
+      function nextFunc() {
+        google.script.run.withSuccessHandler(htmNum).runBoilerplate("gsFiles");
+        function htmNum(drop) {
+          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+          var rndFunc = drop[rndNumDrop];
+          console.log(rndFunc + "...");
+          document.getElementById("template").innerHTML =
+            "waiting for " + rndFunc + "...";
+          google.script.run
+            .withSuccessHandler(allCap)
+            .withFailureHandler(error)
+            .runBoilerplate(rndFunc);
+          function allCap(droplet) {
+            if (droplet.length === 99) {
+              google.script.run
+                .withSuccessHandler(doCap)
+                .runBoilerplate("seoCapital", droplet);
+              function doCap(myFile) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(myFile);
+              }
+            } else {
+              document.getElementById("template").innerHTML =
+                JSON.stringify(droplet);
+            }
+          }
+          function error(er) {
+            console.log(er);
+            document.getElementById("template").innerHTML = JSON.stringify(er);
+          }
+          document
+            .getElementById("userClickedAgain")
+            .addEventListener("click", function () {
+              document.getElementById("template").innerHTML =
+                "waiting for " + rndFunc + "...";
+              google.script.run
+                .withSuccessHandler(oneCap)
+                .runBoilerplate(rndFunc);
+              function oneCap(dropClick) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(dropClick);
+              }
+            });
+        }
+      }
+      function navAway() {
+        var newPage = gsFileList[htmNum()];
+        rndPage = newPage;
+        document.getElementById("template").innerHTML =
+          "waiting for " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("contentApp", [newPage]);
+        function done(drop) {
+          document.getElementById("template").innerHTML = drop;
+        }
+      }
+      function error(er) {
+        console.log(er);
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", againFunc);
+      function againFunc() {
+        google.script.run.withSuccessHandler(htmNum).runBoilerplate("gsFiles");
+        function htmNum(drop) {
+          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+          var rndFunc = drop[rndNumDrop];
+          console.log(rndFunc + "...");
+          document.getElementById("template").innerHTML =
+            "waiting for " + rndFunc + "...";
+          google.script.run
+            .withSuccessHandler(allCap)
+            .withFailureHandler(error)
+            .runBoilerplate(rndFunc);
+          function allCap(droplet) {
+            if (droplet.length === 99) {
+              google.script.run
+                .withSuccessHandler(doCap)
+                .runBoilerplate("seoCapital", droplet);
+              function doCap(myFile) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(myFile);
+              }
+            } else {
+              document.getElementById("template").innerHTML =
+                JSON.stringify(droplet);
+            }
+          }
+          function error(er) {
+            console.log(er);
+            document.getElementById("template").innerHTML = JSON.stringify(er);
+          }
+          document
+            .getElementById("userClickedAgain")
+            .addEventListener("click", function () {
+              document.getElementById("template").innerHTML =
+                "waiting for " + rndFunc + "...";
+              google.script.run
+                .withSuccessHandler(oneCap)
+                .runBoilerplate(rndFunc);
+              function oneCap(dropClick) {
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(dropClick);
+              }
+            });
+        }
+      }
+      function navAway() {
+        var newPage = gsFileList[htmNum()];
+        rndPage = newPage;
+        document.getElementById("template").innerHTML =
+          "waiting for " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("contentApp", [newPage]);
+        function done(drop) {
+          document.getElementById("template").innerHTML = drop;
+        }
+      }
+      function error(er) {
+        console.log(er);
+      }
+    </script>
+  </body>
+</html>

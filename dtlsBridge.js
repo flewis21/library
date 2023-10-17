@@ -167,125 +167,8 @@ var dtlsBridge = function (func, time) {
   }
 };
 
-var dtlsPro = function (e) {
-  // var e = "if and out business"
-  if (e) {
-    var boilerUrl = dtlsBridge(e, time);
-    if (boilerUrl) {
-      return boilerUrl;
-    }
-  }
-  var isProduct = formsUrls([e].join("").toLowerCase(), "videoForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  var time = start;
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
-  var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var seoArray = seoPastTime([cokey].join(""), time);
-  var uti = seoArray.playList;
-  var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);
-
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "videoForms", time)
-
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          form
-            .addSectionHeaderItem()
-            .setTitle("https://youtube.com/watch?v=" + piece);
-          form
-            .addVideoItem()
-            .setAlignment(FormApp.Alignment.CENTER)
-            .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + piece);
-          if (
-            timeToExecute <= 6 * 60 * 1000 &&
-            timeToExecute >= 5.98 * 60 * 1000
-          ) {
-            console.log(
-              "that function: " +
-                arguments.callee.caller.name +
-                "\nthis function: " +
-                arguments.callee.name +
-                "\nTime limit six minutes",
-            );
-          }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
-          if (timeToExecute <= 0.05 * 60 * 1000) {
-            console.log(
-              "piece: " +
-                piece[0] +
-                "\ntimeToExecute: " +
-                timeToExecute.valueOf(),
-            );
-            return;
-          }
-          return piece[0];
-        }
-        return;
-      }
-    });
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
-  }
-  var rndUti = uti[randNum(uti)];
-};
-
 var dtlsPict = function (e, time) {
   var search = [e].join("");
-  if (e) {
-    var boilerUrl = dtlsBridge(e, time);
-    if (boilerUrl) {
-      return boilerUrl;
-    }
-  }
   var isProduct = formsUrls(search.toLowerCase(), "pictForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && typeof isProduct !== "undefined") {
@@ -297,7 +180,13 @@ var dtlsPict = function (e, time) {
   var arrData = coSort(time).title;
   var utilNeed = randomUtility(e, arrData).title;
   var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
+  if (cokey) {
+    var boilerUrl = dtlsBridge(cokey, time);
+    if (boilerUrl) {
+      return boilerUrl;
+    }
+  }
+  isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -455,26 +344,25 @@ var dtlsPict = function (e, time) {
   var rndUti = uti[randNum(uti)];
 };
 
-var portPro = function (e) {
-  // var e = "qvar"
+var dtlsPro = function (e) {
+  // var e = "if and out business"
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
       return boilerUrl;
     }
   }
-  var isProduct = formsUrls([e].join("").toLowerCase(), "webForms");
+  var isProduct = formsUrls([e].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   var time = start;
-  // var namedVar = "pred"
   var arrData = coSort(time).title;
   var utilNeed = randomUtility(e, arrData).title;
   var cokey = e || utilNeed;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -482,42 +370,29 @@ var portPro = function (e) {
   }
   // var utiStr = skyNeed(cokey, time)
   // var utiSeo = pastSeo(utiStr, time)
-  var seoArray = needBing([cokey].join(""), time);
-  var uti = seoArray.myPlay;
-  var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
+  var seoArray = seoPastTime([cokey].join(""), time);
+  var uti = seoArray.playList;
+  var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);
+
   if (typeof form === "object") {
-    // fileManager(form.getId(), "webForms", time)
+    // fileManager(form.getId(), "videoForms", time)
 
     form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
-        var srPiece = piece.indexOf("src2=");
-        var svPiece = piece.indexOf("xmlns=");
-        var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
-          .join("")
-          .split('"')[1];
-        if ([svPiece].indexOf("svg") > -1) {
-          var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
-            .join("")
-            .split('"')[1];
-        }
-        if (piece.indexOf("http") > -1) {
+        if (piece) {
           var elaspeTime = new Date() - time;
           var timeToExecute = maxTime - elaspeTime;
           // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
           form.addPageBreakItem().setTitle([cokey].join(""));
-          form.addSectionHeaderItem().setTitle(piece);
-          if (srImgRes || svImgRes) {
-            var imgUrl = srImgRes || svImgRes;
-          }
-          if ([imgUrl].join("").length > 0) {
-            form
-              .addImageItem()
-              .setTitle(cokey + " storyboard")
-              .setImage(UrlFetchApp.fetch(imgUrl))
-              .setWidth(1012)
-              .setAlignment(FormApp.Alignment.CENTER);
-          }
+          form
+            .addSectionHeaderItem()
+            .setTitle("https://youtube.com/watch?v=" + piece);
+          form
+            .addVideoItem()
+            .setAlignment(FormApp.Alignment.CENTER)
+            .setWidth(612)
+            .setVideoUrl("https://youtube.com/watch?v=" + piece);
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000
@@ -574,6 +449,7 @@ var portPro = function (e) {
         return;
       }
     });
+    return surveyPlayer(uti, [cokey].join(""));
     var formUrl = form.getPublishedUrl();
     return formUrl;
   }
@@ -638,6 +514,132 @@ var portBing = function (e) {
             .setAlignment(FormApp.Alignment.CENTER)
             .setWidth(612)
             .setVideoUrl("https://youtube.com/watch?v=" + piece);
+          if (
+            timeToExecute <= 6 * 60 * 1000 &&
+            timeToExecute >= 5.98 * 60 * 1000
+          ) {
+            console.log(
+              "that function: " +
+                arguments.callee.caller.name +
+                "\nthis function: " +
+                arguments.callee.name +
+                "\nTime limit six minutes",
+            );
+          }
+          if (
+            timeToExecute <= 5 * 60 * 1000 &&
+            timeToExecute >= 4.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
+          }
+          if (
+            timeToExecute <= 4 * 60 * 1000 &&
+            timeToExecute >= 3.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
+          }
+          if (
+            timeToExecute <= 3 * 60 * 1000 &&
+            timeToExecute >= 2.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
+          }
+          if (
+            timeToExecute <= 2 * 60 * 1000 &&
+            timeToExecute >= 1.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
+          }
+          if (
+            timeToExecute <= 1 * 60 * 1000 &&
+            timeToExecute >= 0.98 * 60 * 1000
+          ) {
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
+          }
+          if (timeToExecute <= 0.05 * 60 * 1000) {
+            console.log(
+              "piece: " +
+                piece[0] +
+                "\ntimeToExecute: " +
+                timeToExecute.valueOf(),
+            );
+            return;
+          }
+          return piece[0];
+        }
+        return;
+      }
+    });
+    return surveyPlayer(uti, [cokey].join(""));
+    var formUrl = form.getPublishedUrl();
+    return formUrl;
+  }
+  var rndUti = uti[randNum(uti)];
+};
+
+var portPro = function (e) {
+  // var e = "qvar"
+  if (e) {
+    var boilerUrl = dtlsBridge(e, time);
+    if (boilerUrl) {
+      return boilerUrl;
+    }
+  }
+  var isProduct = formsUrls([e].join("").toLowerCase(), "webForms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  var time = start;
+  // var namedVar = "pred"
+  var arrData = coSort(time).title;
+  var utilNeed = randomUtility(e, arrData).title;
+  var cokey = e || utilNeed;
+  var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  // var utiStr = skyNeed(cokey, time)
+  // var utiSeo = pastSeo(utiStr, time)
+  var seoArray = needBing([cokey].join(""), time);
+  var uti = seoArray.myPlay;
+  var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
+  if (typeof form === "object") {
+    // fileManager(form.getId(), "webForms", time)
+
+    form.setCollectEmail(true);
+    uti.map((piece) => {
+      while (piece) {
+        var srPiece = piece.indexOf("src2=");
+        var svPiece = piece.indexOf("xmlns=");
+        var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
+          .join("")
+          .split('"')[1];
+        if ([svPiece].indexOf("svg") > -1) {
+          var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
+            .join("")
+            .split('"')[1];
+        }
+        if (piece.indexOf("http") > -1) {
+          var elaspeTime = new Date() - time;
+          var timeToExecute = maxTime - elaspeTime;
+          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+          form.addPageBreakItem().setTitle([cokey].join(""));
+          form.addSectionHeaderItem().setTitle(piece);
+          if (srImgRes || svImgRes) {
+            var imgUrl = srImgRes || svImgRes;
+          }
+          if ([imgUrl].join("").length > 0) {
+            form
+              .addImageItem()
+              .setTitle(cokey + " storyboard")
+              .setImage(UrlFetchApp.fetch(imgUrl))
+              .setWidth(1012)
+              .setAlignment(FormApp.Alignment.CENTER);
+          }
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000
@@ -867,11 +869,11 @@ var stockHistory = function (e) {
       return boilerUrl;
     }
   }
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
+  var isProduct = formsUrls([e].join("").toLowerCase(), "docForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    var survey = seoCapital(formUrl);
+    return formUrl;
   }
   var time = start;
   var arrData = allInvestors(e, time);
@@ -883,7 +885,7 @@ var stockHistory = function (e) {
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    var survey = seoCapital(formUrl);
+    return formUrl;
   } else {
     // var utiStr = skyNeed(cokey, time)
     // var utiSeo = pastSeo(utiStr, time)
@@ -976,5 +978,5 @@ var stockHistory = function (e) {
       return formUrl;
     }
   }
-  var rndUti = uti[randNum(uti)];
+  // var rndUti = uti[randNum(uti)]
 };

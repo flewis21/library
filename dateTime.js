@@ -10,8 +10,10 @@ function dateTime(date) {
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
     </head>
     <body>
-      <?!= datePicker ?>
-      <?!= timePicker ?>
+      <div class="container">
+        <?!= datePicker ?>
+        <?!= timePicker ?>
+      </div>
       <div id="error_log"></div>
       <script>
         document.addEventListener(

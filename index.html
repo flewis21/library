@@ -39,7 +39,13 @@
           <div
             class="container menu-img grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
           >
-            <?!= dtlsMain("Furtado") ?>
+            <? var infoLink = seoSheet("Nelly Furtado").keyWords ?> <? var
+            pageArray = [] ?> <? var page = infoLink.map((tv) => { ?> <? var
+            listItem = seoPastTime(tv).playList ?> <? var plaListNum =
+            Math.floor(Math.random() * Math.floor(tv.length)) ?> <? var
+            rndListItem = tv[plaListNum] ?> <? pageArray.push(rndListItem) ?> <?
+            }) ?> <? var story = pageArray[Math.floor(Math.random() *
+            Math.floor(pageArray.length))] ?> <?!= seoCapital(dtlsPro(story)) ?>
           </div>
         </div>
       </div>

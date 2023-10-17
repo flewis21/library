@@ -22,6 +22,7 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
     var timeToExecute = maxTime - elaspeTime;
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (myFile) {
+      console.log(myFile);
       myFile.moveTo(DriveApp.getFolderById(folderId));
       return;
     } else {

@@ -730,6 +730,22 @@ var dtlsSomeFunction = function (e) {
 };
 
 var dtlsStore = function (itemName, time) {
+  if (itemName) {
+    var boilerUrl = dtlsBridge(itemName, time);
+    if (boilerUrl) {
+      return boilerUrl;
+    }
+  }
+  var isProduct = formsUrls(
+    [itemName].join("").toLowerCase(),
+    "inventoryForms",
+  );
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  var time = start;
   return HtmlService.createTemplate(
     contentApp(
       `
@@ -972,60 +988,153 @@ var filetypeBing = function (e) {
   return [cokey].join("");
 };
 
-var generalWorkInvoice = function (clientName) {
-  return HtmlService.createTemplate(
-    contentApp(
-      `
-    <? var rndClient = coUtility(client)[0]; ?>
-    <? var dtlsUrl = "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args="; ?>
-    <?  var form = formMaker(rndClient.rndTitle);  ?>
-    <? fileManager(rndClient.rndTitle, "Forms") ?>
+var generalWorkInvoice = function (clientName, time) {
+  // var clientName = "iforce maxx"
+  if (clientName) {
+    var boilerUrl = dtlsBridge(clientName, time);
+    if (boilerUrl) {
+      return boilerUrl;
+    }
+  }
+  var isProduct = formsUrls([clientName].join("").toLowerCase(), "Forms");
+  console.log(typeof isProduct);
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
+    console.log(isProduct);
+    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    return formUrl;
+  }
+  var time = start;
+  var arrData = allInvestors(clientName, time);
+  var cokey = arrData.title;
+  var yahooNeed = arrData.ticker;
+  var coHelpText = arrData.edgarUrl;
+  if (
+    [cokey].join().toLowerCase().includes([clientName].join().toLowerCase())
+  ) {
+    isProduct = formsUrls([cokey].join("").toLowerCase(), "Forms");
+    console.log(typeof isProduct);
+    if (typeof isProduct === "string" && isProduct !== "undefined") {
+      console.log(isProduct);
+      var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+      return formUrl;
+    }
+    return HtmlService.createTemplate(
+      contentApp(
+        `
+      <?  var clientBusName = busName ?>
+      <?  var dtlsUrl =  portBing(clientBusName); ?>
+      <?  var form = formMaker([clientBusName].join("").toUpperCase(), "Forms", timeNow);  ?>
+      <?   if (typeof form === "object"){ ?>
+      <?  console.log("form object " + form.getPublishedUrl()) ?>
+      <?  var formUrl = form.getPublishedUrl(); ?>
+      <?  form.setCollectEmail(true); ?>
+      <?  form.setAllowResponseEdits(true); ?>
+      <?  form.addSectionHeaderItem().setTitle; ?>
+      <?  form.addDateItem().setTitle('Invoice Date').setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Pickup Address ").setRequired(false) ?>
+      <?  form.addTextItem().setTitle("Car ").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Vin/STK # ").setRequired(true) ?>
+      <?  form.addTextItem().setTitle("Gas ").setRequired(true) ?>
+      <?  form.addTextItem().setTitle("Company Address ").setRequired(true) ?>
+      <?  form.addTextItem().setTitle("Delivery/Pick-up/Chase-car ").setRequired(true) ?>
+      <?  form.addTextItem().setTitle("Hours").setRequired(false) ?>
+      <?  form.addTextItem().setTitle("Labor ").setRequired(true) ?>
+      <?  form.addTextItem().setTitle("Total ").setRequired(false) ?>
+      <?  form.addSectionHeaderItem().setTitle("Company Info").setHelpText(dtlsUrl); ?>
+      <?  if (typeof clientTicker !== "undefined") { ?>
+      <?  form.addSectionHeaderItem().setTitle(clientTicker).setHelpText(clientFile); ?>
+      <?  form.addTextItem().setTitle("Industry").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Sector").setRequired(true); ?>
+      <?  form.addParagraphTextItem().setTitle("Industry/Market Corrections").setRequired(false); ?>
+      <?  form.addParagraphTextItem().setTitle("News").setRequired(false); ?>
+      <?  form.addParagraphTextItem().setTitle("Economic/Business Cycles").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Stock Price").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Outstanding Shares").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Quarterly Earnings").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Annualized Net Income").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Total Equity").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Retained Earnings").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Cash & Marketable Securities").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Accounts Receivable").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Inventories").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Long-term Investments").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Net PP&E").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Current Financial Liabilities").setRequired(true); ?>
+      <?  form.addTextItem().setTitle("Long-term Interest-bearing Debts").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Current Year Total Earnings").setRequired(false); ?>
+      <?  form.addTextItem().setTitle("Base Year Total Earnings").setRequired(false);} ?>
+      <?  form.addTextItem().setTitle('Your Name').setRequired(true); ?>
+      <?  form.addTextItem().setTitle('Your Address').setRequired(true); ?>
+      <?  form.addTextItem().setTitle('Your Phone Number').setRequired(true); ?>
+      <?  form.addParagraphTextItem().setTitle('Your Message').setRequired(true); ?>
+      <?  form.addGridItem().setTitle('Track').setRows(["Status"]).setColumns(["Queued", "Pending", "Settled"]).setRequired(true); ?>
+      <?  form.setTitle(clientBusName.toUpperCase()).setConfirmationMessage('Thanks for your feedback !!')}; ?>
+      <div class="row">
+      <div class="col s12 l12 m12 card-panel">
+      <div class="container row valign-wrapper"><?!= rule() ?></div>
+      <div class="video-container grey" style="clear: both">
+      <div class="col s12 l12 m12 receipt black darken-1">
+      <iframe 
+        class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+        src="<?= formUrl ?>" 
+        width="100%"
+        height="100%"
+        allow="autoplay"
+        allow="encrypted-media"
+        title="Dontime Life Website"
+        frameborder="0"
+        allowfullscreen
+        ></iframe>
+      </div></div></div></div>`,
+        {
+          client: clientName,
+          timeNow: time,
+          busName: cokey,
+          clientTicker: yahooNeed,
+          clientFile: coHelpText,
+        },
+      ),
+    )
+      .evaluate()
+      .getContent();
+  } else {
+    return HtmlService.createTemplate(
+      contentApp(
+        `
+    <?  var clientBusName = busName ?>
+    <?  var dtlsUrl =  portBing(clientBusName); ?>
+    <?  var form = formMaker([clientBusName].join("").toUpperCase(), "Forms", timeNow);  ?>
+    <?   if (typeof form === "object"){ ?>
+    <?  console.log("form object " + form.getPublishedUrl()) ?>
+    <?  var formUrl = form.getPublishedUrl(); ?>
+    <?  form.setCollectEmail(true); ?>
+    <?  form.setAllowResponseEdits(true); ?>
     <?  form.addSectionHeaderItem().setTitle; ?>
     <?  form.addDateItem().setTitle('Invoice Date').setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Car ").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Deliver/Pickup ").setRequired(true) ?>
-    <?  form.addTextItem().setTitle("Vin/STK # ").setRequired(true) ?>
-    <?  form.addTextItem().setTitle("Delivery Address ").setRequired(true) ?>
-    <?  form.addTextItem().setTitle("Labor ").setRequired(true) ?>
-    <?  form.addTextItem().setTitle("Gas ").setRequired(true) ?>
-    <?  form.addTextItem().setTitle("Total ").setRequired(false) ?>
-    <?  form.addTextItem().setTitle("Delivery Time ").setRequired(false) ?>
     <?  form.addTextItem().setTitle("Pickup Address ").setRequired(false) ?>
-    <?  form.addSectionHeaderItem().setTitle("Company Info").setHelpText(dtlsUrl + encodeURIComponent(rndClient.rndTitle)); ?>
-    <?  if (typeof rndClient.rndTicker !== "undefined") { ?>
-    <?  form.addSectionHeaderItem().setTitle(rndClient.rndTicker).setHelpText(rndClient.secUrl); ?>
-    <?  form.addTextItem().setTitle("Industry").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Sector").setRequired(true); ?>
-    <?  form.addParagraphTextItem().setTitle("Industry/Market Corrections").setRequired(false); ?>
-    <?  form.addParagraphTextItem().setTitle("News").setRequired(false); ?>
-    <?  form.addParagraphTextItem().setTitle("Economic/Business Cycles").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Stock Price").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Outstanding Shares").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Quarterly Earnings").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Annualized Net Income").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Total Equity").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Retained Earnings").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Cash & Marketable Securities").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Accounts Receivable").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Inventories").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Long-term Investments").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Net PP&E").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Current Financial Liabilities").setRequired(true); ?>
-    <?  form.addTextItem().setTitle("Long-term Interest-bearing Debts").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Current Year Total Earnings").setRequired(false); ?>
-    <?  form.addTextItem().setTitle("Base Year Total Earnings").setRequired(false);} ?>
+    <?  form.addTextItem().setTitle("Car ").setRequired(true); ?>
+    <?  form.addTextItem().setTitle("Vin/STK # ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Gas ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Customer Address ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Delivery/Pick-up/Chase-car ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Hours").setRequired(false) ?>
+    <?  form.addTextItem().setTitle("Labor ").setRequired(true) ?>
+    <?  form.addTextItem().setTitle("Total ").setRequired(false) ?>
+    <?  if (dtlsUrl.length === 99){form.addSectionHeaderItem().setTitle("Customer Info").setHelpText(dtlsUrl);} ?>
     <?  form.addTextItem().setTitle('Your Name').setRequired(true); ?>
+    <?  form.addTextItem().setTitle('Your Address').setRequired(true); ?>
+    <?  form.addTextItem().setTitle('Your Phone Number').setRequired(true); ?>
     <?  form.addParagraphTextItem().setTitle('Your Message').setRequired(true); ?>
-    <?  form.setTitle(rndClient.rndTitle).setConfirmationMessage('Thanks for your feedback !!'); ?>
-    <?  var url = form.getPublishedUrl(); ?>
+      <?  form.addGridItem().setTitle('Track').setRows(["Status"]).setColumns(["Queued", "Pending", "Settled"]).setRequired(true); ?>
+    <?  form.setTitle(clientBusName.toUpperCase()).setConfirmationMessage('Thanks for your feedback !!')}; ?>
     <div class="row">
-    <div class="col s10 l12 m12 card-panel push-s1">
+    <div class="col s12 l12 m12 card-panel">
     <div class="container row valign-wrapper"><?!= rule() ?></div>
     <div class="video-container grey" style="clear: both">
     <div class="col s12 l12 m12 receipt black darken-1">
     <iframe 
       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="<?!= url ?>" 
+      src="<?= formUrl ?>" 
       width="100%"
       height="100%"
       allow="autoplay"
@@ -1034,25 +1143,47 @@ var generalWorkInvoice = function (clientName) {
       frameborder="0"
       allowfullscreen
       ></iframe>
-    </div></div></div></div>
-    <? var liveForm = FormApp.openById(form.getId()) ?>
-    <? var formResponses = liveForm.getResponses() ?>
-    <? for (var i = 0; i < formResponses.length; i++) { ?>
-    <? var formResponse = formResponses[i]; ?>
-    <? var itemResponses = formResponse.getItemResponses(); ?>
-    <? for (var j = 0; j < itemResponses.length; j++) { ?>
-      <? var itemResponse = itemResponses[j]; ?>
-      <? console.log('Response #%s to the question "%s" was "%s"', 
-         (i + 1).toString(), 
-         itemResponse.getItem().getTitle(), 
+    </div></div></div></div>`,
+        {
+          client: clientName,
+          timeNow: time,
+          busName: clientName,
+          clientTicker: yahooNeed,
+          clientFile: coHelpText,
+        },
+      ),
+    )
+      .evaluate()
+      .getContent();
+  }
+};
+
+var overFlow = function () {
+  `    <?  var liveForm = FormApp.openById(form.getId()) ?>
+    <?  var formResponses = liveForm.getResponses() ?>
+    <?  for (var i = 0; i < formResponses.length; i++) { ?>
+    <?  var formResponse = formResponses[i]; ?>
+    <?  var itemResponses = formResponse.getItemResponses(); ?>
+    <?  for (var j = 0; j < itemResponses.length; j++) { ?>
+      <?  var itemResponse = itemResponses[j]; ?>
+      <?  console.log('Response #%s to the question "%s" was "%s"', 
+        (i + 1).toString(), 
+        itemResponse.getItem().getTitle(), 
           itemResponse.getResponse()); ?>
-    <? } ?>
-  <? } ?>`,
-      { client: clientName },
-    ),
-  )
-    .evaluate()
-    .getContent();
+    <?  }} ?>
+      <? var liveForm = FormApp.openById(form.getId()) ?>
+      <? var formResponses = liveForm.getResponses() ?>
+      <? for (var i = 0; i < formResponses.length; i++) { ?>
+      <? var formResponse = formResponses[i]; ?>
+      <? var itemResponses = formResponse.getItemResponses(); ?>
+      <? for (var j = 0; j < itemResponses.length; j++) { ?>
+        <? var itemResponse = itemResponses[j]; ?>
+        <? console.log('Response #%s to the question "%s" was "%s"', 
+          (i + 1).toString(), 
+          itemResponse.getItem().getTitle(), 
+            itemResponse.getResponse()); ?>
+      <? }} ?>
+`;
 };
 
 var geneFrame = function (reference) {
@@ -1060,11 +1191,11 @@ var geneFrame = function (reference) {
     contentApp(
       `
     <? var rndClient = function() { ?>
-    <?  return new Promise((resolve) => {resolve(formMaker(file))})} ?>
+    <?  return new Promise((resolve) => {resolve(formMaker(file, "videoForms"))})} ?>
     <? var clientRes = rndClient()
     .then((resu) => {return resu})
     .catch((err) => {console.log(err)}) ?>
-    <? var form = FormApp.openByUrl(JSON.stringify(formMaker(file))) ?>
+    <? var form = FormApp.openByUrl(JSON.stringify(formMaker(file, "videoForms"))) ?>
     <? var vidId = coUtility(file)[0].playlistArr ?>
     <? if (vidId.length > 0) {?>
     <? vidId.map((id)=>{return form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl("https://youtube.com/watch?v=" + id)})} ?>
@@ -1095,7 +1226,7 @@ var geneFrame = function (reference) {
     <script>document.addEventListener("DOMContentLoaded", lasVegas)
     function lasVegas() {
       
-      document.getElementById("vegas").innerHTML = <?= formsUrls(file) ?>
+      document.getElementById("vegas").innerHTML = <?= formsUrls(file, "videoForms") ?>
       }</script>`,
       {
         file: reference,
