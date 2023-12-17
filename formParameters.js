@@ -9,11 +9,14 @@ var maxTime = 6 * 59.9 * 1000;
 var sCache = CacheService.getScriptCache();
 
 var formMaker = function (fileName, folderX, time) {
+  console.log("calling formUrls with " + fileName + ", " + folderX);
   if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
     return formsUrls(fileName, folderX, time);
   }
   if (fileName !== "") {
+    console.log("calling FormApp with " + fileName);
     var newFile = FormApp.create(fileName);
+    console.log("calling fileManager with " + newFile.getId() + ", " + folderX);
     fileManager(newFile.getId(), folderX, time);
     return newFile;
   }

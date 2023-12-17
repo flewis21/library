@@ -1,58 +1,66 @@
 var allInvestors = function (rndKey, time) {
-  var uniqueKey = JSON.parse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ]);
-  var uniqueCoArray = covArrays(uniqueKey);
+  if (typeof time === "undefined") {
+    time = start;
+  }
+  // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
+  // var uniqueCoArray = uniqueKey;
   var coArray = [`bank semi fact bio science chain space coin`];
   var reCoArray = coArray.toString().split(" ");
   var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
-  var hCodedCo = reCoArray.sort((a, b) => {
+  var myCoArray = reCoArray.sort((a, b) => {
     a - b;
   })[rndCoA];
-  var myCoArray = uniqueCoArray.filter((co) => {
-    return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase());
-  });
-  var rndArrayNum = Math.floor(Math.random() * Math.floor(myCoArray.length));
-  var rndTitleVested = myCoArray[rndArrayNum][0]["title"];
+  console.log([rndKey].join("").length);
+  if ([rndKey].join("").length > 1) {
+    var timeKey = [rndKey].join("").split(" ");
+  }
+  var matches = timeKey || myCoArray;
+  // var myCoArray = uniqueCoArray.filter((co) => {
+
+  //     return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase())
+  //   })
+  var rndArrayNum = Math.floor(Math.random() * Math.floor(matches.length));
+  var rndTitleVested = matches; //[rndArrayNum][0]["title"]
   var coKey = rndKey || rndTitleVested;
-  const matches = [];
-  uniqueCoArray
-    .sort((a, b) => a - b)
-    .filter((ac) => {
-      if (
-        JSON.stringify(ac[0]["title"])
-          .toLowerCase()
-          .includes(coKey.toString().toLowerCase())
-      ) {
-        matches.push(ac);
-      } else if (
-        JSON.stringify(ac[0]["title"])
-          .toLowerCase()
-          .includes(rndTitleVested.toString().toLowerCase())
-      ) {
-        matches.push(ac);
-      }
-    });
+  // const matches = []
+  // uniqueCoArray.sort((a, b) => a - b).filter(
+  //     (ac)=> {
+  //       if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(coKey.toString().toLowerCase())) {
+
+  //         matches.push(ac)
+  //       }
+  //       else if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {
+
+  //         matches.push(ac)
+  //       }
+  //       })
   if (matches.length !== 0) {
-    var randomKey = Math.floor(Math.random() * Math.floor(matches.length)); // Math.floor(Math.random())
     var uniqueCoKey = [matches].entries().next().value;
-    var randomTitle = uniqueCoKey[1][randomKey][0]["title"];
-    var randomTicker = uniqueCoKey[1][randomKey][0]["ticker"];
-    var randomCik = uniqueCoKey[1][randomKey][0]["cik_str"];
+    var uniqueNum = randNum(uniqueCoKey[1]);
+    var mathCalc = function () {
+      return uniqueNum * 999999999;
+    };
+    var takeNum = mathCalc();
+    var randomKey = Math.floor(Math.random() * Math.floor(takeNum));
+    var randomTitle = uniqueCoKey[1]; //[randomKey][0]["title"];
+    var randomTicker = uniqueCoKey[1]; //[randomKey][0]["ticker"];
+    var randomCik = randomKey; //randomKey[randomKey][0]["cik_str"];
+    while (randomCik < 99999) {
+      randomCik = randomKey;
+    }
   }
   //Youtube Widget
-  var idArray = needPastTime(randomTitle || coKey);
-  var randomPlaylist = [];
-  for (var i = 0; i < idArray.length; i++) {
-    const randomVidKey = Math.floor(
-      Math.random() * Math.floor([idArray].length),
-    ); // Math.floor(Math.random());
-    randomPlaylist.push(idArray[randomVidKey]);
-  }
+  var tunPlay = randomTitle || coKey;
+  var randomPlaylist = needPastTime(tunPlay);
+  // var randomPlaylist = idArray;
+  //   for (var i = 0;i<idArray.length;i++) {
+  //   var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));
+  //   randomPlaylist.push(idArray[randomVidKey])
+  // }
   var vidPlaylist = function () {
-    const randomVidKey = Math.floor(
+    var randomVidKey = Math.floor(
       Math.random() * Math.floor(randomPlaylist.length),
-    ); // Math.floor(Math.random());
+    );
     var playListSorted = randomPlaylist.sort((a, b) => a - b);
     var videoObject = covObjects(playListSorted, ["youtubeID"]);
     if (typeof videoObject["youtubeID"] !== "undefined") {
@@ -82,19 +90,48 @@ var allInvestors = function (rndKey, time) {
 };
 
 var allTime = function (rndKey, arrD, time) {
+  if (typeof time === "undefined") {
+    var time = start;
+  }
+  console.log("rndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time);
+  console.log("Calling randomSubstance with arrD: " + arrD);
   var uniqueKey = randomSubstance(0, 4, null, arrD, time).myNewArr;
+  console.log(
+    "Recieved uniqueKey: " +
+      uniqueKey +
+      " from randomSubstance with arrD " +
+      arrD,
+  );
   var uniCoArr = [uniqueKey].join("").split(" ");
+  console.log("Calling covObjects with uniCoArr: " + uniCoArr);
   var uniqueCoObjects = covObjects(uniCoArr, ["allTime"], time);
+  console.log(
+    "Recieved uniqueCoObjects: " +
+      uniqueCoObjects +
+      " from covObjects with uniCoArr " +
+      uniCoArr,
+  );
   var rndCoObjects =
     uniqueCoObjects[
       Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
     ];
+  console.log("Calling covArrays with rndCoObjects: " + rndCoObjects);
   var uniqueCoArray = covArrays(rndCoObjects, time);
+  console.log(
+    "Recieved uniqueCoArray: " +
+      uniqueCoArray +
+      " from covArrays with rndCoObjects " +
+      rndCoObjects,
+  );
   var rndCoArray =
     uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
   var coKey = rndKey || rndCoArray;
   //Youtube Widget
+  console.log("Calling seoPastTime with coKey: " + coKey);
   var seoArray = seoPastTime([coKey].join(""), time);
+  console.log(
+    "Recieved seoArray: " + seoArray + " from seoPastTime with coKey " + coKey,
+  );
   // console.log(typeof seoArray)
   if (typeof seoArray === "object") {
     var idArray = seoArray.playList;
@@ -114,7 +151,14 @@ var allTime = function (rndKey, arrD, time) {
         Math.random() * Math.floor(randomPlaylist.length),
       ); // Math.floor(Math.random());
       var playListSorted = randomPlaylist.sort((a, b) => a - b);
+      console.log("Calling covObjects with playListSorted: " + playListSorted);
       var videoObject = covObjects(playListSorted, ["youtubeID"]);
+      console.log(
+        "Recieved videoObject: " +
+          videoObject +
+          " from covObjects with playListSorted " +
+          playListSorted,
+      );
       if (typeof videoObject["youtubeID"] !== "undefined") {
         var uniqueVidKey = [videoObject].entries().next().value;
         var randomVid = uniqueVidKey[1][randomVidKey];
@@ -123,9 +167,13 @@ var allTime = function (rndKey, arrD, time) {
       }
     };
     var sortaPlay = randomPlaylist.sort((a, b) => a - b);
+    console.log("Calling vidPlaylist with ");
     var randomVideo =
       vidPlaylist() ||
       sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
+    console.log(
+      "Recieved randomVideo: " + randomVideo + " from vidPlaylist with ",
+    );
     var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
     // console.log(seoArray.playList)
 
@@ -482,14 +530,18 @@ var oldSEC = function (rndTitle) {
 };
 
 var opt = function (searchString) {
+  if (typeof searchString === "undefined") {
+    var searchString = "company user";
+  }
   var url =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
-  var optUrl = getUrl(ScriptApp) + "?func=seoSheet&args=";
+  var optUrl = getUrl(ScriptApp) + "?func=dtlsPict&args=";
   var tmp = [];
-  let jsonData = Utilities.jsonParse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ]);
-  var arrData = covArrays(jsonData);
+  let jsonData = coUtility(searchString)[0];
+  var arrData = covArrays(jsonData.playlistArr);
+  while (arrData.length === 0) {
+    arrData = covArrays(jsonData.playlistArr);
+  }
   // console.log(arrData.length)
   let objParts = {};
   for (var i = 0; i < arrData.length; i++) {
@@ -524,8 +576,9 @@ var opt = function (searchString) {
   const alTheCo = arrData
     .sort((a, b) => a - b)
     .filter((ac) => {
+      var logAC = ac[0]; //["title"]
       if (
-        JSON.stringify(ac[0]["title"])
+        JSON.stringify(logAC)
           .toLowerCase()
           .includes(
             searchString ||
@@ -548,22 +601,51 @@ var opt = function (searchString) {
         matches.push(ac);
     });
   jo.user = dataArray;
-  var coTable = matches.map((r) => {
-    return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
-      r[0]["cik_str"]
-    }&owner=exclude" target="_blank">${
-      r[0]["cik_str"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      optUrl + encodeURIComponent(r[0]["ticker"])
-    }" target="_blank">${
-      r[0]["ticker"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      optUrl + encodeURIComponent(r[0]["title"])
-    }" target="_blank">${r[0]["title"]}</a></td></tr>`;
-  });
+  var coTable = arrData
+    .map((r) => {
+      return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
+        jsonData.rndCik
+      }&owner=exclude" target="_blank">${
+        jsonData.rndCik
+      }</a></td><td><a class="waves-effect waves-light btn" href="${
+        optUrl + encodeURIComponent(jsonData.rndTicker)
+      }" target="_blank">${
+        jsonData.rndTicker
+      }</a></td><td><a class="waves-effect waves-light btn" href="${
+        optUrl + encodeURIComponent(jsonData.rndTitle)
+      }" target="_blank">${jsonData.rndTitle}</a></td></tr>`;
+    })
+    .toString()
+    .replace(/,/g, "");
   var result = JSON.stringify(coTable);
   return HtmlService.createTemplate(
-    `
+    contentApp(
+      `
+    <html id="opt">
+      <head>
+        <base target="_top">
+        <meta charset="utf-8">
+        <meta name="seoCapital" content="Boilerplate SEO Capital">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+          <style>
+
+              body {
+
+                flex-grow: 1;
+                color:blue;
+                text-decoration:bold;
+                flex-flow: row wrap;
+                grid-column: 1;
+                grid-row: 1;
+                text-align: center;
+                align-content: flex-start;
+                overflow: auto;
+              }
+          </style>
+      </head>
+      <body>
+
     <div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
     <div class="container">
@@ -584,8 +666,17 @@ var opt = function (searchString) {
    </div>
    <script>
     document.addEventListener("DOMContentLoaded", 
-function(){document.getElementById("test").innerHTML = ${result}})
-  </script>`,
+function(){document.getElementById("test").innerHTML = <?!= tableContents ?>})
+  </script>
+  
+      <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
+      </body>
+    </html>
+        `,
+      {
+        tableContents: result,
+      },
+    ),
   )
     .evaluate()
     .getContent();

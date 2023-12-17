@@ -1,14 +1,47 @@
+var delAddress = function () {
+  var ws = ssGetSheetBySpreadsheetUrl(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "General Work Invoice",
+  );
+  var address = ws
+    .getRange(2, 5, ws.getRange("E2").getDataRegion().getLastRow(), 1)
+    .getValues();
+  var toRnd = [Math.floor(Math.random() * Math.floor(address.length))];
+  var fromRnd = [Math.floor(Math.random() * Math.floor(address.length))];
+  var endAddress = address[toRnd];
+  var startAddress = address[fromRnd];
+  while (endAddress.join("").length === 0) {
+    toRnd = [Math.floor(Math.random() * Math.floor(address.length))];
+    endAddress = address[toRnd];
+  }
+  while (startAddress.join("").length === 0) {
+    fromRnd = [Math.floor(Math.random() * Math.floor(address.length))];
+    startAddress = address[fromRnd];
+  }
+  return {
+    startPoint: startAddress,
+    endPoint: endAddress,
+  };
+};
+
 var endPoint = function (end, return_type) {
+  var rndEnd = delAddress().endPoint;
   var pathEnd = DistanceProject.GOOGLEMAPS(
     "4510 Split Creek Dr, Douglasville, Ga, 30135",
-    end,
+    end || rndEnd,
     return_type,
   );
   return pathEnd;
 };
 
-var kiloPoint = function (start, end) {
-  var path = DistanceProject.GOOGLEMAPS(start, end, "kilometers");
+var kiloPoint = function (startCoord, end) {
+  var rndStart = delAddress().startPoint;
+  var rndEnd = delAddress().endPoint;
+  var path = DistanceProject.GOOGLEMAPS(
+    startCoord || rndStart,
+    end || rndEnd,
+    "kilometers",
+  );
   return path;
 };
 
@@ -19,17 +52,28 @@ var lockR = function (row, col) {
   return lock;
 };
 
-var milePoint = function (start, end) {
+var milePoint = function (startCoord, end) {
+  if (typeof startCoord === "undefined") {
+    var startCoord = delAddress().startPoint;
+  }
+  if (typeof end === "undefined") {
+    var end = delAddress().endPoint;
+  }
   var path =
-    DistanceProject.GOOGLEMAPS(start, end, "miles") +
-    DistanceProject.GOOGLEMAPS(end, start, "miles");
+    DistanceProject.GOOGLEMAPS(startCoord, end, "miles") +
+    DistanceProject.GOOGLEMAPS(end, startCoord, "miles");
   return path;
 };
 
-var minutePoint = function (start, end) {
+var minutePoint = function (startCoord, end) {
+  var rndStart = delAddress().startPoint;
+  var rndEnd = delAddress().endPoint;
   var path =
-    DistanceProject.GOOGLEMAPS(start, end, "minutes") +
-    DistanceProject.GOOGLEMAPS(end, start, "minutes");
+    DistanceProject.GOOGLEMAPS(
+      startCoord || rndStart,
+      end || rndEnd,
+      "minutes",
+    ) + DistanceProject.GOOGLEMAPS(end || rndEnd, start || rndStart, "minutes");
   return path;
 };
 
@@ -51,12 +95,12 @@ var searchEdit = function (e) {
           return;
         })()
       : authLogic(e.source.getSheetName() !== "Invoice Form")
-      ? (() => {
-          return;
-        })()
-      : (() => {
-          searchRecords();
-        })();
+        ? (() => {
+            return;
+          })()
+        : (() => {
+            searchRecords();
+          })();
   }
 };
 

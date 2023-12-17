@@ -249,14 +249,13 @@ var dtlsCalculator = function (e) {
   return html.evaluate().getContent();
 }; //:contentFile('uiAccess');
 
-var dtlsEnvironment = function (rndSubstance) {
+var dtlsEnvironment = function (e, time) {
   var dtlsUrl =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args=";
-  var arrayMath = [
-    `${randomSubstance(null, 0, 2 * 3)} ${randomSubstance(null, 0, 3 * 5)}`,
-  ];
+  var arrayMath = allInvestors(e, time);
+  // var arrayMath = [`${randomSubstance(null,0,2*3)} ${randomSubstance(null,0,3*5)}`]
   var product =
-    rndSubstance ||
+    e ||
     arrayMath
       .toString()
       .split(" ")
@@ -265,6 +264,13 @@ var dtlsEnvironment = function (rndSubstance) {
         Math.random() * Math.floor(arrayMath.toString().split(" ").length),
       )
     ];
+  // var e = "if and out business"
+  if (e) {
+    var boilerUrl = dtlsBridge(e, time);
+    if (boilerUrl) {
+      return boilerUrl;
+    }
+  }
   var isProduct = formsUrls(product);
   if (typeof isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
@@ -506,7 +512,7 @@ var dtlsEnvironment = function (rndSubstance) {
     .getContent();
 };
 
-var dtlsInvestor = function (coKey) {
+var dtlsInvestor = function (coKey, time) {
   var coData = coUtility(coKey)[0];
   if (coData) {
     var coDataName = coData.rndTitle;
@@ -517,61 +523,70 @@ var dtlsInvestor = function (coKey) {
     }
   }
   if (typeof coData.rndTicker !== "undefined") {
-    var form = formMaker(coData.rndTitle);
-    fileManager(coData.rndTitle, "Forms");
-    form.addParagraphTextItem().setTitle();
-    form
-      .addSectionHeaderItem()
-      .setTitle(coData.rndTicker)
-      .setHelpText(coData.secUrl);
-    form.addTextItem().setTitle("Industry").setRequired(true);
-    form.addTextItem().setTitle("Sector").setRequired(true);
-    form
-      .addParagraphTextItem()
-      .setTitle("Industry/Market Corrections")
-      .setRequired(false);
-    form.addParagraphTextItem().setTitle("News").setRequired(false);
-    form
-      .addParagraphTextItem()
-      .setTitle("Economic/Business Cycles")
-      .setRequired(false);
-    form.addTextItem().setTitle("Stock Price").setRequired(true);
-    form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-    form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-    form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
-    form.addTextItem().setTitle("Total Equity").setRequired(false);
-    form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Cash & Marketable Securities")
-      .setRequired(true);
-    form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-    form.addTextItem().setTitle("Inventories").setRequired(true);
-    form.addTextItem().setTitle("Long-term Investments").setRequired(false);
-    form.addTextItem().setTitle("Net PP&E").setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Current Financial Liabilities")
-      .setRequired(true);
-    form
-      .addTextItem()
-      .setTitle("Long-term Interest-bearing Debts")
-      .setRequired(false);
-    form
-      .addTextItem()
-      .setTitle("Current Year Total Earnings")
-      .setRequired(false);
-    form.addTextItem().setTitle("Base Year Total Earnings").setRequired(false);
-    form.addTextItem().setTitle("Your Name").setRequired(true);
-    form.addDateItem().setTitle("Birth Date").setRequired(true);
-    form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-    form
-      .setTitle(coData.rndTitle)
-      .setConfirmationMessage("Thanks for your feedback !!");
-    var url = form.getPublishedUrl();
-    return geneFrame(url);
-    return HtmlService.createTemplate(
-      `<div class="row">
+    // var form = formMaker();
+    var form = formMaker(
+      [coData.rndTitle].join("").toUpperCase(),
+      "Forms",
+      time,
+    );
+
+    if (typeof form === "object") {
+      // fileManager(coData.rndTitle, "Forms")
+      form
+        .addSectionHeaderItem()
+        .setTitle(coData.rndTicker)
+        .setHelpText(coData.secUrl);
+      form.addTextItem().setTitle("Industry").setRequired(true);
+      form.addTextItem().setTitle("Sector").setRequired(true);
+      form
+        .addParagraphTextItem()
+        .setTitle("Industry/Market Corrections")
+        .setRequired(false);
+      form.addParagraphTextItem().setTitle("News").setRequired(false);
+      form
+        .addParagraphTextItem()
+        .setTitle("Economic/Business Cycles")
+        .setRequired(false);
+      form.addTextItem().setTitle("Stock Price").setRequired(true);
+      form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+      form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+      form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+      form.addTextItem().setTitle("Total Equity").setRequired(false);
+      form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+      form
+        .addTextItem()
+        .setTitle("Cash & Marketable Securities")
+        .setRequired(true);
+      form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+      form.addTextItem().setTitle("Inventories").setRequired(true);
+      form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+      form.addTextItem().setTitle("Net PP&E").setRequired(false);
+      form
+        .addTextItem()
+        .setTitle("Current Financial Liabilities")
+        .setRequired(true);
+      form
+        .addTextItem()
+        .setTitle("Long-term Interest-bearing Debts")
+        .setRequired(false);
+      form
+        .addTextItem()
+        .setTitle("Current Year Total Earnings")
+        .setRequired(false);
+      form
+        .addTextItem()
+        .setTitle("Base Year Total Earnings")
+        .setRequired(false);
+      form.addTextItem().setTitle("Your Name").setRequired(true);
+      form.addDateItem().setTitle("Birth Date").setRequired(true);
+      form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+      form
+        .setTitle(coData.rndTitle)
+        .setConfirmationMessage("Thanks for your feedback !!");
+      var url = form.getPublishedUrl();
+      return url;
+      return HtmlService.createTemplate(
+        `<div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
     <div class="video-container" style="clear: both">
     <div class="col s12 receipt deep-purple darken-1">
@@ -587,9 +602,10 @@ var dtlsInvestor = function (coKey) {
       allowfullscreen
       ></iframe>
     </div></div></div></div>`,
-    )
-      .evaluate()
-      .getContent();
+      )
+        .evaluate()
+        .getContent();
+    }
   } else {
     return dtlsEnviroment(coData.rndTitle);
   }

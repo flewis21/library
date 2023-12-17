@@ -2,8 +2,10 @@ var coUtility = function (rndClient) {
   var client = rndClient;
   var uniqueCo = [];
   if (typeof client !== "undefined") {
+    console.log("calling allInvestors with " + client);
     var coName = allInvestors(client.toString().toLowerCase());
   } else {
+    console.log("calling allInvestors with " + client);
     var coName = allInvestors();
   }
   if (typeof coName["cik"] === "undefined") {
@@ -72,17 +74,21 @@ var dataRowIndex = function (data, row, index) {
 };
 
 var dtlsCapital = function (url) {
-  const videoSearch = [
-    urlDataSource(url, null, { muteHttpExceptions: true, mode: "no-cors" }),
-  ];
-  const table = videoSearch
-    .slice(videoSearch.indexOf("SERP"))
-    .toString()
-    .split("SERP");
-  const pong = table.map((ping) => {
-    return ping.substring(0);
-  });
-  return pong.toString().split(",");
+  if (url) {
+    const videoSearch = [
+      urlDataSource(url, null, { muteHttpExceptions: true, mode: "no-cors" }),
+    ];
+    const table = videoSearch
+      .slice(videoSearch.indexOf("SERP"))
+      .toString()
+      .split("SERP");
+    const pong = table.map((ping) => {
+      return ping.substring(0);
+    });
+    return pong.toString().split(",");
+  } else {
+    return {};
+  }
 };
 
 var forArray = function (arrayData) {
@@ -240,7 +246,11 @@ var needUtility = function (rndClient, arrD, time) {
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
     console.log([client].join("").length + " is greater than " + 0);
+    console.log("Calling seoSheet with " + client);
     var seoTitle = seoSheet(client, time).keyWords;
+    console.log(
+      "Recieved seoTitle: " + seoTitle + " from seoSheet with client " + client,
+    );
     var improvedTitle = seoTitle.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
         // var elaspeTime = new Date() - time
@@ -260,12 +270,23 @@ var needUtility = function (rndClient, arrD, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      var coName = allTime(rndTitle2.toLowerCase(), arrD, time);
+      console.log("Calling allTime with " + rndTitle2);
+      var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
+      console.log(
+        "Recieved coName: " +
+          coName +
+          " from allTime with rndTitle2 " +
+          rndTitle2,
+      );
     } else {
+      console.log("Calling allTime with ");
       var coName = allTime(null, arrD, time);
+      console.log("Recieved coName: " + coName + " from allTime with ");
     }
   } else {
+    console.log("Calling allTime with ");
     var coName = allTime(null, arrD, time);
+    console.log("Recieved coName: " + coName + " from allTime with ");
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({
@@ -338,8 +359,16 @@ var udsCache = function (content) {
   }
 };
 
-var urlDataSource = function (url, params, time, xpath) {
-  var res = UrlFetchApp.fetch(url, params);
+var urlDataSource = function (cokey, url, time, xpath) {
+  if (typeof time === "undefined") {
+    time = start;
+  }
+  if (typeof cokey === "undefined") {
+    var cokey = "url data";
+  }
+  // var res = UrlFetchApp.fetch(url, {muteHttpExceptions:true});
+  var seoArray = seoPastTime([cokey].join(""), time);
+  return (uti = seoArray.playList);
   var content = res.getContentText();
   return content;
 

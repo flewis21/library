@@ -1,30 +1,28 @@
 function apiSetupSheet() {
-  var doc = SpreadsheetApp.openById(
-    PropertiesService.getScriptProperties().getProperty("key"),
-  );
+  var cprops = PropertiesService.getScriptProperties();
+  var keyC = cprops.getProperty("key");
+  var doc = SpreadsheetApp.openById(keyC);
   return doc;
 }
 
 function apiSetupActiveSheet() {
-  var doc = SpreadsheetApp.openById(
-    PropertiesService.getScriptProperties().getProperty("sheetkey"),
-  );
+  var cprops = PropertiesService.getScriptProperties();
+  var activeC = cprops.getProperty("sheetkey");
+  var doc = SpreadsheetApp.openById(activeC);
   return doc;
 }
 
 function apiSetup() {
-  var scriptKey = PropertiesService.getScriptProperties().setProperty(
-    "key",
-    ssId(),
-  );
+  var wsId = ssId();
+  var cprops = PropertiesService.getScriptProperties();
+  var scriptKey = cprops.setProperty("key", wsId);
   return scriptKey;
 }
 
 function apiSetupActive() {
-  var scriptKey = PropertiesService.getScriptProperties().setProperty(
-    "sheetkey",
-    ssSheet().getSheetId(),
-  );
+  var ssId = ssSheet().getSheetId();
+  var cprops = PropertiesService.getScriptProperties();
+  var scriptKey = cprops.setProperty("sheetkey", ssId);
   return scriptKey;
 }
 

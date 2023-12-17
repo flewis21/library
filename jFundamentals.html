@@ -28,7 +28,6 @@
   </head>
   <body>
     <nav>
-      <a href="<?!= getUrl(ScriptApp) ?>" target="_top">Back</a>
       <a id="requestor" href="#" onclick="navAway()">Load</a>
       <a id="caller" href="#" onclick="updatePage()">Reload</a>
       <a
@@ -41,9 +40,23 @@
     <br />
     <div id="drip">waiting...</div>
     <script id="jFundamentalsScript1">
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate([func], [args]);
+        });
+      }
       document.addEventListener("DOMContentLoaded", updatePage);
       var htmFileList = [
-        `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers Section3.Challenge1 gnuFree myGNUFreeJS`,
+        `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
       ]
         .toString()
         .split(" ");
@@ -53,6 +66,7 @@
       var rndPage = htmFileList[htmNum()];
       console.log(rndPage + "...");
       function updatePage() {
+        localStorage.setItem("htmSearch", rndPage);
         document.getElementById("drip").innerHTML =
           "waiting for " + rndPage + "...";
         google.script.run
@@ -60,12 +74,38 @@
           .withFailureHandler(error)
           .runBoilerplate("renderFile", [rndPage]);
         function done(drop) {
-          document.getElementById("drip").innerHTML = drop;
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
+
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
+                var linkFollow = document.createElement("a");
+                linkFollow.href = cChange + "?func=renderFile&args=" + rndPage;
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_child";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("drip");
+                docWnd.innerHTML = drop;
+              }
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("drip").innerHTML = JSON.stringify(er);
+            });
         }
       }
       function navAway() {
         var newPage = htmFileList[htmNum()];
         rndPage = newPage;
+        localStorage.setItem("htmSearch", rndPage);
         document.getElementById("drip").innerHTML =
           "waiting for " + newPage + "...";
         google.script.run
@@ -73,11 +113,38 @@
           .withFailureHandler(error)
           .runBoilerplate("renderFile", [newPage]);
         function done(drop) {
-          document.getElementById("drip").innerHTML = drop;
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
+
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
+                var linkFollow = document.createElement("a");
+                linkFollow.href = cChange + "?func=renderFile&args=" + rndPage;
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_child";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("drip");
+                docWnd.innerHTML = drop;
+              }
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("drip").innerHTML = JSON.stringify(er);
+            });
         }
       }
       function error(er) {
+        alert(rndPage + " error(" + er + ")");
         console.log(er);
+        document.getElementById("drip").innerHTML = JSON.stringify(er);
       }
     </script>
   </body>

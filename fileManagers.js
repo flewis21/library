@@ -13,16 +13,25 @@ var driveUrls = function (fileX) {
 
 var fileManager = function (fileX, folder, time, content, mimeType) {
   if (typeof fileX !== "undefined") {
+    console.log("calling folderIdGlobal with " + folder);
     var folderId = folderIdGlobal(folder, time);
-    var file = DriveApp.getRootFolder().getFilesByName(
-      DriveApp.getFileById(fileX).getName(),
+    console.log("calling DriveApp with " + fileX + " to get the file name");
+    folderIdName = DriveApp.getFileById(fileX).getName();
+    console.log(
+      "calling DriveApp with " +
+        folderIdName +
+        " to search the root folder for the file",
     );
+    var file = DriveApp.getRootFolder().getFilesByName(folderIdName);
     var elaspeTime = new Date() - time;
     var myFile = file.next();
     var timeToExecute = maxTime - elaspeTime;
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (myFile) {
-      console.log(myFile);
+      // console.log(myFile)
+      console.log(
+        "calling DriveApp with id of file found in root drive - " + folderId,
+      );
       myFile.moveTo(DriveApp.getFolderById(folderId));
       return;
     } else {
@@ -35,13 +44,16 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
 };
 
 var folderIdGlobal = function (folderX, time) {
+  console.log("calling DriveApp");
   var tree = DriveApp.getFolders();
+  console.log("Receiving from DriveApp - " + tree);
   while (tree.hasNext()) {
     var elaspeTime = new Date() - time;
     var timeToExecute = maxTime - elaspeTime;
     var myId = tree.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
+    console.log("Receiving from DriveApp - " + myFolder);
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (folderX === myFolder) {
       return id;

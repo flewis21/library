@@ -169,44 +169,73 @@ var dtlsBridge = function (func, time) {
 
 var dtlsPict = function (e, time) {
   var search = [e].join("");
+  console.log("calling formUrls with " + search);
   var isProduct = formsUrls(search.toLowerCase(), "pictForms");
-  console.log(typeof isProduct);
+  console.log("Receiving from formUrls a(n) - " + typeof isProduct);
   if (typeof isProduct === "string" && typeof isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   var time = start;
-  // var e = "instagram"
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
-  var cokey = e || utilNeed;
+  // var e = "first at vicksburg"
+  // console.log("calling coSort")
+  // var arrData = coSort(time).title
+  // console.log("Receiving from coSort - ")
+  // console.log("calling randomUtility with ")
+  // var utilNeed = randomUtility(e,arrData).title
+  // console.log("Receiving from randomUtility - " + utilNeed)
+  var cokey = e; //|| utilNeed
   if (cokey) {
     var boilerUrl = dtlsBridge(cokey, time);
     if (boilerUrl) {
       return boilerUrl;
     }
   }
+  var coHelpText =
+    "http://www.bing.com/images/search?q=" +
+    encodeURIComponent(e) +
+    "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
+  console.log("calling formUrls with " + cokey);
   isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
-  console.log(typeof isProduct);
+  console.log("Receiving from formUrls a(n) - " + typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   // var utiStr = skyNeed(cokey, time)
   // var utiSeo = pastSeo(utiStr, time)
+  console.log("calling seoPictTime with " + cokey);
   var seoArray = seoPictTime([cokey].join(""), time);
   var uti = seoArray.playList;
+  var seoArrayVid = seoPastTime([cokey].join(""), time);
+  var utiVid = seoArrayVid.playList;
+  console.log("Receiving from seoPictTime - ");
+  console.log("calling formMaker with " + cokey);
   var form = formMaker([cokey].join("").toUpperCase(), "pictForms", time);
 
   if (typeof form === "object") {
     // fileManager(form.getId(), "videoForms", time)
 
+    form
+      .addTextItem()
+      .setTitle("CUSTOM SEARCH")
+      .setRequired(true)
+      .setHelpText(coHelpText);
+    form.setCollectEmail(true);
     uti.map((piece) => {
-      while (piece) {
-        if (piece) {
+      if (
+        [piece].join("").split('"')[1].indexOf("Logo.svg") !== -1 &&
+        [piece].join("").split('"')[1].indexOf("<") === -1 &&
+        [piece].join("").split('"')[1].indexOf("http") !== -1
+      ) {
+        console.log(
+          "calling join with " + [piece] + " looking for index of < and http",
+        );
+        var pieceStr = [piece].join("").split('"')[1];
+        console.log("Receiving from join - " + pieceStr);
+        if (pieceStr) {
           var elaspeTime = new Date() - time;
           var timeToExecute = maxTime - elaspeTime;
-          var pieceStr = [piece].join("");
           // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
           form.addPageBreakItem().setTitle([cokey].join(""));
           // form.addSectionHeaderItm().setTitle(pieceStr.split('"'))
@@ -270,14 +299,15 @@ var dtlsPict = function (e, time) {
             .setTitle("PRODUCTION NOTES")
             .setHelpText("SPECIAL EQUIPMENT\n BOX\n\n\n\n\n");
           form.addParagraphTextItem();
-          if (pieceStr.indexOf("<") === -1 && pieceStr.indexOf("http") !== -1) {
-            form
-              .addImageItem()
-              .setTitle(cokey + " storyboard")
-              .setImage(UrlFetchApp.fetch(pieceStr.split('"')[1]))
-              .setWidth(1012)
-              .setAlignment(FormApp.Alignment.CENTER);
-          }
+          console.log("calling UrlFetchApp with " + JSON.stringify(pieceStr));
+
+          form
+            .addImageItem()
+            .setTitle(cokey + " storyboard")
+            .setImage(UrlFetchApp.fetch(pieceStr))
+            .setWidth(1012)
+            .setAlignment(FormApp.Alignment.CENTER);
+
           form.addTextItem().setHelpText("scene no.").setRequired(true);
           form.addTextItem().setHelpText("int/ext").setRequired(true);
           form.addTextItem().setHelpText("day/night").setRequired(true);
@@ -286,9 +316,9 @@ var dtlsPict = function (e, time) {
             timeToExecute >= 5.98 * 60 * 1000
           ) {
             console.log(
-              "that function: " +
+              "dtlsPict - \nthis function: " +
                 arguments.callee.caller.name +
-                "\nthis function: " +
+                "\nis calling: " +
                 arguments.callee.name +
                 "\nTime limit six minutes",
             );
@@ -326,18 +356,16 @@ var dtlsPict = function (e, time) {
           if (timeToExecute <= 0.05 * 60 * 1000) {
             console.log(
               "piece: " +
-                piece[0] +
+                pieceStr[0] +
                 "\ntimeToExecute: " +
                 timeToExecute.valueOf(),
             );
             return;
           }
-          return piece[0];
         }
-        return;
       }
     });
-    form.setCollectEmail(true);
+    // return surveyPlayer(utiVid, [cokey].join(""))
     var formUrl = form.getPublishedUrl();
     return formUrl;
   }
@@ -345,13 +373,19 @@ var dtlsPict = function (e, time) {
 };
 
 var dtlsPro = function (e) {
-  // var e = "if and out business"
+  if (typeof e === "undefined") {
+    var e = "ifandoutbusiness";
+  }
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
       return boilerUrl;
     }
   }
+  var coHelpText =
+    "http://www.bing.com/videos/search?q=" +
+    encodeURIComponent(e) +
+    "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var isProduct = formsUrls([e].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
@@ -359,9 +393,9 @@ var dtlsPro = function (e) {
     return formUrl;
   }
   var time = start;
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
-  var cokey = e || utilNeed;
+  // var arrData = coSort(time).title
+  // var utilNeed = randomUtility(e,arrData).title
+  var cokey = e;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
@@ -377,6 +411,11 @@ var dtlsPro = function (e) {
   if (typeof form === "object") {
     // fileManager(form.getId(), "videoForms", time)
 
+    form
+      .addTextItem()
+      .setTitle("CUSTOM SEARCH")
+      .setRequired(true)
+      .setHelpText(coHelpText);
     form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
@@ -449,7 +488,7 @@ var dtlsPro = function (e) {
         return;
       }
     });
-    return surveyPlayer(uti, [cokey].join(""));
+    // return surveyPlayer(uti, [cokey].join(""))
     var formUrl = form.getPublishedUrl();
     return formUrl;
   }
@@ -457,7 +496,9 @@ var dtlsPro = function (e) {
 };
 
 var portBing = function (e) {
-  // var e = "if and out business"
+  if (typeof e === "undefined") {
+    var e = "ifandoutbusiness";
+  }
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
@@ -475,9 +516,9 @@ var portBing = function (e) {
     return formUrl;
   }
   var time = start;
-  var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
-  var cokey = e || utilNeed;
+  // var arrData = coSort(time).title
+  // var utilNeed = randomUtility(e,arrData).title
+  var cokey = e;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
@@ -570,7 +611,7 @@ var portBing = function (e) {
         return;
       }
     });
-    return surveyPlayer(uti, [cokey].join(""));
+    // return surveyPlayer(uti, [cokey].join(""))
     var formUrl = form.getPublishedUrl();
     return formUrl;
   }
@@ -862,7 +903,9 @@ var stockPro = function (e, time) {
 };
 
 var stockHistory = function (e) {
-  // var e = "if and out business"
+  if (typeof e === "undefined") {
+    var e = "ifandoutbusiness";
+  }
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {

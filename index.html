@@ -34,19 +34,11 @@
       style="font-size: 30px"
     ></nav>
     <div class="row">
-      <div class="container">
+      <div id="indexSEO" class="container">
         <div class="col s12 receipt nav-wrapper deep-purple darken-1">
           <div
             class="container menu-img grey darken-4 z-depth-5 scale-transition scale-out scale-in receipt"
-          >
-            <? var infoLink = seoSheet("Nelly Furtado").keyWords ?> <? var
-            pageArray = [] ?> <? var page = infoLink.map((tv) => { ?> <? var
-            listItem = seoPastTime(tv).playList ?> <? var plaListNum =
-            Math.floor(Math.random() * Math.floor(tv.length)) ?> <? var
-            rndListItem = tv[plaListNum] ?> <? pageArray.push(rndListItem) ?> <?
-            }) ?> <? var story = pageArray[Math.floor(Math.random() *
-            Math.floor(pageArray.length))] ?> <?!= seoCapital(dtlsPro(story)) ?>
-          </div>
+          ></div>
         </div>
       </div>
     </div>
@@ -62,6 +54,112 @@
       document
         .querySelector("iframe")
         .setAttribute("style", "color: blue; clear: both; text-align: center;");
+    </script>
+    <script id="indexScript1">
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate([func], [args]);
+        });
+      }
+      document.addEventListener("DOMContentLoaded", updatePage);
+      var htmSearchList = [``].toString().split(" ");
+      var htmNum = function () {
+        return Math.floor(Math.random() * Math.floor(htmSearchList.length));
+      };
+      var rndPage = htmSearchList[htmNum()];
+      console.log(rndPage + "...");
+      function updatePage() {
+        localStorage.setItem("htmSearch", rndPage);
+        document.getElementById("indexSEO").innerHTML =
+          "waiting for " + rndPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("seoIndex");
+        function done(drop) {
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
+
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
+                var linkFollow = document.createElement("a");
+                linkFollow.href = cChange + "?func=seoIndex";
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_child";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("indexSEO");
+                docWnd.innerHTML = drop;
+              }
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("indexSEO").innerHTML =
+                JSON.stringify(er);
+            });
+        }
+      }
+      function navAway() {
+        var newPage = htmSearchList[htmNum()];
+        rndPage = newPage;
+        localStorage.setItem("htmSearch", rndPage);
+        document.getElementById("indexSEO").innerHTML =
+          "waiting for " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("seoIndex");
+        function done(drop) {
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
+
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
+                var linkFollow = document.createElement("a");
+                linkFollow.href = cChange + "?func=seoIndex";
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_child";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("indexSEO");
+                docWnd.innerHTML = drop;
+              }
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("indexSEO").innerHTML =
+                JSON.stringify(er);
+            });
+        }
+      }
+      function error(er) {
+        alert(rndPage + " error(" + er + ")");
+        console.log(er);
+        document.getElementById("indexSEO").innerHTML = JSON.stringify(er);
+      }
     </script>
   </body>
 </html>

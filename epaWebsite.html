@@ -5,20 +5,52 @@
   </head>
   <body>
     <nav>
-      <a href="#" target="_top">Back</a>
+      <a href="#" target="_top" id="navBack">Back</a>
     </nav>
     <div class="agenda container col s1">
-      <input value="" class="timepicker" id="prefTime" type="text" />
+      <input value="" class="timepicker" id="pRule" type="text" />
     </div>
     <button id="btn">Run It!</button>
     <script>
-      google.script.run.epaData();
-      google.script.run
-        .withSuccessHandler(pageLink)
-        .runBoilerplate("getUrl", []);
-      google.script.run.withSuccessHandler(dateRule).runBoilerplate("rule", []);
-      document.getElementById("prefTime").value = dateRule;
-      document.getElementById("breakUrl").value = pageLink;
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate([func], [args]);
+        });
+      }
+      document.getElementById("btn").addEventListener("click", openBlankPage);
+
+      function openBlankPage() {
+        serverside("getScriptUrl").then((cChange) => {
+          console.log(typeof cChange + " with length = " + cChange.length);
+          if (cChange.length === 114) {
+            // console.log(cChange)
+            var linkFollow = document.createElement("a");
+            linkFollow.href = cChange + "?func=&args=";
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_child";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click();
+            document.getElementById("linkFOLLOW").remove();
+          }
+        });
+      }
+
+      serverside("epaData");
+      serverside("getScriptUrl").then((pageLink) => {
+        document.getElementById("navBack").href = pageLink;
+      });
+      serverside("rule").then((dateRule) => {
+        document.getElementById("pRule").value = dateRule;
+      });
     </script>
     <input type="hidden" value="" id="breakUrl" />
   </body>

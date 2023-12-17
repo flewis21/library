@@ -29,10 +29,10 @@
         "object" == typeof exports && "object" == typeof module
           ? (module.exports = e())
           : "function" == typeof define && define.amd
-          ? define([], e)
-          : "object" == typeof exports
-          ? (exports.NRBA = e())
-          : (t.NRBA = e());
+            ? define([], e)
+            : "object" == typeof exports
+              ? (exports.NRBA = e())
+              : (t.NRBA = e());
       })(self, function () {
         return (function () {
           var t,
@@ -404,8 +404,8 @@
                         return t && t instanceof s
                           ? t
                           : t
-                          ? (0, o.X)(t, c, f)
-                          : f();
+                            ? (0, o.X)(t, c, f)
+                            : f();
                       }
                       function v(t, n, i, o, a) {
                         if ((!1 !== a && (a = !0), !r.aborted || o)) {
@@ -534,8 +534,8 @@
                       "x" === (i = o[c])
                         ? r().toString(16)
                         : "y" === i
-                        ? (i = (3 & r()) | 8).toString(16)
-                        : i;
+                          ? (i = (3 & r()) | 8).toString(16)
+                          : i;
                   return a;
                 }
                 function i() {
@@ -669,16 +669,16 @@
                             0 === c[u].indexOf("s=")
                               ? (o = c[u].substring(2))
                               : 0 === c[u].indexOf("p=")
-                              ? ";" ===
-                                  (i = c[u].substring(2)).charAt(
-                                    i.length - 1,
-                                  ) && (i = i.substr(0, i.length - 1))
-                              : 0 === c[u].indexOf("r=") &&
-                                ";" ===
-                                  (n = c[u].substring(2)).charAt(
-                                    n.length - 1,
-                                  ) &&
-                                (n = n.substr(0, n.length - 1));
+                                ? ";" ===
+                                    (i = c[u].substring(2)).charAt(
+                                      i.length - 1,
+                                    ) && (i = i.substr(0, i.length - 1))
+                                : 0 === c[u].indexOf("r=") &&
+                                  ";" ===
+                                    (n = c[u].substring(2)).charAt(
+                                      n.length - 1,
+                                    ) &&
+                                  (n = n.substr(0, n.length - 1));
                           if (n) {
                             var s = r(document.referrer);
                             (a = s == n) ||
@@ -1695,10 +1695,10 @@
                         "break" === t.type || "continue" === t.type
                           ? (this.next = t.arg)
                           : "return" === t.type
-                          ? ((this.rval = this.arg = t.arg),
-                            (this.method = "return"),
-                            (this.next = "end"))
-                          : "normal" === t.type && e && (this.next = e),
+                            ? ((this.rval = this.arg = t.arg),
+                              (this.method = "return"),
+                              (this.next = "end"))
+                            : "normal" === t.type && e && (this.next = e),
                         d
                       );
                     },
@@ -1907,11 +1907,11 @@
                   (R = "visibilitychange"),
                   (k = "visibilityState"))
                 : void 0 !== document.msHidden
-                ? ((A = "msHidden"), (R = "msvisibilitychange"))
-                : void 0 !== document.webkitHidden &&
-                  ((A = "webkitHidden"),
-                  (R = "webkitvisibilitychange"),
-                  (k = "webkitVisibilityState"));
+                  ? ((A = "msHidden"), (R = "msvisibilitychange"))
+                  : void 0 !== document.webkitHidden &&
+                    ((A = "webkitHidden"),
+                    (R = "webkitvisibilitychange"),
+                    (k = "webkitVisibilityState"));
               var z = i(2085);
               function N(t, e) {
                 return (
@@ -2020,8 +2020,8 @@
                             k && document[k]
                               ? i(document[k])
                               : document[A]
-                              ? i("hidden")
-                              : i("visible");
+                                ? i("hidden")
+                                : i("visible");
                           },
                           (0, e.m)(!1),
                         ),
@@ -2104,8 +2104,8 @@
                           e <= (0, O.zO)()
                             ? (n.fid = (0, O.zO)() - e)
                             : e > (0, O.os)() && e <= Date.now()
-                            ? ((e -= (0, O.os)()), (n.fid = (0, O.zO)() - e))
-                            : (e = (0, O.zO)()),
+                              ? ((e -= (0, O.os)()), (n.fid = (0, O.zO)() - e))
+                              : (e = (0, O.zO)()),
                           (this.fiRecorded = !0),
                           (0, w.p)(
                             "timing",
@@ -2634,8 +2634,8 @@
                             (m
                               ? m.then(b)
                               : u
-                              ? u(b)
-                              : ((y = -y), (w.data = y)));
+                                ? u(b)
+                                : ((y = -y), (w.data = y)));
                       })(e);
                   }),
                   r.on("open-xhr-start", v),
@@ -2812,10 +2812,10 @@
                 return !t || ("object" !== e && "function" !== e)
                   ? -1
                   : t === window
-                  ? 0
-                  : (0, et.X)(t, "nr@id", function () {
-                      return Dt++;
-                    });
+                    ? 0
+                    : (0, et.X)(t, "nr@id", function () {
+                        return Dt++;
+                      });
               }
               var Ft = i(5973);
               function Gt(t) {
@@ -3166,11 +3166,11 @@
                             "string" == typeof t[0]
                               ? (e = t[0])
                               : t[0] && t[0].url
-                              ? (e = t[0].url)
-                              : window.URL &&
-                                t[0] &&
-                                t[0] instanceof URL &&
-                                (e = t[0].href),
+                                ? (e = t[0].url)
+                                : window.URL &&
+                                  t[0] &&
+                                  t[0] instanceof URL &&
+                                  (e = t[0].href),
                               e &&
                                 ((this.parsedOrigin = (0, Ut.e)(e)),
                                 (this.sameOrigin =
@@ -3228,11 +3228,11 @@
                             "string" == typeof i
                               ? (n = i)
                               : "object" == typeof i && i instanceof Qt
-                              ? (n = i.url)
-                              : window.URL &&
-                                "object" == typeof i &&
-                                i instanceof URL &&
-                                (n = i.href),
+                                ? (n = i.url)
+                                : window.URL &&
+                                  "object" == typeof i &&
+                                  i instanceof URL &&
+                                  (n = i.href),
                               x(this, n);
                             var o = (
                               "" +
@@ -3306,12 +3306,12 @@
                               return "json" === n && null !== e
                                 ? e
                                 : "arraybuffer" === n ||
-                                  "blob" === n ||
-                                  "json" === n
-                                ? Gt(t.response)
-                                : "text" === n || "" === n || void 0 === n
-                                ? Gt(t.responseText)
-                                : void 0;
+                                    "blob" === n ||
+                                    "json" === n
+                                  ? Gt(t.response)
+                                  : "text" === n || "" === n || void 0 === n
+                                    ? Gt(t.responseText)
+                                    : void 0;
                             })(e, t.lastSize);
                             if ((n && (t.metrics.rxSize = n), t.sameOrigin)) {
                               var r = e.getResponseHeader(

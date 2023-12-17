@@ -446,13 +446,17 @@ var getEventValues = function (title, startTime, endTime, series) {
 };
 
 var getSize = function (url, params) {
-  var content = UrlFetchApp.fetch(url, params);
-  var res = content.getContentText();
-  const lines = res.split(/\r?\n/);
-  return {
-    rows: lines.length - 1,
-    columns: lines[0].split(",").length,
-  };
+  if (url) {
+    var content = UrlFetchApp.fetch(url, params);
+    var res = content.getContentText();
+    const lines = res.split(/\r?\n/);
+    return {
+      rows: lines.length - 1,
+      columns: lines[0].split(",").length,
+    };
+  } else {
+    return {};
+  }
 };
 
 var getScriptUrl = function () {
@@ -630,18 +634,18 @@ var prepareDataBrain = function (data, ratio = 29) {
             values.splice(0, 0, male[0]);
           })()
         : authLogic(values[values.indexOf("F")] === "F")
-        ? (function () {
-            const female = values.splice(values.indexOf("F"), 1);
-            values.splice(0, 0, female[0]);
-          })()
-        : authLogic(values[values.indexOf("I")] === "I")
-        ? (function () {
-            const inConclusive = values.splice(values.indexOf("I"), 1);
-            values.splice(0, 0, inConclusive[0]);
-          })()
-        : (function () {
-            return;
-          })();
+          ? (function () {
+              const female = values.splice(values.indexOf("F"), 1);
+              values.splice(0, 0, female[0]);
+            })()
+          : authLogic(values[values.indexOf("I")] === "I")
+            ? (function () {
+                const inConclusive = values.splice(values.indexOf("I"), 1);
+                values.splice(0, 0, inConclusive[0]);
+              })()
+            : (function () {
+                return;
+              })();
       values[0] = sexToNumber(values[0]);
       return {
         input: values,
@@ -707,6 +711,21 @@ var randNum = function (namedVar) {
 };
 
 var randomSubstance = function (index, loopLength, importedData, arrD, time) {
+  if (typeof time === "undefined") {
+    var time = start;
+  }
+  console.log(
+    "index: " +
+      index +
+      "\nLoop Length: " +
+      loopLength +
+      "\nImported Data: " +
+      importedData +
+      "\nArray Data: " +
+      arrD +
+      "\nTime: " +
+      time,
+  );
   var newArr = [];
   var i = index || 0;
   var l = loopLength || 1;
@@ -1045,15 +1064,19 @@ var testArray = function (content) {
 };
 
 var testData = function (sourceData, time) {
+  if (typeof time === "undefined") {
+    var time = start;
+  }
+  if (typeof sourceData === "undefined") {
+    var sourceData = [01234567].join("").split(",");
+  }
+  var myArray = [];
   try {
-    var myArray = [];
     for (var row in sourceData) {
       var elaspeTime = new Date() - time;
       console.log(
-        "that function: " +
-          arguments.callee.caller.name +
-          "\nthis function: " +
-          arguments.callee.name +
+        "sourceData: " +
+          sourceData +
           "\nrow: " +
           row +
           "\nelaspeTime: " +
@@ -1063,24 +1086,32 @@ var testData = function (sourceData, time) {
       for (var col in sourceData[row]) {
         var elaspeTime = new Date() - time;
         console.log(
-          "that function: " +
-            arguments.callee.caller.name +
-            "\nthis function: " +
-            arguments.callee.name +
+          "sourceData[row]: " +
+            sourceData[row] +
             "\ncol: " +
             col +
             "\nelaspeTime: " +
             elaspeTime,
         );
         myArray[row].push(sourceData[row][col]);
+        console.log(
+          "myArray[row]: " +
+            myArray[row] +
+            "\nsourceData[row][col]: " +
+            sourceData[row][col] +
+            "\nelaspeTime: " +
+            elaspeTime,
+        );
       }
     }
-    return myArray;
     console.log(myArray);
   } catch (err) {
     console.log(err);
     return err;
   }
+  return {
+    testArray: myArray,
+  };
 };
 // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 

@@ -376,7 +376,6 @@ var renderTemplate = function (blob, argsObject) {
     .evaluate()
     .append(funcCheck)
     .append(html)
-    .append(schedule)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setTitle("Don'time Life Services");
 };

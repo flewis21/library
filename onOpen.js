@@ -1,4 +1,8 @@
 var onOpen = function (appInterface) {
-  var menu = appInterface.getUi();
-  return menu;
+  if (typeof appInterface !== "string") {
+    return JSON.stringify({});
+  } else {
+    var menu = appInterface.getUi();
+    return menu;
+  }
 };

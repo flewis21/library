@@ -3,68 +3,163 @@ function seoKeyword() {
 }
 
 function needPastTime(searchString) {
-  const videoSearch = urlDataSource(
-    `http://www.bing.com/search?q=${encodeURIComponent(
-      searchString,
-    )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-  );
-  // return videoSearch
-  const vidsSearched = [];
-  const vidValues = [];
-  const uniqueVid = [];
-  [videoSearch].map((videoId) => {
-    const idArray = videoId.slice(videoId.indexOf(`v=`)).toString().split(`v=`);
-    for (var i = 1; i < idArray.length; i++) {
-      const playId = idArray[i].toString().substring(0, 11);
-      vidsSearched.push([playId]);
-      vidValues.push(playId.valueOf());
+  if (typeof time === "undefined") {
+    time = start;
+  }
+  while (typeof fndOrd !== "object") {
+    if (typeof searchString === "undefined") {
+      var searchString = "influencer";
     }
-    // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
-    // return v[0].valueOf();});
-    // console.log(vidV)
-    // console.log(vidsSearched.map((m) => {const mObject = Utilities.jsonStringify(m)
-    // console.log(mObject.indexOf(","))}))
-    return vidsSearched.forEach(function (vid) {
-      const vidObject = vid;
-      // console.log(typeof vidObject)
-      if (
-        vidObject[0].indexOf("=") === -1 &&
-        vidObject[0].indexOf("query") === -1 &&
-        vidObject[0].indexOf(";") === -1 &&
-        vidObject[0].indexOf("ajax") === -1 &&
-        vidObject[0].indexOf("whole") === -1 &&
-        vidObject[0].indexOf("inner") === -1 &&
-        vidObject[0].indexOf("strong") === -1 &&
-        vidObject[0].indexOf("ing") === -1 &&
-        vidObject[0].indexOf("brid") === -1 &&
-        vidObject[0].indexOf("ctrl") === -1 &&
-        vidObject[0].indexOf("location") === -1 &&
-        vidObject[0].indexOf("wiki") === -1 &&
-        vidObject[0].indexOf("//") === -1 &&
-        vidObject[0].indexOf("Html") === -1 &&
-        vidObject[0].indexOf("data") === -1 &&
-        vidObject[0].indexOf("undefined") === -1 &&
-        vidObject[0].indexOf("client") === -1 &&
-        vidObject[0].indexOf("/") === -1 &&
-        vidObject[0].indexOf("peri") === -1 &&
-        vidObject[0].indexOf("ten") === -1 &&
-        vidObject[0].indexOf("out") === -1 &&
-        vidObject[0].indexOf("new") === -1 &&
-        vidObject[0].indexOf("]") === -1 &&
-        vidObject[0].indexOf("[") === -1 &&
-        vidObject[0].indexOf("\\") === -1 &&
-        vidObject[0].indexOf("get") === -1 &&
-        vidObject[0].indexOf("&&") === -1 &&
-        vidObject[0].indexOf("a.severity") === -1 &&
-        vidObject[0].indexOf("b_cont") === -1 &&
-        vidObject[0].indexOf(",") === -1
-      ) {
-        uniqueVid.push(vid);
+    const data = UrlFetchApp.fetch(
+      `http://www.bing.com/search?q=${encodeURIComponent(
+        searchString,
+      )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+      { muteHTTPExceptions: true },
+    );
+    const videoSearch = data.getContentText();
+    // return videoSearch
+    const vidsSearched = [];
+    const vidValues = [];
+    const sorFndOrd = [];
+    [videoSearch].map((videoId) => {
+      const idArray = videoId
+        .slice(videoId.indexOf(`v=`))
+        .toString()
+        .split(`v=`);
+      for (var i = 1; i < idArray.length; i++) {
+        const playId = idArray[i].toString().substring(0, 11);
+        vidsSearched.push(playId);
+        vidValues.push(playId.valueOf());
       }
+      // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
+      // return v[0].valueOf();});
+      // console.log(vidV)
+      // console.log(vidsSearched.map((m) => {const mObject = Utilities.jsonStringify(m)
+      // console.log(mObject.indexOf(","))}))
+      return vidsSearched.forEach(function (vid) {
+        const vidObject = vid;
+        // console.log(typeof vidObject)
+        if (
+          vidObject[0].indexOf("=") === -1 &&
+          vidObject[0].indexOf("query") === -1 &&
+          vidObject[0].indexOf(";") === -1 &&
+          vidObject[0].indexOf("ajax") === -1 &&
+          vidObject[0].indexOf("whole") === -1 &&
+          vidObject[0].indexOf("inner") === -1 &&
+          vidObject[0].indexOf("strong") === -1 &&
+          vidObject[0].indexOf("ing") === -1 &&
+          vidObject[0].indexOf("brid") === -1 &&
+          vidObject[0].indexOf("ctrl") === -1 &&
+          vidObject[0].indexOf("location") === -1 &&
+          vidObject[0].indexOf("wiki") === -1 &&
+          vidObject[0].indexOf("//") === -1 &&
+          vidObject[0].indexOf("Html") === -1 &&
+          vidObject[0].indexOf("data") === -1 &&
+          vidObject[0].indexOf("undefined") === -1 &&
+          vidObject[0].indexOf("client") === -1 &&
+          vidObject[0].indexOf("/") === -1 &&
+          vidObject[0].indexOf("peri") === -1 &&
+          vidObject[0].indexOf("ten") === -1 &&
+          vidObject[0].indexOf("out") === -1 &&
+          vidObject[0].indexOf("new") === -1 &&
+          vidObject[0].indexOf("]") === -1 &&
+          vidObject[0].indexOf("[") === -1 &&
+          vidObject[0].indexOf("\\") === -1 &&
+          vidObject[0].indexOf("get") === -1 &&
+          vidObject[0].indexOf("&&") === -1 &&
+          vidObject[0].indexOf("a.severity") === -1 &&
+          vidObject[0].indexOf("b_cont") === -1 &&
+          vidObject[0].indexOf(",") === -1 &&
+          vidObject[0].indexOf("document.qu") === -1
+        ) {
+          sorFndOrd.push(vid);
+        }
+      });
     });
-  });
-  //  console.log(uniqueVid)
-  return uniqueVid.sort((a, b) => a - b);
+    var i = 0;
+    var l = sorFndOrd.length;
+    for (i, l; i < l; i++) {
+      var fndOrd = [];
+      sorFndOrd.sort((a, b) => {
+        if (a !== b && fndOrd.indexOf(a) === -1) {
+          if (fndOrd.indexOf(a) > -1) {
+            return;
+          }
+
+          fndOrd.push(a);
+        } else if (a === b && fndOrd.indexOf(a) === -1) {
+          if (fndOrd.indexOf(a) > -1) {
+            return;
+          }
+
+          fndOrd.push(a);
+        } else if (b !== a && fndOrd.indexOf(b) === -1) {
+          if (fndOrd.indexOf(b) > -1) {
+            return;
+          }
+
+          fndOrd.push(b);
+        }
+      });
+    }
+    if (typeof fndOrd === "object") {
+      // console.log(seoArray.playList)
+      break;
+    }
+  }
+
+  // console.log(fndOrd)
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time;
+      var timeToExecute = maxTime - elaspeTime;
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (
+          test.indexOf("false") === -1 &&
+          test.indexOf("var") === -1 &&
+          test.indexOf("=") === -1 &&
+          test.indexOf(".") === -1 &&
+          test.indexOf("(") === -1 &&
+          test.indexOf(")") === -1 &&
+          test.indexOf("_") === -1 &&
+          test.indexOf(";") === -1 &&
+          test.indexOf('"') === -1 &&
+          test.indexOf("Error") === -1 &&
+          test.indexOf("error") === -1 &&
+          test.indexOf("Codes") === -1 &&
+          test.indexOf("siz23") === -1 &&
+          test.indexOf(":") === -1 &&
+          test.indexOf("{}") === -1 &&
+          test.indexOf("}") === -1 &&
+          test.indexOf("<") === -1 &&
+          test.indexOf(">") === -1 &&
+          test.indexOf("r[1]+r[3],a") === -1 &&
+          test.indexOf("new XMLHttp") === -1
+        ) {
+          if (JSON.stringify(i) >= 3) {
+            break;
+          }
+          return test[i];
+        }
+      }
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    });
+    var rndSort = [];
+    for (var i = 0, l = rndRes.length; i < l; i++) {
+      var sorRes = rndRes.filter((o) => {
+        return o !== rndRes[i];
+      });
+      rndSort.push(sorRes);
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+
+    //  console.log(uniqueVid)
+    return rndRes.sort((a, b) => a - b);
+  }
 }
 
 var pastTime = function (url) {
@@ -90,7 +185,7 @@ function videoPage(search) {
   var res = seoSheet(search).keyWords;
   var resRnd = Math.floor(Math.random() * Math.floor(res.length));
   var content = res[resRnd];
-  var youPlayer = dtlsMain(content);
+  var youPlayer = videoPlayer(content);
   var content = HtmlService.createTemplate(`
   ${
     contentApp(
