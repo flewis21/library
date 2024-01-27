@@ -451,17 +451,7 @@ var oldSEC = function (rndTitle) {
   const titleMatches = [matches.toString().substring(titleKings)];
   // console.log(Utilities.jsonStringify([titleMatches]))
   var coTable = matches.map((r) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(
-      r[0]["ticker"],
-    )}&page=1&sort_by=relevence&langcode=en" target="_blank">${
-      r[0]["ticker"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(
-      r[0]["cik_str"],
-    )}&owner=exclude" target="_blank">${
-      r[0]["cik_str"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(
-      r[0]["title"],
-    )}" target="_blank">${r[0]["title"]}</a></td></tr>`;
+    return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(r[0]["cik_str"])}&owner=exclude" target="_blank">${r[0]["cik_str"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_blank">${r[0]["title"]}</a></td></tr>`;
   });
   const result = JSON.stringify(coTable);
   const randomCoKey = Math.floor(
@@ -603,17 +593,7 @@ var opt = function (searchString) {
   jo.user = dataArray;
   var coTable = arrData
     .map((r) => {
-      return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${
-        jsonData.rndCik
-      }&owner=exclude" target="_blank">${
-        jsonData.rndCik
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        optUrl + encodeURIComponent(jsonData.rndTicker)
-      }" target="_blank">${
-        jsonData.rndTicker
-      }</a></td><td><a class="waves-effect waves-light btn" href="${
-        optUrl + encodeURIComponent(jsonData.rndTitle)
-      }" target="_blank">${jsonData.rndTitle}</a></td></tr>`;
+      return `<tr><td><a href="https://www.sec.gov/edgar/browse/?CIK=${jsonData.rndCik}&owner=exclude" target="_blank">${jsonData.rndCik}</a></td><td><a class="waves-effect waves-light btn" href="${optUrl + encodeURIComponent(jsonData.rndTicker)}" target="_blank">${jsonData.rndTicker}</a></td><td><a class="waves-effect waves-light btn" href="${optUrl + encodeURIComponent(jsonData.rndTitle)}" target="_blank">${jsonData.rndTitle}</a></td></tr>`;
     })
     .toString()
     .replace(/,/g, "");

@@ -36,9 +36,7 @@ function youTube(e) {
             </ul>
 
           </div>
-          <div><label for="reload01">Search Bing</label><a href="https://www.bing.com/search?q=${encodeURIComponent(
-            username,
-          )}+site%3Aclubhouse.com&PC=U316&FORM=CHROMN" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?!= myTitle ?></h1></a></div>
+          <div><label for="reload01">Search Bing</label><a href="https://www.bing.com/search?q=${encodeURIComponent(username)}+site%3Aclubhouse.com&PC=U316&FORM=CHROMN" target="_blank"><h1 class="blue z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt" id="reload01"><?!= myTitle ?></h1></a></div>
           <div class="row">
           <div class="col s8">
           <span><input placeholder="About me?..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span></div></div>

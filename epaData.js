@@ -91,25 +91,7 @@ var epaData = function (e) {
             var jo = {};
             jo.user = dataArray;
             var coTable = jo.user.map((r) => {
-              return `<tr><td><a class="waves-effect waves-light btn" href="${
-                urlIngredient + encodeURIComponent(r["ingredientname"])
-              }" target="_blank">${
-                r["ingredientname"]
-              }</a></td><td><a class="waves-effect waves-light btn" href="${
-                urlPlay + encodeURIComponent(r["registrationstatus"])
-              }" target="_blank">${
-                r["registrationstatus"]
-              }</a></td><td><a class="waves-effect waves-light btn" href="${
-                urlPlay + encodeURIComponent(r["productnamestatus"])
-              }" target="_blank">${
-                r["productnamestatus"]
-              }</a></td><td><a class="waves-effect waves-light btn" href="${
-                urlCalendar + encodeURIComponent(r["productstatusdate"])
-              }" target="_blank">${
-                r["productstatusdate"]
-              }</a></td><td><a class="waves-effect waves-light btn" href="${
-                urlProduct + encodeURIComponent(r["productname"])
-              }" target="_blank">${r["productname"]}</a></td></tr>`;
+              return `<tr><td><a class="waves-effect waves-light btn" href="${urlIngredient + encodeURIComponent(r["ingredientname"])}" target="_blank">${r["ingredientname"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["registrationstatus"])}" target="_blank">${r["registrationstatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["productnamestatus"])}" target="_blank">${r["productnamestatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCalendar + encodeURIComponent(r["productstatusdate"])}" target="_blank">${r["productstatusdate"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlProduct + encodeURIComponent(r["productname"])}" target="_blank">${r["productname"]}</a></td></tr>`;
             });
             var result = JSON.stringify(coTable);
             // var t4 = newEPAData(productIngName(test2["active_ingredients"][0]["active_ing"]));
@@ -284,25 +266,7 @@ var epaIng = function (e) {
     ];
   var randNum = Math.floor(Math.random() * Math.floor(res["items"].length));
   var coTable = res["items"].map((r) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="${
-      urlIngredient + encodeURIComponent(r["ingredientname"])
-    }" target="_blank">${
-      r["ingredientname"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlPlay + encodeURIComponent(r["registrationstatus"])
-    }" target="_blank">${
-      r["registrationstatus"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlPlay + encodeURIComponent(r["productnamestatus"])
-    }" target="_blank">${
-      r["productnamestatus"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlCalendar + encodeURIComponent(r["productstatusdate"])
-    }" target="_blank">${
-      r["productstatusdate"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlProduct + encodeURIComponent(r["productname"])
-    }" target="_blank">${r["productname"]}</a></td></tr>`;
+    return `<tr><td><a class="waves-effect waves-light btn" href="${urlIngredient + encodeURIComponent(r["ingredientname"])}" target="_blank">${r["ingredientname"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["registrationstatus"])}" target="_blank">${r["registrationstatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["productnamestatus"])}" target="_blank">${r["productnamestatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCalendar + encodeURIComponent(r["productstatusdate"])}" target="_blank">${r["productstatusdate"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlProduct + encodeURIComponent(r["productname"])}" target="_blank">${r["productname"]}</a></td></tr>`;
   });
   var result = JSON.stringify(coTable);
   var ing2name = res["items"][randNum]["productname"] || product;
@@ -552,29 +516,7 @@ var oldEPA = function (rndTitle) {
     // console.log(Utilities.jsonStringify([titleMatches]))
     var coTable = matches
       .map((r) => {
-        return `<tr><td><a class="waves-effect waves-light btn" href="${urlProduct}${encodeURIComponent(
-          r["productname"],
-        )}" target="_blank">${
-          r["productname"]
-        }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-          r["eparegnumber"],
-        )}" target="_blank">${
-          r["eparegnumber"]
-        }</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(
-          r["registrationstatus"],
-        )}" target="_blank">${
-          r["registrationstatus"]
-        }</a></td><td><a class="waves-effect waves-light btn" href="${urlPlayer}${encodeURIComponent(
-          r["ingredientname"],
-        )}" target="_blank">${
-          r["ingredientname"]
-        }</a></td><td><a class="waves-effect waves-light btn" href="${urlCasNo}${encodeURIComponent(
-          r["casnumber"],
-        )}" target="_blank">${
-          r["casnumber"]
-        }</a></td><td><a class="waves-effect waves-light btn" href="${urlPcCode}${encodeURIComponent(
-          r["pccode"],
-        )}" target="_blank">${r["pccode"]}</a></td></tr>`;
+        return `<tr><td><a class="waves-effect waves-light btn" href="${urlProduct}${encodeURIComponent(r["productname"])}" target="_blank">${r["productname"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(r["eparegnumber"])}" target="_blank">${r["eparegnumber"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlEpaRegNo}${encodeURIComponent(r["registrationstatus"])}" target="_blank">${r["registrationstatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlayer}${encodeURIComponent(r["ingredientname"])}" target="_blank">${r["ingredientname"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCasNo}${encodeURIComponent(r["casnumber"])}" target="_blank">${r["casnumber"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPcCode}${encodeURIComponent(r["pccode"])}" target="_blank">${r["pccode"]}</a></td></tr>`;
       })
       .toString()
       .replace(/,/g, "");

@@ -26,20 +26,39 @@
             .runBoilerplate([func], [args]);
         });
       }
+      var boxInput = document.getElementById("pRule");
+      document.getElementById("pRule").addEventListener("click", clearBox);
+      boxInput.addEventListener("keypress", function (event) {
+        // If the user preses the "Enter" key on the keyboard.
+        if (event.key === "Enter") {
+          document.getElementById("btn").click();
+        }
+      });
       document.getElementById("btn").addEventListener("click", openBlankPage);
 
+      function clearBox() {
+        boxInput.value = "";
+      }
       function openBlankPage() {
         serverside("getScriptUrl").then((cChange) => {
           console.log(typeof cChange + " with length = " + cChange.length);
           if (cChange.length === 114) {
             // console.log(cChange)
             var linkFollow = document.createElement("a");
-            linkFollow.href = cChange + "?func=&args=";
+            linkFollow.href = cChange + boxInput.value;
             linkFollow.id = "linkFOLLOW";
             linkFollow.target = "_child";
             document.body.appendChild(linkFollow);
             document.getElementById("linkFOLLOW").click();
             document.getElementById("linkFOLLOW").remove();
+            boxInput.value = "";
+            serverside("rule").then((dateRule) => {
+              console.log(typeof boxInput.value);
+              console.log(boxInput.value.length);
+              if (boxInput.value.length === 0) {
+                boxInput.value = dateRule;
+              }
+            });
           }
         });
       }
@@ -49,7 +68,11 @@
         document.getElementById("navBack").href = pageLink;
       });
       serverside("rule").then((dateRule) => {
-        document.getElementById("pRule").value = dateRule;
+        console.log(typeof boxInput.value);
+        console.log(boxInput.value.length);
+        if (boxInput.value.length === 0) {
+          boxInput.value = dateRule;
+        }
       });
     </script>
     <input type="hidden" value="" id="breakUrl" />

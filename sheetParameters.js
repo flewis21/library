@@ -7,9 +7,7 @@ function activeSsId() {
 var bingSWF = function (searchString, time) {
   // var searchString = "oa"
   if (typeof searchString !== "undefined") {
-    var searchString = `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(
-      searchString,
-    )}&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var searchString = `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(searchString)}&PC=U316&top=50&skip=0&FORM=CHROMN`;
     var data = [
       urlDataSource(searchString, { muteHttpExceptions: true }, time),
     ];
@@ -32,9 +30,7 @@ var bingSWF = function (searchString, time) {
 var bingNeed = function (searchString, time) {
   if (typeof searchString !== "undefined") {
     // const videoSearch = [urlDataSource(`https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(searchString)}&PC=U316&top=50&skip=0&FORM=CHROMN`, null, {muteHttpExceptions:true})];
-    const search = `https://www.bing.com/search?q=${encodeURIComponent(
-      searchString,
-    )}%20intitle%3A - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const search = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const data = [urlDataSource(search, { muteHttpExceptions: true }, time)];
     const table = data.slice(data.indexOf("SERP")).toString().split("SERP");
     const pong = table.map((ping) => {
@@ -114,17 +110,13 @@ var cabDriver = function (e) {
     <div id="dev">
     </div>
     <script>
-      document.getElementById("dev").textContent = ${JSON.stringify(
-        agendaCal.getContent(),
-      )}
+      document.getElementById("dev").textContent = ${JSON.stringify(agendaCal.getContent())}
     </script>`,
   ).getRawContent();
 };
 
 var classifiedCapital = function (searchString, time) {
-  const searchStr = `https://www.bing.com/search?q=${encodeURIComponent(
-    searchString,
-  )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  const searchStr = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   const videoSearch = [
     urlDataSource(searchStr, { muteHttpExceptions: true }, time),
   ];
@@ -141,9 +133,7 @@ var classifiedCapital = function (searchString, time) {
 };
 
 var classifiedSheet = function (searchString, time) {
-  var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
-    searchString,
-  )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var headers = ["keywords"];
   var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   const seoSearched = [];
@@ -338,9 +328,7 @@ var classifiedSheet = function (searchString, time) {
       <?!= dOMContentLoaded ?>
     </script>
     <script>document.addEventListener("DOMContentLoaded", function()
-          {document.getElementById("seoData").innerHTML = ${JSON.stringify(
-            searchesCapital,
-          )};})</script>
+          {document.getElementById("seoData").innerHTML = ${JSON.stringify(searchesCapital)};})</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
         `,
   );
@@ -417,9 +405,7 @@ function mis(text) {
 var needBing = function (searchString, time) {
   // var searchString = "Just married"
   if (typeof searchString !== "undefined") {
-    const search = `http://www.bing.com/search?q=${encodeURIComponent(
-      searchString,
-    )}%20intitle%3A - Search - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const search = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - Search - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const data = [urlDataSource(search, { muteHttpExceptions: true }, time)];
     var resDATA = data.indexOf("SERP");
     var dataSplit = data.slice(resDATA).toString().split("SERP");
@@ -459,9 +445,7 @@ var needBing = function (searchString, time) {
 };
 
 var needPong = function (searchString) {
-  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(
-    searchString,
-  )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
   var txt = seoBites(searchString, seoFactor(data).split(","));
   console.log(txt.length);
@@ -576,9 +560,7 @@ var pastSeo = function (namedVar, time) {
 var pictBing = function (searchString, time) {
   // var searchString =  "Drones"
   if (typeof searchString !== "undefined") {
-    const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
-      searchString,
-    )}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const search = [
       urlDataSource(rndSearch, { muteHttpExceptions: true }, time),
     ];
@@ -1204,9 +1186,7 @@ var seoPictTime = function (searchString, time) {
 
 var seoPictures = function (searchString, time) {
   // var searchString = "linkedIn"
-  var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(
-    searchString,
-  )}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   // var i = 0
   // var l = [data].join("").split(" ").length
@@ -1504,9 +1484,7 @@ var seoTwitter = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(
-    searchString,
-  )}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
   var data = [unFilData.getContentText()];
   console.log("Calling seoFactor with " + data);
@@ -1531,9 +1509,7 @@ var seoYoutube = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(
-    searchString,
-  )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
   var data = [unFilData.getContentText()];
   var idArray = vidFactor(data, time).vidArray;
@@ -1577,11 +1553,17 @@ var sheetSeo = function (namedVar, time) {
 };
 
 var sheetsUrls = function (fileX) {
+  var fileNameList = matchManager("json");
+  var fileName = fileNameList.join("");
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
     var trueName = treeRoot.next();
-    if (trueName.getMimeType() === "GOOGLE_SHEETS") {
-      if (trueName.getName() === fileX) return trueName.getUrl();
+    if (trueName.getMimeType() == "GOOGLE_SHEETS") {
+      if (trueName.getName() === fileName) {
+        return console.log(trueName.getUrl());
+      } else {
+        return console.log({});
+      }
     }
   }
 };
@@ -1809,11 +1791,7 @@ var taxiService = function () {
 var tutorial = function (text) {
   var html = contentApp(`
     <body id="screen"></body>
-    <script>document.getElementById("screen").innerHTML = ${urlDataSource(
-      encodeURI(text),
-    )} || ${urlDataSource(
-      encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"),
-    )} </script>`);
+    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
   return html;
 };
 

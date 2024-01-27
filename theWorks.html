@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+  </head>
+  <body>
+    <? var eFolder = DriveApp.getFoldersByName("General Work Invoice").next() ?>
+    <? var folderFile = eFolder.getFilesByName("General Work Invoice") ?> <? var
+    dataTree = [] ?> <? while (folderFile.hasNext()) { var myFile =
+    folderFile.next() var currentFileUrl = myFile.getUrl();
+    dataTree.push(currentFileUrl) } ?> <? var rndFiled =
+    Math.floor(Math.random() * (Math.floor(dataTree.length))) ?> <? var filed =
+    dataTree[rndFiled] ?>
+    <div class="row">
+      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+        <div class="video-container" style="clear: both">
+          <div class="col s12 receipt deep-purple darken-1">
+            <iframe
+              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+              id="worksFrame"
+              src=""
+              width="100%"
+              height="100%"
+              allow="autoplay"
+              allow="encrypted-media"
+              title="Dontime Life Website"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document,addEventListener("DOMContentLoaded", pageScript);
+      function pageScript() {
+        document.getElementById("worksFrame").src = <?!= JSON.stringify(filed) ?>
+    </script>
+  </body>
+</html>

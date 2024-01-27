@@ -356,49 +356,7 @@ var sheetWebsite = function (e) {
   var searchString = dataArray[randNum]["productName"];
   jo.user = dataArray;
   var coTable = jo.user.map((r) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["id"])
-    }" target="_blank">${
-      r["id"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["productName"])
-    }" target="_blank">${
-      r["productName"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand1"])
-    }" target="_blank">${
-      r["rand1"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand2"])
-    }" target="_blank">${
-      r["rand2"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand3"])
-    }" target="_blank">${
-      r["rand3"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand4"])
-    }" target="_blank">${
-      r["rand4"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand5"])
-    }" target="_blank">${
-      r["rand5"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand6"])
-    }" target="_blank">${
-      r["rand6"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand7"])
-    }" target="_blank">${
-      r["rand7"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand8"])
-    }" target="_blank">${
-      r["rand8"]
-    }</a></td><td><a class="waves-effect waves-light btn" href="${
-      urlWww + encodeURIComponent(r["rand9"])
-    }" target="_blank">${r["rand9"]}</a></td></tr>`;
+    return `<tr><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["id"])}" target="_blank">${r["id"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["productName"])}" target="_blank">${r["productName"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand1"])}" target="_blank">${r["rand1"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand2"])}" target="_blank">${r["rand2"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand3"])}" target="_blank">${r["rand3"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand4"])}" target="_blank">${r["rand4"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand5"])}" target="_blank">${r["rand5"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand6"])}" target="_blank">${r["rand6"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand7"])}" target="_blank">${r["rand7"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand8"])}" target="_blank">${r["rand8"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlWww + encodeURIComponent(r["rand9"])}" target="_blank">${r["rand9"]}</a></td></tr>`;
   });
   var result = JSON.stringify(coTable);
   baseUrl = getUrl(ScriptApp);

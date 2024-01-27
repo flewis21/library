@@ -62,12 +62,7 @@ var navBar = function (
   navBar.test = HtmlService.createHtmlOutput(
     `
     <script>
-      ${tagBuilder(
-        "data",
-        [["the"]],
-        "a",
-        '\\ value=r[1] target="_blank" href="https://www.sec.gov/edgar/browse/?CIK="r[0][0]"&owner=exclude"',
-      )}
+      ${tagBuilder("data", [["the"]], "a", '\\ value=r[1] target="_blank" href="https://www.sec.gov/edgar/browse/?CIK="r[0][0]"&owner=exclude"')}
     </script> `,
   ).getContent();
   // contentApp("<?!= html ?>", { html: "".concat(contentApp(

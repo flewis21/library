@@ -11,9 +11,7 @@ function needPastTime(searchString) {
       var searchString = "influencer";
     }
     const data = UrlFetchApp.fetch(
-      `http://www.bing.com/search?q=${encodeURIComponent(
-        searchString,
-      )}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+      `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
       { muteHTTPExceptions: true },
     );
     const videoSearch = data.getContentText();
@@ -237,11 +235,7 @@ function videoPlayer(searchString) {
   const playListVar = JSON.stringify(randomPlaylist);
   const videoTable = [randomPlaylist]
     .map((v) => {
-      return `<tr><td>${geneFrame(
-        "https://www.youtube.com/watch?v=" + v[0],
-      )}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${
-        v[0]
-      }" target="_blank">${v[0]}</a></td></tr>`;
+      return `<tr><td>${geneFrame("https://www.youtube.com/watch?v=" + v[0])}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`;
     })
     .toString()
     .replace(/,/g, "");
