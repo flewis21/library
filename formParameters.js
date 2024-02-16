@@ -172,6 +172,40 @@ var matchManager = function (folderX, time) {
   };
 };
 
+var fileMatchManager = function (folderX, fileX, time) {
+  var elaspedTime;
+  var fileTree = [];
+  if (
+    typeof folderX !== "undefined" ||
+    folderX !== null ||
+    [folderX].join("").length > 0
+  ) {
+    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+    var tree = pyFolder.getFiles();
+    while (tree.hasNext()) {
+      fileTree.push(tree.next().getName());
+    }
+    if (fileTree.length === 0) {
+      tree = DriveApp.getFiles();
+      while (tree.hasNext()) {
+        fileTree.push(tree.next().getName());
+      }
+    }
+  } else {
+    var tree = DriveApp.getFiles();
+    while (tree.hasNext()) {
+      fileTree.push(tree.next().getName());
+    }
+  }
+
+  if (fileX) {
+    var match = fileMatch(fileX, fileTree);
+    return match;
+  } else {
+    return fileTree;
+  }
+};
+
 var fileMatch = function (fileX, stringArray) {
   if ([fileX].join("").length > 0) {
     var search = [fileX].join("");

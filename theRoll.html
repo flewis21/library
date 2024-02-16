@@ -26,18 +26,8 @@
     </style>
   </head>
   <body>
-    <? var folderMain = folderManager() ?> <? var fileList = [] ?> <? while
-    (fileList.length === 0) { var rndFolder = Math.floor(Math.random() *
-    (Math.floor(folderMain.length))); var folder = folderMain[rndFolder]
-    fileList = matchManager(folder).sheets } ?> <? var eFolder =
-    DriveApp.getFoldersByName(folder).next() ?> <? var rndFiled =
-    Math.floor(Math.random() * (Math.floor(fileList.length))); ?> <? var file =
-    fileList[rndFiled] ?> <? var folderFile = eFolder.getFilesByName(file) ?> <?
-    var dataTree = [] ?> <? while (folderFile.hasNext()) { var myFile =
-    folderFile.next() var currentFileUrl = myFile.getUrl();
-    dataTree.push(currentFileUrl)} ?> <? var rndFiledMain =
-    Math.floor(Math.random() * (Math.floor(dataTree.length))) ?> <? var
-    filedMain = dataTree[rndFiledMain] ?>
+    <? var folder = "Toyota" ?>; <? var file = "img_0053.jpg" ?> <? var
+    filedMain = fileBrowser(folder, file) ?>
     <div id="pageBlock">
       <p><?= folder ?>: <?= file ?></p>
     </div>
@@ -48,7 +38,7 @@
             id="indexDrive"
             class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
             src=""
-            style="width: 100%; height: 180vh"
+            style="width: 100%; height: 80vh"
             allow="autoplay"
             allow="encrypted-media"
             title="Dontime Life Website"

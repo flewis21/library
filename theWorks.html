@@ -1,40 +1,128 @@
 <!doctype html>
-<html>
+<html id="test">
   <head>
     <base target="_top" />
   </head>
   <body>
-    <? var eFolder = DriveApp.getFoldersByName("General Work Invoice").next() ?>
-    <? var folderFile = eFolder.getFilesByName("General Work Invoice") ?> <? var
-    dataTree = [] ?> <? while (folderFile.hasNext()) { var myFile =
-    folderFile.next() var currentFileUrl = myFile.getUrl();
-    dataTree.push(currentFileUrl) } ?> <? var rndFiled =
-    Math.floor(Math.random() * (Math.floor(dataTree.length))) ?> <? var filed =
-    dataTree[rndFiled] ?>
+    <nav>
+      <a href="#" target="_top" id="navBack">Back</a>
+    </nav>
+    <div id="pageBlock"></div>
+    <div class="agenda container col s1">
+      <input value="" class="timepicker" id="pRule" type="text" />
+    </div>
+    <button id="btn">Run It!</button>
     <div class="row">
-      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-        <div class="video-container" style="clear: both">
-          <div class="col s12 receipt deep-purple darken-1">
-            <iframe
-              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
-              id="worksFrame"
-              src=""
-              width="100%"
-              height="100%"
-              allow="autoplay"
-              allow="encrypted-media"
-              title="Dontime Life Website"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
-          </div>
+      <div id="forHtml" class="col s12 I12 m12 card-panel amber">
+        <div class="container" style="clear: both">
+          <iframe
+            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+            id="worksFrame"
+            src=""
+            style="width: 100%; height: 80vh"
+            allow="autoplay"
+            allow="encrypted-media"
+            title="Dontime Life Website"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
     </div>
     <script>
-      document,addEventListener("DOMContentLoaded", pageScript);
-      function pageScript() {
-        document.getElementById("worksFrame").src = <?!= JSON.stringify(filed) ?>
+      function serverSide(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate(func, args);
+        });
+      }
+      console.log(window);
+      var boxInput = document.getElementById("pRule");
+      boxInput.addEventListener("click", clearBox);
+      boxInput.addEventListener("keypress", function (event) {
+        // If the user preses the "Enter" key on the keyboard.
+        if (event.key === "Enter") {
+          document.getElementById("btn").click();
+        }
+      });
+      document.getElementById("btn").addEventListener("click", openWorks);
+
+      function clearBox() {
+        boxInput.value = "";
+      }
+      var folder = "loc";
+      var file = "id";
+      function openWorks() {
+        console.log(
+          typeof boxInput.value +
+            " _: " +
+            boxInput.value.indexOf(",") +
+            boxInput.value.split(""),
+        );
+        if (boxInput.value.indexOf(",") === -1) {
+          console.log("rndFolder,rndFile");
+          var splitSearch = boxInput.value.split("");
+          var funcFlex = boxInput.value;
+          console.log(urlFolder);
+          var urlFolder =
+            splitSearch[
+              Math.floor(Math.random() * Math.floor(splitSearch.length))
+            ];
+          console.log(urlFolder);
+          var urlFile =
+            splitSearch[
+              Math.floor(Math.random() * Math.floor(splitSearch.length))
+            ];
+          console.log(urlFile);
+        } else {
+          console.log("folder,file");
+          var splitSearch = boxInput.value.split(",");
+          var funcFlex = splitSearch[0];
+          var urlFolder = splitSearch[1];
+          console.log(urlFolder);
+          var urlFile = splitSearch[2];
+          console.log(urlFile);
+        }
+        console.log([urlFolder, urlFile]);
+        serverSide([funcFlex], [urlFolder, urlFile]).then((filed) => {
+          console.log(
+            typeof filed + " XX " + [filed].join("").length + " XXX " + filed,
+          );
+          if (
+            filed.length === 99 ||
+            filed.length === 94 ||
+            filed.length === 101 ||
+            filed.length === 132 ||
+            filed.length === 83
+          ) {
+            document.getElementById("worksFrame").src = filed;
+          } else {
+            document.getElementById("forHtml").innerHTML = filed;
+          }
+          if (
+            typeof urlFolder !== "undefined" ||
+            typeof urlFile !== "undefined"
+          ) {
+            document.getElementById("pageBlock").innerHTML =
+              "<p>" + urlFolder + ": " + urlFile + "</p>";
+          }
+          serverSide("rule").then((dateRule) => {
+            console.log(typeof boxInput.value);
+            console.log(boxInput.value.length);
+            if (boxInput.value.length === 0) {
+              boxInput.value = dateRule;
+            }
+          });
+        });
+      }
     </script>
   </body>
 </html>

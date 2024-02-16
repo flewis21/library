@@ -189,7 +189,7 @@ var breakthrough = function (e, time) {
         <div class="col s10 card-panel l12 m12 push-s1">
         <div class="video-container grey darken-4 z-depth-5">
         <div class="col s12 l12 m12" id="player1">
-          <?!= dtlsMain(myVideo) ?></div>
+          <?!= seoCapital(myVideo) ?></div>
         </div></div></div>
         <div class="row">
         <div class="col s10 card-panel black l12 m12 push-s1">

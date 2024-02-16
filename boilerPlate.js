@@ -225,6 +225,30 @@ var contentFile = function (file, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
+var convertToJS = function (rndText) {
+  if (typeof rndText === "undefined") {
+    var rndText = `
+<?!= appL.length === 99 || appL.length === 94 || appL.length === 101 || appL.length === 132 || appL.length === 83 ?>`;
+  }
+  var jsCodeS = "<?";
+  var jsCodeE = "<?=";
+  var jsCodeX = "<?!=";
+  var jsCodeC = "?>";
+  if (rndText.includes(jsCodeS)) {
+    rndText = rndText.replace(/\<\?/g, "");
+  }
+  if (rndText.includes(jsCodeE)) {
+    rndText = rndText.replace(/\<\?=/g, "");
+  }
+  if (rndText.includes(jsCodeX)) {
+    rndText = rndText.replace(/\<\?\!\=/g, "");
+  }
+  if (rndText.includes(jsCodeC)) {
+    rndText = rndText.replace(/\?\>/g, "");
+  }
+  return console.log(rndText);
+};
+
 var convertToObjects = function (rows, headings, time) {
   var temp = rows.reduce(
     function (ctx, row) {

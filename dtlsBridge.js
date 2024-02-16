@@ -904,28 +904,104 @@ var stockPro = function (e, time) {
 
 var stockHistory = function (e) {
   if (typeof e === "undefined") {
-    var e = "ifandoutbusiness";
+    var driveArr = [];
+    while (driveArr.length === 0) {
+      var eDrive = folderManager();
+      var rndDrivePoint = Math.floor(Math.random() * Math.floor(eDrive.length));
+      var eFolder = eDrive[rndDrivePoint];
+      var eFile = matchManager(eFolder);
+      // return console.log(e)
+      // var uniqueE = JSON.parse(e)
+      for (var key in eFile) {
+        if (eFile[key].length > 0) {
+          driveArr.push(eFile[key]);
+        }
+      }
+    }
+    var rndArrPoint = Math.floor(Math.random() * Math.floor(driveArr.length));
+    var arrPoint = driveArr[rndArrPoint];
+    var rndFilePoint = Math.floor(Math.random() * Math.floor(arrPoint.length));
+    var e = arrPoint[rndFilePoint];
   }
-  if (e) {
-    var boilerUrl = dtlsBridge(e, time);
+  // return console.log(eFile)
+  else if (e) {
+    console.log(e, "  ", typeof e);
+    var boilerUrl = dtlsBridge([e].join("").toLowerCase(), time);
     if (boilerUrl) {
       return boilerUrl;
     }
+    var allTitleData = [];
+    var uiDrive = folderManager();
+    var returnfolderArr = folderMatch([e].join("").toLowerCase(), uiDrive);
+    var rndReturnPoint = Math.floor(
+      Math.random() * Math.floor(returnfolderArr.length),
+    );
+    var eFolder = returnfolderArr[rndReturnPoint];
+
+    // return JSON.stringify(eFolder)
+    var uiArr = matchManager(eFolder);
+    for (var key in uiArr) {
+      if (uiArr[key].length > 0) {
+        allTitleData.push(uiArr[key]);
+      }
+    }
+    // return JSON.stringify(allTitleData)
+    e = allTitleData;
   }
   var isProduct = formsUrls([e].join("").toLowerCase(), "docForms");
-  console.log(typeof isProduct);
+  // return console.log(typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   var time = start;
-  var arrData = allInvestors(e, time);
+  if (typeof eFolder === "undefined") {
+    var unArr = [];
+    while (unArr.length === 0) {
+      var rndUnPoint = Math.floor(Math.random() * Math.floor(uiDrive.length));
+      var unFolder = uiDrive[rndUnPoint];
+      var unFile = matchManager(unFolder);
+      // return console.log(e)
+      // var uniqueE = JSON.parse(e)
+      for (var key in unFile) {
+        if (unFile[key].length > 0) {
+          unArr.push(unFile[key]);
+        }
+      }
+    }
+    var rndUnPoint = Math.floor(Math.random() * Math.floor(unArr.length));
+    var unPoint = unArr[rndUnPoint];
+    var rndUnFilePoint = Math.floor(Math.random() * Math.floor(unPoint.length));
+    var unE = unPoint[rndUnFilePoint];
+    var myFolderHistory = DriveApp.getFoldersByName(unFolder).next();
+    var myFileHistory = myFolderHistory.getFilesByName(
+      [unE].join("").toLowerCase(),
+    );
+  } else {
+    console.log(arrData, " :", typeof arrData);
+    console.log(eFolder);
+    var myFolderHistory = DriveApp.getFoldersByName(eFolder).next();
+    var myFileHistory = myFolderHistory.getFilesByName(
+      [e].join("").toLowerCase(),
+    );
+  }
+  var dataTree = [];
+  var nameTree = [];
+  while (myFileHistory.hasNext()) {
+    var myFile = myFileHistory.next();
+    var currentFileUrl = myFile.getUrl();
+    var currentFileName = myFile.getName();
+    dataTree.push(currentFileUrl);
+    nameTree.push(currentFileName);
+  }
+  var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
+  // var arrData = nameTree[rndFiled]
   // var utilNeed = randomUtility(e,arrData).title
-  var cokey = arrData.title;
-  var yahooNeed = arrData.ticker;
-  var coHelpText = arrData.edgarUrl;
+  // var yahooNeed = arrData.ticker
+  var coHelpText = dataTree[rndFiled];
+  var cokey = nameTree[rndFiled];
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
-  console.log(typeof isProduct);
+  // return console.log(typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
@@ -934,6 +1010,7 @@ var stockHistory = function (e) {
     // var utiSeo = pastSeo(utiStr, time)
     var seoArray = seoPastTime([cokey].join(""), time);
     var uti = seoArray.playList;
+    // return console.log(uti)
     var form = formMaker([cokey].join("").toUpperCase(), "docForms", time);
 
     if (typeof form === "object") {

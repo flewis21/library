@@ -901,7 +901,7 @@ var seoIndex = function (searchWord) {
   if (typeof searchWord === "undefined") {
     searchWord = "Nelly Furtado";
   }
-  var infoLink = seoSheet(searchWord).keyWords;
+  var infoLink = seoSheet([searchWord].join("").toLowerCase()).keyWords;
   var arrInfo = [infoLink].join("");
   var infoSP = arrInfo.split(",");
   var plaListNum = Math.floor(Math.random() * Math.floor(infoSP.length));

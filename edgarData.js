@@ -10,11 +10,11 @@ var allInvestors = function (rndKey, time) {
   var myCoArray = reCoArray.sort((a, b) => {
     a - b;
   })[rndCoA];
-  console.log([rndKey].join("").length);
-  if ([rndKey].join("").length > 1) {
-    var timeKey = [rndKey].join("").split(" ");
-  }
-  var matches = timeKey || myCoArray;
+  // console.log([rndKey].join("").length)
+  // if ([rndKey].join("").length > 1){
+  //     var timeKey = [rndKey].join("").split(" ");
+  //   }
+  var matches = myCoArray;
   // var myCoArray = uniqueCoArray.filter((co) => {
 
   //     return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase())
