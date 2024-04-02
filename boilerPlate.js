@@ -1,230 +1,5 @@
 // Compiled using dontime 1.0.0 (TypeScript 4.7.4)
 
-var appSort = function (numIndex, time) {
-  var titleArray = [];
-  for (var key in globalThis) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-    if (typeof globalThis[key] == "function") {
-      titleArray.push(key);
-    }
-  }
-
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
-  var freqArray = [];
-  var i = 0;
-  var l = arrData.length;
-  for (i, l; i < l; i++) {
-    titleArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === arrData[numIndex || i]) {
-        if (freqArray.indexOf(a) > -1) {
-          return;
-        }
-        {
-        }
-        freqArray.push(a);
-        return a - b;
-      }
-    });
-  }
-  return freqArray;
-};
-
-// ---------------------------------------------------------------------------------------------------------------------
-function apiRedeplaoy() {
-  var scriptKey = PropertiesService.getScriptProperties().getProperties();
-  console.log(scriptKey);
-  return scriptKey;
-}
-
-// The parameters ((class)) don't match the method signature for HtmlService.createTemplate.
-// ---------------------------------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------------------------------
-var companyName = function (companyNameUrl) {
-  const companyNameSecData = epaA(AVar(companyNameUrl));
-  const companyArray = testData(companyNameSecData);
-  return companyArray;
-};
-// console.log(companyNameSecData)
-// console.log(myObject)
-
-var covArrays = function (objects, time) {
-  const dataArray = [];
-  for (var obj in objects) {
-    var elaspeTime = new Date() - time;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nobj: " +  obj + "\nelaspeTime: " + elaspeTime)
-    dataArray.push([objects[obj]]);
-  }
-  return dataArray;
-};
-// console.log(JSON.stringify(dataArray[obj]))
-// console.log(dataArray)
-
-var covSheetArrays = function (myArray) {
-  var sheetArray = [];
-  for (var key in myArray) {
-    sheetArray.push([]);
-    for (var val in myArray[key]) {
-      sheetArray[key].push([myArray[key][val]]);
-    }
-  }
-  return sheetArray;
-};
-
-var covertArr = function (objects) {
-  var rows = [];
-  for (var key in objects) {
-    console.log(key);
-    rows.push([]);
-    for (var val in objects[key]) {
-      console.log(objects[key]);
-      rows[key].push(objects[key][val]);
-      for (var i = 0; i < rows.length; i++) {
-        console.log(rows[i]);
-      }
-    }
-  }
-  console.log(rows);
-  var temp = mapValues(sliceValues(rows, 1), 0);
-  console.log(temp);
-  return temp;
-}; //, cVar)
-
-// The parameters (number[]) don't match the method signature for HtmlService.createTemplate.
-// ---------------------------------------------------------------------------------------------------------------------
-
-var contentApp = function (blob, argsObject) {
-  const tmp = HtmlService.createTemplate(
-    ContentService.createTextOutput(blob)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent(),
-  );
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentBlob = function (blob, argsObject) {
-  var tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).getContent()
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentTemplate = function (file, argsObject) {
-  var tmp = HtmlService.createTemplateFromFile(file);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).setMimeType(ContentService.MimeType.JAVASCRIPT).getContent()
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(
-    ContentService.createTextOutput(file)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent(),
-  );
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject }))
-//  .setMimeType(ContentService.MimeType.JSON).getContent())
-//  {const keys = Object.keys(argsObject);
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
 var convertToJS = function (rndText) {
   if (typeof rndText === "undefined") {
     var rndText = `
@@ -276,166 +51,44 @@ var convertToObjects = function (rows, headings, time) {
   return temp;
 };
 
-var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
-  var tickerFreqArray = [];
+// ---------------------------------------------------------------------------------------------------------------------
+// The parameters ((class)) don't match the method signature for HtmlService.createTemplate.
+// ---------------------------------------------------------------------------------------------------------------------
 
-  for (i, ticl; i < ticl; i++) {
-    tickerArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === tickerArrData[i]) {
-        tickerFreqArray.push(a);
+// ---------------------------------------------------------------------------------------------------------------------
+var covArrays = function (objects, time) {
+  const dataArray = [];
+  for (var obj in objects) {
+    var elaspeTime = new Date() - time;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nobj: " +  obj + "\nelaspeTime: " + elaspeTime)
+    dataArray.push([objects[obj]]);
+  }
+  return dataArray;
+};
+// console.log(JSON.stringify(dataArray[obj]))
+// console.log(dataArray)
+
+var covertArr = function (objects, row, index) {
+  var data = [];
+  for (var key in objects) {
+    // console.log(key)
+    data.push([]);
+    for (var val in objects[key]) {
+      // console.log(objects[key])
+      data[key].push(objects[key][val]);
+      for (var i = 0; i < data.length; i++) {
+        // console.log(data[i])
       }
-    });
+    }
   }
+  // console.log(data)
+  var temp = mapValues(sliceValues(data, row), index);
+  // console.log(temp)
+  return temp;
+}; //, cVar)
 
-  return tickerFreqArray;
-};
-
-var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
-  var cikFreqArray = [];
-
-  for (i, cikl; i < cikl; i++) {
-    cikArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      // console.log(a.toString()[0])
-      if (a.toString()[0] === cikArrData[i].toString()) {
-        if (a !== b && cikFreqArray.indexOf(a) === -1) {
-          if (cikFreqArray.indexOf(a) > -1) {
-            return;
-          }
-          {
-          }
-
-          cikFreqArray.push(a);
-        }
-      } else if (b.toString()[0] === cikArrData[i].toString()) {
-        if (b !== a && cikFreqArray.indexOf(b) === -1) {
-          if (cikFreqArray.indexOf(b) > -1) {
-            return;
-          }
-          {
-          }
-
-          cikFreqArray.push(b);
-        }
-      }
-    });
-  }
-  // var cikNonStandard = []
-  // l = cikArray.length
-  // for (i,1;i<l;i++) {
-
-  //   if (cikFreqArray.indexOf(cikArray[i]) === -1) {
-
-  //     cikNonStandard.push(cikArray[i])
-
-  //   }
-
-  //  }
-
-  return cikFreqArray;
-};
-
-var coSortTitles = function (titleArray, titleArrData, i, titl) {
-  var titleFreqArray = [];
-  for (i, titl; i < titl; i++) {
-    titleArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === titleArrData[i]) {
-        titleFreqArray.push(a);
-      }
-    });
-  }
-
-  return titleFreqArray;
-};
-
-var coSort = function (time) {
-  var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
-  var uniqueKey = JSON.parse(data);
-  var cikArray = [];
-  var tickerArray = [];
-  var titleArray = [];
-  for (var key in uniqueKey) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-    cikArray.push(uniqueKey[key]["cik_str"]);
-    tickerArray.push(uniqueKey[key]["ticker"]);
-    titleArray.push(uniqueKey[key]["title"]);
-  }
-  {
-  }
-
-  var cikArrData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  var titleArrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
-  var tickerArrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
-  var i = 0;
-  var cikl = cikArrData.length;
-  var ticl = tickerArrData.length;
-  var titl = titleArrData.length;
-  var cikFreqArray = coSortCIKS(cikArray, cikArrData, i, cikl);
-  var tickerFreqArray = coSortTickers(tickerArray, tickerArrData, i, ticl);
-  var titleFreqArray = coSortTitles(titleArray, titleArrData, i, titl);
-  return {
-    cik: cikFreqArray,
-    ticker: tickerFreqArray,
-    title: titleFreqArray,
-  };
-};
+// The parameters (number[]) don't match the method signature for HtmlService.createTemplate.
+// ---------------------------------------------------------------------------------------------------------------------
 
 var covObjects = function (rows, headings, time) {
   if (rows) {
@@ -452,12 +105,16 @@ var covObjects = function (rows, headings, time) {
   }
 };
 
-function email() {
-  var emails = validateFiles();
-  var emailsCount = validateFiles().toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
-  return randomEmail;
-}
+var covSheetArrays = function (myArray) {
+  var sheetArray = [];
+  for (var key in myArray) {
+    sheetArray.push([]);
+    for (var val in myArray[key]) {
+      sheetArray[key].push([myArray[key][val]]);
+    }
+  }
+  return sheetArray;
+};
 
 var getEventValues = function (title, startTime, endTime, series) {
   var eventsDataRange = sliceValues(getValues(), 1);
@@ -469,261 +126,14 @@ var getEventValues = function (title, startTime, endTime, series) {
   }
 };
 
-var getSize = function (url, params) {
-  if (url) {
-    var content = UrlFetchApp.fetch(url, params);
-    var res = content.getContentText();
-    const lines = res.split(/\r?\n/);
-    return {
-      rows: lines.length - 1,
-      columns: lines[0].split(",").length,
-    };
-  } else {
-    return {};
-  }
-};
-
-var getScriptUrl = function () {
-  return ScriptApp.getService().getUrl();
-};
-
-var getUrl = function (appInterface) {
-  var url = appInterface.getService().getUrl();
-  return url;
-};
-
-var include = function (file, argsObject) {
-  const tmp = HtmlService.createHtmlOutputFromFile(file);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .asTemplate()
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getBlob()
-    .getDataAsString();
-};
-
-var includeApp = function (blob, argsObject) {
-  const tmp = HtmlService.createHtmlOutput(blob);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .asTemplate()
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-};
-
-var includeBlob = function (file, argsObject) {
-  if (file) {
-    const temp = ContentService.createTextOutput(
-      HtmlService.createTemplateFromFile(file).evaluate().getContent(),
-    );
-    const tmp = HtmlService.createTemplate(
-      temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
-    );
-    if (argsObject) {
-      const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
-      // tmp["list"] = htmlListArray;
-    } // END IF
-    // Route[file] = argsObject
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-  }
-};
-
-var includeGSFile = function (file, argsArray) {
-  return renderTemplate(`<?!= appJS ?>`, {
-    appJS: async function () {
-      const serverSide = function (func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runAll(`boilerplate.${[func]}`, [args]);
-        });
-      };
-      try {
-        if (file) {
-          const content = await serverSide(file, argsArray);
-          return content;
-        }
-      } catch (error_1) {
-        console.log(error_1);
-      }
-    },
-  });
-};
-
-var includeGSBlob = function (blob, argsArray) {
-  return renderTemplate(`<?!= appJS ?>`, {
-    appJS: async function () {
-      try {
-        const content = await serverSide(blob, argsArray);
-        return content;
-      } catch (error_1) {
-        console.log(error_1);
-      }
-    },
-  });
-};
-
-var includeRunIt = () => {};
-
-var includeJs = function (blob, argsObject) {
-  const tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-};
-
-var lockRange = function (row, col) {
-  var ws = ssSheet();
-  var range = ws.getDataRange().getValues();
-  var lock = range.map(openRange(row, col));
-  return ss, ws, range, lock;
-};
-
 var mapValues = function (data, index) {
-  var mapData = data.map(function (e) {
-    return e[index].valueOf();
-  });
-  return mapData;
-};
-
-var myFunction = function (webApp, argsObject) {
-  const tmp = HtmlService.createHtmlOutput(webApp);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-};
-
-var openRange = function (row, stampRow) {
-  var ws = ssSheet();
-  var range = ws.getRange(row, stampRow).setValue(new Date());
-  return ss, ws, range;
-};
-
-var prepareDataBrain = function (data, ratio = 29) {
   if (data) {
-    return data.map((row) => {
-      const rings = Object.values(row).slice(0, 1);
-      const values = Object.values(row).slice(1);
-      authLogic(values[values.indexOf("M")] === "M")
-        ? (function () {
-            const male = values.splice(values.indexOf("M"), 1);
-            values.splice(0, 0, male[0]);
-          })()
-        : authLogic(values[values.indexOf("F")] === "F")
-          ? (function () {
-              const female = values.splice(values.indexOf("F"), 1);
-              values.splice(0, 0, female[0]);
-            })()
-          : authLogic(values[values.indexOf("I")] === "I")
-            ? (function () {
-                const inConclusive = values.splice(values.indexOf("I"), 1);
-                values.splice(0, 0, inConclusive[0]);
-              })()
-            : (function () {
-                return;
-              })();
-      values[0] = sexToNumber(values[0]);
-      return {
-        input: values,
-        output: [rings[0] / ratio],
-      };
+    data = data.map(function (e) {
+      return e[index].valueOf();
     });
+    return data;
   }
 };
-
-var productDist = function (
-  epaAUrl,
-  epaDUrl,
-  epaDXpath,
-  epaDDelimiter,
-  dVar,
-  eVar,
-  fVar,
-  iVar,
-  jVar,
-) {
-  const productDistEpaData =
-    // epaA(
-    // GVar(epaAUrl)
-    epaD(AVar(epaDUrl), BVar(epaDXpath), CVar(epaDDelimiter));
-  // [DVar(dVar)]
-  // [EVar(eVar)]
-  // [FVar(fVar)]
-  // )
-  // [HVar(hVar)]
-  // [IVar(iVar)]
-  // [JVar(jVar)]
-  return productDistEpaData;
-};
-
-var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
-  const productNameEpaData = epaD(
-    AVar(epaDaVar),
-    BVar(epaDbVar),
-    CVar(epaDcVar),
-  )[DVar(dVar)][EVar(eVar)][FVar(fVar)];
-  return productNameEpaData;
-};
-
-var randomTickerXpath = function (rnum) {
-  const rnumber = rnum;
-  return rnumber;
-};
-
-function randomEmail() {
-  var emails = validate();
-  var emailsCount = validate().toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
-  return randomEmail;
-}
 
 var randNum = function (namedVar) {
   if (namedVar) {
@@ -809,46 +219,10 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
 // console.log(thisNewArr)
 // console.log(randomWord)
 
-var randomUtility = function (e, arrD, time) {
-  // var utilStr = skyNeed(namedVar, time)
-  // var utilSubst = randomSubstance(0,4,namedVar,time)
-  var rndObj = needUtility([e].join(" "), arrD, time)[0];
-  return {
-    playlist: rndObj.playlistArr,
-    cik: rndObj.rndCik,
-    ticker: rndObj.rndTicker,
-    title: rndObj.rndTitle,
-    secData: rndObj.secUrl,
-    youtubeID: rndObj.videoItem,
-    youtubVideo: rndObj.videoItemUrl,
-  };
-};
-
-function rule() {
-  var today = new Date();
-  var todayString = today.toDateString() + " - " + today.toTimeString();
-  return todayString;
-}
-
-function scriptQuit() {
-  return;
-}
-
-var sexToNumber = function (sex) {
-  switch (sex) {
-    case "F":
-      return 0;
-    case "M":
-      return 1;
-    default:
-      return 0.5;
-  }
-};
-
 var sliceValues = function (data, row) {
   if (data) {
-    var values = data.slice(row);
-    return values;
+    data = data.slice(row);
+    return data;
   }
 };
 
@@ -1024,45 +398,6 @@ var substanceVegas = function (importedData, index, loopLength) {
   console.log();
 };
 
-var tabField = function (url, xpath, index, time) {
-  if (url) {
-    var data = [urlDataSource(url), { muteHttpExceptions: true }, time];
-    var test = dataHeadings(splitX(data, xpath))[index];
-    return {
-      myTab: test,
-    };
-  }
-};
-
-var tagBuilder = function (content) {
-  const htmlBody = contentApp(content);
-  return htmlBody;
-};
-
-var tempArrayNoX = function (url, indexParsed, index) {
-  const jsonData = urlDataSource(url);
-  const testIndex = splitNoX(JSON.parse(sliceValues(jsonData, indexParsed)));
-  // const arrayObjData = testArray(testIndex)
-  // const objTest = forArray(testIndex);
-  // const dataHeaders = splitNoX(sliceValues(objTest, index))
-
-  console.log(testIndex);
-};
-
-var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
-  const jsonData = urlDataSource(url);
-  const testIndex = splitX(
-    JSON.parse(sliceValues(jsonData, indexParsed)),
-    xpath,
-    delimiter,
-  );
-  // const arrayObjData = testArray(testIndex)
-  const objTest = forArray(testIndex);
-  const dataHeaders = splitX(sliceValues(objTest, index), xpath, delimiter);
-
-  console.log(testIndex);
-};
-
 var testArray = function (content) {
   json = content;
   // console.log(json)
@@ -1163,100 +498,6 @@ var untestedData = function (arrData) {
   }
   console.log(objParts);
   return objParts;
-};
-
-var testObject = function (dataArray, fVarHeaders) {
-  myRows = testData(dataArray);
-  myObject = covObjects(myRows, FVar(fVarHeaders));
-  return myObject;
-};
-
-function userSite() {
-  var website = SitesApp.getSites();
-  console.log(website);
-  return {
-    mySites: website,
-  };
-}
-
-var yahooSort = function (ticker, time) {
-  // var ticker = "AAPL"
-  var data = [
-    urlDataSource(
-      "https://query2.finance.yahoo.com/v10/finance/quoteSummary/" +
-        ticker +
-        "?modules=assetProfile%2CsummaryProfile%2CsummaryDetail%2CesgScores%2Cprice%2CincomeStatementHistory%2CincomeStatementHistoryQuarterly%2CbalanceSheetHistory%2CbalanceSheetHistoryQuarterly%2CcashflowStatementHistory%2CcashflowStatementHistoryQuarterly%2CdefaultKeyStatistics%2CfinancialData%2CcalendarEvents%2CsecFilings%2CrecommendationTrend%2CupgradeDowngradeHistory%2CinstitutionOwnership%2CfundOwnership%2CmajorDirectHolders%2CmajorHoldersBreakdown%2CinsiderTransactions%2CinsiderHolders%2CnetSharePurchaseActivity%2Cearnings%2CearningsHistory%2CearningsTrend%2CindustryTrend%2CindexTrend%2CsectorTrend",
-      { muteHttpExceptions: true },
-    ),
-  ];
-  var uniqueKey = JSON.parse(data);
-  var priceArray = [];
-  var timeArray = [];
-  var currencyArray = [];
-  var currencySymArray = [];
-  for (var key in uniqueKey) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-    priceArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketPrice"]);
-    timeArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketTime"]);
-    currencyArray.push(uniqueKey[key]["result"][0]["price"]["currency"]);
-    currencySymArray.push(
-      uniqueKey[key]["result"][0]["price"]["currencySymbol"],
-    );
-  }
-  {
-  }
-  var stockPrice = [priceArray[0]["fmt"]];
-  var priceTime = [timeArray[0]];
-  var priceCurrency = [currencyArray[0]];
-  var priceCurrencySymbol = [currencySymArray[0]];
-  return {
-    price: stockPrice,
-    time: priceTime,
-    currency: priceCurrency,
-    currencySymbol: priceCurrencySymbol,
-  };
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
-  var freqArray = [];
-  var i = 0;
-  var l = arrData.length;
-  for (i, l; i < l; i++) {
-    var sorArray = titleArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === arrData[i]) {
-        freqArray.push(a);
-        return a - b;
-      }
-    });
-  }
-  return freqArray;
 };
 
 var widgetData = function (dataSource, headings) {

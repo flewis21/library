@@ -759,13 +759,12 @@ var seoCapital = function (url) {
           <div class="row">
             <div class="col s10 card-panel l12 m12 push-s1">
               <div class="container row valign-wrapper"><?!= rule() ?></div>
-                <div id="divSEOC" class="video-container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
+                <div id="divSEOC" class="container grey flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
                     <iframe 
                       class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
                       src=${url}
                       id="w3Res"
-                      width="100%"
-                      height="100%"
+                      style="width:100%; height:207vh"
                       allow="autoplay"
                       allow="encrypted-media"
                       title="Dontime Life Website"
@@ -901,11 +900,12 @@ var seoIndex = function (searchWord) {
   if (typeof searchWord === "undefined") {
     searchWord = "Nelly Furtado";
   }
-  var infoLink = seoSheet([searchWord].join("").toLowerCase()).keyWords;
-  var arrInfo = [infoLink].join("");
-  var infoSP = arrInfo.split(",");
+  var infoSP = seoSheet(searchWord.toLowerCase()).keyWords;
   var plaListNum = Math.floor(Math.random() * Math.floor(infoSP.length));
   var story = infoSP[plaListNum];
+  return seoCapital(dtlsPict(story));
+  // var arrInfo =  [infoLink].join("");
+  // var infoSP = arrInfo.split(",")
   // var pageArray = []
   // var page =infoSP.map((tv) => {
   //   var listItem = seoPastTime(tv).playList
@@ -914,7 +914,6 @@ var seoIndex = function (searchWord) {
   //   pageArray.push(rndListItem)
   //   })
   //   var story = pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))]
-  return seoCapital(dtlsPict(story));
 };
 
 var seoPastTime = function (searchString, time) {
@@ -1212,13 +1211,15 @@ var seoSheet = function (searchString, time) {
   console.log("Calling seoTwitter with searchString " + searchString);
   var uniqueSeo = seoTwitter(searchString, time).twiData;
   console.log(
-    "Recieved uniqueSeo: " +
+    "Recieved " +
+      typeof uniqueSeo +
+      " uniqueSeo: " +
       uniqueSeo +
       " from seoTwitter with searchString " +
       searchString,
   );
   var fndOrd = uniqueSeo
-    .join()
+    .join("")
     .split(" ")
     .filter((p) => {
       var elaspeTime = new Date() - time;

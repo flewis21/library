@@ -28,6 +28,13 @@ function authLogic(logic) {
 // console.log(isValid)});
 // return isValid;}
 
+function email() {
+  var emails = validateFiles();
+  var emailsCount = validateFiles().toString().split(",").length;
+  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+  return randomEmail;
+}
+
 function getBreakthrough(e) {
   const list = (e) => {
     return {
@@ -270,6 +277,13 @@ function pill() {
   });
   return contentApp(pill);
   //:contentFile('uiAccess')
+}
+
+function randomEmail() {
+  var emails = validate();
+  var emailsCount = validate().toString().split(",").length;
+  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+  return randomEmail;
 }
 
 var runIt = function (e) {

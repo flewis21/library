@@ -1,3 +1,11 @@
+var companyName = function (companyNameUrl) {
+  const companyNameSecData = epaA(AVar(companyNameUrl));
+  const companyArray = testData(companyNameSecData);
+  return companyArray;
+};
+// console.log(companyNameSecData)
+// console.log(myObject)
+
 var epaData = function (e) {
   var urlProduct =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";
@@ -665,6 +673,40 @@ var productFullName = function (productName) {
     ),
   ]);
   return newEPAData(rawData);
+};
+
+var productDist = function (
+  epaAUrl,
+  epaDUrl,
+  epaDXpath,
+  epaDDelimiter,
+  dVar,
+  eVar,
+  fVar,
+  iVar,
+  jVar,
+) {
+  const productDistEpaData =
+    // epaA(
+    // GVar(epaAUrl)
+    epaD(AVar(epaDUrl), BVar(epaDXpath), CVar(epaDDelimiter));
+  // [DVar(dVar)]
+  // [EVar(eVar)]
+  // [FVar(fVar)]
+  // )
+  // [HVar(hVar)]
+  // [IVar(iVar)]
+  // [JVar(jVar)]
+  return productDistEpaData;
+};
+
+var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
+  const productNameEpaData = epaD(
+    AVar(epaDaVar),
+    BVar(epaDbVar),
+    CVar(epaDcVar),
+  )[DVar(dVar)][EVar(eVar)][FVar(fVar)];
+  return productNameEpaData;
 };
 
 var productNamePartial = function (productName) {

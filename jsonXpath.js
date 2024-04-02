@@ -120,6 +120,20 @@ var forObjects = function (data, delimiter) {
   // console.log(json[1])
 };
 
+var getSize = function (url, params) {
+  if (url) {
+    var content = UrlFetchApp.fetch(url, params);
+    var res = content.getContentText();
+    const lines = res.split(/\r?\n/);
+    return {
+      rows: lines.length - 1,
+      columns: lines[0].split(",").length,
+    };
+  } else {
+    return {};
+  }
+};
+
 var jsonDataX = function (data) {
   // headings = dataHeadings(data);
   const arrayN = testData(data);
@@ -335,12 +349,46 @@ var tabData = function (url, xpath, headers) {
   return test;
 };
 
+var tabField = function (url, xpath, index, time) {
+  if (url) {
+    var data = [urlDataSource(url), { muteHttpExceptions: true }, time];
+    var test = dataHeadings(splitX(data, xpath))[index];
+    return {
+      myTab: test,
+    };
+  }
+};
+
 var tabIndex = function (url, xpath, index, headers) {
   var test = covObjects(
     jsonDataX(sliceValues(jsonXpath(url, xpath), 0)[index]),
     dataHeadings(testData(headers)),
   );
   return test;
+};
+
+var tempArrayNoX = function (url, indexParsed, index) {
+  const jsonData = urlDataSource(url);
+  const testIndex = splitNoX(JSON.parse(sliceValues(jsonData, indexParsed)));
+  // const arrayObjData = testArray(testIndex)
+  // const objTest = forArray(testIndex);
+  // const dataHeaders = splitNoX(sliceValues(objTest, index))
+
+  console.log(testIndex);
+};
+
+var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
+  const jsonData = urlDataSource(url);
+  const testIndex = splitX(
+    JSON.parse(sliceValues(jsonData, indexParsed)),
+    xpath,
+    delimiter,
+  );
+  // const arrayObjData = testArray(testIndex)
+  const objTest = forArray(testIndex);
+  const dataHeaders = splitX(sliceValues(objTest, index), xpath, delimiter);
+
+  console.log(testIndex);
 };
 
 var udsCache = function (content) {

@@ -45,6 +45,8 @@
         });
       }
       console.log(window);
+      const forHTMLContent = document.getElementById("forHtml").innerHTML;
+      console.log(forHTMLContent);
       var boxInput = document.getElementById("pRule");
       boxInput.addEventListener("click", clearBox);
       boxInput.addEventListener("keypress", function (event) {
@@ -103,6 +105,7 @@
             filed.length === 132 ||
             filed.length === 83
           ) {
+            document.getElementById("forHtml").innerHTML = forHTMLContent;
             document.getElementById("worksFrame").src = filed;
           } else {
             document.getElementById("forHtml").innerHTML = filed;

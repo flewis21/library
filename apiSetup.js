@@ -1,3 +1,9 @@
+function apiRedeplaoy() {
+  var scriptKey = PropertiesService.getScriptProperties().getProperties();
+  console.log(scriptKey);
+  return scriptKey;
+}
+
 function apiSetupSheet() {
   var cprops = PropertiesService.getScriptProperties();
   var keyC = cprops.getProperty("key");

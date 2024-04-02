@@ -427,28 +427,102 @@ function videoPlayer(searchString) {
 // .catch(
 //     (error) => {console.log(error)});
 
+// function iframeC() {
+//   return JSON.stringify({
+//     appJs:
+//       function create() {
+//       function serverSide(func, args) {
+//         return new Promise((resolve, reject) => {
+//             HtmlService.createTemplate(`
+//             <script>
+//               google.script.run
+//               .withSuccessHandler(result => {
+//                 const Route = {};
+//                 Route.path = function(route, callback) {
+//                     Route[route] = callback
+//                   }
+//                 Route.path("bHang", ${resolve});
+//                 return Route["bHang"](result)
+//                 })
+//               .withFailureHandler(error => {
+//                   console.log(document.getElementById("test").innerHTML)
+//                   const Route = {};
+//                   Route.path = function(route, callback) {
+//                       Route[route] = callback
+//                     }
+//                   Route.path("bErr", ${reject});
+//                   return Route["bErr"](error)
+//                 })
+//               .runBoilerplate(${[func]},${[args]})
+//             </script>`).evaluate().asTemplate()
+//           }
+//         )
+//       };
+//       JSON.stringify(serverSide("appSort")
+//       .then((hang) => {
+//           return hang
+//         }))
+//       }
+//     ,
+//   })
+// }
+
 function iframeC() {
-  return {
-    appJs: function create() {
-      const serverSide = function (func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
+  var content = HtmlService.createTemplate(`
+    <!DOCTYPE html>
+      <html>
+      <head></head>
+      <body>
+        <div id="bodyHang">body hang</div>
+      </body>
+      </html>
+  `);
+  content.alert = HtmlService.createHtmlOutput(
+    `
+        <script>
+          alert("server side")
+        </script>
+`,
+  ).getContent();
+  return content.evaluate().getContent();
+  content.serverSide = HtmlService.createHtmlOutput(
+    `
+        <script>
+          function serverSide(func, args) {
+            return new Promise((resolve, reject) => {
+                  google.script.run
+                  .withSuccessHandler(result => {
+                    const Route = {};
+                    Route.path = function(route, callback) {
+                        Route[route] = callback
+                      } 
+                    Route.path("bHang", resolve);
+                    return Route["bHang"](result)
+                    })
+                  .withFailureHandler(error => {
+                      console.log(document.getElementById("test").innerHTML)
+                      const Route = {};
+                      Route.path = function(route, callback) {
+                          Route[route] = callback
+                        } 
+                      Route.path("bErr", reject);
+                      return Route["bErr"](error)
+                    })
+                  .runBoilerplate([func],[args])
+              }
+            )
+          };
+          serverSide("appSort")
+          .then((hang) => {
+              return hang
             })
-            .withFailureHandler((error) => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runBoilerplate([func], [args]);
-        });
-      };
-    },
-  };
+        </script>
+`,
+  ).getContent();
 }
 
 function iFC() {
-  iframeC().appJs();
+  return iframeC();
 }
 
 function surveyPlayer(searchString, joinString) {

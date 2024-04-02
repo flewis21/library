@@ -41,97 +41,436 @@ var rndCoin = function () {
       }
     }
   }
-  var form = FormApp.create("Coin Toss");
+  var form = FormApp.create("Coin Toss").setDescription(
+    trial.length + " Tosses",
+  );
   var formUrl = form.getPublishedUrl();
   trial.map((seo) => {
     for (var key in seo) {
       if (key === "heads") {
-        form.addSectionHeaderItem().setTitle(randomSubstance([key], 0, 1));
+        form
+          .addSectionHeaderItem()
+          .setTitle(randomSubstance(0, 1, [key]).myNewArr);
       } else {
-        form.addSectionHeaderItem().setTitle(randomSubstance([key], 0, 1));
+        form
+          .addSectionHeaderItem()
+          .setTitle(randomSubstance(0, 1, [key]).myNewArr);
       }
     }
   });
-  return seoCapital(formUrl);
+  return formUrl;
+};
+
+var rndTrial = function (infinitum) {
+  // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
+  var trial = [];
+  var judge = 0;
+  var coinHead = 0;
+  var coinTail = 0;
+  console.log(typeof [infinitum]);
+  if (!infinitum) {
+    var infinitum = [0, 1];
+  } else {
+    infinitum = infinitum.split(" ");
+    console.log(typeof [infinitum] + " " + infinitum);
+  }
+  var coin;
+  infinitum.map((fin) => {
+    // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
+    coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+    // if (coin === 1) {
+    //   coinHead++
+    // trial.push({
+    //   heads: fin})}
+    // else {
+    //   coinTail++
+    // trial.push({
+    //   tails: fin})}
+    if (coin === fin) {
+      coinHead++;
+      trial.push({
+        heads: fin,
+      });
+    } else {
+      coinTail++;
+      trial.push({
+        tails: fin,
+      });
+    }
+    while (coinHead !== coinTail) {
+      judge++;
+      // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
+      coin =
+        infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+      // if (coin === 1) {
+      //   coinHead++
+      // trial.push({
+      //   heads: fin})}
+      // else {
+      //   coinTail++
+      // trial.push({
+      //   tails: fin})}
+      if (coin === fin) {
+        coinHead++;
+        trial.push({
+          heads: fin,
+        });
+      } else {
+        coinTail++;
+        trial.push({
+          tails: fin,
+        });
+      }
+      // if (trial[0]["heads"] && trial[judge]["tails"] || trial[0]["tails"] && trial[judge]["heads"]){
+      // break}
+      // else {
+      // for (var i=judge,l=trial.length;i<l;i++) {
+      //   console.log(JSON.stringify(trial[judge])) }}
+    }
+  });
+  console.log(trial);
+  var form = FormApp.create("Coin Trial").setDescription(
+    trial.length + " Tosses",
+  );
+  var formUrl = form.getPublishedUrl();
+  var tailEnd = 0;
+  var headStart = 0;
+  trial.map((seo) => {
+    for (var key in seo) {
+      if (key === "heads") {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+        // } else {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+        form
+          .addSectionHeaderItem()
+          .setTitle(key + "  " + seo["heads"])
+          .setHelpText(headStart++ + "  tosses");
+      } else {
+        form
+          .addSectionHeaderItem()
+          .setTitle(key + " " + seo["tails"])
+          .setHelpText(tailEnd++ + "  tosses");
+      }
+    }
+  });
+  return formUrl;
+};
+
+var rndControl = function (infinitum) {
+  var trial = [];
+  var judge = 0;
+  var coinHead = 0;
+  var coinTail = 0;
+  console.log(typeof [infinitum]);
+  if (!infinitum) {
+    var infinitum = [
+      10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 23, 24, 25, 26,
+      27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+      45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62,
+      63, 64, 65, 66, 67, 68, 69,
+    ];
+  } else {
+    infinitum = infinitum.split(" ");
+    //   return infinitum.map((fin) => {
+    //   var penny = Math.floor(Math.random() * Math.floor(fin))
+    //   while (coinTail < penny) {
+    //     trial.push({
+    //       tails: coinTail
+    //     })
+    //     coinTail++
+    //     penny = Math.floor(Math.random() * Math.floor(fin))
+    //   }
+    //   return JSON.stringify(trial)
+    // })
+    console.log(typeof [infinitum] + " " + infinitum);
+  }
+  var coin;
+  var penny;
+  infinitum.map((fin) => {
+    coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+    penny = Math.floor(Math.random() * Math.floor(fin));
+    if (penny !== coin) {
+      trial.push({
+        heads: fin,
+      });
+      coinHead++;
+    }
+    // if (penny === coin)
+    else {
+      trial.push({
+        tails: fin,
+      });
+      coinTail++;
+    }
+    // else {
+    //   trial.push({
+    // heads: donza})
+    // }
+    // return
+    while (coinTail !== coinHead) {
+      penny = Math.floor(Math.random() * Math.floor(fin));
+      coin =
+        infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+      if (penny === coin) {
+        trial.push({
+          tails: fin,
+        });
+        coinTail++;
+        if (fin > coinTail) {
+          return;
+        }
+      }
+      // if (penny !== coin)
+      else {
+        trial.push({
+          heads: fin,
+        });
+        coinHead++;
+        if (fin > coinHead) {
+          return;
+        }
+      }
+      // else {
+      //       trial.push({
+      //       heads: donza
+      //     })
+      //     }
+    }
+  });
+  //     return console.log(trial)
+  //     return console.log(coinTail !== coinHead)
+  // return console.log(covertArr(trial,0,0))
+  var form = FormApp.create("Coin Trial").setDescription(
+    trial.length + " Tosses",
+  );
+  var formUrl = form.getPublishedUrl();
+  var tailEnd = 0;
+  var headStart = 0;
+  trial.map((seo) => {
+    for (var key in seo) {
+      if (key === "heads") {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+        // } else {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+        if (headStart === 1) {
+          // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  toss")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["heads"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["heads"])) +
+                "  for your thoughts",
+            );
+        } else if (headStart < 1 || headStart > 1) {
+          // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["heads"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["heads"])) +
+                "  for your thoughts",
+            );
+        }
+      } else {
+        if (tailEnd === 1) {
+          // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  toss")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["tails"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["tails"])) +
+                "  for your thoughts",
+            );
+        } else if (tailEnd < 1 || tailEnd > 1) {
+          // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["tails"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["tails"])) +
+                "  for your thoughts",
+            );
+        }
+      }
+    }
+  });
+  return formUrl;
 };
 
 var rndDice = function () {
   // if ([0,1,2,3,4,5][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
-  var snakeEye = [];
-  var deuce = [];
-  var tre = [];
-  var four = [];
-  var five = [];
-  var six = [];
-  var dice = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))] * 3;
+  var trial = [];
+  var judge = 0;
+  var snakeEyes = 0;
+  var deuces = 0;
+  var tres = 0;
+  var fours = 0;
+  var fives = 0;
+  var sixes = 0;
+  var dice = [0, 1, 2, 3, 4, 5][
+    Math.floor(Math.random() * Math.floor([0, 1, 2, 3, 4, 5].length))
+  ];
   if (dice === 0) {
-    snakeEye.push(dice);
+    snakeEyes++;
+    trial.push({
+      snakeEyes: dice,
+    });
   } else if (dice === 1) {
-    deuce.push(dice);
+    deuces++;
+    trial.push({
+      deuces: dice,
+    });
   } else if (dice === 2) {
-    tre.push(dice);
+    tres++;
+    trial.push({
+      tres: dice,
+    });
   } else if (dice === 3) {
-    four.push(dice);
+    fours++;
+    trial.push({
+      fours: dice,
+    });
   } else if (dice === 4) {
-    five.push(dice);
+    fives++;
+    trial.push({
+      fives: dice,
+    });
   } else {
-    six.push(dice);
+    sixes++;
+    trial.push({
+      sixes: dice,
+    });
   }
+
+  // if (dice === 0) {
+  // snakeEye.push(dice)}
+  // else if (dice === 1) {
+  // deuces.push(dice)}
+  // else if (dice === 2) {
+  // tre.push(dice)}
+  // else if (dice === 3) {
+  // four.push(dice)}
+  // else if (dice === 4) {
+  // five.push(dice)}
+  // else {
+  // six.push(dice)}
   while (
-    snakeEye.length !== deuce.length ||
-    snakeEye.length !== tre.length ||
-    snakeEye.length !== four.length ||
-    snakeEye.length !== five.length ||
-    snakeEye.length !== six.length
+    snakeEyes !== deuces ||
+    snakeEyes !== tres ||
+    snakeEyes !== fours ||
+    snakeEyes !== fives ||
+    (snakeEyes !== sixes && deuces !== snakeEyes) ||
+    deuces !== tres ||
+    deuces !== fours ||
+    deuces !== fives ||
+    (deuces !== sixes && tres !== snakeEyes) ||
+    tres !== deuces ||
+    tres !== fours ||
+    tres !== fives ||
+    (tres !== sixes && fours !== snakeEyes) ||
+    fours !== deuces ||
+    fours !== tres ||
+    fours !== fives ||
+    (fours !== sixes && fives !== snakeEyes) ||
+    fives !== deuces ||
+    fives !== tres ||
+    fives !== fours ||
+    (fives !== sixes && sixes !== snakeEyes) ||
+    sixes !== deuces ||
+    sixes !== tres ||
+    sixes !== fours ||
+    sixes !== fives
   ) {
-    dice = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))] * 3;
+    judge++;
+    var dice = [0, 1, 2, 3, 4, 5][
+      Math.floor(Math.random() * Math.floor([0, 1, 2, 3, 4, 5].length))
+    ];
     if (dice === 0) {
-      snakeEye.push(dice);
+      snakeEyes++;
+      trial.push({
+        snakeEyes: dice,
+      });
     } else if (dice === 1) {
-      deuce.push(dice);
+      deuces++;
+      trial.push({
+        deuces: dice,
+      });
     } else if (dice === 2) {
-      tre.push(dice);
+      tres++;
+      trial.push({
+        tres: dice,
+      });
     } else if (dice === 3) {
-      four.push(dice);
+      fours++;
+      trial.push({
+        fours: dice,
+      });
     } else if (dice === 4) {
-      five.push(dice);
+      fives++;
+      trial.push({
+        fives: dice,
+      });
     } else {
-      six.push(dice);
+      sixes++;
+      trial.push({
+        sixes: dice,
+      });
     }
-    console.log(
-      snakeEye.length +
-        " " +
-        deuce.length +
-        " " +
-        tre.length +
-        " " +
-        four.length +
-        " " +
-        five.length +
-        " " +
-        six.length,
-    );
+
+    // dice = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] * 3
+    // if (dice === 0) {
+    // snakeEye.push(dice)}
+    // else if (dice === 1) {
+    // deuce.push(dice)}
+    // else if (dice === 2) {
+    // tre.push(dice)}
+    // else if (dice === 3) {
+    // four.push(dice)}
+    // else if (dice === 4) {
+    // five.push(dice)}
+    // else {
+    // six.push(dice)}
+    //   console.log(snakeEye.length + " " + deuce.length + " " + tre.length + " " + four.length + " " + five.length + " " + six.length)
+    // }
+    // var trial = [].concat(snakeEye.length + " " + deuce.length + " " + tre.length + " " + four.length + " " + five.length + " " + six.length)
+    // snakeEye.length
+    if (
+      (trial[0]["snakeEyes"] &&
+        trial[1]["deuces"] &&
+        trial[2]["tres"] &&
+        trial[4]["fours"] &&
+        trial[5]["fives"] &&
+        trial[judge]["sixes"]) ||
+      (trial[0]["sixes"] &&
+        trial[1]["deuces"] &&
+        trial[2]["tres"] &&
+        trial[4]["fours"] &&
+        trial[5]["fives"] &&
+        trial[judge]["snakeEyes"])
+    ) {
+      break;
+    } else {
+      for (var i = judge, l = trial.length; i < l; i++) {
+        console.log(JSON.stringify(trial[judge]));
+      }
+    }
   }
-  var trial = [].concat(
-    snakeEye.length +
-      " " +
-      deuce.length +
-      " " +
-      tre.length +
-      " " +
-      four.length +
-      " " +
-      five.length +
-      " " +
-      six.length,
+  var form = FormApp.create("Dice Roll").setDescription(
+    trial.length + " Rolls",
   );
-  snakeEye.length;
-  var form = FormApp.create("Dice");
   var formUrl = form.getPublishedUrl();
   trial.map((seo) => {
-    return form.addSectionHeaderItem().setTitle(randomSubstance([seo]));
+    for (var key in seo) {
+      form
+        .addSectionHeaderItem()
+        .setTitle(randomSubstance(0, 1, [key]).myNewArr);
+    }
   });
-  return geneFrame(formUrl);
+  return formUrl;
 };
 
 var breakthrough = function (e, time) {

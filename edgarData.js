@@ -186,6 +186,167 @@ var allTime = function (rndKey, arrD, time) {
   }
 };
 
+var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
+  var tickerFreqArray = [];
+
+  for (i, ticl; i < ticl; i++) {
+    tickerArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === tickerArrData[i]) {
+        tickerFreqArray.push(a);
+      }
+    });
+  }
+
+  return tickerFreqArray;
+};
+
+var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
+  var cikFreqArray = [];
+
+  for (i, cikl; i < cikl; i++) {
+    cikArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      // console.log(a.toString()[0])
+      if (a.toString()[0] === cikArrData[i].toString()) {
+        if (a !== b && cikFreqArray.indexOf(a) === -1) {
+          if (cikFreqArray.indexOf(a) > -1) {
+            return;
+          }
+          {
+          }
+
+          cikFreqArray.push(a);
+        }
+      } else if (b.toString()[0] === cikArrData[i].toString()) {
+        if (b !== a && cikFreqArray.indexOf(b) === -1) {
+          if (cikFreqArray.indexOf(b) > -1) {
+            return;
+          }
+          {
+          }
+
+          cikFreqArray.push(b);
+        }
+      }
+    });
+  }
+  // var cikNonStandard = []
+  // l = cikArray.length
+  // for (i,1;i<l;i++) {
+
+  //   if (cikFreqArray.indexOf(cikArray[i]) === -1) {
+
+  //     cikNonStandard.push(cikArray[i])
+
+  //   }
+
+  //  }
+
+  return cikFreqArray;
+};
+
+var coSortTitles = function (titleArray, titleArrData, i, titl) {
+  var titleFreqArray = [];
+  for (i, titl; i < titl; i++) {
+    titleArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === titleArrData[i]) {
+        titleFreqArray.push(a);
+      }
+    });
+  }
+
+  return titleFreqArray;
+};
+
+var coSort = function (time) {
+  var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
+  var uniqueKey = JSON.parse(data);
+  var cikArray = [];
+  var tickerArray = [];
+  var titleArray = [];
+  for (var key in uniqueKey) {
+    var elaspeTime = new Date() - start;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    cikArray.push(uniqueKey[key]["cik_str"]);
+    tickerArray.push(uniqueKey[key]["ticker"]);
+    titleArray.push(uniqueKey[key]["title"]);
+  }
+  {
+  }
+
+  var cikArrData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var titleArrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var tickerArrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var i = 0;
+  var cikl = cikArrData.length;
+  var ticl = tickerArrData.length;
+  var titl = titleArrData.length;
+  var cikFreqArray = coSortCIKS(cikArray, cikArrData, i, cikl);
+  var tickerFreqArray = coSortTickers(tickerArray, tickerArrData, i, ticl);
+  var titleFreqArray = coSortTitles(titleArray, titleArrData, i, titl);
+  return {
+    cik: cikFreqArray,
+    ticker: tickerFreqArray,
+    title: titleFreqArray,
+  };
+};
+
 var edgarData = function (text) {
   // SEC Edgar Filings Widget
   let h = {};
@@ -662,6 +823,26 @@ function(){document.getElementById("test").innerHTML = <?!= tableContents ?>})
     .getContent();
 };
 
+var randomTickerXpath = function (rnum) {
+  const rnumber = rnum;
+  return rnumber;
+};
+
+var randomUtility = function (e, arrD, time) {
+  // var utilStr = skyNeed(namedVar, time)
+  // var utilSubst = randomSubstance(0,4,namedVar,time)
+  var rndObj = needUtility([e].join(" "), arrD, time)[0];
+  return {
+    playlist: rndObj.playlistArr,
+    cik: rndObj.rndCik,
+    ticker: rndObj.rndTicker,
+    title: rndObj.rndTitle,
+    secData: rndObj.secUrl,
+    youtubeID: rndObj.videoItem,
+    youtubVideo: rndObj.videoItemUrl,
+  };
+};
+
 function videoSEC() {
   const uniqueCo = Utilities.jsonParse([
     urlDataSource("https://www.sec.gov/files/company_tickers.json"),
@@ -736,3 +917,83 @@ function videoSEC() {
   }; //Global object closed
   return html.evaluate().getContent();
 } //webApp closed
+
+var yahooSort = function (ticker, time) {
+  // var ticker = "AAPL"
+  var data = [
+    urlDataSource(
+      "https://query2.finance.yahoo.com/v10/finance/quoteSummary/" +
+        ticker +
+        "?modules=assetProfile%2CsummaryProfile%2CsummaryDetail%2CesgScores%2Cprice%2CincomeStatementHistory%2CincomeStatementHistoryQuarterly%2CbalanceSheetHistory%2CbalanceSheetHistoryQuarterly%2CcashflowStatementHistory%2CcashflowStatementHistoryQuarterly%2CdefaultKeyStatistics%2CfinancialData%2CcalendarEvents%2CsecFilings%2CrecommendationTrend%2CupgradeDowngradeHistory%2CinstitutionOwnership%2CfundOwnership%2CmajorDirectHolders%2CmajorHoldersBreakdown%2CinsiderTransactions%2CinsiderHolders%2CnetSharePurchaseActivity%2Cearnings%2CearningsHistory%2CearningsTrend%2CindustryTrend%2CindexTrend%2CsectorTrend",
+      { muteHttpExceptions: true },
+    ),
+  ];
+  var uniqueKey = JSON.parse(data);
+  var priceArray = [];
+  var timeArray = [];
+  var currencyArray = [];
+  var currencySymArray = [];
+  for (var key in uniqueKey) {
+    var elaspeTime = new Date() - start;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    priceArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketPrice"]);
+    timeArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketTime"]);
+    currencyArray.push(uniqueKey[key]["result"][0]["price"]["currency"]);
+    currencySymArray.push(
+      uniqueKey[key]["result"][0]["price"]["currencySymbol"],
+    );
+  }
+  {
+  }
+  var stockPrice = [priceArray[0]["fmt"]];
+  var priceTime = [timeArray[0]];
+  var priceCurrency = [currencyArray[0]];
+  var priceCurrencySymbol = [currencySymArray[0]];
+  return {
+    price: stockPrice,
+    time: priceTime,
+    currency: priceCurrency,
+    currencySymbol: priceCurrencySymbol,
+  };
+  var arrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var freqArray = [];
+  var i = 0;
+  var l = arrData.length;
+  for (i, l; i < l; i++) {
+    var sorArray = titleArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === arrData[i]) {
+        freqArray.push(a);
+        return a - b;
+      }
+    });
+  }
+  return freqArray;
+};

@@ -1,3 +1,59 @@
+var appSort = function (numIndex, time) {
+  var titleArray = [];
+  for (var key in globalThis) {
+    var elaspeTime = new Date() - start;
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    if (typeof globalThis[key] == "function") {
+      titleArray.push(key);
+    }
+  }
+  var arrData = [
+    "e",
+    "t",
+    "a",
+    "o",
+    "n",
+    "r",
+    "i",
+    "s",
+    "h",
+    "d",
+    "l",
+    "f",
+    "c",
+    "m",
+    "u",
+    "g",
+    "y",
+    "p",
+    "w",
+    "b",
+    "v",
+    "k",
+    "x",
+    "j",
+    "q",
+    "z",
+  ];
+  var freqArray = [];
+  var i = 0;
+  var l = arrData.length;
+  for (i, l; i < l; i++) {
+    titleArray.sort((a, b) => {
+      // return console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + " OR " + b + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === arrData[numIndex || i]) {
+        if (freqArray.indexOf(a) > -1) {
+          return;
+        } else {
+          freqArray.push(a);
+        }
+      }
+    });
+  }
+  console.log(freqArray);
+  return freqArray;
+};
+
 var defaultWebsite = function (e) {
   // const Route = {};
   // Route.path = function(route, callback) {
@@ -286,6 +342,78 @@ var defaultWebsite = function (e) {
   }
 };
 
+var getScriptUrl = function () {
+  return ScriptApp.getService().getUrl();
+};
+
+var getUrl = function (appInterface) {
+  var url = appInterface.getService().getUrl();
+  return url;
+};
+
+var gsFiles = function () {
+  var gsFileList = [];
+  for (var key in globalThis) {
+    if (typeof globalThis[key] == "function") {
+      gsFileList.push(key);
+    }
+  }
+  return gsFileList;
+};
+
+var prepareDataBrain = function (data, ratio = 29) {
+  if (data) {
+    return data.map((row) => {
+      const rings = Object.values(row).slice(0, 1);
+      const values = Object.values(row).slice(1);
+      authLogic(values[values.indexOf("M")] === "M")
+        ? (function () {
+            const male = values.splice(values.indexOf("M"), 1);
+            values.splice(0, 0, male[0]);
+          })()
+        : authLogic(values[values.indexOf("F")] === "F")
+          ? (function () {
+              const female = values.splice(values.indexOf("F"), 1);
+              values.splice(0, 0, female[0]);
+            })()
+          : authLogic(values[values.indexOf("I")] === "I")
+            ? (function () {
+                const inConclusive = values.splice(values.indexOf("I"), 1);
+                values.splice(0, 0, inConclusive[0]);
+              })()
+            : (function () {
+                return;
+              })();
+      values[0] = sexToNumber(values[0]);
+      return {
+        input: values,
+        output: [rings[0] / ratio],
+      };
+    });
+  }
+};
+
+function rule() {
+  var today = new Date();
+  var todayString = today.toDateString() + " - " + today.toTimeString();
+  return todayString;
+}
+
+function scriptQuit() {
+  return;
+}
+
+var sexToNumber = function (sex) {
+  switch (sex) {
+    case "F":
+      return 0;
+    case "M":
+      return 1;
+    default:
+      return 0.5;
+  }
+};
+
 var sheetWebsite = function (e) {
   var usr = e;
   if (!usr["parameter"]) {
@@ -460,3 +588,11 @@ var sheetWebsite = function (e) {
 // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
 // return webApp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 // console.log("Array of Objects: " + Utilities.jsonStringify(arrData[0]))
+
+function userSite() {
+  var website = SitesApp.getSites();
+  console.log(website);
+  return {
+    mySites: website,
+  };
+}

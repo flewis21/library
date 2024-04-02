@@ -71,37 +71,46 @@ function saveRecord() {
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "General Work Invoice",
   );
-  const idCell = formWS.getRange("C3");
-  const id = idCell.getValue();
-  return authLogic(id === "")
-    ? createNewRecord()
-    : (function () {
-        const cellFound = dataWS.getRange("K:K");
-        cellFound
-          .createTextFinder(id)
-          .matchCase(true)
-          .matchEntireCell(true)
-          .findNext();
-        return authLogic(!cellFound)
-          ? (function () {
-              return;
-            })()
-          : (function () {
-              const nextIDCell = settingsWS.getRange("A2");
-              const nextID = nextIDCell.getValue();
-              const row = cellFound.getRow();
-              const fieldValues = fieldRange.map((f) =>
-                formWS.getRange(f).getValue(),
-              );
-              fieldValues.push(id);
-              console.log(fieldValues);
-              // const findValues =
-              dataWS
-                .getRange(row, 1, 1, fieldValues.length)
-                .setValues([fieldValues]);
-              spreadSheet().toast("New record Created", "id: " + nextID);
-            })();
-      })();
+  const formMiles = formWS.getRange("C17").getDisplayValue();
+  const destMiles = JSON.stringify(formWS.getRange("C14").getDisplayValue());
+  const startMiles = JSON.stringify(formWS.getRange("C12").getDisplayValue());
+  console.log(
+    typeof formMiles +
+      " /// " +
+      [formMiles].length +
+      "//////\n " +
+      destMiles +
+      "/////////\n " +
+      startMiles,
+  );
+  if ([formMiles].length === 1) {
+    const delivery = Math.ceil(
+      Math.ceil(minutePoint(destMiles, startMiles)) / 60,
+    );
+    const deliveryCell = formWS.getRange("C17");
+    deliveryCell.setValue(delivery);
+  }
+  //   const idCell = formWS.getRange("C3");
+  //   const id = idCell.getValue()
+  //     return authLogic(id === "")? createNewRecord():
+  // (function() {
+  //   const cellFound = dataWS.getRange("K:K");
+  //   cellFound.createTextFinder(id).matchCase(true).matchEntireCell(true).findNext();
+  //     return authLogic(!cellFound)?
+  // (function()
+  //     {return})():
+  // (function(){
+  //   const nextIDCell = settingsWS.getRange("A2");
+  //   const nextID = nextIDCell.getValue();
+  //   const row = cellFound.getRow();
+  //   const fieldValues = fieldRange.map(f => formWS.getRange(f).getValue());
+  // fieldValues.push(id);
+  //       console.log(fieldValues)
+  //   // const findValues =
+  // dataWS.getRange(row,1,1,fieldValues.length).setValues([fieldValues])
+  // spreadSheet().toast("New record Created", "id: " + nextID);
+  // })()
+  // })()
 }
 
 function searchRecords() {

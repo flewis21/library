@@ -138,6 +138,12 @@ var TVar = function (varA) {
   };
 };
 
+var testObject = function (dataArray, fVarHeaders) {
+  myRows = testData(dataArray);
+  myObject = covObjects(myRows, FVar(fVarHeaders));
+  return myObject;
+};
+
 var UVar = function (varA) {
   aVar = varA;
   return {

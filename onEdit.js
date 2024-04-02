@@ -52,6 +52,13 @@ var lockR = function (row, col) {
   return lock;
 };
 
+var lockRange = function (row, col) {
+  var ws = ssSheet();
+  var range = ws.getDataRange().getValues();
+  var lock = range.map(openRange(row, col));
+  return ss, ws, range, lock;
+};
+
 var milePoint = function (startCoord, end) {
   if (typeof startCoord === "undefined") {
     var startCoord = delAddress().startPoint;
@@ -86,6 +93,12 @@ var onEdit = function (e) {
     // stampRowSales(e);
     searchEdit(e);
   }
+};
+
+var openRange = function (row, stampRow) {
+  var ws = ssSheet();
+  var range = ws.getRange(row, stampRow).setValue(new Date());
+  return ss, ws, range;
 };
 
 var searchEdit = function (e) {
