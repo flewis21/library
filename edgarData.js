@@ -2,54 +2,58 @@ var allInvestors = function (rndKey, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
-  // var uniqueCoArray = uniqueKey;
-  var coArray = [`bank semi fact bio science chain space coin`];
-  var reCoArray = coArray.toString().split(" ");
-  var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
-  var myCoArray = reCoArray.sort((a, b) => {
-    a - b;
-  })[rndCoA];
-  // console.log([rndKey].join("").length)
-  // if ([rndKey].join("").length > 1){
-  //     var timeKey = [rndKey].join("").split(" ");
-  //   }
-  var matches = myCoArray;
-  // var myCoArray = uniqueCoArray.filter((co) => {
+  if (typeof rndKey === "undefined") {
+    // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
+    // var uniqueCoArray = uniqueKey;
+    var coArray = [`bank semi fact bio science chain space coin`];
+    var reCoArray = coArray.toString().split(" ");
+    var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
+    var myCoArray = reCoArray.sort((a, b) => {
+      a - b;
+    })[rndCoA];
+    // console.log([rndKey].join("").length)
+    // if ([rndKey].join("").length > 1){
+    //     var timeKey = [rndKey].join("").split(" ");
+    //   }
+    var matches = myCoArray;
+    // var myCoArray = uniqueCoArray.filter((co) => {
 
-  //     return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase())
-  //   })
-  var rndArrayNum = Math.floor(Math.random() * Math.floor(matches.length));
-  var rndTitleVested = matches; //[rndArrayNum][0]["title"]
-  var coKey = rndKey || rndTitleVested;
-  // const matches = []
-  // uniqueCoArray.sort((a, b) => a - b).filter(
-  //     (ac)=> {
-  //       if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(coKey.toString().toLowerCase())) {
-
-  //         matches.push(ac)
-  //       }
-  //       else if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {
-
-  //         matches.push(ac)
-  //       }
-  //       })
-  if (matches.length !== 0) {
-    var uniqueCoKey = [matches].entries().next().value;
-    var uniqueNum = randNum(uniqueCoKey[1]);
-    var mathCalc = function () {
-      return uniqueNum * 999999999;
-    };
-    var takeNum = mathCalc();
-    var randomKey = Math.floor(Math.random() * Math.floor(takeNum));
-    var randomTitle = uniqueCoKey[1]; //[randomKey][0]["title"];
-    var randomTicker = uniqueCoKey[1]; //[randomKey][0]["ticker"];
-    var randomCik = randomKey; //randomKey[randomKey][0]["cik_str"];
-    while (randomCik < 99999) {
-      randomCik = randomKey;
-    }
+    //     return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase())
+    //   })
+    var rndArrayNum = Math.floor(Math.random() * Math.floor(matches.length));
+    var rndTitleVested = matches; //[rndArrayNum][0]["title"]
   }
-  //Youtube Widget
+  var coKey = rndKey || rndTitleVested;
+  if (typeof rndKey === "undefined") {
+    // const matches = []
+    // uniqueCoArray.sort((a, b) => a - b).filter(
+    //     (ac)=> {
+    //       if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(coKey.toString().toLowerCase())) {
+
+    //         matches.push(ac)
+    //       }
+    //       else if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {
+
+    //         matches.push(ac)
+    //       }
+    //       })
+    if (matches.length !== 0) {
+      var uniqueCoKey = [matches].entries().next().value;
+      var uniqueNum = randNum(uniqueCoKey[1]);
+      var mathCalc = function () {
+        return uniqueNum * 999999999;
+      };
+      var takeNum = mathCalc();
+      var randomKey = Math.floor(Math.random() * Math.floor(takeNum));
+      var randomTitle = uniqueCoKey[1]; //[randomKey][0]["title"];
+      var randomTicker = uniqueCoKey[1]; //[randomKey][0]["ticker"];
+      var randomCik = randomKey; //randomKey[randomKey][0]["cik_str"];
+      while (randomCik < 99999) {
+        randomCik = randomKey;
+      }
+    }
+    //Youtube Widget
+  }
   var tunPlay = randomTitle || coKey;
   var randomPlaylist = needPastTime(tunPlay);
   // var randomPlaylist = idArray;
@@ -844,48 +848,67 @@ var randomUtility = function (e, arrD, time) {
 };
 
 function videoSEC() {
-  const uniqueCo = Utilities.jsonParse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ]);
-  const uniqueCoArray = covArrays(uniqueCo);
+  const ws = ssGetSheetBySpreadsheetUrl(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "sec",
+  );
+  // const wsData = sliceValues(ws.getDataRange().getValues(),1)
+  const vidOptionsCik = ws
+    .getRange(1, 1, ws.getRange("A2").getDataRegion().getLastRow(), 1)
+    .getValues();
+  const vidOptionsTicker = ws
+    .getRange(2, 2, ws.getRange("B2").getDataRegion().getLastRow(), 1)
+    .getValues();
+  const vidOptionsTitle = ws
+    .getRange(3, 3, ws.getRange("C2").getDataRegion().getLastRow(), 1)
+    .getValues();
+  const vidOptions = {
+    muteHttpExceptions: true,
+  };
+  // const vidSheetsJson = mapValues(wsData,0)
+  // const vidJson = UrlFetchApp.fetch("https://www.sec.gov/Archives/edgar/cik-lookup-data.txt",vidOptions).getContentText();
+  // const uniqueCo = JSON.parse([]);
+  const uniqueCoArray = sliceValues(ws.getDataRange().getValues(), 1); //covArrays(uniqueCo);
   const randomCoKey = Math.floor(
     Math.random() * Math.floor(uniqueCoArray.length),
   ); // Math.floor(Math.random());
-  var sectionCo = [uniqueCoArray[randomCoKey][0]["title"]]
-    .toString()
-    .split(" ");
+  var sectionCo = [uniqueCoArray[randomCoKey][2]].toString().split(" ");
   var itemId =
     sectionCo[Math.floor(Math.random() * Math.floor(sectionCo.length))];
+  console.log(itemId);
   var vidDetail = coUtility(itemId)[0];
+  console.log(vidDetail);
   const html = HtmlService.createTemplate(`
-    <!DOCTYPE html>
-      <html id="test">
-        <body class="green">
-          <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
-          <div class="row">
-          <div class="col s10 card-panel red push-s1 push-m1 push-l1">
-          <div class="video-container">
-          <div class="col s12 receipt red" id="player1"><?!= dtlsVegas(myTitle) ?></div></div></div></div>
-          <div class="row">
-          <div class="col s10 card-panel red push-s1 push-m1 push-l1">
-          <div class="container">
-          <div class="col s12 receipt red">
-          <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
-          </div></div></div></div>
-          <div class="row">
-          <div class="col s10 card-panel red push-s1 push-m1 push-l1">
-          <div class="container agenda z-depth-5 pulse blue receipt">
-          <div class="col s12 receipt red">
-          <input class="left datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div></div></div></div>
-          <div class="row">
-          <div class="col s10 card-panel red push-s1 push-m1 push-l1">
-          <div class="container agenda z-depth-5 pulse blue receipt">
-          <div class="col s12 receipt red">
-          <input class="right timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div></div></div></div>
-          <script>document.getElementById('username').addEventListener('change', <?!= topScript ?>)</script>
-          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-        </body>
-      </html>`);
+      <!DOCTYPE html>
+        <html id="test">
+          <body class="green">
+            <a href="https://flewis21.github.io/Don-time-Life-Services/" target="_top"><span><h1 class="z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large receipt">Don'time Life Services!</h1></span></a>
+            <div class="row">
+            <div class="col s10 card-panel red push-s1 push-m1 push-l1">
+            <div class="video-container">
+            <div class="col s12 receipt red" id="player1"><?!= dtlsVegas(myTitle) ?></div></div></div></div>
+            <div class="row">
+            <div class="col s10 card-panel red push-s1 push-m1 push-l1">
+            <div class="container">
+            <div class="col s12 receipt red">
+            <span><input placeholder="Calculator..." class="menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="username" type="search" /></span>
+            </div></div></div></div>
+            <div class="row">
+            <div class="col s10 card-panel red push-s1 push-m1 push-l1">
+            <div class="container agenda z-depth-5 pulse blue receipt">
+            <div class="col s12 receipt red">
+            <input class="left datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" placeholder="Book a date"/></div></div></div></div>
+            <div class="row">
+            <div class="col s10 card-panel red push-s1 push-m1 push-l1">
+            <div class="container agenda z-depth-5 pulse blue receipt">
+            <div class="col s12 receipt red">
+            <input class="right timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" placeholder="Book a time"/></div></div></div></div>
+            <script>
+              document.getElementById('username').addEventListener('change', <?!= topScript ?>)
+            </script>
+            <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+          </body>
+        </html>`);
   html.myTitle = vidDetail.rndTitle;
   html.topScript = function () {
     //console.log(document.getElementById("test").innerHTML)

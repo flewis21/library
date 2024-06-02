@@ -409,41 +409,62 @@ var driveUrls = function (fileX) {
 
 var fileBrowser = function (folder, file) {
   console.log([folder, file]);
-  var foldersObj = folderManager();
+  if (folder) {
+    var foldersObj = folderManager(folder);
+  } else {
+    var foldersObj = folderManager();
+  }
+  console.log("foldersObj.length: " + foldersObj.length + "\n " + foldersObj);
   var glFolders = [];
   for (var key in foldersObj) {
     glFolders.push(foldersObj[key]);
   }
-  // if (glFolders.indexOf(folder) === -1) {folder}
+  console.log("glFolders.length: " + glFolders.length + "\n " + glFolders);
+  // if (glFolders.indexOf(folder) === -1) {folder} || glFolders.indexOf(folder) === -1
   if (
     typeof folder === "undefined" ||
     folder === null ||
     [folder].join("").length === 0 ||
-    glFolders.indexOf(folder) === -1
+    foldersObj.length > 1
   ) {
     var folder =
       glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
+  } else {
+    var folder = foldersObj.toString();
   }
   console.log(folder);
-  var filesObj = fileMatchManager(folder);
+  var filesObj = fileMatchManager(folder, file);
+  console.log("filesObj.length: " + filesObj.length + "\n " + filesObj);
   var glFiles = [];
   for (var key in filesObj) {
     glFiles.push(filesObj[key]);
   }
-  console.log("glFiles.length: " + glFiles.length);
+  console.log("glFiles.length: " + glFiles.length + "\n " + glFiles);
   if (
     typeof file === "undefined" ||
     file === null ||
     [file].join("").length === 0 ||
-    (glFiles.indexOf(file) === -1 && glFiles.length > 0)
+    (glFiles.join("").toLowerCase().indexOf([file].join("").toLowerCase()) ===
+      -1 &&
+      glFiles.length > 0) ||
+    filesObj.length > 1
   ) {
+    console.log(
+      "Declaring " +
+        file +
+        " by assigning " +
+        glFiles[Math.floor(Math.random() * Math.floor(glFiles.length))] +
+        " to variable",
+    );
     var file = glFiles[Math.floor(Math.random() * Math.floor(glFiles.length))];
+  } else {
+    var file = filesObj.toString();
   }
+  //  || glFolders.indexOf(folder) !== -1
   if (
     typeof folder !== "undefined" ||
     folder !== null ||
-    [folder].join("").length > 0 ||
-    glFolders.indexOf(folder) !== -1
+    [folder].join("").length > 0
   ) {
     console.log("folder: " + folder);
     var eFolder = DriveApp.getFoldersByName(folder).next();
@@ -491,22 +512,60 @@ var fbTester = function () {
   return console.log(res);
 };
 
+var fileFold = function (folderX, fileX, time) {
+  var elaspedTime;
+  var fileFree = [];
+  if (
+    typeof folderX !== "undefined" ||
+    folderX !== null ||
+    [folderX].join("").length > 0
+  ) {
+    if (typeof folderX === "undefined") {
+      return;
+    }
+    // console.log(folderX + "\n" + typeof folderX)
+    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+    var tree = pyFolder.getFiles();
+    while (tree.hasNext()) {
+      // console.log(typeof tree.next().getName())
+      var minFold = [tree.next().getName()].join("").toLowerCase();
+      // console.log(minFold)
+      var minFile = [fileX].join("").toLowerCase();
+      if (minFold.includes(minFile)) {
+        fileFree.push(tree.next().getName());
+      }
+      break;
+    }
+  } else {
+    return JSON.stringify(this);
+  }
+  return fileFree;
+};
+
 var fileManager = function (fileX, folder, time, content, mimeType) {
-  if (typeof fileX !== "undefined") {
-    console.log("calling folderIdGlobal with " + folder);
-    var folderId = folderIdGlobal(folder, time);
-    console.log("calling DriveApp with " + fileX + " to get the file name");
-    folderIdName = DriveApp.getFileById(fileX).getName();
+  if (typeof fileX !== "undefined" && typeof folder !== "undefined") {
     console.log(
-      "calling DriveApp with " +
-        folderIdName +
-        " to search the root folder for the file",
+      "Declaring folderId calling folderIdGlobal(" + folder + ", time)",
     );
-    var file = DriveApp.getRootFolder().getFilesByName(folderIdName);
+    var folderId = folderIdGlobal(folder, time);
+    console.log(
+      "Declaring folderIdName calling DriveApp.getFileById(" +
+        folderId +
+        ").getName() to get the folder name",
+    );
+    var folderIdName = DriveApp.getFolderById(folderId).getName();
+    console.log(
+      "Declaring file calling DriveApp.getRootFolder().getFilesByName(" +
+        fileX +
+        ").next() to search the root folder for the file",
+    );
+    var file = DriveApp.getRootFolder().getFilesByName(fileX);
     var elaspeTime = new Date() - time;
-    var myFile = file.next();
-    var timeToExecute = maxTime - elaspeTime;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    if (file.hasNext()) {
+      var myFile = file.next();
+      var timeToExecute = maxTime - elaspeTime;
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    }
     if (myFile) {
       // console.log(myFile)
       console.log(
@@ -523,22 +582,163 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
   }
 };
 
+var fileMatch = function (fileX, stringArray) {
+  var lenFile = [fileX].join("").length;
+  if (lenFile > 0) {
+    var search = [fileX].join("").toLowerCase();
+    var searchFileStr = search.split(" ");
+    var i = 0;
+    var l = searchFileStr.length;
+  }
+  var fileXIndex = [];
+  stringArray.map((file) => {
+    // var sfi = searchFileStr
+    var matchFile = [fileX].join("").toLowerCase();
+    var testFile = [file].join("").toLowerCase();
+    var fxi = testFile.indexOf(matchFile);
+    if (fxi > -1) {
+      // var properFile = file
+      var myObj = convertToObjects([[file]], [fxi])[0];
+      fileXIndex.push(file);
+    }
+  });
+  return fileXIndex;
+};
+
+var fileMatchManager = function (folderX, fileX, time) {
+  var elaspedTime;
+  var fileTree = [];
+  if (
+    typeof folderX !== "undefined" ||
+    folderX !== null ||
+    [folderX].join("").length > 0
+  ) {
+    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+  } else {
+    var folderX = furtFolder();
+    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+  }
+  var tree = pyFolder.getFiles();
+  var matchFile = [fileX].join("").toLowerCase();
+  while (tree.hasNext()) {
+    var testFile = [tree.next().getName()].join("").toLowerCase();
+    if (testFile.includes(matchFile)) {
+      fileTree.push(tree.next().getName());
+    }
+  }
+  if (fileTree.length === 0) {
+    // tree = DriveApp.getFiles();
+    // tree = pyFolder.getFiles()
+    while (tree.hasNext()) {
+      fileTree.push(tree.next().getName());
+    }
+    // return fileTree
+  }
+  // else {
+  //   var tree = DriveApp.getFiles();
+  //   while (tree.hasNext()) {
+  //     fileTree.push(tree.next().getName())
+  //   }
+  //     return fileTree
+  // }
+
+  if (fileX) {
+    var match = fileMatch(fileX, fileTree);
+    // return match
+  }
+  // else {
+  //   return fileTree
+  // }
+
+  if (match) {
+    return match;
+  } else {
+    return fileTree;
+  }
+};
+
+var furtFolder = function (folder) {
+  if (folder) {
+    var foldersObj = folderManager(folder);
+  } else {
+    var foldersObj = folderManager();
+  }
+  console.log("foldersObj.length: " + foldersObj.length + "\n " + foldersObj);
+  var glFolders = [];
+  for (var key in foldersObj) {
+    glFolders.push(foldersObj[key]);
+  }
+  console.log("glFolders.length: " + glFolders.length + "\n " + glFolders);
+  // if (glFolders.indexOf(folder) === -1) {folder}
+  if (
+    typeof folder === "undefined" ||
+    folder === null ||
+    [folder].join("").length === 0 ||
+    glFolders.indexOf(folder) === -1
+  ) {
+    var folder =
+      glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
+  }
+  return console.log(folder);
+};
+
 var folderIdGlobal = function (folderX, time) {
-  console.log("calling DriveApp");
+  console.log("Declaring tree with DriveApp.getFolders()");
   var tree = DriveApp.getFolders();
-  console.log("Receiving from DriveApp - " + tree);
+  // console.log("Receiving from DriveApp - " + tree)
   while (tree.hasNext()) {
     var elaspeTime = new Date() - time;
     var timeToExecute = maxTime - elaspeTime;
     var myId = tree.next();
     var id = myId.getId();
+    // console.log("Declaring myFolder with DriveApp.getFolderById(" + id + ").getName()")
     var myFolder = DriveApp.getFolderById(id).getName();
-    console.log("Receiving from DriveApp - " + myFolder);
+    // console.log("myFolder = " + JSON.stringify(myFolder))
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
     if (folderX === myFolder) {
       return id;
     }
   }
+};
+
+var folderManager = function (folderX, time) {
+  var elaspedTime;
+  var folderTree = [];
+  var tree = DriveApp.getFolders();
+  while (tree.hasNext()) {
+    folderTree.push(tree.next().getName());
+  }
+  if (folderX) {
+    var match = folderMatch(folderX, folderTree);
+    return match;
+  } else {
+    return folderTree;
+  }
+};
+
+var folderMatch = function (folderX, stringArray) {
+  if ([folderX].join("").length > 0) {
+    var search = [folderX].join("");
+    var searchFolderStr = search.toLowerCase().split(" ");
+    var i = 0;
+    var l = searchFolderStr.length;
+  }
+  var folderXIndex = [];
+  stringArray.map((folder) => {
+    // var sfi = searchFileStr
+    var xStr = [folder].join("").toLowerCase();
+    var xFold = [folderX].join("").toLowerCase();
+    var xRes = xStr.includes(xFold);
+    if (xRes === true) {
+      var fxi = xStr.indexOf(xFold);
+      if (fxi > -1) {
+        // var properFolder = folder
+        var myObj = convertToObjects([[folder]], [fxi])[0];
+        folderXIndex.push(folder);
+      }
+    }
+  });
+  return folderXIndex;
 };
 
 var rndUrls = function () {

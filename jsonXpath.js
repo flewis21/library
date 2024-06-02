@@ -255,15 +255,21 @@ var needCapital = function (searchString) {
 };
 
 var needUtility = function (rndClient, arrD, time) {
+  if (typeof rndClient === "undefined") {
+    var rndClient = "random";
+  }
   var client = rndClient;
   console.log(typeof [client].join("") + " " + [client].join("").length);
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
     console.log([client].join("").length + " is greater than " + 0);
-    console.log("Calling seoSheet with " + client);
+    console.log("Declaring seoTitle with " + client);
     var seoTitle = seoSheet(client, time).keyWords;
     console.log(
-      "Recieved seoTitle: " + seoTitle + " from seoSheet with client " + client,
+      "Recieved seoSheet keywords: " +
+        seoTitle +
+        " while declaring seoTitle with client " +
+        client,
     );
     var improvedTitle = seoTitle.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
@@ -284,16 +290,16 @@ var needUtility = function (rndClient, arrD, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      console.log("Calling allTime with " + rndTitle2);
+      console.log("Declaring coName with " + rndTitle2);
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
       console.log(
-        "Recieved coName: " +
+        "Recieved allTime: " +
           coName +
-          " from allTime with rndTitle2 " +
+          " while declaring coName with rndTitle2 " +
           rndTitle2,
       );
     } else {
-      console.log("Calling allTime with ");
+      console.log("Declaring coName with null values ");
       var coName = allTime(null, arrD, time);
       console.log("Recieved coName: " + coName + " from allTime with ");
     }

@@ -14,9 +14,11 @@ var formMaker = function (fileName, folderX, time) {
     return formsUrls(fileName, folderX, time);
   }
   if (fileName !== "") {
-    console.log("calling FormApp with " + fileName);
+    console.log("Declaring newFile with FormApp.create(" + fileName + ")");
     var newFile = FormApp.create(fileName);
-    console.log("calling fileManager with " + newFile.getId() + ", " + folderX);
+    console.log(
+      "calling fileManager(" + newFile.getId() + ", " + folderX + ")",
+    );
     fileManager(newFile.getId(), folderX, time);
     return newFile;
   }
@@ -170,95 +172,6 @@ var matchManager = function (folderX, time) {
     pngs: pngTree,
     pdfs: pdfTree,
   };
-};
-
-var fileMatchManager = function (folderX, fileX, time) {
-  var elaspedTime;
-  var fileTree = [];
-  if (
-    typeof folderX !== "undefined" ||
-    folderX !== null ||
-    [folderX].join("").length > 0
-  ) {
-    var pyFolder = DriveApp.getFoldersByName(folderX).next();
-    var tree = pyFolder.getFiles();
-    while (tree.hasNext()) {
-      fileTree.push(tree.next().getName());
-    }
-    if (fileTree.length === 0) {
-      tree = DriveApp.getFiles();
-      while (tree.hasNext()) {
-        fileTree.push(tree.next().getName());
-      }
-    }
-  } else {
-    var tree = DriveApp.getFiles();
-    while (tree.hasNext()) {
-      fileTree.push(tree.next().getName());
-    }
-  }
-
-  if (fileX) {
-    var match = fileMatch(fileX, fileTree);
-    return match;
-  } else {
-    return fileTree;
-  }
-};
-
-var fileMatch = function (fileX, stringArray) {
-  if ([fileX].join("").length > 0) {
-    var search = [fileX].join("");
-    var searchFileStr = search.toLowerCase().split(" ");
-    var i = 0;
-    var l = searchFileStr.length;
-  }
-  var fileXIndex = [];
-  stringArray.map((file) => {
-    // var sfi = searchFileStr
-    var fxi = file.toLowerCase().indexOf(fileX.toLowerCase());
-    if (fxi > -1) {
-      // var properFile = file
-      var myObj = convertToObjects([[file]], [fxi])[0];
-      fileXIndex.push(file);
-    }
-  });
-  return fileXIndex;
-};
-
-var folderManager = function (folderX, time) {
-  var elaspedTime;
-  var folderTree = [];
-  var tree = DriveApp.getFolders();
-  while (tree.hasNext()) {
-    folderTree.push(tree.next().getName());
-  }
-  if (folderX) {
-    var match = folderMatch(folderX, folderTree);
-    return match;
-  } else {
-    return folderTree;
-  }
-};
-
-var folderMatch = function (folderX, stringArray) {
-  if ([folderX].join("").length > 0) {
-    var search = [folderX].join("");
-    var searchFolderStr = search.toLowerCase().split(" ");
-    var i = 0;
-    var l = searchFolderStr.length;
-  }
-  var folderXIndex = [];
-  stringArray.map((folder) => {
-    // var sfi = searchFileStr
-    var fxi = folder.toLowerCase().indexOf(folderX.toLowerCase());
-    if (fxi > -1) {
-      // var properFolder = folder
-      var myObj = convertToObjects([[folder]], [fxi])[0];
-      folderXIndex.push(folder);
-    }
-  });
-  return folderXIndex;
 };
 
 var formsUrlsGlobal = function (fileX, time) {

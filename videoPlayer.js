@@ -68,7 +68,10 @@ function needPastTime(searchString) {
           vidObject[0].indexOf("a.severity") === -1 &&
           vidObject[0].indexOf("b_cont") === -1 &&
           vidObject[0].indexOf(",") === -1 &&
-          vidObject[0].indexOf("document.qu") === -1
+          vidObject[0].indexOf("document.qu") === -1 &&
+          vidObject[0].indexOf("1,typeof h!") === -1 &&
+          vidObject[0].indexOf("EdgeWorksp") === -1 &&
+          vidObject[0].indexOf("{") === -1
         ) {
           sorFndOrd.push(vid);
         }
@@ -108,55 +111,61 @@ function needPastTime(searchString) {
 
   // console.log(fndOrd)
   if (fndOrd) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-    var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
-      for (var i = 0, l = randomKey; i < l; i++) {
-        if (
-          test.indexOf("false") === -1 &&
-          test.indexOf("var") === -1 &&
-          test.indexOf("=") === -1 &&
-          test.indexOf(".") === -1 &&
-          test.indexOf("(") === -1 &&
-          test.indexOf(")") === -1 &&
-          test.indexOf("_") === -1 &&
-          test.indexOf(";") === -1 &&
-          test.indexOf('"') === -1 &&
-          test.indexOf("Error") === -1 &&
-          test.indexOf("error") === -1 &&
-          test.indexOf("Codes") === -1 &&
-          test.indexOf("siz23") === -1 &&
-          test.indexOf(":") === -1 &&
-          test.indexOf("{}") === -1 &&
-          test.indexOf("}") === -1 &&
-          test.indexOf("<") === -1 &&
-          test.indexOf(">") === -1 &&
-          test.indexOf("r[1]+r[3],a") === -1 &&
-          test.indexOf("new XMLHttp") === -1
-        ) {
-          if (JSON.stringify(i) >= 3) {
-            break;
+    console.log(fndOrd);
+    var randomKey = 0;
+    var rndRes = [];
+    while (rndRes.length === 0) {
+      randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+      rndRes = fndOrd.filter((test) => {
+        var elaspeTime = new Date() - time;
+        var timeToExecute = maxTime - elaspeTime;
+        for (var i = 0, l = randomKey; i < l; i++) {
+          if (
+            test.indexOf("false") === -1 &&
+            test.indexOf("var") === -1 &&
+            test.indexOf("=") === -1 &&
+            test.indexOf(".") === -1 &&
+            test.indexOf("(") === -1 &&
+            test.indexOf(")") === -1 &&
+            test.indexOf("_") === -1 &&
+            test.indexOf(";") === -1 &&
+            test.indexOf('"') === -1 &&
+            test.indexOf("Error") === -1 &&
+            test.indexOf("error") === -1 &&
+            test.indexOf("Codes") === -1 &&
+            test.indexOf("siz23") === -1 &&
+            test.indexOf(":") === -1 &&
+            test.indexOf("{}") === -1 &&
+            test.indexOf("}") === -1 &&
+            test.indexOf("<") === -1 &&
+            test.indexOf(">") === -1 &&
+            test.indexOf("r[1]+r[3],a") === -1 &&
+            test.indexOf("EdgeWorksp") === -1 &&
+            test.indexOf("new XMLHttp") === -1
+          ) {
+            if (JSON.stringify(i) >= 3) {
+              break;
+            }
+            return test[i];
           }
-          return test[i];
         }
-      }
-      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-    });
-    var rndSort = [];
-    for (var i = 0, l = rndRes.length; i < l; i++) {
-      var sorRes = rndRes.filter((o) => {
-        return o !== rndRes[i];
+        // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       });
-      rndSort.push(sorRes);
-    }
-    var sorKind = rndSort.toString().split(" ");
-    var revKind = sorKind.reverse();
-    var popKind = revKind.pop();
-    var rndKind = popKind.split(",");
+      var rndSort = [];
+      for (var i = 0, l = rndRes.length; i < l; i++) {
+        var sorRes = rndRes.filter((o) => {
+          return o !== rndRes[i];
+        });
+        rndSort.push(sorRes);
+      }
+      var sorKind = rndSort.toString().split(" ");
+      var revKind = sorKind.reverse();
+      var popKind = revKind.pop();
+      var rndKind = popKind.split(",");
 
-    //  console.log(uniqueVid)
-    return rndRes.sort((a, b) => a - b);
+      //  console.log(uniqueVid)
+      return rndRes.sort((a, b) => a - b);
+    }
   }
 }
 

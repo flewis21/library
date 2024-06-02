@@ -848,19 +848,22 @@ var dtlsTv = function () {
 };
 
 var dtlsVegas = function (rndId) {
-  // var rndId = "Converse Chuck Taylor All Star Low Top"
+  if (typeof rndId === "undefined") {
+    var rndId = "Converse Chuck Taylor All Star Low Top";
+  }
   var rndTKey = seoSheet(rndId).keyWords;
   var keyNum = Math.floor(Math.random() * Math.floor(rndTKey.length));
   var ndT = rndTKey[keyNum].replace(/"'/g, "");
   var ndTNum = Math.floor(Math.random() * Math.floor(ndT.length));
   var util = ndT[ndTNum];
   var ndtUtil = needUtility(util)[0];
+  return console.log(ndtUtil);
   var ndTArray = ndtUtil.playlistArr;
-  var form = formMaker(rndId.toUpperCase());
+  var form = formMaker([rndId].join("").toUpperCase(), "Forms");
   if (typeof form === "string") {
     var formUrl = FormApp.openByUrl(form).getPublishedUrl();
   } else {
-    fileManager(rndId.toUpperCase(), "Forms");
+    // fileManager([rndId].join("").toUpperCase(), "Forms")
     var rndVid =
       ndTArray[Math.floor(Math.random() * Math.floor(ndTArray.length))];
     form
@@ -879,7 +882,7 @@ var dtlsVegas = function (rndId) {
         <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
         <div class="container" style="clear: both">
         <div class="col s12 receipt deep-purple darken-1">
-        <div id="vegas"></div>          
+        <div id="vegas">${result}</div>          
         </div></div></div></div>
         <div class="row">
         <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
@@ -897,14 +900,10 @@ var dtlsVegas = function (rndId) {
           allowfullscreen
           ></iframe>
         </div></div></div></div>
-        <script>document.addEventListener("DOMContentLoaded", lasVegas)
-        function lasVegas() {
-          
-          document.getElementById("vegas").innerHTML = ${result}
-        </script>
       </body>
     </html>`,
   );
+  // html.result = ndtUtil.rndTitle
   return html.getRawContent();
 };
 

@@ -188,19 +188,19 @@ var rndControl = function (infinitum) {
   var penny;
   infinitum.map((fin) => {
     coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
-    penny = Math.floor(Math.random() * Math.floor(fin));
+    penny = Math.floor(Math.random() * Math.floor(coin));
     if (penny !== coin) {
-      trial.push({
-        heads: fin,
-      });
-      coinHead++;
-    }
-    // if (penny === coin)
-    else {
       trial.push({
         tails: fin,
       });
       coinTail++;
+    }
+    // if (penny === coin)
+    else {
+      trial.push({
+        heads: coin,
+      });
+      coinHead++;
     }
     // else {
     //   trial.push({
@@ -208,25 +208,25 @@ var rndControl = function (infinitum) {
     // }
     // return
     while (coinTail !== coinHead) {
-      penny = Math.floor(Math.random() * Math.floor(fin));
       coin =
         infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+      penny = Math.floor(Math.random() * Math.floor(coin));
       if (penny === coin) {
         trial.push({
-          tails: fin,
+          heads: coin,
         });
-        coinTail++;
-        if (fin > coinTail) {
+        coinHead++;
+        if (fin < coinHead) {
           return;
         }
       }
       // if (penny !== coin)
       else {
         trial.push({
-          heads: fin,
+          tails: fin,
         });
-        coinHead++;
-        if (fin > coinHead) {
+        coinTail++;
+        if (fin < coinTail) {
           return;
         }
       }
@@ -298,6 +298,196 @@ var rndControl = function (infinitum) {
       }
     }
   });
+  return formUrl;
+};
+
+var rndChoice = function (game) {
+  var trial = [];
+  var judge = 0;
+  var coinHead = 0;
+  var coinTail = 0;
+  var infinitum = [
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 23, 24, 25, 26, 27,
+    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+    47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
+    66, 67, 68, 69,
+  ];
+  console.log(typeof [game]);
+  if (!game) {
+    var game = 5;
+  }
+  // else {
+  //   infinitum = infinitum.split(" ")
+  //   return infinitum.map((fin) => {
+  //   var penny = Math.floor(Math.random() * Math.floor(fin))
+  //   while (coinTail < penny) {
+  //     trial.push({
+  //       tails: coinTail
+  //     })
+  //     coinTail++
+  //     penny = Math.floor(Math.random() * Math.floor(fin))
+  //   }
+  //   return JSON.stringify(trial)
+  // })
+  // console.log(typeof [infinitum] + " " + infinitum)
+  // }
+  var coin;
+  var penny;
+  // infinitum.map((fin) => {
+  coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+  console.log(coin);
+  penny = Math.floor(Math.random() * Math.floor(coin));
+  console.log(penny);
+  if (penny !== coin) {
+    trial.push({
+      tails: Math.floor((penny + coin) / 2),
+    });
+    coinTail++;
+  }
+  // if (penny === coin)
+  else {
+    trial.push({
+      heads: Math.floor((penny + coin) / 2),
+    });
+    coinHead++;
+  }
+  // else {
+  //   trial.push({
+  // heads: donza})
+  // }
+  // return
+  console.log(trial);
+  console.log("coinTail !== coinHead: " + coinTail !== coinHead);
+  while (coinTail !== coinHead) {
+    coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+    console.log(coin);
+    penny = Math.floor(Math.random() * Math.floor(coin));
+    console.log(penny);
+    if (penny === coin) {
+      trial.push({
+        heads: Math.floor((penny + coin) / 2),
+      });
+      coinHead++;
+      if (coinHead == game) {
+        break;
+      }
+    }
+    // if (penny !== coin)
+    else {
+      trial.push({
+        tails: Math.floor((penny + coin) / 2),
+      });
+      coinTail++;
+      if (coinTail == game) {
+        break;
+      }
+    }
+    // else {
+    //       trial.push({
+    //       heads: donza
+    //     })
+    //     }
+  }
+  // })
+  // return console.log(trial[0]['tails'])
+  //     return console.log(coinTail !== coinHead)
+  // return console.log(covertArr(trial,0,0))
+  var form = FormApp.create("Coin Trial").setDescription(
+    trial.length + " Tosses",
+  );
+  var formUrl = form.getPublishedUrl();
+  var tailEnd = 0;
+  var endTail = [];
+  var headStart = 0;
+  var startHead = [];
+  trial.map((seo) => {
+    for (var key in seo) {
+      if (key === "heads") {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+        // } else {
+        //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+        if (headStart === 1) {
+          // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  toss")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["heads"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["heads"])) +
+                "  for your thoughts",
+            );
+        } else if (headStart < 1 || headStart > 1) {
+          // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["heads"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["heads"])) +
+                "  for your thoughts",
+            );
+        }
+        startHead.push(seo["heads"]);
+      } else {
+        if (tailEnd === 1) {
+          // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  toss")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["tails"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["tails"])) +
+                "  for your thoughts",
+            );
+        } else if (tailEnd < 1 || tailEnd > 1) {
+          // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+          form
+            .addSectionHeaderItem()
+            .setTitle(key + "  " + seo["tails"])
+            .setHelpText(
+              "Penny " +
+                Math.floor(Math.random() * Math.floor(seo["tails"])) +
+                "  for your thoughts",
+            );
+        }
+        endTail.push(seo["tails"]);
+      }
+    }
+  });
+  if (endTail.length >= 2) {
+    form
+      .addSectionHeaderItem()
+      .setTitle(
+        "Moving Tails  " +
+          Math.floor(endTail.reduce((a, b) => a + b, 0) / endTail.length),
+      )
+      .setHelpText(
+        "Penny " +
+          Math.floor(
+            Math.random() *
+              Math.floor(endTail.reduce((a, b) => a + b, 0) / endTail.length),
+          ) +
+          "  for your thoughts",
+      );
+  }
+  if (startHead.length >= 2) {
+    form
+      .addSectionHeaderItem()
+      .setTitle(
+        "Moving Heads  " +
+          Math.floor(startHead.reduce((a, b) => a + b, 0) / startHead.length),
+      )
+      .setHelpText(
+        "Penny " +
+          Math.floor(
+            Math.random() *
+              Math.floor(
+                startHead.reduce((a, b) => a + b, 0) / startHead.length,
+              ),
+          ) +
+          "  for your thoughts",
+      );
+  }
   return formUrl;
 };
 

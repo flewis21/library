@@ -5,26 +5,44 @@ function activeSsId() {
 }
 
 var bingSWF = function (searchString, time) {
-  // var searchString = "oa"
-  if (typeof searchString !== "undefined") {
-    var searchString = `https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(searchString)}&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    var data = [
-      urlDataSource(searchString, { muteHttpExceptions: true }, time),
-    ];
-    var resDATA = data.indexOf("SERP");
-    var dataSplit = data.slice(resDATA).toString().split("SERP");
-    var httpIndex = [dataSplit].join("").indexOf("https");
-    var bill = [dataSplit].join("").split("https");
-    var playBill = [bill].join("").split(" ");
-    const table = data.slice(data.indexOf("SERP")).toString().split("SERP");
-    const pong = table.map((ping) => {
-      return ping.substring(0);
-    });
-    return {
-      myPong: pong.toString().split(","),
-      myPlay: playBill,
-    };
+  //
+  if (typeof searchString === "undefined") {
+    var searchString = "oa";
   }
+  var searcher =
+    "https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+" +
+    encodeURIComponent(searchString) +
+    "&PC=U316&top=50&skip=0&FORM=CHROMN";
+  var searcherOptions = {
+    muteHttpExceptions: true,
+  };
+  var data = [UrlFetchApp.fetch(searcher, searcherOptions).getContentText()];
+  console.log(typeof data);
+  var resDATA = data.slice(data.indexOf("SERP")).join("");
+  console.log(typeof resDATA);
+  var dataSplit = resDATA.split("SERP");
+  var httpIndex = dataSplit.slice(dataSplit.indexOf("https")).join("");
+  var bill = httpIndex.split("https");
+  var playBill = [bill].join("").split(" ");
+  const plate = playBill.map((silver) => {
+    return [silver].slice(0, silver.indexOf(searchString));
+  });
+  var setPlate = plate.filter((plated) => {
+    if (typeof plated === "undefined" || plated.length == 0) {
+      return;
+    } else {
+      return plated;
+    }
+  });
+  console.log(setPlate);
+  const table = [dataSplit].join(",").split(",");
+  const pong = setPlate.map((ping) => {
+    return ping[0].substring(0, ping[0].length);
+  });
+  return console.log({
+    myPong: pong.toString().split(","),
+    myPlay: table,
+  });
 };
 
 var bingNeed = function (searchString, time) {
@@ -1208,15 +1226,18 @@ var seoSheet = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  console.log("Calling seoTwitter with searchString " + searchString);
+  if (typeof searchString === "undefined") {
+    var searchString = "sports medicine";
+  }
+  console.log("Declaring uniqueSeo with searchString " + searchString);
   var uniqueSeo = seoTwitter(searchString, time).twiData;
-  console.log(
-    "Recieved " +
+  return console.log(
+    "Recieved seoTwitter data while declaring uniqueSeo with searchString " +
+      JSON.stringify(searchString) +
+      "\n" +
       typeof uniqueSeo +
-      " uniqueSeo: " +
-      uniqueSeo +
-      " from seoTwitter with searchString " +
-      searchString,
+      ": \n" +
+      uniqueSeo[uniqueSeo.indexOf(searchString)],
   );
   var fndOrd = uniqueSeo
     .join("")
@@ -1485,21 +1506,41 @@ var seoTwitter = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
-  var data = [unFilData.getContentText()];
-  console.log("Calling seoFactor with " + data);
+  if (typeof searchString === "undefined") {
+    var searchString = "love";
+  }
+  // var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`
+  // var unFilData = UrlFetchApp.fetch(rndSearch,{muteHttpExceptions:true})
+  // var data = [unFilData.getContentText()]
+  var data = [];
+  var foldCounter = 0;
+  var foldData = folderManager();
+  // console.log(data.length)
+  while (data.length === 0) {
+    // console.log(data.length)
+    // console.log(foldData[foldCounter])
+    data = fileFold(foldData[foldCounter], searchString);
+    // console.log(data)
+    if (foldData.length > foldCounter) {
+      foldCounter++;
+    } else {
+      break;
+    }
+  }
+  console.log("Declaring idArray with " + data);
   var idArray = [seoFactor(data, time).factorData].toString().split("\n");
   console.log(
     "Recieved idArray: " + idArray + " from seoFactor with data " + data,
   );
-  console.log("Calling seoBites with " + searchString);
+  console.log("Declaring uniqueSeo with " + searchString + " and " + idArray);
   var uniqueSeo = seoBites(searchString, idArray, time);
   console.log(
     "Recieved uniqueSeo: " +
       uniqueSeo +
       " from seoBites with searchString " +
-      searchString,
+      searchString +
+      " and idArray " +
+      idArray,
   );
   return {
     twiData: uniqueSeo,
@@ -1510,9 +1551,12 @@ var seoYoutube = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
   }
+  if (typeof searchString === "undefined") {
+    var searchString = "love";
+  }
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
-  var data = [unFilData.getContentText()];
+  var data = unFilData.getContentText();
   var idArray = vidFactor(data, time).vidArray;
   return {
     myIdArr: idArray,
@@ -1805,6 +1849,9 @@ var urlSpreadSheet = function (url) {
 var vidFactor = function (data, time) {
   if (typeof time === "undefined") {
     time = start;
+  }
+  if (typeof data !== "object") {
+    data = [data];
   }
   var dataArray = [];
   var idArray = [];
