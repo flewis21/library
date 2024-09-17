@@ -149,7 +149,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
     var time = start;
   }
   console.log(
-    "index: " +
+    "randomSubstance( \nindex: " +
       index +
       "\nLoop Length: " +
       loopLength +
@@ -158,7 +158,8 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\nArray Data: " +
       arrD +
       "\nTime: " +
-      time,
+      time +
+      " )",
   );
   var newArr = [];
   var i = index || 0;

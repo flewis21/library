@@ -1,11 +1,14 @@
 var coUtility = function (rndClient) {
-  var client = rndClient;
+  var client;
+  if (rndClient) {
+    client = rndClient;
+  }
   var uniqueCo = [];
   if (typeof client !== "undefined") {
-    console.log("calling allInvestors with " + client);
+    console.log("calling allInvestors(" + client + ")");
     var coName = allInvestors(client.toString().toLowerCase());
   } else {
-    console.log("calling allInvestors with " + client);
+    console.log("calling allInvestors()");
     var coName = allInvestors();
   }
   if (typeof coName["cik"] === "undefined") {
@@ -259,14 +262,21 @@ var needUtility = function (rndClient, arrD, time) {
     var rndClient = "random";
   }
   var client = rndClient;
-  console.log(typeof [client].join("") + " " + [client].join("").length);
+  console.log(
+    "needUtility: \n" +
+      typeof [client].join("") +
+      " " +
+      [client].join("").length,
+  );
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
-    console.log([client].join("").length + " is greater than " + 0);
-    console.log("Declaring seoTitle with " + client);
+    console.log(
+      "needUtility: \n" + [client].join("").length + " is greater than " + 0,
+    );
+    console.log("needUtility: \nDeclaring seoTitle with " + client);
     var seoTitle = seoSheet(client, time).keyWords;
     console.log(
-      "Recieved seoSheet keywords: " +
+      "needUtility: \nRecieved seoSheet keywords: " +
         seoTitle +
         " while declaring seoTitle with client " +
         client,
@@ -290,23 +300,27 @@ var needUtility = function (rndClient, arrD, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      console.log("Declaring coName with " + rndTitle2);
+      console.log("needUtility: \nDeclaring coName with " + rndTitle2);
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
       console.log(
-        "Recieved allTime: " +
+        "needUtility: \nRecieved allTime: " +
           coName +
           " while declaring coName with rndTitle2 " +
           rndTitle2,
       );
     } else {
-      console.log("Declaring coName with null values ");
+      console.log("needUtility: \nDeclaring coName with null values ");
       var coName = allTime(null, arrD, time);
-      console.log("Recieved coName: " + coName + " from allTime with ");
+      console.log(
+        "needUtility: \nRecieved coName: " + coName + " from allTime with ",
+      );
     }
   } else {
-    console.log("Calling allTime with ");
+    console.log("needUtility: \nCalling allTime with ");
     var coName = allTime(null, arrD, time);
-    console.log("Recieved coName: " + coName + " from allTime with ");
+    console.log(
+      "needUtility: \nRecieved coName: " + coName + " from allTime with ",
+    );
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({

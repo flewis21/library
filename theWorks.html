@@ -45,14 +45,78 @@
         });
       }
       console.log(window);
-      const forHTMLContent = document.getElementById("forHtml").innerHTML;
+      var forHTMLContent = document.getElementById("forHtml").innerHTML;
       console.log(forHTMLContent);
       var boxInput = document.getElementById("pRule");
       boxInput.addEventListener("click", clearBox);
       boxInput.addEventListener("keypress", function (event) {
         // If the user preses the "Enter" key on the keyboard.
         if (event.key === "Enter") {
-          document.getElementById("btn").click();
+          console.log(
+            typeof boxInput.value +
+              " _: " +
+              boxInput.value.indexOf(",") +
+              boxInput.value.split(""),
+          );
+          if (boxInput.value.indexOf(",") === -1) {
+            console.log("rndFolder,rndFile");
+            var splitSearch = boxInput.value.split("");
+            var funcFlex = boxInput.value;
+            console.log(urlFolder);
+            var urlFolder =
+              splitSearch[
+                Math.floor(Math.random() * Math.floor(splitSearch.length))
+              ];
+            console.log(urlFolder);
+            var urlFile =
+              splitSearch[
+                Math.floor(Math.random() * Math.floor(splitSearch.length))
+              ];
+            console.log(urlFile);
+          } else {
+            console.log("folder,file");
+            var splitSearch = boxInput.value.split(",");
+            var funcFlex = splitSearch[0];
+            var urlFolder = splitSearch[1];
+            console.log(urlFolder);
+            var urlFile = splitSearch[2];
+            console.log(urlFile);
+          }
+          console.log([urlFolder, urlFile]);
+          serverSide([funcFlex], [urlFolder, urlFile]).then((filed) => {
+            console.log(
+              typeof filed + " XX " + [filed].join("").length + " XXX " + filed,
+            );
+            if (
+              filed.length === 83 ||
+              filed.length === 94 ||
+              filed.length === 97 ||
+              filed.length === 99 ||
+              filed.length === 101 ||
+              filed.length === 103 ||
+              filed.length === 132 ||
+              filed.length === 136
+            ) {
+              document.getElementById("forHtml").innerHTML = forHTMLContent;
+              document.getElementById("worksFrame").src = filed;
+            } else {
+              document.getElementById("forHtml").innerHTML = filed;
+            }
+            if (
+              typeof urlFolder !== "undefined" ||
+              typeof urlFile !== "undefined"
+            ) {
+              document.getElementById("pageBlock").innerHTML =
+                "<p>" + urlFolder + ": " + urlFile + "</p>";
+            }
+            serverSide("rule").then((dateRule) => {
+              console.log(typeof boxInput.value);
+              console.log(boxInput.value.length);
+              if (boxInput.value.length === 0) {
+                boxInput.value = dateRule;
+              }
+            });
+          });
         }
       });
       document.getElementById("btn").addEventListener("click", openWorks);
@@ -108,8 +172,12 @@
             filed.length === 132 ||
             filed.length === 136
           ) {
-            document.getElementById("forHtml").innerHTML = forHTMLContent;
-            document.getElementById("worksFrame").src = filed;
+            var linkFollow = document.createElement("a");
+            linkFollow.href = filed;
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_blank";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click();
           } else {
             document.getElementById("forHtml").innerHTML = filed;
           }

@@ -2,60 +2,126 @@ var allInvestors = function (rndKey, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  if (typeof rndKey === "undefined") {
-    // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
-    // var uniqueCoArray = uniqueKey;
-    var coArray = [`bank semi fact bio science chain space coin`];
-    var reCoArray = coArray.toString().split(" ");
-    var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
-    var myCoArray = reCoArray.sort((a, b) => {
-      a - b;
-    })[rndCoA];
-    // console.log([rndKey].join("").length)
-    // if ([rndKey].join("").length > 1){
-    //     var timeKey = [rndKey].join("").split(" ");
-    //   }
-    var matches = myCoArray;
-    // var myCoArray = uniqueCoArray.filter((co) => {
-
-    //     return co[0]["title"].toLowerCase().includes(hCodedCo.toLowerCase())
-    //   })
-    var rndArrayNum = Math.floor(Math.random() * Math.floor(matches.length));
-    var rndTitleVested = matches; //[rndArrayNum][0]["title"]
-  }
-  var coKey = rndKey || rndTitleVested;
-  if (typeof rndKey === "undefined") {
-    // const matches = []
-    // uniqueCoArray.sort((a, b) => a - b).filter(
-    //     (ac)=> {
-    //       if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(coKey.toString().toLowerCase())) {
-
-    //         matches.push(ac)
-    //       }
-    //       else if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {
-
-    //         matches.push(ac)
-    //       }
-    //       })
-    if (matches.length !== 0) {
-      var uniqueCoKey = [matches].entries().next().value;
-      var uniqueNum = randNum(uniqueCoKey[1]);
-      var mathCalc = function () {
-        return uniqueNum * 999999999;
+  // return console.log([rndKey].join("").length)
+  var coArray = rndKey || [`bank semi fact bio science chain space coin`];
+  var reCoArray = coArray.toString().split(" ");
+  var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
+  var myCoArray = reCoArray.sort((a, b) => {
+    // var rndArrayNum =  Math.floor(Math.random() * (Math.floor(matches.length)));
+    //[rndArrayNum][0]["title"];
+    a - b;
+  });
+  // console.log(myCoArray + " :\n" + myCoArray[rndCoA])
+  var matches = myCoArray[rndCoA];
+  var sheetCalc = function () {
+    var secSheet = ssGetSheetBySpreadsheetUrl(
+      "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+      "sec",
+    );
+    var secArrays = secSheet.getDataRange().getValues().slice(1);
+    var arrVals = secArrays.map((val) => {
+      return {
+        cik: val[0],
+        ticker: val[1],
+        title: val[2],
       };
-      var takeNum = mathCalc();
-      var randomKey = Math.floor(Math.random() * Math.floor(takeNum));
-      var randomTitle = uniqueCoKey[1]; //[randomKey][0]["title"];
-      var randomTicker = uniqueCoKey[1]; //[randomKey][0]["ticker"];
-      var randomCik = randomKey; //randomKey[randomKey][0]["cik_str"];
-      while (randomCik < 99999) {
-        randomCik = randomKey;
-      }
+    });
+    var rndArrVals = [];
+    while (rndArrVals.length < arrVals.length) {
+      rndArrVals.push(
+        arrVals[
+          Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()
+        ],
+      );
     }
-    //Youtube Widget
+    // return console.log(rndTitleVested)
+    return rndArrVals;
+    // return [Math.random() * (uniqueNum)].join("").split(".")
+  };
+  // return console.log(sheetCalc())
+  var myTitleArray = [];
+  while (myTitleArray.length < 1) {
+    //   if (typeof rndKey === "undefined") {
+    // }
+    // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
+    var uniqueCoArray = sheetCalc();
+    myTitleArray = uniqueCoArray.filter((co) => {
+      return co["title"].toLowerCase().includes(matches.toLowerCase());
+    });
+    // if ([rndKey].join("").length > 1){ //     var timeKey = [rndKey].join("").split(" ");}
   }
-  var tunPlay = randomTitle || coKey;
+  // return console.log(myTitleArray)
+  // var myCikArray = [];
+  // while (myCikArray.length < 1) {
+  //   if (typeof rndKey === "undefined") {     // var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
+  //   var uniqueCikArray = sheetCalc("A2:A");
+  //   myCikArray = uniqueCikArray.filter((cik) => {
+  //     return cik.includes(matches.toLowerCase())
+  //   })
+  // return console.log(myCikArray)
+  // if ([rndKey].join("").length > 1){ //     var timeKey = [rndKey].join("").split(" ");}
+  // }}
+  var rndTitleVested = myTitleArray;
+  var coKey = rndKey || rndTitleVested;
+  // if (typeof rndKey === "undefined" ){
+  // }
+  // return console.log(sheetCalc())
+  // return console.log(randomCik)
+  var titleMatches = [];
+  myTitleArray
+    .sort((a, b) => a - b)
+    .filter((ac) => {
+      if (ac["title"].toLowerCase().includes(coKey.toString().toLowerCase())) {
+        titleMatches.push(ac);
+      }
+      // else if (JSON.stringify(ac.toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {   //         matches.push(ac)}
+    });
+  if (myTitleArray.length !== 0) {
+    var uniqueCoKey = [myTitleArray].entries().next().value;
+    var uniqueNum = 0;
+    while (uniqueNum === 0) {
+      console.log(
+        "executing rndNum(" + JSON.stringify(uniqueCoKey[1][0]["cik"]) + ")",
+      );
+      uniqueNum = randNum(JSON.stringify(uniqueCoKey[1][0]["cik"]));
+    }
+    // return console.log(uniqueNum)
+    var mathCalc = function () {
+      return [Math.random() * uniqueNum].join("").split(".");
+    };
+    var takeNum = mathCalc()[1];
+    var randomKey = Math.floor(Math.random() * Math.floor(takeNum));
+    while (randomKey[0] > 1) {
+      randomKey = Math.floor(Math.random() * Math.floor(takeNum));
+    }
+    var uniqueCoTitle = uniqueCoKey[1][0]["title"];
+    var randomTitle = uniqueCoKey[1];
+    //[randomKey][0]["title"];
+    var uniqueCoTicker = uniqueCoKey[1][0]["ticker"];
+    var randomTicker = uniqueCoKey[1];
+    //[randomKey][0]["ticker"];
+    var uniqueCoCik = uniqueCoKey[1][0]["cik"];
+    var randomCik = [randomKey].join("").slice(1, 7);
+    //randomKey[randomKey][0]["cik_str"];
+    // while (randomCik < 99999 || randomCik > 999999999) {
+    //     randomCik = randomKey
+    // }
+  } //Youtube Widget
+  var cikUrl =
+    "https://www.sec.gov/edgar/browse/?CIK=" + uniqueCoCik + "&owner=exclude";
+  // return console.log(cikUrl)
+  var tunPlay = uniqueCoTitle || coKey;
+  console.log(
+    "allInvestors: \nDeclaring randomPlaylist = needPastTime(" + tunPlay + ")",
+  );
   var randomPlaylist = needPastTime(tunPlay);
+  console.log(
+    "allInvestors: \nRecieved: " +
+      randomPlaylist +
+      " from declared vatiable randomPlaylist = needPastTime(" +
+      tunPlay +
+      ")",
+  );
   // var randomPlaylist = idArray;
   //   for (var i = 0;i<idArray.length;i++) {
   //   var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));
@@ -66,7 +132,19 @@ var allInvestors = function (rndKey, time) {
       Math.random() * Math.floor(randomPlaylist.length),
     );
     var playListSorted = randomPlaylist.sort((a, b) => a - b);
+    console.log(
+      "vidPlaylist: \nDeclaring videoObject = covObjects(" +
+        playListSorted +
+        ",[youtubeID])",
+    );
     var videoObject = covObjects(playListSorted, ["youtubeID"]);
+    console.log(
+      "vidPlaylist: \nRecieved" +
+        JSON.stringify(videoObject) +
+        " from  declared variable videoObject = covObjects(" +
+        playListSorted +
+        ",[youtubeID])",
+    );
     if (typeof videoObject["youtubeID"] !== "undefined") {
       var uniqueVidKey = [videoObject].entries().next().value;
       var randomVid = uniqueVidKey[1][randomVidKey];
@@ -81,11 +159,11 @@ var allInvestors = function (rndKey, time) {
   var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
   // return misBing(randomVideo)
   var secUrl =
-    "https://www.sec.gov/edgar/browse/?CIK=" + randomCik + "&owner=exclude";
+    "https://www.sec.gov/edgar/browse/?CIK=" + uniqueCoCik + "&owner=exclude";
   return {
-    cik: randomCik,
-    ticker: randomTicker,
-    title: randomTitle || coKey,
+    cik: uniqueCoCik,
+    ticker: uniqueCoTicker,
+    title: uniqueCoTitle || coKey,
     rndVideoId: randomVideo,
     videoPlaylist: randomPlaylist,
     videoUrl: youtubeUrl,

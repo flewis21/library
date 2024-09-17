@@ -1,4 +1,7 @@
 var dtlsBridge = function (func, time) {
+  if (typeof func === "undefined") {
+    var func = "doGet";
+  }
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -7,6 +10,7 @@ var dtlsBridge = function (func, time) {
   }
   var lowCapApp = [appList].join("").toLowerCase().split(",");
   var lowCapFunc = [func].join("").toLowerCase().split(",");
+  return console.log(lowCapFunc);
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   if (funFirst > -1) {
     // var func = "proMediaSnip"

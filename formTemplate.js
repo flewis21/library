@@ -614,7 +614,7 @@ var dtlsInvestor = function (coKey, time) {
 var dtlsMain = function (file) {
   var isProduct = formsUrls(file, "Forms");
   console.log(typeof isProduct);
-  if (typeof isProduct === "string") {
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
     return HtmlService.createTemplate(
@@ -851,7 +851,9 @@ var dtlsVegas = function (rndId) {
   if (typeof rndId === "undefined") {
     var rndId = "Converse Chuck Taylor All Star Low Top";
   }
+  console.log("dtlsVegas:\ncalling seoSheet(" + rndId + ").keyWords");
   var rndTKey = seoSheet(rndId).keyWords;
+  return console.log(convertToJS(rndTKey));
   var keyNum = Math.floor(Math.random() * Math.floor(rndTKey.length));
   var ndT = rndTKey[keyNum].replace(/"'/g, "");
   var ndTNum = Math.floor(Math.random() * Math.floor(ndT.length));

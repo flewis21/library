@@ -732,7 +732,7 @@ var seoBites = function (searchString, idArray, time) {
     .map((l) => {
       var elaspeTime = new Date() - time;
       console.log(
-        "searchString: " +
+        "seoBites: \nsearchString: " +
           searchString +
           "\nl: " +
           l +
@@ -754,7 +754,7 @@ var seoBites = function (searchString, idArray, time) {
       }
     });
   }
-  return uniqueSeo;
+  return console.log(uniqueSeo);
 };
 
 var seoCapital = function (url) {
@@ -1229,10 +1229,12 @@ var seoSheet = function (searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = "sports medicine";
   }
-  console.log("Declaring uniqueSeo with searchString " + searchString);
+  console.log(
+    "seoSheet: \nDeclaring uniqueSeo with searchString " + searchString,
+  );
   var uniqueSeo = seoTwitter(searchString, time).twiData;
   return console.log(
-    "Recieved seoTwitter data while declaring uniqueSeo with searchString " +
+    "seoSheet: \nRecieved seoTwitter data while declaring uniqueSeo with searchString " +
       JSON.stringify(searchString) +
       "\n" +
       typeof uniqueSeo +
@@ -1414,19 +1416,23 @@ var seoSheet = function (searchString, time) {
     var stringSplit = [searchString].join("").split(",");
   }
   if (stringSplit) {
-    console.log("Calling testData with stringSplit: " + stringSplit);
+    console.log(
+      "seoSheet: \nCalling testData with stringSplit: " + stringSplit,
+    );
     var testString = JSON.stringify(testData([stringSplit], time).testArray);
     console.log(
-      "Recieved testString: " +
+      "seoSheet: \nRecieved testString: " +
         testString +
         " from testData with stringSplit " +
         stringSplit,
     );
   } else {
-    console.log("Calling testData with searchString: " + searchString);
+    console.log(
+      "seoSheet: \nCalling testData with searchString: " + searchString,
+    );
     var testString = JSON.stringify(testData([searchString], time).testArray);
     console.log(
-      "Recieved testString: " +
+      "seoSheet: \nRecieved testString: " +
         testString +
         " from testData with searchString " +
         searchString,
@@ -1437,7 +1443,7 @@ var seoSheet = function (searchString, time) {
     [testString].map((increase) => {
       var elaspeTime = new Date() - time;
       console.log(
-        "testString: " +
+        "seoSheet: \ntestString: " +
           testString +
           "\nincrease: " +
           increase +
@@ -1527,15 +1533,23 @@ var seoTwitter = function (searchString, time) {
       break;
     }
   }
-  console.log("Declaring idArray with " + data);
+  console.log("seoTwitter: \nDeclaring idArray with " + data);
   var idArray = [seoFactor(data, time).factorData].toString().split("\n");
   console.log(
-    "Recieved idArray: " + idArray + " from seoFactor with data " + data,
+    "seoTwitter: \nRecieved idArray: " +
+      idArray +
+      " from seoFactor with data " +
+      data,
   );
-  console.log("Declaring uniqueSeo with " + searchString + " and " + idArray);
+  console.log(
+    "seoTwitter: \nDeclaring uniqueSeo with " +
+      searchString +
+      " and " +
+      idArray,
+  );
   var uniqueSeo = seoBites(searchString, idArray, time);
   console.log(
-    "Recieved uniqueSeo: " +
+    "seoTwitter: \nRecieved uniqueSeo: " +
       uniqueSeo +
       " from seoBites with searchString " +
       searchString +

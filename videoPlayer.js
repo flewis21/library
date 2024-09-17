@@ -111,7 +111,7 @@ function needPastTime(searchString) {
 
   // console.log(fndOrd)
   if (fndOrd) {
-    console.log(fndOrd);
+    console.log("needPastTime \n" + fndOrd);
     var randomKey = 0;
     var rndRes = [];
     while (rndRes.length === 0) {
