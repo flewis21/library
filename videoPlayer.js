@@ -71,7 +71,8 @@ function needPastTime(searchString) {
           vidObject[0].indexOf("document.qu") === -1 &&
           vidObject[0].indexOf("1,typeof h!") === -1 &&
           vidObject[0].indexOf("EdgeWorksp") === -1 &&
-          vidObject[0].indexOf("{") === -1
+          vidObject[0].indexOf("{") === -1 &&
+          vidObject[0].indexOf("personaI") === -1
         ) {
           sorFndOrd.push(vid);
         }

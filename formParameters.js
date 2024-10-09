@@ -9,15 +9,19 @@ var maxTime = 6 * 59.9 * 1000;
 var sCache = CacheService.getScriptCache();
 
 var formMaker = function (fileName, folderX, time) {
-  console.log("calling formUrls with " + fileName + ", " + folderX);
   if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
+    console.log("formMaker: \nformsUrls(" + fileName, folderX, time + ")");
     return formsUrls(fileName, folderX, time);
   }
   if (fileName !== "") {
-    console.log("Declaring newFile with FormApp.create(" + fileName + ")");
+    console.log(
+      "formMaker: \nDeclaring newFile = FormApp.create(" + fileName + ")",
+    );
     var newFile = FormApp.create(fileName);
     console.log(
-      "calling fileManager(" + newFile.getId() + ", " + folderX + ")",
+      "formMaker: \nfileManager(" + newFile.getId(),
+      folderX,
+      time + ")",
     );
     fileManager(newFile.getId(), folderX, time);
     return newFile;
@@ -26,6 +30,10 @@ var formMaker = function (fileName, folderX, time) {
 
 var formsUrls = function (fileX, folderX, time) {
   if ([fileX].join("").length > 0) {
+    // console.log("formUrls: \nDeclaring")
+    console.log(
+      "formUrls: \nDeclaring search = [" + fileX + "].join(" + "" + ")",
+    );
     var search = [fileX].join("");
     var searchFileStr = search.toLowerCase().split(" ");
     var i = 0;
@@ -36,6 +44,11 @@ var formsUrls = function (fileX, folderX, time) {
       // First execution
       var dataTree = [];
       var treeList = [];
+      console.log(
+        "formUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
+          folderX +
+          ").next()",
+      );
       var eFolder = DriveApp.getFoldersByName(folderX).next();
       var eFoldId = eFolder.getId();
       var folderFiles = eFolder.getFiles();
@@ -44,24 +57,45 @@ var formsUrls = function (fileX, folderX, time) {
       while (folderFiles.hasNext()) {
         var allFiles = folderFiles.next();
         var currentFileName = allFiles.getName();
+        console.log("formUrls: \ncurrent file name: " + currentFileName);
         var fileUrl = allFiles.getUrl();
         // treeList.push(fileUrl)
         // var fileX = "eas"
         // if (subFiles.getName().toLowerCase().split(" ").indexOf(fileX) > -1)
+        console.log(
+          "formUrls: \nDeclaring currentFileStr = currentFileName.toLowerCase().split(" +
+            " " +
+            ")",
+        );
         var currentFileStr = currentFileName.toLowerCase().split(" ");
         var fileXIndex = [];
         for (i, l; i < l; i++) {
+          console.log("formUrls: \nDeclaring sfi = searchFileStr[" + i + "]");
           var sfi = searchFileStr[i];
+          console.log(
+            "formUrls: \nDeclaring fxi = currentFileStr.indexOf(" + sfi + ")",
+          );
           var fxi = currentFileStr.indexOf(sfi);
           if (fxi > -1) {
+            console.log(
+              "formUrls: \nDeclaring myObj = convertToObjects(" + [[fxi]],
+              [sfi] + ")[0]",
+            );
             var myObj = convertToObjects([[fxi]], [sfi])[0];
           }
+          console.log("formUrls: \nfileXIndex.push(" + myObj + ")");
           fileXIndex.push(myObj);
         }
         var fileXIndexLen = fileXIndex.join("").length;
+        console.log(
+          "formUrls: \nDeclaring fileXincluded = currentFileName.toLowerCase().includes(" +
+            search +
+            ")",
+        );
         var fileXincluded = currentFileName.toLowerCase().includes(search);
         if (fileXincluded || fileXIndexLen > 0) {
           // console.log(fileX + " " + DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" ").indexOf(fileX) + " " +  DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" "))
+          console.log("formUrls: \ndataTree.push(" + allFiles.getUrl() + ")");
           dataTree.push(allFiles.getUrl());
         }
       }
@@ -70,7 +104,13 @@ var formsUrls = function (fileX, folderX, time) {
       //   if (gf.toLowerCase().substring(fileX.toLowerCase()))
       //   return gf})
       //   console.log(typeof formFile[0])}
+      console.log(
+        "formUrls: \nDeclaring rndFiled = Math.floor(" +
+          Math.random() * Math.floor(dataTree.length) +
+          ")",
+      );
       var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
+      console.log("formUrls: \nDeclaring filed = dataTree[" + rndFiled + "]");
       var filed = dataTree[rndFiled];
       //  || treeList[Math.floor(Math.random() * (Math.floor(treeList.length)))]
       return filed;
@@ -78,100 +118,6 @@ var formsUrls = function (fileX, folderX, time) {
       console.log(err);
     }
   }
-};
-
-var matchManager = function (folderX, time) {
-  // First execution
-  var appTree = [];
-  var pngTree = [];
-  var pdfTree = [];
-  var docList = [];
-  var slideList = [];
-  var sheetList = [];
-  var formList = [];
-  if (typeof folderX === "undefined") {
-    var allFolders = folderManager();
-    var rndFolder = Math.floor(Math.random() * Math.floor(allFolders.length));
-    folderX = allFolders[rndFolder];
-  }
-  var eFolder = DriveApp.getFoldersByName(folderX).next();
-  var eFoldId = eFolder.getId();
-  var folderFiles = eFolder.getFiles();
-  var folderDocs = eFolder.getFilesByType(MimeType.GOOGLE_DOCS);
-  var folderSlides = eFolder.getFilesByType(MimeType.GOOGLE_SLIDES);
-  var folderSheets = eFolder.getFilesByType(MimeType.GOOGLE_SHEETS);
-  var folderForms = eFolder.getFilesByType(MimeType.GOOGLE_FORMS);
-  var folderApps = eFolder.getFilesByType(MimeType.GOOGLE_APPS_SCRIPT);
-  var folderPng = eFolder.getFilesByType(MimeType.PNG);
-  var folderPdf = eFolder.getFilesByType(MimeType.PDF);
-  // var currentFolderFiles = DriveApp.getFolderById(eFoldId).getFiles();
-  // var treeRoot = DriveApp.getFolderById(DriveApp.getFoldersByName("Forms").next().getId()).getFiles();
-  // return console.log(eFolder.getFilesByType(MimeType.GOOGLE_DOCS).hasNext())
-  while (
-    folderDocs.hasNext() ||
-    folderSlides.hasNext() ||
-    folderSheets.hasNext() ||
-    folderForms.hasNext()
-  ) {
-    if (folderDocs.hasNext()) {
-      var docFiles = folderDocs.next();
-      var currentDocName = docFiles.getName();
-      docList.push(currentDocName);
-    }
-    if (folderSlides.hasNext()) {
-      var slideFiles = folderSlides.next();
-      var currentSlideName = slideFiles.getName();
-      slideList.push(currentSlideName);
-    }
-    if (folderSheets.hasNext()) {
-      var sheetFiles = folderSheets.next();
-      var currentSheetName = sheetFiles.getName();
-      sheetList.push(currentSheetName);
-    }
-    if (folderForms.hasNext()) {
-      var formFiles = folderForms.next();
-      var currentFormName = formFiles.getName();
-      formList.push(currentFormName);
-    }
-    // var fileUrl = allFiles.getUrl()
-    // var fileEx = allFiles.getMimeType()
-    // return console.log(fileEx)
-  }
-  while (folderApps.hasNext() || folderPng.hasNext() || folderPdf.hasNext()) {
-    if (folderApps.hasNext()) {
-      var appFiles = folderApps.next();
-      var currentAppName = appFiles.getName();
-      appTree.push(currentAppName);
-    }
-    if (folderPng.hasNext()) {
-      var pngFiles = folderPng.next();
-      var currentPngName = pngFiles.getName();
-      pngTree.push(currentPngName);
-    }
-    if (folderPdf.hasNext()) {
-      var pdfFiles = folderPdf.next();
-      var currentPdfName = pdfFiles.getName();
-      pdfTree.push(currentPdfName);
-    }
-    // var fileUrl = allFiles.getUrl()
-    // var fileEx = allFiles.getMimeType()
-    // return console.log(fileEx)
-  }
-  // return console.log(treeList)
-  // var fileX = "eas"
-  // if (subFiles.getName().toLowerCase().split(" ").indexOf(fileX) > -1)
-  // var currentFileStr = currentFileName.toLowerCase().split(" ")
-  // console.log(currentFileStr)
-  // var match = fileMatch(fileX, treeList)
-  return {
-    docs: docList,
-    slides: slideList,
-    sheets: sheetList,
-    forms: formList,
-    apps: appTree,
-    pngs: pngTree,
-    pdfs: pdfTree,
-  };
 };
 
 var formsUrlsGlobal = function (fileX, time) {

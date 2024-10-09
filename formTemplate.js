@@ -446,7 +446,6 @@ var dtlsEnvironment = function (e, time) {
   if (typeof secReport !== "undefined") {
     form.addSectionHeaderItem().setTitle(stkTicker).setHelpText(secReport);
     form.addTextItem().setTitle("Industry").setRequired(true);
-    form.addTextItem().setTitle("Sector").setRequired(true);
     form
       .addParagraphTextItem()
       .setTitle("Industry/Market Corrections")
@@ -746,6 +745,9 @@ var dtlsSomeFunction = function (e) {
 };
 
 var dtlsStore = function (itemName, time) {
+  // if (typeof itemName === "undefined") {
+  //   var itemName = "water"
+  // }
   if (itemName) {
     var boilerUrl = dtlsBridge(itemName, time);
     if (boilerUrl) {
@@ -762,24 +764,54 @@ var dtlsStore = function (itemName, time) {
     return formUrl;
   }
   var time = start;
-  return HtmlService.createTemplate(
-    contentApp(
-      `
-  <? var form = formMaker([item].join("").toUpperCase(), "inventoryForms", allTime) ?>
-  <? var formUrl = form.getPublishedUrl(); ?>
-  <? var jo = storeFunction(); ?>
-  <? form.setTitle(jo.length + " Items").setConfirmationMessage('Thanks for your feedback !!'); ?>
-  <? var coTable = jo.map((r)=>{ ?>
-      <? form.addPageBreakItem().setTitle(r["Description"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Quantity: " + r["QTY"] + " set of " + r["Pack Size"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Price: " + r["TOTAL COST"]) ?>
-      <? form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["COST PER PIECE"]) ?>
-      \n\n\n\n 
-      <? }).toString().replace(/,/g, "") ?>
-  <? var result = JSON.stringify(coTable); ?>
-  <? baseUrl = getUrl(ScriptApp); ?>
-  <? inventoryUrl = getUrl(ScriptApp); ?>
-  <? financeUrl = getUrl(ScriptApp); ?>
+  var form = formMaker(
+    [itemName].join("").toUpperCase(),
+    "inventoryForms",
+    time,
+  );
+  var formUrl = form.getPublishedUrl();
+  var jo = storeFunction();
+  var joItemCount = [];
+  jo.map((c) => {
+    var joXItem = c["Description"];
+    if (
+      [joXItem]
+        .join("")
+        .toLowerCase()
+        .includes([itemName].join("").toLowerCase())
+    ) {
+      joItemCount.push(c);
+    }
+  });
+  if (joItemCount.length > 1 || joItemCount.length < 1) {
+    form
+      .setTitle(joItemCount.length + " Items")
+      .setConfirmationMessage("Thanks for your feedback !!");
+  } else {
+    form
+      .setTitle(joItemCount.length + " Item")
+      .setConfirmationMessage("Thanks for your feedback !!");
+  }
+  var coTable = joItemCount
+    .map((r) => {
+      form.addPageBreakItem().setTitle(r["Description"]);
+      form
+        .addSectionHeaderItem()
+        .setTitle("Quantity: " + r["QTY"] + " set of " + r["Pack Size"]);
+      form.addSectionHeaderItem().setTitle("Price: " + r["TOTAL COST"]);
+      form
+        .addSectionHeaderItem()
+        .setTitle("Cost Per Piece: " + r["COST PER PIECE"]) + "\n\n\n\n\n\n";
+    })
+    .toString()
+    .replace(/,/g, "");
+  return formUrl;
+  var result = JSON.stringify(coTable);
+  baseUrl = getUrl(ScriptApp);
+  inventoryUrl = getUrl(ScriptApp);
+  financeUrl = getUrl(ScriptApp);
+  var itemContent = contentApp(
+    `
       <div class="row">
         <div class="col s10 card-panel l12 m12 push-s1">
           <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
@@ -792,7 +824,7 @@ var dtlsStore = function (itemName, time) {
                         <div class="col s10 l10 m10 receipt black darken-1">
                           <iframe 
                             class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-                            src=<?= formUrl ?>
+                            src=<fileUrl 
                             id="busRes"
                             width="100%"
                             height="100%"
@@ -821,15 +853,10 @@ var dtlsStore = function (itemName, time) {
           </div>
         </div>
       </div>
-    `,
-      {
-        item: itemName || "SHOPPING LIST",
-        allTime: time,
-      },
-    ),
-  )
-    .evaluate()
-    .getContent();
+`,
+    { item: itemName || "SHOPPING LIST", fileUrl: formUrl, allTime: time },
+  );
+  return itemContent;
 };
 
 var dtlsTv = function () {

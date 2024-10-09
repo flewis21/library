@@ -524,17 +524,23 @@ var fileFold = function (folderX, fileX, time) {
       return;
     }
     // console.log(folderX + "\n" + typeof folderX)
+    console.log(
+      "fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" +
+        folderX +
+        ").next()",
+    );
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
+    console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()");
+    // var minFile = [fileX].join("").toLowerCase()
     var tree = pyFolder.getFiles();
     while (tree.hasNext()) {
-      // console.log(typeof tree.next().getName())
-      var minFold = [tree.next().getName()].join("").toLowerCase();
-      // console.log(minFold)
-      var minFile = [fileX].join("").toLowerCase();
-      if (minFold.includes(minFile)) {
-        fileFree.push(tree.next().getName());
-      }
-      break;
+      // console.log("fileFold: \nDeclaring minFold = [" + tree.next().getName() + "].join('').toLowerCase()");
+      // var minFold = [tree.next().getName()].join("").toLowerCase();
+      // console.log("fileFold: \nDeclaring minFile = [" + fileX + "].join('').toLowerCase()")
+      // if (minFold.includes(minFile)) {
+      fileFree.push(tree.next().getName());
+      // }
+      // break
     }
   } else {
     return JSON.stringify(this);
@@ -706,9 +712,14 @@ var folderManager = function (folderX, time) {
   var folderTree = [];
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
+    // console.log("folderManager: \n folderTree.push(" + tree.next().getName() + ")")
     folderTree.push(tree.next().getName());
   }
   if (folderX) {
+    console.log(
+      "folderManager: \nDeclaring match = folderMatch(" + folderX,
+      folderTree + ")",
+    );
     var match = folderMatch(folderX, folderTree);
     return match;
   } else {
@@ -717,11 +728,17 @@ var folderManager = function (folderX, time) {
 };
 
 var folderMatch = function (folderX, stringArray) {
-  if ([folderX].join("").length > 0) {
-    var search = [folderX].join("");
-    var searchFolderStr = search.toLowerCase().split(" ");
-    var i = 0;
-    var l = searchFolderStr.length;
+  if ([folderX].join("").length === 0) {
+    var eDrive = folderManager();
+    var folderX = eDrive[Math.floor(Math.random() * Math.floor(eDrive.length))];
+  }
+  var search = [folderX].join("");
+  var searchFolderStr = search.toLowerCase().split(" ");
+  var i = 0;
+  var l = searchFolderStr.length;
+  // return console.log(l)
+  if ([stringArray].join("").length === 0) {
+    var stringArray = folderManager();
   }
   var folderXIndex = [];
   stringArray.map((folder) => {
@@ -739,6 +756,189 @@ var folderMatch = function (folderX, stringArray) {
     }
   });
   return folderXIndex;
+};
+
+var matchManager = function (folderX, time) {
+  // First execution
+  var appTree = [];
+  var pngTree = [];
+  var pdfTree = [];
+  var docList = [];
+  var slideList = [];
+  var sheetList = [];
+  var formList = [];
+  if (typeof folderX === "undefined") {
+    var allFolders = folderManager();
+    console.log(
+      "matchManager: \nDeclaring rndFolder = Math.floor(" +
+        Math.random() * Math.floor(allFolders.length) +
+        ")",
+    );
+    var rndFolder = Math.floor(Math.random() * Math.floor(allFolders.length));
+    console.log(
+      "matchManager: \nDeclaring folderX = JSON.stringify(" +
+        allFolders[rndFolder] +
+        ")",
+    );
+    var folderX = JSON.stringify(allFolders[rndFolder]);
+  }
+  // console.log("matchManager: \nDeclaring  = (" + ")")
+  console.log(
+    "matchManager: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
+      folderX +
+      ").next()",
+  );
+  var eFolder = DriveApp.getFoldersByName(folderX).next();
+  // console.log("matchManager: \nDeclaring eFoldId = (" + eFolder.getId() + ")")
+  var eFoldId = eFolder.getId();
+  // console.log("matchManager: \nDeclaring folderFiles = (" + eFolder.getFiles() + ")")
+  var folderFiles = eFolder.getFiles();
+  console.log(
+    "matchManager: \nDeclaring folderDocs = eFolder.getFilesByType(" +
+      MimeType.GOOGLE_DOCS +
+      ")",
+  );
+  var folderDocs = eFolder.getFilesByType(MimeType.GOOGLE_DOCS);
+  console.log(
+    "matchManager: \nDeclaring folderSlides = eFolder.getFilesByType(" +
+      MimeType.GOOGLE_SLIDES +
+      ")",
+  );
+  var folderSlides = eFolder.getFilesByType(MimeType.GOOGLE_SLIDES);
+  console.log(
+    "matchManager: \nDeclaring folderSheets = eFolder.getFilesByType(" +
+      MimeType.GOOGLE_SHEETS +
+      ")",
+  );
+  var folderSheets = eFolder.getFilesByType(MimeType.GOOGLE_SHEETS);
+  console.log(
+    "matchManager: \nDeclaring folderForms = eFolder.getFilesByType(" +
+      MimeType.GOOGLE_FORMS +
+      ")",
+  );
+  var folderForms = eFolder.getFilesByType(MimeType.GOOGLE_FORMS);
+  console.log(
+    "matchManager: \nDeclaring folderApps = eFolder.getFilesByType(" +
+      MimeType.GOOGLE_APPS_SCRIPT +
+      ")",
+  );
+  var folderApps = eFolder.getFilesByType(MimeType.GOOGLE_APPS_SCRIPT);
+  console.log(
+    "matchManager: \nDeclaring folderPng = eFolder.getFilesByType(" +
+      MimeType.PNG +
+      ")",
+  );
+  var folderPng = eFolder.getFilesByType(MimeType.PNG);
+  console.log(
+    "matchManager: \nDeclaring folderPdf = eFolder.getFilesByType(" +
+      MimeType.PDF +
+      ")",
+  );
+  var folderPdf = eFolder.getFilesByType(MimeType.PDF);
+  // console.log("matchManager: \nDeclaring  = (" + ")")
+  // var currentFolderFiles = DriveApp.getFolderById(eFoldId).getFiles();
+  // var treeRoot = DriveApp.getFolderById(DriveApp.getFoldersByName("Forms").next().getId()).getFiles();
+  // return console.log(eFolder.getFilesByType(MimeType.GOOGLE_DOCS).hasNext())
+  if (
+    folderDocs.hasNext() ||
+    folderSlides.hasNext() ||
+    folderSheets.hasNext() ||
+    folderForms.hasNext()
+  ) {
+    // if (folderDocs.hasNext()) {
+    while (folderDocs.hasNext()) {
+      // console.log("matchManager: \nDeclaring docFiles = (" + ")")
+      // var docFiles = folderDocs.next()
+      // console.log("matchManager: \nDeclaring currentDocName = (" + folderDocs.next().getName() + ")")
+      // var currentDocName =  folderDocs.next().getName();
+      // console.log("matchManager: \ndocList.push(" + folderDocs.next().getName() + ")")
+      docList.push(folderDocs.next().getName());
+    }
+    // }
+    // if (folderSlides.hasNext()) {
+    while (folderSlides.hasNext()) {
+      // console.log("matchManager: \nDeclaring slideFiles = (" + folderSlides.next() + ")")
+      // var slideFiles = folderSlides.next()
+      // console.log("matchManager: \nDeclaring currentSlideName = (" + folderSlides.next().getName() + ")")
+      // var currentSlideName =  folderSlides.next().getName();
+      // console.log("matchManager: \nslideList.push(" + folderSlides.next().getName() + ")")
+      slideList.push(folderSlides.next().getName());
+    }
+    // }
+    // if (folderSheets.hasNext()) {
+    while (folderSheets.hasNext()) {
+      // console.log("matchManager: \nDeclaring sheetFiles = (" + folderSheets.next() + ")")
+      // var sheetFiles = folderSheets.next()
+      // console.log("matchManager: \nDeclaring currentSheetName = (" + folderSheets.next().getName() + ")")
+      // var currentSheetName =  folderSheets.next().getName();
+      // console.log("matchManager: \nsheetList.push(" + folderSheets.next().getName() + ")")
+      sheetList.push(folderSheets.next().getName());
+    }
+    // }
+    // if (folderForms.hasNext()) {
+    while (folderForms.hasNext()) {
+      // console.log("matchManager: \nDeclaring formFiles = (" + folderForms.next() + ")")
+      // var formFiles = folderForms.next()
+      // console.log("matchManager: \nDeclaring currentFormName = (" + folderForms.next().getName() + ")")
+      // var currentFormName =  folderForms.next().getName();
+      // console.log("matchManager: \nformList.push(" + folderForms.next().getName() + ")")
+      formList.push(folderForms.next().getName());
+    }
+    // }
+    // var fileUrl = allFiles.getUrl()
+    // var fileEx = allFiles.getMimeType()
+    // return console.log(fileEx)
+  }
+  if (folderApps.hasNext() || folderPng.hasNext() || folderPdf.hasNext()) {
+    // if (folderApps.hasNext()) {
+    while (folderApps.hasNext()) {
+      // console.log("matchManager: \nDeclaring appFiles = (" + folderApps.next() + ")")
+      // var appFiles = folderApps.next()
+      // console.log("matchManager: \nDeclaring currentAppName = (" + folderApps.next().getName() + ")")
+      // var currentAppName =  folderApps.next().getName();
+      // console.log("matchManager: \nappTree.push(" + folderApps.next().getName() + ")")
+      appTree.push(folderApps.next().getName());
+    }
+    // }
+    // if (folderPng.hasNext()) {
+    while (folderPng.hasNext()) {
+      // console.log("matchManager: \nDeclaring pngFiles = (" + folderPng.next() + ")")
+      // var pngFiles = folderPng.next()
+      // console.log("matchManager: \nDeclaring currentPngName = (" + folderPng.next().getName() + ")")
+      // var currentPngName =  folderPng.next().getName();
+      // console.log("matchManager: \npngTree.push(" + folderPng.next().getName() + ")")
+      pngTree.push(folderPng.next().getName());
+    }
+    // }
+    // if (folderPdf.hasNext()) {
+    while (folderPdf.hasNext()) {
+      // console.log("matchManager: \nDeclaring pdfFiles = (" + folderPdf.next() + ")")
+      // var pdfFiles = folderPdf.next()
+      // console.log("matchManager: \nDeclaring currentPdfName = (" + folderPdf.next().getName() + ")")
+      // var currentPdfName =  folderPdf.next().getName();
+      // console.log("matchManager: \n pdfTree.push(" + folderPdf.next().getName() + ")")
+      pdfTree.push(folderPdf.next().getName());
+    }
+    // }
+    // var fileUrl = allFiles.getUrl()
+    // var fileEx = allFiles.getMimeType()
+    // return console.log(fileEx)
+  }
+  // return console.log(treeList)
+  // var fileX = "eas"
+  // if (subFiles.getName().toLowerCase().split(" ").indexOf(fileX) > -1)
+  // var currentFileStr = currentFileName.toLowerCase().split(" ")
+  // console.log(currentFileStr)
+  // var match = fileMatch(fileX, treeList)
+  return {
+    docs: docList,
+    slides: slideList,
+    sheets: sheetList,
+    forms: formList,
+    apps: appTree,
+    pngs: pngTree,
+    pdfs: pdfTree,
+  };
 };
 
 var rndUrls = function () {

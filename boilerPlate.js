@@ -3,7 +3,24 @@
 var convertToJS = function (rndText) {
   if (typeof rndText === "undefined") {
     var rndText = `
-<?!= appL.length === 99 || appL.length === 94 || appL.length === 101 || appL.length === 132 || appL.length === 83 ?>`;
+    <? var form = formMaker([item].join("").toUpperCase(), "inventoryForms", allTime) ?>
+  <? var formUrl = form.getPublishedUrl() ?>
+  <? var jo = storeFunction() ?>
+  <? form.setTitle(jo.length + " Items").setConfirmationMessage('Thanks for your feedback !!') ?>
+  <? var coTable = jo.map((r)=>{ ?>
+    <? var xItem = r["Description"] ?>
+    <? if ([xItem].join("").toLowerCase().includes([item].join("").toLowerCase())) { ?>
+      form.addPageBreakItem().setTitle(r["Description"])
+      form.addSectionHeaderItem().setTitle("Quantity: " + r["QTY"] + " set of " + r["Pack Size"])
+      form.addSectionHeaderItem().setTitle("Price: " + r["TOTAL COST"])
+      form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["COST PER PIECE"])\n\n\n\n 
+     <? } ?>
+     <? }).toString().replace(/,/g, "") ?>
+  <? var result = JSON.stringify(coTable); ?>
+  <? baseUrl = getUrl(ScriptApp); ?>
+  <? inventoryUrl = getUrl(ScriptApp); ?>
+  <? financeUrl = getUrl(ScriptApp); ?>
+`;
   }
   var jsCodeS = "<?";
   var jsCodeE = "<?=";

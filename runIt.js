@@ -287,7 +287,7 @@ function randomEmail() {
 }
 
 var runIt = function (e) {
-  urlDataSource("https://www.sec.gov/files/company_tickers.json");
+  //urlDataSource("https://www.sec.gov/files/company_tickers.json")
   if (e.parameter["default"] === "") {
     return wwAccess("development", proMediaSnip)(e);
     //: contentFile("uiAccess");

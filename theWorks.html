@@ -5,7 +5,7 @@
   </head>
   <body>
     <nav>
-      <a href="#" target="_top" id="navBack">Back</a>
+      <a href="" target="_top" id="navBack">Back</a>
     </nav>
     <div id="pageBlock"></div>
     <div class="agenda container col s1">
@@ -99,6 +99,7 @@
             ) {
               document.getElementById("forHtml").innerHTML = forHTMLContent;
               document.getElementById("worksFrame").src = filed;
+              document.getElementById("navBack").href = filed;
             } else {
               document.getElementById("forHtml").innerHTML = filed;
             }
@@ -122,7 +123,12 @@
       document.getElementById("btn").addEventListener("click", openWorks);
 
       function clearBox() {
-        boxInput.value = "";
+        serverSide("funcCalc").then((funcFiles) => {
+          boxInput.value =
+            funcFiles[
+              Math.floor(Math.random() * Math.floor(funcFiles.length)).valueOf()
+            ];
+        });
       }
       var folder = "loc";
       var file = "id";
@@ -178,6 +184,7 @@
             linkFollow.target = "_blank";
             document.body.appendChild(linkFollow);
             document.getElementById("linkFOLLOW").click();
+            document.getElementById("navBack").href = filed;
           } else {
             document.getElementById("forHtml").innerHTML = filed;
           }

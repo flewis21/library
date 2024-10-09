@@ -342,6 +342,22 @@ var defaultWebsite = function (e) {
   }
 };
 
+var funcCalc = function () {
+  var appList = [];
+  for (var key in globalThis) {
+    if (typeof globalThis[key] == "function") {
+      appList.push(key);
+    }
+  }
+  var rndArrVals = [];
+  while (rndArrVals.length < appList.length) {
+    rndArrVals.push(
+      appList[Math.floor(Math.random() * Math.floor(appList.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+
 var getScriptUrl = function () {
   return ScriptApp.getService().getUrl();
 };

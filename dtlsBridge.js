@@ -748,32 +748,93 @@ var portPro = function (e) {
 };
 
 var stockPro = function (e, time) {
-  // var e = "inc"
-  var isProduct = formsUrls([e].join("").toLowerCase(), "docForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
+  if (typeof e === "undefined") {
+    var allTitleData = [];
+    var atdCount = 0;
+    while (allTitleData.length === 0) {
+      var uiArr = matchManager("docForms", time);
+      for (var key in uiArr) {
+        if (uiArr[key].length > 0) {
+          console.log("stockPro: \nallTitleData.push(" + uiArr[key] + ")");
+          allTitleData.push(uiArr[key]);
+        }
+      }
+      atdCount++;
+      console.log("stockPro: \nkey search progress " + atdCount);
+    }
+    var rndArrPoint = Math.floor(
+      Math.random() * Math.floor(allTitleData.length),
+    );
+    var arrPoint = allTitleData[rndArrPoint];
+    var rndFilePoint = Math.floor(Math.random() * Math.floor(arrPoint.length));
+    // if (driveArr.length === 0) {
+    //    e = undefined
+    //    console.log("stockHistory: \nDeclaring e = " + typeof e)
+    // } else {
+    e = arrPoint[rndFilePoint];
+    // }
+    // var e = "bank"
+    console.log(
+      "stockPro: \nDeclaring isProduct = formsUrls(" +
+        [e].join("").toLowerCase(),
+      "docForms" + ")",
+    );
+    var isProduct = formsUrls([e].join("").toLowerCase(), "docForms");
+    console.log(typeof isProduct);
+    if (typeof isProduct === "string" && isProduct !== "undefined") {
+      console.log(
+        "stockPro: \nDeclaring formUrl = FormApp.openByUrl(" +
+          isProduct +
+          ").getPublishedUrl()",
+      );
+      var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+      return formUrl;
+    }
   }
   if (e) {
+    console.log(
+      "stockPro: \nDeclaring boilerUrl = dtlsBridge(" + e,
+      time + ")",
+    );
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
       return boilerUrl;
     }
   }
+  console.log("stockPro: \nDeclaring arrData = allInvestors(" + e, time + ")");
   var arrData = allInvestors(e, time);
   // var dataTitle = [arrData.title]
   // var coData = randomUtility(e, dataTitle)
   var cokey = arrData.title;
   var yahooNeed = arrData.ticker;
   var coHelpText = arrData.edgarUrl;
+  console.log(
+    "stockPro: \nDeclaring isProduct = formsUrls(" +
+      [cokey].join("").toLowerCase(),
+    "docForms" + ")",
+  );
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string" && isProduct !== "undefined") {
+    console.log(
+      "stockPro: \nDeclaring formUrl = FormApp.openByUrl(" +
+        isProduct +
+        ").getPublishedUrl()",
+    );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    console.log("stockPro: \nDeclaring survey = seoCapital(" + formUrl + ")");
     var survey = seoCapital(formUrl);
   } else {
+    console.log(
+      "stockPro: \nDeclaring uti = bingSWF(" + [cokey].join("") + ").myPlay",
+    );
     var uti = bingSWF([cokey].join("")).myPlay;
+    console.log(
+      "stockPro: \nDeclaring form = formMaker(" +
+        [cokey].join("").toUpperCase(),
+      "docForms",
+      time + ")",
+    );
     var form = formMaker([cokey].join("").toUpperCase(), "docForms", time);
     if (typeof form === "object") {
       // fileManager(form.getId(), "docForms", time)
@@ -907,54 +968,98 @@ var stockPro = function (e, time) {
 };
 
 var stockHistory = function (e) {
-  if (typeof e === "undefined") {
-    var driveArr = [];
-    while (driveArr.length === 0) {
-      var eDrive = folderManager();
+  var eDrive = folderManager();
+  var driveArr = [];
+  var allTitleData = [];
+  // else
+  // if (typeof e === "undefined") {
+  while (driveArr.length === 0 && allTitleData.length === 0) {
+    if (typeof e === "undefined" && driveArr.length === 0) {
       var rndDrivePoint = Math.floor(Math.random() * Math.floor(eDrive.length));
       var eFolder = eDrive[rndDrivePoint];
-      var eFile = matchManager(eFolder);
+      // return console.log(eFile)
       // return console.log(e)
       // var uniqueE = JSON.parse(e)
+      var eFile = matchManager(eFolder);
       for (var key in eFile) {
         if (eFile[key].length > 0) {
+          console.log(eFile[key]);
           driveArr.push(eFile[key]);
         }
       }
+      // var rndArrPoint = Math.floor(Math.random() * (Math.floor(driveArr.length)));
+      // var arrPoint = driveArr[rndArrPoint]
+      // var rndFilePoint = Math.floor(Math.random() * (Math.floor([arrPoint].length)));
+      // var eRndFile = arrPoint[rndFilePoint];
+      var e = eFolder;
     }
-    var rndArrPoint = Math.floor(Math.random() * Math.floor(driveArr.length));
-    var arrPoint = driveArr[rndArrPoint];
-    var rndFilePoint = Math.floor(Math.random() * Math.floor(arrPoint.length));
-    var e = arrPoint[rndFilePoint];
-  }
-  // return console.log(eFile)
-  else if (e) {
-    console.log(e, "  ", typeof e);
-    var boilerUrl = dtlsBridge([e].join("").toLowerCase(), time);
-    if (boilerUrl) {
-      return boilerUrl;
-    }
-    var allTitleData = [];
-    var uiDrive = folderManager();
-    var returnfolderArr = folderMatch([e].join("").toLowerCase(), uiDrive);
-    var rndReturnPoint = Math.floor(
-      Math.random() * Math.floor(returnfolderArr.length),
-    );
-    var eFolder = returnfolderArr[rndReturnPoint];
-
-    // return JSON.stringify(eFolder)
-    var uiArr = matchManager(eFolder);
-    for (var key in uiArr) {
-      if (uiArr[key].length > 0) {
-        allTitleData.push(uiArr[key]);
+    if (e) {
+      var boilerUrl = dtlsBridge([e].join("").toLowerCase(), time);
+      if (boilerUrl) {
+        console.log("stockHistory: \n" + e, "  ", typeof e);
+        return boilerUrl;
       }
+      var atdCount = 0;
+      // while (allTitleData.length === 0) {
+      // if (returnfolderArr) {
+
+      //   return console.log(JSON.stringify(eFolder))
+      // }
+      console.log(
+        "stockHistory: \nDeclaring returnfolderArr = folderMatch(" +
+          [e].join("").toLowerCase(),
+        [eDrive] + ")",
+      );
+      var returnfolderArr = folderMatch([e].join("").toLowerCase(), eDrive);
+      var rndReturnPoint = Math.floor(
+        Math.random() * Math.floor(returnfolderArr.length),
+      );
+      var eFolder = returnfolderArr[rndReturnPoint];
+      var uiArr = matchManager(eFolder);
+      for (var key in uiArr) {
+        if (uiArr[key].length > 0) {
+          allTitleData.push(uiArr[key]);
+        }
+      }
+      atdCount++;
+      console.log("stockHistory: \nkey search progress " + atdCount);
+      // return JSON.stringify(allTitleData)
+      // }
+      var rndArrPoint = Math.floor(
+        Math.random() * Math.floor(allTitleData.length),
+      );
+      var arrPoint = allTitleData[rndArrPoint];
+      var rndFilePoint = Math.floor(
+        Math.random() * Math.floor([arrPoint].length),
+      );
+      if (driveArr.length === 0) {
+        e = undefined;
+        console.log("stockHistory: \nDeclaring e = " + typeof e);
+      } else {
+        e = arrPoint[rndFilePoint];
+      }
+      // e = allTitleData
     }
-    // return JSON.stringify(allTitleData)
-    e = allTitleData;
   }
+  // }
+
+  // return console.log(driveArr)
+  // return console.log(eFile)
+  // else if (e) {
+  // }
+  console.log(
+    "stockHistory: \nDeclaring isProduct = formsUrls(" +
+      [e].join("").toLowerCase(),
+    "docForms" + ")",
+  );
   var isProduct = formsUrls([e].join("").toLowerCase(), "docForms");
   // return console.log(typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
+    console.log(
+      "stockHistory: \nDeclaring formUrl = FormApp.openByUrl(" +
+        isProduct +
+        ").getPublishedUrl()",
+    );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
@@ -962,8 +1067,8 @@ var stockHistory = function (e) {
   if (typeof eFolder === "undefined") {
     var unArr = [];
     while (unArr.length === 0) {
-      var rndUnPoint = Math.floor(Math.random() * Math.floor(uiDrive.length));
-      var unFolder = uiDrive[rndUnPoint];
+      var rndUnPoint = Math.floor(Math.random() * Math.floor(eDrive.length));
+      var unFolder = eDrive[rndUnPoint];
       var unFile = matchManager(unFolder);
       // return console.log(e)
       // var uniqueE = JSON.parse(e)
@@ -977,44 +1082,94 @@ var stockHistory = function (e) {
     var unPoint = unArr[rndUnPoint];
     var rndUnFilePoint = Math.floor(Math.random() * Math.floor(unPoint.length));
     var unE = unPoint[rndUnFilePoint];
+    console.log(
+      "stockHistory: \nDeclaring myFolderHistory = DriveApp.getFoldersByName(" +
+        unFolder +
+        ").next()",
+    );
     var myFolderHistory = DriveApp.getFoldersByName(unFolder).next();
+    console.log(
+      "stockHistory: \nDeclaring myFileHistory = myFolderHistory.getFilesByName(" +
+        [unE].join("").toLowerCase() +
+        ")",
+    );
     var myFileHistory = myFolderHistory.getFilesByName(
       [unE].join("").toLowerCase(),
     );
   } else {
-    console.log(arrData, " :", typeof arrData);
-    console.log(eFolder);
+    // console.log("stockHiatory: \n" + arrData, " :", typeof arrData)
+    // console.log(eFolder)
+    // console.log("stockHistory: \nDeclaring  = (" +  + ")")
+    console.log(
+      "stockHistory: \nDeclaring myFolderHistory = DriveApp.getFoldersByName(" +
+        eFolder +
+        ").next()",
+    );
     var myFolderHistory = DriveApp.getFoldersByName(eFolder).next();
+    console.log(
+      "stockHistory: \nDeclaring myFileHistory = myFolderHistory.getFilesByName(" +
+        [e].join("").toLowerCase() +
+        ")",
+    );
     var myFileHistory = myFolderHistory.getFilesByName(
       [e].join("").toLowerCase(),
     );
   }
+  // return console.log(myFileHistory)
   var dataTree = [];
   var nameTree = [];
   while (myFileHistory.hasNext()) {
     var myFile = myFileHistory.next();
     var currentFileUrl = myFile.getUrl();
     var currentFileName = myFile.getName();
+    // console.log("stockHistory: \nDeclaring  = (" +  + ")")
+    console.log("stockHistory: \n dataTree.push(" + currentFileUrl + ")");
     dataTree.push(currentFileUrl);
+    console.log("stockHistory: \n nameTree.push(" + currentFileName + ")");
     nameTree.push(currentFileName);
   }
   var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
   // var arrData = nameTree[rndFiled]
   // var utilNeed = randomUtility(e,arrData).title
   // var yahooNeed = arrData.ticker
+  // console.log("stockHistory: \nDeclaring  = (" +  + ")")
+  console.log(
+    "stockHistory: \nDeclaring coHelpText = dataTree[" + rndFiled + "]",
+  );
   var coHelpText = dataTree[rndFiled];
+  console.log("stockHistory: \nDeclaring cokey = nameTree[" + rndFiled + "]");
   var cokey = nameTree[rndFiled];
+  console.log(
+    "stockHistory: \nDeclaring isProduct = formsUrls(" +
+      [cokey].join("").toLowerCase(),
+    "docForms" + ")",
+  );
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "docForms");
   // return console.log(typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
+    console.log(
+      "stockHistory: \nDeclaring formUrl = FormApp.openByUrl(" +
+        isProduct +
+        ").getPublishedUrl()",
+    );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   } else {
     // var utiStr = skyNeed(cokey, time)
     // var utiSeo = pastSeo(utiStr, time)
+    console.log(
+      "stockHistory: \nDeclaring seoArray = seoPastTime(" + [cokey].join(""),
+      time + ")",
+    );
     var seoArray = seoPastTime([cokey].join(""), time);
     var uti = seoArray.playList;
     // return console.log(uti)
+    console.log(
+      "stockHistory: \nDeclaring form = formMaker(" +
+        [cokey].join("").toUpperCase(),
+      "docForms",
+      time + ")",
+    );
     var form = formMaker([cokey].join("").toUpperCase(), "docForms", time);
 
     if (typeof form === "object") {
