@@ -357,11 +357,11 @@ var rndCoin = function () {
     for (var key in seo) {
       if (key === "heads") {
         form
-          .addSectionHeaderItem()
+          .addParagraphTextItem()
           .setTitle(randomSubstance(0, 1, [key]).myNewArr);
       } else {
         form
-          .addSectionHeaderItem()
+          .addParagraphTextItem()
           .setTitle(randomSubstance(0, 1, [key]).myNewArr);
       }
     }
@@ -382,7 +382,19 @@ var rndControl = function (infinitum) {
       45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62,
       63, 64, 65, 66, 67, 68, 69,
     ];
+    console.log(
+      "called function: " +
+        arguments.callee.name +
+        "\nvar infinitum = " +
+        infinitum,
+    );
   } else {
+    console.log(
+      "called function: " +
+        arguments.callee.name +
+        "\nvar infinitum = " +
+        infinitum,
+    );
     infinitum = infinitum.split(" ");
     //   return infinitum.map((fin) => {
     //   var penny = Math.floor(Math.random() * Math.floor(fin))
@@ -458,7 +470,7 @@ var rndControl = function (infinitum) {
   var form = FormApp.create("Coin Trial").setDescription(
     trial.length + " Tosses",
   );
-  var formUrl = form.getPublishedUrl();
+  var formResponse = form.createResponse();
   var tailEnd = 0;
   var headStart = 0;
   trial.map((seo) => {
@@ -469,50 +481,79 @@ var rndControl = function (infinitum) {
         //   form.addSectionHeaderItem().setTitle(randomSubstance(0,1,[key]).myNewArr + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
         if (headStart === 1) {
           // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  toss")
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["heads"]))).createResponse("Penny for your thoughts");
+          var upscale = Math.floor(Math.random() * Math.floor(seo["heads"]));
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"])
           form
-            .addSectionHeaderItem()
+            .addScaleItem()
+            .setTitle(seo["heads"])
+            .setBounds(1, 5)
+            .setLabels(key, upscale);
+          var item = form
+            .addParagraphTextItem()
             .setTitle(key + "  " + seo["heads"])
-            .setHelpText(
-              "Penny " +
-                Math.floor(Math.random() * Math.floor(seo["heads"])) +
-                "  for your thoughts",
-            );
+            .setHelpText(upscale);
+          var response = item.createResponse("Penny for your thoughts");
+          formResponse.withItemResponse(response);
         } else if (headStart < 1 || headStart > 1) {
           // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["heads"]))).createResponse("Penny for your thoughts")
+          var upscale = Math.floor(Math.random() * Math.floor(seo["heads"]));
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"])
           form
-            .addSectionHeaderItem()
+            .addScaleItem()
+            .setTitle(seo["heads"])
+            .setBounds(1, 5)
+            .setLabels(key, upscale);
+          var item = form
+            .addParagraphTextItem()
             .setTitle(key + "  " + seo["heads"])
-            .setHelpText(
-              "Penny " +
-                Math.floor(Math.random() * Math.floor(seo["heads"])) +
-                "  for your thoughts",
-            );
+            .setHelpText(upscale);
+          var response = item.createResponse("Penny for your thoughts");
+          formResponse.withItemResponse(response);
         }
       } else {
         if (tailEnd === 1) {
           // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  toss")
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["tails"]))).createResponse("Penny for your thoughts")
+          var upscale = Math.floor(Math.random() * Math.floor(seo["tails"]));
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"])
           form
-            .addSectionHeaderItem()
+            .addScaleItem()
+            .setTitle(seo["tails"])
+            .setBounds(1, 5)
+            .setLabels(key, upscale);
+          var item = form
+            .addParagraphTextItem()
             .setTitle(key + "  " + seo["tails"])
-            .setHelpText(
-              "Penny " +
-                Math.floor(Math.random() * Math.floor(seo["tails"])) +
-                "  for your thoughts",
-            );
+            .setHelpText(upscale);
+          var response = item.createResponse("Penny for your thoughts");
+          formResponse.withItemResponse(response);
         } else if (tailEnd < 1 || tailEnd > 1) {
           // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["tails"]))).createResponse("Penny for your thoughts")
+          var upscale = Math.floor(Math.random() * Math.floor(seo["tails"]));
+          // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"])
           form
-            .addSectionHeaderItem()
+            .addScaleItem()
+            .setTitle(seo["tails"])
+            .setBounds(1, 5)
+            .setLabels(key, upscale);
+          var item = form
+            .addParagraphTextItem()
             .setTitle(key + "  " + seo["tails"])
-            .setHelpText(
-              "Penny " +
-                Math.floor(Math.random() * Math.floor(seo["tails"])) +
-                "  for your thoughts",
-            );
+            .setHelpText(upscale);
+          var response = item.createResponse("Penny for your thoughts");
+          formResponse.withItemResponse(response);
         }
       }
+      headStart++;
+      tailEnd++;
     }
+    headStart++;
+    tailEnd++;
   });
+  var formUrl = formResponse.toPrefilledUrl();
   return formUrl;
 };
 

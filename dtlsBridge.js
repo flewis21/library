@@ -10,7 +10,7 @@ var dtlsBridge = function (func, time) {
   }
   var lowCapApp = [appList].join("").toLowerCase().split(",");
   var lowCapFunc = [func].join("").toLowerCase().split(",");
-  return console.log(lowCapFunc);
+  console.log(lowCapFunc);
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   if (funFirst > -1) {
     // var func = "proMediaSnip"
@@ -172,24 +172,96 @@ var dtlsBridge = function (func, time) {
 };
 
 var dtlsPict = function (e, time) {
+  if (typeof time === "undefined") {
+    var time = start;
+  }
+  var allTitleData = [];
+  var atdCount = 0;
+  // if (typeof e === "undefined") {
+  while (allTitleData.length === 0) {
+    var uiArr = matchManager("pictForms", time);
+    for (var key in uiArr) {
+      if (uiArr[key]) {
+        console.log("dtlsPict: \n" + key.valueOf());
+      }
+      if (uiArr[key].length > 0) {
+        if (e) {
+          [uiArr[key]][0].map((or) => {
+            if (
+              [or]
+                .toString()
+                .toLowerCase()
+                .includes([e].toString().toLowerCase()) &&
+              [or].indexOf("[") === -1
+            ) {
+              allTitleData.push(or);
+              // console.log("dtlsPict: \n[" + or + "].toString().toLowerCase().includes([" + e + "].toString().toLowerCase()): " + [or].toString().toLowerCase().includes([e].toString().toLowerCase()))
+            }
+          });
+        } else {
+          [uiArr[key]][0].map((or) => {
+            if ([or].join("").indexOf("[") === -1) {
+              allTitleData.push(or);
+              // console.log("dtlsPict: \nallTitleData.push(" + or + ")")
+            }
+          });
+        }
+      }
+    }
+    atdCount++;
+    console.log("dtlsPict: \nkey search progress " + atdCount);
+  }
+  var rndArrPoint = Math.floor(Math.random() * Math.floor(allTitleData.length));
+  console.log(
+    "dtlsPict: \nvar " +
+      rndArrPoint +
+      " = Math.floor(Math.random() * (" +
+      Math.floor(allTitleData.length) +
+      "))",
+  );
+  var arrPoint = allTitleData[rndArrPoint];
+  console.log(
+    "dtlsPict: \nvar " + arrPoint + " = allTitleData[" + rndArrPoint + "]",
+  );
+  var rndFilePoint = Math.floor(Math.random() * Math.floor([arrPoint].length));
+  console.log(
+    "dtlsPict: \nvar " +
+      rndFilePoint +
+      " = Math.floor(Math.random() * (" +
+      Math.floor([arrPoint].length) +
+      "))",
+  );
+  e = [arrPoint][rndFilePoint];
+  console.log("dtlsPict: \n" + e + " = [arrPoint][" + rndFilePoint + "]");
+  var arrData = coSort(time).title;
+  console.log("dtlsPict: \nvar arrData = coSort(" + time + ").title");
+  var utilNeed = randomUtility(e, arrData, time).title;
+  return console.log(
+    "dtlsPict: \nvar " + utilNeed + " = randomUtility(" + e,
+    arrData,
+    time + ").title",
+  );
+  // }
   var search = [e].join("");
-  console.log("calling formUrls with " + search);
+  return console.log(
+    "dtlsPict: \nvar isProduct = formsUrls(" + search.toLowerCase(),
+    "pictForms" + ")",
+  );
   var isProduct = formsUrls(search.toLowerCase(), "pictForms");
-  console.log("Receiving from formUrls a(n) - " + typeof isProduct);
   if (typeof isProduct === "string" && typeof isProduct !== "undefined") {
+    // console.log("dtlsPictL \n")
+    console.log(
+      "dtlsPict: \nDeclaring formUrl = FormApp.openByUrl(" +
+        isProduct +
+        ").getPublishedUrl()",
+    );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   var time = start;
-  // var e = "first at vicksburg"
-  // console.log("calling coSort")
-  // var arrData = coSort(time).title
-  // console.log("Receiving from coSort - ")
-  // console.log("calling randomUtility with ")
-  // var utilNeed = randomUtility(e,arrData).title
-  // console.log("Receiving from randomUtility - " + utilNeed)
-  var cokey = e; //|| utilNeed
+  var cokey = e || utilNeed;
   if (cokey) {
+    console.log("dtlsPict: \nvar boilerUrl = dtlsBridge(" + cokey, time + ")");
     var boilerUrl = dtlsBridge(cokey, time);
     if (boilerUrl) {
       return boilerUrl;
@@ -199,22 +271,41 @@ var dtlsPict = function (e, time) {
     "http://www.bing.com/images/search?q=" +
     encodeURIComponent(e) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
-  console.log("calling formUrls with " + cokey);
+  console.log(
+    "dtlsPict: \nisProduct = formsUrls(" + [cokey].join("").toLowerCase(),
+    "pictForms" + ")",
+  );
   isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
-  console.log("Receiving from formUrls a(n) - " + typeof isProduct);
+  // console.log("Receiving from formUrls a(n) - " + typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
+    console.log(
+      "dtlsPict: \nDeclaring formUrl = FormApp.openByUrl(" +
+        isProduct +
+        ").getPublishedUrl()",
+    );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
   // var utiStr = skyNeed(cokey, time)
   // var utiSeo = pastSeo(utiStr, time)
-  console.log("calling seoPictTime with " + cokey);
+  console.log(
+    "dtlsPict: \nDeclaring seoArray = seoPictTime(" + [cokey].join(""),
+    time + ")",
+  );
   var seoArray = seoPictTime([cokey].join(""), time);
   var uti = seoArray.playList;
+  console.log(
+    "dtlsPict: \nDeclaring seoArrayVid = seoPastTime(" + [cokey].join(""),
+    time + ")",
+  );
   var seoArrayVid = seoPastTime([cokey].join(""), time);
   var utiVid = seoArrayVid.playList;
-  console.log("Receiving from seoPictTime - ");
-  console.log("calling formMaker with " + cokey);
+  // console.log("Receiving from seoPictTime - ")
+  return console.log(
+    "dtlsPict: \nDeclaring form = formMaker(" + [cokey].join("").toUpperCase(),
+    "pictForms",
+    time + ")",
+  );
   var form = formMaker([cokey].join("").toUpperCase(), "pictForms", time);
 
   if (typeof form === "object") {

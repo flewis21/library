@@ -5,11 +5,15 @@ var coUtility = function (rndClient) {
   }
   var uniqueCo = [];
   if (typeof client !== "undefined") {
-    console.log("calling allInvestors(" + client + ")");
     var coName = allInvestors(client.toString().toLowerCase());
+    console.log(
+      "coUtility: \nvar coName = allInvestors(" +
+        client +
+        ".toString().toLowerCase())",
+    );
   } else {
-    console.log("calling allInvestors()");
     var coName = allInvestors();
+    console.log("coUtility: \nvar coName = allInvestors()");
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({
@@ -262,37 +266,28 @@ var needUtility = function (rndClient, arrD, time) {
     var rndClient = "random";
   }
   var client = rndClient;
-  console.log(
-    "needUtility: \n" +
-      client +
-      " is a:  \n" +
-      typeof [client].join("") +
-      ", and is " +
-      [client].join("").length +
-      " characters in length",
-  );
+  // console.log("needUtility: \n" + client + " is a:  \n" + typeof [client].join("") + ", and is " + [client].join("").length + " characters in length")
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
+    // console.log("needUtility: \n" + [client].join("").length + " is greater than " + 0)
+    var seoTitle = seoSheet(client, time).keyWords;
     console.log(
-      "needUtility: \n" + [client].join("").length + " is greater than " + 0,
-    );
-    console.log(
-      "needUtility: \nDeclaring seoTitle = seoSheet(" + client,
+      "needUtility: \nvar " + seoTitle + " = seoSheet(" + client,
       time + ").keyWords",
     );
-    var seoTitle = seoSheet(client, time).keyWords;
-    // console.log("needUtility: \nRecieved seoSheet keywords: " + seoTitle + " while declaring seoTitle with client " + client)
-    var improvedTitle = seoTitle.map((r) => {
+    var improvUI = [seoTitle].join("").split(" ");
+    var improvedTitle = [];
+    improvUI.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
         // var elaspeTime = new Date() - time
         // console.log("r[i]: " + r[i] + "\nelaspeTime: " + elaspeTime)
         if (r.indexOf(",") === -1 && r.indexOf("can\u0027t") === -1) {
-          if (i == 1) {
+          improvedTitle.push(r);
+          if (i == 5) {
             break;
           }
         }
       }
-      return r;
     });
     var titleSlice = improvedTitle.slice(1);
     var title2 = titleSlice.map((l) => {
@@ -301,31 +296,29 @@ var needUtility = function (rndClient, arrD, time) {
     if (title2.length > 0) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
-      console.log(
-        "needUtility: \nDeclaring coName = allTime(" +
-          [rndTitle2].join("").toLowerCase(),
-        arrD,
-        time + ")",
-      );
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
-      // console.log("needUtility: \nRecieved allTime: " + coName + " while declaring coName with rndTitle2 " + rndTitle2)
-    } else {
       console.log(
-        "needUtility: \nDeclaring coName = allTime(" + null,
+        " + needUtility: \nvar " +
+          coName +
+          " = allTime("[rndTitle2].join("").toLowerCase(),
         arrD,
         time + ")",
       );
+    } else {
       var coName = allTime(null, arrD, time);
-      // console.log("needUtility: \nRecieved coName: " + coName + " from allTime with ")
+      console.log(
+        "needUtility: \nvar " + coName + " = allTime(" + null,
+        arrD,
+        time + ")",
+      );
     }
   } else {
+    var coName = allTime(null, arrD, time);
     console.log(
-      "needUtility: \nDeclaring coName = allTime(" + null,
+      "needUtility: \nvar " + coName + " = allTime(" + null,
       arrD,
       time + ")",
     );
-    var coName = allTime(null, arrD, time);
-    // console.log("needUtility: \nRecieved coName: " + coName + " from allTime with ")
   }
   if (typeof coName["cik"] === "undefined") {
     uniqueCo.push({
@@ -441,6 +434,10 @@ var urlDataSource = function (cokey, url, time, xpath) {
   }
   // var res = UrlFetchApp.fetch(url, {muteHttpExceptions:true});
   var seoArray = seoPastTime([cokey].join(""), time);
+  console.log(
+    "urlDataSource: \nvar " + seoArray + " = seoPastTime(" + [cokey].join(""),
+    time + ")",
+  );
   return (uti = seoArray.playList);
   var content = res.getContentText();
   return content;

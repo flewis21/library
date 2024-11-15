@@ -42,12 +42,25 @@ var convertToJS = function (rndText) {
 };
 
 var convertToObjects = function (rows, headings, time) {
+  console.log("convertToObjects: \nDeclaring temp = rows.reduce()");
   var temp = rows.reduce(
     function (ctx, row) {
+      console.log(
+        "convertToObjects: \nrows.reduce(function (" + JSON.stringify(ctx),
+        row + ")",
+      );
       ctx.objects.push(
         ctx.headings.reduce(function (item, heading, index) {
           var elaspeTime = new Date() - time;
           // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+          console.log(
+            "convertToObjects: \nitem[" +
+              heading +
+              "] = row[" +
+              index +
+              "];\nreturn " +
+              item,
+          );
           item[heading] = row[index];
           return item;
         }, {}),
@@ -56,6 +69,16 @@ var convertToObjects = function (rows, headings, time) {
       headings.forEach(function (heading, index) {
         var elaspeTime = new Date() - time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+        console.log(
+          "convertToObjects: \nmyObj[" +
+            heading +
+            "] = [" +
+            row +
+            "][" +
+            index +
+            "]\nreturn " +
+            ctx,
+        );
         myObj[heading] = [row][index];
       });
       return ctx;
@@ -65,7 +88,7 @@ var convertToObjects = function (rows, headings, time) {
       headings,
     },
   ).objects;
-  return temp;
+  return JSON.stringify(temp);
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -165,19 +188,6 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
   if (typeof time === "undefined") {
     var time = start;
   }
-  console.log(
-    "randomSubstance( \nindex: " +
-      index +
-      "\nLoop Length: " +
-      loopLength +
-      "\nImported Data: " +
-      importedData +
-      "\nArray Data: " +
-      arrD +
-      "\nTime: " +
-      time +
-      " )",
-  );
   var newArr = [];
   var i = index || 0;
   var l = loopLength || 1;
@@ -219,6 +229,19 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
+  console.log(
+    "randomSubstance: \n( \nindex: " +
+      index +
+      "\nLoop Length: " +
+      loopLength +
+      "\nImported Data: " +
+      importedData +
+      "\nArray Data: " +
+      arrD +
+      "\nTime: " +
+      time +
+      " )",
+  );
   if (newArr) {
     var sortNewArr = newArr.sort((a, b) => a - b)[
       Math.floor(Math.random() * newArr.length)
@@ -445,14 +468,16 @@ var testData = function (sourceData, time) {
     var time = start;
   }
   if (typeof sourceData === "undefined") {
-    var sourceData = [01234567].join("").split(",");
+    var sourceData = ["0", "1", "2", "3", "4", "5", "6", "7"]
+      .toString()
+      .split("3");
   }
   var myArray = [];
   try {
     for (var row in sourceData) {
       var elaspeTime = new Date() - time;
       console.log(
-        "sourceData: " +
+        "testData: \nsourceData: " +
           sourceData +
           "\nrow: " +
           row +
@@ -463,8 +488,18 @@ var testData = function (sourceData, time) {
       for (var col in sourceData[row]) {
         var elaspeTime = new Date() - time;
         console.log(
-          "sourceData[row]: " +
-            sourceData[row] +
+          "testData: \nmyArray - " +
+            myArray +
+            "[row - " +
+            row +
+            "]: " +
+            myArray[row] +
+            "\nsourceData - " +
+            sourceData +
+            "[row - " +
+            row +
+            "]: " +
+            [sourceData][row] +
             "\ncol: " +
             col +
             "\nelaspeTime: " +
@@ -472,18 +507,31 @@ var testData = function (sourceData, time) {
         );
         myArray[row].push(sourceData[row][col]);
         console.log(
-          "myArray[row]: " +
+          "testData: \nmyArray - " +
+            myArray +
+            "[row - " +
+            row +
+            "]: " +
             myArray[row] +
-            "\nsourceData[row][col]: " +
-            sourceData[row][col] +
+            "\nmyArray[row].push(sourceData - " +
+            sourceData +
+            "[row - " +
+            row +
+            "][col - " +
+            col +
+            "]): " +
+            [sourceData][row][col] +
             "\nelaspeTime: " +
             elaspeTime,
         );
       }
     }
-    console.log(myArray);
+    return console.log(
+      "testData: \nmyArray: " +
+        spreadSheetCreate("myArraySheet", myArray, "arrayData", myArray, time),
+    );
   } catch (err) {
-    console.log(err);
+    console.log("testData: \nerr: " + err);
     return err;
   }
   return {
@@ -492,41 +540,8 @@ var testData = function (sourceData, time) {
 };
 // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 
-var untestedData = function (arrData) {
-  const tmpArray = Object.entries(arrData);
-  const tmpKeys = Object.keys(tmpArray);
-  const tmpValues = Object.values(tmpArray);
-  let objTmpParts = {};
-  for (var i = 0, l = tmpKeys.length; i < l; i++) {
-    objTmpParts[tmpValues[i][0]] = tmpValues[i][1];
-  }
-  return objTmpParts;
-  let objParts = {};
-  for (var i = 0; i < [arrData].length; i++) {
-    //Object.fromEntries(JSON.stringify(
-    var heldKey = [arrData].keys();
-    for (const key of heldKey) {
-      return key;
-    }
-    var keyLog = heldKey.next().value;
-    for (var [key, { keyLog }] of Object.entries(arrData[i])) {
-      console.log(key);
-      objParts[keyLog] = key;
-    } //.map(entry => [entry[1]]))
-  }
-  console.log(objParts);
-  return objParts;
-};
-
-var widgetData = function (dataSource, headings) {
-  var values = dataSource;
-  var temp = values.map(function (row) {
-    var myObj = {};
-    headings.forEach(function (heading, index) {
-      myObj[heading] = row[index];
-    });
-    return myObj;
-  });
-  return temp;
-  // console.log(temp)
+var testObject = function (dataArray, fVarHeaders) {
+  myRows = testData(dataArray);
+  myObject = covObjects(myRows, FVar(fVarHeaders));
+  return myObject;
 };

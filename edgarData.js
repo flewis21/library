@@ -175,44 +175,49 @@ var allTime = function (rndKey, arrD, time) {
   if (typeof time === "undefined") {
     var time = start;
   }
-  console.log("rndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time);
-  console.log("Calling randomSubstance with arrD: " + arrD);
-  var uniqueKey = randomSubstance(0, 4, null, arrD, time).myNewArr;
-  console.log(
-    "Recieved uniqueKey: " +
-      uniqueKey +
-      " from randomSubstance with arrD " +
+  if (typeof rndKey === "undefined" || typeof rndKey === null) {
+    // console.log("allTime: \nrndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time)
+    var uniqueKey = randomSubstance(0, 4, null, arrD, time).myNewArr;
+    console.log(
+      "allTime: \nvar " + uniqueKey + " = randomSubstance(" + 0,
+      4,
+      null,
       arrD,
-  );
-  var uniCoArr = [uniqueKey].join("").split(" ");
-  console.log("Calling covObjects with uniCoArr: " + uniCoArr);
-  var uniqueCoObjects = covObjects(uniCoArr, ["allTime"], time);
-  console.log(
-    "Recieved uniqueCoObjects: " +
-      uniqueCoObjects +
-      " from covObjects with uniCoArr " +
-      uniCoArr,
-  );
-  var rndCoObjects =
-    uniqueCoObjects[
-      Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
-    ];
-  console.log("Calling covArrays with rndCoObjects: " + rndCoObjects);
-  var uniqueCoArray = covArrays(rndCoObjects, time);
-  console.log(
-    "Recieved uniqueCoArray: " +
-      uniqueCoArray +
-      " from covArrays with rndCoObjects " +
-      rndCoObjects,
-  );
-  var rndCoArray =
-    uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
+      time + ").myNewArr",
+    );
+    var uniCoArr = [uniqueKey].join("").split(" ");
+    console.log(
+      "allTime: \nvar " + uniCoArr + " = " + [uniqueKey].join("").split(" "),
+    );
+    var uniqueCoObjects = covObjects(uniCoArr, ["allTime"], time);
+    console.log(
+      "allTime: \nvar " + uniqueCoObjects + " = covObjects(" + uniCoArr,
+      ["allTime"],
+      time + ")",
+    );
+    var rndCoObjects =
+      uniqueCoObjects[
+        Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
+      ];
+    var uniqueCoArray = covArrays(rndCoObjects, time);
+    console.log(
+      "allTime: \nvar " + uniqueCoArray + " = covArrays(" + rndCoObjects,
+      time + ")",
+    );
+    var rndCoArray =
+      uniqueCoArray[
+        Math.floor(Math.random() * Math.floor(uniqueCoArray.length))
+      ];
+  }
   var coKey = rndKey || rndCoArray;
   //Youtube Widget
-  console.log("Calling seoPastTime with coKey: " + coKey);
   var seoArray = seoPastTime([coKey].join(""), time);
   console.log(
-    "Recieved seoArray: " + seoArray + " from seoPastTime with coKey " + coKey,
+    "allTime: \nvar " +
+      JSON.stringify(seoArray) +
+      " = seoPastTime(" +
+      [coKey].join(""),
+    time + ")",
   );
   // console.log(typeof seoArray)
   if (typeof seoArray === "object") {
@@ -233,29 +238,31 @@ var allTime = function (rndKey, arrD, time) {
         Math.random() * Math.floor(randomPlaylist.length),
       ); // Math.floor(Math.random());
       var playListSorted = randomPlaylist.sort((a, b) => a - b);
-      console.log("Calling covObjects with playListSorted: " + playListSorted);
-      var videoObject = covObjects(playListSorted, ["youtubeID"]);
+      var videoObject = covObjects(playListSorted, ["youtubeID"], time);
       console.log(
-        "Recieved videoObject: " +
-          videoObject +
-          " from covObjects with playListSorted " +
+        "allTime: \nvar " +
+          JSON.stringify(videoObject) +
+          " = covObjects(" +
           playListSorted,
+        ["youtubeID"],
+        time + ")",
       );
       if (typeof videoObject["youtubeID"] !== "undefined") {
         var uniqueVidKey = [videoObject].entries().next().value;
+        console.log(
+          "allTime: \nvar " +
+            uniqueVidKey +
+            " = "[videoObject].entries().next().value,
+        );
         var randomVid = uniqueVidKey[1][randomVidKey];
         var rVideo = randomVid["youtubeID"];
         return rVideo;
       }
     };
     var sortaPlay = randomPlaylist.sort((a, b) => a - b);
-    console.log("Calling vidPlaylist with ");
     var randomVideo =
       vidPlaylist() ||
       sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
-    console.log(
-      "Recieved randomVideo: " + randomVideo + " from vidPlaylist with ",
-    );
     var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
     // console.log(seoArray.playList)
 
@@ -268,96 +275,50 @@ var allTime = function (rndKey, arrD, time) {
   }
 };
 
-var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
-  var tickerFreqArray = [];
-
-  for (i, ticl; i < ticl; i++) {
-    tickerArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === tickerArrData[i]) {
-        tickerFreqArray.push(a);
-      }
-    });
-  }
-
-  return tickerFreqArray;
-};
-
-var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
-  var cikFreqArray = [];
-
-  for (i, cikl; i < cikl; i++) {
-    cikArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      // console.log(a.toString()[0])
-      if (a.toString()[0] === cikArrData[i].toString()) {
-        if (a !== b && cikFreqArray.indexOf(a) === -1) {
-          if (cikFreqArray.indexOf(a) > -1) {
-            return;
-          }
-          {
-          }
-
-          cikFreqArray.push(a);
-        }
-      } else if (b.toString()[0] === cikArrData[i].toString()) {
-        if (b !== a && cikFreqArray.indexOf(b) === -1) {
-          if (cikFreqArray.indexOf(b) > -1) {
-            return;
-          }
-          {
-          }
-
-          cikFreqArray.push(b);
-        }
-      }
-    });
-  }
-  // var cikNonStandard = []
-  // l = cikArray.length
-  // for (i,1;i<l;i++) {
-
-  //   if (cikFreqArray.indexOf(cikArray[i]) === -1) {
-
-  //     cikNonStandard.push(cikArray[i])
-
-  //   }
-
-  //  }
-
-  return cikFreqArray;
-};
-
-var coSortTitles = function (titleArray, titleArrData, i, titl) {
-  var titleFreqArray = [];
-  for (i, titl; i < titl; i++) {
-    titleArray.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === titleArrData[i]) {
-        titleFreqArray.push(a);
-      }
-    });
-  }
-
-  return titleFreqArray;
-};
-
 var coSort = function (time) {
-  var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
-  var uniqueKey = JSON.parse(data);
+  // console.log("coSort: \nvar data = [" + urlDataSource("https://www.sec.gov/files/company_tickers.json") + "]")
+  // var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")]
+  // console.log("coSort: \nvar dataObjects = convertToObjects(" + data, 'dataObject',time + ")")
+  // var dataObjects = convertToObjects(data, ["dataObject"],time)
+  // var uniqueKey = JSON.parse(dataObjects);
+  // var cikArray = []
+  // var tickerArray = []
+  // var titleArray = []
+  // for (var key in uniqueKey) {
+  //   var elaspeTime = new Date() - start
+  //   // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+  //   cikArray.push(uniqueKey[key]["cik_str"])
+  //   tickerArray.push(uniqueKey[key]["ticker"])
+  //   titleArray.push(uniqueKey[key]["title"])
+
+  // }{
+
+  // }
+  var sheetCalc = function () {
+    var secSheet = ssGetSheetBySpreadsheetUrl(
+      "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+      "sec",
+    );
+    var secArrays = secSheet.getDataRange().getValues().slice(1);
+    var arrVals = secArrays.map((val) => {
+      return {
+        cik: val[0],
+        ticker: val[1],
+        title: val[2],
+      };
+    });
+    return arrVals;
+  };
+
+  var data = sheetCalc();
   var cikArray = [];
   var tickerArray = [];
   var titleArray = [];
-  for (var key in uniqueKey) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-    cikArray.push(uniqueKey[key]["cik_str"]);
-    tickerArray.push(uniqueKey[key]["ticker"]);
-    titleArray.push(uniqueKey[key]["title"]);
-  }
-  {
-  }
-
+  data.map((sec) => {
+    cikArray.push(sec["cik"]);
+    tickerArray.push(sec["ticker"]);
+    titleArray.push(sec["title"]);
+  });
   var cikArrData = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   var titleArrData = [
     "e",
@@ -427,6 +388,80 @@ var coSort = function (time) {
     ticker: tickerFreqArray,
     title: titleFreqArray,
   };
+};
+
+var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
+  var cikFreqArray = [];
+
+  for (i, cikl; i < cikl; i++) {
+    cikArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      // console.log(a.toString()[0])
+      if (a.toString()[0] === cikArrData[i].toString()) {
+        if (a !== b && cikFreqArray.indexOf(a) === -1) {
+          if (cikFreqArray.indexOf(a) > -1) {
+            return;
+          }
+          {
+          }
+
+          cikFreqArray.push(a);
+        }
+      } else if (b.toString()[0] === cikArrData[i].toString()) {
+        if (b !== a && cikFreqArray.indexOf(b) === -1) {
+          if (cikFreqArray.indexOf(b) > -1) {
+            return;
+          }
+          {
+          }
+
+          cikFreqArray.push(b);
+        }
+      }
+    });
+  }
+  // var cikNonStandard = []
+  // l = cikArray.length
+  // for (i,1;i<l;i++) {
+
+  //   if (cikFreqArray.indexOf(cikArray[i]) === -1) {
+
+  //     cikNonStandard.push(cikArray[i])
+
+  //   }
+
+  //  }
+
+  return cikFreqArray;
+};
+
+var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
+  var tickerFreqArray = [];
+
+  for (i, ticl; i < ticl; i++) {
+    tickerArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === tickerArrData[i]) {
+        tickerFreqArray.push(a);
+      }
+    });
+  }
+
+  return tickerFreqArray;
+};
+
+var coSortTitles = function (titleArray, titleArrData, i, titl) {
+  var titleFreqArray = [];
+  for (i, titl; i < titl; i++) {
+    titleArray.sort((a, b) => {
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+      if (a[0].toLowerCase() === titleArrData[i]) {
+        titleFreqArray.push(a);
+      }
+    });
+  }
+
+  return titleFreqArray;
 };
 
 var edgarData = function (text) {
@@ -914,6 +949,11 @@ var randomUtility = function (e, arrD, time) {
   // var utilStr = skyNeed(namedVar, time)
   // var utilSubst = randomSubstance(0,4,namedVar,time)
   var rndObj = needUtility([e].join(" "), arrD, time)[0];
+  console.log(
+    "randomUtility: \nvar " + rndObj + " = needUtility(" + [e].join(" "),
+    arrD,
+    time + ")[0]",
+  );
   return {
     playlist: rndObj.playlistArr,
     cik: rndObj.rndCik,

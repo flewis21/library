@@ -513,7 +513,7 @@ var fbTester = function () {
 };
 
 var fileFold = function (folderX, fileX, time) {
-  var elaspedTime;
+  var elaspedTime = time;
   var fileFree = [];
   if (
     typeof folderX !== "undefined" ||
@@ -524,13 +524,9 @@ var fileFold = function (folderX, fileX, time) {
       return;
     }
     // console.log(folderX + "\n" + typeof folderX)
-    console.log(
-      "fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" +
-        folderX +
-        ").next()",
-    );
+    // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
-    console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()");
+    // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
     var tree = pyFolder.getFiles();
     while (tree.hasNext()) {
@@ -769,81 +765,40 @@ var matchManager = function (folderX, time) {
   var formList = [];
   if (typeof folderX === "undefined") {
     var allFolders = folderManager();
-    console.log(
-      "matchManager: \nDeclaring rndFolder = Math.floor(" +
-        Math.random() * Math.floor(allFolders.length) +
-        ")",
-    );
     var rndFolder = Math.floor(Math.random() * Math.floor(allFolders.length));
-    console.log(
-      "matchManager: \nDeclaring folderX = JSON.stringify(" +
-        allFolders[rndFolder] +
-        ")",
-    );
     var folderX = JSON.stringify(allFolders[rndFolder]);
+    // console.log("matchManager: \nvar folderX = JSON.stringify(allFolders[" + rndFolder + "])");
   }
   // console.log("matchManager: \nDeclaring  = (" + ")")
-  console.log(
-    "matchManager: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
-      folderX +
-      ").next()",
-  );
   var eFolder = DriveApp.getFoldersByName(folderX).next();
+  // console.log("matchManager: \nvar eFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
   // console.log("matchManager: \nDeclaring eFoldId = (" + eFolder.getId() + ")")
   var eFoldId = eFolder.getId();
   // console.log("matchManager: \nDeclaring folderFiles = (" + eFolder.getFiles() + ")")
   var folderFiles = eFolder.getFiles();
-  console.log(
-    "matchManager: \nDeclaring folderDocs = eFolder.getFilesByType(" +
-      MimeType.GOOGLE_DOCS +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderDocs = eFolder.getFilesByType(" + MimeType.GOOGLE_DOCS + ")")
   var folderDocs = eFolder.getFilesByType(MimeType.GOOGLE_DOCS);
-  console.log(
-    "matchManager: \nDeclaring folderSlides = eFolder.getFilesByType(" +
-      MimeType.GOOGLE_SLIDES +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderSlides = eFolder.getFilesByType(" + MimeType.GOOGLE_SLIDES + ")")
   var folderSlides = eFolder.getFilesByType(MimeType.GOOGLE_SLIDES);
-  console.log(
-    "matchManager: \nDeclaring folderSheets = eFolder.getFilesByType(" +
-      MimeType.GOOGLE_SHEETS +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderSheets = eFolder.getFilesByType(" + MimeType.GOOGLE_SHEETS + ")")
   var folderSheets = eFolder.getFilesByType(MimeType.GOOGLE_SHEETS);
-  console.log(
-    "matchManager: \nDeclaring folderForms = eFolder.getFilesByType(" +
-      MimeType.GOOGLE_FORMS +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderForms = eFolder.getFilesByType(" + MimeType.GOOGLE_FORMS + ")")
   var folderForms = eFolder.getFilesByType(MimeType.GOOGLE_FORMS);
-  console.log(
-    "matchManager: \nDeclaring folderApps = eFolder.getFilesByType(" +
-      MimeType.GOOGLE_APPS_SCRIPT +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderApps = eFolder.getFilesByType(" + MimeType.GOOGLE_APPS_SCRIPT + ")")
   var folderApps = eFolder.getFilesByType(MimeType.GOOGLE_APPS_SCRIPT);
-  console.log(
-    "matchManager: \nDeclaring folderPng = eFolder.getFilesByType(" +
-      MimeType.PNG +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderPng = eFolder.getFilesByType(" + MimeType.PNG + ")")
   var folderPng = eFolder.getFilesByType(MimeType.PNG);
-  console.log(
-    "matchManager: \nDeclaring folderPdf = eFolder.getFilesByType(" +
-      MimeType.PDF +
-      ")",
-  );
+  // console.log("matchManager: \nDeclaring folderPdf = eFolder.getFilesByType(" + MimeType.PDF + ")")
   var folderPdf = eFolder.getFilesByType(MimeType.PDF);
   // console.log("matchManager: \nDeclaring  = (" + ")")
   // var currentFolderFiles = DriveApp.getFolderById(eFoldId).getFiles();
   // var treeRoot = DriveApp.getFolderById(DriveApp.getFoldersByName("Forms").next().getId()).getFiles();
   // return console.log(eFolder.getFilesByType(MimeType.GOOGLE_DOCS).hasNext())
   if (
-    folderDocs.hasNext() ||
-    folderSlides.hasNext() ||
-    folderSheets.hasNext() ||
-    folderForms.hasNext()
+    folderDocs.hasNext() === true ||
+    folderSlides.hasNext() === true ||
+    folderSheets.hasNext() === true ||
+    folderForms.hasNext() === true
   ) {
     // if (folderDocs.hasNext()) {
     while (folderDocs.hasNext()) {
@@ -889,7 +844,11 @@ var matchManager = function (folderX, time) {
     // var fileEx = allFiles.getMimeType()
     // return console.log(fileEx)
   }
-  if (folderApps.hasNext() || folderPng.hasNext() || folderPdf.hasNext()) {
+  if (
+    folderApps.hasNext() === true ||
+    folderPng.hasNext() === true ||
+    folderPdf.hasNext() === true
+  ) {
     // if (folderApps.hasNext()) {
     while (folderApps.hasNext()) {
       // console.log("matchManager: \nDeclaring appFiles = (" + folderApps.next() + ")")

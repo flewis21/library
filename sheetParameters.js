@@ -767,27 +767,37 @@ var seoBites = function (searchString, idArray, time) {
     time = start;
   }
   const uniqueSeo = [];
-  const searchWords = [searchString]
-    .toString()
-    .split(" ")
-    .map((l) => {
-      var elaspeTime = new Date() - time;
-      console.log(
-        "seoBites: \nsearchString: " +
-          searchString +
-          "\nl: " +
-          l +
-          "\nelaspeTime: " +
-          elaspeTime,
-      );
-      return l;
-    });
+  const searchWords = [];
+  const searchUI = [searchString].join("").split(" ");
+  searchUI.map((l) => {
+    var elaspeTime = new Date() - time;
+    console.log(
+      "seoBites: \nsearchString: " +
+        searchString +
+        "\nl: " +
+        l +
+        "\nelaspeTime: " +
+        elaspeTime,
+    );
+    searchWords.push(l);
+  });
   for (var i = 0, l = searchWords.length; i < l; i++) {
     idArray.map((w) => {
       // var elaspeTime = new Date() - time
       // console.log("w: \nelaspeTime: " + elaspeTime)
       if (w !== "") {
+        console.log("seoBites: \n" + w + " !== '': " + w);
         if (w.indexOf(w[0].includes(searchWords[i])) !== -1) {
+          console.log(
+            "seoBites: \n" +
+              w +
+              ".indexOf(" +
+              w[0] +
+              ".includes(" +
+              searchWords[i] +
+              ")) !== -1: " +
+              w.indexOf(w[0].includes(searchWords[i])),
+          );
           // var elaspeTime = new Date() - time
           // console.log("w: \nelaspeTime: " + elaspeTime)
           uniqueSeo.push(w);
@@ -795,7 +805,7 @@ var seoBites = function (searchString, idArray, time) {
       }
     });
   }
-  return console.log(uniqueSeo);
+  return uniqueSeo;
 };
 
 var seoCapital = function (url) {
@@ -950,6 +960,7 @@ var seoFactor = function (data, time) {
     idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
   });
   var factorArray = [idArray].toString().replace(/,/g, "");
+  // console.log("seoFactor: \nvar " + factorArray + " = " + [idArray].toString().replace(/,/g, ''))
   return {
     factorData: factorArray,
   };
@@ -987,11 +998,8 @@ var seoPastTime = function (searchString, time) {
   }
   while (typeof fndOrd !== "object") {
     // console.log("seoPastTime: \n")
-    console.log(
-      "seoPastTime: \nDeclaring uniqueVid = seoYoutube(" + searchString,
-      time + ").myIdArr",
-    );
     var uniqueVid = seoYoutube(searchString, time).myIdArr;
+    // console.log("seoPastTime: \nvar " + uniqueVid + " = seoYoutube(" + searchString, time + ").myIdArr")
     var sorFndOrd = uniqueVid.filter((vidObject) => {
       var elaspeTime = new Date() - time;
       var timeToExecute = maxTime - elaspeTime;
@@ -1053,14 +1061,7 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf("&&") === -1 &&
         vidObject.indexOf(",") === -1
       ) {
-        console.log(
-          "seoPastTime: \nvidObject: " +
-            vidObject +
-            "\nelaspeTime: " +
-            elaspeTime +
-            "\ntimeToExecute: " +
-            timeToExecute,
-        );
+        // console.log("seoPastTime: \nvidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
         return vidObject;
       }
     });
@@ -1069,7 +1070,8 @@ var seoPastTime = function (searchString, time) {
     for (i, l; i < l; i++) {
       var fndOrd = [];
       sorFndOrd.sort((a, b) => {
-        if (a !== b && fndOrd.indexOf(a) === -1) {
+        //  if (a !== b && fndOrd.indexOf(a) === -1) {
+        while (a !== b && fndOrd.indexOf(a) === -1) {
           if (fndOrd.indexOf(a) > -1) {
             return;
           }
@@ -1077,26 +1079,47 @@ var seoPastTime = function (searchString, time) {
           }
 
           //  console.log("stockHistory: \n")
-          console.log("seoPastTime: \nfndOrd.push(" + a + ")");
           fndOrd.push(a);
-        } else if (a === b && fndOrd.indexOf(a) === -1) {
+          //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
+        }
+        //  else if (a === b && fndOrd.indexOf(a) === -1) {
+        while (a === b && fndOrd.indexOf(a) === -1) {
+          //  console.log("seoPastTime: \n" + a + " === " + b + " && fndOrd.indexOf(" + a + ") === -1 " + a === b && fndOrd.indexOf(a) === -1)
           if (fndOrd.indexOf(a) > -1) {
+            //  console.log("seoPastTime: \nfndOrd.indexOf(" + a + ") > -1 "+ fndOrd.indexOf(a))
             return;
           }
           {
           }
 
-          console.log("seoPastTime: \nfndOrd.push(" + a + ")");
           fndOrd.push(a);
-        } else if (b !== a && fndOrd.indexOf(b) === -1) {
+          //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
+        }
+        //  else if (b !== a && fndOrd.indexOf(b) === -1) {
+        while (b !== a && fndOrd.indexOf(b) === -1) {
+          //  console.log("seoPastTime: \n" + b + " !== " + a + " && fndOrd.indexOf(" + b + ") === -1 " + b !== a && fndOrd.indexOf(b) === -1)
           if (fndOrd.indexOf(b) > -1) {
+            //  console.log("seoPastTime: \nfndOrd.indexOf(" + b + ") > -1 "+ fndOrd.indexOf(b))
             return;
           }
           {
           }
 
-          console.log("seoPastTime: \nfndOrd.push(" + b + ")");
           fndOrd.push(b);
+          //  else if (b !== a && fndOrd.indexOf(b) === -1) {
+          while (b === a && fndOrd.indexOf(b) === -1) {
+            //  console.log("seoPastTime: \n" + b + " === " + a + " && fndOrd.indexOf(" + b + ") === -1 " + b === a && fndOrd.indexOf(b) === -1)
+            if (fndOrd.indexOf(b) > -1) {
+              //  console.log("seoPastTime: \nfndOrd.indexOf(" + b + ") > -1 " + fndOrd.indexOf(b))
+              return;
+            }
+            {
+            }
+
+            fndOrd.push(b);
+            //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
+          }
+          //  console.log("seoPastTime: \nfndOrd.push(" + b + ")")
         }
       });
     }
@@ -1130,7 +1153,8 @@ var seoPastTime = function (searchString, time) {
           test.indexOf("{}") === -1 &&
           test.indexOf("}") === -1 &&
           test.indexOf("<") === -1 &&
-          test.indexOf(">") === -1
+          test.indexOf(">") === -1 &&
+          test.indexOf("EdgeWorksp") === -1
         ) {
           if (JSON.stringify(i) >= 3) {
             break;
@@ -1142,11 +1166,12 @@ var seoPastTime = function (searchString, time) {
     });
     var rndSort = [];
     for (var i = 0, l = rndRes.length; i < l; i++) {
-      var sorRes = rndRes.filter((o) => {
-        return o !== rndRes[i];
+      rndRes.filter((o) => {
+        rndSort.push(o !== rndRes[i]);
+        if (rndSort.length === rndRes.length) {
+          return;
+        }
       });
-      console.log("seoPastTime: \nrndSort.push(" + sorRes + ")");
-      rndSort.push(sorRes);
     }
     var sorKind = rndSort.toString().split(" ");
     var revKind = sorKind.reverse();
@@ -1173,13 +1198,30 @@ var seoPictTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = "Drones";
   }
+  // console.log("seoPictTime: \n")
+  console.log(
+    "seoPictTime: \nvar altSearch = seoSheet(" + searchString,
+    time + ")",
+  );
   var altSearch = seoSheet(searchString, time);
   var listSearch = altSearch.keyWords;
   var rndListKey = Math.floor(Math.random() * Math.floor(listSearch.length));
   var testSearch = listSearch[rndListKey];
+  console.log(
+    "seoPictTime: \n[" +
+      testSearch +
+      "].join().indexOf(" +
+      searchString +
+      ") === " +
+      [testSearch].join("").indexOf(searchString),
+  );
   if ([testSearch].join("").indexOf(searchString) === -1) {
     searchString = allInvestors().title;
   }
+  console.log(
+    "seoPictTime: \nvar uniqueVid = seoPictures(" + searchString,
+    time + ")",
+  );
   var uniqueVid = seoPictures(searchString, time);
   var sorFndOrd = uniqueVid.filter((vidObject) => {
     var elaspeTime = new Date() - time;
@@ -1201,7 +1243,19 @@ var seoPictTime = function (searchString, time) {
   for (i, l; i < l; i++) {
     sorFndOrd.sort((a, b) => {
       // console.log(a)
+      console.log(
+        "seoPictTime: \n" +
+          a +
+          ".toLowerCase() === " +
+          sorFndOrd[i] +
+          ".toLowerCase() " +
+          a.toLowerCase() ===
+          sorFndOrd[i].toLowerCase(),
+      );
       if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
+        console.log(
+          "seoPictTime: \nfndOrd.indexOf(" + a + ") > -1 " + fndOrd.indexOf(a),
+        );
         if (fndOrd.indexOf(a) > -1) {
           return;
         }
@@ -1219,6 +1273,12 @@ var seoPictTime = function (searchString, time) {
       var elaspeTime = new Date() - time;
       var timeToExecute = maxTime - elaspeTime;
       for (var i = 0, l = randomKey; i < l; i++) {
+        console.log(
+          "seoPictTime: \ntest.indexOf(" +
+            "tse4.mm.bing.net" +
+            ") > -1 " +
+            test.indexOf("tse4.mm.bing.net"),
+        );
         if (test.indexOf("tse4.mm.bing.net") > -1) {
           if (JSON.stringify(i) >= 3) {
             break;
@@ -1259,8 +1319,16 @@ var seoPictTime = function (searchString, time) {
 // url: formUrl
 
 var seoPictures = function (searchString, time) {
-  // var searchString = "linkedIn"
+  if (typeof searchString === "undefined") {
+    var searchString = "linkedIn";
+  }
   var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  // console.log("seoPictures: \n")
+  console.log(
+    "seoPictures: \nvar data = [urlDataSource(" + rndSearch,
+    { muteHttpExceptions: true },
+    time + ")]",
+  );
   var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
   // var i = 0
   // var l = [data].join("").split(" ").length
@@ -1274,6 +1342,13 @@ var seoPictures = function (searchString, time) {
   // }
 
   // }
+  console
+    .log(
+      "seoPictures: \nvar uniqueSeo = data.slice(" +
+        data.indexOf(" + 'src2=' + "),
+    )
+    .toString()
+    .split(" + 'src2=' + " + ")");
   var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
   // console.log(uniqueSeo.join("").split('"')[6])
   return uniqueSeo;
@@ -1286,12 +1361,11 @@ var seoSheet = function (searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = "sports medicine";
   }
+  var uniqueSeo = seoTwitter(searchString, time).twiData;
   console.log(
-    "seoSheet: \nDeclaring uniqueSeo = seoTwitter(" + searchString,
+    "seoSheet: \nvar " + uniqueSeo + " = seoTwitter(" + searchString,
     time + ").twiData",
   );
-  var uniqueSeo = seoTwitter(searchString, time).twiData;
-  // console.log("seoSheet: \nRecieved seoTwitter data while declaring uniqueSeo with searchString " + JSON.stringify(searchString) + "\n" + typeof uniqueSeo + ": \n" + uniqueSeo[uniqueSeo.indexOf(searchString)])
   var fndOrd = uniqueSeo
     .join("")
     .split(" ")
@@ -1467,40 +1541,33 @@ var seoSheet = function (searchString, time) {
     var stringSplit = [searchString].join("").split(",");
   }
   if (stringSplit) {
+    var testString = testData([stringSplit], time).testArray;
     console.log(
-      "seoSheet: \nCalling testData with stringSplit: " + stringSplit,
-    );
-    var testString = JSON.stringify(testData([stringSplit], time).testArray);
-    console.log(
-      "seoSheet: \nRecieved testString: " +
+      "seoSheet: \nvar " +
         testString +
-        " from testData with stringSplit " +
-        stringSplit,
+        " = " +
+        testData([stringSplit], time).testArray,
     );
   } else {
+    var testString = testData([searchString], time).testArray;
     console.log(
-      "seoSheet: \nCalling testData with searchString: " + searchString,
-    );
-    var testString = JSON.stringify(testData([searchString], time).testArray);
-    console.log(
-      "seoSheet: \nRecieved testString: " +
+      "seoSheet: \nvar " +
         testString +
-        " from testData with searchString " +
-        searchString,
+        " = " +
+        testData([searchString], time).testArray,
     );
   }
   var lowerCaseS = [];
-  if (lowerCaseS.indexOf(testString[0]) === -1) {
-    [testString].map((increase) => {
+  if (lowerCaseS.indexOf(testString) === -1) {
+    console.log(
+      "seoSheet: \nlowerCaseS.indexOf(" +
+        testString +
+        ") === -1: " +
+        lowerCaseS.indexOf(testString),
+    );
+    var stringUI = [testString].join("").split(" ");
+    stringUI.map((increase) => {
       var elaspeTime = new Date() - time;
-      console.log(
-        "seoSheet: \ntestString: " +
-          testString +
-          "\nincrease: " +
-          increase +
-          "\nelaspeTime: " +
-          elaspeTime,
-      );
       lowerCaseS.push(increase);
     });
   }
@@ -1511,9 +1578,27 @@ var seoSheet = function (searchString, time) {
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[0][i] !== "undefined") {
+          console.log(
+            "seoSheet: \ntypeof " +
+              lowerCaseS[0][i] +
+              " !== undefined: " +
+              typeof lowerCaseS[0][i],
+          );
           var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
+            console.log(
+              "seoSheet: \nlowerCaseResearch.includes(" +
+                lowerCaseSearchString +
+                "): " +
+                lowerCaseResearch.includes(lowerCaseSearchString),
+            );
             if (lowerCaseS.indexOf(seo) === -1) {
+              console.log(
+                "seoSheet: \nlowerCaseS.indexOf(" +
+                  seo +
+                  ") === -1: " +
+                  lowerCaseS.indexOf(seo),
+              );
               var elaspeTime = new Date() - time;
               // console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime)
               lowerCaseS.push(seo);
@@ -1571,32 +1656,24 @@ var seoTwitter = function (searchString, time) {
   // var data = [unFilData.getContentText()]
   var data = [];
   var foldCounter = 0;
-  console.log("seoTwitter: \nDeclaring foldData = folderManager()");
+  // console.log("seoTwitter: \nDeclaring foldData = folderManager()")
   var foldData = folderManager();
   // console.log(data.length)
   while (data.length === 0) {
     // console.log(data.length)
     // console.log(foldData[foldCounter])
-    console.log(
-      "seoTwitter: \nDeclaring minFold = fileFold(" + foldData[foldCounter],
-      searchString + ")",
-    );
     var minFold = fileFold(foldData[foldCounter], searchString);
-    console.log(
-      "seoTwitter: \n data = " +
-        minFold.map((p) => {
-          console.log(p);
-          if (
-            [p]
-              .join("")
-              .toLowerCase()
-              .includes([searchString].join("").toLowerCase())
-          )
-            return p;
-        }),
-    );
+    // console.log("seoTwitter: \nvar minFold = fileFold(" + foldData[foldCounter], searchString + ")")
+    // console.log("seoTwitter: \n data = " + minFold.map((p) => {
+    // console.log("fileFold: \nif ([" + p + "].join(" + "" + ").toLowerCase().includes([" + searchString +"].join(" + "" + ").toLowerCase())) = " + "\n" + [p].join("").toLowerCase().includes([searchString].join("").toLowerCase()) + " return " + p);
+    // if ([p].join("").toLowerCase().includes([searchString].join("").toLowerCase()))
+    // return p
+    // }))
     data = minFold.filter((p) => {
-      return p === searchString;
+      if (p === searchString) {
+        console.log("seoTwitter: \n" + p + " === " + searchString);
+        return p === searchString;
+      }
     });
     // console.log(data)
     if (foldData.length > foldCounter) {
@@ -1605,20 +1682,10 @@ var seoTwitter = function (searchString, time) {
       break;
     }
   }
-  console.log(
-    "seoTwitter: \nDeclaring idArray = [" +
-      seoFactor(data, time).factorData +
-      "].toString().split(/\n)",
-  );
   var idArray = [seoFactor(data, time).factorData].toString().split("\n");
-  // console.log("seoTwitter: \nRecieved idArray: " + idArray + " from seoFactor with data " + data)
-  console.log(
-    "seoTwitter: \nDeclaring uniqueSeo = seoBites(" + searchString,
-    idArray,
-    time + ")",
-  );
+  // console.log("seoTwitter: \nvar " + idArray + " = " + [seoFactor(data, time).factorData].toString().split("\n"))
   var uniqueSeo = seoBites(searchString, idArray, time);
-  // console.log("seoTwitter: \nRecieved uniqueSeo: " + uniqueSeo + " from seoBites with searchString " + searchString + " and idArray " + idArray)
+  // console.log("seoTwitter: \nvar " + uniqueSeo + " = seoBites(" + searchString,idArray, time + ")")
   return {
     twiData: uniqueSeo,
   };
@@ -1633,12 +1700,10 @@ var seoYoutube = function (searchString, time) {
   }
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
+  // console.log("seoYoutube: \nvar " + unFilData + " = UrlFetchApp.fetch(" + rndSearch,{muteHttpExceptions:true} + ")")
   var data = unFilData.getContentText();
-  console.log(
-    "seoYoutube: \nDeclaring idArray = vidFactor(" + data,
-    time + ").vidArray",
-  );
   var idArray = vidFactor(data, time).vidArray;
+  // console.log("seoYoutube: \nvar " + idArray + " = vidFactor(" + data, time + ").vidArray")
   return {
     myIdArr: idArray,
   };
@@ -1679,7 +1744,10 @@ var sheetSeo = function (namedVar, time) {
 };
 
 var sheetsUrls = function (fileX) {
-  var fileNameList = matchManager("json");
+  if (typeof fileX === "undefined") {
+    var fileX = "json";
+  }
+  var fileNameList = matchManager(fileX);
   var fileName = fileNameList.join("");
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
@@ -1713,32 +1781,46 @@ function spreadSheet() {
 }
 
 var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
-  console.log(fileX);
+  console.log(
+    "called function: " + arguments.callee.name + "\nfile name: " + fileX,
+  );
   var nSs = formsUrls(fileX, "Sheets");
-  console.log("Google Drive Url " + nSs);
-  if (typeof nSs === "undefined") {
+  console.log(
+    "called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs,
+  );
+  if (typeof nSs !== "string" || typeof nSs === "undefined") {
     if (fileX) {
-      var ss = sheetsMaker(fileX, "Sheets", time);
-      console.log(ss.getName());
+      var ss = sheetsMaker(fileX, rowHeaders, time);
+      console.log(
+        "called function: " +
+          arguments.callee.name +
+          "\nSheet name: " +
+          ss.getName(),
+      );
       var sheet = ss.getSheets()[0].activate();
       console.log(
-        "that function: " +
-          arguments.callee.caller.name +
-          "\nthis function: " +
+        "called function: " +
           arguments.callee.name +
+          "\ncaller function: " +
+          arguments.callee.caller.name +
           "\nName of this sheet is " +
           sheet.getName(),
       );
       var ws = sheet.setName(sheetName);
       console.log(
-        "that function: " +
-          arguments.callee.caller.name +
-          "\nthis function: " +
+        "called function: " +
           arguments.callee.name +
+          "\ncaller function: " +
+          arguments.callee.caller.name +
           "\nSheet name changed to " +
           ws.getName(),
       );
-      console.log(ss.getActiveSheet().getName());
+      console.log(
+        "called function: " +
+          arguments.callee.name +
+          "\nName of active sheet" +
+          ss.getActiveSheet().getName(),
+      );
       var headers = [];
       rowHeaders.map((h) => {
         headers.push(h);
@@ -1761,13 +1843,13 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
       ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
       var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();
       console.log(
-        "that function: " +
-          arguments.callee.caller.name +
-          "\nthis function: " +
+        "Called function: " +
           arguments.callee.name +
-          "\nNew file named " +
+          "\nCaller function: " +
+          arguments.callee.caller.name +
+          "\nNew file with name " +
           fileX +
-          " created!",
+          " was created!",
       );
       var newFile = formsUrls(fileX, "Sheets");
       return {
@@ -1776,7 +1858,7 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
     }
   } else {
     return {
-      myFileX: formsUrls(fileX, "Sheets"),
+      myFileX: nSs, //formsUrls(fileX,"Sheets")
     };
   }
   `else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);
@@ -1939,22 +2021,14 @@ var vidFactor = function (data, time) {
   data.map((vidData) => {
     // var elaspeTime = new Date() - time
     // console.log("vidData: \nelaspeTime: " + elaspeTime)
-    console.log(
-      "vidFactor: \ndataArray.push(" +
-        vidData.slice(vidData.indexOf(`v=`)).toString().split(`v=`) +
-        ")",
-    );
     dataArray.push(vidData.slice(vidData.indexOf(`v=`)).toString().split(`v=`));
+    // console.log("vidFactor: \ndataArray.push(vidData.slice(" + vidData.indexOf(`v=`) + ").toString().split(" + `v=` + "))")
   });
   for (var i = 0, l = dataArray[0].length; i < l; i++) {
     // var elaspeTime = new Date() - time
     // console.log("dataArray[0][i]: " + dataArray[0][i] + "\nelaspeTime: " + elaspeTime)
-    console.log(
-      "vidFactor: \nidArray.push(" +
-        dataArray[0][i].toString().substring(0, 11) +
-        ")",
-    );
     idArray.push(dataArray[0][i].toString().substring(0, 11));
+    // console.log("vidFactor: \nidArray.push(" + dataArray[0][i] + ".toString().substring(" + 0,11 + "))")
   }
   return {
     vidArray: idArray,

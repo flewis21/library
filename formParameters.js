@@ -57,45 +57,32 @@ var formsUrls = function (fileX, folderX, time) {
       while (folderFiles.hasNext()) {
         var allFiles = folderFiles.next();
         var currentFileName = allFiles.getName();
-        console.log("formUrls: \ncurrent file name: " + currentFileName);
+        // console.log("formUrls: \ncurrent file name: " + currentFileName)
         var fileUrl = allFiles.getUrl();
         // treeList.push(fileUrl)
         // var fileX = "eas"
         // if (subFiles.getName().toLowerCase().split(" ").indexOf(fileX) > -1)
-        console.log(
-          "formUrls: \nDeclaring currentFileStr = currentFileName.toLowerCase().split(" +
-            " " +
-            ")",
-        );
+        // console.log("formUrls: \nDeclaring currentFileStr = currentFileName.toLowerCase().split(" + " " + ")")
         var currentFileStr = currentFileName.toLowerCase().split(" ");
         var fileXIndex = [];
         for (i, l; i < l; i++) {
-          console.log("formUrls: \nDeclaring sfi = searchFileStr[" + i + "]");
+          // console.log("formUrls: \nDeclaring sfi = searchFileStr[" + i + "]")
           var sfi = searchFileStr[i];
-          console.log(
-            "formUrls: \nDeclaring fxi = currentFileStr.indexOf(" + sfi + ")",
-          );
+          // console.log("formUrls: \nDeclaring fxi = currentFileStr.indexOf(" + sfi + ")")
           var fxi = currentFileStr.indexOf(sfi);
           if (fxi > -1) {
-            console.log(
-              "formUrls: \nDeclaring myObj = convertToObjects(" + [[fxi]],
-              [sfi] + ")[0]",
-            );
+            // console.log("formUrls: \nDeclaring myObj = convertToObjects(" + [[fxi]],[sfi] + ")[0]")
             var myObj = convertToObjects([[fxi]], [sfi])[0];
           }
-          console.log("formUrls: \nfileXIndex.push(" + myObj + ")");
+          // console.log("formUrls: \nfileXIndex.push(" + myObj + ")")
           fileXIndex.push(myObj);
         }
         var fileXIndexLen = fileXIndex.join("").length;
-        console.log(
-          "formUrls: \nDeclaring fileXincluded = currentFileName.toLowerCase().includes(" +
-            search +
-            ")",
-        );
+        // console.log("formUrls: \nDeclaring fileXincluded = currentFileName.toLowerCase().includes(" + search + ")")
         var fileXincluded = currentFileName.toLowerCase().includes(search);
         if (fileXincluded || fileXIndexLen > 0) {
           // console.log(fileX + " " + DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" ").indexOf(fileX) + " " +  DriveApp.getFolderById(eFoldId).getFiles().next().getName().toLowerCase().split(" "))
-          console.log("formUrls: \ndataTree.push(" + allFiles.getUrl() + ")");
+          // console.log("formUrls: \ndataTree.push(" + allFiles.getUrl() + ")")
           dataTree.push(allFiles.getUrl());
         }
       }
@@ -104,13 +91,9 @@ var formsUrls = function (fileX, folderX, time) {
       //   if (gf.toLowerCase().substring(fileX.toLowerCase()))
       //   return gf})
       //   console.log(typeof formFile[0])}
-      console.log(
-        "formUrls: \nDeclaring rndFiled = Math.floor(" +
-          Math.random() * Math.floor(dataTree.length) +
-          ")",
-      );
+      // console.log("formUrls: \nDeclaring rndFiled = Math.floor(" + Math.random() * (Math.floor(dataTree.length)) + ")")
       var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
-      console.log("formUrls: \nDeclaring filed = dataTree[" + rndFiled + "]");
+      // console.log("formUrls: \nDeclaring filed = dataTree[" + rndFiled + "]")
       var filed = dataTree[rndFiled];
       //  || treeList[Math.floor(Math.random() * (Math.floor(treeList.length)))]
       return filed;

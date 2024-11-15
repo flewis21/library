@@ -52,6 +52,22 @@
       boxInput.addEventListener("keypress", function (event) {
         // If the user preses the "Enter" key on the keyboard.
         if (event.key === "Enter") {
+          openWorks();
+        }
+      });
+      boxInput.addEventListener("keypress", function (event) {
+        // If the user preses the "Enter" key on the keyboard.
+        if (event.key === "Enter") {
+          clearBox();
+          boxInput.value = "";
+          serverSide("rule").then((dateRule) => {
+            console.log(typeof boxInput.value);
+            console.log(boxInput.value.length);
+            if (boxInput.value.length === 0) {
+              boxInput.value = dateRule;
+            }
+          });
+          return;
           console.log(
             typeof boxInput.value +
               " _: " +
@@ -60,8 +76,8 @@
           );
           if (boxInput.value.indexOf(",") === -1) {
             console.log("rndFolder,rndFile");
-            var splitSearch = boxInput.value.split("");
             var funcFlex = boxInput.value;
+            var splitSearch = funcFlex.split("");
             console.log(urlFolder);
             var urlFolder =
               splitSearch[
@@ -128,6 +144,7 @@
             funcFiles[
               Math.floor(Math.random() * Math.floor(funcFiles.length)).valueOf()
             ];
+          openWorks();
         });
       }
       var folder = "loc";
@@ -141,8 +158,8 @@
         );
         if (boxInput.value.indexOf(",") === -1) {
           console.log("rndFolder,rndFile");
-          var splitSearch = boxInput.value.split("");
           var funcFlex = boxInput.value;
+          var splitSearch = funcFlex.split("");
           console.log(urlFolder);
           var urlFolder =
             splitSearch[
@@ -178,15 +195,40 @@
             filed.length === 132 ||
             filed.length === 136
           ) {
+            boxInput.value = "";
+            serverSide("rule").then((dateRule) => {
+              console.log(typeof boxInput.value);
+              console.log(boxInput.value.length);
+              if (boxInput.value.length === 0) {
+                boxInput.value = dateRule;
+              }
+            });
             var linkFollow = document.createElement("a");
-            linkFollow.href = filed;
+            if (boxInput.value.indexOf(",") === -1) {
+              linkFollow.href = "<?!= getUrl(ScriptApp) ?>?func=" + funcFlex; //filed;
+            } else {
+              linkFollow.href =
+                "<?!= getUrl(ScriptApp) ?>?func=" +
+                urlFolder +
+                "&args=" +
+                urlFile; //filed;
+            }
             linkFollow.id = "linkFOLLOW";
-            linkFollow.target = "_blank";
+            linkFollow.target = "_child";
             document.body.appendChild(linkFollow);
             document.getElementById("linkFOLLOW").click();
             document.getElementById("navBack").href = filed;
+            document.getElementById("linkFOLLOW").remove();
           } else {
             document.getElementById("forHtml").innerHTML = filed;
+            boxInput.value = "";
+            serverSide("rule").then((dateRule) => {
+              console.log(typeof boxInput.value);
+              console.log(boxInput.value.length);
+              if (boxInput.value.length === 0) {
+                boxInput.value = dateRule;
+              }
+            });
           }
           if (
             typeof urlFolder !== "undefined" ||
