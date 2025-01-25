@@ -470,7 +470,7 @@ var rndControl = function (infinitum) {
   var form = FormApp.create("Coin Trial").setDescription(
     trial.length + " Tosses",
   );
-  var formResponse = form.createResponse();
+  var formUrl = form.getPublishedUrl();
   var tailEnd = 0;
   var headStart = 0;
   trial.map((seo) => {
@@ -486,15 +486,9 @@ var rndControl = function (infinitum) {
           // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"])
           form
             .addScaleItem()
-            .setTitle(seo["heads"])
+            .setTitle(upscale)
             .setBounds(1, 5)
-            .setLabels(key, upscale);
-          var item = form
-            .addParagraphTextItem()
-            .setTitle(key + "  " + seo["heads"])
-            .setHelpText(upscale);
-          var response = item.createResponse("Penny for your thoughts");
-          formResponse.withItemResponse(response);
+            .setLabels(key, seo["heads"]);
         } else if (headStart < 1 || headStart > 1) {
           // form.addSectionHeaderItem().setTitle(key + "  " + seo["heads"]).setHelpText(headStart++ + "  tosses")
           // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["heads"]))).createResponse("Penny for your thoughts")
@@ -502,15 +496,9 @@ var rndControl = function (infinitum) {
           // form.addParagraphTextItem().setTitle(key + "  " + seo["heads"])
           form
             .addScaleItem()
-            .setTitle(seo["heads"])
+            .setTitle(upscale)
             .setBounds(1, 5)
-            .setLabels(key, upscale);
-          var item = form
-            .addParagraphTextItem()
-            .setTitle(key + "  " + seo["heads"])
-            .setHelpText(upscale);
-          var response = item.createResponse("Penny for your thoughts");
-          formResponse.withItemResponse(response);
+            .setLabels(key, seo["heads"]);
         }
       } else {
         if (tailEnd === 1) {
@@ -520,15 +508,9 @@ var rndControl = function (infinitum) {
           // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"])
           form
             .addScaleItem()
-            .setTitle(seo["tails"])
+            .setTitle(upscale)
             .setBounds(1, 5)
-            .setLabels(key, upscale);
-          var item = form
-            .addParagraphTextItem()
-            .setTitle(key + "  " + seo["tails"])
-            .setHelpText(upscale);
-          var response = item.createResponse("Penny for your thoughts");
-          formResponse.withItemResponse(response);
+            .setLabels(key, seo["tails"]);
         } else if (tailEnd < 1 || tailEnd > 1) {
           // form.addSectionHeaderItem().setTitle(key + " " + seo["tails"]).setHelpText(tailEnd++ + "  tosses")
           // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"]).setHelpText(Math.floor(Math.random() * Math.floor(seo["tails"]))).createResponse("Penny for your thoughts")
@@ -536,15 +518,9 @@ var rndControl = function (infinitum) {
           // form.addParagraphTextItem().setTitle(key + "  " + seo["tails"])
           form
             .addScaleItem()
-            .setTitle(seo["tails"])
+            .setTitle(upscale)
             .setBounds(1, 5)
-            .setLabels(key, upscale);
-          var item = form
-            .addParagraphTextItem()
-            .setTitle(key + "  " + seo["tails"])
-            .setHelpText(upscale);
-          var response = item.createResponse("Penny for your thoughts");
-          formResponse.withItemResponse(response);
+            .setLabels(key, seo["tails"]);
         }
       }
       headStart++;
@@ -553,7 +529,6 @@ var rndControl = function (infinitum) {
     headStart++;
     tailEnd++;
   });
-  var formUrl = formResponse.toPrefilledUrl();
   return formUrl;
 };
 

@@ -1,8 +1,22 @@
+// is the conveyance of power and authority an objective, measurable quantity?
+
+// No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
+
+// Subjectivity in Definition: Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.
+// Qualitative Aspects: The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.
+// Contextual Dependence: The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.
+// However, there are some aspects that can be measured or assessed to some degree:
+
+// Visible Demonstrations: Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.
+// Compliance and Obedience: The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.
+// Social Influence: The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.
+// In conclusion: While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+
 var appSort = function (numIndex, time) {
+  // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
   var titleArray = [];
   for (var key in globalThis) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelapsedTime: " + elapsedTime)
     if (typeof globalThis[key] == "function") {
       titleArray.push(key);
     }
@@ -40,7 +54,7 @@ var appSort = function (numIndex, time) {
   var l = arrData.length;
   for (i, l; i < l; i++) {
     titleArray.sort((a, b) => {
-      // return console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + " OR " + b + "\nelaspeTime: " + elaspeTime)
+      // return console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + " OR " + b + "\nelapsedTime: " + elapsedTime)
       if (a[0].toLowerCase() === arrData[numIndex || i]) {
         if (freqArray.indexOf(a) > -1) {
           return;
@@ -50,7 +64,7 @@ var appSort = function (numIndex, time) {
       }
     });
   }
-  console.log(freqArray);
+  // console.log(freqArray)
   return freqArray;
 };
 

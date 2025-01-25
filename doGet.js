@@ -10,9 +10,140 @@ var buildTags = function (posHtml) {
     : contentFile("uiAccess");
 };
 
-var doGet = function (e) {
+function doGet(e) {
+  e
+    ? e
+    : (e = objectOfS(
+        ["parameter"],
+        [[["func", arguments.callee.name]]],
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      ));
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      e.parameter["func"] +
+      ", = " +
+      !e.parameter["func"],
+  );
+  var titleArray = [];
+  for (var key in globalThis) {
+    if (typeof globalThis[key] == "function") {
+      titleArray.push(key);
+    }
+  }
+  var objMaster = {
+    miscellaneous: {
+      section: titleArray,
+    },
+  };
+  var fx = e.parameter["func"];
+  if (fx === objMaster.miscellaneous.section[111]) {
+    return handleRequest(e).getContent();
+  } else if (fx === objMaster.miscellaneous.section[58]) {
+    console.log(
+      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+        "\n" +
+        arguments.callee.name +
+        "\n!" +
+        fx +
+        ", = " +
+        !fx,
+    );
+    // Replace with your actual sheet ID
+    // const spreadsheetId = 'YOUR_SPREADSHEET_ID';
+    // const range = 'Sheet1!A1:C'; // Adjust the range as needed
+
+    // Get the data from the sheet
+    // const ss = SpreadsheetApp.getActiveSpreadsheet();
+    // const sheet = ss.getSheetByName('Sheet1'); // Adjust the sheet name
+    const sheet = ssGetSheetBySpreadsheetUrl(
+      "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+      "Receive",
+    );
+    const data = sheet.getDataRange().getValues();
+
+    // Generate the HTML table
+    let html = "<table>";
+    for (const row of data) {
+      html += "<tr>";
+      for (const cell of row) {
+        html += `<td>${cell}</td>`;
+      }
+      html += "</tr>";
+    }
+    html += "</table>";
+
+    // Create the HTML content
+    const pageHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Financial Statements</title>
+        <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Financial Statements</h1>
+        <div id="tabDiv">
+          ${html}
+        </div>
+      </body>
+    </html>
+  `;
+
+    // Return the HTML content
+    return renderTemplate(pageHtml, {}, "Finance Landing Page");
+  } else {
+    var libFunc = "renderFile";
+    var htmlArray = [
+      `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess`,
+    ]
+      .toString()
+      .split(" ");
+    var args =
+      htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
+    if (renderFile(args)) {
+      return renderTemplate(
+        contentApp(
+          `<?!= HtmlService.createTemplate(appL).evaluate().getContent() ?>`,
+          {
+            appL: this[libFunc].apply(this, [args]),
+          },
+        ),
+        { e: e },
+        args,
+      );
+    } else {
+      return handleRequest(e);
+    }
+  }
+}
+
+var doGetPost = function (e) {
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!e, = " +
+      !e,
+  );
   if (e) {
     var foobarr = e.parameter["func"];
+    var barArgs = e.parameter["args"];
   }
   var libFunc = foobarr || "renderFile";
   var rndPage = [
@@ -31,36 +162,84 @@ var doGet = function (e) {
         ),
     )
   ];
-  if (e) {
-    var barArgs = e.parameter["args"];
-  }
   args = barArgs || ["jFundamentals"];
-  return renderTemplate(
-    contentApp(`<?!= appL ?>`, {
-      appL:
-        libFunc ||
-        HtmlService.createHtmlOutput(
-          `
+  if (renderFile(args)) {
+    return renderTemplate(
+      contentApp(`<?!= appL ?>`, {
+        appL:
+          libFunc ||
+          HtmlService.createHtmlOutput(
+            `
               <script>
                 document.getElementById("appList").value
               </script>
               `,
-        )
-          .getContent()
-          .apply(this, [
-            args ||
-              HtmlService.createHtmlOutput(
-                `
+          )
+            .getContent()
+            .apply(this, [
+              args ||
+                HtmlService.createHtmlOutput(
+                  `
               <script>
                 document.getElementById("username").value
               </script>
               `,
-              ).getContent(),
-          ]),
-    }),
-    { e: e },
-  );
+                ).getContent(),
+            ]),
+      }),
+      { e: e },
+    );
+  } else {
+    return handleRequest(e);
+  }
 };
+
+function doGetStop(e) {
+  return handleRequest(e);
+}
+
+function handleRequest(e) {
+  if (e.parameter && e.parameter.action === "getData") {
+    return handleGetData();
+  } else if (e.parameter && e.parameter.action === "submitForm") {
+    return handleFormSubmission(e);
+  } else {
+    return ContentService.createTextOutput("Invalid Request").setMimeType(
+      ContentService.MimeType.TEXT,
+    );
+  }
+}
+
+function handleGetData() {
+  var data = {
+    message: "Hello from Apps Script Backend!",
+    timestamp: new Date(),
+  };
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
+    ContentService.MimeType.JSON,
+  );
+}
+
+function handleFormSubmission(e) {
+  try {
+    var formData = JSON.parse(e.postData.contents);
+    MailApp.sendEmail({
+      to: "promanual-support@googlegroups.com",
+      subject: "New Form Submission",
+      body: JSON.stringify(formData),
+    });
+    return ContentService.createTextOutput(
+      JSON.stringify({
+        success: true,
+        message: "Form submitted successfully!",
+      }),
+    ).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(
+      JSON.stringify({ success: false, message: "Error submitting form." }),
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+}
 
 function misBing(e, time) {
   console.log(JSON.stringify(e));
@@ -559,6 +738,19 @@ var userClicked = function () {
 //   //   return Route[e.parameter['webApp']](e);
 //   // };
 // }
+
+var runBoilerplate = function (func, someArgs) {
+  var libFunc = func || "doGet";
+  args = someArgs || [];
+  return this[libFunc].apply(this, [args]);
+};
+
+var runAll = function (func, args) {
+  var arr = func.split(".");
+  var libFunc = arr[0];
+  args = args || [];
+  return this[libFunc].apply(this, args);
+};
 
 var superDoGet = function (route, callback) {
   const Route = {};

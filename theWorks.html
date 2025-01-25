@@ -4,9 +4,11 @@
     <base target="_top" />
   </head>
   <body>
-    <nav>
-      <a href="" target="_top" id="navBack">Back</a>
-    </nav>
+    <div id="loadingIndicator" style="display: none">
+      <nav>
+        <a href="" target="_top" id="navBack">Loading...</a>
+      </nav>
+    </div>
     <div id="pageBlock"></div>
     <div class="agenda container col s1">
       <input value="" class="timepicker" id="pRule" type="text" />
@@ -30,222 +32,89 @@
       </div>
     </div>
     <script>
+      const loadingIndicator = document.getElementById('loadingIndicator');
       function serverSide(func, args) {
         return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.log(error);
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runBoilerplate(func, args);
-        });
-      }
-      console.log(window);
-      var forHTMLContent = document.getElementById("forHtml").innerHTML;
-      console.log(forHTMLContent);
-      var boxInput = document.getElementById("pRule");
-      boxInput.addEventListener("click", clearBox);
-      boxInput.addEventListener("keypress", function (event) {
-        // If the user preses the "Enter" key on the keyboard.
-        if (event.key === "Enter") {
-          openWorks();
-        }
-      });
-      boxInput.addEventListener("keypress", function (event) {
-        // If the user preses the "Enter" key on the keyboard.
-        if (event.key === "Enter") {
-          clearBox();
-          boxInput.value = "";
-          serverSide("rule").then((dateRule) => {
-            console.log(typeof boxInput.value);
-            console.log(boxInput.value.length);
-            if (boxInput.value.length === 0) {
-              boxInput.value = dateRule;
-            }
-          });
-          return;
-          console.log(
-            typeof boxInput.value +
-              " _: " +
-              boxInput.value.indexOf(",") +
-              boxInput.value.split(""),
-          );
-          if (boxInput.value.indexOf(",") === -1) {
-            console.log("rndFolder,rndFile");
-            var funcFlex = boxInput.value;
-            var splitSearch = funcFlex.split("");
-            console.log(urlFolder);
-            var urlFolder =
-              splitSearch[
-                Math.floor(Math.random() * Math.floor(splitSearch.length))
-              ];
-            console.log(urlFolder);
-            var urlFile =
-              splitSearch[
-                Math.floor(Math.random() * Math.floor(splitSearch.length))
-              ];
-            console.log(urlFile);
-          } else {
-            console.log("folder,file");
-            var splitSearch = boxInput.value.split(",");
-            var funcFlex = splitSearch[0];
-            var urlFolder = splitSearch[1];
-            console.log(urlFolder);
-            var urlFile = splitSearch[2];
-            console.log(urlFile);
-          }
-          console.log([urlFolder, urlFile]);
-          serverSide([funcFlex], [urlFolder, urlFile]).then((filed) => {
-            console.log(
-              typeof filed + " XX " + [filed].join("").length + " XXX " + filed,
-            );
-            if (
-              filed.length === 83 ||
-              filed.length === 94 ||
-              filed.length === 97 ||
-              filed.length === 99 ||
-              filed.length === 101 ||
-              filed.length === 103 ||
-              filed.length === 132 ||
-              filed.length === 136
-            ) {
-              document.getElementById("forHtml").innerHTML = forHTMLContent;
-              document.getElementById("worksFrame").src = filed;
-              document.getElementById("navBack").href = filed;
-            } else {
-              document.getElementById("forHtml").innerHTML = filed;
-            }
-            if (
-              typeof urlFolder !== "undefined" ||
-              typeof urlFile !== "undefined"
-            ) {
-              document.getElementById("pageBlock").innerHTML =
-                "<p>" + urlFolder + ": " + urlFile + "</p>";
-            }
-            serverSide("rule").then((dateRule) => {
-              console.log(typeof boxInput.value);
-              console.log(boxInput.value.length);
+        google.script.run
+        .withSuccessHandler(result => {
+          resolve(result)})
+        .withFailureHandler(error => {
+          console.log(error)
+            console.log(document.getElementById("test").innerHTML)
+            reject(error)})
+        .runBoilerplate(func, args)})};
+            console.log(window)
+          var forHTMLContent = document.getElementById("forHtml").innerHTML
+            console.log(forHTMLContent)
+          var boxInput = document.getElementById("pRule")
+          var buttonInput = document.getElementById("btn")
+          boxInput.addEventListener('click', serverSide("rule")
+          .then((dateRule) => {
+            console.log(typeof boxInput.value)
+            console.log(boxInput.value.length)
               if (boxInput.value.length === 0) {
-                boxInput.value = dateRule;
-              }
-            });
-          });
-        }
-      });
-      document.getElementById("btn").addEventListener("click", openWorks);
-
-      function clearBox() {
-        serverSide("funcCalc").then((funcFiles) => {
-          boxInput.value =
-            funcFiles[
-              Math.floor(Math.random() * Math.floor(funcFiles.length)).valueOf()
-            ];
-          openWorks();
-        });
-      }
-      var folder = "loc";
-      var file = "id";
-      function openWorks() {
-        console.log(
-          typeof boxInput.value +
-            " _: " +
-            boxInput.value.indexOf(",") +
-            boxInput.value.split(""),
-        );
+                boxInput.value = dateRule}}))
+          buttonInput.addEventListener("click", serverSide("rule")
+          .then((dateRule) => {
+            console.log(typeof boxInput.value)
+            console.log(boxInput.value.length)
+              if (boxInput.value.length === 0) {
+                boxInput.value = dateRule}}))
+          boxInput.addEventListener('keypress', function(event) {
+            // If the user preses the "Enter" key on the keyboard.
+            if (event.key === "Enter") {
+              clearBox()
+              openWorks()}})
+        function clearBox() {
+          // Hide the loading indicator after filtering is complete
+          loadingIndicator.style.display = 'none';
+          document.getElementById("navBack").href = "#"}
+        var folder = "loc";
+        var file = "id";
+       function openWorks() {
+        // Show the loading indicator
+        loadingIndicator.style.display = 'block';
+        console.log(typeof boxInput.value + " _: " + boxInput.value.indexOf(",") + boxInput.value.split(""))
         if (boxInput.value.indexOf(",") === -1) {
-          console.log("rndFolder,rndFile");
-          var funcFlex = boxInput.value;
-          var splitSearch = funcFlex.split("");
-          console.log(urlFolder);
-          var urlFolder =
-            splitSearch[
-              Math.floor(Math.random() * Math.floor(splitSearch.length))
-            ];
-          console.log(urlFolder);
-          var urlFile =
-            splitSearch[
-              Math.floor(Math.random() * Math.floor(splitSearch.length))
-            ];
-          console.log(urlFile);
-        } else {
-          console.log("folder,file");
-          var splitSearch = boxInput.value.split(",");
-          var funcFlex = splitSearch[0];
-          var urlFolder = splitSearch[1];
-          console.log(urlFolder);
-          var urlFile = splitSearch[2];
-          console.log(urlFile);
-        }
-        console.log([urlFolder, urlFile]);
-        serverSide([funcFlex], [urlFolder, urlFile]).then((filed) => {
-          console.log(
-            typeof filed + " XX " + [filed].join("").length + " XXX " + filed,
-          );
-          if (
-            filed.length === 83 ||
-            filed.length === 94 ||
-            filed.length === 97 ||
-            filed.length === 99 ||
-            filed.length === 101 ||
-            filed.length === 103 ||
-            filed.length === 132 ||
-            filed.length === 136
-          ) {
-            boxInput.value = "";
-            serverSide("rule").then((dateRule) => {
-              console.log(typeof boxInput.value);
-              console.log(boxInput.value.length);
-              if (boxInput.value.length === 0) {
-                boxInput.value = dateRule;
-              }
-            });
+          var funcFlex = boxInput.value
+          console.log("rndFolder,rndFile\n" + funcFlex)
+          var splitSearch = funcFlex.split("")
+          console.log(urlFolder)
+          var urlFolder = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
+          console.log(urlFolder)
+          var urlFile = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
+          console.log(urlFile)}
+          else {
+            var redAlert = boxInput.value
+            console.log("folder,file\n" + redAlert)
+            var splitSearch = redAlert.split(",")
+            console.log(splitSearch)
+            var funcFlex = splitSearch[0];
+            console.log(funcFlex)
+            var urlFolder = splitSearch[1];
+            console.log(urlFolder)
+            var urlFile = splitSearch[2];
+            console.log(urlFile)}
+          console.log([urlFolder,urlFile])
+        serverSide([funcFlex], [urlFolder,urlFile])
+       .then((filed) => {
+          console.log(typeof filed + " XX " + [filed].join("").length + " XXX " + filed)
+          if (filed.length === 83 || filed.length === 94 || filed.length === 97 || filed.length === 99 || filed.length === 101 || filed.length === 103 || filed.length === 132 || filed.length === 136 ) {
             var linkFollow = document.createElement("a");
             if (boxInput.value.indexOf(",") === -1) {
-              linkFollow.href = "<?!= getUrl(ScriptApp) ?>?func=" + funcFlex; //filed;
-            } else {
-              linkFollow.href =
-                "<?!= getUrl(ScriptApp) ?>?func=" +
-                urlFolder +
-                "&args=" +
-                urlFile; //filed;
-            }
+              linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex} //filed;
+              else {
+                linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex + '&args=' + urlFolder} //filed;
             linkFollow.id = "linkFOLLOW";
             linkFollow.target = "_child";
             document.body.appendChild(linkFollow);
             document.getElementById("linkFOLLOW").click();
-            document.getElementById("navBack").href = filed;
-            document.getElementById("linkFOLLOW").remove();
-          } else {
-            document.getElementById("forHtml").innerHTML = filed;
-            boxInput.value = "";
-            serverSide("rule").then((dateRule) => {
-              console.log(typeof boxInput.value);
-              console.log(boxInput.value.length);
-              if (boxInput.value.length === 0) {
-                boxInput.value = dateRule;
-              }
-            });
-          }
-          if (
-            typeof urlFolder !== "undefined" ||
-            typeof urlFile !== "undefined"
-          ) {
-            document.getElementById("pageBlock").innerHTML =
-              "<p>" + urlFolder + ": " + urlFile + "</p>";
-          }
-          serverSide("rule").then((dateRule) => {
-            console.log(typeof boxInput.value);
-            console.log(boxInput.value.length);
-            if (boxInput.value.length === 0) {
-              boxInput.value = dateRule;
-            }
-          });
-        });
-      }
+            document.getElementById("navBack").href = filed
+            document.getElementById("linkFOLLOW").remove()};
+          else {
+            document.getElementById("forHtml").innerHTML = filed}
+        if (typeof urlFolder !== "undefined" || typeof urlFile !== "undefined") {
+            document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + ": " +  urlFile + "</p>\n"}})}
     </script>
   </body>
 </html>

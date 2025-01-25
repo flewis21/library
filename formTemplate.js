@@ -684,8 +684,8 @@ var dtlsSomeFunction = function (e) {
     if (typeof form === "object") {
       covIdArray[0][0].map((d) => {
         while (d) {
-          var elaspedTime = new Date() - time;
-          var timeToExecute = maxTime - elaspedTime;
+          var elapsedTime = new Date() - time;
+          var timeToExecute = maxTime - elapsedTime;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form
             .addSectionHeaderItem()
@@ -1333,30 +1333,30 @@ var mainMan = function (mainFile) {
 };
 
 var somMainFunc = async function (e) {
-  var elaspedTime = new Date() - start;
-  var timeToExecute = maxTime - elaspedTime;
+  var elapsedTime = new Date() - start;
+  var timeToExecute = maxTime - elapsedTime;
   while (timeToExecute > 0.3 * 60 * 1000) {
     console.log(timeToExecute);
     dtlsSomeFunction("It's who you know");
-    if (elaspedTime <= 0.3 * 60 * 1000) {
+    if (elapsedTime <= 0.3 * 60 * 1000) {
       console.log("Six minutes");
     }
-    if (elaspedTime == 1 * 60 * 1000) {
+    if (elapsedTime == 1 * 60 * 1000) {
       console.log("Five minutes remainig");
     }
-    if (elaspedTime == 2 * 60 * 1000) {
+    if (elapsedTime == 2 * 60 * 1000) {
       console.log("Four minutes remainig");
     }
-    if (elaspedTime == 3 * 60 * 1000) {
+    if (elapsedTime == 3 * 60 * 1000) {
       console.log("Three minutes remainig");
     }
-    if (elaspedTime == 4 * 60 * 1000) {
+    if (elapsedTime == 4 * 60 * 1000) {
       console.log("Two minutes remainig");
     }
-    if (elaspedTime == 5 * 60 * 1000) {
+    if (elapsedTime == 5 * 60 * 1000) {
       console.log("One minute remainig");
     }
-    if (elaspedTime >= maxTime) {
+    if (elapsedTime >= maxTime) {
       console.log("maximum execution time exceeded");
     }
   }

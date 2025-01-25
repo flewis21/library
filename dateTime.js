@@ -23,8 +23,8 @@ function dateTime(date) {
           M.Timepicker.init(
           timePicker
           , {
-          defaultTime: "now" 
-          }); function serverside(func, args) {
+          defaultTime: "now"}); 
+          function serverside(func, args) {
           return new Promise((resolve, reject) => {
             google.script.run
             .withSuccessHandler(result => {

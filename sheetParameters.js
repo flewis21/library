@@ -520,8 +520,8 @@ var pastSeo = function (namedVar, time) {
     fileManager([namedVar].join("").toUpperCase(), "Forms", time);
     seoPlaylist.map((d) => {
       while (d) {
-        var elaspedTime = new Date() - time;
-        var timeToExecute = maxTime - elaspedTime;
+        var elapsedTime = new Date() - time;
+        var timeToExecute = maxTime - elapsedTime;
         form.addPageBreakItem().setTitle([namedVar].join(""));
         form
           .addSectionHeaderItem()
@@ -992,205 +992,6 @@ var seoIndex = function (searchWord) {
   //   var story = pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))]
 };
 
-var seoPastTime = function (searchString, time) {
-  if (typeof time === "undefined") {
-    time = start;
-  }
-  while (typeof fndOrd !== "object") {
-    // console.log("seoPastTime: \n")
-    var uniqueVid = seoYoutube(searchString, time).myIdArr;
-    // console.log("seoPastTime: \nvar " + uniqueVid + " = seoYoutube(" + searchString, time + ").myIdArr")
-    var sorFndOrd = uniqueVid.filter((vidObject) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
-      if (
-        vidObject.length === 11 &&
-        vidObject !== '"' &&
-        vidObject.toLowerCase !== "http" &&
-        vidObject.toLowerCase !== "result" &&
-        vidObject.toLowerCase !== "content" &&
-        vidObject.toLowerCase !== "data" &&
-        vidObject.toLowerCase !== "length" &&
-        vidObject.toLowerCase !== "ajax" &&
-        vidObject.toLowerCase !== "if" &&
-        vidObject.toLowerCase !== "attrib" &&
-        vidObject.toLowerCase !== "get" &&
-        vidObject.toLowerCase !== "null" &&
-        vidObject.toLowerCase !== "saving" &&
-        vidObject.toLowerCase !== "location" &&
-        vidObject.toLowerCase !== "has" &&
-        vidObject.toLowerCase !== "query" &&
-        vidObject.toLowerCase !== "res" &&
-        vidObject.toLowerCase !== "acc" &&
-        vidObject.toLowerCase !== "hybrid" &&
-        vidObject.toLowerCase !== "amp" &&
-        vidObject.indexOf("=") === -1 &&
-        vidObject.indexOf("query") === -1 &&
-        vidObject.indexOf(";") === -1 &&
-        vidObject.indexOf("ajax") === -1 &&
-        vidObject.indexOf("whole") === -1 &&
-        vidObject.indexOf("document.qu") === -1 &&
-        vidObject.indexOf("inner") === -1 &&
-        vidObject.indexOf("strong") === -1 &&
-        vidObject.indexOf("ing") === -1 &&
-        vidObject.indexOf("brid") === -1 &&
-        vidObject.indexOf("ctrl") === -1 &&
-        vidObject.indexOf("location") === -1 &&
-        vidObject.indexOf("wiki") === -1 &&
-        vidObject.indexOf("//") === -1 &&
-        vidObject.indexOf("Html") === -1 &&
-        vidObject.indexOf("data") === -1 &&
-        vidObject.indexOf("undefined") === -1 &&
-        vidObject.indexOf("client") === -1 &&
-        vidObject.indexOf("/") === -1 &&
-        vidObject.indexOf("peri") === -1 &&
-        vidObject.indexOf("ten") === -1 &&
-        vidObject.indexOf("out") === -1 &&
-        vidObject.indexOf("new") === -1 &&
-        vidObject.indexOf("]") === -1 &&
-        vidObject.indexOf("localStorag") === -1 &&
-        vidObject.indexOf("t.loadEvent") === -1 &&
-        vidObject.indexOf("[") === -1 &&
-        vidObject.indexOf("a.severity") === -1 &&
-        vidObject.indexOf("cont") === -1 &&
-        vidObject.indexOf("\\") === -1 &&
-        vidObject.indexOf("JSON.parse(") === -1 &&
-        vidObject.indexOf("_w._sydConv") === -1 &&
-        vidObject.indexOf("o.Prefetchi") === -1 &&
-        vidObject.indexOf("get") === -1 &&
-        vidObject.indexOf("&&") === -1 &&
-        vidObject.indexOf(",") === -1
-      ) {
-        // console.log("seoPastTime: \nvidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-        return vidObject;
-      }
-    });
-    var i = 0;
-    var l = sorFndOrd.length;
-    for (i, l; i < l; i++) {
-      var fndOrd = [];
-      sorFndOrd.sort((a, b) => {
-        //  if (a !== b && fndOrd.indexOf(a) === -1) {
-        while (a !== b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
-            return;
-          }
-          {
-          }
-
-          //  console.log("stockHistory: \n")
-          fndOrd.push(a);
-          //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
-        }
-        //  else if (a === b && fndOrd.indexOf(a) === -1) {
-        while (a === b && fndOrd.indexOf(a) === -1) {
-          //  console.log("seoPastTime: \n" + a + " === " + b + " && fndOrd.indexOf(" + a + ") === -1 " + a === b && fndOrd.indexOf(a) === -1)
-          if (fndOrd.indexOf(a) > -1) {
-            //  console.log("seoPastTime: \nfndOrd.indexOf(" + a + ") > -1 "+ fndOrd.indexOf(a))
-            return;
-          }
-          {
-          }
-
-          fndOrd.push(a);
-          //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
-        }
-        //  else if (b !== a && fndOrd.indexOf(b) === -1) {
-        while (b !== a && fndOrd.indexOf(b) === -1) {
-          //  console.log("seoPastTime: \n" + b + " !== " + a + " && fndOrd.indexOf(" + b + ") === -1 " + b !== a && fndOrd.indexOf(b) === -1)
-          if (fndOrd.indexOf(b) > -1) {
-            //  console.log("seoPastTime: \nfndOrd.indexOf(" + b + ") > -1 "+ fndOrd.indexOf(b))
-            return;
-          }
-          {
-          }
-
-          fndOrd.push(b);
-          //  else if (b !== a && fndOrd.indexOf(b) === -1) {
-          while (b === a && fndOrd.indexOf(b) === -1) {
-            //  console.log("seoPastTime: \n" + b + " === " + a + " && fndOrd.indexOf(" + b + ") === -1 " + b === a && fndOrd.indexOf(b) === -1)
-            if (fndOrd.indexOf(b) > -1) {
-              //  console.log("seoPastTime: \nfndOrd.indexOf(" + b + ") > -1 " + fndOrd.indexOf(b))
-              return;
-            }
-            {
-            }
-
-            fndOrd.push(b);
-            //  console.log("seoPastTime: \nfndOrd.push(" + a + ")")
-          }
-          //  console.log("seoPastTime: \nfndOrd.push(" + b + ")")
-        }
-      });
-    }
-    if (typeof fndOrd === "object") {
-      // console.log(seoArray.playList)
-      break;
-    }
-  }
-  // console.log(fndOrd)
-  if (fndOrd) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-    var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
-      for (var i = 0, l = randomKey; i < l; i++) {
-        if (
-          test.indexOf("false") === -1 &&
-          test.indexOf("var") === -1 &&
-          test.indexOf("=") === -1 &&
-          test.indexOf(".") === -1 &&
-          test.indexOf("(") === -1 &&
-          test.indexOf(")") === -1 &&
-          test.indexOf("_") === -1 &&
-          test.indexOf(";") === -1 &&
-          test.indexOf('"') === -1 &&
-          test.indexOf("Error") === -1 &&
-          test.indexOf("error") === -1 &&
-          test.indexOf("Codes") === -1 &&
-          test.indexOf("siz23") === -1 &&
-          test.indexOf(":") === -1 &&
-          test.indexOf("{}") === -1 &&
-          test.indexOf("}") === -1 &&
-          test.indexOf("<") === -1 &&
-          test.indexOf(">") === -1 &&
-          test.indexOf("EdgeWorksp") === -1
-        ) {
-          if (JSON.stringify(i) >= 3) {
-            break;
-          }
-          return test[i];
-        }
-      }
-      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-    });
-    var rndSort = [];
-    for (var i = 0, l = rndRes.length; i < l; i++) {
-      rndRes.filter((o) => {
-        rndSort.push(o !== rndRes[i]);
-        if (rndSort.length === rndRes.length) {
-          return;
-        }
-      });
-    }
-    var sorKind = rndSort.toString().split(" ");
-    var revKind = sorKind.reverse();
-    var popKind = revKind.pop();
-    var rndKind = popKind.split(",");
-    return {
-      playList: rndRes.sort((a, b) => a - b),
-    };
-  }
-};
-// var form = formMaker(searchString)
-// fileManager(searchString, "Forms")
-// var lowerCaseS = seoSheet(searchString).keyWords
-// lowerCaseS.map((b) => {
-// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-// return form.addVideoItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(needUtility(b)[0].videoItemUrl)})
-// var formUrl = form.getPublishedUrl()
-// url: formUrl
-
 var seoPictTime = function (searchString, time) {
   if (typeof time === "undefined") {
     var time = start;
@@ -1354,296 +1155,6 @@ var seoPictures = function (searchString, time) {
   return uniqueSeo;
 };
 
-var seoSheet = function (searchString, time) {
-  if (typeof time === "undefined") {
-    time = start;
-  }
-  if (typeof searchString === "undefined") {
-    var searchString = "sports medicine";
-  }
-  var uniqueSeo = seoTwitter(searchString, time).twiData;
-  console.log(
-    "seoSheet: \nvar " + uniqueSeo + " = seoTwitter(" + searchString,
-    time + ").twiData",
-  );
-  var fndOrd = uniqueSeo
-    .join("")
-    .split(" ")
-    .filter((p) => {
-      var elaspeTime = new Date() - time;
-      // console.log("p: " + p + "\nelaspeTime: " + elaspeTime)
-      if (p.length > 3 && p.length < 18) {
-        return p[0] !== "<";
-      }
-    });
-  if (fndOrd.length > 0) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-    var rndRes = fndOrd.filter((test) => {
-      for (var i = 0, l = randomKey; i < l; i++) {
-        if (
-          test.indexOf("false") === -1 &&
-          test.indexOf("var") === -1 &&
-          test.indexOf("=") === -1 &&
-          test.indexOf(".") === -1 &&
-          test.indexOf("(") === -1 &&
-          test.indexOf(")") === -1 &&
-          test.indexOf("_") === -1 &&
-          test.indexOf(";") === -1 &&
-          test.indexOf('"') === -1 &&
-          test.indexOf("Error") === -1 &&
-          test.indexOf("error") === -1 &&
-          test.indexOf("Codes") === -1 &&
-          test.indexOf("siz23") === -1 &&
-          test.indexOf(":") === -1 &&
-          test.indexOf("{}") === -1 &&
-          test.indexOf("}") === -1 &&
-          test.indexOf("<") === -1 &&
-          test.indexOf(">") === -1 &&
-          test.indexOf("0?void") === -1 &&
-          test.indexOf("12H7a3") === -1 &&
-          test.indexOf("6H13ZM7") === -1 &&
-          test.indexOf("2zm0") === -1 &&
-          test.indexOf("null") === -1 &&
-          test.indexOf("return") === -1 &&
-          test.indexOf("%eSearch") === -1 &&
-          test.indexOf("#fbpgdg") === -1 &&
-          test.indexOf("fbpkgiid") === -1 &&
-          test.indexOf("'undefined'") === -1 &&
-          test.indexOf("bepcfg") === -1 &&
-          test.indexOf("instanceof") === -1 &&
-          test.indexOf("passed") === -1 &&
-          test.indexOf("element") === -1 &&
-          test.indexOf("0v2ZM3") === -1 &&
-          test.indexOf("1-1-1H0a3") === -1 &&
-          test.indexOf("13V3H0v10h2Zm1") === -1 &&
-          test.indexOf("14H3v2h10v-2ZM2") === -1 &&
-          test.indexOf("serp") === -1 &&
-          test.indexOf("Identity") === -1 &&
-          test.indexOf("else") === -1 &&
-          test.indexOf("errd") === -1 &&
-          test.indexOf("'Ref") === -1 &&
-          test.indexOf("Rewards") === -1 &&
-          test.indexOf("payload") === -1 &&
-          test.indexOf("eventData") === -1 &&
-          test.indexOf("else") === -1 &&
-          test.indexOf("root") === -1 &&
-          test.indexOf("'noresult'") === -1 &&
-          test.indexOf("muid") === -1 &&
-          test.indexOf("payload") === -1 &&
-          test.indexOf("eventObj") === -1 &&
-          test.indexOf("eventType") === -1 &&
-          test.indexOf("handler") === -1 &&
-          test.indexOf("throw") === -1 &&
-          test.indexOf("remove") === -1 &&
-          test.indexOf("typeof") === -1 &&
-          test.indexOf("failed") === -1 &&
-          test.indexOf("removed") === -1 &&
-          test.indexOf("from") === -1 &&
-          test.indexOf("your") === -1 &&
-          test.indexOf("Init") === -1 &&
-          test.indexOf("parachuteSuccess") === -1 &&
-          test.indexOf("contentType") === -1 &&
-          test.indexOf("postBody") === -1 &&
-          test.indexOf("quick") === -1 &&
-          test.indexOf("execute") === -1 &&
-          test.indexOf("bind") === -1 &&
-          test.indexOf("toggle") === -1 &&
-          test.indexOf("true") === -1 &&
-          test.indexOf("callback") === -1 &&
-          test.indexOf("load") === -1 &&
-          test.indexOf("allow-popups") === -1 &&
-          test.indexOf("allow-same-origin") === -1 &&
-          test.indexOf("config") === -1 &&
-          test.indexOf("match") === -1 &&
-          test.indexOf("name") === -1 &&
-          test.indexOf("accLinkParams") === -1 &&
-          test.indexOf("successFunc") === -1 &&
-          test.indexOf("status") === -1 &&
-          test.indexOf("timestamp") === -1 &&
-          test.indexOf("impressionGuid") === -1 &&
-          test.indexOf("eventToLog") === -1 &&
-          test.indexOf("pageType") === -1 &&
-          test.indexOf("explicitTimeStamp") === -1 &&
-          test.indexOf("DynScopesDropdown") === -1 &&
-          test.indexOf("AwayTimeThreshold") === -1 &&
-          test.indexOf("contains") === -1 &&
-          test.indexOf("these") === -1 &&
-          test.indexOf("logEvent") === -1 &&
-          test.indexOf("search") === -1 &&
-          test.indexOf("description") === -1 &&
-          test.indexOf("site") === -1 &&
-          test.indexOf("won't") === -1 &&
-          test.indexOf("allow") === -1 &&
-          test.indexOf("undelivered") === -1 &&
-          test.indexOf("here") === -1 &&
-          test.indexOf("eventName") === -1 &&
-          test.indexOf("input") === -1 &&
-          test.indexOf("conversationId") === -1 &&
-          test.indexOf("chatBNPData") === -1 &&
-          test.indexOf("wlcmData") === -1 &&
-          test.indexOf("SydFSCModule") === -1 &&
-          test.indexOf("function") === -1 &&
-          test.indexOf("can\u0027t") === -1 &&
-          test.indexOf("render") === -1 &&
-          test.indexOf("webResultsUrls") === -1 &&
-          test.indexOf("RespImgInfoArr") === -1 &&
-          test.indexOf("RespImgInfoArr") === -1 &&
-          test.indexOf("RespImgInfoArr") === -1 &&
-          test.indexOf("solid") === -1 &&
-          test.indexOf("can\u0027t") === -1 &&
-          test.indexOf("during") === -1 &&
-          test.indexOf("height") === -1 &&
-          test.indexOf("have") === -1 &&
-          test.indexOf("about") === -1 &&
-          test.indexOf("this") === -1 &&
-          test.indexOf("Bing") === -1 &&
-          test.indexOf("turn") === -1 &&
-          test.indexOf("Click") === -1 &&
-          test.indexOf("more") === -1 &&
-          test.indexOf("Bing!") === -1 &&
-          test.indexOf("page") === -1 &&
-          test.indexOf("info") === -1 &&
-          test.indexOf("find") === -1 &&
-          test.indexOf("params") === -1 &&
-          test.indexOf("right") === -1 &&
-          test.indexOf("Your") === -1 &&
-          test.indexOf("Search") === -1 &&
-          test.indexOf("Also") === -1 &&
-          test.indexOf("powered") === -1 &&
-          test.indexOf("copilot") === -1 &&
-          test.indexOf("EntityPanePreview") === -1 &&
-          test.indexOf("undefined") === -1 &&
-          test.indexOf("twitter") === -1 &&
-          test.indexOf("startSettings") === -1 &&
-          test.indexOf("Feedback") === -1 &&
-          test.indexOf("Start") === -1 &&
-          test.indexOf("exploring") === -1 &&
-          test.indexOf("body") === -1 &&
-          test.indexOf("select") === -1 &&
-          test.indexOf("rprData") === -1 &&
-          test.indexOf("MWHEEEAP0025010") === -1 &&
-          test.indexOf("disableSpriteLogo") === -1 &&
-          test.indexOf("MWHEEEAP0025010") === -1
-        ) {
-          if (JSON.stringify(i) >= 3) {
-            break;
-          }
-          return test[i];
-        }
-      }
-      var elaspeTime = new Date() - time;
-      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime)
-    });
-    var resData = rndRes.slice(0);
-    var reSearch = resData.toString().replace(/,/g, " ").split(" ");
-  }
-  if (typeof searchString !== "object") {
-    var stringSplit = [searchString].join("").split(",");
-  }
-  if (stringSplit) {
-    var testString = testData([stringSplit], time).testArray;
-    console.log(
-      "seoSheet: \nvar " +
-        testString +
-        " = " +
-        testData([stringSplit], time).testArray,
-    );
-  } else {
-    var testString = testData([searchString], time).testArray;
-    console.log(
-      "seoSheet: \nvar " +
-        testString +
-        " = " +
-        testData([searchString], time).testArray,
-    );
-  }
-  var lowerCaseS = [];
-  if (lowerCaseS.indexOf(testString) === -1) {
-    console.log(
-      "seoSheet: \nlowerCaseS.indexOf(" +
-        testString +
-        ") === -1: " +
-        lowerCaseS.indexOf(testString),
-    );
-    var stringUI = [testString].join("").split(" ");
-    stringUI.map((increase) => {
-      var elaspeTime = new Date() - time;
-      lowerCaseS.push(increase);
-    });
-  }
-  if (reSearch) {
-    reSearch.map((seo) => {
-      var elaspeTime = new Date() - time;
-      // console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime)
-      var lowerCaseResearch = seo.toLowerCase();
-      for (var i = 0, l = lowerCaseS.length; i < l; i++) {
-        if (typeof lowerCaseS[0][i] !== "undefined") {
-          console.log(
-            "seoSheet: \ntypeof " +
-              lowerCaseS[0][i] +
-              " !== undefined: " +
-              typeof lowerCaseS[0][i],
-          );
-          var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
-          if (lowerCaseResearch.includes(lowerCaseSearchString)) {
-            console.log(
-              "seoSheet: \nlowerCaseResearch.includes(" +
-                lowerCaseSearchString +
-                "): " +
-                lowerCaseResearch.includes(lowerCaseSearchString),
-            );
-            if (lowerCaseS.indexOf(seo) === -1) {
-              console.log(
-                "seoSheet: \nlowerCaseS.indexOf(" +
-                  seo +
-                  ") === -1: " +
-                  lowerCaseS.indexOf(seo),
-              );
-              var elaspeTime = new Date() - time;
-              // console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime)
-              lowerCaseS.push(seo);
-            }
-          }
-        }
-      }
-    });
-  }
-  return {
-    keyWords: lowerCaseS,
-  };
-};
-// var headers = ["keywords"]
-// var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
-// var randomSheetname = searchString || rndRes[sheetRndKey]
-// var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)))
-// var randomFormname = searchString || rndRes[formRndKey]
-// var form = formMaker(randomFormname)
-// fileManager(randomFormname, "Forms")
-// var ss = sheetsMaker(randomFormname)
-// fileManager(randomFormname, "Sheets")
-// if (typeof form === "object") {
-// var headForms = []
-// lowerCaseS.map((b) => {
-// if (globalThis[b]) {
-// console.log(globalThis[b].toString())
-// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-// headForms.push(b)
-// return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(globalThis[b].toString())
-// }
-// else {
-// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-// headForms.push(b)
-// return //form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(b)
-// }
-// })
-// form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId())
-// var formUrl = form.getPublishedUrl()
-// }
-// else {
-// var formUrl = form
-// }
-// url: formUrl,
-
 var seoTwitter = function (searchString, time) {
   if (typeof time === "undefined") {
     time = start;
@@ -1710,12 +1221,40 @@ var seoYoutube = function (searchString, time) {
 };
 
 var sheetsMaker = function (fileName, folderX, time) {
-  if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
-    return formsUrls(fileName, folderX, time);
-  }
-  if (fileName !== "") {
-    var newFile = SpreadsheetApp.create(fileName);
-    sheetsFileManager(newFile.getId(), folderX, time);
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!fileName, = " +
+      !fileName,
+  );
+  if (fileName) {
+    var unique = 0;
+    var oldFile = "https://";
+    var newFileName = fileName;
+    while (oldFile.indexOf("https://") > 0) {
+      oldFile = formsUrls(newFileName, folderX, start);
+      console.log(
+        JSON.stringify(this["start"]) +
+          "\n" +
+          arguments.callee.name +
+          "\n!oldFile, = " +
+          !oldFile,
+      );
+      newFileName = fileName + unique;
+      unique++;
+    }
+    var newFile = SpreadsheetApp.create(newFileName);
+    console.log(
+      JSON.stringify(this["start"]) +
+        "\n" +
+        arguments.callee.name +
+        "\n!newFile, = " +
+        !newFile
+        ? newFile.getName()
+        : "",
+    );
+    sheetsFileManager(newFile.getId(), folderX, start);
     return newFile;
   }
 };
@@ -1782,51 +1321,42 @@ function spreadSheet() {
 
 var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
   console.log(
-    "called function: " + arguments.callee.name + "\nfile name: " + fileX,
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!fileX, = " +
+      !fileX,
   );
-  var nSs = formsUrls(fileX, "Sheets");
-  console.log(
-    "called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs,
-  );
-  if (typeof nSs !== "string" || typeof nSs === "undefined") {
-    if (fileX) {
-      var ss = sheetsMaker(fileX, rowHeaders, time);
-      console.log(
-        "called function: " +
-          arguments.callee.name +
-          "\nSheet name: " +
-          ss.getName(),
-      );
+  if (!fileX) {
+    var fileX = arguments.callee.name;
+  }
+  if (fileX) {
+    // console.log("called function: " + arguments.callee.name + "\nfile name: " + fileX)
+    var ss = sheetsMaker(fileX, "Sheets", start);
+    // console.log("called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs);
+    if (ss) {
+      // SpreadsheetApp.openByUrl(ss)
+      // console.log("called function: " + arguments.callee.name + "\nSheet name: " + ss.getName())
       var sheet = ss.getSheets()[0].activate();
-      console.log(
-        "called function: " +
-          arguments.callee.name +
-          "\ncaller function: " +
-          arguments.callee.caller.name +
-          "\nName of this sheet is " +
-          sheet.getName(),
-      );
+      // console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nName of this sheet is " + sheet.getName());
+      if (!sheetName) {
+        var sheetName = arguments.callee.name;
+      }
       var ws = sheet.setName(sheetName);
-      console.log(
-        "called function: " +
-          arguments.callee.name +
-          "\ncaller function: " +
-          arguments.callee.caller.name +
-          "\nSheet name changed to " +
-          ws.getName(),
-      );
-      console.log(
-        "called function: " +
-          arguments.callee.name +
-          "\nName of active sheet" +
-          ss.getActiveSheet().getName(),
-      );
+      // console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nSheet name changed to " + ws.getName());
+      // console.log("called function: " + arguments.callee.name + "\nName of active sheet" + ss.getActiveSheet().getName());
       var headers = [];
+      if (!rowHeaders) {
+        var rowHeaders = arguments.callee.name;
+      }
       rowHeaders.map((h) => {
         headers.push(h);
       });
       ws.appendRow(headers);
       var dataArray = [];
+      if (!data) {
+        var data = arguments.callee.name;
+      }
       data.map((o) => {
         var sheetCol = [o].join("").split(",");
         var sheetArr = sheetCol.map((arr) => {
@@ -1834,14 +1364,16 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
         });
         dataArray.push(sheetArr);
       });
-      var dataCol = dataArray;
+      // var dataCol = dataArray
       var daLen = dataArray.length;
       console.log(dataArray + " : " + daLen);
       var dRange = ws.getDataRange().getValues();
       var col = dRange[0].length;
       console.log(col);
-      ws.getRange(2, 1, dataArray.length, col).setValues(dataArray);
-      var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();
+      var rowDRange = ws.getLastRow();
+      var colDRange = ws.getLastColumn();
+      ws.getRange(2, 1, [dataArray].length, col).setValues([dataArray]);
+      // var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues()
       console.log(
         "Called function: " +
           arguments.callee.name +
@@ -1851,15 +1383,15 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
           fileX +
           " was created!",
       );
-      var newFile = formsUrls(fileX, "Sheets");
+      var ssId = ss.getId();
+      var ssNewFile = SpreadsheetApp.openById(ssId).getUrl();
+      // var newFile = formsUrls(fileX,"Sheets", rowHeaders, data, start)
       return {
-        myFileX: newFile,
+        myFileX: ssNewFile,
       };
     }
   } else {
-    return {
-      myFileX: nSs, //formsUrls(fileX,"Sheets")
-    };
+    return {};
   }
   `else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);
             ws = ss.getActiveSheet()
@@ -2002,6 +1534,45 @@ var tutorial = function (text) {
     <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
   return html;
 };
+
+function updateSheet(url, sheetName, data, numCols, time) {
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !data,
+  );
+  // Replace with your Google Sheet ID and range
+  // var spreadsheetId = 'YOUR_SHEET_ID';
+  // var range = 'Sheet1!A1:E';
+  // Replace with the path to your service account credentials file (optional)
+  // var serviceAccountFile = 'path/to/your/credentials.json';
+  // var credentials = ServiceAccountCredentials.fromServiceAccountFile(serviceAccountFile, ['https://www.googleapis.com/auth/spreadsheets']);
+  // var client = Sheets.newClient(credentials);
+  // Get the active spreadsheet and the sheet
+  // var ss = SpreadsheetApp.getActiveSpreadsheet();
+  // var sheet = ss.getSheetByName("Sheet1"); // Replace "Sheet1" with your sheet name
+  // Get the last row
+  var sheet = ssGetSheetBySpreadsheetUrl(url, sheetName);
+  // var nextRow = sheet.getLastRow();
+  // Get the range for the next row
+  // const nextRowRange = sheet.getRange(nextRow, 1, 1, data.length);
+  // Set the values in the next row
+  // nextRowRange.setValues([data]);
+  // Append data to the sheet
+  sheet.appendRow(data);
+  // Get the range of the newly added row
+  // var newRowRange = sheet.getRange(nextRow + 1, 1, 1, data.length);
+  // Set the background color of the newly added row (optional)
+  // newRowRange.setBackgroundColor("lightgreen");
+  // Display a success message (optional)
+  // Browser.msgBox("Data submitted to Google Sheet successfully!");
+  var sheetArray = SpreadsheetApp.openByUrl(url).getUrl();
+  return {
+    myFileX: sheetArray,
+  };
+}
 
 var urlSpreadSheet = function (url) {
   var ssApp = SpreadsheetApp;

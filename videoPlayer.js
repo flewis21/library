@@ -536,17 +536,34 @@ function iFC() {
 }
 
 function surveyPlayer(searchString, joinString) {
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!searchString = " +
+      !searchString,
+  );
   //var url = seoSheet(encodeURIComponent(searchString)).url;
   //Youtube Widget
-  // var uti = sheetSeo(pastSeo(skyNeed(`searchString`)))
-  // const idArray = uti.map((piece) => {
-  //   console.log(typeof piece)
-  //   if (typeof piece  === "undefined") {
-  //     console.log("it's " + typeof piece)
-  //     return}
-  //   else
-  //   {return piece }
-  // });
+  if (!searchString && !joinString) {
+    var numVarRnd = randNum(arguments.callee.name);
+    var arrDRnd = appSort(numVarRnd);
+    var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+    var joinString = [searchString].join("");
+  }
+  if (!joinString) {
+    var joinString = [searchString].join("");
+  }
+  var uti = seoPastTime(searchString, start).playList;
+  const idArray = uti.map((piece) => {
+    //   console.log(typeof piece)
+    if (typeof piece === "undefined") {
+      // console.log("it's " + typeof piece)
+      return;
+    } else {
+      return piece;
+    }
+  });
   // const randomPlaylist = [];
   //   for (var i=0,l=idArray.length;i<l;i++)
   //     {const randomVidKey = Math.floor(Math.random() * (Math.floor(idArray.length)))// Math.floor(Math.random());
@@ -563,7 +580,7 @@ function surveyPlayer(searchString, joinString) {
   // return rVideo}
   // const randomVideo = vidPlaylist();
   // const titleVar = JSON.stringify(searchString);
-  const playListVar = JSON.stringify(searchString);
+  // const playListVar = JSON.stringify(searchString);
   // const videoTable = [searchString].map((v) => {return `<tr><td>${geneFrame("https://www.youtube.com/watch?v=" + v[0])}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`}).toString().replace(/,/g, "")
   // const result = JSON.stringify(videoTable);
   const html = HtmlService.createTemplate(`<!DOCTYPE html>
@@ -575,7 +592,7 @@ function surveyPlayer(searchString, joinString) {
     <div class="row">
         <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
           <div class="container">
-      <a href="#" target="_top">
+      <a href="<?= link ?>" target="_top">
         <h1 class="col s12 receipt nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01">
       <?= searchTtile ?>
     </h1></a></div></nav></div>
@@ -615,8 +632,8 @@ function surveyPlayer(searchString, joinString) {
       function onYouTubeIframeAPIReady() 
         {console.log("youtube API ready");
         player1 = new YT.Player('player1', 
-          {height: '505',
-          width: '585',
+          {height: '475',
+          width: '535',
           playerVars: 
             {'autoplay': 1,
             'loop': 1,
@@ -640,10 +657,10 @@ function surveyPlayer(searchString, joinString) {
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) 
-        {event.target.loadPlaylist(<?!= myPlayList ?>, ctr);
+        {event.target.loadPlaylist(<?= myPlayList ?>, ctr);
         ctr++;
         //event.target.loadVideoById({videoId: vidTubeId});
-        // console.log("videoId: " + ${searchString});
+        // console.log("videoId: ");
         event.target.setShuffle()
         event.target.setLoop()
         event.target.playVideo()}
@@ -716,7 +733,9 @@ function surveyPlayer(searchString, joinString) {
 </html>`);
   // html.vidTubeId = JSON.stringify(randomVideo);
   // html.researchId = randomVideo
+  // html.link = getScriptUrl() + "?func=surveyPlayer&args=" + joinString
+  html.link = formsUrlsGlobal(joinString);
   html.searchTtile = joinString;
-  html.myPlayList = [playListVar].sort((a, b) => a - b);
+  html.myPlayList = [uti].sort((a, b) => a - b);
   return html.evaluate().getContent();
 }
