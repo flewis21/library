@@ -3,7 +3,9 @@
   <head>
     <base target="_top" />
   </head>
-  <body>
+  <body
+    class="agenda z-depth-5 pulse btn-large card-panel green scale-out scale-in"
+  >
     <div id="loadingIndicator" style="display: none">
       <nav>
         <a href="" target="_top" id="navBack">Loading...</a>
@@ -14,25 +16,32 @@
       <input value="" class="timepicker" id="pRule" type="text" />
     </div>
     <button id="btn">Run It!</button>
-    <div class="row">
-      <div id="forHtml" class="col s12 I12 m12 card-panel amber">
-        <div class="container" style="clear: both">
-          <iframe
-            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
-            id="worksFrame"
-            src=""
-            style="width: 100%; height: 80vh"
-            allow="autoplay"
-            allow="encrypted-media"
-            title="Dontime Life Website"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
+    <div id="content" style="display: none">
+      <div class="row">
+        <div id="forHtml" class="col s12 I12 m12 card-panel amber">
+          <div class="container" style="clear: both">
+            <iframe
+              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+              id="worksFrame"
+              src=""
+              style="width: 100%; height: 80vh"
+              allow="autoplay"
+              allow="encrypted-media"
+              title="Dontime Life Website"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>
     <script>
+      console.log(window)
+      var folder = "loc";
+      var file = "id";
       const loadingIndicator = document.getElementById('loadingIndicator');
+      const forHTMLContent = document.getElementById("forHtml").innerHTML
+      const workMenu = document.getElementById("navBack")
       function serverSide(func, args) {
         return new Promise((resolve, reject) => {
         google.script.run
@@ -43,78 +52,98 @@
             console.log(document.getElementById("test").innerHTML)
             reject(error)})
         .runBoilerplate(func, args)})};
-            console.log(window)
-          var forHTMLContent = document.getElementById("forHtml").innerHTML
-            console.log(forHTMLContent)
-          var boxInput = document.getElementById("pRule")
-          var buttonInput = document.getElementById("btn")
-          boxInput.addEventListener('click', serverSide("rule")
+      function clientSide() {
+        return new Promise((resolve, reject) => {
+        google.script.url
+        .getLocation(result => {
+          resolve(result)})
+        .withFailureHandler(error => {
+          console.log(error)
+            reject(error)})})};
+      var boxInput = document.getElementById("pRule")
+      var buttonInt = document.getElementById("btn")
+      var placeRule = serverSide("rule")
           .then((dateRule) => {
-            console.log(typeof boxInput.value)
-            console.log(boxInput.value.length)
-              if (boxInput.value.length === 0) {
-                boxInput.value = dateRule}}))
-          buttonInput.addEventListener("click", serverSide("rule")
-          .then((dateRule) => {
-            console.log(typeof boxInput.value)
-            console.log(boxInput.value.length)
-              if (boxInput.value.length === 0) {
-                boxInput.value = dateRule}}))
-          boxInput.addEventListener('keypress', function(event) {
-            // If the user preses the "Enter" key on the keyboard.
-            if (event.key === "Enter") {
-              clearBox()
-              openWorks()}})
-        function clearBox() {
-          // Hide the loading indicator after filtering is complete
-          loadingIndicator.style.display = 'none';
-          document.getElementById("navBack").href = "#"}
-        var folder = "loc";
-        var file = "id";
-       function openWorks() {
-        // Show the loading indicator
-        loadingIndicator.style.display = 'block';
-        console.log(typeof boxInput.value + " _: " + boxInput.value.indexOf(",") + boxInput.value.split(""))
+            return dateRule})
+      boxInput.addEventListener('keypress', function(event) {
+        // If the user preses the "Enter" key on the keyboard.
+        if (event.key === "Enter") {
+        if (boxInput.value.length === 0) {
+          boxInput.value = placeRule;
+          workMenu.href = "#"
+          return}
+          // Hide the contentBox before filtering
+          content.style.display = 'none';
+          // Show the loading indicator
+          loadingIndicator.style.display = 'block'
+          plaChag()}})
+      buttonInt.addEventListener("click", function() {
+        if (boxInput.value.length === 0) {
+          boxInput.value = placeRule;
+          workMenu.href = "#"
+          return}
+        else {
+          // Hide the contentBox before filtering
+          content.style.display = 'none';
+          // Show the loading indicator
+          loadingIndicator.style.display = 'block'
+          plaChag()}})
+      function plaChag() {
+        console.log("_" + boxInput.value.length + " " + typeof boxInput.value + " _: " + boxInput.value.indexOf(",") + "\n" + boxInput.value.split(""))
         if (boxInput.value.indexOf(",") === -1) {
           var funcFlex = boxInput.value
           console.log("rndFolder,rndFile\n" + funcFlex)
           var splitSearch = funcFlex.split("")
-          console.log(urlFolder)
           var urlFolder = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
           console.log(urlFolder)
           var urlFile = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
           console.log(urlFile)}
+        else {
+          var redAlert = boxInput.value
+          console.log("folder,file\n" + redAlert)
+          var splitSearch = redAlert.split(",")
+          console.log(splitSearch)
+          var funcFlex = splitSearch[0];
+          console.log(funcFlex)
+          var urlFolder = splitSearch[1];
+          console.log(urlFolder)
+          var urlFile = splitSearch[2];
+          console.log(urlFile)}
+        console.log([urlFolder,urlFile]);
+        serverSide([funcFlex], [[urlFolder],[urlFile]])
+        .then((filed) => {
+          if (filed !== null){
+          // Show the contentBox after filtering is complete
+          content.style.display = 'block'
+          // Hide the loading indicator after filtering is complete
+          loadingIndicator.style.display = 'none';
+          if (!urlFolder && !urlFile) {
+          document.getElementById("pageBlock").innerHTML = "<p>" + funcFlex + "</p>\n"}
+          else if (urlFolder && !urlFile) {
+          document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + "</p>\n"}
           else {
-            var redAlert = boxInput.value
-            console.log("folder,file\n" + redAlert)
-            var splitSearch = redAlert.split(",")
-            console.log(splitSearch)
-            var funcFlex = splitSearch[0];
-            console.log(funcFlex)
-            var urlFolder = splitSearch[1];
-            console.log(urlFolder)
-            var urlFile = splitSearch[2];
-            console.log(urlFile)}
-          console.log([urlFolder,urlFile])
-        serverSide([funcFlex], [urlFolder,urlFile])
-       .then((filed) => {
+          document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + ": " +  urlFile + "</p>\n"}
           console.log(typeof filed + " XX " + [filed].join("").length + " XXX " + filed)
           if (filed.length === 83 || filed.length === 94 || filed.length === 97 || filed.length === 99 || filed.length === 101 || filed.length === 103 || filed.length === 132 || filed.length === 136 ) {
-            var linkFollow = document.createElement("a");
-            if (boxInput.value.indexOf(",") === -1) {
-              linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex} //filed;
+            const confirmation = window.confirm("Click OK to continue to the destination.");
+            if (confirmation) {
+              var linkFollow = document.createElement("a");
+              if (boxInput.value.indexOf(",") === -1) {
+                linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex} //filed;
               else {
                 linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex + '&args=' + urlFolder} //filed;
-            linkFollow.id = "linkFOLLOW";
-            linkFollow.target = "_child";
-            document.body.appendChild(linkFollow);
-            document.getElementById("linkFOLLOW").click();
-            document.getElementById("navBack").href = filed
-            document.getElementById("linkFOLLOW").remove()};
+              linkFollow.id = "linkFOLLOW";
+              linkFollow.target = "_child";
+              document.body.appendChild(linkFollow);
+              document.getElementById("linkFOLLOW").click();
+              document.getElementById("navBack").href = filed
+              document.getElementById("linkFOLLOW").remove()}}
           else {
-            document.getElementById("forHtml").innerHTML = filed}
-        if (typeof urlFolder !== "undefined" || typeof urlFile !== "undefined") {
-            document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + ": " +  urlFile + "</p>\n"}})}
+            document.getElementById("forHtml").innerHTML = filed}}
+        else {
+          clientSide()
+          .then((eObject) => {
+            <?!= handleRequest(eObject) ?>})}})}
     </script>
   </body>
 </html>

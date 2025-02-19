@@ -1,9 +1,11 @@
 var formMaker = function (fileName, folderX, time) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
+      "\n!" +
+      fileName +
+      ", = " +
       !fileName,
   );
   if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
@@ -25,71 +27,19 @@ var formMaker = function (fileName, folderX, time) {
   }
 };
 
-var formsUrls = function (fileX, folderX, time) {
-  console.log(
-    JSON.stringify(this["start"]) +
-      "\n" +
-      arguments.callee.name +
-      "\n!fileX, = " +
-      !fileX,
-  );
-  if ([fileX].join("").length > 0) {
-    console.log(
-      "formUrls: \nDeclaring search = [" + fileX + "].join(" + "" + ")",
-    );
-    var search = [fileX].toString();
-    var searchFileStr = search.toLowerCase().split(" ");
-    var i = 0;
-    var l = searchFileStr.length;
-  }
-  if (typeof folderX !== "undefined") {
-    try {
-      // First execution
-      var dataTree = [];
-      console.log(
-        "formUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
-          folderX +
-          ").next()",
-      );
-      var eFolder = DriveApp.getFoldersByName(folderX).next();
-      var folderFiles = eFolder.getFiles();
-      while (folderFiles.hasNext()) {
-        var allFiles = folderFiles.next();
-        var currentFileName = allFiles.getName();
-        var currentFileStr = currentFileName.toLowerCase().split(" ");
-        var fileXIndex = [];
-        for (i, l; i < l; i++) {
-          var sfi = searchFileStr[i];
-          var fxi = currentFileStr.indexOf(sfi);
-          if (fxi > -1) {
-            var myObj = convertToObjects([[fxi]], [sfi], start)[0];
-          }
-          fileXIndex.push(myObj);
-        }
-        var fileXIndexLen = fileXIndex.join("").length;
-        var fileXincluded = currentFileName.toLowerCase().includes(search);
-        if (fileXincluded || fileXIndexLen > 0) {
-          dataTree.push(allFiles.getUrl());
-        }
-      }
-      var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
-      var filed = dataTree[rndFiled];
-      return filed;
-    } catch (err) {
-      console.log(err);
-      return "Error loading files " + err;
-    }
-  }
-  return;
-};
-
 var formsUrlsGlobal = function (fileX, time) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
-      !fileX,
+      "\nfileX is !" +
+      !fileX +
+      ", = " +
+      fileX +
+      "\ntime is !" +
+      !time +
+      ", = " +
+      time,
   );
   if (!fileX && !time) {
     var numVarRnd = randNum(arguments.callee.name);
@@ -135,10 +85,12 @@ var formsUrlsGlobal = function (fileX, time) {
 
 var searchUrlsGlobal = function (fileX) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
+      "\n!" +
+      fileX +
+      ", = " +
       !fileX,
   );
   var rootFile = searchUrlsRoot(fileX);
@@ -159,10 +111,12 @@ var searchUrlsGlobal = function (fileX) {
 
 var searchUrlsRoot = function (fileX) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
+      "\n!" +
+      fileX +
+      ", = " +
       !fileX,
   );
   var treeRoot = DriveApp.getRootFolder().getFiles();
@@ -178,10 +132,12 @@ var searchUrlsRoot = function (fileX) {
 
 var searchUrlsTree = function (fileX) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
+      "\n!" +
+      fileX +
+      ", = " +
       !fileX,
   );
   var elapsedTime;
@@ -208,7 +164,11 @@ var searchUrlsTree = function (fileX) {
 };
 
 var searchUrlsRandom = function () {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name,
+  );
 
   var fileTree = [];
   var fileData = [];
@@ -236,10 +196,12 @@ var searchUrlsRandom = function () {
 
 var searchTreeRoot = function (fileX) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!fileName, = " +
+      "\n!" +
+      fileX +
+      ", = " +
       !fileX,
   );
   var treeRoot = DriveApp.getRootFolder().getFiles();
@@ -252,6 +214,15 @@ var searchTreeRoot = function (fileX) {
 };
 
 var searchDataTree = function (fileX) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      fileX +
+      ", = " +
+      !fileX,
+  );
   var dataTree = [];
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {

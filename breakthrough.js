@@ -1,9 +1,33 @@
-var breakthrough = function (e, time) {
-  var username = e;
-  var userData = allInvestors(e, null, time);
+var breakthrough = function (chance, time) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      chance +
+      ", = " +
+      !chance +
+      "\n!" +
+      time +
+      ", = " +
+      !time,
+  );
+  var username;
+  var rndUsername = objectOfS(
+    ["parameter"],
+    [[["func", arguments.callee.name]]],
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+  ).parameter["func"];
+  var noChance =
+    rndUsername[Math.floor(Math.random() * Math.floor(rndUsername.length))];
+  chance ? (username = chance) : (username = noChance);
+  // return console.log(username)
+  var userData = allInvestors(username, time);
   var arrD = [userData.title].join("").split(" ");
+  return console.log(arrD);
   var userKey = randomSubstance(0, 1, null, arrD, time).myNewArr;
   const data = needUtility(username || userKey, arrD, time)[0];
+  return console.log(data);
   if (!username) {
     var percent = Math.floor(
       Math.random() * Math.floor(data.playlistArr.length),
@@ -53,7 +77,7 @@ var breakthrough = function (e, time) {
         <div class="col s10 card-panel l12 m12 push-s1">
         <div class="video-container grey darken-4 z-depth-5">
         <div class="col s12 l12 m12" id="player1">
-          <?!= seoCapital(myVideo) ?></div>
+          <?!= surveyPlayer(myVideo) ?></div>
         </div></div></div>
         <div class="row">
         <div class="col s10 card-panel black l12 m12 push-s1">

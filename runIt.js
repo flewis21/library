@@ -271,9 +271,9 @@ function pill() {
     luxonJs:
       '\n    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>',
     tabulatorJs:
-      '\n    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>',
+      '\n<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>',
     dOMContentLoaded:
-      '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\n    var elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
+      '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\nvar elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
   });
   return contentApp(pill);
   //:contentFile('uiAccess')
@@ -288,31 +288,31 @@ function randomEmail() {
 
 var runIt = function (e) {
   //urlDataSource("https://www.sec.gov/files/company_tickers.json")
-  if (e.parameter["default"] === "") {
+  if (e.parameter["args"] === "") {
     return wwAccess("development", proMediaSnip)(e);
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "epa") {
+  } else if (e.parameter["args"] === "epa") {
     return renderTemplate(wwAccess("epa", epaData)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "edgar") {
+  } else if (e.parameter["args"] === "edgar") {
     return renderTemplate(wwAccess("edgar", edgarData)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "odd") {
+  } else if (e.parameter["args"] === "odd") {
     return renderTemplate(wwAccess("odd", breakthrough)(e));
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "gamer") {
+  } else if (e.parameter["args"] === "gamer") {
     return renderTemplate(wwAccess("gamer", jsGameScripts)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "checkOD") {
+  } else if (e.parameter["args"] === "checkOD") {
     return renderTemplate(wwAccess("checkOD", checkOnDay)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "usGov") {
+  } else if (e.parameter["args"] === "usGov") {
     return renderTemplate(wwAccess("usGov", congressLeg)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "jFun") {
+  } else if (e.parameter["args"] === "jFun") {
     return renderTemplate(wwAccess("jFun", jFundamentals)(e));
     //: contentFile("uiAccess");
-  } else if (e.parameter["default"] === "ssTest") {
+  } else if (e.parameter["args"] === "ssTest") {
     return renderTemplate(wwAccess("ssTest", superTest)(e));
     //: contentFile("uiAccess");
   } else {
@@ -352,96 +352,3 @@ function uiAccess() {
 // const effectiveUser = Session.getEffectiveUser().getEmail();
 // const isValidGroup = authLogic(validGroup());
 //:contentFile('uiAccess');
-
-function validateFiles() {
-  // Grant or Deny access
-  const emailList = (() => {
-    var files = DriveApp.getFiles();
-    var fileNames = files.next().getName();
-    var sharedFiles = [];
-    try {
-      for (var i = 0; i < fileNames.length; i++) {
-        [fileNames].map((name) => {
-          if (sharedFiles.indexOf(name) === -1) {
-            sharedFiles.push(name);
-          }
-        });
-        file = DriveApp.getFilesByName(sharedFiles).next();
-      }
-    } catch (e) {
-      // Access denied.
-      return false;
-    }
-    // Access granted.
-    // List all users with Editor permission.
-    return file.getEditors().map((editor) => {
-      return editor.getEmail();
-      console.log(editor.getEmail());
-    });
-  })();
-  return emailList;
-  console.log(emailList);
-}
-
-function validateFolders() {
-  // Grant or Deny access
-  const folderList = (() => {
-    const folders = DriveApp.getFolders();
-    const folderNames = folders.next().getName();
-    const sharedFolders = [];
-    try {
-      for (var i = 0; i < folderNames.length; i++) {
-        [folderNames].map((name) => {
-          if (sharedFolders.indexOf(name) === -1) {
-            sharedFolders.push(name);
-          }
-        });
-        folder = DriveApp.getFoldersByName(sharedFolders).next();
-      }
-    } catch (e) {
-      // Access denied.
-      return false;
-    }
-    // Access granted.
-    // List all users with Editor permission.
-    return folder.getEditors().map((editor) => {
-      return editor.getEmail();
-      console.log(editor.getEmail());
-    });
-  })();
-  // return emailList
-  console.log(folderList);
-}
-
-function validGroup() {
-  const hasAccess = (() => {
-    let isMemberOfGroup = false;
-    let emailList = validateFiles();
-    console.log(emailList);
-    GroupsApp.getGroups()
-      .map((group) => {
-        return group.getEmail();
-        console.log(group.getEmail());
-      })
-      .forEach((group) => {
-        if (emailList.includes(group)) {
-          isMemberOfGroup = true;
-        }
-      });
-    return isMemberOfGroup;
-  })();
-  return {
-    acc: hasAccess,
-  };
-  console.log(groupEmailList);
-}
-
-var wwAccess = function (rname, rfunction, args) {
-  const Route = {};
-  Route.path = function (route, callback) {
-    Route[route] = callback;
-  };
-  Route.path(rname, rfunction);
-  args = args || [];
-  return Route[rname](args);
-};

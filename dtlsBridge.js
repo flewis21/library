@@ -1,177 +1,24 @@
-var dtlsBridge = function (func, time) {
-  if (typeof func === "undefined") {
-    var func = "doGet";
-  }
-  var appList = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      appList.push(key);
-    }
-  }
-  var lowCapApp = [appList].join("").toLowerCase().split(",");
-  var lowCapFunc = [func].join("").toLowerCase().split(",");
-  console.log(lowCapFunc);
-  var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
-  if (funFirst > -1) {
-    // var func = "proMediaSnip"
-    var appLen = appList.length;
-    var rdmNumForName = Math.floor(Math.random() * Math.floor(appLen));
-    var randomSeo = appList[rdmNumForName];
-    var resFunc = appList[funFirst];
-    var keysFunc = seoSheet(randomSeo).keyWords;
-    var keyLen = keysFunc.length;
-    var mathRnd = Math.floor(Math.random() * Math.floor(keyLen));
-    var rndKey = keysFunc[mathRnd];
-    if (mathRnd > 0) {
-      var seoFirst = [rndKey][0];
-      var lowCapSeo = [seoFirst].join("").toLowerCase().split(",");
-      var seoTwo = lowCapApp.indexOf(lowCapSeo[0]);
-      var resSeo = appList[seoTwo];
-    } else {
-      var sLen = rndKey.length;
-      var sLenRnd = Math.floor(Math.random() * Math.floor(sLen));
-      var seoFirst = rndKey[sLenRnd];
-      var lowCapSeo = [seoFirst].join("").toLowerCase().split(",");
-      var seoTwo = lowCapApp.indexOf(lowCapSeo[0]);
-      var resSeo = appList[seoTwo];
-    }
-    if (funFirst > -1) {
-      var formName = resFunc;
-      var jsFunc = globalThis[resFunc]();
-      if (typeof jsFunc === "undefined") {
-        return;
-      }
-    } else if (seoTwo > -1) {
-      var formName = resSeo;
-      var jsFunc = globalThis[resSeo]();
-      if (typeof jsFunc === "undefined") {
-        return;
-      }
-    } else {
-      var formName = randomSeo;
-      var jsFunc = globalThis[randomSeo]();
-      if (typeof jsFunc === "undefined") {
-        return;
-      }
-    }
-    // var lowCapName = [formName].join("").toLowerCase().split(",");
-    // var formFirst = lowCapApp.indexOf(lowCapName[0]);
-    // var resForm = appList[formFirst]
-    // if (lowCapApp.includes(lowCapName)) {
-
-    //   var jsFunc = globalThis[resForm]()
-    //   if (typeof jsFunc === "undefined") {
-
-    //     return
-
-    //   }
-    if (
-      typeof jsFunc === "string" &&
-      jsFunc.indexOf("<") === -1 &&
-      jsFunc.indexOf("http") !== -1
-    ) {
-      var appType = jsFunc.split("/");
-      if (appType.indexOf("spreadsheets") > -1) {
-        return jsFunc;
-      }
-      var formUrl = FormApp.openByUrl(jsFunc).getPublishedUrl();
-      return formUrl;
-    }
-    var isProduct = formsUrls([formName].join("").toLowerCase(), "Forms");
-    console.log(typeof isProduct);
-    if (typeof isProduct === "string") {
-      var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-      return formUrl;
-    }
-    var form = formMaker([formName].join("").toUpperCase(), "Forms");
-    if (typeof form === "object") {
-      form.setCollectEmail(true);
-      if (
-        [appList]
-          .join()
-          .toLowerCase()
-          .includes([formName].join("").toLowerCase())
-      ) {
-        form
-          .addParagraphTextItem()
-          .setHelpText(globalThis[formName].toString());
-      }
-      if (typeof jsFunc === "object") {
-        jsFunc.map((piece) => {
-          while (piece) {
-            if (piece) {
-              var elaspeTime = new Date() - time;
-              var timeToExecute = maxTime - elaspeTime;
-              // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-              form.addPageBreakItem().setTitle([formName].join(""));
-              // form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
-              form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
-              if (
-                timeToExecute <= 6 * 60 * 1000 &&
-                timeToExecute >= 5.98 * 60 * 1000
-              ) {
-                console.log(
-                  "that function: " +
-                    arguments.callee.caller.name +
-                    "\nthis function: " +
-                    arguments.callee.name +
-                    "\nTime limit six minutes",
-                );
-              }
-              if (
-                timeToExecute <= 5 * 60 * 1000 &&
-                timeToExecute >= 4.98 * 60 * 1000
-              ) {
-                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-              }
-              if (
-                timeToExecute <= 4 * 60 * 1000 &&
-                timeToExecute >= 3.98 * 60 * 1000
-              ) {
-                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-              }
-              if (
-                timeToExecute <= 3 * 60 * 1000 &&
-                timeToExecute >= 2.98 * 60 * 1000
-              ) {
-                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-              }
-              if (
-                timeToExecute <= 2 * 60 * 1000 &&
-                timeToExecute >= 1.98 * 60 * 1000
-              ) {
-                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-              }
-              if (
-                timeToExecute <= 1 * 60 * 1000 &&
-                timeToExecute >= 0.98 * 60 * 1000
-              ) {
-                // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-              }
-              if (timeToExecute <= 0.05 * 60 * 1000) {
-                console.log(
-                  "piece: " +
-                    piece[0] +
-                    "\ntimeToExecute: " +
-                    timeToExecute.valueOf(),
-                );
-                return;
-              }
-              return piece[0];
-            }
-            return;
-          }
-        });
-      }
-      var formUrl = form.getPublishedUrl();
-      return formUrl;
-    }
-
-    // }
-  }
-};
-
 var dtlsPict = function (e, time) {
+  e
+    ? e
+    : (e = objectOfS(
+        ["parameter"],
+        [[["func", arguments.callee.name]]],
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      ).parameter["func"]);
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      e +
+      ", = " +
+      !e +
+      "\n!" +
+      time +
+      ", = " +
+      !time,
+  );
   if (typeof time === "undefined") {
     var time = start;
   }
@@ -467,254 +314,7 @@ var dtlsPict = function (e, time) {
   var rndUti = uti[randNum(uti)];
 };
 
-var dtlsPro = function (e) {
-  if (typeof e === "undefined") {
-    var e = "ifandoutbusiness";
-  }
-  if (e) {
-    var boilerUrl = dtlsBridge(e, time);
-    if (boilerUrl) {
-      return boilerUrl;
-    }
-  }
-  var coHelpText =
-    "http://www.bing.com/videos/search?q=" +
-    encodeURIComponent(e) +
-    "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
-  var isProduct = formsUrls([e].join("").toLowerCase(), "videoForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  var time = start;
-  // var arrData = coSort(time).title
-  // var utilNeed = randomUtility(e,arrData).title
-  var cokey = e;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var seoArray = seoPastTime([cokey].join(""), time);
-  var uti = seoArray.playList;
-  var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);
-
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "videoForms", time)
-
-    form
-      .addTextItem()
-      .setTitle("CUSTOM SEARCH")
-      .setRequired(true)
-      .setHelpText(coHelpText);
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          form
-            .addSectionHeaderItem()
-            .setTitle("https://youtube.com/watch?v=" + piece);
-          form
-            .addVideoItem()
-            .setAlignment(FormApp.Alignment.CENTER)
-            .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + piece);
-          if (
-            timeToExecute <= 6 * 60 * 1000 &&
-            timeToExecute >= 5.98 * 60 * 1000
-          ) {
-            console.log(
-              "that function: " +
-                arguments.callee.caller.name +
-                "\nthis function: " +
-                arguments.callee.name +
-                "\nTime limit six minutes",
-            );
-          }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
-          if (timeToExecute <= 0.05 * 60 * 1000) {
-            console.log(
-              "piece: " +
-                piece[0] +
-                "\ntimeToExecute: " +
-                timeToExecute.valueOf(),
-            );
-            return;
-          }
-          return piece[0];
-        }
-        return;
-      }
-    });
-    // return surveyPlayer(uti, [cokey].join(""))
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
-  }
-  var rndUti = uti[randNum(uti)];
-};
-
-var portBing = function (e) {
-  if (typeof e === "undefined") {
-    var e = "ifandoutbusiness";
-  }
-  if (e) {
-    var boilerUrl = dtlsBridge(e, time);
-    if (boilerUrl) {
-      return boilerUrl;
-    }
-  }
-  var coHelpText =
-    "http://www.bing.com/search?q=" +
-    encodeURIComponent(e) +
-    "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
-  var isProduct = formsUrls([e].join("").toLowerCase(), "webForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  var time = start;
-  // var arrData = coSort(time).title
-  // var utilNeed = randomUtility(e,arrData).title
-  var cokey = e;
-  var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
-  console.log(typeof isProduct);
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
-  var seoArray = seoPastTime([cokey].join(""), time);
-  var uti = seoArray.playList;
-  var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
-
-  if (typeof form === "object") {
-    // fileManager(form.getId(), "videoForms", time)
-
-    form
-      .addTextItem()
-      .setTitle("CUSTOM SEARCH")
-      .setRequired(true)
-      .setHelpText(coHelpText);
-    form.setCollectEmail(true);
-    uti.map((piece) => {
-      while (piece) {
-        if (piece) {
-          var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          form
-            .addSectionHeaderItem()
-            .setTitle("https://youtube.com/watch?v=" + piece);
-          form
-            .addVideoItem()
-            .setAlignment(FormApp.Alignment.CENTER)
-            .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + piece);
-          if (
-            timeToExecute <= 6 * 60 * 1000 &&
-            timeToExecute >= 5.98 * 60 * 1000
-          ) {
-            console.log(
-              "that function: " +
-                arguments.callee.caller.name +
-                "\nthis function: " +
-                arguments.callee.name +
-                "\nTime limit six minutes",
-            );
-          }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
-          if (timeToExecute <= 0.05 * 60 * 1000) {
-            console.log(
-              "piece: " +
-                piece[0] +
-                "\ntimeToExecute: " +
-                timeToExecute.valueOf(),
-            );
-            return;
-          }
-          return piece[0];
-        }
-        return;
-      }
-    });
-    // return surveyPlayer(uti, [cokey].join(""))
-    var formUrl = form.getPublishedUrl();
-    return formUrl;
-  }
-  var rndUti = uti[randNum(uti)];
-};
-
 var portPro = function (e) {
-  // var e = "qvar"
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
@@ -728,7 +328,6 @@ var portPro = function (e) {
     return formUrl;
   }
   var time = start;
-  // var namedVar = "pred"
   var arrData = coSort(time).title;
   var utilNeed = randomUtility(e, arrData).title;
   var cokey = e || utilNeed;
@@ -738,14 +337,10 @@ var portPro = function (e) {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
   var seoArray = needBing([cokey].join(""), time);
   var uti = seoArray.myPlay;
   var form = formMaker([cokey].join("").toUpperCase(), "webForms", time);
   if (typeof form === "object") {
-    // fileManager(form.getId(), "webForms", time)
-
     form.setCollectEmail(true);
     uti.map((piece) => {
       while (piece) {
@@ -762,7 +357,6 @@ var portPro = function (e) {
         if (piece.indexOf("http") > -1) {
           var elaspeTime = new Date() - time;
           var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
           form.addPageBreakItem().setTitle([cokey].join(""));
           form.addSectionHeaderItem().setTitle(piece);
           if (srImgRes || svImgRes) {
@@ -788,36 +382,6 @@ var portPro = function (e) {
                 "\nTime limit six minutes",
             );
           }
-          if (
-            timeToExecute <= 5 * 60 * 1000 &&
-            timeToExecute >= 4.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")
-          }
-          if (
-            timeToExecute <= 4 * 60 * 1000 &&
-            timeToExecute >= 3.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")
-          }
-          if (
-            timeToExecute <= 3 * 60 * 1000 &&
-            timeToExecute >= 2.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
-          }
-          if (
-            timeToExecute <= 2 * 60 * 1000 &&
-            timeToExecute >= 1.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")
-          }
-          if (
-            timeToExecute <= 1 * 60 * 1000 &&
-            timeToExecute >= 0.98 * 60 * 1000
-          ) {
-            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")
-          }
           if (timeToExecute <= 0.05 * 60 * 1000) {
             console.log(
               "piece: " +
@@ -837,6 +401,17 @@ var portPro = function (e) {
   }
   var rndUti = uti[randNum(uti)];
 };
+// var e = "qvar"
+// var namedVar = "pred"
+// var utiStr = skyNeed(cokey, time)
+// var utiSeo = pastSeo(utiStr, time)
+// fileManager(form.getId(), "webForms", time)
+// console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+// if (timeToExecute <= 5 * 60 * 1000 && timeToExecute >= 4.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")}
+// if (timeToExecute <= 4 * 60 * 1000 && timeToExecute >= 3.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")}
+// if (timeToExecute <= 3 * 60 * 1000 && timeToExecute >= 2.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")
+// if (timeToExecute <= 2 * 60 * 1000 && timeToExecute >= 1.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")}
+// if (timeToExecute <= 1 * 60 * 1000 && timeToExecute >= .98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")}
 
 var stockPro = function (e, time) {
   if (typeof e === "undefined") {

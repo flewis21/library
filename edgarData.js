@@ -433,42 +433,42 @@ var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
 };
 
 var oldSEC = function (rndTitle) {
-  var urlCompany =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=foo.misBing&args=";
+  var urlCompany = "<?= getScriptUrl() ?>?func=surveyPlayer&args=";
   var urlTicker = "https://www.nasdaq.com/search?q=";
   var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
-  const uniqueCo = JSON.parse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json", null, {
-      muteHttpExceptions: true,
-    }),
-  ]);
-  const titleKings = needCapital(rndTitle);
+  const uniqueCo = sheetCalc();
+  // const titleKings = needCapital(rndTitle)
   const uniqueCoArray = covArrays(uniqueCo);
   const matches = [];
   const alTheCo = uniqueCoArray.filter((ac) => {
-    if (JSON.stringify(ac[0]["title"]).toLowerCase().includes(rndTitle))
+    if (
+      JSON.stringify(ac[0]["title"])
+        .toLowerCase()
+        .includes([rndTitle].toString().toLowerCase())
+    )
       matches.push(ac);
   });
-  const titleMatches = [matches.toString().substring(titleKings)];
+  // const titleMatches = [matches.toString().substring(titleKings)];
   // console.log(Utilities.jsonStringify([titleMatches]))
-  var coTable = matches.map((r) => {
-    return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(r[0]["cik_str"])}&owner=exclude" target="_blank">${r[0]["cik_str"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_blank">${r[0]["title"]}</a></td></tr>`;
-  });
+  var coTable = matches
+    .map((r) => {
+      return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(r[0]["cik"])}&owner=exclude" target="_blank">${r[0]["cik"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_top">${r[0]["title"]}</a></td></tr>`;
+    })
+    .toString()
+    .replace(/,/g, "");
   const result = JSON.stringify(coTable);
-  const randomCoKey = Math.floor(
-    Math.random() * Math.floor(uniqueCoArray.length),
-  ); // Math.floor(Math.random());
-  const uniqueCoKey = [uniqueCo].entries().next().value;
-  const randomCo = uniqueCoKey[1][randomCoKey];
+  // const randomCoKey = Math.floor(Math.random() * (Math.floor(uniqueCoArray.length)))// Math.floor(Math.random());
+  // const uniqueCoKey = [uniqueCo].entries().next().value;
+  // const randomCo = uniqueCoKey[1][randomCoKey];
   const html = HtmlService.createTemplate(
     `<body>
       <div class="row">
-      <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      <div class="col s12 card-panel amber">
       <div class="container">
       <div class="col s12 receipt red">
-      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+      <table class="striped centered highlight amber responsive-table z-depth-5" style="width:100%">
         <thead>
-          <tr>
+          <tr style="justify-content: space-around;overflow: auto;border-radius: 50%;max-width: 100%;height: auto;display: block;margin: auto;">
             <th>Ticker</th>
             <th>Company Identification Key</th>
             <th>Company Name</th>
@@ -511,10 +511,11 @@ var oldSEC = function (rndTitle) {
       linkFollow.href =
         url + "?func=oldSEC" + "&args=" + encodeURIComponent(uname);
       linkFollow.id = "linkFOLLOW";
-      linkFollow.target = "_top";
+      linkFollow.target = "_self";
       document.body.appendChild(linkFollow);
       document.getElementById("linkFOLLOW").click();
       document.getElementById("username").value = "";
+      document.getElementById("linkFOLLOW").remove();
     })();
   }; //Global object closed
   return html.evaluate().getContent();
@@ -524,9 +525,8 @@ var opt = function (searchString) {
   if (typeof searchString === "undefined") {
     var searchString = "company user";
   }
-  var url =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?args=";
-  var optUrl = getUrl(ScriptApp) + "?func=dtlsPict&args=";
+  var url = "<?= getScriptUrl() ?>?func=";
+  var optUrl = "<?= getScriptUrl() ?>?func=dtlsPict&args=";
   var tmp = [];
   let jsonData = coUtility(searchString)[0];
   var arrData = covArrays(jsonData.playlistArr);

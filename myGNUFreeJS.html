@@ -35,19 +35,6 @@
     />
     <div id="template"></div>
   </body>
-  <script></script>
-  <script>
-    parent.document.addEventListener(
-      "DOMContentLoaded",
-      google.script.run.myFileJS(),
-    );
-  </script>
-  <script id="gold" type="text/javascript">
-    parent.document.addEventListener(
-      "DOMContentLoaded",
-      google.script.run.myFileJS(),
-    );
-  </script>
   <script>
     function serverside(func, args) {
       return new Promise((resolve, reject) => {
@@ -60,263 +47,384 @@
             console.log(document.getElementById("test").innerHTML);
             reject(error);
           })
-          .runBoilerplate([func], [args]);
+          .runBoilerplate(func, args);
       });
     }
     var againCap = "";
-    document.addEventListener("DOMContentLoaded", updateFunc);
     function updateFunc() {
-      google.script.run.withSuccessHandler(htmNum).runBoilerplate("gsFiles");
-      function htmNum(drop) {
+      serverside("gsFiles").then((drop) => {
         var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
         var rndFunc = drop[rndNumDrop];
         localStorage.setItem("gsSearch", rndFunc);
-        againCap = rndFunc;
-        console.log(rndFunc + "...");
+        console.log(arguments.callee.name + "\n" + rndFunc + "...");
         document.getElementById("template").innerHTML =
-          "waiting for " + rndFunc + "...";
-        google.script.run
-          .withSuccessHandler(allCap)
-          .withFailureHandler(error)
-          .runBoilerplate(rndFunc);
-        function allCap(droplet) {
-          alert(rndFunc + "(" + droplet + ")");
-          alert("droplet.length = " + droplet.length);
-          if (typeof droplet === null) {
-            return;
-          }
-          if (droplet.length === 99) {
-            google.script.run
-              .withSuccessHandler(doCap)
-              .runBoilerplate("seoCapital", droplet);
-            function doCap(myFile) {
-              alert(rndFunc + "(" + myFile + ")");
-
-              document.getElementById("template").innerHTML =
-                JSON.stringify(myFile);
+          "waiting for upDateFunc: " + rndFunc + "...";
+        serverside(rndFunc)
+          .then((droplet) => {
+            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            alert(
+              arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            );
+            if (typeof droplet === null) {
+              return;
             }
-          } else {
-            alert(droplet.length + " is not the required length");
-
+            if (
+              droplet.length === 99 ||
+              droplet.length === 86 ||
+              droplet.length === 101 ||
+              droplet.length === 112
+            ) {
+              serverside("seoCapital", droplet).then((myFile) => {
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")",
+                );
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(myFile);
+              });
+            } else {
+              alert(
+                arguments.callee.name +
+                  "\n" +
+                  droplet.length +
+                  " is not the required length",
+              );
+              serverside("getScriptUrl")
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
+                  if (cChange.length === 112 || cChange.length === 86) {
+                    // console.log(cChange)
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
+                    if (confirmation) {
+                      var linkFollow = document.createElement("a");
+                      linkFollow.href = cChange + "?func=" + rndFunc;
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  alert(
+                    arguments.callee.name +
+                      "\n" +
+                      rndFunc +
+                      " error(" +
+                      er +
+                      ")",
+                  );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            }
+          })
+          .catch((er) => {
+            alert(
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            );
             serverside("getScriptUrl")
               .then((cChange) => {
                 console.log(
-                  typeof cChange + " with length = " + cChange.length,
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
                 );
-                if (cChange.length === 112) {
+                if (cChange.length === 112 || cChange.length === 86) {
                   // console.log(cChange)
-                  var linkFollow = document.createElement("a");
-                  linkFollow.href = cChange + "?func=" + rndFunc;
-                  linkFollow.id = "linkFOLLOW";
-                  linkFollow.target = "_child";
-                  document.body.appendChild(linkFollow);
-                  document.getElementById("linkFOLLOW").click();
-                  document.getElementById("linkFOLLOW").remove();
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
                 } else {
                   var docWnd = document.getElementById("template");
                   docWnd.innerHTML = cChange;
                 }
               })
               .catch((er) => {
-                alert(rndFunc + " error(" + er + ")");
-                console.log(er);
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
                 document.getElementById("template").innerHTML =
                   JSON.stringify(er);
               });
-          }
-        }
-        function error(er) {
-          alert(rndFunc + " error(" + er + ")");
-          serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(typeof cChange + " with length = " + cChange.length);
-              if (cChange.length === 112) {
-                // console.log(cChange)
-                var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=" + rndFunc;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_child";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              } else {
-                var docWnd = document.getElementById("template");
-                docWnd.innerHTML = cChange;
-              }
-            })
-            .catch((er) => {
-              alert(rndFunc + " error(" + er + ")");
-              console.log(er);
-              document.getElementById("template").innerHTML =
-                JSON.stringify(er);
-            });
-        }
-      }
+          });
+      });
     }
-
     document
       .getElementById("userClickedNext")
       .addEventListener("click", nextFunc);
     function nextFunc() {
-      google.script.run.withSuccessHandler(htmNum).runBoilerplate("gsFiles");
-      function htmNum(drop) {
+      serverside("gsFiles").then((drop) => {
         var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
         var rndFunc = drop[rndNumDrop];
         localStorage.setItem("gsSearch", rndFunc);
-        againCap = rndFunc;
         console.log(rndFunc + "...");
         document.getElementById("template").innerHTML =
-          "waiting for " + rndFunc + "...";
-        google.script.run
-          .withSuccessHandler(allCap)
-          .withFailureHandler(error)
-          .runBoilerplate(rndFunc);
-        function allCap(droplet) {
-          alert(rndFunc + "(" + droplet + ")");
-          alert("droplet.length = " + droplet.length);
-          if (droplet.length === 99) {
-            google.script.run
-              .withSuccessHandler(doCap)
-              .runBoilerplate("seoCapital", droplet);
-            function doCap(myFile) {
-              alert(rndFunc + "(" + myFile + ")");
-              document.getElementById("template").innerHTML =
-                JSON.stringify(myFile);
-            }
-          } else {
-            alert(droplet.length + " is not the required length");
-
-            serverside("getScriptUrl")
-              .then((cChange) => {
-                console.log(
-                  typeof cChange + " with length = " + cChange.length,
-                );
-                if (cChange.length === 112) {
+          "waiting for nextFunc: " + rndFunc + "...";
+        serverside(rndFunc)
+          .then((droplet) => {
+            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            alert(
+              arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            );
+            if (droplet.length === 99) {
+              serverside("seoCapital", droplet).then((myFile) => {
+                alert(rndFunc + "(" + myFile + ")");
+                if (
+                  myFile.length === 99 ||
+                  myFile.length === 86 ||
+                  myFile.length === 101 ||
+                  myFile.length === 112
+                ) {
                   // console.log(cChange)
                   var linkFollow = document.createElement("a");
-                  linkFollow.href = cChange + "?func=" + rndFunc;
+                  linkFollow.href = myFile + "?func=" + rndFunc;
                   linkFollow.id = "linkFOLLOW";
-                  linkFollow.target = "_child";
+                  linkFollow.target = "_blank";
                   document.body.appendChild(linkFollow);
                   document.getElementById("linkFOLLOW").click();
                   document.getElementById("linkFOLLOW").remove();
+                } else {
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(myFile);
+                }
+              });
+            } else {
+              alert(
+                arguments.callee.name +
+                  "\n" +
+                  droplet.length +
+                  " is not the required length",
+              );
+              serverside("getScriptUrl")
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
+                  if (cChange.length === 112 || cChange.length === 86) {
+                    // console.log(cChange)
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
+                    if (confirmation) {
+                      var linkFollow = document.createElement("a");
+                      linkFollow.href = cChange + "?func=" + rndFunc;
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  alert(
+                    arguments.callee.name +
+                      "\n" +
+                      rndFunc +
+                      " error(" +
+                      er +
+                      ")",
+                  );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            }
+          })
+          .catch((er) => {
+            alert(
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            );
+            serverside("getScriptUrl")
+              .then((cChange) => {
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
+                if (cChange.length === 112 || cChange.length === 86) {
+                  // console.log(cChange)
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
                 } else {
                   var docWnd = document.getElementById("template");
                   docWnd.innerHTML = cChange;
                 }
               })
               .catch((er) => {
-                alert(rndFunc + " error(" + er + ")");
-                console.log(er);
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
                 document.getElementById("template").innerHTML =
                   JSON.stringify(er);
               });
-          }
-        }
-        function error(er) {
-          alert(rndFunc + " error(" + er + ")");
-          serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(typeof cChange + " with length = " + cChange.length);
-              if (cChange.length === 112) {
-                // console.log(cChange)
-                var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=" + rndFunc;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_child";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              } else {
-                var docWnd = document.getElementById("template");
-                docWnd.innerHTML = cChange;
-              }
-            })
-            .catch((er) => {
-              alert(rndFunc + " error(" + er + ")");
-              console.log(er);
-              document.getElementById("template").innerHTML =
-                JSON.stringify(er);
-            });
-        }
-      }
+          });
+      });
     }
-
     document
       .getElementById("userClickedAgain")
       .addEventListener("click", againFunc);
     function againFunc() {
+      againCap = localStorage.getItem("gsSearch");
       document.getElementById("template").innerHTML =
-        "waiting for " + againCap + "...";
-      google.script.run
-        .withSuccessHandler(allCap)
-        .withFailureHandler(error)
-        .runBoilerplate(againCap);
-      function allCap(droplet) {
-        alert(againCap + "(" + droplet + ")");
-        alert("droplet.length = " + droplet.length);
-        if (droplet.length === 99) {
-          google.script.run
-            .withSuccessHandler(doCap)
-            .runBoilerplate("seoCapital", droplet);
-          function doCap(myFile) {
-            alert(againCap + "(" + myFile + ")");
-            document.getElementById("template").innerHTML =
-              JSON.stringify(myFile);
+        "waiting for againFunc: " + againCap + "...";
+      serverside(againCap)
+        .then((droplet) => {
+          alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
+          alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
+          if (
+            droplet.length === 99 ||
+            droplet.length === 101 ||
+            droplet.length === 112 ||
+            droplet.length === 86
+          ) {
+            serverside("seoCapital", droplet).then((myFile) => {
+              alert(
+                arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
+              );
+              document.getElementById("template").innerHTML =
+                JSON.stringify(myFile);
+            });
+          } else {
+            alert(
+              arguments.callee.name +
+                "\n" +
+                droplet.length +
+                " is not the required length",
+            );
+            serverside("getScriptUrl")
+              .then((cChange) => {
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
+                if (cChange.length === 112 || cChange.length === 86) {
+                  // console.log(cChange)
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + againCap;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                } else {
+                  var docWnd = document.getElementById("template");
+                  docWnd.innerHTML = cChange;
+                }
+              })
+              .catch((er) => {
+                alert(
+                  arguments.callee.name +
+                    "\n" +
+                    againCap +
+                    " error(" +
+                    er +
+                    ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(er);
+              });
           }
-        } else {
-          alert(droplet.length + " is not the required length");
-
+        })
+        .catch((er) => {
+          alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
           serverside("getScriptUrl")
             .then((cChange) => {
-              console.log(typeof cChange + " with length = " + cChange.length);
-              if (cChange.length === 112) {
+              console.log(
+                arguments.callee.name +
+                  "\n" +
+                  typeof cChange +
+                  " with length = " +
+                  cChange.length,
+              );
+              if (droplet.length === 86 || cChange.length === 112) {
                 // console.log(cChange)
-                var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=" + againCap;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_child";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
+                const confirmation = window.confirm(
+                  "Click OK to continue to the destination.",
+                );
+                if (confirmation) {
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href = cChange + "?func=" + againCap;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                }
               } else {
                 var docWnd = document.getElementById("template");
                 docWnd.innerHTML = cChange;
               }
             })
             .catch((er) => {
-              alert(againCap + " error(" + er + ")");
-              console.log(er);
+              alert(
+                arguments.callee.name + "\n" + againCap + " error(" + er + ")",
+              );
+              console.log(arguments.callee.name + "\n" + er);
               document.getElementById("template").innerHTML =
                 JSON.stringify(er);
             });
-        }
-      }
-      function error(er) {
-        alert(againCap + " error(" + er + ")");
-        serverside("getScriptUrl")
-          .then((cChange) => {
-            console.log(typeof cChange + " with length = " + cChange.length);
-            if (cChange.length === 112) {
-              // console.log(cChange)
-              var linkFollow = document.createElement("a");
-              linkFollow.href = cChange + "?func=" + againCap;
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_child";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            } else {
-              var docWnd = document.getElementById("template");
-              docWnd.innerHTML = cChange;
-            }
-          })
-          .catch((er) => {
-            alert(rndFunc + " error(" + er + ")");
-            console.log(er);
-            document.getElementById("template").innerHTML = JSON.stringify(er);
-          });
-      }
+        });
     }
   </script>
 </html>

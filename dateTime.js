@@ -1,4 +1,13 @@
 function dateTime(date) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\ndate is !" +
+      !date +
+      ", = " +
+      date,
+  );
   // Date and Time Picker Widget
   var dateTime = HtmlService.createTemplate(`
   <html id="dateTime">
@@ -77,7 +86,7 @@ function dateTime(date) {
           <div class="container">
             <div class="col s7 l7 m7 receipt nav-wrapper deep-purple darken-1">
               <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt">
-              <input  placeholder=<?!= ph ?> class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" /></div>
+              <input  placeholder="<?!= ph ?>" class="timepicker menu-img z-depth-5 card-panel green scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefTime" type="text" /></div>
             </div>
           </div>
         </div>
@@ -108,7 +117,7 @@ function dateTime(date) {
           <div class="container">
             <div class="col s7 l7 m7 receipt nav-wrapper deep-purple darken-1">
               <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt">
-              <input placeholder=<?!= ph ?> class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" /></div>
+              <input placeholder="<?!= ph ?>" class="datepicker menu-img z-depth-5 card-panel red scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" id="prefDate" type="text" /></div>
             </div>
           </div>
         </div>

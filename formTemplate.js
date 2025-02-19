@@ -523,6 +523,7 @@ var dtlsInvestor = function (coKey, time) {
   }
   if (typeof coData.rndTicker !== "undefined") {
     // var form = formMaker();
+    var urlTicker = "https://www.nasdaq.com/search?q=" + coData.rndTicker;
     var form = formMaker(
       [coData.rndTitle].join("").toUpperCase(),
       "Forms",
@@ -533,7 +534,7 @@ var dtlsInvestor = function (coKey, time) {
       // fileManager(coData.rndTitle, "Forms")
       form
         .addSectionHeaderItem()
-        .setTitle(coData.rndTicker)
+        .setTitle(urlTicker)
         .setHelpText(coData.secUrl);
       form.addTextItem().setTitle("Industry").setRequired(true);
       form.addTextItem().setTitle("Sector").setRequired(true);
@@ -611,45 +612,74 @@ var dtlsInvestor = function (coKey, time) {
 };
 
 var dtlsMain = function (file) {
-  var isProduct = formsUrls(file, "Forms");
-  console.log(typeof isProduct);
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nfile is !" +
+      !file +
+      ", = " +
+      file,
+  );
+  var isProduct = driveManager(
+    file,
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+  );
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nisProduct is !" +
+      !isProduct +
+      ", = " +
+      typeof isProduct,
+  );
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
-    return HtmlService.createTemplate(
-      `
-  <html id="test">
-    <head>
-      <base target="_top">
-      <meta charset="utf-8">
-      <meta name="description" content="Example meta description.">
-      <meta name=viewport content="width=device-width, initial-scale=1">
-      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-    </head>
-    <body>
-    <div class="row">
-    <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
-    <div class="container row valign-wrapper"><?!= rule() ?></div>
-    <div class="video-container grey" style="clear: both">
-    <div class="col s10 l10 m10 receipt black darken-1">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src=${formUrl}
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div></div>
-    </body>
-  </html>
-      `,
-    )
-      .evaluate()
-      .getContent();
+  } else {
+    return "File Does Not Exist!";
+  }
+};
+// ;return HtmlService.createTemplate(`<html id="test"><head><base target="_top"><meta charset="utf-8"><meta name="description" content="Example meta description."><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"></head><body><div class="row"><div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1"><div class="container row valign-wrapper"><?!= rule() ?></div><div class="video-container grey" style="clear: both"><div class="col s10 l10 m10 receipt black darken-1"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src=${formUrl} width="100%" height="100%" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen></iframe></div></div></div></div></body></html>`).evaluate().getContent();
+
+var dtlsResearchForm = function (topic) {
+  var cokey;
+  topic
+    ? (cokey = topic)
+    : (cokey = objectOfS(
+        ["parameter"],
+        [[["func", arguments.callee.name]]],
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      ).parameter["func"]);
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      topic +
+      ", = " +
+      topic,
+  );
+  var tri = trial();
+  var form = FormApp.create(cokey).setDescription(" Research " + tri.length);
+  if (typeof form === "object") {
+    var formUrl = form.getPublishedUrl();
+    tri.map((seo) => {
+      for (var key in seo) {
+        if (key === "heads") {
+          form
+            .addParagraphTextItem()
+            .setTitle(randomSubstance(0, 1, [key]).myNewArr);
+        } else {
+          form
+            .addParagraphTextItem()
+            .setTitle(randomSubstance(0, 1, [key]).myNewArr);
+        }
+      }
+    });
+    form.setCollectEmail(true);
+    return formUrl;
   }
 };
 
@@ -680,9 +710,11 @@ var dtlsSomeFunction = function (e) {
   }
   // console.log(covIdArray[0][0].map((e)=>{return e[0]}))
   var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);
+  var formUrl = form.getPublishedUrl();
+  form.setCollectEmail(true);
   if (seoArray) {
     if (typeof form === "object") {
-      covIdArray[0][0].map((d) => {
+      covIdArray.map((d) => {
         while (d) {
           var elapsedTime = new Date() - time;
           var timeToExecute = maxTime - elapsedTime;
@@ -741,7 +773,7 @@ var dtlsSomeFunction = function (e) {
       });
     }
   }
-  return covIdArray;
+  return { playList: covIdArray, content: formUrl };
 };
 
 var dtlsStore = function (itemName, time) {

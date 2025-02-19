@@ -98,7 +98,7 @@
             .catch((er) => {
               alert(rndPage + " error(" + er + ")");
               console.log(er);
-              document.getElementById("drip").innerHTML = JSON.stringify(er);
+              document.getElementById("drip").innerHTML = er;
             });
         }
       }
@@ -137,14 +137,14 @@
             .catch((er) => {
               alert(rndPage + " error(" + er + ")");
               console.log(er);
-              document.getElementById("drip").innerHTML = JSON.stringify(er);
+              document.getElementById("drip").innerHTML = er;
             });
         }
       }
       function error(er) {
         alert(rndPage + " error(" + er + ")");
         console.log(er);
-        document.getElementById("drip").innerHTML = JSON.stringify(er);
+        document.getElementById("drip").innerHTML = er;
       }
     </script>
   </body>

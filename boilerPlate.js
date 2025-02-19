@@ -2,10 +2,12 @@
 
 var convertToJS = function (rndText) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      rndText +
+      ", = " +
       !rndText,
   );
   if (typeof rndText === "undefined") {
@@ -62,30 +64,38 @@ var convertToJS = function (rndText) {
 
 var convertToObjects = function (rows, headings, time) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!headings, = " +
-      !headings,
+      "\nrows is !" +
+      !rows +
+      ", = " +
+      rows +
+      "\nheadings is !" +
+      !headings +
+      ", = " +
+      headings +
+      "\ntime is !" +
+      !time +
+      ", = " +
+      time,
   );
-  // console.log("convertToObjects: \nDeclaring temp = rows.reduce()")
   var temp = rows.reduce(
     function (ctx, row) {
-      // console.log("convertToObjects: \nrows.reduce(function (" + JSON.stringify(ctx), row + ")")
       ctx.objects.push(
         ctx.headings.reduce(function (item, heading, index) {
-          var elaspeTime = new Date() - time;
-          // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
-          // console.log("convertToObjects: \nitem[" + heading + "] = row[" + index + "];\nreturn " + item)
+          var elaspeTime =
+            new Date() -
+            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
           item[heading] = row[index];
           return item;
         }, {}),
       );
       var myObj = {};
       headings.forEach(function (heading, index) {
-        var elaspeTime = new Date() - time;
-        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
-        // console.log("convertToObjects: \nmyObj[" + heading + "] = [" + row + "][" + index + "]\nreturn " + ctx)
+        var elaspeTime =
+          new Date() -
+          Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
         myObj[heading] = [row][index];
       });
       return ctx;
@@ -97,6 +107,12 @@ var convertToObjects = function (rows, headings, time) {
   ).objects;
   return JSON.stringify(temp);
 };
+// console.log("convertToObjects: \nDeclaring temp = rows.reduce()")
+// console.log("convertToObjects: \nrows.reduce(function (" + JSON.stringify(ctx), row + ")")
+// console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+// console.log("convertToObjects: \nitem[" + heading + "] = row[" + index + "];\nreturn " + item)
+// console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
+// console.log("convertToObjects: \nmyObj[" + heading + "] = [" + row + "][" + index + "]\nreturn " + ctx)
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The parameters ((class)) don't match the method signature for HtmlService.createTemplate.
@@ -105,10 +121,12 @@ var convertToObjects = function (rows, headings, time) {
 // ---------------------------------------------------------------------------------------------------------------------
 var covertArr = function (objects, row, index) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      objects +
+      ", = " +
       !objects,
   );
   var data = [];
@@ -134,10 +152,12 @@ var covertArr = function (objects, row, index) {
 
 var covSheetArrays = function (myArray) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      myArray +
+      ", = " +
       !myArray,
   );
 
@@ -153,10 +173,12 @@ var covSheetArrays = function (myArray) {
 
 var getEventValues = function (title, startTime, endTime, series) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      title +
+      ", = " +
       !title,
   );
   var eventsDataRange = sliceValues(getValues(), 1);
@@ -165,16 +187,6 @@ var getEventValues = function (title, startTime, endTime, series) {
     var end = eventsDataRange[i][endTime];
     var description = eventsDataRange[i][title];
     return addEventToCalendar(start, end, description, start);
-  }
-};
-
-var mapValues = function (data, index) {
-  // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !data)
-  if (data) {
-    data = data.map(function (e) {
-      return e[index].valueOf();
-    });
-    return data;
   }
 };
 
@@ -187,7 +199,23 @@ function objectOfS(keys, values, time) {
    *                      key-value pairs for the inner objects.
    * @return {Object} An object of objects.
    */
-  // console.log(time + "\n" + arguments.callee.name + "\n!keys, = " + !keys,)
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nkeys is !" +
+      !keys +
+      ", = " +
+      keys +
+      "\nvalues is !" +
+      !values +
+      ", = " +
+      values +
+      "\ntime is !" +
+      !time +
+      ", = " +
+      time,
+  );
   if (keys.length !== values.length) {
     throw new Error("Number of keys must match the number of value arrays.");
   }
@@ -202,11 +230,13 @@ function objectOfS(keys, values, time) {
 
 var randNum = function (namedVar) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
-      !namedVar,
+      "\nnamedVar is !" +
+      !namedVar +
+      ", = " +
+      namedVar,
   );
   if (namedVar) {
     var len = namedVar.length;
@@ -226,10 +256,12 @@ var sliceValues = function (data, row) {
 
 var splitArr = function (rows, idx, query) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      rows +
+      ", = " +
       !rows,
   );
   return rows.filter(function (a) {
@@ -239,10 +271,12 @@ var splitArr = function (rows, idx, query) {
 
 var splitArrHeadings = function (test) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      test +
+      ", = " +
       !test,
   );
   var headings = [];
@@ -254,10 +288,12 @@ var splitArrHeadings = function (test) {
 
 var splitArrRange = function (test) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      test +
+      ", = " +
       !test,
   );
   var headings = [];
@@ -278,10 +314,12 @@ var splitArrRange = function (test) {
 
 var splitNoX = function (content, pushIndex) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      content +
+      ", = " +
       !content,
   );
   var json = content;
@@ -318,10 +356,12 @@ var splitNoX = function (content, pushIndex) {
 
 var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      splitXContent +
+      ", = " +
       !splitXContent,
   );
   if (splitXContent) {
@@ -347,12 +387,22 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   }
 };
 
-var substanceVegas = function (importedData, index, loopLength) {
+var substanceVegas = function (index, loopLength, importedData) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      index +
+      ", = " +
+      !index +
+      "\n!" +
+      loopLength +
+      ", = " +
+      !loopLength +
+      "\n!" +
+      importedData +
+      ", = " +
       !importedData,
   );
   var arrData = importedData || [
@@ -440,10 +490,12 @@ var substanceVegas = function (importedData, index, loopLength) {
 
 var testArray = function (content) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      content +
+      ", = " +
       !content,
   );
   json = content;
@@ -471,11 +523,17 @@ var testArray = function (content) {
 
 var testData = function (sourceData, time) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
-      !sourceData,
+      "\n!" +
+      sourceData +
+      ", = " +
+      !sourceData +
+      "\n!" +
+      time +
+      ", = " +
+      !time,
   );
   if (typeof time === "undefined") {
     var time = start;
@@ -539,10 +597,7 @@ var testData = function (sourceData, time) {
         );
       }
     }
-    return console.log(
-      "testData: \nmyArray: " +
-        spreadSheetCreate("myArraySheet", myArray, "arrayData", myArray, time),
-    );
+    // console.log("testData: \nmyArray: " + spreadSheetCreate("myArraySheet",myArray,["arrayData"],myArray,time))
   } catch (err) {
     console.log("testData: \nerr: " + err);
     return err;
@@ -553,12 +608,60 @@ var testData = function (sourceData, time) {
 };
 // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 
+var trial = function () {
+  // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
+  var trial = [];
+  var judge = 0;
+  var coinHead = 0;
+  var coinTail = 0;
+  var coin = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))];
+  if (coin === 1) {
+    coinHead++;
+    trial.push({
+      heads: coin,
+    });
+  } else {
+    coinTail++;
+    trial.push({
+      tails: coin,
+    });
+  }
+  while (coinHead !== coinTail) {
+    judge++;
+    coin = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))];
+    if (coin === 1) {
+      coinHead++;
+      trial.push({
+        heads: coin,
+      });
+    } else {
+      coinTail++;
+      trial.push({
+        tails: coin,
+      });
+    }
+    if (
+      (trial[0]["heads"] && trial[judge]["tails"]) ||
+      (trial[0]["tails"] && trial[judge]["heads"])
+    ) {
+      break;
+    } else {
+      for (var i = judge, l = trial.length; i < l; i++) {
+        console.log(JSON.stringify(trial[judge]));
+      }
+    }
+  }
+  return trial;
+};
+
 var testObject = function (dataArray, fVarHeaders) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      dataArray +
+      ", = " +
       !dataArray,
   );
   myRows = testData(dataArray);

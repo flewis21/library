@@ -35,6 +35,11 @@ function addDays() {
 }
 
 function busyDates() {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name,
+  );
   var calendars = CalendarApp.getAllCalendars();
   var myCalendar;
   calendars.map((calendar) => {
@@ -175,7 +180,11 @@ var calRecurrence = function (series) {
 };
 
 function dateAgenda() {
-  // var ws = idSpreadSheet("1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=1223141535");
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name,
+  );
   var sheetJSONSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Schedules",
@@ -184,17 +193,18 @@ function dateAgenda() {
   var data = range.getValues();
   var dates = mapValues(sliceValues(data, 1), 0);
   var uniqueData = dateModel(dates);
-  // console.log(uniqueData)
-  // var headings = data[0].map(function (val) {
-  //     console.log(val);
-  //     return val.toString().toLowerCase();
-  // });
-  // var noHeaders = data.slice(1);
-  // var outputData = (covObjects(noHeaders, headings));
   return uniqueData;
   console.log(sheetJSONSheet.getName());
   console.log(uniqueData);
 }
+// var ws = idSpreadSheet("1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=1223141535");
+// console.log(uniqueData)
+// var headings = data[0].map(function (val) {
+//     console.log(val);
+//     return val.toString().toLowerCase();
+// });
+// var noHeaders = data.slice(1);
+// var outputData = (covObjects(noHeaders, headings));
 
 var dateFunction = function (series) {
   var days = mapValues(sliceValues(ssDataRange(), 1), series);
@@ -208,6 +218,15 @@ var dateFunction = function (series) {
 };
 
 var dateModel = function (days) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\ndays is !" +
+      !days +
+      ", = " +
+      days,
+  );
   var uniqueDays = [];
   if (days) {
     days.forEach(function (d) {

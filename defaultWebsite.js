@@ -381,16 +381,6 @@ var getUrl = function (appInterface) {
   return url;
 };
 
-var gsFiles = function () {
-  var gsFileList = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      gsFileList.push(key);
-    }
-  }
-  return gsFileList;
-};
-
 var prepareDataBrain = function (data, ratio = 29) {
   if (data) {
     return data.map((row) => {

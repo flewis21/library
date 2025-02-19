@@ -1,42 +1,13 @@
-var coUtility = function (rndClient) {
-  var client;
-  if (rndClient) {
-    client = rndClient;
-  }
-  var uniqueCo = [];
-  if (typeof client !== "undefined") {
-    var coName = allInvestors(client.toString().toLowerCase());
-    console.log(
-      "coUtility: \nvar coName = allInvestors(" +
-        client +
-        ".toString().toLowerCase())",
-    );
-  } else {
-    var coName = allInvestors();
-    console.log("coUtility: \nvar coName = allInvestors()");
-  }
-  if (typeof coName["cik"] === "undefined") {
-    uniqueCo.push({
-      rndTitle: coName["title"],
-      videoItem: coName["rndVideoId"],
-      videoItemUrl: coName["videoUrl"],
-      playlistArr: coName["videoPlaylist"],
-    });
-  } else {
-    uniqueCo.push({
-      rndCik: coName["cik"],
-      rndTicker: coName["ticker"],
-      rndTitle: coName["title"],
-      videoItem: coName["rndVideoId"],
-      videoItemUrl: coName["videoUrl"],
-      playlistArr: coName["videoPlaylist"],
-      secUrl: coName["edgarUrl"],
-    });
-  }
-  return uniqueCo;
-};
-
 var csvDataSource = function (url, params) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   if (url) {
     var content = UrlFetchApp.fetch(url, params);
     var res = content.getContentText();
@@ -71,6 +42,15 @@ var csvDataSource = function (url, params) {
 };
 
 var dataRowIndex = function (data, row, index) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      row +
+      ", = " +
+      !row,
+  );
   var sliceObj = JSON.parse(sliceValues(data, row));
   var converted = covArrays(sliceObj);
   // var sliceArray = covArrays(converted)
@@ -81,6 +61,15 @@ var dataRowIndex = function (data, row, index) {
 };
 
 var dtlsCapital = function (url) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   if (url) {
     const videoSearch = [
       urlDataSource(url, null, { muteHttpExceptions: true, mode: "no-cors" }),
@@ -99,6 +88,15 @@ var dtlsCapital = function (url) {
 };
 
 var forArray = function (arrayData) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      arrayData +
+      ", = " +
+      !arrayData,
+  );
   var array = [];
   for (var i = 0; i < arrayData.length; i++) {
     let a = splitNoX(arrayData, [arrayData[i]].values());
@@ -109,6 +107,15 @@ var forArray = function (arrayData) {
 };
 
 var forHeaders = function (objectData) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      objectData +
+      ", = " +
+      !objectData,
+  );
   for (var i = 0; i < objectData.length; i++) {
     json = objectHeaders(objectData, JSON.stringify(i));
   }
@@ -117,6 +124,15 @@ var forHeaders = function (objectData) {
 };
 
 var forObjects = function (data, delimiter) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      data +
+      ", = " +
+      !data,
+  );
   for (var i = 0; i < data.length; i++) {
     json = covObjects(
       objectHeaders(data, JSON.stringify(i))[1],
@@ -128,6 +144,15 @@ var forObjects = function (data, delimiter) {
 };
 
 var getSize = function (url, params) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   if (url) {
     var content = UrlFetchApp.fetch(url, params);
     var res = content.getContentText();
@@ -142,6 +167,15 @@ var getSize = function (url, params) {
 };
 
 var jsonDataX = function (data) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      data +
+      ", = " +
+      !data,
+  );
   // headings = dataHeadings(data);
   const arrayN = testData(data);
   const noHeaders = sliceValues(arrayN, 0);
@@ -150,6 +184,11 @@ var jsonDataX = function (data) {
 };
 
 async function jsonFormatter() {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name,
+  );
   var res = UrlFetchApp.fetch(
     "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1",
   );
@@ -184,6 +223,15 @@ async function jsonFormatter() {
 //console.log(xpath);
 
 var jsonINIT = function (json) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      json +
+      ", = " +
+      !json,
+  );
   /**
    * Imports JSON data
    * @param url URL of JSON data as string
@@ -224,6 +272,15 @@ var jsonINIT = function (json) {
 // console.log(res.getContentText());
 
 var jsonXpath = function (jsonXpathDataRange) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      jsonXpathDataRange +
+      ", = " +
+      !jsonXpathDataRange,
+  );
   var jsonXpathNoHeaders = [jsonXpathDataRange].map(function (val) {
     return val.toString().toLowerCase();
   });
@@ -246,6 +303,15 @@ var jsonXpath = function (jsonXpathDataRange) {
 //     {jsonXpathDataRange[row].push(jsonValuesXpath[row][col]);}}
 
 var needCapital = function (searchString) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      searchString +
+      ", = " +
+      !searchString,
+  );
   const videoSearch = [
     urlDataSource(`https://flewis21.github.io/foobar`, null, {
       muteHttpExceptions: true,
@@ -262,6 +328,15 @@ var needCapital = function (searchString) {
 };
 
 var objectHeaders = function (object, index) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      object +
+      ", = " +
+      !object,
+  );
   var headerRow = object[index].map(function (val) {
     return JSON.stringify(val).toString().toLowerCase();
   });
@@ -269,6 +344,15 @@ var objectHeaders = function (object, index) {
 };
 
 var rowsToReturn = function (data, index) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      data +
+      ", = " +
+      !data,
+  );
   if (data) {
     var rowsToReturn = data.filter(function (a) {
       return a[index];
@@ -280,6 +364,15 @@ var rowsToReturn = function (data, index) {
 };
 
 var tabData = function (url, xpath, headers) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      headers +
+      ", = " +
+      !headers,
+  );
   var test = covObjects(
     jsonDataX(sliceValues(jsonXpath(url, xpath), 0)),
     dataHeadings(testData(headers)),
@@ -288,6 +381,15 @@ var tabData = function (url, xpath, headers) {
 };
 
 var tabField = function (url, xpath, index, time) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   if (url) {
     var data = [urlDataSource(url), { muteHttpExceptions: true }, time];
     var test = dataHeadings(splitX(data, xpath))[index];
@@ -298,6 +400,15 @@ var tabField = function (url, xpath, index, time) {
 };
 
 var tabIndex = function (url, xpath, index, headers) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      headers +
+      ", = " +
+      !headers,
+  );
   var test = covObjects(
     jsonDataX(sliceValues(jsonXpath(url, xpath), 0)[index]),
     dataHeadings(testData(headers)),
@@ -306,16 +417,33 @@ var tabIndex = function (url, xpath, index, headers) {
 };
 
 var tempArrayNoX = function (url, indexParsed, index) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   const jsonData = urlDataSource(url);
   const testIndex = splitNoX(JSON.parse(sliceValues(jsonData, indexParsed)));
   // const arrayObjData = testArray(testIndex)
   // const objTest = forArray(testIndex);
   // const dataHeaders = splitNoX(sliceValues(objTest, index))
-
   console.log(testIndex);
 };
 
 var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      url +
+      ", = " +
+      !url,
+  );
   const jsonData = urlDataSource(url);
   const testIndex = splitX(
     JSON.parse(sliceValues(jsonData, indexParsed)),
@@ -325,11 +453,19 @@ var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
   // const arrayObjData = testArray(testIndex)
   const objTest = forArray(testIndex);
   const dataHeaders = splitX(sliceValues(objTest, index), xpath, delimiter);
-
   console.log(testIndex);
 };
 
 var udsCache = function (content) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      content +
+      ", = " +
+      !content,
+  );
   var data = JSON.parse(content);
   if (data) {
     for (var key in data) {
@@ -346,8 +482,17 @@ var udsCache = function (content) {
 };
 
 var urlDataSource = function (cokey, url, time, xpath) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      cokey +
+      ", = " +
+      !cokey,
+  );
   if (typeof time === "undefined") {
-    time = start;
+    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
   }
   if (typeof cokey === "undefined") {
     var cokey = "url data";

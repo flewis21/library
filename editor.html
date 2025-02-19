@@ -4,6 +4,17 @@
     <base target="_top" />
   </head>
   <body>
+    <p>Select a Google Doc:</p>
+    <select id="docSelect">
+      <? var files = DriveApp.searchFiles('mimeType =
+      "application/vnd.google-apps.document"'); ?> <? while (files.hasNext()) {
+      ?> <? var file = files.next(); ?>
+      <option id="myOptions" value="<?= file.getId() ?>">
+        <?= file.getName() ?>
+      </option>
+      <? var fileUrl = file.getUrl() ?> <? } ?>
+    </select>
+
     <? var eFolder = DriveApp.getFoldersByName("SDTLC").next() ?> <? var
     folderFile = eFolder.getFilesByName("Code Editor") ?> <? var dataTree = []
     ?> <? while (folderFile.hasNext()) { var myFile = folderFile.next() var
@@ -33,7 +44,7 @@
     <script>
       document,addEventListener("DOMContentLoaded", pageScript);
       function pageScript() {
-        document.getElementById("editorFrame").src = <?!= JSON.stringify(filed) ?>
+        document.getElementById("editorFrame").src = <?= JSON.stringify(fileUrl) ?>
     </script>
   </body>
 </html>

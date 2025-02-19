@@ -11,45 +11,102 @@ var buildTags = function (posHtml) {
 };
 
 function doGet(e) {
+  validGroup();
+  validateFolders();
+  validateFiles();
   e
     ? e
     : (e = objectOfS(
         ["parameter"],
-        [[["func", arguments.callee.name]]],
+        [[["func", testlt()]]],
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       ));
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      e.parameter["func"] +
+      "\ne is !" +
+      !e +
       ", = " +
-      !e.parameter["func"],
+      e,
   );
+  var webAppUrl = getScriptUrl();
+  if (typeof e === "object") {
+    var fx = e.parameter["func"];
+  } else {
+    var fx = e.parameter["func"];
+  }
   var titleArray = [];
+  var content = e.parameter["args"];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
       titleArray.push(key);
     }
   }
+  var lowCapApp = [appList].join("").toLowerCase().split(",");
+  var lowCapFunc = [e].join("").toLowerCase().split(",");
+  var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {
     miscellaneous: {
       section: titleArray,
     },
   };
-  var fx = e.parameter["func"];
-  if (fx === objMaster.miscellaneous.section[111]) {
-    return handleRequest(e).getContent();
+  if (!fx) {
+    var rndStr = testlt();
+    return renderTemplate(surveyPlayer(rndStr, rndStr), {}, rndStr);
+  } else if (crmT(fx)) {
+    try {
+      var payload = fx(content);
+    } catch (error) {
+      return renderTemplate(surveyPlayer(fx, error), {}, content);
+    }
+    if (payload) {
+      if (
+        payload.length === 99 ||
+        payload.length === 94 ||
+        payload.length === 83 ||
+        payload.length === 97 ||
+        payload.length === 101 ||
+        payload.length === 103 ||
+        payload.length === 136 ||
+        payload.length === 132 ||
+        payload.indexOf("&entry") > -1
+      ) {
+        return renderTemplate(mis(payload), {}, "All departments");
+      } else {
+        return renderTemplate(
+          `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload}</div></body></html>`,
+          {},
+          "All departments",
+        );
+      }
+    }
+  } else if (fx === objMaster.miscellaneous.section[0]) {
+  } else if (fx === objMaster.miscellaneous.section[1]) {
+  } else if (fx === objMaster.miscellaneous.section[3]) {
+    return renderTemplate(DVar.apply(this, rndCoin));
+    var aVar = objectOfS(
+      ["parameter"],
+      [[["func", arguments.callee.name]]],
+      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    );
+
+    return renderTemplatedVar(dVar).myVar;
+  } else if (fx === objMaster.miscellaneous.section[10]) {
+  } else if (fx === objMaster.miscellaneous.section[11]) {
+  } else if (fx === objMaster.miscellaneous.section[21]) {
+  } else if (fx === objMaster.miscellaneous.section[31]) {
+  } else if (fx === objMaster.miscellaneous.section[41]) {
+  } else if (fx === objMaster.miscellaneous.section[51]) {
   } else if (fx === objMaster.miscellaneous.section[58]) {
     console.log(
       Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
         "\n" +
         arguments.callee.name +
-        "\n!" +
-        fx +
+        "\nfx is !" +
+        !fx +
         ", = " +
-        !fx,
+        fx,
     );
     // Replace with your actual sheet ID
     // const spreadsheetId = 'YOUR_SPREADSHEET_ID';
@@ -107,6 +164,52 @@ function doGet(e) {
 
     // Return the HTML content
     return renderTemplate(pageHtml, {}, "Finance Landing Page");
+  } else if (fx === objMaster.miscellaneous.section[61]) {
+  } else if (fx === objMaster.miscellaneous.section[71]) {
+  } else if (fx === objMaster.miscellaneous.section[81]) {
+  } else if (fx === objMaster.miscellaneous.section[91]) {
+  } else if (fx === objMaster.miscellaneous.section[100]) {
+  } else if (fx === objMaster.miscellaneous.section[101]) {
+  } else if (fx === objMaster.miscellaneous.section[111]) {
+    return handleRequest(e).getContent();
+  } else if (fx === objMaster.miscellaneous.section[121]) {
+  } else if (fx === objMaster.miscellaneous.section[131]) {
+  } else if (fx === objMaster.miscellaneous.section[132]) {
+    return renderTemplate(oldSEC, {}, "Securities and Exchanges");
+  } else if (fx === objMaster.miscellaneous.section[141]) {
+  } else if (fx === objMaster.miscellaneous.section[151]) {
+  } else if (fx === objMaster.miscellaneous.section[161]) {
+  } else if (fx === objMaster.miscellaneous.section[171]) {
+  } else if (fx === objMaster.miscellaneous.section[181]) {
+  } else if (fx === objMaster.miscellaneous.section[191]) {
+  } else if (fx === objMaster.miscellaneous.section[201]) {
+  } else if (fx === objMaster.miscellaneous.section[210]) {
+  } else if (fx === objMaster.miscellaneous.section[211]) {
+  } else if (fx === objMaster.miscellaneous.section[221]) {
+  } else if (fx === objMaster.miscellaneous.section[231]) {
+  } else if (fx === objMaster.miscellaneous.section[241]) {
+  } else if (fx === objMaster.miscellaneous.section[251]) {
+  } else if (fx === objMaster.miscellaneous.section[261]) {
+  } else if (fx === objMaster.miscellaneous.section[271]) {
+  } else if (fx === objMaster.miscellaneous.section[281]) {
+  } else if (fx === objMaster.miscellaneous.section[291]) {
+  } else if (fx === objMaster.miscellaneous.section[301]) {
+  } else if (fx === objMaster.miscellaneous.section[310]) {
+  } else if (fx === objMaster.miscellaneous.section[311]) {
+  } else if (fx === objMaster.miscellaneous.section[321]) {
+  } else if (fx === objMaster.miscellaneous.section[331]) {
+  } else if (fx === objMaster.miscellaneous.section[341]) {
+  } else if (fx === objMaster.miscellaneous.section[351]) {
+  } else if (fx === objMaster.miscellaneous.section[361]) {
+  } else if (fx === objMaster.miscellaneous.section[362]) {
+  } else if (fx === objMaster.miscellaneous.section[363]) {
+  } else if (fx === objMaster.miscellaneous.section[364]) {
+  } else if (fx === objMaster.miscellaneous.section[365]) {
+  } else if (fx === objMaster.miscellaneous.section[366]) {
+  } else if (fx === objMaster.miscellaneous.section[367]) {
+  } else if (fx === objMaster.miscellaneous.section[368]) {
+  } else if (fx === objMaster.miscellaneous.section[369]) {
+  } else if (fx === objMaster.miscellaneous.section[370]) {
   } else {
     var libFunc = "renderFile";
     var htmlArray = [
@@ -121,11 +224,11 @@ function doGet(e) {
         contentApp(
           `<?!= HtmlService.createTemplate(appL).evaluate().getContent() ?>`,
           {
-            appL: this[libFunc].apply(this, [args]),
+            appL: this[libFunc].apply(this, ["oddChances"]),
           },
         ),
         { e: e },
-        args,
+        "oddChances",
       );
     } else {
       return handleRequest(e);
@@ -242,10 +345,21 @@ function handleFormSubmission(e) {
 }
 
 function misBing(e, time) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      e +
+      ", = " +
+      !e +
+      "\n!" +
+      time +
+      ", = " +
+      !time,
+  );
   console.log(JSON.stringify(e));
-  const uniqueKey = JSON.parse([
-    urlDataSource("https://www.sec.gov/files/company_tickers.json"),
-  ]);
+  const uniqueKey = sheetCalc();
   const uniqueCoArray = covArrays(uniqueKey);
   const randomKey = Math.floor(
     Math.random() * Math.floor(uniqueCoArray.length),
@@ -313,18 +427,24 @@ function misBing(e, time) {
       }
       var func = document.getElementById("func").value;
       var args = document.getElementById("args").value;
-      var linkHome = document.createElement("a");
-      var linkFollow = document.createElement("a");
-      linkFollow.href =
-        url +
-        "?func=" +
-        encodeURIComponent(func) +
-        "&args=" +
-        encodeURIComponent(args);
-      linkFollow.id = "linkFOLLOW";
-      linkFollow.target = "_top";
-      document.body.appendChild(linkFollow);
-      document.getElementById("linkFOLLOW").click();
+      const confirmation = window.confirm(
+        "Click OK to continue to the destination.",
+      );
+      if (confirmation) {
+        var linkHome = document.createElement("a");
+        var linkFollow = document.createElement("a");
+        linkFollow.href =
+          url +
+          "?func=" +
+          encodeURIComponent(func) +
+          "&args=" +
+          encodeURIComponent(args);
+        linkFollow.id = "linkFOLLOW";
+        linkFollow.target = "_top";
+        document.body.appendChild(linkFollow);
+        document.getElementById("linkFOLLOW").click();
+        document.getElementById("linkFOLLOW").remove();
+      }
       document.getElementById("func").value = "";
       document.getElementById("args").value = "";
     })();
@@ -340,18 +460,19 @@ function misBing(e, time) {
             console.log(document.getElementById("test").innerHTML);
             reject(error);
           })
-          .runBoilerplate([func], [args]);
+          .runBoilerplate(func, args);
       });
     }; //serverSide closed
     // VideoPlayer Widget
-    serverSide(`userClicked`, [`traffic`])
-      .then(async (videoSearch) => {
+    serverSide("userClicked")
+      .then((videoSearch) => {
         document.getElementById("vids").innerHTML = videoSearch;
       }) //Global then closed
       .catch((error) => {
+        alert(error);
         console.log(error);
-      }); //Global catch closed
-  }), //vidApp closed
+      });
+  }), //vidApp closed //Global catch closed
     (html.jsApp = function () {
       const serverSide = function (func, args) {
         return new Promise((resolve, reject) => {
@@ -363,40 +484,39 @@ function misBing(e, time) {
               console.log(document.getElementById("test").innerHTML);
               reject(error);
             })
-            .runBoilerplate([func], [args]);
+            .runBoilerplate(func, args);
         });
       }; //serverSide closed
-      serverSide("urlDataSource", [
-        "https://www.sec.gov/files/company_tickers.json",
-      ])
-        .then(async (res) => {
-          var input = [JSON.parse(res)];
+      serverSide("sheetCalc")
+        .then((res) => {
+          var input = res;
           for (var i = 0; i < input.length; i++) {
             var randomKey = Math.floor(
               Math.random() * Math.floor(input.length),
             ); // Math.floor(Math.random())
-            var currentCik = await input[i][randomKey]["cik_str"];
-            var currentTicker = await input[i][randomKey]["ticker"];
-            var currentTitle = await input[i][randomKey]["title"];
-            var companyHtml = `<div>
-                <p><em> Hello Scroll!<em>, 
-                <br><span> <div id="searchMe">${currentTitle}</div> <h2>${currentTicker}</h2> is ready to trade. </span>
-                <br>Best Regards.
-                <br>P.S. <a href="https://www.sec.gov/edgar/browse/?CIK=${currentCik}&owner=exclude" target="_blank">Click here for info!</a></p>
-                </div>`;
+            var currentCik = input[i][randomKey]["cik_str"];
+            var currentTicker = input[i][randomKey]["ticker"];
+            var currentTitle = input[i][randomKey]["title"];
+            var companyHtml =
+              "<div><p><em> Hello Scroll!<em>,<br><span> <div id='searchMe'>${currentTitle}</div> <h2>${currentTicker}</h2> is ready to trade. </span><br>Best Regards.<br>P.S. <a href='https://www.sec.gov/edgar/browse/?CIK=${currentCik}&owner=exclude' target='_blank' rel='noopener noreferrer'>Click here for info!</a></p></div>";
           }
           document.getElementById("template1").innerHTML = companyHtml;
         }) //Global then closed
         .catch((error) => {
+          alert(error);
           console.log(error);
-        }); //Global catch closed
-    }), //jsApp closed
+        });
+    }), //jsApp closed; //Global catch closed
     (html.myRandoms = randomTitle);
-  // })Global object closed
   return html.evaluate().getContent();
-} //webApp closed
+} //webApp closed    // })Global object closed
 
 var userClicked = function () {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name,
+  );
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
   let timeout = null;
@@ -414,17 +534,23 @@ var userClicked = function () {
       var url = urlData.toString();
     }
     var uname = document.getElementById("username").value;
-    var linkHome = document.createElement("a");
-    var linkFollow = document.createElement("a");
-    linkHome.href = "https://flewis21.github.io/videoSEC/";
-    linkFollow.href = url + "?func=dtls&args=" + encodeURIComponent(uname);
-    linkHome.id = "linkHOME";
-    linkFollow.id = "linkFOLLOW";
-    linkHome.target = "popup";
-    linkFollow.target = "_top";
-    document.body.appendChild(linkHome);
-    document.body.appendChild(linkFollow);
-    document.getElementById("linkFOLLOW").click();
+    const confirmation = window.confirm(
+      "Click OK to continue to the destination.",
+    );
+    if (confirmation) {
+      var linkHome = document.createElement("a");
+      var linkFollow = document.createElement("a");
+      linkHome.href = "https://flewis21.github.io/videoSEC/";
+      linkFollow.href = url + "?func=dtls&args=" + encodeURIComponent(uname);
+      linkHome.id = "linkHOME";
+      linkFollow.id = "linkFOLLOW";
+      linkHome.target = "popup";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkHome);
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("linkFOLLOW").remove();
+    }
     document.getElementById("linkHOME");
     document.getElementById("username").value = "";
   })();
@@ -740,9 +866,37 @@ var userClicked = function () {
 // }
 
 var runBoilerplate = function (func, someArgs) {
+  console.log(func + " ," + someArgs);
   var libFunc = func || "doGet";
-  args = someArgs || [];
-  return this[libFunc].apply(this, [args]);
+  if ([someArgs].toString().indexOf(",") === -1) {
+    console.log(
+      [someArgs].toString().indexOf(",") +
+        "Boilerplate runBoilerplate :index of comma is equal to -1 :" +
+        typeof someArgs,
+    );
+    return this[libFunc].apply(this, someArgs);
+  } else if ([someArgs].toString().indexOf(",") !== -1) {
+    console.log(
+      [someArgs].toString().indexOf(",") +
+        "Boilerplate runBoilerplate :index of comma is not equal to -1 :" +
+        typeof someArgs,
+    );
+    var fx = [someArgs].toString().split(",");
+    var boiler = [];
+    var content = [];
+    for (var i = 0, l = fx.length; i < l; i++) {
+      if (i == 0) {
+        boiler.push(fx[i]);
+      }
+      if (i > 0) {
+        content.push(fx[i]);
+      }
+    }
+    boiler.push(content);
+    return this[libFunc].apply(this, boiler);
+  } else if (!someArgs) {
+    return this[libFunc].apply(this, []);
+  }
 };
 
 var runAll = function (func, args) {

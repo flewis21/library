@@ -1,9 +1,11 @@
 var crmEBI = function (fx) {
   console.log(
-    JSON.stringify(this["start"]) +
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      fx +
+      ", = " +
       !fx,
   );
   // var fx = e;
@@ -23,11 +25,11 @@ var crmEBI = function (fx) {
       </style>
     </head>
     <body>
-      <nav>
+      <nav class="center">
         <a id="caller" href="<?= getUrl(ScriptApp) ?>?func=crmEBI&args=${fx}" target="_top">update</a>
       </nav>
       <br>
-      <div id="div"><?!= index ?></div>
+      <div class="center" id="div"><?!= index ?></div>
     </body>
   </html>`,
     {
@@ -108,7 +110,6 @@ var crmEBI = function (fx) {
       </body>
     </html>`,
             {},
-            " ",
           );
         } else if (fx === objMaster.miscellaneous.section[1]) {
           return contentApp(
@@ -180,7 +181,6 @@ var crmEBI = function (fx) {
         </body>
       </html>`,
             {},
-            " ",
           );
         } else if (fx === objMaster) {
           return contentApp(``, {}, " ");
@@ -302,7 +302,6 @@ var crmEBI = function (fx) {
               dateDefault:
                 new Date() - new Date(new Date()).toLocaleDateString(),
             },
-            "Employee Benefits Inquiry",
           );
         }
       })(),
@@ -341,7 +340,9 @@ function postEd(ed) {
     JSON.stringify(this["start"]) +
       "\n" +
       arguments.callee.name +
-      "\n!ed, = " +
+      "\n!" +
+      ed +
+      ", = " +
       !ed,
   );
   if (!ed) {

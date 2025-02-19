@@ -1,17 +1,19 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <base target="_top" />
-    <meta charset="utf-8" />
-    <meta name="appList" content="Boilerplate Function List" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" \ />
+    <meta name="appList" content="Boilerplate Function List" \ />
+    <meta name="viewport" content="width=device-width, initial-scale=1" \ />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       rel="stylesheet"
+      \
     />
     <link
       href="https://fonts.googleapis.com/css?family=Acme"
       rel="stylesheet"
+      \
     />
     <style>
       a:link,
@@ -25,35 +27,161 @@
       }
     </style>
   </head>
-  <body>
-    <? var folder = "Toyota" ?>; <? var file = "img_0053.jpg" ?> <? var
-    filedMain = fileBrowser(folder, file) ?>
-    <div id="pageBlock">
-      <p><?= folder ?>: <?= file ?></p>
-    </div>
+  <body class="center container">
     <div class="row">
-      <div class="col s12 I12 m12 card-panel amber">
-        <div class="container" style="clear: both">
-          <iframe
-            id="indexDrive"
-            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
-            src=""
-            style="width: 100%; height: 80vh"
-            allow="autoplay"
-            allow="encrypted-media"
-            title="Dontime Life Website"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
+      <div
+        class="center col s12 m12 l12 agenda z-depth-5 brown scale-out scale-in"
+      >
+        <div id="loadingIndicator" style="display: none">
+          <nav
+            class="agenda z-depth-5 pulse btn-large card-panel brown scale-out scale-in"
+          >
+            <a href="" target="_top" id="searchload">Loading...</a>
+          </nav>
+        </div>
+        <br \ />
+        <div
+          class="center col s12 m12 l12"
+          id="errorIndicator"
+          style="display: none"
+        >
+          <nav
+            class="agenda z-depth-5 pulse btn-large card-panel brown scale-out scale-in"
+          >
+            <a href="" target="_top" id="errorLoad"></a>
+          </nav>
+        </div>
+        <br \ />
+        <div class="center col s12 m12 l12" id="divLZ" style="display: block">
+          <div
+            class="center agenda col s4 l4 m4 push-s4 push-m4 push-l4 z-depth-5 brown scale-out scale-in pulse btn-large card-panel"
+          >
+            <input value="" class="timepicker" id="pRule" type="search" />
+          </div>
+        </div>
+        <br \ />
+        <div class="center col s12 m12 l12">
+          <div
+            class="center agenda col s2 m2 l2 push-s5 push-m5 push-l5 z-depth-5 brown scale-out scale-in pulse btn-large card-panel"
+          >
+            <button id="btn">Run It!</button>
+          </div>
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      document, addEventListener("DOMContentLoaded", pageScript);
-      function pageScript() {
-        document.getElementById("indexDrive").src = "<?= filedMain ?>";
-      }
-    </script>
+    <div class="center col s12 m12 l12">
+      <div id="pageBlock"></div>
+    </div>
+    <br \ />
+    <div id="content" style="display: none">
+      <div class="row">
+        <div class="col s12 I12 m12 card-panel brown">
+          <div class="container" style="clear: both">
+            <iframe
+              id="indexDrive"
+              class="z-depth-5 card-panel brown darken-1 scale-transition scale-out scale-in btn-large"
+              src=""
+              style="width: 100%; height: 80vh"
+              allow="autoplay"
+              allow="encrypted-media"
+              title="Dontime Life Website"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Show the search area
+    divLZ.style.display = "block";
+  });
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+        .withSuccessHandler((result) => {
+          resolve(result);
+        })
+        .withFailureHandler((error) => {
+          console.log(error);
+          reject(error);
+        })
+        .runBoilerplate(func, args);
+    });
+  }
+  var indexSc = document.getElementById("indexDrive");
+  var displaySc = document.getElementById("pageBlock");
+  var nameFile = document.getElementById("pRule");
+  var runButton = document.getElementById("btn");
+  nameFile.addEventListener("keypress", function (event) {
+    // If the user preses the "Enter" key on the keyboard.
+    if (event.key === "Enter") {
+      // Hide the error reporting after filtering is complete;
+      errorIndicator.style.display = "none";
+      var search = nameFile.value;
+      if (search) {
+        // Show the loading indicator
+        loadingIndicator.style.display = "block";
+      }
+      serverside("fileBrowser", [search])
+        .then((filedMain) => {
+          if (filedMain) {
+            displaySc.innerHTML = "<p>" + search + "</p>";
+            indexSc.src = filedMain;
+            // Hide the loading indicator after filtering is complete;
+            loadingIndicator.style.display = "none";
+            // Show the contentBox after filtering is complete;
+            content.style.display = "block";
+            // Hide the error reporting after filtering is complete;
+            errorIndicator.style.display = "none";
+          }
+        })
+        .catch((er) => {
+          // Hide the loading indicator after error is returned
+          loadingIndicator.style.display = "none";
+          // Show the error indicator after error is returned
+          errorIndicator.style.display = "block";
+          if (er) {
+            document.getElementById("errorLoad").innerHTML = er;
+            alert(er);
+          }
+        });
+    }
+  });
+  runButton.addEventListener("click", () => {
+    // Hide the error reporting after filtering is complete;
+    errorIndicator.style.display = "none";
+    var search = nameFile.value;
+    if (search) {
+      // Show the loading indicator
+      loadingIndicator.style.display = "block";
+    }
+    serverside("fileBrowser", [search])
+      .then((filedMain) => {
+        if (filedMain) {
+          displaySc.innerHTML = "<p>" + search + "</p>";
+          indexSc.src = filedMain;
+          // Hide the loading indicator after filtering is complete;
+          loadingIndicator.style.display = "none";
+          // Show the contentBox after filtering is complete;
+          content.style.display = "block";
+          // Hide the error reporting after filtering is complete;
+          errorIndicator.style.display = "none";
+        }
+      })
+      .catch((er) => {
+        // Hide the loading indicator after error is returned
+        loadingIndicator.style.display = "none";
+        // Show the error indicator after error is returned
+        errorIndicator.style.display = "block";
+        if (er) {
+          document.getElementById("errorLoad").innerHTML = er;
+          alert(er);
+        }
+      });
+  });
+</script>

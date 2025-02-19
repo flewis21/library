@@ -26,7 +26,7 @@ function finEd(ed) {
   );
   if (!ed) {
     var formData = JSON.parse(
-      convertToObjects([[arguments.callee.name]], ["name"], start),
+      convertToObjects([[testlt()]], ["name"], start),
     )[0];
   } else {
     var formData = JSON.parse(ed);
