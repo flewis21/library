@@ -51,7 +51,7 @@ function doGet(e) {
       section: titleArray,
     },
   };
-  if (!fx) {
+  if (mis(fx)) {
     var rndStr = testlt();
     return renderTemplate(surveyPlayer(rndStr, rndStr), {}, rndStr);
   } else if (crmT(fx)) {
@@ -865,43 +865,32 @@ var userClicked = function () {
 //   // };
 // }
 
-var runBoilerplate = function (func, someArgs) {
-  console.log(func + " ," + someArgs);
+var runBoilerplate = function (func, someargs) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nfunc is !" +
+      !func +
+      ", = " +
+      func +
+      "\nsomeargs is !" +
+      !someargs +
+      ", = " +
+      someargs,
+  );
   var libFunc = func || "doGet";
-  if ([someArgs].toString().indexOf(",") === -1) {
-    console.log(
-      [someArgs].toString().indexOf(",") +
-        "Boilerplate runBoilerplate :index of comma is equal to -1 :" +
-        typeof someArgs,
-    );
-    return this[libFunc].apply(this, someArgs);
-  } else if ([someArgs].toString().indexOf(",") !== -1) {
-    console.log(
-      [someArgs].toString().indexOf(",") +
-        "Boilerplate runBoilerplate :index of comma is not equal to -1 :" +
-        typeof someArgs,
-    );
-    var fx = [someArgs].toString().split(",");
-    var boiler = [];
-    var content = [];
-    for (var i = 0, l = fx.length; i < l; i++) {
-      if (i == 0) {
-        boiler.push(fx[i]);
-      }
-      if (i > 0) {
-        content.push(fx[i]);
-      }
-    }
-    boiler.push(content);
-    return this[libFunc].apply(this, boiler);
-  } else if (!someArgs) {
-    return this[libFunc].apply(this, []);
-  }
+  var args = someargs || [];
+  return this[libFunc].apply(this, args);
 };
 
 var runAll = function (func, args) {
-  var arr = func.split(".");
-  var libFunc = arr[0];
+  try {
+    var arr = func.split(".");
+    var libFunc = arr[0];
+  } catch (error) {
+    return;
+  }
   args = args || [];
   return this[libFunc].apply(this, args);
 };

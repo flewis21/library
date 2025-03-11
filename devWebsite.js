@@ -72,11 +72,11 @@ var devWebsite = function (e) {
       webApp.url = getUrl(ScriptApp);
       return contentApp(webApp); //:contentFile('uiAccess');
     default: // <!-----------------------------Default Website-------------------------------!>
-      const unData = Utilities.jsonParse([
+      const unData = JSON.stringify([
         urlDataSource("https://www.sec.gov/files/company_tickers.json"),
       ]);
       const testUnData = untestedData(unData);
-      const jsonUnData = Utilities.jsonStringify(testUnData);
+      const jsonUnData = JSON.stringify(testUnData);
       const rowsDefault = jsonXpath([jsonUnData]);
       let search = rowsDefault.filter(function (a) {
         return a[0] == query;

@@ -694,40 +694,6 @@ var mapValues = function (data, index) {
   }
 };
 
-function mis(text) {
-  console.log("mis :" + typeof text);
-  if (typeof text === "object") {
-    const textObj = JSON.stringify(text);
-    const fx = textObj
-      .split(",")[0]
-      .substring(2, textObj.split(",")[0].length - 1);
-    const payLoad = textObj.split(",")[1];
-    const boiler = crmCalc(fx);
-    if (!boiler) {
-      const fx = text[0];
-      const payLoad = text[1];
-      var html = HtmlService.createTemplate(
-        `<!DOCTYPE html><html lang="en"><body><label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl = document.getElementById("breakUrl");</script>`,
-      );
-      html.url = getScriptUrl().toString() + "?func=" + fx + "&args=" + payLoad;
-      return html.evaluate().getContent();
-    }
-  } else {
-    const boiler = crmCalc(text);
-    if (!boiler) {
-      var html = HtmlService.createTemplate(
-        `<!DOCTYPE html><html lang="en"><body><label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl = document.getElementById("breakUrl");</script>`,
-      );
-      html.url = getScriptUrl().toString() + "?func=" + text;
-      return html.evaluate().getContent();
-    } else {
-      return authLogic(text)
-        ? UrlFetchApp.fetch(encodeURI(text)).getContentText()
-        : xkcdRSS();
-    }
-  }
-}
-
 var needBing = function (searchString, time) {
   // var searchString = "Just married"
   if (typeof searchString !== "undefined") {
@@ -1152,12 +1118,16 @@ var seoFactor = function (data, time) {
   data.map((seoData) => {
     // var elaspeTime = new Date() - time
     // console.log("seoData: \nelaspeTime: " + elaspeTime)
-    var strDiv = seoData.split("<div>");
-    // for (var i=0,l=seoData.length; i<l; i++) {
-    // var sliDiv = seoData.slice(strDiv)
-    // var spDiv = sliDiv.toString()
-    // var arrDiv = spDiv.split("</div>")}
-    idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
+    try {
+      var strDiv = seoData.split("<div>");
+      // for (var i=0,l=seoData.length; i<l; i++) {
+      // var sliDiv = seoData.slice(strDiv)
+      // var spDiv = sliDiv.toString()
+      // var arrDiv = spDiv.split("</div>")}
+      idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
+    } catch (error) {
+      return;
+    }
   });
   var factorArray = [idArray].toString().replace(/,/g, "");
   // console.log("seoFactor: \nvar " + factorArray + " = " + [idArray].toString().replace(/,/g, ''))

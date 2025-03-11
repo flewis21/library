@@ -25,7 +25,6 @@
         </h1></span
       ></a
     >
-
     <div>
       <ul class="table-body menu-img z-depth-5"></ul>
     </div>
@@ -76,7 +75,7 @@
         return Math.floor(Math.random() * Math.floor(htmSearchList.length));
       };
       var rndPage = htmSearchList[htmNum()];
-      console.log(rndPage + "...");
+      alert(rndPage + "...");
       function updatePage() {
         localStorage.setItem("htmSearch", rndPage);
         document.getElementById("indexSEO").innerHTML =
@@ -89,7 +88,6 @@
           alert(rndPage + "(" + drop + ")");
           alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
-
           serverside("getScriptUrl")
             .then((cChange) => {
               console.log(typeof cChange + " with length = " + cChange.length);
@@ -129,7 +127,6 @@
           alert(rndPage + "(" + drop + ")");
           alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
-
           serverside("getScriptUrl")
             .then((cChange) => {
               console.log(typeof cChange + " with length = " + cChange.length);

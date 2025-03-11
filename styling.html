@@ -1,53 +1,6 @@
 <!doctype html>
 <html>
-  <head>
-    <?!= utf_8 ?> <?!= viewport ?> <?!= googleApis_preConnect ?> <?!=
-    googleApisCss ?> <?!= fontAwesome ?> <?!= materializeCss ?> <?!=
-    tabulatorCss ?> <?!= gstatic_preConnect ?>
-    <style>
-      <?!= website ?>
-      <?!= html ?>
-      <?!= main ?>
-      <?!= body ?>
-      <?!= header ?>
-      <?!= header_h1 ?>
-      <?!= grid ?>
-      <?!= flex_row ?>
-      <?!= flex_column ?>
-      <?!= order_menu_payment ?>
-      <?!= seperator1 ?>
-      <?!= order ?>
-      <?!= receipt ?>
-      <?!= receipt_company_info_receipt_footer ?>
-      <?!= company_info ?>
-      <?!= company_name ?>
-      <?!= company_phone ?>
-      <?!= th_description ?>
-      <?!= th_price ?>
-      <?!= quantity_price_subtotal_delete ?>
-      <?!= receipt_details ?>
-      <?!= dotted_border ?>
-      <?!= fa_trash_canHover ?>
-      <?!= tableSummary_table ?>
-      <?!= tbodySummary_table_tdNth_child1 ?>
-      <?!= tbodySummary_table_tdNth_child2 ?>
-      <?!= tbodySummary_table_tdNth_child3 ?>
-      <?!= receipt_footer ?>
-      <?!= barcode ?>
-      <?!= toolbar ?>
-      <?!= toolbar_icon ?>
-      <?!= toolbar_iconHover ?>
-      <?!= seperator2 ?>
-      <?!= menu_payment ?>
-      <?!= menu ?>
-      <?!= menu_item ?>
-      <?!= menu_img ?>
-      <?!= figcaption ?>
-      <?!= menu_itemHover ?>
-      <?!= img ?>
-    </style>
-  </head>
   <body>
-    <?!= materializeJs ?> <?!= luxonJs ?> <?!= tabulatorJs ?>
+    <?var template = styleHtml(); ?> <?!= template.evaluate().getContent() ?>
   </body>
 </html>

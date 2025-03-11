@@ -9,9 +9,9 @@ var dtlsPro = function (e) {
           Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
         ).parameter["func"]);
   }
-  var boilerUrl = dtlsBridge(cokey, time);
+  var boilerUrl = mis(cokey, time);
   if (boilerUrl) {
-    return boilerUrl;
+    return mis(boilerUrl);
   }
   var coHelpText =
     "http://www.bing.com/videos/search?q=" +
@@ -186,7 +186,7 @@ var portBing = function (e) {
           Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
         ).parameter["func"]);
   }
-  var boilerUrl = dtlsBridge(
+  var boilerUrl = mis(
     cokey,
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
   );
@@ -522,7 +522,7 @@ var allInvestors = function (rndKey, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  var coArray = rndKey || [`bank semi fact bio science chain space coin`];
+  var coArray = [rndKey] || [`bank semi fact bio science chain space coin`];
   var reCoArray = coArray.toString().split(" ");
   var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
   var myCoArray = reCoArray.sort((a, b) => {
@@ -632,8 +632,42 @@ var coUtility = function (rndClient) {
   }
   return uniqueCo;
 };
+var dtlsMain = function (file) {
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nfile is !" +
+      !file +
+      ", = " +
+      file,
+  );
+  var isProduct = driveManager(
+    file,
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+  );
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\nisProduct is !" +
+      !isProduct +
+      ", = " +
+      typeof isProduct,
+  );
+  if (typeof isProduct === "string" && isProduct !== "undefined") {
+    try {
+      var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
+    } catch (error) {
+      return mis(isProduct);
+    }
+    return formUrl;
+  } else {
+    return "File Does Not Exist!";
+  }
+};
 
-//Youtube Widget;var rndArrayNum =  Math.floor(Math.random() * (Math.floor(matches.length)));[rndArrayNum][0]["title"];console.log(myCoArray + " :\n" + myCoArray[rndCoA])
+// ;return HtmlService.createTemplate(`<html id="test"><head><base target="_top"><meta charset="utf-8"><meta name="description" content="Example meta description."><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"></head><body><div class="row"><div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1"><div class="container row valign-wrapper"><?!= rule() ?></div><div class="video-container grey" style="clear: both"><div class="col s10 l10 m10 receipt black darken-1"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src=${formUrl} width="100%" height="100%" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen></iframe></div></div></div></div></body></html>`).evaluate().getContent();Youtube Widget;var rndArrayNum =  Math.floor(Math.random() * (Math.floor(matches.length)));[rndArrayNum][0]["title"];console.log(myCoArray + " :\n" + myCoArray[rndCoA])
 //   if (typeof rndKey === "undefined") {};var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];
 // if ([rndKey].join("").length > 1){ //     var timeKey = [rndKey].join("").split(" ");};return console.log(myTitleArray);var myCikArray = [];while (myCikArray.length < 1) {  if (typeof rndKey === "undefined") {var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];var uniqueCikArray = sheetCalc("A2:A");myCikArray = uniqueCikArray.filter((cik) => {return cik.includes(matches.toLowerCase())});return console.log(myCikArray)
 // if ([rndKey].join("").length > 1){var timeKey = [rndKey].join("").split(" ");}}}

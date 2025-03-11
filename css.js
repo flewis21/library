@@ -1,66 +1,6 @@
 function styleHtml() {
-  var startPageUrl = getUrl(ScriptApp) + "?default";
-  var content = HtmlService.createTemplate(`
-    <!DOCTYPE html>
-      <html>
-        <head>
-          <?!= utf_8 ?>
-          <?!= viewport ?>
-          <?!= googleApis_preConnect ?>
-          <?!= googleApisCss ?>
-          <?!= fontAwesome ?>
-          <?!= materializeCss ?>
-          <?!= tabulatorCss ?>
-          <?!= gstatic_preConnect ?>
-          <style>
-            <?!= website ?>
-            <?!= html ?>
-            <?!= main ?>
-            <?!= body ?>
-            <?!= header ?>
-            <?!= header_h1 ?>
-            <?!= grid ?>
-            <?!= flex_row ?>
-            <?!= flex_column ?>
-            <?!= order_menu_payment ?>
-            <?!= seperator1 ?>
-            <?!= order ?>
-            <?!= receipt ?>
-            <?!= receipt_company_info_receipt_footer ?>
-            <?!= company_info ?>
-            <?!= company_name ?>
-            <?!= company_phone ?>
-            <?!= th_description ?>
-            <?!= th_price ?>
-            <?!= quantity_price_subtotal_delete ?>
-            <?!= receipt_details ?>
-            <?!= dotted_border ?>
-            <?!= fa_trash_canHover ?>
-            <?!= tableSummary_table ?>
-            <?!= tbodySummary_table_tdNth_child1 ?>
-            <?!= tbodySummary_table_tdNth_child2 ?>
-            <?!= tbodySummary_table_tdNth_child3 ?>
-            <?!= receipt_footer ?>
-            <?!= barcode ?>
-            <?!= toolbar ?>
-            <?!= toolbar_icon ?>
-            <?!= toolbar_iconHover ?>
-            <?!= seperator2 ?>
-            <?!= menu_payment ?>
-            <?!= menu ?>
-            <?!= menu_item ?>
-            <?!= menu_img ?>
-            <?!= figcaption ?>
-            <?!= menu_itemHover ?>
-            <?!= img ?>
-          </style>
-        </head>
-        <body>
-          <?!= materializeJs ?>
-          <?!= luxonJs ?>
-          <?!= tabulatorJs ?>
-        </body>
-      </html>`);
+  const startPageUrl = getUrl(ScriptApp) + "?default";
+  const content = {};
   content.utf_8 = HtmlService.createHtmlOutput(
     `
     <meta charset="UTF-8">`,
@@ -124,6 +64,10 @@ function styleHtml() {
   content.tabulatorJs = HtmlService.createHtmlOutput(
     `
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>`,
+  ).getContent();
+  content.jsQuery = HtmlService.createHtmlOutput(
+    `
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
   ).getContent();
   content.website = HtmlService.createHtmlOutput(
     `
@@ -338,12 +282,115 @@ function styleHtml() {
     `
     img {width: 160px;}`,
   ).getContent();
+  content.startPageUrl = startPageUrl;
+  return content;
+} //:contentFile('uiAccess');
+
+var builtStyling = function () {
+  var content = styleHtml();
+  var frame = frameHtml();
+
+  var htmlString = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      ${content.utf_8}
+      ${content.viewport}
+      ${content.googleApis_preConnect}
+      ${content.googleApisCss}
+      ${content.fontAwesome}
+      ${content.materializeCss}
+      ${content.jsQuery}
+      ${content.tabulatorCss}
+      ${content.gstatic_preConnect}
+      <style>
+        ${content.website}
+        ${content.html}
+        ${content.main}
+        ${content.body}
+        ${content.header}
+        ${content.header_h1}
+        ${content.grid}
+        ${content.flex_row}
+        ${content.flex_column}
+        ${content.order_menu_payment}
+        ${content.seperator1}
+        ${content.order}
+        ${content.receipt}
+        ${content.receipt_company_info_receipt_footer}
+        ${content.company_info}
+        ${content.company_name}
+        ${content.company_phone}
+        ${content.th_description}
+        ${content.th_price}
+        ${content.quantity_price_subtotal_delete}
+        ${content.receipt_details}
+        ${content.dotted_border}
+        ${content.fa_trash_canHover}
+        ${content.tableSummary_table}
+        ${content.tbodySummary_table_tdNth_child1}
+        ${content.tbodySummary_table_tdNth_child2}
+        ${content.tbodySummary_table_tdNth_child3}
+        ${content.receipt_footer}
+        ${content.barcode}
+        ${content.toolbar}
+        ${content.toolbar_icon}
+        ${content.toolbar_iconHover}
+        ${content.seperator2}
+        ${content.menu_payment}
+        ${content.menu}
+        ${content.menu_item}
+        ${content.menu_img}
+        ${content.figcaption}
+        ${content.menu_itemHover}
+        ${content.img}
+      </style>
+    </head>
+    <body>
+    <div id="iframePlayer"></div>
+      ${content.materializeJs}
+      ${content.luxonJs}
+      ${content.tabulatorJs}
+      <script>
+        ${HtmlService.createTemplate(frame.iframePlayer).evaluate().getContent()}
+      </script>
+    </body>
+  </html>
+  `;
+  return HtmlService.createHtmlOutput(htmlString).asTemplate();
+};
+
+var frameHtml = function (file, argsArray) {
+  const content = {};
   content.iframePlayer = function () {
-    tag = document.createElement("script");
+    const myObj = {
+      appJS: function serverSide(func, args) {
+        "use strict";
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.error(error);
+              reject(error);
+            })
+            .runBoilerplate(func, args);
+        });
+      },
+    };
+    // Expose serverSide to the global scope or a specific namespace
+    if (!window && !window.myApp) {
+      window.myApp = {};
+    }
+    window.myApp.serverSide = myObj.appJS; // Or, if you have a namespace
+    // : myApp.serverSide
+    // = serverSide;
+    const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName("script")[0];
+    const firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    var iframePlayer;
+    let iframePlayer;
     function onYouTubeIframeAPIReady() {
       iframePlayer = new YT.Player("iframePlayer", {
         height: "505",
@@ -364,27 +411,27 @@ function styleHtml() {
         },
         events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
       });
-    }
-    function onPlayerReady(event) {
-      event.target.playVideo();
-    }
-    var done = false;
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        setTimeout(playVideo);
-        // done = true;
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+      const done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          setTimeout(playVideo); // done
+          // = true;
+        }
+      }
+      function stopVideo() {
+        iframePlayer.stopVideo();
+      }
+      function playVideo() {
+        iframePlayer.playVideo();
+      }
+      function nextVideo() {
+        iframePlayer.nextVideo();
       }
     }
-    function stopVideo() {
-      iframePlayer.stopVideo();
-    }
-    function playVideo() {
-      iframePlayer.playVideo();
-    }
-    function nextVideo() {
-      iframePlayer.nextVideo();
-    }
+    return myObj;
   };
-  content.startPageUrl = startPageUrl;
-  return content.evaluate().getContent();
-} //:contentFile('uiAccess');
+  return content;
+};

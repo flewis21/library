@@ -190,7 +190,7 @@ var needUtility = function (rndClient, arrD, time) {
   // console.log("needUtility: \n" + client + " is a:  \n" + typeof [client].join("") + ", and is " + [client].join("").length + " characters in length")
   var uniqueCo = [];
   if (typeof client !== "undefined" && [client].join("").length > 0) {
-    // console.log("needUtility: \n" + [client].join("").length + " is greater than " + 0)
+    // console.log("needUtility: \n" + [client].join("").length + " is greater than " + 0);
     var seoTitle = seoSheet(client, time).keyWords;
     console.log(
       "needUtility: \nvar " + seoTitle + " = seoSheet(" + client,
@@ -200,8 +200,8 @@ var needUtility = function (rndClient, arrD, time) {
     var improvedTitle = [];
     improvUI.map((r) => {
       for (var i = 0, l = r.length; i < l; i++) {
-        // var elaspeTime = new Date() - time
-        // console.log("r[i]: " + r[i] + "\nelaspeTime: " + elaspeTime)
+        // var elaspeTime
+        // = new Date() - time;console.log("r[i]: " + r[i] + "\nelaspeTime: " + elaspeTime)
         if (r.indexOf(",") === -1 && r.indexOf("can\u0027t") === -1) {
           improvedTitle.push(r);
           if (i == 5) {
@@ -218,13 +218,51 @@ var needUtility = function (rndClient, arrD, time) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
-      console.log(
-        " + needUtility: \nvar " +
-          coName +
-          " = allTime("[rndTitle2].join("").toLowerCase(),
-        arrD,
-        time + ")",
-      );
+      try {
+        if (Array.isArray(rndTitle2)) {
+          console.log(
+            " + needUtility: \nvar " +
+              coName +
+              " = allTime(" +
+              rndTitle2.join("").toLowerCase(),
+            arrD,
+            time + ")",
+          );
+        } else if (typeof rndTitle2 === "string" && rndTitle2) {
+          console.log(
+            " + needUtility: \nvar " +
+              coName +
+              " = allTime(" +
+              rndTitle2.toLowerCase(),
+            arrD,
+            time + ")",
+          );
+        }
+      } catch (error) {
+        var rndTitle2 = [error][
+          Math.floor(Math.random() * Math.floor([error].length))
+        ];
+        var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
+        if (Array.isArray(rndTitle2)) {
+          console.log(
+            " + needUtility: \nvar " +
+              coName +
+              " = allTime(" +
+              rndTitle2.join("").toLowerCase(),
+            arrD,
+            time + ")",
+          );
+        } else if (typeof rndTitle2 === "string" && rndTitle2) {
+          console.log(
+            " + needUtility: \nvar " +
+              coName +
+              " = allTime(" +
+              rndTitle2.toLowerCase(),
+            arrD,
+            time + ")",
+          );
+        }
+      }
     } else {
       var coName = allTime(null, arrD, time);
       console.log(
@@ -241,14 +279,13 @@ var needUtility = function (rndClient, arrD, time) {
       time + ")",
     );
   }
-  if (typeof coName["title"] === "undefined") {
+  if (coName && coName.hasOwnProperty("title") && !coName["title"]) {
     uniqueCo.push({
-      rndTitle: coName["title"],
       videoItem: coName["rndVideoId"],
       videoItemUrl: coName["videoUrl"],
       playlistArr: coName["videoPlaylist"],
     });
-  } else {
+  } else if (coName && coName.hasOwnProperty("title") && coName["title"]) {
     uniqueCo.push({
       rndTitle: coName["title"],
       videoItem: coName["rndVideoId"],
@@ -346,9 +383,8 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
     var sortNewArr = newArr.sort((a, b) => a - b)[
       Math.floor(Math.random() * newArr.length)
     ];
-    return {
-      myNewArr: sortNewArr,
-    };
+    // return console.log({myNewArr: sortNewArr});
+    return { myNewArr: sortNewArr };
     console.log();
   }
 };

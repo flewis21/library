@@ -503,22 +503,25 @@ var testArray = function (content) {
   // console.log(json.length)
   var pathArray = [];
   // console.log(pathArray);
-  for (var i = 0; i < json.length; i++) {
-    pathArray.push([JSON.stringify(i).split("/")]);
-    // console.log(json[i])
+  try {
+    for (var i = 0; i < json.length; i++) {
+      pathArray.push([JSON.stringify(i).split("/")]);
+      // console.log(json[i])
+    }
+  } catch (error) {
+    // console.log(pathArray);
+    // var json = content;
+    // var tempObj = dataRowIndex(json, 0, 0)
+    //   json = forData(tempObj)
+    // var jsonTestObj = dataRowIndex(json[1], 0, 0)
+    // console.log(jsonTestObj)
+    // var tempArr = [];
+    // for (var obj in content) {
+    //     tempArr.push([obj, content]);
+    // }
+    return pathArray;
+    // console.log(tempArr)
   }
-  // console.log(pathArray);
-  // var json = content;
-  // var tempObj = dataRowIndex(json, 0, 0)
-  //   json = forData(tempObj)
-  // var jsonTestObj = dataRowIndex(json[1], 0, 0)
-  // console.log(jsonTestObj)
-  // var tempArr = [];
-  // for (var obj in content) {
-  //     tempArr.push([obj, content]);
-  // }
-  return pathArray;
-  // console.log(tempArr)
 };
 
 var testData = function (sourceData, time) {

@@ -669,23 +669,28 @@ var randomTickerXpath = function (rnum) {
 };
 
 var randomUtility = function (e, arrD, time) {
-  // var utilStr = skyNeed(namedVar, time)
-  // var utilSubst = randomSubstance(0,4,namedVar,time)
+  // var utilStr
+  // = skyNeed(namedVar, time);var utilSubst
+  // = randomSubstance(0,4,namedVar,time)
   var rndObj = needUtility([e].join(" "), arrD, time)[0];
   console.log(
     "randomUtility: \nvar " + rndObj + " = needUtility(" + [e].join(" "),
     arrD,
     time + ")[0]",
   );
-  return {
-    playlist: rndObj.playlistArr,
-    cik: rndObj.rndCik,
-    ticker: rndObj.rndTicker,
-    title: rndObj.rndTitle,
-    secData: rndObj.secUrl,
-    youtubeID: rndObj.videoItem,
-    youtubVideo: rndObj.videoItemUrl,
-  };
+  if (rndObj) {
+    return {
+      playlist: rndObj.playlistArr,
+      cik: rndObj.rndCik,
+      ticker: rndObj.rndTicker,
+      title: rndObj.rndTitle,
+      secData: rndObj.secUrl,
+      youtubeID: rndObj.videoItem,
+      youtubVideo: rndObj.videoItemUrl,
+    };
+  } else {
+    return;
+  }
 };
 
 function videoSEC() {

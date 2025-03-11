@@ -4,27 +4,46 @@
     <base target="_top" />
   </head>
   <body>
-    <p>Select a Google Doc:</p>
-    <select id="docSelect">
-      <? var files = DriveApp.searchFiles('mimeType =
-      "application/vnd.google-apps.document"'); ?> <? while (files.hasNext()) {
-      ?> <? var file = files.next(); ?>
-      <option id="myOptions" value="<?= file.getId() ?>">
-        <?= file.getName() ?>
-      </option>
-      <? var fileUrl = file.getUrl() ?> <? } ?>
-    </select>
-
-    <? var eFolder = DriveApp.getFoldersByName("SDTLC").next() ?> <? var
-    folderFile = eFolder.getFilesByName("Code Editor") ?> <? var dataTree = []
-    ?> <? while (folderFile.hasNext()) { var myFile = folderFile.next() var
-    currentFileUrl = myFile.getUrl(); dataTree.push(currentFileUrl) } ?> <? var
-    rndFiled = Math.floor(Math.random() * (Math.floor(dataTree.length))) ?> <?
-    var filed = dataTree[rndFiled] ?>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field col s12">
+            <select id="templateSelect">
+              <option value="" disabled selected>Choose a Template Doc</option>
+              <? var files = DriveApp.searchFiles('mimeType =
+              "application/vnd.google-apps.document"'); ?> <? while
+              (files.hasNext()) { ?> <? var file = files.next(); ?>
+              <option value="<?= file.getUrl() ?>">
+                <?= file.getName() ?>
+              </option>
+              <? } ?>
+            </select>
+            <label for="templateSelect">Select a Google Doc</label>
+          </div>
+        </div>
+        <div class="col s12"><p id="selectedDoc">Selected Document ID:</p></div>
+        <div class="col s12">
+          <button class="btn" id="openDocButton" disabled>Open Document</button>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
         <div class="video-container" style="clear: both">
           <div class="col s12 receipt deep-purple darken-1">
+            <form id="myForm" style="display: none"></form>
+            <iframe
+              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+              id="player1"
+              src=""
+              width="100%"
+              height="100%"
+              allow="autoplay"
+              allow="encrypted-media"
+              title="Dontime Life Website"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
             <iframe
               class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
               id="editorFrame"
@@ -42,9 +61,21 @@
       </div>
     </div>
     <script>
-      document,addEventListener("DOMContentLoaded", pageScript);
-      function pageScript() {
-        document.getElementById("editorFrame").src = <?= JSON.stringify(fileUrl) ?>
+      function serverside(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)})};
+      var edIf
+        = document.getElementById("editorFrame")
+      var edSrc
+        = document.getElementById("templateSelect").value
+      document.getElementById("templateSelect").addEventListener("change", function()=>{
+        edIf.src
+          = edSrc})
     </script>
   </body>
 </html>

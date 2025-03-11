@@ -376,6 +376,18 @@ var driveVideoFormsFilter = function (filterFiles) {
   return filedMain;
 };
 
+var driveDocBrowser = function () {
+  var files = DriveApp.searchFiles(
+    'mimeType = "application/vnd.google-apps.document"',
+  );
+  var docsList = [];
+  while (files.hasNext()) {
+    var file = files.next();
+    docsList.push(file.getUrl());
+  }
+  return docsList;
+};
+
 var driveDocForms = function () {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
@@ -750,23 +762,7 @@ var fbTester = function () {
 };
 
 var fileFold = function (folderX, fileX, time) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      folderX +
-      ", = " +
-      !folderX +
-      "\n!" +
-      fileX +
-      ", = " +
-      !fileX +
-      "\n!" +
-      time +
-      ", = " +
-      !time,
-  );
+  // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
   var elapsedTime = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
   var fileFree = [];
   if (

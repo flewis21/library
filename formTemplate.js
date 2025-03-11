@@ -488,27 +488,24 @@ var dtlsEnvironment = function (e, time) {
   form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
   form.setTitle(coInfo).setConfirmationMessage("Thanks for your feedback !!");
   var url = form.getPublishedUrl();
-  return geneFrame(url);
-  return HtmlService.createTemplate(
-    `<div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="video-container" style="clear: both">
-    <div class="col s12 receipt deep-purple darken-1">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="${url}" 
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div></div>`,
-  )
-    .evaluate()
-    .getContent();
+  return url;
+  // return HtmlService.createTemplate(
+  //   `<div class="row">
+  //   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+  //   <div class="video-container" style="clear: both">
+  //   <div class="col s12 receipt deep-purple darken-1">
+  //   <iframe
+  //     class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+  //     src="${url}"
+  //     width="100%"
+  //     height="100%"
+  //     allow="autoplay"
+  //     allow="encrypted-media"
+  //     title="Dontime Life Website"
+  //     frameborder="0"
+  //     allowfullscreen
+  //     ></iframe>
+  //   </div></div></div></div>`).evaluate().getContent()
 };
 
 var dtlsInvestor = function (coKey, time) {
@@ -585,63 +582,29 @@ var dtlsInvestor = function (coKey, time) {
         .setConfirmationMessage("Thanks for your feedback !!");
       var url = form.getPublishedUrl();
       return url;
-      return HtmlService.createTemplate(
-        `<div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="video-container" style="clear: both">
-    <div class="col s12 receipt deep-purple darken-1">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src="${url}" 
-      width="100%"
-      height="100%"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div></div>`,
-      )
-        .evaluate()
-        .getContent();
+      // return HtmlService.createTemplate(
+      // <div class="row">
+      // <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+      // <div class="video-container" style="clear: both">
+      // <div class="col s12 receipt deep-purple darken-1">
+      // <iframe
+      //   class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+      //   src="${url}"
+      //   width="100%"
+      //   height="100%"
+      //   allow="autoplay"
+      //   allow="encrypted-media"
+      //   title="Dontime Life Website"
+      //   frameborder="0"
+      //   allowfullscreen
+      //   ></iframe>
+      // </div></div></div></div>
+      // ).evaluate().getContent()
     }
   } else {
     return dtlsEnviroment(coData.rndTitle);
   }
 };
-
-var dtlsMain = function (file) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nfile is !" +
-      !file +
-      ", = " +
-      file,
-  );
-  var isProduct = driveManager(
-    file,
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-  );
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nisProduct is !" +
-      !isProduct +
-      ", = " +
-      typeof isProduct,
-  );
-  if (typeof isProduct === "string" && isProduct !== "undefined") {
-    var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
-    return formUrl;
-  } else {
-    return "File Does Not Exist!";
-  }
-};
-// ;return HtmlService.createTemplate(`<html id="test"><head><base target="_top"><meta charset="utf-8"><meta name="description" content="Example meta description."><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"></head><body><div class="row"><div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1"><div class="container row valign-wrapper"><?!= rule() ?></div><div class="video-container grey" style="clear: both"><div class="col s10 l10 m10 receipt black darken-1"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src=${formUrl} width="100%" height="100%" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen></iframe></div></div></div></div></body></html>`).evaluate().getContent();
 
 var dtlsResearchForm = function (topic) {
   var cokey;

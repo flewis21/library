@@ -1,7 +1,7 @@
-var dtlsPict = function (e, time) {
-  e
-    ? e
-    : (e = objectOfS(
+var dtlsPict = function (snap, time) {
+  snap
+    ? snap
+    : (snap = objectOfS(
         ["parameter"],
         [[["func", arguments.callee.name]]],
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
@@ -10,48 +10,46 @@ var dtlsPict = function (e, time) {
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      e +
+      "\nsnap is !" +
+      !snap +
       ", = " +
-      !e +
-      "\n!" +
-      time +
+      snap +
+      "\ntime is !" +
+      !time +
       ", = " +
-      !time,
+      time,
   );
   if (typeof time === "undefined") {
-    var time = start;
+    var time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
   }
   var allTitleData = [];
   var atdCount = 0;
-  // if (typeof e === "undefined") {
-  while (allTitleData.length === 0) {
-    var uiArr = matchManager("pictForms", time);
+  var maxIterations = 100; // if (typeof snap === "undefined") {
+  while (allTitleData.length === 0 && atdCount < maxIterations) {
+    var uiArr = matchManager("pictForms", snap, time);
     for (var key in uiArr) {
       if (uiArr[key]) {
-        console.log("dtlsPict: \n" + key.valueOf());
-      }
-      if (uiArr[key].length > 0) {
-        if (e) {
-          [uiArr[key]][0].map((or) => {
-            if (
-              [or]
-                .toString()
-                .toLowerCase()
-                .includes([e].toString().toLowerCase()) &&
-              [or].indexOf("[") === -1
-            ) {
-              allTitleData.push(or);
-              // console.log("dtlsPict: \n[" + or + "].toString().toLowerCase().includes([" + e + "].toString().toLowerCase()): " + [or].toString().toLowerCase().includes([e].toString().toLowerCase()))
-            }
-          });
-        } else {
-          [uiArr[key]][0].map((or) => {
-            if ([or].join("").indexOf("[") === -1) {
-              allTitleData.push(or);
-              // console.log("dtlsPict: \nallTitleData.push(" + or + ")")
-            }
-          });
+        // console.log("dtlsPict: \n" + key.valueOf())
+        if (uiArr[key].length > 0) {
+          if (snap) {
+            [uiArr[key]][0].map((or) => {
+              if (
+                [or]
+                  .toString()
+                  .toLowerCase()
+                  .includes([snap].toString().toLowerCase()) &&
+                [or].indexOf("[") === -1
+              ) {
+                allTitleData.push(or); // console.log("dtlsPict: \n[" + or + "].toString().toLowerCase().includes([" + snap + "].toString().toLowerCase()): " + [or].toString().toLowerCase().includes([snap].toString().toLowerCase()))
+              }
+            });
+          } else {
+            [uiArr[key]][0].map((or) => {
+              if ([or].join("").indexOf("[") === -1) {
+                allTitleData.push(or); // console.log("dtlsPict: \nallTitleData.push(" + or + ")")
+              }
+            });
+          }
         }
       }
     }
@@ -78,22 +76,17 @@ var dtlsPict = function (e, time) {
       Math.floor([arrPoint].length) +
       "))",
   );
-  e = [arrPoint][rndFilePoint];
-  console.log("dtlsPict: \n" + e + " = [arrPoint][" + rndFilePoint + "]");
+  snap = [arrPoint][rndFilePoint];
+  console.log("dtlsPict: \n" + snap + " = [arrPoint][" + rndFilePoint + "]");
   var arrData = coSort(time).title;
   console.log("dtlsPict: \nvar arrData = coSort(" + time + ").title");
-  var utilNeed = randomUtility(e, arrData, time).title;
-  return console.log(
-    "dtlsPict: \nvar " + utilNeed + " = randomUtility(" + e,
-    arrData,
-    time + ").title",
-  );
-  // }
-  var search = [e].join("");
-  return console.log(
-    "dtlsPict: \nvar isProduct = formsUrls(" + search.toLowerCase(),
-    "pictForms" + ")",
-  );
+  var tempNeed = randomUtility(snap, arrData, time);
+  if (tempNeed) {
+    var utilNeed = tempNeed.title;
+  }
+  // return console.log("dtlsPict: \nvar " + utilNeed + " = randomUtility(" + snap,arrData,time + ").title")// }
+  var search = [snap].join("");
+  // return console.log("dtlsPict: \nvar isProduct = formsUrls(" + search.toLowerCase(), "pictForms" + ")");
   var isProduct = formsUrls(search.toLowerCase(), "pictForms");
   if (typeof isProduct === "string" && typeof isProduct !== "undefined") {
     // console.log("dtlsPictL \n")
@@ -106,7 +99,7 @@ var dtlsPict = function (e, time) {
     return formUrl;
   }
   var time = start;
-  var cokey = e || utilNeed;
+  var cokey = snap || utilNeed;
   if (cokey) {
     console.log("dtlsPict: \nvar boilerUrl = dtlsBridge(" + cokey, time + ")");
     var boilerUrl = dtlsBridge(cokey, time);
@@ -116,14 +109,13 @@ var dtlsPict = function (e, time) {
   }
   var coHelpText =
     "http://www.bing.com/images/search?q=" +
-    encodeURIComponent(e) +
+    encodeURIComponent(snap) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   console.log(
     "dtlsPict: \nisProduct = formsUrls(" + [cokey].join("").toLowerCase(),
     "pictForms" + ")",
   );
-  isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms");
-  // console.log("Receiving from formUrls a(n) - " + typeof isProduct)
+  isProduct = formsUrls([cokey].join("").toLowerCase(), "pictForms"); // console.log("Receiving from formUrls a(n) - " + typeof isProduct)
   if (typeof isProduct === "string" && isProduct !== "undefined") {
     console.log(
       "dtlsPict: \nDeclaring formUrl = FormApp.openByUrl(" +
@@ -132,9 +124,9 @@ var dtlsPict = function (e, time) {
     );
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
-  }
-  // var utiStr = skyNeed(cokey, time)
-  // var utiSeo = pastSeo(utiStr, time)
+  } // var utiStr
+  // = skyNeed(cokey, time);var utiSeo
+  // = pastSeo(utiStr, time)
   console.log(
     "dtlsPict: \nDeclaring seoArray = seoPictTime(" + [cokey].join(""),
     time + ")",
@@ -146,18 +138,15 @@ var dtlsPict = function (e, time) {
     time + ")",
   );
   var seoArrayVid = seoPastTime([cokey].join(""), time);
-  var utiVid = seoArrayVid.playList;
-  // console.log("Receiving from seoPictTime - ")
+  var utiVid = seoArrayVid.playList; // console.log("Receiving from seoPictTime - ")
   return console.log(
     "dtlsPict: \nDeclaring form = formMaker(" + [cokey].join("").toUpperCase(),
     "pictForms",
     time + ")",
   );
   var form = formMaker([cokey].join("").toUpperCase(), "pictForms", time);
-
   if (typeof form === "object") {
     // fileManager(form.getId(), "videoForms", time)
-
     form
       .addTextItem()
       .setTitle("CUSTOM SEARCH")
@@ -177,11 +166,8 @@ var dtlsPict = function (e, time) {
         console.log("Receiving from join - " + pieceStr);
         if (pieceStr) {
           var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
-          // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
-          form.addPageBreakItem().setTitle([cokey].join(""));
-          // form.addSectionHeaderItm().setTitle(pieceStr.split('"'))
-
+          var timeToExecute = maxTime - elaspeTime; // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+          form.addPageBreakItem().setTitle([cokey].join("")); // form.addSectionHeaderItm().setTitle(pieceStr.split('"'))
           form.addDateItem().setHelpText("(DATE)");
           form
             .addSectionHeaderItem()
@@ -242,14 +228,12 @@ var dtlsPict = function (e, time) {
             .setHelpText("SPECIAL EQUIPMENT\n BOX\n\n\n\n\n");
           form.addParagraphTextItem();
           console.log("calling UrlFetchApp with " + JSON.stringify(pieceStr));
-
           form
             .addImageItem()
             .setTitle(cokey + " storyboard")
             .setImage(UrlFetchApp.fetch(pieceStr))
             .setWidth(1012)
             .setAlignment(FormApp.Alignment.CENTER);
-
           form.addTextItem().setHelpText("scene no.").setRequired(true);
           form.addTextItem().setHelpText("int/ext").setRequired(true);
           form.addTextItem().setHelpText("day/night").setRequired(true);

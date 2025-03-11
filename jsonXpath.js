@@ -445,11 +445,15 @@ var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
       !url,
   );
   const jsonData = urlDataSource(url);
-  const testIndex = splitX(
-    JSON.parse(sliceValues(jsonData, indexParsed)),
-    xpath,
-    delimiter,
-  );
+  try {
+    const testIndex = splitX(
+      JSON.parse(sliceValues(jsonData, indexParsed)),
+      xpath,
+      delimiter,
+    );
+  } catch (error) {
+    return;
+  }
   // const arrayObjData = testArray(testIndex)
   const objTest = forArray(testIndex);
   const dataHeaders = splitX(sliceValues(objTest, index), xpath, delimiter);

@@ -47,201 +47,80 @@ var driveManager = function (strNw, time) {
   }
 };
 var matchManager = function (folderX, narrow, time) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nfolderX is !" +
-      !folderX +
-      ", = " +
-      folderX +
-      "\nnarrow is !" +
-      !narrow +
-      ", = " +
-      narrow +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
   var arn = [narrow || testlt()].toString().toLowerCase();
   var xFolder = [];
-  var appTree = [];
-  var pngTree = [];
-  var pdfTree = [];
-  var docList = [];
-  var formList = [];
-  var slideList = [];
-  var sheetList = [];
-  while (
-    appTree.length === 0 &&
-    pngTree.length === 0 &&
-    pdfTree.length === 0 &&
-    docList.length === 0 &&
-    formList.length === 0 &&
-    slideList.length === 0 &&
-    sheetList.length === 0
-  ) {
-    if (typeof folderX === "undefined") {
-      var allFolders = folderManager();
-      allFolders.map((folderX) => {
-        xFolder.push(folderX);
-      });
+  var appTree = [],
+    pngTree = [],
+    pdfTree = [],
+    docList = [],
+    formList = [],
+    slideList = [],
+    sheetList = [];
+  var iterationCount = 0;
+  var maxiterations = 10;
+  if (typeof folderX === "undefined") {
+    var allFolders = folderManager();
+    allFolders.map((folderX) => {
+      xFolder.push(folderX);
+    });
+  }
+  var folderRoot = DriveApp.getFoldersByName(folderX || xFolder.toString());
+  if (folderRoot.hasNext()) {
+    var eFolder = folderRoot.next();
+    var eFoldId = eFolder.getId();
+    var folderFiles = eFolder.getFiles();
+    var filesArray = [];
+    while (folderFiles.hasNext()) {
+      filesArray.push(folderFiles.next());
     }
-    var folderRoot = DriveApp.getFoldersByName(folderX || xFolder.toString());
-    if (folderRoot.hasNext()) {
-      var eFolder = DriveApp.getFoldersByName(folderX).next();
-      var eFoldId = eFolder.getId();
-      var folderFiles = eFolder.getFiles();
-      if (folderX === "Forms") {
-        var folderDocs = eFolder.getFilesByType(MimeType.GOOGLE_DOCS);
-        if (folderDocs.hasNext()) {
-          while (folderDocs.hasNext()) {
-            var fileMim = folderDocs.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              docList.push(fileMim);
-            }
+    while (
+      appTree.length === 0 &&
+      pngTree.length === 0 &&
+      pdfTree.length === 0 &&
+      docList.length === 0 &&
+      formList.length === 0 &&
+      slideList.length === 0 &&
+      sheetList.length === 0 &&
+      iterationCount < maxiterations
+    ) {
+      filesArray.forEach(function (file) {
+        var fileMim = file.getName().toLowerCase();
+        var mimeType = file.getMimeType();
+        if (fileMim.includes(arn)) {
+          if (mimeType === MimeType.GOOGLE_DOCS) {
+            docList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
+            slideList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_SHEETS) {
+            sheetList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_FORMS) {
+            formList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+            appTree.push(file.getName());
+          } else if (mimeType === MimeType.PNG) {
+            pngTree.push(file.getName());
+          } else if (mimeType === MimeType.PDF) {
+            pdfTree.push(file.getName());
+          }
+        } else {
+          if (mimeType === MimeType.GOOGLE_DOCS) {
+            docList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
+            slideList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_SHEETS) {
+            sheetList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_FORMS) {
+            formList.push(file.getName());
+          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+            appTree.push(file.getName());
+          } else if (mimeType === MimeType.PNG) {
+            pngTree.push(file.getName());
+          } else if (mimeType === MimeType.PDF) {
+            pdfTree.push(file.getName());
           }
         }
-      } else if (folderX === "Forms") {
-        var folderSlides = eFolder.getFilesByType(MimeType.GOOGLE_SLIDES);
-        if (folderSlides.hasNext()) {
-          while (folderSlides.hasNext()) {
-            var fileMim = folderSlides.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              slideList.push(fileMim);
-            }
-          }
-        }
-      } else if (folderX === "Sheets") {
-        var folderSheets = eFolder.getFilesByType(MimeType.GOOGLE_SHEETS);
-        if (folderSheets.hasNext()) {
-          while (folderSheets.hasNext()) {
-            var fileMim = folderSheets.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              sheetList.push(fileMim);
-            }
-          }
-        }
-      } else if (folderX === "Forms") {
-        var folderForms = eFolder.getFilesByType(MimeType.GOOGLE_FORMS);
-        if (folderForms.hasNext()) {
-          while (folderForms.hasNext()) {
-            var fileMim = folderForms.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              formList.push(fileMim);
-            }
-          }
-        }
-      } else if (folderX === "Forms") {
-        var folderApps = eFolder.getFilesByType(MimeType.GOOGLE_APPS_SCRIPT);
-        if (folderApps.hasNext()) {
-          while (folderApps.hasNext()) {
-            var fileMim = folderApps.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              appTree.push(fileMim);
-            }
-          }
-        }
-      } else if (folderX === "Forms") {
-        var folderPng = eFolder.getFilesByType(MimeType.PNG);
-        if (folderPng.hasNext()) {
-          while (folderPng.hasNext()) {
-            var fileMim = folderPng.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              pngTree.push(fileMim);
-            }
-          }
-        }
-      } else if (folderX === "Forms") {
-        var folderPdf = eFolder.getFilesByType(MimeType.PDF);
-        if (folderPdf.hasNext()) {
-          while (folderPdf.hasNext()) {
-            var fileMim = folderPdf.next().getName();
-            var coLate = fileMim.toLowerCase();
-            if (coLate.includes(arn)) {
-              pdfTree.push(fileMim);
-            }
-          }
-        }
-      } else {
-        var folderDocs = eFolder.getFilesByType(MimeType.GOOGLE_DOCS);
-        if (folderDocs.hasNext()) {
-          while (folderDocs.hasNext()) {
-            var docMim = folderDocs.next().getName();
-            var docLate = docMim.toLowerCase();
-            if (docLate.includes(arn)) {
-              docList.push(docMim);
-            }
-          }
-        }
-        var folderSlides = eFolder.getFilesByType(MimeType.GOOGLE_SLIDES);
-        if (folderSlides.hasNext()) {
-          while (folderSlides.hasNext()) {
-            var slidesMim = folderSlides.next().getName();
-            var slidesLate = slidesMim.toLowerCase();
-            if (slidesLate.includes(arn)) {
-              slideList.push(slidesMim);
-            }
-          }
-        }
-        var folderSheets = eFolder.getFilesByType(MimeType.GOOGLE_SHEETS);
-        if (folderSheets.hasNext()) {
-          while (folderSheets.hasNext()) {
-            var sheetMim = folderSheets.next().getName();
-            var sheetLate = sheetMim.toLowerCase();
-            if (sheetLate.includes(arn)) {
-              sheetList.push(sheetMim);
-            }
-          }
-        }
-        var folderForms = eFolder.getFilesByType(MimeType.GOOGLE_FORMS);
-        if (folderForms.hasNext()) {
-          while (folderForms.hasNext()) {
-            var formMim = folderForms.next().getName();
-            var formLate = formMim.toLowerCase();
-            if (formLate.includes(arn)) {
-              formList.push(formMim);
-            }
-          }
-        }
-        var folderApps = eFolder.getFilesByType(MimeType.GOOGLE_APPS_SCRIPT);
-        if (folderApps.hasNext()) {
-          while (folderApps.hasNext()) {
-            var gsMim = folderApps.next().getName();
-            var gsLate = gsMim.toLowerCase();
-            if (gsLate.includes(arn)) {
-              appTree.push(gsMim);
-            }
-          }
-        }
-        var folderPng = eFolder.getFilesByType(MimeType.PNG);
-        if (folderPng.hasNext()) {
-          while (folderPng.hasNext()) {
-            var pngMim = folderPng.next().getName();
-            var pngLate = pngMim.toLowerCase();
-            if (pngLate.includes(arn)) {
-              pngTree.push(pngMim);
-            }
-          }
-        }
-        var folderPdf = eFolder.getFilesByType(MimeType.PDF);
-        if (folderPdf.hasNext()) {
-          while (folderPdf.hasNext()) {
-            var pdfMim = folderPdf.next().getName();
-            var pdfLate = pdfMim.toLowerCase();
-            if (pdfLate.includes(arn)) {
-              pdfTree.push(pdfMim);
-            }
-          }
-        }
-      }
+      });
     }
     return {
       docs: docList,
@@ -252,6 +131,18 @@ var matchManager = function (folderX, narrow, time) {
       pngs: pngTree,
       pdfs: pdfTree,
       fderX: xFolder,
+    };
+  } else {
+    console.warn("Folder " + folderX + "not found");
+    return {
+      docs: [],
+      slides: [],
+      sheets: [],
+      forms: [],
+      apps: [],
+      pngs: [],
+      pdfs: [],
+      fderX: [],
     };
   }
 };

@@ -5,44 +5,11 @@ var appList = function () {
       arguments.callee.name,
   );
   return HtmlService.createTemplate(
-    `
-  <html id="appList">
-    <head>
-      <base target="_top">
-      <meta charset="utf-8">
-      <meta name="appList" content="Boilerplate Function List">
-      <meta name=viewport content="width=device-width, initial-scale=1">
-      <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-      <style>
+    `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
         a:link, a:visited {color:black !important;}
         a:hover, a:active{ 
           color:white  !important;
-          text-decoration:none  !important;}
-      </style>
-    </head>
-    <body>
-    <? var appList = appSort(9) ?>
-    <? var dropList = appList.map((item) => {
-        return "<option>" + item + "</option>"
-    }).join("") ?>
-    <? var result = JSON.stringify(dropList) ?>
-    <? var appUrl = getUrl(ScriptApp) + "?func=" ?>
-      <div class="row">
-      <div class="col s12 l12 m12 card-panel amber receipt">
-      <div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData">
-      <label id="indexLab">
-        <strong>Research</strong>
-      </label>
-      <div id="indexDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
-      <table class="striped centered highlight responsive-table amber z-depth-5">
-        <thead>
-        </thead>
-        <tbody>
-          <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <td style="vertical-align: top;text-align: left">
-              <table class="striped centered highlight responsive-table amber z-depth-5">
-                <tbody>
-                  <td id="tdIndexRes" style="width: 705px; height: 405px; padding: 0;">
+          text-decoration:none  !important;}</style></head><body><? var nber = randNum(arguments.callee.caller.name) ?><? var appList = appSort(nber) ?><? var dropList = appList.map((item) => {return "<option>" + item + "</option>"}).join("") ?><? var result = JSON.stringify(dropList) ?><? var appUrl = getUrl(ScriptApp) + "?func=" ?><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="indexLab"><strong>Research</strong></label><div id="indexDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdIndexRes" style="width: 705px; height: 405px; padding: 0;">
                     <iframe 
                       class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
                       src=""
@@ -53,56 +20,8 @@ var appList = function () {
                       title="Dontime Life Website"
                       frameborder="0"
                       allowfullscreen
-                      ></iframe>
-                  </td>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="row">
-        <div class="col s12 card-panel l12 m12 receipt red">
-          <div class="container">
-          <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt">
-            <div class="col s12 l12 m12 receipt red">
-              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="homeIndex"  type="search" />
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div></div></div>
-      <div class="row">
-        <div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in receipt" style="font-size: 30px">
-          <div class="container">
-            <div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1">
-              <div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt col s12">
-                <span>
-                  <input placeholder="Your Search Here Ex. apple,orange..." class="flow-text menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-      <div class="col s12 l12 m12 card-panel amber receipt">
-      <div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData">
-      <label id="tubeLab">
-        <strong>Research</strong>
-      </label>
-      <div id="tubeDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
-      <table class="striped centered highlight responsive-table amber z-depth-5">
-        <thead>
-        </thead>
-        <tbody>
-          <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <td style="vertical-align: top;text-align: left">
-              <table class="striped centered highlight responsive-table amber z-depth-5">
-                <tbody>
-                  <td id="tdTubeRes" style="width: 705px; height: 405px; padding: 0;">
+                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red">
+              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="homeIndex"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in receipt" style="font-size: 30px"><div class="container"><div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1"><div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt col s12"><span><input placeholder="Your Search Here Ex. apple,orange..." class="flow-text menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/></span></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="tubeLab"><strong>Research</strong></label><div id="tubeDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdTubeRes" style="width: 705px; height: 405px; padding: 0;">
                     <iframe 
                       class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
                       src=""
@@ -113,43 +32,7 @@ var appList = function () {
                       title="Dontime Life Website"
                       frameborder="0"
                       allowfullscreen
-                      ></iframe>
-                  </td>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="row">
-        <div class="col s12 card-panel l12 m12 receipt red">
-          <div class="container">
-          <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt">
-            <div class="col s12 l12 m12 receipt red">
-              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="tubeSearch"  type="search" />
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div></div></div>
-      <div class="row">
-      <div class="col s12 l12 m12 card-panel amber receipt">
-      <div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData">
-      <label id="bingLab">
-        <strong>Research</strong>
-      </label>
-      <div id="bingDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
-      <table class="striped centered highlight responsive-table amber z-depth-5">
-        <thead>
-        </thead>
-        <tbody>
-          <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <td style="vertical-align: top;text-align: left">
-              <table class="striped centered highlight responsive-table amber z-depth-5">
-                <tbody>
-                  <td id="tdBingRes" style="width: 705px; height: 405px; padding: 0;">
+                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="tubeSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="bingLab"><strong>Research</strong></label><div id="bingDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBingRes" style="width: 705px; height: 405px; padding: 0;">
                   <iframe 
                     class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
                     src=""
@@ -160,43 +43,7 @@ var appList = function () {
                     title="Dontime Life Website"
                     frameborder="0"
                     allowfullscreen
-                    ></iframe>
-                  </td>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="row">
-        <div class="col s12 card-panel l12 m12 receipt red">
-          <div class="container">
-          <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt">
-            <div class="col s12 l12 m12 receipt red">
-              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="bingSearch"  type="search" />
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div></div></div>
-      <div class="row">
-      <div class="col s12 l12 m12 card-panel amber receipt">
-      <div class="menu-img btn-large valign-wrapper col s12 darken-0 receipt amber" id="seoData">
-      <label id="busLab">
-        <strong>Research</strong>
-      </label>
-      <div id="busDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center">
-      <table class="striped centered highlight responsive-table amber z-depth-5">
-        <thead>
-        </thead>
-        <tbody>
-          <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <td style="vertical-align: top;text-align: left">
-              <table class="striped centered highlight responsive-table amber z-depth-5">
-                <tbody>
-                  <td id="tdBusRes" style="width: 705px; height: 405px; padding: 0;">
+                    ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="bingSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 darken-0 receipt amber" id="seoData"><label id="busLab"><strong>Research</strong></label><div id="busDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBusRes" style="width: 705px; height: 405px; padding: 0;">
                   <iframe 
                     class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
                     src=""
@@ -207,263 +54,116 @@ var appList = function () {
                     title="Dontime Life Website"
                     frameborder="0"
                     allowfullscreen
-                    ></iframe>
-                  </td>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="row">
-        <div class="col s12 card-panel l12 m12 receipt red">
-          <div class="container">
-          <div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt">
-            <div class="col s12 l12 m12 receipt red">
-              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" />
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div></div></div>
-      <script>
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-                resolve(result)})
-            .withFailureHandler((error) => {
-                reject(error)})
-            .runBoilerplate(func, args)})};
-        var homeSearch = document.getElementById("homeIndex");
-        homeSearch.addEventListener("change",(e) => {
-          const strValue = homeSearch.value
-          var cap = e.target.value
-          document.getElementById("homeIndex").value = ""
-          document.getElementById("indexLab").innerText = "... waiting for " + strValue
-          serverside("mis", [cap])
-          .then((vid) => {
-            if (vid) {
-              // User clicked "No" or X in the title bar.
-              document.getElementById("indexLab").innerText = ""
-              if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {
-                          document.getElementById("indexRes").src = vid}
-              else {
-                document.getElementById("tdIndexRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}})
-          .catch((er) => {
-            console.log(er)
-            document.getElementById("indexLab").innerText = er})})
-        homeSearch.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {
-          const strValue = homeSearch.value
-            if (!strValue) {
-              document.getElementById("indexLab").innerText = "... Loading"
-              serverside("mis")
-              .then((stream) => {
-                if (stream) {
-                  document.getElementById("indexLab").innerText = ""
-                  if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {
-                              document.getElementById("indexRes").src = stream}
-                  else {
-                    document.getElementById("indexRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}
-                else {
-                  document.getElementById("indexLab").innerText =  e}})
-              .catch((er) => {
-                console.log(er)
-                document.getElementById("indexLab").innerText = er})}}})
-        var tube = document.getElementById("tubeSearch")
-        tube.addEventListener("change",(e) => {
-          const strValue = tube.value
-          var cap = e.target.value
-          document.getElementById("tubeSearch").value = ""
-          document.getElementById("tubeLab").innerText = "... waiting for " + strValue
-          serverside("mis", [cap])
-          .then((vid) => {
-            if (vid) {
-              // User clicked "No" or X in the title bar.
-              document.getElementById("tubeLab").innerText = ""
-              if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {
-                          document.getElementById("tubeRes").src = vid}
-              else {
-                document.getElementById("tdTubeRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}})
-          .catch((er) => {
-            console.log(er)
-            document.getElementById("tubeLab").innerText =  er})})
-        tube.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {
-          const strValue = tube.value
-          if (!strValue) {
-            document.getElementById("tubeLab").innerText = "... Loading"
-            serverside("mis")
-            .then((stream) => {
-              if (stream) {
-                document.getElementById("tubeLab").innerText = ""
-                if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {
-                            document.getElementById("tubeRes").src = stream}
-                else {
-                  document.getElementById("tdTubeRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}
-              else {
-                document.getElementById("tubeLab").innerText =  e}})
-            .catch((er) => {
-              console.log(er)
-              document.getElementById("tubeLab").innerText =  er})}}})
-        var bing = document.getElementById("bingSearch")
-        bing.addEventListener("change",(e) => {
-          const strValue = bing.value
-          var cap = e.target.value
-          document.getElementById("bingSearch").value = ""
-          document.getElementById("bingLab").innerText = "... waiting for " + strValue
-          serverside("mis", [cap])
-          .then((vid) => {
-            if (vid) {
-              // User clicked "No" or X in the title bar.
-              document.getElementById("bingLab").innerText = ""
-              if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {
-                          document.getElementById("bingRes").src = vid}
-              else {
-                document.getElementById("tdBingRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}})
-          .catch((er) => {
-            console.log(er)
-            document.getElementById("bingLab").innerText =  er})})
-        bing.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {
-          const strValue = bing.value
-            if (!strValue) {
-              document.getElementById("bingLab").innerText = "... Loading"
-              serverside("mis")
-              .then((stream) => {
-                if (stream) {
-                  document.getElementById("bingLab").innerText = ""
-                  if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {
-                              document.getElementById("bingRes").src = stream}
-                  else {
-                    document.getElementById("tdBingRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}
-                else {
-                  document.getElementById("bingLab").innerText =  e}})
-              .catch((er) => {
-                console.log(er)
-                document.getElementById("bingLab").innerText =  er})}}})
-        var busn = document.getElementById("busSearch")
-        busn.addEventListener("change",(e) => {
-          const strValue = busn.value
-          var cap = e.target.value
-          document.getElementById("busSearch").value = ""
-          document.getElementById("busLab").innerText = "... waiting for " + strValue
-          serverside("mis", [cap])
-          .then((html) => {
-            if (html) {
-              // User clicked "No" or X in the title bar.
-              document.getElementById("busLab").innerText = ""
-              if (html.length === 99 || html.length ===94 || html.length === 83 || html.length ===97 || html.length ===101 || html.length ===103 || html.length ===136 || html.length ===132 || html.indexOf("&entry") > -1) {
-                          document.getElementById("busRes").src = html}
-              else {
-                document.getElementById("tdBusRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + html + '</div></body></html>'}}})
-          .catch((er) => {
-            console.log(er)
-            document.getElementById("busLab").innerText =  er})})
-        busn.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {
-            const strValue = busn.value
-            if (!strValue) {
-              document.getElementById("busLab").innerText = "... Loading"
-              serverside("mis")
-              .then((stream) => {
-                if (stream) {
-                  document.getElementById("busLab").innerText = ""
-                  if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {
-                              document.getElementById("busRes").src = stream}
-                  else {
-                    document.getElementById("tdBusRes").innerHTML = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}
-                else {
-                  document.getElementById("busLab").innerText =  e}})
-              .catch((er) => {
-                console.log(er)
-                document.getElementById("busLab").innerText =  er})}}})
-        var appSearch = document.getElementById("uiApp")
-        appSearch.addEventListener("change",(e) => {
-          const bar = appSearch.value || "";
-          document.getElementById("uiApp").value = ""
-          serverside("mis", [bar])
-          .then((cChange) => {
-              if (cChange) {
-                // console.log(cChange)
-            var cBlinkFollow = document.createElement("a");
-            if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {
-              cBlinkFollow.href = cChange;}
-            cBlinkFollow.id = "cBlinkFOLLOW";
-            cBlinkFollow.target = "_blank";
-            document.body.appendChild(cBlinkFollow);
-          document.getElementById("cBlinkFOLLOW").click();
-          document.getElementById("cBlinkFOLLOW").remove()}})
-          .catch((er) => {
-            console.log(er)})
-          serverside("mis", [bar])
-          .then((cChange) => {
-              if (cChange) {
-                // console.log(cChange)
-            var cdtlinkFollow = document.createElement("a");
-            if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {
-              cdtlinkFollow.href = cChange;}
-            cdtlinkFollow.id = "cdtlinkFOLLOW";
-            cdtlinkFollow.target = "_blank";
-            document.body.appendChild(cdtlinkFollow);
-          document.getElementById("cdtlinkFOLLOW").click();
-          document.getElementById("cdtlinkFOLLOW").remove()}})
-          .catch((er) => {
-            console.log(er)})
-          serverside("mis", [bar])
-          .then((cChange) => {
-              if (cChange) {
-                // console.log(cChange)
-            var gwilinkFollow = document.createElement("a");
-            if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {
-              gwilinkFollow.href = cChange;}
-            gwilinkFollow.id = "gwilinkFOLLOW";
-            gwilinkFollow.target = "_blank";
-            document.body.appendChild(gwilinkFollow);
-          document.getElementById("gwilinkFOLLOW").click();
-          document.getElementById("gwilinkFOLLOW").remove()}})
-          .catch((er) => {
-            console.log(er)})
-          serverside("mis", [bar])
-          .then((cChange) => {
-              if (cChange) {
-                // console.log(cChange)
-            var hlinkFollow = document.createElement("a");
-            if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {
-              hlinkFollow.href = cChange;}
-            hlinkFollow.id = "hlinkFOLLOW";
-            hlinkFollow.target = "_blank";
-            document.body.appendChild(hlinkFollow);
-          document.getElementById("hlinkFOLLOW").click();
-          document.getElementById("hlinkFOLLOW").remove()}})
-          .catch((er) => {
-            console.log(er)})})
-        appSearch.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {}})
-          function onUserClick(bar) {
-            var foo = "mis";
-            var oulinkFollow = document.createElement("a");
-            oulinkFollow.href = <?= appUrl ?> + foo + "&args=" + bar;
-            oulinkFollow.id = "oulinkFOLLOW";
-            oulinkFollow.target = "_blank";
-            document.body.appendChild(oulinkFollow);}
-          function openTheForm(bar) {
-            onUserClick(bar)
-            document.getElementById("oulinkFOLLOW").click();
-            document.getElementById("uiApp").value = ""
-            document.getElementById("oulinkFOLLOW").remove()};
-      </script>
-    </body>
-  </html>
-  `,
+                    ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" /></div></div></div></div></div></div></div></div><script>function serverside(func, args) {return new Promise((resolve, reject) => {google.script.run.withSuccessHandler((result) => {resolve(result)}).withFailureHandler((error) => {reject(error)}).runBoilerplate(func, args)})};var homeSearch 
+  = document.getElementById("homeIndex");homeSearch.addEventListener("change",(e) => {const strValue 
+  = homeSearch.value;var cap 
+  = e.target.value;document.getElementById("homeIndex").value 
+  = "";document.getElementById("indexLab").innerText 
+  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
+  // User clicked "No" or X in the title bar.
+  document.getElementById("indexLab").innerText 
+  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
+  = vid}else {document.getElementById("tdIndexRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
+  = er})});homeSearch.addEventListener('keypress', function(event) {
+  // If the user preses the "Enter" key on the keyboard. 
+  if (event.key === "Enter")  {const strValue 
+  = homeSearch.value;if (!strValue) {document.getElementById("indexLab").innerText 
+  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("indexLab").innerText 
+  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
+  = stream}else {document.getElementById("indexRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("indexLab").innerText 
+  =  e}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
+  = er})}}});var tube 
+  = document.getElementById("tubeSearch");tube.addEventListener("change",(e) => {const strValue 
+  = tube.value;var cap 
+  = e.target.value;document.getElementById("tubeSearch").value 
+  = "";document.getElementById("tubeLab").innerText 
+  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
+ // User clicked "No" or X in the title bar.
+  document.getElementById("tubeLab").innerText 
+  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
+  = vid}else {document.getElementById("tdTubeRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
+  =  er})});tube.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+  if (event.key === "Enter")  {const strValue 
+  = tube.value;if (!strValue) {document.getElementById("tubeLab").innerText 
+  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("tubeLab").innerText 
+  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
+  = stream}else {document.getElementById("tdTubeRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("tubeLab").innerText 
+  =  e}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
+  =  er})}}});var bing 
+  = document.getElementById("bingSearch");bing.addEventListener("change",(e) => {const strValue 
+  = bing.value;var cap 
+  = e.target.value;document.getElementById("bingSearch").value 
+  = "";document.getElementById("bingLab").innerText 
+  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {// User clicked "No" or X in the title bar.
+  document.getElementById("bingLab").innerText 
+  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
+  = vid}else {document.getElementById("tdBingRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
+  =  er})});bing.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+  if (event.key === "Enter")  {const strValue 
+  = bing.value;if (!strValue) {document.getElementById("bingLab").innerText 
+  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("bingLab").innerText 
+  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
+  = stream}else {document.getElementById("tdBingRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("bingLab").innerText 
+  =  e}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
+  =  er})}}});var busn 
+  = document.getElementById("busSearch");busn.addEventListener("change",(e) => {const strValue 
+  = busn.value;var cap 
+  = e.target.value;document.getElementById("busSearch").value 
+  = "";document.getElementById("busLab").innerText 
+  = "... waiting for " + strValue;serverside("mis", [cap]).then((html) => {if (html) {// User clicked "No" or X in the title bar.
+  document.getElementById("busLab").innerText 
+  = "";if (html.length === 99 || html.length ===94 || html.length === 83 || html.length ===97 || html.length ===101 || html.length ===103 || html.length ===136 || html.length ===132 || html.indexOf("&entry") > -1) {document.getElementById("busRes").src 
+  = html}else {document.getElementById("tdBusRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + html + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
+  =  er})});busn.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+  if (event.key === "Enter")  {const strValue
+  = busn.value;if (!strValue) {document.getElementById("busLab").innerText 
+  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("busLab").innerText 
+  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("busRes").src 
+  = stream}else {document.getElementById("tdBusRes").innerHTML 
+  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("busLab").innerText 
+  =  e}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
+  =  er})}}});var appSearch 
+  = document.getElementById("uiApp");appSearch.addEventListener("change",(e) => {const bar 
+  = e.target.value || "";document.getElementById("uiApp").value 
+  = "";serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+  var cBlinkFollow 
+  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cBlinkFollow.href 
+  = cChange;};cBlinkFollow.id 
+  = "cBlinkFOLLOW";cBlinkFollow.target 
+  = "_blank";document.body.appendChild(cBlinkFollow);document.getElementById("cBlinkFOLLOW").click();document.getElementById("cBlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+  var cdtlinkFollow 
+  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cdtlinkFollow.href 
+  = cChange;};cdtlinkFollow.id 
+  = "cdtlinkFOLLOW";cdtlinkFollow.target 
+  = "_blank";document.body.appendChild(cdtlinkFollow);document.getElementById("cdtlinkFOLLOW").click();document.getElementById("cdtlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+  var gwilinkFollow 
+  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {gwilinkFollow.href 
+  = cChange;};gwilinkFollow.id 
+  = "gwilinkFOLLOW";gwilinkFollow.target 
+  = "_blank";document.body.appendChild(gwilinkFollow);document.getElementById("gwilinkFOLLOW").click();document.getElementById("gwilinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+  var hlinkFollow 
+  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {hlinkFollow.href 
+  = cChange;};hlinkFollow.id 
+  = "hlinkFOLLOW";hlinkFollow.target 
+  = "_blank";document.body.appendChild(hlinkFollow);document.getElementById("hlinkFOLLOW").click();document.getElementById("hlinkFOLLOW").remove()}}).catch((er) => {alert(er)})});appSearch.addEventListener('keypress', function(event) {var bar
+  appSearch.addEventListener("change",(e) => {bar 
+  = e.target.value || "";var foo 
+  = [];alert(foo);var content 
+  = [];alert(content);var argsObject 
+  = serverside("misSt", [bar]).then((res)=>{return JSON.stringify(res)}).catch((er)=>{alert(er)})})// If the user preses the "Enter" key on the keyboard. 
+  if (event.key === "Enter")  {serverside(foo, [content]).then((cChange) => {alert(cChange);var oulinkFollow 
+  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {oulinkFollow.href 
+  = cChange;};oulinkFollow.id 
+  = "oulinkFOLLOW";oulinkFollow.target 
+  = "_blank";document.body.appendChild(oulinkFollow);document.getElementById("oulinkFOLLOW").click();document.getElementById("uiApp").value 
+  = "";document.getElementById("oulinkFOLLOW").remove()}).catch((er) => {alert(er)})}})</script></body></html>`,
   )
     .evaluate()
     .getContent();
@@ -624,7 +324,7 @@ var contentFile = function (file, argsObject) {
   }
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .getContent();
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -667,6 +367,154 @@ var include = function (file, argsObject) {
     .getDataAsString();
 };
 
+var defSBD = function (e) {
+  var args = [
+    `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
+  ]
+    .toString()
+    .split(" ")[
+    Math.floor(
+      Math.random() *
+        Math.floor(
+          [
+            `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
+          ]
+            .toString()
+            .split(" ").length,
+        ),
+    )
+  ];
+  try {
+    if (!globalThis.hasOwnProperty(e.parameter["func"])) {
+      // Get the actual function
+      var foobarr = globalThis.renderFile;
+      return renderTemplate(
+        `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+          body {
+            flex-grow: 1;
+            color:blue;
+            text-decoration:bold;
+            flex-flow: row wrap;
+            grid-column: 1;
+            grid-row: 1;
+            text-align: center;
+            align-content: flex-start;
+            overflow: auto;
+          }</style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {var pagE 
+  = document.getElementById("pageObj");pagE.innerHTML 
+  = <?= JSON.stringify(e) ?>}</script></html>`,
+        {
+          renBlob: contentApp(
+            `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+            body {
+              flex-grow: 1;
+              color:blue;
+              text-decoration:bold;
+              flex-flow: row wrap;
+              grid-column: 1;
+              grid-row: 1;
+              text-align: center;
+              align-content: flex-start;
+              overflow: auto;
+            }</style></head><body><div id="coApp"><?= appL ?></div><div class="row"><div class="col s7 l7 m7 card-panel push-m2 push-s2 push-l2"><div class="video-container"> 
+                <iframe 
+                  src=""
+                  id="indexBeta"
+                  width="100%"
+                  height="100%"
+                  allow="autoplay"
+                  allow="encrypted-media"
+                  title="Dontime Life Website"
+                  frameborder="0"
+                  allowfullscreen
+                  ></iframe></div></div></div><script>console.log("script is working");var coDaApp 
+  = document.getElementById("coApp");var inDaApp 
+  = document.getElementById("indexBeta");console.log(<?= appL ?>);if (typeof <?= appL ?> !== 'undefined') {console.log(<?= appL.length ?>);if (<?= vUrl(appL) ?>) {coDaApp.innerHTML 
+  = "";inDaApp.src 
+  = "<?= appL ?>"}else {inDaApp.src 
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
+            { appL: globalThis[foobarr].apply(this, [args]) },
+          ),
+          e: e,
+        },
+        args,
+      );
+    }
+  } catch (error) {
+    throw new Error(
+      "File not found and global function does not exist: " + foobarr,
+    );
+  }
+};
+var freeSBD = function (func) {
+  try {
+    if (typeof globalThis[func] == "function") {
+      // Get the actual function
+      var foobarr = globalThis[func];
+      return renderTemplate(
+        `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+            body {
+              flex-grow: 1;
+              color:blue;
+              text-decoration:bold;
+              flex-flow: row wrap;
+              grid-column: 1;
+              grid-row: 1;
+              text-align: center;
+              align-content: flex-start;
+              overflow: auto;
+            }</style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {
+          var pagE 
+            = document.getElementById("pageObj");}</script></html>`,
+        {
+          renBlob: contentApp(
+            `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+            body {
+              flex-grow: 1;
+              color:blue;
+              text-decoration:bold;
+              flex-flow: row wrap;
+              grid-column: 1;
+              grid-row: 1;
+              text-align: center;
+              align-content: flex-start;
+              overflow: auto;
+            }</style></head><body><div id="coApp"><?= appL ?></div><div class="row"><div class="col s7 l7 m7 card-panel push-m2 push-s2 push-l2"><div class="video-container"> 
+                <iframe 
+                  src=""
+                  id="indexBeta"
+                  width="100%"
+                  height="100%"
+                  allow="autoplay"
+                  allow="encrypted-media"
+                  title="Dontime Life Website"
+                  frameborder="0"
+                  allowfullscreen
+                  ></iframe></div></div></div><script>console.log("script is working");var coDaApp 
+  = document.getElementById("coApp");var inDaApp 
+  = document.getElementById("indexBeta");console.log(<?= appL ?>);if (typeof <?= appL ?> !== 'undefined') {console.log(<?= appL.length ?>);if (<?= vUrl(appL) ?>) {coDaApp.innerHTML 
+  = "";inDaApp.src 
+  = "<?= appL ?>"}else {inDaApp.src 
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
+            { appL: globalThis[func](), vUrl: isValidUrl },
+          ),
+        },
+        foobarr,
+      );
+    } else {
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    Logger.log("Error creating template from function: " + error);
+    throw new Error(
+      "Could not create template from file or function: " + foobarr,
+    );
+  }
+};
+
 var includeApp = function (blob, argsObject) {
   const tmp = HtmlService.createHtmlOutput(blob);
   if (argsObject) {
@@ -699,8 +547,7 @@ var includeBlob = function (file, argsObject) {
         tmp[key] = argsObject[key];
       });
       // tmp["list"] = htmlListArray;
-    } // END IF
-    // Route[file] = argsObject
+    } // END IF;Route[file] = argsObject
     return tmp
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
@@ -708,31 +555,134 @@ var includeBlob = function (file, argsObject) {
 };
 
 var includeGSFile = function (file, argsArray) {
-  return renderTemplate(`<?!= appJS ?>`, {
-    appJS: async function () {
-      const serverSide = function (func, args) {
+  var misStArrayFile = misSt(file, argsArray)
+    ? console.log("misStArrayFile = " + typeof misStArrayFile)
+    : console.error("misStArrayFile = " + typeof misStArrayFile);
+  var misStArrayArgs = misSt(argsArray)
+    ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
+    : console.error("misStArrayArgs = " + typeof misStArrayArgs);
+  if (misStArrayFile.args) {
+    var fileNames = misStArrayFile.args;
+    if (fileNames) {
+      file = [fileNames][0];
+    } else {
+      file = testlt();
+    }
+  } // else if (misStArrayArgs.args) {var fileNames
+  // = misStArrayArgs.args;file
+  // = [fileNames][0]}argsArray
+  // = [fileNames].slice(1).toString().replace(/,/g, " ")var funcNames
+  // =  misStArray.func;
+  var tmp = {};
+  var myApp = {
+    appJS: () => {
+      function serverSide(func, args) {
+        "use strict";
         return new Promise((resolve, reject) => {
           google.script.run
             .withSuccessHandler((result) => {
               resolve(result);
             })
             .withFailureHandler((error) => {
-              console.log(document.getElementById("test").innerHTML);
+              console.error(error);
               reject(error);
             })
-            .runAll(`boilerplate.${[func]}`, [args]);
+            .runBoilerplate(func, args);
         });
-      };
-      try {
-        if (file) {
-          const content = await serverSide(file, argsArray);
-          return content;
+      }
+      // Expose serverSide to the global scope or a specific namespace
+      window.serverSide = serverSide; // Or, if you have a namespace: myApp.serverSide = serverSide;
+      if (argsArray) {
+        // Optionally, if you want to run a specific function immediately:
+        // (If argsArray is not defined, you can omit the args)
+        if (file && typeof file === "string" && file.length > 0) {
+          // basic validation
+          if (argsArray && Array.isArray(argsArray)) {
+            const freeCall = serverSide(file, argsArray)
+              .then((result) => {
+                // Handle the result of the initial server-side call
+                console.log("Initial serverSide call result:", result);
+              })
+              .catch((error) => {
+                // Handle errors from the initial server-side call
+                console.error("Initial serverSide call error:", error);
+              })
+              ? console.log("freeCall = " + typeof freeCall)
+              : console.error("freeCall = " + typeof freeCall);
+          } else {
+            const defCall = serverSide(file)
+              .then((result) => {
+                console.log("Initial serverSide call result:", result);
+              })
+              .catch((error) => {
+                console.error("Initial serverSide call error:", error);
+              })
+              ? console.log("defCall = " + typeof defCall)
+              : console.error("defCall = " + typeof defCall);
+          }
         }
-      } catch (error_1) {
-        console.log(error_1);
       }
     },
-  });
+  };
+  try {
+    const keys = Object.keys(myApp);
+    keys.forEach(function (key) {
+      tmp[key] = [key];
+    })
+      ? console.log("keys = " + typeof keys)
+      : console.error("keys = " + typeof keys);
+  } catch (error) {
+    console.error(error);
+    return "Error in includeGSFile appJS " + error;
+  }
+  if (argsArray) {
+    try {
+      const keys = Object.keys(argsArray);
+      keys.forEach(function (key) {
+        tmp[key] = argsArray[key];
+      })
+        ? console.log("keys = " + typeof keys)
+        : console.error("keys = " + typeof keys);
+    } catch (error) {
+      console.error(error);
+      return "Error in includeGSFile args " + error;
+    }
+  }
+  try {
+    tmp = HtmlService.createTemplateFromFile(file)
+      ? console.log("tmp = " + typeof tmp)
+      : console.error("tmp = " + typeof tmp);
+  } catch (error) {
+    console.error(error);
+  }
+  Logger.log("Error creating template from file: " + error);
+  if (typeof globalThis[file] == "function") {
+    try {
+      var content = ContentService.createTextOutput(globalThis[file]())
+        .setMimeType(ContentService.MimeType.JSON)
+        .getContent()
+        ? console.log("content = " + typeof content)
+        : console.error("content = " + typeof content);
+      tmp = HtmlService.createTemplate(content)
+        ? console.log("tmp = " + typeof tmp)
+        : console.error("tmp = " + typeof tmp);
+    } catch (error1) {
+      console.error(error1);
+      Logger.log("Error creating template from function: " + error1);
+      throw new Error(
+        "Could not create template from file or function: " + file,
+      );
+    }
+  } else {
+    throw new Error(
+      "File not found and global function does not exist: " + file,
+    );
+  }
+  return tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT)
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+    .getContent();
 };
 
 var includeGSBlob = function (blob, argsArray) {
@@ -748,7 +698,9 @@ var includeGSBlob = function (blob, argsArray) {
   });
 };
 
-var includeRunIt = () => {};
+var includeRunIt = () => {
+  freeSBD("rndCoin");
+};
 
 var includeJs = function (blob, argsObject) {
   const tmp = HtmlService.createTemplate(blob);
@@ -791,10 +743,18 @@ var renderFile = function (file, argsObject, title) {
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      file +
+      "\nfile is !" +
+      !file +
       " = " +
-      !file,
+      file +
+      "\nargsObject is !" +
+      !argsObject +
+      " = " +
+      argsObject +
+      "\ntitle is !" +
+      !title +
+      " = " +
+      title,
   );
   try {
     if (file) {
@@ -1083,7 +1043,6 @@ var renderFile = function (file, argsObject, title) {
       return tmp
         .evaluate()
         .setTitle(title)
-        .append(funcCheck)
         .append(html)
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
@@ -1103,136 +1062,27 @@ var renderTemplate = function (blob, argsObject, title) {
       "\n" +
       arguments.callee.name,
   );
-  try {
-    const tmp = HtmlService.createTemplate(blob);
-    if (argsObject) {
+  const tmp = HtmlService.createTemplate(blob);
+  if (argsObject) {
+    try {
       const keys = Object.keys(argsObject);
       keys.forEach(function (key) {
         tmp[key] = argsObject[key];
       });
+    } catch (error) {
+      return "Error in renderTemplate tmp" + error;
     }
-    var funcCheck = appList();
-    var schedule = dateTime(new Date());
-    // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+  }
+  var funcCheck = appList();
+  var css = builtStyling();
+  var schedule = dateTime(new Date());
+  // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+  try {
     var html = contentApp(
       `
     <html id="renderTemplate">
       <head>
-        <base target="_top">
-        <meta charset="UTF-8">
-        <meta name="renderTemplate" content="Boilerplate Render Template">
-        <meta name=viewport content="width=device-width, initial-scale=1">
-        <meta name="contentApp" content="conveyance, power, authority, measured, assessed, subjective, interpretation, understanding, complex, phenomena, Social, Influence, beliefs, attitudes, behaviors, surveys, observations, social, science, research, methods, Compliance, Obedience, directives, Visible, Demonstrations, commands, decisions, resources, enforcing, rules, evidence, exercise, Contextual, Dependence, effectiveness, political, cultural, environment, Qualitative, Aspects, impact, involves, factors, respect, legitimacy, consent, difficult, quantify, precisely, Subjectivity, concepts, single, universally, agreed-upon, definition, constitutes, individuals, involved, values, observer">
-        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <meta content="739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com" name="google-signin-client_id"></meta>
-        <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
-        <script async="" defer="" src="https://apis.google.com/js/platform.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>
-        <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>
-        <style>
-        * {box-sizing: border-box;margin: 0;
-          padding: 0;font-family: "Roboto", sans-serif;}
-        html,
-        body {height: 100%;}
-        main {height: 92%;
-              margin-top: 10px;}
-        body {background-color: #ffc107;}
-        header {background-color: rgba(255,255,255,.1);
-                color: #a7e1ee;
-                font-size: smaller;}
-        header h1 {font-family: "Montserrat", cursive;
-                  margin-left: 15px;}
-        .grid {display: grid;}
-        .flex-row {display: flex;
-                  flex-direction: row;}
-        .flex-column {display: flex;
-                      flex-direction: column;}
-        .order,
-        .menu-payment {border: solid .5px;
-                      border-radius: 10px;
-                      margin: 0px 10px 5px 10px;
-                      height: 100%;
-                      max-height: 100%;}
-        /* -----------------------------------ORDER--------------------------- */
-        .order {background-color: white;
-                flex: 0 0 440px;
-                overflow: auto;}
-        .receipt {border: solid .5px;
-                  margin: 10px 15px 5px 15px;
-                  box-shadow: 3px 3px 2px rgb(3,3,3);
-                  user-select: none;
-                  flex-grow: 1;}
-        .receipt,
-        .company-info,
-        .receipt-footer {align-items: center;}
-        .company-info {margin-top: 5px;}
-        #company-name {font-size: 1.5rem;}
-        #company-phone {font-size: 1.25rem;}
-        th.description {width: 180px;
-                        text-align: left;}
-        th.price {width: 75px;}
-        .quantity,
-        .price,
-        .subtotal,
-        .delete {text-align: right;}
-        .receipt-details {margin-top: 10px;
-                          flex-grow: 1;}
-        .dotted-border {border-bottom: dotted 2px;}
-        .fa-trash-can:hover {transform: scale(1.2);}
-        table.summary-table {text-align: right;}
-        tbody.summary-table td:nth-child(1) {width: 277px;}
-        tbody.summary-table td:nth-child(2) {width: 75px;}
-        tbody.summary-table td:nth-child(3) {width: 25px;}
-        .receipt-footer {padding-top: 20px;}
-        #barcode {font-family: "Libre Barcode 128", cursive;
-                  font-size: 70px;
-                  margin-top: 10px;}
-        .toolbar {flex: 0 0 60px;
-                  justify-content: space-around;
-                  align-items: center;
-                  border: solid .5px;
-                  border-radius: 10px;
-                  margin: 0px 15px 5px 15px;}
-        .toolbar-icon {font-size: 2rem;}
-        .toolbar-icon:hover {transform: scale(1.2);}
-        /* ----------------------------Menu-Payment-------------------------- */
-        .menu-payment {background: rgba(255, 255, 255, .05);
-                      flex-grow: 1;
-                      z-index: 0;}
-        .menu {flex-flow: row wrap;
-              grid-column: 1;
-              grid-row: 1;
-              align-content: flex-start;
-              z-index: 0;
-              height: 100%;
-              overflow: auto;}
-        .menu-item {flex-flow: 
-                  column nowrap;
-                  flex-basis: auto;
-                  flex-shrink: 0;
-                  margin: 5px;
-                  background: rgba(255, 255, 255, .05);
-                  width: 150px;}
-        .menu-img {border-radius: 50%;
-                  max-width: 100%;
-                  height: auto;
-                  display: block;
-                  margin: auto;}
-        figcaption {color: white;
-                    text-align: center;
-                    user-select: none;}
-        .menu-item:hover>.menu-img {transform: scale(1.03);}
-        img {width: 160px;}
-        </style>
+        <?!= builtStyling().evaluate().getContent() ?>
       </head>
       <body>
       <div class="row">
@@ -1292,7 +1142,6 @@ var renderTemplate = function (blob, argsObject, title) {
         </tbody>
       </table>
       </div></div></div></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script>
           function serverside(func, args) {
           return new Promise((resolve, reject) => {
@@ -1302,6 +1151,99 @@ var renderTemplate = function (blob, argsObject, title) {
             .withFailureHandler(error => {
                 reject(error)})
             .runBoilerplate(func, args)})};
+          $(document).ready(function() {
+            $('select').formSelect();
+
+            $('#templateSelect').change(function() {
+              var selectedTemplateUrl 
+                = $(this).val();
+                if (selectedTemplateUrl) {
+                  $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+                  $("#myForm").show(); // Show the form only after template is loaded.
+                  $("#myForm").empty(); // Clear previous form fields.
+                  // 2. Dynamically create form fields based on template placeholders (requires server-side)
+                  serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+                    placeholders.forEach(function(placeholder) {
+                      var fieldName 
+                        = placeholder.replace(/{{|}}/g, ''); // Extract field name
+                      $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+                      $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+                    });
+                    $("#myForm").append("<button type='submit'>Submit</button>");
+
+
+                    $("#myForm").submit(function(event) {
+                      event.preventDefault();
+
+                      var formData 
+                        = $(this).serializeObject();
+                      serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+                        $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+                      }).catch((error)=>{
+                        console.error("Error:", error);
+                        $("#result").html("<p>Error creating document. Please check the logs.</p>");
+                      })
+
+                    });
+
+                  }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+                $("#editorFrame").prop("src", "");
+                $("#myForm").hide();}
+            });
+
+            $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+              var o 
+                = {};
+              var a 
+                = this.serializeArray();
+              $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                  if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                  }
+                  o[this.name].push(this.value || '');
+                } else {
+                  o[this.name] = this.value || '';
+                }
+              });
+              return o;
+            };
+          });
+        function submitDomain(formData) {
+          serverside("submitDomain", [formData])
+            .then(result => {
+              console.log("Server response:", result);
+              $("#successMessage").text(result); // Display success message
+            })
+            .catch(error => {
+              console.error("Error submitting domain:", error);
+              $("#errorMessage").text(error); // Display error message
+            });
+        }
+
+        $("#domainForm").submit(function(event) {
+          event.preventDefault();
+          const formData = $(this).serializeObject();
+          submitDomain(formData); // Call the function
+        });
+
+        function lookupDomain(searchTerm) {
+          serverside("lookupDomain", [searchTerm])
+            .then(results => {
+              console.log("Lookup results:", results);
+              displaySearchResults(results); // Display results
+            })
+            .catch(error => {
+              console.error("Error looking up domain:", error);
+              $("#errorMessage").text(error); // Display error message
+            });
+        }
+
+        $("#lookupButton").click(function() {
+          const searchTerm = $("#searchTerm").val();
+          lookupDomain(searchTerm);
+        });
+
         var busa = document.getElementById("artiicleIndex");
         var busx = document.getElementById("loadingLab");
         var busc = document.getElementById("contentDiv");
@@ -1325,7 +1267,11 @@ var renderTemplate = function (blob, argsObject, title) {
         <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
       </body>
-    </html>`,
+    </html>
+  <div id="result"></div>
+  <div id="successMessage"></div>
+  <div id="errorMessage"></div>
+  <table id="resultsTable"></table>`,
       {
         funcClicked: function () {
           //console.log(document.getElementById("test").innerHTML)
@@ -1399,17 +1345,15 @@ var renderTemplate = function (blob, argsObject, title) {
         },
       },
     );
-    return tmp
-      .evaluate()
-      .setTitle(title)
-      .append(funcCheck)
-      .append(html)
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
   } catch (error) {
-    console.log("error in renderTemplate: " + error);
-    return "Error rendering template.";
+    return "Error in rendertemplate html" + error;
   }
+  return tmp
+    .evaluate()
+    .setTitle(title)
+    .append(html)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 }; // or throw error.
 
 // Gets a cache that is common to all users of the script
@@ -1426,3 +1370,91 @@ var tagBuilder = function (content) {
 var threeTime = new Date(3 * 59.9 * 1000).getMilliseconds();
 
 var twoTime = new Date(2 * 59.9 * 1000).getMilliseconds();
+
+var wildSBD = function (e) {
+  var args = e.parameter["args"];
+  try {
+    if (
+      globalThis.hasOwnProperty(e.parameter["func"]) &&
+      typeof globalThis[e.parameter["func"]] === "function"
+    ) {
+      // Get the actual function
+      var foobarr = globalThis[e.parameter["func"]];
+      return renderTemplate(
+        `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+
+            body {
+
+              flex-grow: 1;
+              color:blue;
+              text-decoration:bold;
+              flex-flow: row wrap;
+              grid-column: 1;
+              grid-row: 1;
+              text-align: center;
+              align-content: flex-start;
+              overflow: auto;
+            }
+        </style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {
+          var pagE 
+            = document.getElementById("pageObj");
+          pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`,
+        {
+          renBlob: contentApp(
+            `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+
+            body {
+
+              flex-grow: 1;
+              color:blue;
+              text-decoration:bold;
+              flex-flow: row wrap;
+              grid-column: 1;
+              grid-row: 1;
+              text-align: center;
+              align-content: flex-start;
+              overflow: auto;
+            }
+        </style></head><body><div id="coApp"><?= appL ?></div><div class="row"><div class="col s7 l7 m7 card-panel push-m2 push-s2 push-l2"><div class="video-container"> 
+                <iframe 
+                  src=""
+                  id="indexBeta"
+                  width="100%"
+                  height="100%"
+                  allow="autoplay"
+                  allow="encrypted-media"
+                  title="Dontime Life Website"
+                  frameborder="0"
+                  allowfullscreen
+                  ></iframe>
+            </div></div></div><script>console.log("script is working");
+              var coDaApp 
+                = document.getElementById("coApp");
+              var inDaApp 
+                = document.getElementById("indexBeta");console.log(<?= appL ?>);if (typeof <?= appL ?> !== 'undefined') {console.log(<?= appL.length ?>);if (<?= vUrl(appL) ?>) {
+              coDaApp.innerHTML 
+                = "";
+              inDaApp.src 
+                = "<?= appL ?>"}else {
+              inDaApp.src 
+                = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");
+              inDaApp.src 
+                = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
+            {
+              appL: globalThis[e.parameter["func"]].apply(this, [args]),
+            },
+          ),
+
+          e: e,
+        },
+        args,
+      );
+    }
+  } catch (error) {
+    console.error(error);
+    Logger.log("Error creating template from function: " + error);
+    throw new Error(
+      "Could not create template from file or function: " + foobarr,
+    );
+  }
+};
