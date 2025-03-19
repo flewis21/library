@@ -699,7 +699,7 @@ var includeGSBlob = function (blob, argsArray) {
 };
 
 var includeRunIt = () => {
-  freeSBD("rndCoin");
+  console.log(leadBook(10));
 };
 
 var includeJs = function (blob, argsObject) {
@@ -895,8 +895,8 @@ var renderFile = function (file, argsObject, title) {
         </head>
         <body id="renderFile">
       <div class="row">
-      <div class="col s12 card-panel amber">
-      <div class="container">
+      <div class="col s12 m12 l12 card-panel amber">
+      <div class="video-container" style="clear: both">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
         <thead>
@@ -907,6 +907,20 @@ var renderFile = function (file, argsObject, title) {
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody>
                   <td>
+                    <div class="row"><p>
+                    <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+
+                    <i>Legal Title:</i>
+                    <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                    <i>Rights of Possession and Control: </i>
+                    <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                    <i>Right of Disposal:</i>
+                    <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                    <i>Freedom from Competing Claims:</i>
+                    <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                    <i>Bearing the Burdens of Ownership:</i>
+                    <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                    </div>
                     <div class="row"><p>
                     <p> Is the conveyance of power and authority an objective, measurable quantity?</p><br />
 
@@ -953,6 +967,9 @@ var renderFile = function (file, argsObject, title) {
       </div></div></div></div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
       <script>
+      document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
+      document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
+      document.querySelector("iframe").setAttribute("style", "color: blue; clear: both; text-align: center;");
         function serverside(func, args) {
         return new Promise((resolve, reject) => {
           google.script.run

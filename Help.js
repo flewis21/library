@@ -422,15 +422,11 @@ var mis = function (text) {
       if (supFunc) {
         var response = UrlFetchApp.fetch(supFunc.args, {
           followRedirects: false, // Prevent automatic redirects
-        })
-          ? console.log(response + " response = " + typeof response)
-          : console.error(response + " response = " + typeof response);
+        });
       } else {
         var response = UrlFetchApp.fetch(text, {
           followRedirects: false, // Prevent automatic redirects
-        })
-          ? console.log(response + " response = " + typeof response)
-          : console.error(response + " response = " + typeof response);
+        });
       }
     } catch (e) {
       console.error("Error fetching URL:", e);
@@ -445,14 +441,10 @@ var mis = function (text) {
     if (res) {
       if (res >= 300 && res < 400) {
         // Redirect occurred
-        var location = response.getHeaders().Location
-          ? console.log(location + " location = " + typeof location)
-          : console.error(location + " location = " + typeof location);
+        var location = response.getHeaders().Location;
       } else {
         // No redirect or other error
-        var location = response.getContentText()
-          ? console.log("location = " + typeof location)
-          : console.error("location = " + typeof location);
+        var location = response.getContentText();
       }
     } else {
       if (supFunc) {
@@ -547,7 +539,7 @@ var vidPlaylist = function (tunPlay) {
       0,
       [listGen].toString().length,
       [listGen].toString().split(""),
-    );
+    ).substWord;
     noList.push(noVid);
   }
   var randomPlaylist;

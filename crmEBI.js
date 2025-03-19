@@ -209,9 +209,22 @@ var crmEBI = function (fx) {
         </style>
       </head>
       <body>
+        <div class="col s12">
+          <div class="input-field col s12">
+            <select id="templateSelect">
+              <option value="" disabled selected>Choose a Template Doc</option>
+              <? var files = DriveApp.searchFiles('mimeType = "application/vnd.google-apps.document"'); ?>
+              <? while (files.hasNext()) { ?>
+                <? var file = files.next(); ?>
+                <option value="<?= file.getUrl() ?>"><?= file.getName() ?></option>
+              <? } ?>
+            </select>
+            <label for="templateSelect">Select a Google Doc</label>
+          </div>
+        </div>
         <h1><div id="companyName">Employee Benefits Inquiry</div></h1>
-        <input type="text" id="rowIndex" placeholder="Enter row number" value="0" style="font-size: 5em">
-        <form id="myForm" style="font-size: 4.5em">
+        <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 5em">
+        <form id="ebiForm" style="font-size: 4.5em">
           <div style="font-size: 1.5em">
             <p>Hi!</p><p>This is Fabian with WLS Community Benefits!</p><p> Good morning/afternoon!</p><p>How are you today? (Wait for answer)!</p><p>Please tell me your name (again)!</p><p>(Insert <label for="name" style="font-size: 1em">Name</label> here:<input type="text" id="name" name="name" style="font-size: .5em"> or write it down)!</p><p>Thanks!</p><p>Hi<input type="text" id="nameFr" name="nameFriendly" style="font-size: .5em"><label for="nameFr" style="font-size: 1em">Friendly Name</label>!:</p><p>Are you the person who handles employee benefits?(Wait for answer)!</p><h2>May I speak with the person who handles benefits, please?</h2>
             <p>Hi<input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: .5em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name</label>!:</p><p>This is Fabian with WLS Community Benefits!</p><p>I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</p><p>Can I have a few minutes of your time? (If not, find out what would be a good time to call back)! Do you offer employee benefits?</p><div class="interface dotted_border"><a id="yesHL"><div id="yesOffer"><h3>If yes, continue!</h3></div><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&pid=ImgRaw&r=0" alt="Ask: Do you offer employee benefits?" /></a><a id="noHL"><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&pid=ImgDetMain" alt="Ask: Do you offer employee benefits?" /></a></div><div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank">Contact Me</a></div><br />
@@ -220,7 +233,7 @@ var crmEBI = function (fx) {
         
         <script>
           var sheetRows = document.getElementById('rowIndex');
-          var form = document.getElementById('myForm');
+          var form = document.getElementById('ebiForm');
           form.addEventListener('submit', function(event) {
             event.preventDefault();
             submitForm();
@@ -244,7 +257,6 @@ var crmEBI = function (fx) {
                   console.log(error)
                   reject(error)})
               .runBoilerplate(func, args)})};
-            var rowIndex = parseInt(document.getElementById("rowIndex").value);
             function submitForm() {
               var formData = {};
               for (var i = 0; i < form.elements.length; i++) {
@@ -264,8 +276,11 @@ var crmEBI = function (fx) {
                 document.getElementById("cBlinkFOLLOW").remove()}})
                 .catch((er) => {
                   alert(er)})}
+              if (sheetRows) {
                 sheetRows.addEventListener('select', function() { 
-              serverside("leadBook", [rowIndex])
+                var rowIndex = parseInt(document.getElementById("rowIndex").value);
+                console.log(rowIndex)
+                serverside("leadBook", [rowIndex])
                 .then((cChange) => {
                   var link = cChange.url
                   var data = cChange.jsonData
@@ -277,13 +292,13 @@ var crmEBI = function (fx) {
                     document.getElementById("nameAdd").value = "";
                     document.getElementById("phone").value = data.Phone_Number_Combined || "";
                     document.getElementById("fullTimeEmployees").value = data.Location_Employee_Size_Actual || "";
+                  } else {
+                    console.log("No more data or invalid row index.");
+                    // Optionally, disable the form or show a message
 
                     // Increment and update the row index
                     var rowIndex = parseInt(document.getElementById("rowIndex").value);
                     document.getElementById("rowIndex").value = rowIndex + 1;
-                  } else {
-                    console.log("No more data or invalid row index.");
-                    // Optionally, disable the form or show a message
                   }
                     if (link) {
                       alert(link)
@@ -297,7 +312,7 @@ var crmEBI = function (fx) {
                   document.getElementById("cClinkFOLLOW").click();
                   document.getElementById("cClinkFOLLOW").remove()}}})
                 .catch((er) => {
-                  alert(er)})})
+                  alert(er)})})}
                 serverside('busyDates', [])
                 .then((disabledDays) => {
                 let timePicker = document.getElementById('time');
@@ -314,6 +329,10 @@ var crmEBI = function (fx) {
                     return disabledDays.indexOf(day.valueOf()) > -1;}})})
                 .catch((er) => {
                   alert(er)})
+                document.getElementById("templateSelect").addEventListener("change", function() {
+                  var edSrc 
+                    = document.getElementById("templateSelect").value
+                  window.open(edSrc)})
           </script>
       </body>
       </html>`,
@@ -433,6 +452,7 @@ function postEd(ed) {
 }
 
 function leadBook(rowIndex) {
+  var rowNum = parseInt(rowIndex);
   var leadSheet =
     "https://docs.google.com/spreadsheets/d/1Ykxv-zQiAjNix7w9IwzGTWiO2X0nqw7NkV5PsaEx3lI/edit?gid=356453707#gid=356453707";
   var leadName = "Custom2025010921011842";
@@ -440,7 +460,7 @@ function leadBook(rowIndex) {
   var liadSsId = ss.getParent().getId();
   var sheetArray = SpreadsheetApp.openById(liadSsId).getUrl();
   var ssData = ss.getDataRange().getValues();
-  if (rowIndex >= 1 && rowIndex < ssData.length) {
+  if (rowNum >= 1 && rowNum < ssData.length) {
     var headers = ssData[0].map(function (header) {
       // Normalize headers: remove spaces, convert to camelCase, etc.
       return header.replace(/ /g, "_"); // Replace spaces with underscores
@@ -449,7 +469,7 @@ function leadBook(rowIndex) {
       //   return letter.toUpperCase();
       // });
     });
-    var row = ssData[rowIndex];
+    var row = ssData[rowNum];
     var rowObject = {};
 
     for (var j = 0; j < headers.length; j++) {

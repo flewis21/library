@@ -20,6 +20,24 @@ function surveyPlayer(searchString, joinString) {
     var myFile = folderFile.next();
     var currentFileUrl = myFile.getUrl();
   } //  dataTree.push(currentFileUrl)};
+  var testGen = testlt();
+  var listGen = objectOfS(
+    ["parameter"],
+    [[["func", testGen]]],
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+  ).parameter["func"];
+  var noList = [];
+  while (noList.length < 3) {
+    var noVid = substanceVegas(
+      0,
+      [listGen].toString().length,
+      [listGen].toString().split(""),
+      50,
+      1,
+      20,
+    ).substHost;
+    noList.push(noVid);
+  }
   var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filed = dataTree[rndFiled];
   if (!searchString && !joinString) {
@@ -33,7 +51,7 @@ function surveyPlayer(searchString, joinString) {
   }
   var uti = dtlsSomeFunction(searchString).playList;
   const html =
-    HtmlService.createTemplate(`<!DOCTYPE html><html id="test"><head><base target="_top"></head><body  id="template"><div class="row container"><nav class="col s12 menu-img btn-large z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px"><div class=""><a href="<?= link ?>" id="linkload01" target="_top"><span><h1 class="col s12 receipt center nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01"><?= searchTtile ?></h1></span></a></div></nav></div><div class="row"><div class="col s12 card-panel amber"><div class=""><div class="col s12 receipt red"><label id="spLab"><strong>Research</strong></label><div id="loadingSurvey" style="display: none;"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 885px; height: 1024px; padding: 0;"><div id="player1"></div></td></tbody></table></td></tr></tbody></table></div><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 885px; height: 1024px; padding: 0;"><div id="player2" class="col s12 m12 l12"><?!= seoCapital(link) ?></div></td></tbody></table></td></tr></tbody></table><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="spSearch"  type="search" /></div></div></div></div></div></div></div></div><script>
+    HtmlService.createTemplate(`<!DOCTYPE html><html id="test"><head><base target="_top"></head><body  id="template"><div class="row container"><nav class="col s12 menu-img btn-large z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px"><div class=""><a href="<?= link ?>" id="linkload01" target="_top"><span><h1 class="col s12 receipt center nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01"><?= searchTtile ?></h1></span></a></div></nav></div><div class="row"><div class="col s12 card-panel amber"><div class=""><div class="col s12 receipt red"><label id="spLab"><strong>Research</strong></label><div id="loadingSurvey" style="display: none;"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 885px; height: 1024px; padding: 0;"><div id="player1"></div></td></tbody></table></td></tr></tbody></table></div><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 885px; height: 1024px; padding: 0;"><div id="player2" class="col s12 m12 l12"><?!= seoCapital(link) ?></div></td></tbody></table></td></tr></tbody></table><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="spSearch"  value="<?= reValue ?>" type="search" /></div></div></div></div></div></div></div></div><script>
   // 2. This code loads the IFrame Player API code asynchronously.
   var tag 
   = document.createElement('script');tag.src 
@@ -88,7 +106,10 @@ function surveyPlayer(searchString, joinString) {
   = er})});eventH.addEventListener("keypress", function(event) {
   // If the user preses the "Enter" key on the keyboard. 
   if (event.key === "Enter")  {var strValue 
-  = eventH.value;if (!strValue) {eventL.innerText 
+  = eventH.value;serverside("substanceVegas", [null,null,null,1,1,5]).then((sub)=>{var hosts 
+  = sub.substHost;var rndHost 
+  = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];eventH.value 
+  = rndHost;});if (!strValue) {eventL.innerText 
   = "... Loading";serverside("mis").then((stream) => {if (stream) {if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || [stream].indexOf("&entry") > -1) {eventV.innerHTML 
   = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src 
   = stream;eventG.href 
@@ -133,6 +154,9 @@ function surveyPlayer(searchString, joinString) {
   html.link = filed;
   html.searchTtile = joinString;
   html.home = getScriptUrl();
+  html.reValue = (() => {
+    return noList[Math.floor(Math.random() * Math.floor(noList.length))];
+  })();
   return html.evaluate().getContent();
 }
 // const randomPlaylist = [];

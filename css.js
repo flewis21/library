@@ -362,7 +362,7 @@ var builtStyling = function () {
 
 var frameHtml = function (file, argsArray) {
   const content = {};
-  content.iframePlayer = function () {
+  content.iframePlayer = function fPla() {
     const myObj = {
       appJS: function serverSide(func, args) {
         "use strict";

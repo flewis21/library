@@ -12,23 +12,27 @@ var convertToJS = function (rndText) {
   );
   if (typeof rndText === "undefined") {
     var rndText = `
-      <? var form = formMaker([item].join("").toUpperCase(), "inventoryForms", allTime) ?>
-      <? var formUrl = form.getPublishedUrl() ?>
-      <? var jo = storeFunction() ?>
-      <? form.setTitle(jo.length + " Items").setConfirmationMessage('Thanks for your feedback !!') ?>
-      <? var coTable = jo.map((r)=>{ ?>
-        <? var xItem = r["Description"] ?>
-        <? if ([xItem].join("").toLowerCase().includes([item].join("").toLowerCase())) { ?>
-          form.addPageBreakItem().setTitle(r["Description"])
-          form.addSectionHeaderItem().setTitle("Quantity: " + r["QTY"] + " set of " + r["Pack Size"])
-          form.addSectionHeaderItem().setTitle("Price: " + r["TOTAL COST"])
-          form.addSectionHeaderItem().setTitle("Cost Per Piece: " + r["COST PER PIECE"])\n\n\n\n 
-        <? } ?>
-        <? }).toString().replace(/,/g, "") ?>
-      <? var result = JSON.stringify(coTable); ?>
-      <? baseUrl = getUrl(ScriptApp); ?>
-      <? inventoryUrl = getUrl(ScriptApp); ?>
-      <? financeUrl = getUrl(ScriptApp); ?>
+    <? var folderMain = folderManager() ?>
+    <? var fileList = [] ?>
+    <? while (fileList.length === 0) {
+        var rndFolder = Math.floor(Math.random() * (Math.floor(folderMain.length)));
+        folder = folderMain[rndFolder]
+        fileList = matchManager("Forms").forms
+    } ?>
+    <? var eFolder = DriveApp.getFoldersByName("Forms").next() ?>
+    <? var rndFiled = Math.floor(Math.random() * (Math.floor(fileList.length))); ?>
+    <? var file = fileList[rndFiled] ?>
+    <? var folderFile = eFolder.getFilesByName(file) ?>
+    <? var dataTree = [] ?>
+    <?   while (folderFile.hasNext()) {
+      var myFile = folderFile.next()
+      var myFileUrl = myFile.getUrl()
+      var currentFileUrl =  FormApp.openByUrl(myFileUrl).getPublishedUrl();
+      dataTree.push(currentFileUrl)
+
+} ?>
+    <? var rndFiledMain = Math.floor(Math.random() * (Math.floor(dataTree.length))) ?>
+    <? var filedMain = dataTree[rndFiledMain] ?>
     `;
   } else {
     var appList = [];
@@ -59,7 +63,7 @@ var convertToJS = function (rndText) {
   if (rndText.includes(jsCodeC)) {
     rndText = rndText.replace(/\?\>/g, "");
   }
-  return JSON.stringify(rndText);
+  return console.log(JSON.stringify(rndText));
 };
 
 var convertToObjects = function (rows, headings, time) {
@@ -387,7 +391,14 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   }
 };
 
-var substanceVegas = function (index, loopLength, importedData) {
+var substanceVegas = function (
+  index,
+  loopLength,
+  importedData,
+  numHosts,
+  minLength,
+  maxLength,
+) {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
@@ -470,21 +481,38 @@ var substanceVegas = function (index, loopLength, importedData) {
     "9",
     "_",
   ];
+  var hostnames = [];
   var newArr = [];
   var i = index || 0;
   var l = loopLength || 1;
+  if (numHosts && minLength && maxLength) {
+    var lpLength =
+      Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+    for (i; i < numHosts; i++) {
+      for (i, lpLength; i < lpLength; i++) {
+        hostnames.push(
+          arrData.sort(() => Math.random - 0.5)[
+            Math.floor(Math.random() * arrData.length)
+          ],
+        );
+      }
+    }
+  }
   for (i, l; i < l; i++) {
     newArr.push(
-      arrData.sort((a, b) => a - b)[Math.floor(Math.random() * arrData.length)],
+      arrData.sort(() => Math.random - 0.5)[
+        Math.floor(Math.random() * arrData.length)
+      ],
     );
   }
+  var randomHost = hostnames.toString().replace(/'"/g, "").replace(/,/g, "");
   var randomWord = newArr.toString().replace(/'"/g, "").replace(/,/g, "");
   newArr
     .map((w) => {
       return w[0].toString();
     })
     .join("");
-  return randomWord;
+  return { substWord: randomWord, substHost: randomHost };
   console.log();
 };
 

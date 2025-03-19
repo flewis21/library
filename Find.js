@@ -180,6 +180,19 @@ var folderManager = function (folderX, time) {
     return folderTree;
   }
 };
+var fileTypeManager = function (fileType) {
+  if (fileType === MimeType.GOOGLE_DOCS) {
+    return DocumentApp;
+  } else if (fileType === MimeType.GOOGLE_SLIDES) {
+    return SlidesApp;
+  } else if (fileType === MimeType.GOOGLE_SHEETS) {
+    return SpreadsheetApp;
+  } else if (fileType === MimeType.GOOGLE_FORMS) {
+    return FormApp;
+  } else {
+    console.warn("Unsupported file type: " + fileType);
+  }
+};
 var formsUrls = function (fileX, folderX, time) {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
