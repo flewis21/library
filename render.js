@@ -1099,7 +1099,7 @@ var renderTemplate = function (blob, argsObject, title) {
       `
     <html id="renderTemplate">
       <head>
-        <?!= builtStyling().evaluate().getContent() ?>
+        <?!= css.evaluate().getContent() ?>
       </head>
       <body>
       <div class="row">
@@ -1365,6 +1365,7 @@ var renderTemplate = function (blob, argsObject, title) {
   } catch (error) {
     return "Error in rendertemplate html" + error;
   }
+  tmp.css = css;
   return tmp
     .evaluate()
     .setTitle(title)
