@@ -743,13 +743,14 @@ var fileBrowser = function (folder) {
   );
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
-  return console.log(
+  console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
       ":\n" +
       filedMain,
   );
+  return filedMain;
 };
 
 var fbTester = function () {
