@@ -1099,7 +1099,7 @@ var renderTemplate = function (blob, argsObject, title) {
       `
     <html id="renderTemplate">
       <head>
-        <?!= css.evaluate().getContent() ?>
+        <?= css.evaluate().getContent() ?>
       </head>
       <body>
       <div class="row">
