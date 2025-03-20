@@ -1363,7 +1363,10 @@ var renderTemplate = function (blob, argsObject, title) {
       },
     );
   } catch (error) {
-    return "Error in rendertemplate html" + error;
+    console.error("Error rendering template:", error, error.stack);
+    return (
+      "Error in rendertemplate html: " + errortoString() + "\n" + error.stack
+    );
   }
   tmp.css = css;
   return tmp
