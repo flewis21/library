@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <base target="_top" />
+    <base target="_top">
   </head>
   <body>
-    <nav>
-      <a href="#" target="_top" id="navBack">Back</a>
-    </nav>
+      <nav>
+        <a href="#" target="_top" id="navBack">Back</a>
+      </nav>
     <div class="agenda container col s1">
       <input value="" class="timepicker" id="pRule" type="text" />
     </div>
@@ -15,66 +15,67 @@
       function serverside(func, args) {
         return new Promise((resolve, reject) => {
           google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.log(error);
-              console.log(document.getElementById("test").innerHTML);
-              reject(error);
-            })
-            .runBoilerplate([func], [args]);
-        });
-      }
-      var boxInput = document.getElementById("pRule");
-      document.getElementById("pRule").addEventListener("click", clearBox);
-      boxInput.addEventListener("keypress", function (event) {
-        // If the user preses the "Enter" key on the keyboard.
-        if (event.key === "Enter") {
-          document.getElementById("btn").click();
-        }
-      });
-      document.getElementById("btn").addEventListener("click", openBlankPage);
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+              console.log(error)
+              console.log(document.getElementById("test").innerHTML)
+              reject(error)})
+          .runBoilerplate([func], [args])})};
+      var boxInput = document.getElementById("pRule")
+      document.getElementById("pRule").addEventListener('click', clearBox)
+      boxInput.addEventListener('keypress', function(event){
+        // If the user preses the "Enter" key on the keyboard. 
+        if (event.key === "Enter"){
+          document.getElementById("btn").click()}})
+      document.getElementById("btn").addEventListener("click", openBlankPage)
+
 
       function clearBox() {
-        boxInput.value = "";
+        boxInput.value = ""
       }
       function openBlankPage() {
-        serverside("getScriptUrl").then((cChange) => {
-          console.log(typeof cChange + " with length = " + cChange.length);
-          if (cChange.length === 114) {
-            // console.log(cChange)
+
+          serverside("getScriptUrl")
+          .then((cChange) => {
+            console.log(typeof cChange + " with length = " + cChange.length)
+              if (cChange.length === 114) {
+
+                
+                // console.log(cChange)
             var linkFollow = document.createElement("a");
-            linkFollow.href = cChange + boxInput.value;
+            linkFollow.href = cChange + boxInput.value
             linkFollow.id = "linkFOLLOW";
             linkFollow.target = "_child";
             document.body.appendChild(linkFollow);
-            document.getElementById("linkFOLLOW").click();
-            document.getElementById("linkFOLLOW").remove();
-            boxInput.value = "";
-            serverside("rule").then((dateRule) => {
-              console.log(typeof boxInput.value);
-              console.log(boxInput.value.length);
-              if (boxInput.value.length === 0) {
-                boxInput.value = dateRule;
-              }
-            });
-          }
-        });
-      }
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("linkFOLLOW").remove();
+          boxInput.value = ""
+          serverside("rule")
+          .then((dateRule) => {
+            console.log(typeof boxInput.value)
+            console.log(boxInput.value.length)
+              if (boxInput.value.length === 0){
+            boxInput.value = dateRule}
+          })
+        }})
 
-      serverside("epaData");
-      serverside("getScriptUrl").then((pageLink) => {
-        document.getElementById("navBack").href = pageLink;
-      });
-      serverside("rule").then((dateRule) => {
-        console.log(typeof boxInput.value);
-        console.log(boxInput.value.length);
-        if (boxInput.value.length === 0) {
-          boxInput.value = dateRule;
-        }
-      });
+      } 
+
+        
+      serverside("epaData")
+      serverside("getScriptUrl")
+      .then((pageLink) => {
+      document.getElementById("navBack").href = pageLink
+      })
+      serverside("rule")
+      .then((dateRule) => {
+        console.log(typeof boxInput.value)
+        console.log(boxInput.value.length)
+          if (boxInput.value.length === 0){
+        boxInput.value = dateRule}
+      })
     </script>
-    <input type="hidden" value="" id="breakUrl" />
+  <input type="hidden" value="" id="breakUrl" />
   </body>
 </html>

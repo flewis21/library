@@ -1,8 +1,8 @@
 function iFC() {
-  return iframeC();
+  return iframeC()
 }
 
-function iframeC() {
+  function iframeC() {
   var content = HtmlService.createTemplate(`
     <!DOCTYPE html>
       <html>
@@ -11,17 +11,14 @@ function iframeC() {
         <div id="bodyHang">body hang</div>
       </body>
       </html>
-  `);
-  content.alert = HtmlService.createHtmlOutput(
-    `
+  `)
+  content.alert = HtmlService.createHtmlOutput(`
         <script>
           alert("server side")
         </script>
-`,
-  ).getContent();
-  return content.evaluate().getContent();
-  content.serverSide = HtmlService.createHtmlOutput(
-    `
+`).getContent()
+return content.evaluate().getContent()
+  content.serverSide = HtmlService.createHtmlOutput(`
         <script>
           function serverSide(func, args) {
             return new Promise((resolve, reject) => {
@@ -52,270 +49,178 @@ function iframeC() {
               return hang
             })
         </script>
-`,
-  ).getContent();
-}
+`).getContent()
+  }
 
 function needPastTime(searchString) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      searchString +
-      ", = " +
-      !searchString,
-  );
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + searchString + ", = " + !searchString)
   if (typeof time === "undefined") {
-    time = start;
+    time = start
   }
   while (typeof fndOrd !== "object") {
-    if (typeof searchString === "undefined") {
-      var searchString = "influencer";
-    }
-    const data = UrlFetchApp.fetch(
-      `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
-      { muteHTTPExceptions: true },
-    );
-    const videoSearch = data.getContentText();
-    // return videoSearch
-    const vidsSearched = [];
-    const vidValues = [];
-    const sorFndOrd = [];
-    [videoSearch].map((videoId) => {
-      const idArray = videoId
-        .slice(videoId.indexOf(`v=`))
-        .toString()
-        .split(`v=`);
-      for (var i = 1; i < idArray.length; i++) {
-        const playId = idArray[i].toString().substring(0, 11);
-        vidsSearched.push(playId);
-        vidValues.push(playId.valueOf());
+  if (typeof searchString === "undefined") {
+    var searchString = "influencer"
+  }
+  const data = UrlFetchApp.fetch(`http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`, {muteHTTPExceptions: true})
+  const videoSearch = data.getContentText();
+  // return videoSearch
+  const vidsSearched = [];
+  const vidValues = [];
+  const sorFndOrd = [];
+  [videoSearch].map((videoId) => {
+      const idArray = videoId.slice(videoId.indexOf(`v=`)).toString().split(`v=`);
+      for (var i = 1;i<idArray.length;i++) {
+        const playId = idArray[i].toString().substring(0,11);
+      vidsSearched.push(playId);
+      vidValues.push(playId.valueOf());
+    };  
+    // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
+                // return v[0].valueOf();});
+  // console.log(vidV)
+  // console.log(vidsSearched.map((m) => {const mObject = Utilities.jsonStringify(m)
+                            // console.log(mObject.indexOf(","))}))
+        return vidsSearched.forEach(function (vid) {
+          const vidObject = vid;
+                // console.log(typeof vidObject)
+                  if (vidObject[0].indexOf("=") === -1&&vidObject[0].indexOf("query") === -1&&vidObject[0].indexOf(";") === -1&&vidObject[0].indexOf("ajax") === -1&&vidObject[0].indexOf("whole") === -1&&vidObject[0].indexOf("inner") === -1&&vidObject[0].indexOf("strong") === -1&&vidObject[0].indexOf("ing") === -1&&vidObject[0].indexOf("brid") === -1&&vidObject[0].indexOf("ctrl") === -1&&vidObject[0].indexOf("location") === -1&&vidObject[0].indexOf("wiki") === -1&&vidObject[0].indexOf("//") === -1&&vidObject[0].indexOf("Html") === -1&&vidObject[0].indexOf("data") === -1&&vidObject[0].indexOf("undefined") === -1&&vidObject[0].indexOf("client") === -1&&vidObject[0].indexOf("/") === -1&&vidObject[0].indexOf("peri") === -1&&vidObject[0].indexOf("ten") === -1&&vidObject[0].indexOf("out") === -1&&vidObject[0].indexOf("new") === -1&&vidObject[0].indexOf("]") === -1&&vidObject[0].indexOf("[") === -1&&vidObject[0].indexOf("\\") === -1&&vidObject[0].indexOf("get") === -1&&vidObject[0].indexOf("&&") === -1&&vidObject[0].indexOf("a.severity") === -1&&vidObject[0].indexOf("b_cont") === -1&&vidObject[0].indexOf(",") === -1&&vidObject[0].indexOf("document.qu") === -1&&vidObject[0].indexOf("1,typeof h!") === -1&&vidObject[0].indexOf("EdgeWorksp") === -1&&vidObject[0].indexOf("{") === -1&&vidObject[0].indexOf("personaI") === -1) {
+                    sorFndOrd.push(vid);
+                }})})
+    var i = 0
+    var l = sorFndOrd.length
+      for (i,l;i<l;i++) {
+
+      var fndOrd = []
+              sorFndOrd.sort((a,b) => {
+                      if (a !== b && fndOrd.indexOf(a) === -1) {
+                          if (fndOrd.indexOf(a) > -1 ) {
+                            return
+                          
+
+                          }
+
+                      fndOrd.push(a)
+                      }
+                    else if (a === b && fndOrd.indexOf(a) === -1) {
+                        if (fndOrd.indexOf(a) > -1 ) {
+                          return
+                        
+
+                        }
+
+                    fndOrd.push(a)
+                    }
+                    else if (b !== a && fndOrd.indexOf(b) === -1) {
+                        if (fndOrd.indexOf(b) > -1 ) {
+                          return
+                        
+
+                        }
+
+                    fndOrd.push(b)
+                    }
+                
+                }) 
+
       }
-      // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
-      // return v[0].valueOf();});
-      // console.log(vidV)
-      // console.log(vidsSearched.map((m) => {const mObject = Utilities.jsonStringify(m)
-      // console.log(mObject.indexOf(","))}))
-      return vidsSearched.forEach(function (vid) {
-        const vidObject = vid;
-        // console.log(typeof vidObject)
-        if (
-          vidObject[0].indexOf("=") === -1 &&
-          vidObject[0].indexOf("query") === -1 &&
-          vidObject[0].indexOf(";") === -1 &&
-          vidObject[0].indexOf("ajax") === -1 &&
-          vidObject[0].indexOf("whole") === -1 &&
-          vidObject[0].indexOf("inner") === -1 &&
-          vidObject[0].indexOf("strong") === -1 &&
-          vidObject[0].indexOf("ing") === -1 &&
-          vidObject[0].indexOf("brid") === -1 &&
-          vidObject[0].indexOf("ctrl") === -1 &&
-          vidObject[0].indexOf("location") === -1 &&
-          vidObject[0].indexOf("wiki") === -1 &&
-          vidObject[0].indexOf("//") === -1 &&
-          vidObject[0].indexOf("Html") === -1 &&
-          vidObject[0].indexOf("data") === -1 &&
-          vidObject[0].indexOf("undefined") === -1 &&
-          vidObject[0].indexOf("client") === -1 &&
-          vidObject[0].indexOf("/") === -1 &&
-          vidObject[0].indexOf("peri") === -1 &&
-          vidObject[0].indexOf("ten") === -1 &&
-          vidObject[0].indexOf("out") === -1 &&
-          vidObject[0].indexOf("new") === -1 &&
-          vidObject[0].indexOf("]") === -1 &&
-          vidObject[0].indexOf("[") === -1 &&
-          vidObject[0].indexOf("\\") === -1 &&
-          vidObject[0].indexOf("get") === -1 &&
-          vidObject[0].indexOf("&&") === -1 &&
-          vidObject[0].indexOf("a.severity") === -1 &&
-          vidObject[0].indexOf("b_cont") === -1 &&
-          vidObject[0].indexOf(",") === -1 &&
-          vidObject[0].indexOf("document.qu") === -1 &&
-          vidObject[0].indexOf("1,typeof h!") === -1 &&
-          vidObject[0].indexOf("EdgeWorksp") === -1 &&
-          vidObject[0].indexOf("{") === -1 &&
-          vidObject[0].indexOf("personaI") === -1
-        ) {
-          sorFndOrd.push(vid);
-        }
-      });
-    });
-    var i = 0;
-    var l = sorFndOrd.length;
-    for (i, l; i < l; i++) {
-      var fndOrd = [];
-      sorFndOrd.sort((a, b) => {
-        if (a !== b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
-            return;
-          }
-
-          fndOrd.push(a);
-        } else if (a === b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
-            return;
-          }
-
-          fndOrd.push(a);
-        } else if (b !== a && fndOrd.indexOf(b) === -1) {
-          if (fndOrd.indexOf(b) > -1) {
-            return;
-          }
-
-          fndOrd.push(b);
-        }
-      });
-    }
     if (typeof fndOrd === "object") {
-      // console.log(seoArray.playList)
-      break;
-    }
-  }
 
-  // console.log(fndOrd)
-  if (fndOrd) {
-    console.log("needPastTime \n" + fndOrd);
-    var randomKey = 0;
-    var rndRes = [];
-    while (rndRes.length === 0) {
-      randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-      rndRes = fndOrd.filter((test) => {
-        var elaspeTime = new Date() - time;
-        var timeToExecute = maxTime - elaspeTime;
-        for (var i = 0, l = randomKey; i < l; i++) {
-          if (
-            test.indexOf("false") === -1 &&
-            test.indexOf("var") === -1 &&
-            test.indexOf("=") === -1 &&
-            test.indexOf(".") === -1 &&
-            test.indexOf("(") === -1 &&
-            test.indexOf(")") === -1 &&
-            test.indexOf("_") === -1 &&
-            test.indexOf(";") === -1 &&
-            test.indexOf('"') === -1 &&
-            test.indexOf("Error") === -1 &&
-            test.indexOf("error") === -1 &&
-            test.indexOf("Codes") === -1 &&
-            test.indexOf("siz23") === -1 &&
-            test.indexOf(":") === -1 &&
-            test.indexOf("{}") === -1 &&
-            test.indexOf("}") === -1 &&
-            test.indexOf("<") === -1 &&
-            test.indexOf(">") === -1 &&
-            test.indexOf("r[1]+r[3],a") === -1 &&
-            test.indexOf("EdgeWorksp") === -1 &&
-            test.indexOf("new XMLHttp") === -1
-          ) {
-            if (JSON.stringify(i) >= 3) {
-              break;
-            }
-            return test[i];
-          }
-        }
-        // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-      });
-      var rndSort = [];
-      for (var i = 0, l = rndRes.length; i < l; i++) {
-        var sorRes = rndRes.filter((o) => {
-          return o !== rndRes[i];
-        });
-        rndSort.push(sorRes);
+    // console.log(seoArray.playList)
+        break
+
+    }
+    
+  }
+  
+    // console.log(fndOrd)
+    if (fndOrd) {
+      console.log("needPastTime \n" + fndOrd)
+      var randomKey = 0
+      var rndRes = []
+      while (rndRes.length === 0) {
+  randomKey = Math.floor(Math.random() * (Math.floor(fndOrd.length)))// Math.floor(Math.random());
+    rndRes = fndOrd.filter((test) => {
+      var elaspeTime = new Date() - time
+      var timeToExecute = maxTime - elaspeTime
+      for (var i=0,l=randomKey; i<l;i++) {
+        if (test.indexOf("false") === -1&&test.indexOf("var") === -1&&test.indexOf("=") === -1&&test.indexOf(".") === -1&&test.indexOf("(") === -1&&test.indexOf(")") === -1&&test.indexOf("_") === -1&&test.indexOf(";") === -1&&test.indexOf('"') === -1&&test.indexOf("Error") === -1&&test.indexOf("error") === -1&&test.indexOf("Codes") === -1&&test.indexOf("siz23") === -1&&test.indexOf(":") === -1&&test.indexOf("{}") === -1&&test.indexOf("}") === -1&&test.indexOf("<") === -1&&test.indexOf(">") === -1&&test.indexOf("r[1]+r[3],a") === -1&&test.indexOf("EdgeWorksp") === -1&&test.indexOf("new XMLHttp") === -1) {
+      if ( JSON.stringify(i) >= 3) {break}
+      return test[i]}
       }
-      var sorKind = rndSort.toString().split(" ");
-      var revKind = sorKind.reverse();
-      var popKind = revKind.pop();
-      var rndKind = popKind.split(",");
+      // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
+    })
+  var rndSort = []
+  for (var i=0,l=rndRes.length;i<l;i++) {
+    var sorRes = rndRes.filter((o) => {
+      return o !== rndRes[i]})
+   rndSort.push(sorRes)}
+   var sorKind =  rndSort.toString().split(" ")
+   var revKind = sorKind.reverse()
+   var popKind = revKind.pop()
+   var rndKind = popKind.split(",")
 
-      //  console.log(uniqueVid)
-      return { playList: rndRes.sort((a, b) => a - b) };
-    }
-  }
-}
+    //  console.log(uniqueVid) 
+     return{ playList: rndRes.sort((a, b) => a - b)}}}}
 
-var pastTime = function (url) {
-  const uniqueVid = needPastTime(
-    `https://www.bing.com/search?q=%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=PORE`,
-    `v=`,
-    0,
-    10,
-  );
-  const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid.length)); // Math.floor(Math.random());
+var pastTime = function(url)
+  {const uniqueVid = needPastTime(`https://www.bing.com/search?q=%20site%3Ayoutube.com&PC=U316$top=50&$skip=0&FORM=PORE`,`v=`, 0, 10);
+  const randomKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
   const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
   // const randomKey = Math.floor(Math.random() * (Math.floor(10000)))// Math.floor(Math.random());
   const uniqueKey = [videoPlaylist].entries().next().value;
-  console.log(uniqueKey[1][randomKey]);
+  console.log(uniqueKey[1][randomKey])
   // const randomCo = uniqueKey[1][randomKey];
   // const randomTitle = randomCo["youtubeID"];
   // const randomTicker = randomCo["ticker"];
   // const randomCIK = randomCo["cik_str"];
-};
-
-function seoKeyword() {
-  needPastTime(`lawyer mugs`);
-}
+  }
+  
+function seoKeyword()
+  { needPastTime(`lawyer mugs`)
+  }
 
 function videoPage(search) {
   // var search = "NEWMONT Corp. DE"
-  var res = seoSheet(search).keyWords;
-  var resRnd = Math.floor(Math.random() * Math.floor(res.length));
-  var content = res[resRnd];
-  var youPlayer = videoPlayer(content);
+  var res = seoSheet(search).keyWords
+  var resRnd = Math.floor(Math.random() * (Math.floor(res.length)))
+  var content = res[resRnd]
+    var youPlayer = videoPlayer(content)
   var content = HtmlService.createTemplate(`
-  ${
-    contentApp(
-      `
-    <?!= playerPlayer ?>`,
-      { playerPlayer: youPlayer },
-    )
-    //:contentFile('uiAccess')
-  }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
-  return content.getRawContent();
-}
+  ${contentApp(`
+    <?!= playerPlayer ?>`,{playerPlayer: youPlayer,})
+  //:contentFile('uiAccess')
+  }`)//("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
+  return content.getRawContent();} 
 
-function videoPlayer(searchString) {
+function  videoPlayer(searchString) {
   //var url = seoSheet(encodeURIComponent(searchString)).url;
   //Youtube Widget
-  var uti = sheetSeo(pastSeo(skyNeed(`searchString`)));
+  var uti = sheetSeo(pastSeo(skyNeed(`searchString`)))
   const idArray = uti.map((piece) => {
-    console.log(typeof piece);
-    if (typeof piece === "undefined") {
-      console.log("it's " + typeof piece);
-      return;
-    } else {
-      return piece;
-    }
+    console.log(typeof piece)
+    if (typeof piece  === "undefined") {
+      console.log("it's " + typeof piece)
+      return} 
+    else
+    {return piece } 
   });
   const randomPlaylist = [];
-  for (var i = 0, l = idArray.length; i < l; i++) {
-    const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
-    randomPlaylist.push(idArray[randomVidKey]);
-  }
-  if (randomPlaylist.length === 0) {
-    return;
-  }
-  const vidPlaylist = function () {
-    const randomVidKey = Math.floor(
-      Math.random() * Math.floor(randomPlaylist.length),
-    ); // Math.floor(Math.random());
-    const videoObject = covObjects(randomPlaylist, ["youtubeID"]);
-    const uniqueVidKey = [videoObject].entries().next().value;
-    const randomVid = uniqueVidKey[1][randomVidKey];
-    if (typeof randomVid === "undefined") {
-      return;
-    }
-    const rVideo = randomVid["youtubeID"];
-    return rVideo;
-  };
+    for (var i=0,l=idArray.length;i<l;i++)
+      {const randomVidKey = Math.floor(Math.random() * (Math.floor(idArray.length)))// Math.floor(Math.random());
+    randomPlaylist.push(idArray[randomVidKey])}
+  if (randomPlaylist.length === 0){
+  return}
+  const vidPlaylist = function(){const randomVidKey = Math.floor(Math.random() * (Math.floor(randomPlaylist.length)))// Math.floor(Math.random());
+  const videoObject = covObjects(randomPlaylist, ["youtubeID"]);
+  const uniqueVidKey = [videoObject].entries().next().value;
+  const randomVid = uniqueVidKey[1][randomVidKey];
+  if (typeof randomVid === "undefined") {
+  return}
+  const rVideo = randomVid["youtubeID"];
+  return rVideo}
   const randomVideo = vidPlaylist();
   const titleVar = JSON.stringify(searchString);
   const playListVar = JSON.stringify(randomPlaylist);
-  const videoTable = [randomPlaylist]
-    .map((v) => {
-      return `<tr><td>${geneFrame("https://www.youtube.com/watch?v=" + v[0])}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`;
-    })
-    .toString()
-    .replace(/,/g, "");
+  const videoTable = [randomPlaylist].map((v) => {return `<tr><td>${geneFrame("https://www.youtube.com/watch?v=" + v[0])}<br /><a class="waves-effect waves-light btn" href="https://www.youtube.com/watch?v=${v[0]}" target="_blank">${v[0]}</a></td></tr>`}).toString().replace(/,/g, "")
   const result = JSON.stringify(videoTable);
   const html = HtmlService.createTemplate(`<!DOCTYPE html>
 <html id="test">
@@ -522,71 +427,74 @@ function videoPlayer(searchString) {
       document.getElementById("reload02").innerHTML = ${result};})</script>
   </body>
 </html>`);
-  html.vidTubeId = JSON.stringify(randomVideo);
-  html.researchId = randomVideo;
-  html.searchTtile = searchString;
-  html.myPlayList = [playListVar].sort((a, b) => a - b);
-  return html.evaluate().getContent();
-}
-// console.log(JSON.stringify(randomPlaylist[0][randomVidKey]))
-// const rdmIdArray = Utilities.jsonStringify([randomPlaylist])
-// const plVidKey = Math.floor(Math.random() * (Math.floor(randomPlaylist.length)))// Math.floor(Math.random());
-// const playVid = Utilities.jsonStringify(randomPlaylist[0][plVidKey])}
-
+html.vidTubeId = JSON.stringify(randomVideo);
+html.researchId = randomVideo
+html.searchTtile = searchString;
+html.myPlayList = [playListVar].sort((a, b) => a - b);
+return html.evaluate().getContent();}
+  // console.log(JSON.stringify(randomPlaylist[0][randomVidKey]))
+  // const rdmIdArray = Utilities.jsonStringify([randomPlaylist])
+    // const plVidKey = Math.floor(Math.random() * (Math.floor(randomPlaylist.length)))// Math.floor(Math.random());  
+    // const playVid = Utilities.jsonStringify(randomPlaylist[0][plVidKey])}
+    
 // serverSide('youTube', [])
-// .then((content) => {document.getElementById('template').innerHTML = content})
-// .catch((error) => {console.log(error)});
+  // .then((content) => {document.getElementById('template').innerHTML = content})
+  // .catch((error) => {console.log(error)});
 // serverSide('checkOnDay', [])
-// .then((content) =>
-// {document.getElementById('checkOnDay').addEventListener('click', userClicked);
+  // .then((content) => 
+    // {document.getElementById('checkOnDay').addEventListener('click', userClicked);
 //   function userClicked()
 //         {document.getElementById('template').innerHTML = content}})
-// .catch((error) => {console.log(error)});
+  // .catch((error) => {console.log(error)});
+
+
 
 // serverSide('onYouTubeIframeAPIReady', ['', ''])
-// .then((content) =>
-// {document.getElementById('mainIndex').addEventListener('click', userClicked);
+  // .then((content) => 
+    // {document.getElementById('mainIndex').addEventListener('click', userClicked);
 //   function userClicked()
 //         {document.getElementById('template').innerHTML = content}})
-// .catch(
+  // .catch(
 //     (error) => {console.log(error)});
 
-// function iframeC() {
-//   return JSON.stringify({
-//     appJs:
-//       function create() {
-//       function serverSide(func, args) {
-//         return new Promise((resolve, reject) => {
-//             HtmlService.createTemplate(`
-//             <script>
-//               google.script.run
-//               .withSuccessHandler(result => {
-//                 const Route = {};
-//                 Route.path = function(route, callback) {
-//                     Route[route] = callback
-//                   }
-//                 Route.path("bHang", ${resolve});
-//                 return Route["bHang"](result)
-//                 })
-//               .withFailureHandler(error => {
-//                   console.log(document.getElementById("test").innerHTML)
-//                   const Route = {};
-//                   Route.path = function(route, callback) {
-//                       Route[route] = callback
-//                     }
-//                   Route.path("bErr", ${reject});
-//                   return Route["bErr"](error)
-//                 })
-//               .runBoilerplate(${[func]},${[args]})
-//             </script>`).evaluate().asTemplate()
-//           }
-//         )
-//       };
-//       JSON.stringify(serverSide("appSort")
-//       .then((hang) => {
-//           return hang
-//         }))
-//       }
-//     ,
-//   })
-// }
+  // function iframeC() {
+  //   return JSON.stringify({
+  //     appJs: 
+  //       function create() {
+  //       function serverSide(func, args) {
+  //         return new Promise((resolve, reject) => {
+  //             HtmlService.createTemplate(`
+  //             <script>
+  //               google.script.run
+  //               .withSuccessHandler(result => {
+  //                 const Route = {};
+  //                 Route.path = function(route, callback) {
+  //                     Route[route] = callback
+  //                   } 
+  //                 Route.path("bHang", ${resolve});
+  //                 return Route["bHang"](result)
+  //                 })
+  //               .withFailureHandler(error => {
+  //                   console.log(document.getElementById("test").innerHTML)
+  //                   const Route = {};
+  //                   Route.path = function(route, callback) {
+  //                       Route[route] = callback
+  //                     } 
+  //                   Route.path("bErr", ${reject});
+  //                   return Route["bErr"](error)
+  //                 })
+  //               .runBoilerplate(${[func]},${[args]})
+  //             </script>`).evaluate().asTemplate()
+  //           }
+  //         )
+  //       };
+  //       JSON.stringify(serverSide("appSort")
+  //       .then((hang) => {
+  //           return hang
+  //         }))
+  //       }
+  //     ,
+  //   })
+  // }
+
+

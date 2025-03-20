@@ -1,12 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html id="test">
   <head>
-    <base target="_top" />
+    <base target="_top">
   </head>
-  <body
-    class="agenda z-depth-5 pulse btn-large card-panel green scale-out scale-in"
-  >
-    <div id="loadingIndicator" style="display: none">
+  <body class="agenda z-depth-5 pulse btn-large card-panel green scale-out scale-in">
+    <div id="loadingIndicator" style="display: none;">
       <nav>
         <a href="" target="_top" id="navBack">Loading...</a>
       </nav>
@@ -16,26 +14,24 @@
       <input value="" class="timepicker" id="pRule" type="text" />
     </div>
     <button id="btn">Run It!</button>
-    <div id="content" style="display: none">
+    <div id="content" style="display: none;">
       <div class="row">
-        <div id="forHtml" class="col s12 I12 m12 card-panel amber">
-          <div class="container" style="clear: both">
-            <iframe
-              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
-              id="worksFrame"
-              src=""
-              style="width: 100%; height: 80vh"
-              allow="autoplay"
-              allow="encrypted-media"
-              title="Dontime Life Website"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </div>
+      <div id="forHtml" class="col s12 I12 m12 card-panel amber">
+      <div class="container" style="clear: both">
+      <iframe 
+        class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
+        id="worksFrame"
+        src=""
+        style="width: 100%; height: 80vh"
+        allow="autoplay"
+        allow="encrypted-media"
+        title="Dontime Life Website"
+        frameborder="0"
+        allowfullscreen
+        ></iframe>
+      </div></div></div>
     </div>
-    <script>
+    <script>      
       console.log(window)
       var folder = "loc";
       var file = "id";
@@ -66,7 +62,7 @@
           .then((dateRule) => {
             return dateRule})
       boxInput.addEventListener('keypress', function(event) {
-        // If the user preses the "Enter" key on the keyboard.
+        // If the user preses the "Enter" key on the keyboard. 
         if (event.key === "Enter") {
         if (boxInput.value.length === 0) {
           boxInput.value = placeRule;
@@ -125,7 +121,7 @@
           document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + ": " +  urlFile + "</p>\n"}
           console.log(typeof filed + " XX " + [filed].join("").length + " XXX " + filed)
           if (filed.length === 83 || filed.length === 94 || filed.length === 97 || filed.length === 99 || filed.length === 101 || filed.length === 103 || filed.length === 132 || filed.length === 136 ) {
-            const confirmation = window.confirm("Click OK to continue to the destination.");
+            const confirmation = window.confirm("Click OK to continue to the destination."); 
             if (confirmation) {
               var linkFollow = document.createElement("a");
               if (boxInput.value.indexOf(",") === -1) {

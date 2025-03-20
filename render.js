@@ -1,11 +1,5 @@
-var appList = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
-  return HtmlService.createTemplate(
-    `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+var appList = function() {
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name);return HtmlService.createTemplate(`<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
         a:link, a:visited {color:black !important;}
         a:hover, a:active{ 
           color:white  !important;
@@ -163,233 +157,156 @@ var appList = function () {
   = cChange;};oulinkFollow.id 
   = "oulinkFOLLOW";oulinkFollow.target 
   = "_blank";document.body.appendChild(oulinkFollow);document.getElementById("oulinkFOLLOW").click();document.getElementById("uiApp").value 
-  = "";document.getElementById("oulinkFOLLOW").remove()}).catch((er) => {alert(er)})}})</script></body></html>`,
-  )
-    .evaluate()
-    .getContent();
-};
-// <div class="row">
-//   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
-//     <div class="container">
-//       <div class="col s12 receipt nav-wrapper deep-purple darken-1">
-//           <a href="#" onclick="aboutMeSearch()" target="_self" id="aboutme">About-Me</a><br />
-//           <a href="#" onclick="shopResearch()" id="shopstore">Store</a><br />
-//           <a href="#" onclick="secResearch()" id="secenv">Local Enviroment</a><br />
-//           <a href="#" onclick="calcResearch()" id="calculate">Calculate</a><br />
-//           <a href="#" onclick="investResearch()" id="invest">Investors</a><br />
-//           <a href="#" onclick="newResearch()" id="rndnew">New</a><br />
-//       </div></div>
-//     </nav>
-// </div>
-// <div class="row">
-//   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-//     <div class="container">
-//       <div class="col s12 receipt deep-purple darken-1">
-//         <div id="dlts"></div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-// <div class="row">
-//   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-//     <div class="container">
-//       <div class="col s12 receipt deep-purple darken-1">
-//         <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
-//           <select id="appList" class="browser-default deep-purple darken-1"></select>
-//       </div>
-//     </div>
-//   </div>
-// </div>
+  = "";document.getElementById("oulinkFOLLOW").remove()}).catch((er) => {alert(er)})}})</script></body></html>`).evaluate().getContent()}
+      // <div class="row">
+      //   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+      //     <div class="container">
+      //       <div class="col s12 receipt nav-wrapper deep-purple darken-1">
+      //           <a href="#" onclick="aboutMeSearch()" target="_self" id="aboutme">About-Me</a><br />
+      //           <a href="#" onclick="shopResearch()" id="shopstore">Store</a><br />
+      //           <a href="#" onclick="secResearch()" id="secenv">Local Enviroment</a><br />
+      //           <a href="#" onclick="calcResearch()" id="calculate">Calculate</a><br />
+      //           <a href="#" onclick="investResearch()" id="invest">Investors</a><br />
+      //           <a href="#" onclick="newResearch()" id="rndnew">New</a><br />
+      //       </div></div>
+      //     </nav>
+      // </div>
+    // <div class="row">
+    //   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    //     <div class="container">
+    //       <div class="col s12 receipt deep-purple darken-1">
+    //         <div id="dlts"></div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    // <div class="row">
+    //   <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+    //     <div class="container">
+    //       <div class="col s12 receipt deep-purple darken-1">
+    //         <label for="appList" class="active" style="font-size: 16px; top: -5px; left: -4px;">Choose your function...</label>
+    //           <select id="appList" class="browser-default deep-purple darken-1"></select>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
 
-var contentApp = function (blob, argsObject) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nblob is !" +
-      !blob +
-      " = " +
-      blob +
-      "\nargsObject is !" +
-      !argsObject +
-      " = " +
-      argsObject,
-  );
+
+var contentApp = function(blob, argsObject) {
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nblob is !" +  !blob + " = " + blob + "\nargsObject is !" +  !argsObject + " = " + argsObject)
   try {
     const tmp = HtmlService.createTemplate(
-      ContentService.createTextOutput(blob)
-        .setMimeType(ContentService.MimeType.JSON)
-        .getContent(),
-    );
+    ContentService.createTextOutput(blob)
+    .setMimeType(ContentService.MimeType.JSON)
+    .getContent());
     if (argsObject) {
       const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
-    }
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .getContent();
-  } catch (error) {
-    console.log("error in contentApp: " + error);
-    return "Error rendering template.";
-  }
-}; // or throw error.
-
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentBlob = function (blob, argsObject) {
-  var tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).getContent()
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentTemplate = function (file, argsObject) {
-  var tmp = HtmlService.createTemplateFromFile(file);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
-// const keys = Object.keys(argsObject);
-// tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).setMimeType(ContentService.MimeType.JAVASCRIPT).getContent()
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-var contentCDN = function (url, argsObject) {
-  var redirectURL = encodeURIComponent(
-    url +
-      "?" +
-      Object.keys(argsObject)
-        .map((key) => key + "=" + argsObject[key])
-        .join("&"),
-  );
-  return HtmlService.createHtmlOutputFromFile("cors")
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-    .addMetaTag("http-equiv", "refresh", "0; url=" + redirectURL);
-};
-
-var contentFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(
-    ContentService.createTextOutput(file)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent(),
-  );
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
+      keys.forEach(
+        function(key) {
+        tmp[key] = argsObject[key]})}
+    return tmp.evaluate()
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
-// const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
-// const argsObject = ContentService.createTextOutput({ args });
-// if (argsObject) {
-// if (ContentService.createTextOutput(JSON.stringify({ argsObject }))
-//  .setMimeType(ContentService.MimeType.JSON).getContent())
-//  {const keys = Object.keys(argsObject);
-// tmp["list"] = htmlListArray;
-// END IF
-// Route[file] = argsObject
-// return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+    .getContent()}
+  catch (error) {
+    console.log("error in contentApp: " + error);
+    return "Error rendering template."}}; // or throw error.
+  
+      // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+      // const argsObject = ContentService.createTextOutput({ args });
+      // if (argsObject) {
+      // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+      // const keys = Object.keys(argsObject);
+      // tmp["list"] = htmlListArray;
+      // END IF
+      // Route[file] = argsObject
+    // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-function eTest() {
-  console.log(Math.floor(maxTime - start / 1000));
+var contentBlob = function(blob, argsObject) 
+  {var tmp = HtmlService.createTemplate(blob);
+      if (argsObject) {var keys = Object.keys(argsObject);
+      keys.forEach(function(key) {tmp[key] = argsObject[key]});}     
+  return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN).getContent()}
+  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+  // const argsObject = ContentService.createTextOutput({ args });
+  // if (argsObject) {
+  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+  // const keys = Object.keys(argsObject);
+  // tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).getContent()
+  // tmp["list"] = htmlListArray;
+  // END IF
+  // Route[file] = argsObject
+  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+    
+
+var contentTemplate = function(file, argsObject) 
+  {var tmp = HtmlService.createTemplateFromFile(file);
+      if (argsObject) {var keys = Object.keys(argsObject);
+      keys.forEach(function(key) {tmp[key] = argsObject[key]});}
+  return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN).getContent()}
+  // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+  // const argsObject = ContentService.createTextOutput({ args });
+  // if (argsObject) {
+  // if (ContentService.createTextOutput(JSON.stringify({ argsObject })).setMimeType(ContentService.MimeType.JSON).getContent()) {
+  // const keys = Object.keys(argsObject);
+  // tmp = ContentService.createTextOutput(tmp.evaluate().getContent()).setMimeType(ContentService.MimeType.JAVASCRIPT).getContent()
+  // tmp["list"] = htmlListArray;
+  // END IF
+  // Route[file] = argsObject
+  // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
+
+
+var contentCDN = function(url, argsObject) {
+    var redirectURL = encodeURIComponent(url + "?" + Object.keys(argsObject).map(key => key + "=" + argsObject[key]).join("&"));
+    return HtmlService.createHtmlOutputFromFile('cors')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      .addMetaTag('http-equiv', 'refresh', '0; url=' + redirectURL);
 }
 
-var fiveTime = new Date(5 * 59.9 * 1000).getMilliseconds();
-
-var fourTime = new Date(4 * 59.9 * 1000).getMilliseconds();
-
-var include = function (file, argsObject) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const tmp = HtmlService.createHtmlOutputFromFile(file);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
+var contentFile = function(file, argsObject)
+  {const tmp = HtmlService.createTemplateFromFile(
+      ContentService.createTextOutput(file).setMimeType(ContentService.MimeType.JSON).getContent());
+      if (argsObject) {const keys = Object.keys(argsObject);
+      keys.forEach(function(key) {tmp[key] = argsObject[key]});} 
+    return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL).getContent()}
+    // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
+    // const argsObject = ContentService.createTextOutput({ args });
+    // if (argsObject) {
+    // if (ContentService.createTextOutput(JSON.stringify({ argsObject }))
+    //  .setMimeType(ContentService.MimeType.JSON).getContent()) 
+    //  {const keys = Object.keys(argsObject);
     // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .asTemplate()
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
-    .getBlob()
-    .getDataAsString();
-};
+    // END IF
+    // Route[file] = argsObject
+    // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var defSBD = function (e) {
-  var args = [
-    `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
-  ]
-    .toString()
-    .split(" ")[
-    Math.floor(
-      Math.random() *
-        Math.floor(
-          [
-            `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
-          ]
-            .toString()
-            .split(" ").length,
-        ),
-    )
-  ];
-  try {
-    if (!globalThis.hasOwnProperty(e.parameter["func"])) {
-      // Get the actual function
-      var foobarr = globalThis.renderFile;
-      return renderTemplate(
-        `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+function eTest() {console.log(Math.floor(maxTime - start / 1000))}
+
+var fiveTime = new Date(5 * 59.9 * 1000).getMilliseconds()
+
+var fourTime = new Date(4 * 59.9 * 1000).getMilliseconds()
+
+var include = function(file, argsObject) {
+  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name)
+    const tmp = HtmlService.createHtmlOutputFromFile(file);
+      if (argsObject) {
+      const keys = Object.keys(argsObject);
+
+      keys.forEach(function(key) {
+            tmp[key] = argsObject[key]
+           });
+
+      // tmp["list"] = htmlListArray;
+      } // END IF
+      // Route[file] = argsObject
+    return tmp.asTemplate().evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN).getBlob().getDataAsString();
+}
+
+var defSBD = function(e) {var args 
+  = [`index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`].toString().split(" ")[Math.floor(Math.random() * (Math.floor([`index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`].toString().split(" ").length)))];try {if (!globalThis.hasOwnProperty(e.parameter["func"])) {// Get the actual function
+  var foobarr
+  = globalThis.renderFile;return renderTemplate(`<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           body {
             flex-grow: 1;
             color:blue;
@@ -402,10 +319,7 @@ var defSBD = function (e) {
             overflow: auto;
           }</style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {var pagE 
   = document.getElementById("pageObj");pagE.innerHTML 
-  = <?= JSON.stringify(e) ?>}</script></html>`,
-        {
-          renBlob: contentApp(
-            `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+  = <?= JSON.stringify(e) ?>}</script></html>`, {renBlob: contentApp(`<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
               color:blue;
@@ -433,27 +347,10 @@ var defSBD = function (e) {
   = "";inDaApp.src 
   = "<?= appL ?>"}else {inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
-  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
-            { appL: globalThis[foobarr].apply(this, [args]) },
-          ),
-          e: e,
-        },
-        args,
-      );
-    }
-  } catch (error) {
-    throw new Error(
-      "File not found and global function does not exist: " + foobarr,
-    );
-  }
-};
-var freeSBD = function (func) {
-  try {
-    if (typeof globalThis[func] == "function") {
-      // Get the actual function
-      var foobarr = globalThis[func];
-      return renderTemplate(
-        `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`, {appL: globalThis[foobarr].apply(this, [args])}), e:e},args)}}catch(error) {throw new Error("File not found and global function does not exist: " + foobarr)}};var freeSBD 
+  = function(func) {try {if (typeof globalThis[func] == "function") {// Get the actual function
+  var foobarr
+  = globalThis[func];return renderTemplate(`<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
               color:blue;
@@ -466,10 +363,7 @@ var freeSBD = function (func) {
               overflow: auto;
             }</style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {
           var pagE 
-            = document.getElementById("pageObj");}</script></html>`,
-        {
-          renBlob: contentApp(
-            `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+            = document.getElementById("pageObj");}</script></html>`, {renBlob: contentApp(`<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
               color:blue;
@@ -497,274 +391,132 @@ var freeSBD = function (func) {
   = "";inDaApp.src 
   = "<?= appL ?>"}else {inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
-  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
-            { appL: globalThis[func](), vUrl: isValidUrl },
-          ),
-        },
-        foobarr,
-      );
-    } else {
-      return;
-    }
-  } catch (error) {
-    console.error(error);
-    Logger.log("Error creating template from function: " + error);
-    throw new Error(
-      "Could not create template from file or function: " + foobarr,
-    );
-  }
-};
+  = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`, {appL: globalThis[func](),vUrl: isValidUrl})},foobarr)}else {return}}catch(error) {console.error(error);Logger.log("Error creating template from function: " + error);throw new Error("Could not create template from file or function: " + foobarr)}}
 
-var includeApp = function (blob, argsObject) {
-  const tmp = HtmlService.createHtmlOutput(blob);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
 
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .asTemplate()
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
-};
-
-var includeBlob = function (file, argsObject) {
-  if (file) {
-    const temp = ContentService.createTextOutput(
-      HtmlService.createTemplateFromFile(file).evaluate().getContent(),
-    );
-    const tmp = HtmlService.createTemplate(
-      temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
-    );
-    if (argsObject) {
+var includeApp = function(blob, argsObject) {
+    const tmp = HtmlService.createHtmlOutput(blob);
+      if (argsObject) {
       const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+
+      keys.forEach(function(key) {
+            tmp[key] = argsObject[key]
+           });
+
       // tmp["list"] = htmlListArray;
+      } // END IF
+      // Route[file] = argsObject
+    return tmp.asTemplate().evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+}
+
+var includeBlob = function(file, argsObject) {
+if (file) {
+  const temp = ContentService.createTextOutput(HtmlService.createTemplateFromFile(file).evaluate().getContent())
+  const tmp = HtmlService.createTemplate(temp.setMimeType(ContentService.MimeType.TEXT).getContent());
+  if (argsObject) {
+    const keys 
+      = Object.keys(argsObject);
+    keys.forEach(function(key) {
+      tmp[key] 
+        = argsObject[key]});
+    // tmp["list"] = htmlListArray;
     } // END IF;Route[file] = argsObject
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
   }
-};
+}
 
-var includeGSFile = function (file, argsArray) {
-  var misStArrayFile = misSt(file, argsArray)
-    ? console.log("misStArrayFile = " + typeof misStArrayFile)
-    : console.error("misStArrayFile = " + typeof misStArrayFile);
-  var misStArrayArgs = misSt(argsArray)
-    ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
-    : console.error("misStArrayArgs = " + typeof misStArrayArgs);
-  if (misStArrayFile.args) {
-    var fileNames = misStArrayFile.args;
-    if (fileNames) {
-      file = [fileNames][0];
-    } else {
-      file = testlt();
-    }
-  } // else if (misStArrayArgs.args) {var fileNames
-  // = misStArrayArgs.args;file
-  // = [fileNames][0]}argsArray
-  // = [fileNames].slice(1).toString().replace(/,/g, " ")var funcNames
+var includeGSFile 
+  = function(file, argsArray) {var misStArrayFile
+  = misSt(file, argsArray)?console.log("misStArrayFile = " + typeof misStArrayFile):console.error("misStArrayFile = " + typeof misStArrayFile);var misStArrayArgs
+  = misSt(argsArray)?console.log("misStArrayArgs = " + typeof misStArrayArgs):console.error("misStArrayArgs = " + typeof misStArrayArgs);if (misStArrayFile.args) {var fileNames 
+  = misStArrayFile.args;if (fileNames ){file 
+  = [fileNames][0]}else {file 
+  = testlt()}}// else if (misStArrayArgs.args) {var fileNames 
+  // = misStArrayArgs.args;file 
+  // = [fileNames][0]}argsArray 
+  // = [fileNames].slice(1).toString().replace(/,/g, " ")var funcNames 
   // =  misStArray.func;
-  var tmp = {};
-  var myApp = {
-    appJS: () => {
-      function serverSide(func, args) {
-        "use strict";
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.error(error);
-              reject(error);
-            })
-            .runBoilerplate(func, args);
-        });
-      }
-      // Expose serverSide to the global scope or a specific namespace
-      window.serverSide = serverSide; // Or, if you have a namespace: myApp.serverSide = serverSide;
-      if (argsArray) {
-        // Optionally, if you want to run a specific function immediately:
-        // (If argsArray is not defined, you can omit the args)
-        if (file && typeof file === "string" && file.length > 0) {
-          // basic validation
-          if (argsArray && Array.isArray(argsArray)) {
-            const freeCall = serverSide(file, argsArray)
-              .then((result) => {
-                // Handle the result of the initial server-side call
-                console.log("Initial serverSide call result:", result);
-              })
-              .catch((error) => {
-                // Handle errors from the initial server-side call
-                console.error("Initial serverSide call error:", error);
-              })
-              ? console.log("freeCall = " + typeof freeCall)
-              : console.error("freeCall = " + typeof freeCall);
-          } else {
-            const defCall = serverSide(file)
-              .then((result) => {
-                console.log("Initial serverSide call result:", result);
-              })
-              .catch((error) => {
-                console.error("Initial serverSide call error:", error);
-              })
-              ? console.log("defCall = " + typeof defCall)
-              : console.error("defCall = " + typeof defCall);
-          }
-        }
-      }
-    },
-  };
-  try {
-    const keys = Object.keys(myApp);
-    keys.forEach(function (key) {
-      tmp[key] = [key];
-    })
-      ? console.log("keys = " + typeof keys)
-      : console.error("keys = " + typeof keys);
-  } catch (error) {
-    console.error(error);
-    return "Error in includeGSFile appJS " + error;
-  }
+  var tmp 
+  = {};var myApp 
+  = {appJS: () => {function serverSide(func, args) {"use strict";return new Promise((resolve, reject) => {google.script.run.withSuccessHandler(result => {resolve(result)}).withFailureHandler(error => {console.error(error);reject(error)}).runBoilerplate(func, args)})};
+  // Expose serverSide to the global scope or a specific namespace
+  window.serverSide 
+  = serverSide; // Or, if you have a namespace: myApp.serverSide = serverSide;
   if (argsArray) {
-    try {
-      const keys = Object.keys(argsArray);
-      keys.forEach(function (key) {
-        tmp[key] = argsArray[key];
-      })
-        ? console.log("keys = " + typeof keys)
-        : console.error("keys = " + typeof keys);
-    } catch (error) {
-      console.error(error);
-      return "Error in includeGSFile args " + error;
-    }
-  }
-  try {
-    tmp = HtmlService.createTemplateFromFile(file)
-      ? console.log("tmp = " + typeof tmp)
-      : console.error("tmp = " + typeof tmp);
-  } catch (error) {
-    console.error(error);
-  }
-  Logger.log("Error creating template from file: " + error);
-  if (typeof globalThis[file] == "function") {
-    try {
-      var content = ContentService.createTextOutput(globalThis[file]())
-        .setMimeType(ContentService.MimeType.JSON)
-        .getContent()
-        ? console.log("content = " + typeof content)
-        : console.error("content = " + typeof content);
-      tmp = HtmlService.createTemplate(content)
-        ? console.log("tmp = " + typeof tmp)
-        : console.error("tmp = " + typeof tmp);
-    } catch (error1) {
-      console.error(error1);
-      Logger.log("Error creating template from function: " + error1);
-      throw new Error(
-        "Could not create template from file or function: " + file,
-      );
-    }
-  } else {
-    throw new Error(
-      "File not found and global function does not exist: " + file,
-    );
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT)
-    .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-    .getContent();
-};
+  // Optionally, if you want to run a specific function immediately:
+  // (If argsArray is not defined, you can omit the args)
+  if (file && typeof file === 'string' && file.length > 0) { // basic validation
+  if(argsArray && Array.isArray(argsArray)){const freeCall 
+  = serverSide(file, argsArray).then(result => {
+  // Handle the result of the initial server-side call
+  console.log("Initial serverSide call result:", result);}).catch(error => {
+  // Handle errors from the initial server-side call
+  console.error("Initial serverSide call error:", error);})?console.log("freeCall = " + typeof freeCall):console.error("freeCall = " + typeof freeCall);} else {const defCall 
+  = serverSide(file).then(result => {console.log("Initial serverSide call result:", result);}).catch(error => {console.error("Initial serverSide call error:", error);})?console.log("defCall = " + typeof defCall):console.error("defCall = " + typeof defCall);}}}}};try {const keys 
+  = Object.keys(myApp);keys.forEach(function(key) {tmp[key] 
+  = [key]})?console.log("keys = " + typeof keys):console.error("keys = " + typeof keys)}catch(error) {console.error(error);return "Error in includeGSFile appJS " + error};if (argsArray) {try {const keys 
+  = Object.keys(argsArray);keys.forEach(function(key) {tmp[key] 
+  = argsArray[key]})?console.log("keys = " + typeof keys):console.error("keys = " + typeof keys);}catch(error) {console.error(error);return "Error in includeGSFile args " + error}};try {tmp 
+  = HtmlService.createTemplateFromFile(file)?console.log("tmp = " + typeof tmp):console.error("tmp = " + typeof tmp);}catch(error){console.error(error)};Logger.log("Error creating template from file: " + error);if (typeof globalThis[file] == "function") {try {var content 
+  = ContentService.createTextOutput(globalThis[file]()).setMimeType(ContentService.MimeType.JSON).getContent()?console.log("content = " + typeof content):console.error("content = " + typeof content);tmp 
+  = HtmlService.createTemplate(content)?console.log("tmp = " + typeof tmp):console.error("tmp = " + typeof tmp);}catch(error1){console.error(error1);Logger.log("Error creating template from function: " + error1);throw new Error("Could not create template from file or function: " + file)}}else {throw new Error("File not found and global function does not exist: " + file)};return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT).setSandboxMode(HtmlService.SandboxMode.IFRAME).getContent()}
 
-var includeGSBlob = function (blob, argsArray) {
-  return renderTemplate(`<?!= appJS ?>`, {
-    appJS: async function () {
-      try {
-        const content = await serverSide(blob, argsArray);
-        return content;
-      } catch (error_1) {
-        console.log(error_1);
+var includeGSBlob = function(blob, argsArray)
+  {return renderTemplate(`<?!= appJS ?>`,{appJS: 
+  async function()
+  {try 
+  {const content=await serverSide(blob,argsArray);
+    return content;} 
+catch(error_1) {
+  console.log(error_1);}}})}
+
+  var includeRunIt = () =>
+      {console.log(leadBook(10))
       }
-    },
-  });
-};
 
-var includeRunIt = () => {
-  console.log(leadBook(10));
-};
+var includeJs = function(blob, argsObject) {
+    const tmp = HtmlService.createTemplate(blob);
+      if (argsObject) {
+      const keys = Object.keys(argsObject);
 
-var includeJs = function (blob, argsObject) {
-  const tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
+      keys.forEach(function(key) {
+            tmp[key] = argsObject[key]
+           });
 
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+      // tmp["list"] = htmlListArray;
+      } // END IF
+      // Route[file] = argsObject
+    return tmp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+}
 
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
-};
+var maxTime = new Date(6 * 59.9 * 1000)
 
-var maxTime = new Date(6 * 59.9 * 1000);
+var myFunction = function(webApp, argsObject) {
+    const tmp = HtmlService.createHtmlOutput(webApp);
+      if (argsObject) {
+      const keys = Object.keys(argsObject);
 
-var myFunction = function (webApp, argsObject) {
-  const tmp = HtmlService.createHtmlOutput(webApp);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
+      keys.forEach(function(key) {
+            tmp[key] = argsObject[key]
+           });
 
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+      // tmp["list"] = htmlListArray;
+      } // END IF
+      // Route[file] = argsObject
+    return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+}
 
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
-};
+var oneTime = new Date(59.9 * 1000).getMilliseconds()
 
-var oneTime = new Date(59.9 * 1000).getMilliseconds();
-
-var renderFile = function (file, argsObject, title) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nfile is !" +
-      !file +
-      " = " +
-      file +
-      "\nargsObject is !" +
-      !argsObject +
-      " = " +
-      argsObject +
-      "\ntitle is !" +
-      !title +
-      " = " +
-      title,
-  );
+var renderFile = function(file, argsObject, title) {
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfile is !" + !file + " = " + file + "\nargsObject is !" + !argsObject + " = " + argsObject + "\ntitle is !" + !title + " = " + title)
   try {
     if (file) {
       const tmp = HtmlService.createTemplateFromFile(file);
       if (argsObject) {
         const keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
-      }
+        keys.forEach(function(key) {
+          tmp[key] = argsObject[key]})};
 
       // tmp["list"] = htmlListArray;
       // END IF
@@ -772,8 +524,7 @@ var renderFile = function (file, argsObject, title) {
       // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
       var funcCheck = appList();
       var schedule = dateTime(new Date());
-      var html = contentApp(
-        `
+      var html = contentApp(`
       <!DOCTYPE html>
       <html lang="en">
         <head>
@@ -983,120 +734,84 @@ var renderFile = function (file, argsObject, title) {
       <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
       <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
     </body>
-  </html>`,
-        {
-          funcClicked: function () {
-            //console.log(document.getElementById("test").innerHTML)
-            // Init a timeout variable to be used below
-            let timeout = null;
-            (() => {
-              // Clear the timeout if it has already been set.
-              // This will prevent the previous task from executing
-              // if it has been less than <MILLISECONDS>
-              // clearTimeout(timeout);
-              // Make a new timeout set to go off in 1000ms (1 second)
-              // timeout = setTimeout
-              // (function  ()
-              // {console.log('Input Value:', textInput.value);}, 5000)();
-              if (typeof url === "undefined") {
-                var urlData = document.getElementById("url").value;
-                var url = urlData.toString();
-              }
-              var func = document.getElementById("func").value;
-              var args = document.getElementById("args").value;
-              if (typeof args !== "undefined") {
-                var linkFollow = document.createElement("a");
-                linkFollow.href =
-                  url +
-                  "?func=" +
-                  encodeURIComponent(func) +
-                  "&args=" +
-                  encodeURIComponent(args);
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_top";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              }
-            })();
-          },
-          argsClicked: function () {
-            //console.log(document.getElementById("test").innerHTML)
-            // Init a timeout variable to be used below
-            let timeout = null;
-            (() => {
-              // Clear the timeout if it has already been set.
-              // This will prevent the previous task from executing
-              // if it has been less than <MILLISECONDS>
-              // clearTimeout(timeout);
-              // Make a new timeout set to go off in 1000ms (1 second)
-              // timeout = setTimeout
-              // (function  ()
-              // {console.log('Input Value:', textInput.value);}, 5000)();
-              if (typeof url === "undefined") {
-                var urlData = document.getElementById("url").value;
-                var url = urlData.toString();
-              }
-              var func = document.getElementById("func").value;
-              var args = document.getElementById("args").value;
-              if (typeof func !== "undefined") {
-                var linkFollow = document.createElement("a");
-                linkFollow.href =
-                  url +
-                  "?func=" +
-                  encodeURIComponent(func) +
-                  "&args=" +
-                  encodeURIComponent(args);
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_top";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              }
-            })();
-          },
-        },
-      );
-      return tmp
-        .evaluate()
-        .setTitle(title)
-        .append(html)
-        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        .getContent();
-    } else {
-      return handleRequest(argsObject);
-    }
-  } catch (error) {
-    console.log("error in renderTemplate: " + error);
-    return "Error rendering template.";
-  }
-};
+  </html>`, {
+    funcClicked: 
+      function() {
+        //console.log(document.getElementById("test").innerHTML)
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  () 
+          // {console.log('Input Value:', textInput.value);}, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("url").value;
+            var url = urlData.toString()}
+          var func = document.getElementById("func").value;
+          var args = document.getElementById("args").value;
+          if (typeof args !== "undefined") {
+          var linkFollow = document.createElement("a");
+          linkFollow.href = url + "?func=" + encodeURIComponent(func) + "&args=" + encodeURIComponent(args);
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click()
+          document.getElementById("linkFOLLOW").remove()}})()},
+    argsClicked: 
+      function() {
+        //console.log(document.getElementById("test").innerHTML)
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  () 
+          // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined") {
+          var urlData = document.getElementById("url").value;
+          var url = urlData.toString()}
+          var func = document.getElementById("func").value;
+          var args = document.getElementById("args").value;
+          if (typeof func !== "undefined") {
+          var linkFollow = document.createElement("a");
+          linkFollow.href = url + "?func=" + encodeURIComponent(func) + "&args=" + encodeURIComponent(args);
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click()
+          document.getElementById("linkFOLLOW").remove()}})()},})
+          return tmp.evaluate().setTitle(title)
+          .append(html)
+          .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+          .getContent()}
+      else{
+        return handleRequest(argsObject)}}
+    catch (error) {
+      console.log("error in renderTemplate: " + error);
+      return "Error rendering template."}}
 
-var renderTemplate = function (blob, argsObject, title) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
-  const tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    try {
+var renderTemplate = function(blob, argsObject, title) {
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name)
+    const tmp = HtmlService.createTemplate(blob);
+    if (argsObject) {try {
       const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
-    } catch (error) {
-      return "Error in renderTemplate tmp" + error;
-    }
-  }
-  var funcCheck = appList();
-  var css = builtStyling();
-  var schedule = dateTime(new Date());
-  // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
-  try {
-    var html = contentApp(
-      `
+      keys.forEach(function(key) {
+          tmp[key] = argsObject[key]})}catch(error) {return "Error in renderTemplate tmp" + error}}
+    var funcCheck = appList();
+    var css = builtStyling()
+    var schedule = dateTime(new Date());
+    // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+    try {var html = contentApp(`
     <html id="renderTemplate">
       <head>
         <?!= builtStyling().evaluate().getContent() ?>
@@ -1288,9 +1003,9 @@ var renderTemplate = function (blob, argsObject, title) {
   <div id="result"></div>
   <div id="successMessage"></div>
   <div id="errorMessage"></div>
-  <table id="resultsTable"></table>`,
-      {
-        funcClicked: function () {
+  <table id="resultsTable"></table>`, {
+      funcClicked: 
+        function() {
           //console.log(document.getElementById("test").innerHTML)
           // Init a timeout variable to be used below
           let timeout = null;
@@ -1301,31 +1016,23 @@ var renderTemplate = function (blob, argsObject, title) {
             // clearTimeout(timeout);
             // Make a new timeout set to go off in 1000ms (1 second)
             // timeout = setTimeout
-            // (function  ()
+            // (function  () 
             // {console.log('Input Value:', textInput.value);}, 5000)();
             if (typeof url === "undefined") {
               var urlData = document.getElementById("url").value;
-              var url = urlData.toString();
-            }
+              var url = urlData.toString()}
             var func = document.getElementById("func").value;
             var args = document.getElementById("args").value;
             if (typeof args !== "undefined") {
-              var linkFollow = document.createElement("a");
-              linkFollow.href =
-                url +
-                "?func=" +
-                encodeURIComponent(func) +
-                "&args=" +
-                encodeURIComponent(args);
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_top";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            }
-          })();
-        },
-        argsClicked: function () {
+            var linkFollow = document.createElement("a");
+            linkFollow.href = url + "?func=" + encodeURIComponent(func) + "&args=" + encodeURIComponent(args);
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_top";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click()
+            document.getElementById("linkFOLLOW").remove()}})()},
+      argsClicked: 
+        function() {
           //console.log(document.getElementById("test").innerHTML)
           // Init a timeout variable to be used below
           let timeout = null;
@@ -1336,69 +1043,46 @@ var renderTemplate = function (blob, argsObject, title) {
             // clearTimeout(timeout);
             // Make a new timeout set to go off in 1000ms (1 second)
             // timeout = setTimeout
-            // (function  ()
+            // (function  () 
             // {console.log('Input Value:', textInput.value);}, 5000)();
-            if (typeof url === "undefined") {
-              var urlData = document.getElementById("url").value;
-              var url = urlData.toString();
-            }
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("url").value;
+            var url = urlData.toString()}
             var func = document.getElementById("func").value;
             var args = document.getElementById("args").value;
             if (typeof func !== "undefined") {
-              var linkFollow = document.createElement("a");
-              linkFollow.href =
-                url +
-                "?func=" +
-                encodeURIComponent(func) +
-                "&args=" +
-                encodeURIComponent(args);
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_top";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            }
-          })();
-        },
-      },
-    );
-  } catch (error) {
-    return "Error in rendertemplate html" + error;
-  }
-  return tmp
-    .evaluate()
-    .setTitle(title)
+            var linkFollow = document.createElement("a");
+            linkFollow.href = url + "?func=" + encodeURIComponent(func) + "&args=" + encodeURIComponent(args);
+            linkFollow.id = "linkFOLLOW";
+            linkFollow.target = "_top";
+            document.body.appendChild(linkFollow);
+            document.getElementById("linkFOLLOW").click()
+            document.getElementById("linkFOLLOW").remove()}})()},})}catch(error){return "Error in rendertemplate html" + error}
+  return tmp.evaluate().setTitle(title)
     .append(html)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .setSandboxMode(HtmlService.SandboxMode.IFRAME);
-}; // or throw error.
-
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME)}; // or throw error.
+  
 // Gets a cache that is common to all users of the script
 var sCache = CacheService.getScriptCache();
 
-var start = new Date(0.1 * 1000).getMilliseconds();
+var start = new Date(.1 * 1000).getMilliseconds()
 
-var tagBuilder = function (content) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const htmlBody = contentApp(content);
-  return htmlBody;
-};
+var tagBuilder = function(content){
+  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name)
+  const htmlBody = contentApp(content)
+  return htmlBody
+}
 
-var threeTime = new Date(3 * 59.9 * 1000).getMilliseconds();
+var threeTime = new Date(3 * 59.9 * 1000).getMilliseconds()
 
-var twoTime = new Date(2 * 59.9 * 1000).getMilliseconds();
+var twoTime = new Date(2 * 59.9 * 1000).getMilliseconds()
 
-var wildSBD = function (e) {
-  var args = e.parameter["args"];
-  try {
-    if (
-      globalThis.hasOwnProperty(e.parameter["func"]) &&
-      typeof globalThis[e.parameter["func"]] === "function"
-    ) {
-      // Get the actual function
-      var foobarr = globalThis[e.parameter["func"]];
-      return renderTemplate(
-        `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+var wildSBD = function(e) {
+  var args 
+    = e.parameter["args"];try {if (globalThis.hasOwnProperty(e.parameter["func"]) && typeof globalThis[e.parameter["func"]] === "function") {// Get the actual function
+  var foobarr
+    = globalThis[e.parameter["func"]];return renderTemplate(`<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
 
@@ -1415,10 +1099,7 @@ var wildSBD = function (e) {
         </style></head><body><div id="pageObj"></div><div><?!= renBlob ?></div></body><script> document.addEventListener("DOMContentLoaded", eRun);function eRun() {
           var pagE 
             = document.getElementById("pageObj");
-          pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`,
-        {
-          renBlob: contentApp(
-            `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+          pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`, {renBlob: contentApp(`<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
 
@@ -1456,22 +1137,8 @@ var wildSBD = function (e) {
               inDaApp.src 
                 = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");
               inDaApp.src 
-                = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
-            {
-              appL: globalThis[e.parameter["func"]].apply(this, [args]),
-            },
-          ),
-
-          e: e,
-        },
-        args,
-      );
-    }
-  } catch (error) {
-    console.error(error);
-    Logger.log("Error creating template from function: " + error);
-    throw new Error(
-      "Could not create template from file or function: " + foobarr,
-    );
-  }
-};
+                = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`, {
+          appL: globalThis[e.parameter["func"]].apply(this, [args])}), 
+      
+      e:e},
+    args)}}catch(error) {console.error(error);Logger.log("Error creating template from function: " + error);throw new Error("Could not create template from file or function: " + foobarr)}}

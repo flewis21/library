@@ -1,27 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top" />
-  </head>
-  <body>
-    <script>
-      // This script immediately redirects back to the content.
-      // Setting the correct headers before the redirect.
+<head>
+  <base target="_top">
+</head>
+<body>
+  <script>
+    // This script immediately redirects back to the content.
+    // Setting the correct headers before the redirect.
 
-      function redirect() {
-        // Get the original request URL from the URL parameters
+    function redirect() {
+      // Get the original request URL from the URL parameters
         var params = new URLSearchParams(window.location.search);
-        var redirectURL = params.get("url");
+        var redirectURL = params.get('url');
         if (redirectURL) {
-          window.location.href = decodeURIComponent(redirectURL);
+            window.location.href = decodeURIComponent(redirectURL);
         } else {
-          // Handle the case where the URL parameter is missing
-          console.error("No redirect URL provided.");
+            // Handle the case where the URL parameter is missing
+            console.error("No redirect URL provided.");
         }
-      }
+    }
 
-      // Call the redirect function after the page load
-      window.onload = redirect;
-    </script>
-  </body>
+    // Call the redirect function after the page load
+    window.onload = redirect;
+  </script>
+</body>
 </html>

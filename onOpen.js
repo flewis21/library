@@ -1,8 +1,11 @@
-var onOpen = function (appInterface) {
+
+var onOpen = function(appInterface) {
   if (typeof appInterface !== "string") {
-    return JSON.stringify({});
-  } else {
+    return JSON.stringify({})
+  }
+  else {
     var menu = appInterface.getUi();
     return menu;
   }
-};
+}
+

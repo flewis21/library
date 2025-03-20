@@ -7,10 +7,10 @@
 //   const fireTest = () => {
 //   return {
 //   promises:
-//     async function authPromise(myPromise)
+//     async function authPromise(myPromise)  
 //                               {
 //     let isValid = false;
-//     if (typeof myPromise === "undefined")
+//     if (typeof myPromise === "undefined") 
 //       {return new Promise((resolve, reject) => {
 //                   // isValid = false
 //                   resolve(isValid)
@@ -39,7 +39,7 @@
 //                           console.log(`Do ${youPromise} ?`)
 //         }
 //         ).catch(
-//   async (error) =>
+//   async (error) => 
 //         {const youFalse = await error
 //           console.log(youFalse + ' for that!')
 //         });
@@ -56,13 +56,13 @@
 //   const serverSide =
 //     function (func, args)
 //                                          {
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//   google.script.run.withSuccessHandler(result =>
+//   google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   console.log(document.getElementById("test").innerHTML)
 //   reject(error)
@@ -70,25 +70,25 @@
 //                      .runAll(`boilerplate.${[func]}`, [args])
 //                                               })
 //                                           };
-//   const regTF = (() =>
+//   const regTF = (() => 
 //                                         {
 //     return  {
 //             }
 //                                         })()
 //                 },
-
+ 
 //   idTest:
 //   function()
 //             {
 //     function runGoogleScript(func, args)
 //                                   {
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   console.log(document.getElementById("test").innerHTML)
 //   reject(error)
@@ -103,13 +103,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("url").value)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -124,13 +124,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -145,13 +145,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -166,13 +166,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -187,13 +187,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -208,13 +208,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -229,13 +229,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -250,13 +250,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -271,13 +271,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -292,13 +292,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -313,13 +313,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -334,13 +334,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -355,13 +355,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -376,13 +376,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -397,13 +397,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -417,13 +417,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -486,13 +486,13 @@
 //     function runGoogleScript(func, args)
 //                                   {
 //     console.log(document.getElementById("test").innerHTML)
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//     google.script.run.withSuccessHandler(result =>
+//     google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   reject(error)
 //                                                       })
@@ -507,13 +507,13 @@
 //   const serverSide =
 //     function (func, args)
 //                                          {
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
-//   google.script.run.withSuccessHandler(result =>
+//   google.script.run.withSuccessHandler(result => 
 //                                                     {
 //   resolve(result)
 //                                                     })
-//                      .withFailureHandler(error =>
+//                      .withFailureHandler(error => 
 //                                                   {
 //   console.log(document.getElementById("test").innerHTML)
 //   reject(error)
@@ -521,16 +521,16 @@
 //                      .runAll(`boilerplate.${[func]}`, [args])
 //                                               })
 //                                           };
-//   const regTF = (() =>
+//   const regTF = (() => 
 //                                         {
 //     return  {
 //     sleep:
-//     function(milliseconds)
+//     function(milliseconds) 
 //                                     {
-//     return new Promise((resolve) =>
+//     return new Promise((resolve) => 
 //   setTimeout(resolve, milliseconds))
 //                                     },
-//     sexToNumber:
+//     sexToNumber: 
 //     function(sex)
 //                   {
 //       switch(sex)
@@ -539,13 +539,13 @@
 //     case 'M': return 1;
 //     default: return 0.5;
 //                   }},
-//     getSize:
+//     getSize: 
 //     function(url)
 //                           {
-//       var res = fetch(url,
-//                             {
+//       var res = fetch(url, 
+//                             { 
 //   method: 'GET',
-//   mode: 'no-cors'
+//   mode: 'no-cors' 
 //                             });
 //       console.log(res)
 //       const lines = res.split(/\r?\n/);
@@ -603,15 +603,15 @@
 //   const csvUrl = "https://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data"
 //     const milli = 2000
 //     regTF.sleep(milli)
-//     .then(async () =>
+//     .then(async () => 
 //                 {
-//   //   await mainReturn.then((result) =>
+//   //   await mainReturn.then((result) => 
 //                             // {
 //   // console.log(result)
 //   //                           })
 //   await serverSide('getSize', [csvUrl])
 //     .then(async (result)=>
-//     {
+//     {   
 //     console.log(result)
 //    await regTF.main(csvUrl, result)
 //     .then((tfReg)=>
@@ -624,12 +624,12 @@
 //     })
 //     });
 //                  })
-//     .catch(error =>
+//     .catch(error => 
 //                     {
 //   console.log(error)
 //                     })
 //               },
-
+ 
 //   appJS:
 //   function()
 //             {
@@ -755,13 +755,13 @@
 //             {var getList = function(func, args)
 //                                       {return  {runIt:
 //     function()
-//               {return new Promise((resolve, reject) =>
+//               {return new Promise((resolve, reject) => 
 //                                             {
 //   google.script.run
-//     .withSuccessHandler(result =>
+//     .withSuccessHandler(result => 
 //                                   {resolve(result)
 //                                   })
-//     .withFailureHandler(error =>
+//     .withFailureHandler(error => 
 //                                 {console.log(document.getElementById("test").innerHTML)
 //                                   reject(error)
 //                                 })
@@ -770,7 +770,7 @@
 //                }}}
 //     getList('getList',[e.target.value]).runIt()
 //     then((list)=>
-//             {console.log(list)
+//             {console.log(list)  
 //             })
 //             },
 //   shareDrive:
@@ -778,13 +778,13 @@
 //             {var serverSide = function(func, args)
 //                                         {return  {runIt:
 //     function()
-//               {return new Promise((resolve, reject) =>
+//               {return new Promise((resolve, reject) => 
 //                                             {
 //   google.script.run
-//     .withSuccessHandler(result =>
+//     .withSuccessHandler(result => 
 //                                   {resolve(result)
 //                                   })
-//     .withFailureHandler(error =>
+//     .withFailureHandler(error => 
 //                                 {console.log(document.getElementById("test").innerHTML)
 //                                   reject(error)
 //                                 })
@@ -858,14 +858,14 @@
 //     let timePicker = document.getElementById('prefTime');
 //     M.Timepicker.init(timePicker, { defaultTime: "now" });
 // google.script.run.withSuccessHandler(populateDates).dateAgenda();
-// function populateDates(disabledDays)
+// function populateDates(disabledDays) 
 //                                 {
 // let datePicker = document.getElementById('prefDate');
-// M.Datepicker.init(datePicker,
-//                               {
+// M.Datepicker.init(datePicker, 
+//                               { 
 //     minDate: new Date(), setDefaultDate: true,
-//     disableDayFn:
-//     function(day)
+//     disableDayFn: 
+//     function(day) 
 //                                 {
 //         return disabledDays.indexOf(day.valueOf()) > -1;
 //                                 }
@@ -887,14 +887,14 @@
 //     runIt:
 //     function()
 //               {
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
 //   google.script.run
-//     .withSuccessHandler(result =>
+//     .withSuccessHandler(result => 
 //                                   {
 //   resolve(result)
 //                                     })
-//     .withFailureHandler(error =>
+//     .withFailureHandler(error => 
 //                                 {
 //   console.log(document.getElementById("test").innerHTML)
 //   reject(error)
@@ -905,12 +905,12 @@
 //                           }
 //                                           };
 //   serverSide('myFileJS', []).runIt()
-//       .then((promiseReturned) =>
+//       .then((promiseReturned) => 
 //           {console.log(promiseReturned)
 //           })
 //       .catch(
 //       (error) =>
-//             {console.log(error)
+//             {console.log(error) 
 //             })
 //   // serverSide('shareDrive', []).runIt()
 //   //   .then((retVal) => {
@@ -929,14 +929,14 @@
 //     serverSide:
 //     function()
 //               {
-//     return new Promise((resolve, reject) =>
+//     return new Promise((resolve, reject) => 
 //                                             {
 //   google.script.run
-//     .withSuccessHandler(result =>
+//     .withSuccessHandler(result => 
 //                                   {
 //   resolve(result)
 //                                     })
-//     .withFailureHandler(error =>
+//     .withFailureHandler(error => 
 //                                 {
 //   console.log(document.getElementById("test").innerHTML)
 //   reject(error)
@@ -953,11 +953,11 @@
 //   console.log(result)
 //   const secJSON = serverSide('urlDataSource',['https://www.sec.gov/files/company_tickers.json'])
 //   secJSON.serverSide()
-//       .then((result) =>
+//       .then((result) => 
 //         {
 //   console.log(result)
 //         })
-//       .catch((error) =>
+//       .catch((error) => 
 //         {
 //   console.log(document.getElementById("test").innerHTML)
 //   console.log(error)
@@ -965,8 +965,8 @@
 
 //         })
 //             },
-//   runIt:
-//   function()
+//   runIt: 
+//   function() 
 //             {
 //       function recordsFound(res)
 //                                 {
@@ -978,7 +978,7 @@
 //       function userRun()
 //                         {
 //         var findMe = document.getElementById("search").value
-//         google.script.run.withSuccessHandler(doStuff).runAll("boilerplate.userSearch",
+//         google.script.run.withSuccessHandler(doStuff).runAll("boilerplate.userSearch", 
 //         [
 //     findMe
 //         ])
@@ -994,69 +994,72 @@
 // })                                                //})
 //                     }
 // return contentApp(content)
-// }
+// } 
 
-function myFileJS(e) {
-  content = contentFile("myGNUFreeJS", {
-    main: function () {
-      const regTF = () => {
-        const serverSide = function (func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-              .withSuccessHandler((result) => {
-                resolve(result);
+function myFileJS(e)
+    {content = contentFile("myGNUFreeJS",
+            {main:
+function()
+  {const regTF = 
+    () => 
+      {const serverSide =
+    function (func, args)
+          {return new Promise((resolve, reject) => 
+          {google.script.run.withSuccessHandler(result => 
+                {resolve(result)
               })
-              .withFailureHandler((error) => {
-                console.log(document.getElementById("test").innerHTML);
-                reject(error);
+        .withFailureHandler(error => 
+    {console.log(document.getElementById("test").innerHTML)
+  reject(error)
               })
-              .runAll(`boilerplate.${[func]}`, [args]);
-          });
-        };
-        serverSide("checkOnDay", [])
-          .then((result) => {
-            document.getElementById("template").innerHTML = result;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-      regTF();
-    },
-    appJs: function () {
-      const matCalendar = function () {
-        // mod the array
-        let timePicker = document.getElementById("prefTime");
-        M.Timepicker.init(timePicker, { defaultTime: "now" });
-        const serverSide = function (func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-              .withSuccessHandler((result) => {
-                resolve(result);
+        .runAll(`boilerplate.${[func]}`, [args])
               })
-              .withFailureHandler((error) => {
-                console.log(document.getElementById("test").innerHTML);
-                reject(error);
+              };  
+      serverSide('checkOnDay', [])
+       .then((result) => 
+            {document.getElementById('template').innerHTML = result
+            }).catch((error) => 
+            {console.log(error)
+            })
+              }
+  regTF()
+                },
+        appJs:
+        function()
+          {const matCalendar = 
+        function() 
+          {// mod the array
+    let timePicker = document.getElementById('prefTime');
+    M.Timepicker.init(timePicker, { defaultTime: "now" });
+    const serverSide =
+    function (func, args)
+          {return new Promise((resolve, reject) => 
+          {google.script.run.withSuccessHandler(result => 
+                {resolve(result)
               })
-              .runAll(`boilerplate.${[func]}`, [args]);
-          });
-        };
-        serverSide("busyDates", [])
-          .then((disabledDays) => {
-            let datePicker = document.getElementById("prefDate");
-            M.Datepicker.init(datePicker, {
-              minDate: new Date(),
-              setDefaultDate: true,
-              disableDayFn: function (day) {
-                return disabledDays.indexOf(day.valueOf()) > -1;
-              },
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-    },
-  });
-  return contentApp(content);
-}
+        .withFailureHandler(error => 
+    {console.log(document.getElementById("test").innerHTML)
+  reject(error)
+              })
+        .runAll(`boilerplate.${[func]}`, [args])
+              })
+              };
+serverSide('busyDates', []).then(
+  (disabledDays) => {let datePicker = document.getElementById('prefDate');
+M.Datepicker.init(datePicker, 
+                              { 
+    minDate: new Date(), setDefaultDate: true,
+    disableDayFn: 
+    function(day) 
+                                {
+        return disabledDays.indexOf(day.valueOf()) > -1;
+                                }
+                              });
+                      }).catch(
+    (error) => {console.log(error)
+                });
+            }
+  },
+            })
+       return contentApp(content)
+            }

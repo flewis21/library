@@ -1,15 +1,9 @@
+
 function dateTime(date) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\ndate is !" +
-      !date +
-      ", = " +
-      date,
-  );
+  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\ndate is !" + !date + ", = " + date)
   // Date and Time Picker Widget
-  var dateTime = HtmlService.createTemplate(`
+  var dateTime = HtmlService
+  .createTemplate(`
   <html id="dateTime">
     <head>
       <base target="_top">
@@ -64,13 +58,12 @@ function dateTime(date) {
           });});
       </script>
     </body>
-  </html>`);
-  (dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString()),
-    (dateTime.timeDefault = new Date(date).toLocaleTimeString());
-  dateTime.dateAgenda = dateAgenda();
+  </html>`)
+  dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString(),
+  dateTime.timeDefault = new Date(date).toLocaleTimeString()
+  dateTime.dateAgenda = dateAgenda(); 
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+    contentApp(`
   <html id="dateTimeTimePicker">
     <head>
       <base target="_top">
@@ -93,15 +86,12 @@ function dateTime(date) {
       </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
-  </html>`,
-      {
-        ph: new Date(date).toLocaleTimeString(),
-      },
-    ),
-  ).getContent();
-  dateTime.datePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+  </html>`
+    , {
+      ph: new Date(date).toLocaleTimeString()
+    , })).getContent()
+    dateTime.datePicker = HtmlService.createHtmlOutput(
+      contentApp(`
   <html id="dateTimeDatePicker">
     <head>
       <base target="_top">
@@ -124,11 +114,9 @@ function dateTime(date) {
       </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </body>
-  </html>`,
-      {
-        ph: new Date(date).toLocaleDateString(),
-      },
-    ),
-  ).getContent();
-  return dateTime.evaluate().getContent();
-} //:contentFile('uiAccess');
+  </html>`
+    , {
+      ph: new Date(date).toLocaleDateString()
+    ,})).getContent()
+  return dateTime.evaluate().getContent()}//:contentFile('uiAccess');
+

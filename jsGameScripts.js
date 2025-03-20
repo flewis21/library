@@ -1,5 +1,5 @@
 function jsGameScripts() {
-  var gamerUrl = getUrl(ScriptApp);
+  var gamerUrl = getUrl(ScriptApp)
   var html = HtmlService.createTemplate(`
   <html id="jsGameScripts">
   <head>
@@ -50,9 +50,8 @@ function jsGameScripts() {
     <script>
     </script>  
   </body>
-</html>`);
-  html.gamemanager = HtmlService.createHtmlOutput(
-    `
+</html>`)
+  html.gamemanager = HtmlService.createHtmlOutput(`
     let GameManager = 
       {setGameStart: 
 function(classType) 
@@ -80,10 +79,8 @@ function(classType)
         <p>Health: " + gamer.health + "</p>";},
       setPreFight: 
 function() 
-  {}}`,
-  ).getContent();
-  html.gamer = HtmlService.createHtmlOutput(
-    `
+  {}}`).getContent();
+    html.gamer = HtmlService.createHtmlOutput(`
       let gamer;
       var Gamer = 
 function(classType, health, mana, strength, agility, speed) 
@@ -92,10 +89,8 @@ function(classType, health, mana, strength, agility, speed)
   this.mana = mana;
   this.strength = strength;
   this.agility = agility;
-  this.speed = speed;}`,
-  ).getContent();
-  html.enemy = HtmlService.createHtmlOutput(
-    `
+  this.speed = speed;}`).getContent();
+    html.enemy = HtmlService.createHtmlOutput(`
       let enemy;
       var Enemy = 
 function(enemyType, health, mana, strength, agility, speed) 
@@ -104,9 +99,8 @@ function(enemyType, health, mana, strength, agility, speed)
   this.mana = mana;
   this.strength = strength;
   this.agility = agility;
-  this.speed = speed;}`,
-  ).getContent();
-  html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();
-  html.gamerUrl = gamerUrl;
-  return html.getRawContent(); //: contentFile("uiAccess")
+  this.speed = speed;}`).getContent();
+    html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();
+    html.gamerUrl = gamerUrl;
+  return html.getRawContent()//: contentFile("uiAccess")
 }
