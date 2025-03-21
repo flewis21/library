@@ -1104,6 +1104,7 @@ var renderTemplate = function (blob, argsObject, title) {
       <body>
       <div class="row">
       <div class="col s12 card-panel amber">
+      <div class="responsive-section">
       <div class="container">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
@@ -1158,7 +1159,7 @@ var renderTemplate = function (blob, argsObject, title) {
           </tr>
         </tbody>
       </table>
-      </div></div></div></div>
+      </div></div></div></div></div>
         <script>
           function serverside(func, args) {
           return new Promise((resolve, reject) => {
