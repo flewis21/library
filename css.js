@@ -282,6 +282,22 @@ function styleHtml() {
     `
     img {width: 160px;}`,
   ).getContent();
+  content.desktopContainer = HtmlService.createHtmlOutput(
+    `
+    @media only screen and (min-width: 601px) {.desktop-container {width: 85%;margin: 0 auto;};.responsive-section {width: 85%;margin: 20 auto;}}`,
+  ).getContent();
+  content.mobileSection = HtmlService.createHtmlOutput(
+    `
+    @media only screen and (max-width: 600px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px}}`,
+  ).getContent();
+  content.contentSection = HtmlService.createHtmlOutput(
+    `
+    .content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}`,
+  ).getContent();
+  content.responsiveSection = HtmlService.createHtmlOutput(
+    `
+    .responsive-section .container {width: 100%;padding: 0px}`,
+  ).getContent();
   content.startPageUrl = startPageUrl;
   return content;
 } //:contentFile('uiAccess');
@@ -304,10 +320,10 @@ var builtStyling = function () {
       ${content.tabulatorCss}
       ${content.gstatic_preConnect}
       <style>
-        @media only screen and (min-width: 601px) {.desktop-container {width: 85%;margin: 0 auto;};.responsive-section {width: 85%;margin: 20 auto;}}
-        @media only screen and (max-width: 600px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px}}
-        .content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}
-        .responsive-section .container {width: 100%;padding: 0px}
+        ${content.desktopContainer}
+        ${content.mobileSection}
+        ${content.contentSection}
+        ${content.responsiveSection}
         ${content.website}
         ${content.html}
         ${content.main}
