@@ -777,125 +777,12 @@ var renderFile = function (file, argsObject, title) {
       <!DOCTYPE html>
       <html lang="en">
         <head>
-          <base target="_top">
-          <meta charset="UTF-8">
-          <meta name="renderTemplate" content="Boilerplate Render Template">
-          <meta name=viewport content="width=device-width, initial-scale=1">
-          <meta name="contentApp" content="conveyance, power, authority, measured, assessed, subjective, interpretation, understanding, complex, phenomena, Social, Influence, beliefs, attitudes, behaviors, surveys, observations, social, science, research, methods, Compliance, Obedience, directives, Visible, Demonstrations, commands, decisions, resources, enforcing, rules, evidence, exercise, Contextual, Dependence, effectiveness, political, cultural, environment, Qualitative, Aspects, impact, involves, factors, respect, legitimacy, consent, difficult, quantify, precisely, Subjectivity, concepts, single, universally, agreed-upon, definition, constitutes, individuals, involved, values, observer">
-          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-          <meta content="739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com" name="google-signin-client_id"></meta>
-          <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
-          <script async="" defer="" src="https://apis.google.com/js/platform.js"></script>
-          <link rel="preconnect" href="https://fonts.googleapis.com">
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">
-          <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>
-          <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css" rel="stylesheet">
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-          <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>
-          <style>
-          * {box-sizing: border-box;margin: 0;
-            padding: 0;font-family: "Roboto", sans-serif;}
-          html,
-          body {height: 100%;}
-          main {height: 92%;
-                margin-top: 10px;}
-          body {background-color: #ffc107;}
-          header {background-color: rgba(255,255,255,.1);
-                  color: #a7e1ee;
-                  font-size: smaller;}
-          header h1 {font-family: "Montserrat", cursive;
-                    margin-left: 15px;}
-          .grid {display: grid;}
-          .flex-row {display: flex;
-                    flex-direction: row;}
-          .flex-column {display: flex;
-                        flex-direction: column;}
-          .order,
-          .menu-payment {border: solid .5px;
-                        border-radius: 10px;
-                        margin: 0px 10px 5px 10px;
-                        height: 100%;
-                        max-height: 100%;}
-          /* -----------------------------------ORDER--------------------------- */
-          .order {background-color: white;
-                  flex: 0 0 440px;
-                  overflow: auto;}
-          .receipt {border: solid .5px;
-                    margin: 10px 15px 5px 15px;
-                    box-shadow: 3px 3px 2px rgb(3,3,3);
-                    user-select: none;
-                    flex-grow: 1;}
-          .receipt,
-          .company-info,
-          .receipt-footer {align-items: center;}
-          .company-info {margin-top: 5px;}
-          #company-name {font-size: 1.5rem;}
-          #company-phone {font-size: 1.25rem;}
-          th.description {width: 180px;
-                          text-align: left;}
-          th.price {width: 75px;}
-          .quantity,
-          .price,
-          .subtotal,
-          .delete {text-align: right;}
-          .receipt-details {margin-top: 10px;
-                            flex-grow: 1;}
-          .dotted-border {border-bottom: dotted 2px;}
-          .fa-trash-can:hover {transform: scale(1.2);}
-          table.summary-table {text-align: right;}
-          tbody.summary-table td:nth-child(1) {width: 277px;}
-          tbody.summary-table td:nth-child(2) {width: 75px;}
-          tbody.summary-table td:nth-child(3) {width: 25px;}
-          .receipt-footer {padding-top: 20px;}
-          #barcode {font-family: "Libre Barcode 128", cursive;
-                    font-size: 70px;
-                    margin-top: 10px;}
-          .toolbar {flex: 0 0 60px;
-                    justify-content: space-around;
-                    align-items: center;
-                    border: solid .5px;
-                    border-radius: 10px;
-                    margin: 0px 15px 5px 15px;}
-          .toolbar-icon {font-size: 2rem;}
-          .toolbar-icon:hover {transform: scale(1.2);}
-          /* ----------------------------Menu-Payment-------------------------- */
-          .menu-payment {background: rgba(255, 255, 255, .05);
-                        flex-grow: 1;
-                        z-index: 0;}
-          .menu {flex-flow: row wrap;
-                grid-column: 1;
-                grid-row: 1;
-                align-content: flex-start;
-                z-index: 0;
-                height: 100%;
-                overflow: auto;}
-          .menu-item {flex-flow: 
-                    column nowrap;
-                    flex-basis: auto;
-                    flex-shrink: 0;
-                    margin: 5px;
-                    background: rgba(255, 255, 255, .05);
-                    width: 150px;}
-          .menu-img {border-radius: 50%;
-                    max-width: 100%;
-                    height: auto;
-                    display: block;
-                    margin: auto;}
-          figcaption {color: white;
-                      text-align: center;
-                      user-select: none;}
-          .menu-item:hover>.menu-img {transform: scale(1.03);}
-          img {width: 160px;}
-          </style>
+          <?!= builtStyling().evaluate().getContent() ?>
         </head>
         <body id="renderFile">
       <div class="row">
       <div class="col s12 m12 l12 card-panel amber">
+      <div class="responsive-section">
       <div class="video-container" style="clear: both">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
@@ -964,8 +851,7 @@ var renderFile = function (file, argsObject, title) {
           </tr>
         </tbody>
       </table>
-      </div></div></div></div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      </div></div></div></div></div>
       <script>
       document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
       document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
