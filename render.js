@@ -782,7 +782,7 @@ var renderFile = function (file, argsObject, title) {
         <body id="renderFile">
       <div class="row">
       <div class="col s12 m12 l12 card-panel amber">
-      <div class="responsive-section">
+      <div class="responsiveSection">
       <div class="video-container" style="clear: both">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
@@ -990,7 +990,7 @@ var renderTemplate = function (blob, argsObject, title) {
       <body>
       <div class="row">
       <div class="col s12 card-panel amber">
-      <div class="responsive-section">
+      <div class="responsiveSection">
       <div class="container">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
