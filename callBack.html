@@ -1,83 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html id="callback">
   <head>
-    <base target="_top">
-    <meta name="callback" content="Boilerplate JavaScript Callbacks">
+    <base target="_top" />
+    <meta name="callback" content="Boilerplate JavaScript Callbacks" />
     <style>
-      a:link, a:visited {color:black !important;}
-      a:hover, a:active{ 
-        color:white  !important;
-        text-decoration:none  !important;}
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: white !important;
+        text-decoration: none !important;
+      }
     </style>
   </head>
   <body id="template">
     <div class="row">
       <nav class="col s3 menu z-depth-5 card-panel amber scale-out scale-in">
-        <a id="main" href='<?!= getUrl(ScriptApp) ?>?func=renderFile&args=callBack' target="_top">Don'time Life Services</a><br />
-        <a id="mainIndex" href='https://flewis21.github.io/About-Me/'>About Me</a><br />
-        <a id="checkOnDay" href='https://flewis21.github.io/videoSEC/'>SEC Videos Today</a><br />
-        <a href='https://flewis21.github.io/odd-chances/' target="_top">Numerological Numbers</a><br />
-        <a href='https://flewis21.github.io/budget/' target="_blank">Check Today EPA</a><br />
-        <a href='https://flewis21.github.io/foobar/' target="_parent">Homemade Games</a><br />
-        <a href='<?!= getUrl(ScriptApp) ?>?func=opt&args=' target="_blank">Company Info Table</a><br />
-        <a href='#' target="_top">Congress Legislation</a><br />  
+        <a
+          id="main"
+          href="<?!= getUrl(ScriptApp) ?>?func=renderFile&args=callBack"
+          target="_top"
+          >Don'time Life Services</a
+        ><br />
+        <a id="mainIndex" href="https://flewis21.github.io/About-Me/"
+          >About Me</a
+        ><br />
+        <a id="checkOnDay" href="https://flewis21.github.io/videoSEC/"
+          >SEC Videos Today</a
+        ><br />
+        <a href="https://flewis21.github.io/odd-chances/" target="_top"
+          >Numerological Numbers</a
+        ><br />
+        <a href="https://flewis21.github.io/budget/" target="_blank"
+          >Check Today EPA</a
+        ><br />
+        <a href="https://flewis21.github.io/foobar/" target="_parent"
+          >Homemade Games</a
+        ><br />
+        <a href="<?!= getUrl(ScriptApp) ?>?func=opt&args=" target="_blank"
+          >Company Info Table</a
+        ><br />
+        <a href="#" target="_top">Congress Legislation</a><br />
       </nav>
     </div>
-    <div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in">
-      <a 
-        href="#" 
-        class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" 
-        target="-blank"> Contact Me</a>
+    <div
+      class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"
+    >
+      <a
+        href="#"
+        class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in"
+        target="-blank"
+      >
+        Contact Me</a
+      >
     </div>
     <br />
-      <a id="caller" href='#'>update</a>
-    <br>
-      <ul id="uldiv">waiting...</ul>
+    <a id="caller" href="#">update</a>
+    <br />
+    <ul id="uldiv">
+      waiting...
+    </ul>
     <div class="interface">
-      <a 
-        href='#'  
-        onclick='PageManager.setPageStart("Setup")'>
+      <a href="#" onclick='PageManager.setPageStart("Setup")'>
         <img src="" alt="setup" />
         <div>
           <h3>Setup</h3>
         </div>
-      </a>      
+      </a>
     </div>
     <div class="row">
-    <div class="col s10 menu-img card-panel amber push-s1 push-m1 push-l1">
+      <div class="col s10 menu-img card-panel amber push-s1 push-m1 push-l1">
+        <div class="container">
+          <div
+            class="col s12 menu-img receipt deep-purple darken-1"
+            style="width: 600px; height: 800px"
+          >
+            <iframe
+              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+              src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview"
+              width="100%"
+              height="100%"
+              allow="autoplay"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
-    <div class="col s12 menu-img receipt deep-purple darken-1" style="width:600px;height:800px">
-    <iframe 
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
-      src="https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview" 
-      width="100%" 
-      height="100%" 
-      allow="autoplay"
-      ></iframe>
-    </div></div></div></div>
-    <div class="container">
-    <nav>
-      <div class="row">
-        <div class="col s10 card-panel l12 m12 push-s1">
-          <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
-            <div class="col s12 l12 m12">
-              <div class="black" id="seoData">
-                <div class="row">
-                  <div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1">
-                    <div class="container row valign-wrapper"><?!= rule() ?></div>
+      <nav>
+        <div class="row">
+          <div class="col s10 card-panel l12 m12 push-s1">
+            <div
+              class="z-depth-5 green toolbar_icon toolbar_iconHover container"
+            >
+              <div class="col s12 l12 m12">
+                <div class="black" id="seoData">
+                  <div class="row">
+                    <div
+                      class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1"
+                    >
+                      <div class="container row valign-wrapper">
+                        <?!= rule() ?>
+                      </div>
                       <div class="video-container grey" style="clear: both">
                         <div class="col s10 l10 m10 receipt black darken-1">
-                          <iframe 
-                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-                            src=''
+                          <iframe
+                            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+                            src=""
                             id="callbackFrame"
-                            style="width:100%;height:100%"
+                            style="width: 100%; height: 100%"
                             allow="autoplay"
                             allow="encrypted-media"
                             title="Dontime Life Website"
                             frameborder="0"
                             allowfullscreen
-                            ></iframe>
+                          ></iframe>
                         </div>
                       </div>
                     </div>
@@ -88,119 +127,127 @@
           </div>
         </div>
       </nav>
-      </div>
-    <script>document.addEventListener('DOMContentLoaded', google.script.run.proMediaSnip())</script>
+    </div>
     <script>
-      document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
-      document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
-      document.querySelector("iframe").setAttribute("style", "color: blue; clear: both; text-align: center;");
+      document.addEventListener(
+        "DOMContentLoaded",
+        google.script.run.proMediaSnip(),
+      );
+    </script>
+    <script>
+      document
+        .querySelector("div")
+        .setAttribute("style", "color: blue; clear: both; text-align: center;");
+      document
+        .querySelector("body")
+        .setAttribute("style", "background-color: amber;background: 282828;");
+      document
+        .querySelector("iframe")
+        .setAttribute("style", "color: blue; clear: both; text-align: center;");
     </script>
     <script id="indexScript1">
       function serverside(func, args) {
         return new Promise((resolve, reject) => {
           google.script.run
-          .withSuccessHandler((result) => {
-              resolve(result)})
-          .withFailureHandler((error) => {
-              console.log(error)
-              console.log(document.getElementById("test").innerHTML)
-              reject(error)})
-          .runBoilerplate([func], [args])})};
-      document.addEventListener("DOMContentLoaded", updatePage)
-      var htmSearchList = [`theRybkaTwins`].toString().split(" ")
-      var htmNum = function() {
-
-            return  Math.floor(Math.random() * (Math.floor(htmSearchList.length)))
-            
-
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate([func], [args]);
+        });
       }
-      var rndPage = htmSearchList[htmNum()];      
-      console.log(rndPage + "...")
+      document.addEventListener("DOMContentLoaded", updatePage);
+      var htmSearchList = [`theRybkaTwins`].toString().split(" ");
+      var htmNum = function () {
+        return Math.floor(Math.random() * Math.floor(htmSearchList.length));
+      };
+      var rndPage = htmSearchList[htmNum()];
+      console.log(rndPage + "...");
       function updatePage() {
         localStorage.setItem("htmSearch", rndPage);
-        document.getElementById("seoData").innerHTML = "waiting for update from " + rndPage + "..."
-            google.script.run.withSuccessHandler(done).withFailureHandler(error).runBoilerplate("seoIndex", [rndPage])
-            function done(drop) {
-              alert(rndPage + "(" + drop + ")" )
-              alert("droplet.length = " + drop.length)
-              // alert(droplet.length + " is not the required length")
+        document.getElementById("seoData").innerHTML =
+          "waiting for update from " + rndPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("seoIndex", [rndPage]);
+        function done(drop) {
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
 
-              serverside("getScriptUrl")
-              .then((cChange) => {
-                console.log(typeof cChange + " with length = " + cChange.length)
-                  if (cChange.length === 112) {
-
-                    
-                    // console.log(cChange)
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
                 var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=seoIndex&args=" + rndPage
+                linkFollow.href = cChange + "?func=seoIndex&args=" + rndPage;
                 linkFollow.id = "linkFOLLOW";
                 linkFollow.target = "_child";
                 document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("seoData");
+                docWnd.innerHTML = drop;
               }
-              else {
-                var docWnd = document.getElementById("seoData")
-                  docWnd.innerHTML = drop;
-
-              }      
-              })
-              .catch((er) => {
-
-                alert(rndPage + " error(" + er + ")")
-                console.log(er)
-                document.getElementById("seoData").innerHTML = er
-
-              })
-            }}
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("seoData").innerHTML = er;
+            });
+        }
+      }
       function navAway() {
-        var newPage = htmSearchList[htmNum()]
-        rndPage = newPage
+        var newPage = htmSearchList[htmNum()];
+        rndPage = newPage;
         localStorage.setItem("htmSearch", rndPage);
-        document.getElementById("seoData").innerHTML = "waiting for response from " + newPage + "..."
-            google.script.run.withSuccessHandler(done).withFailureHandler(error).runBoilerplate("seoIndex", [rndPage])
-            function done(drop) {
-              alert(rndPage + "(" + drop + ")" )
-              alert("droplet.length = " + drop.length)
-              // alert(droplet.length + " is not the required length")
+        document.getElementById("seoData").innerHTML =
+          "waiting for response from " + newPage + "...";
+        google.script.run
+          .withSuccessHandler(done)
+          .withFailureHandler(error)
+          .runBoilerplate("seoIndex", [rndPage]);
+        function done(drop) {
+          alert(rndPage + "(" + drop + ")");
+          alert("droplet.length = " + drop.length);
+          // alert(droplet.length + " is not the required length")
 
-              serverside("getScriptUrl")
-              .then((cChange) => {
-                console.log(typeof cChange + " with length = " + cChange.length)
-                  if (cChange.length === 112) {
-
-                    
-                    // console.log(cChange)
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(typeof cChange + " with length = " + cChange.length);
+              if (cChange.length === 112) {
+                // console.log(cChange)
                 var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=seoIndex&args=" + rndPage
+                linkFollow.href = cChange + "?func=seoIndex&args=" + rndPage;
                 linkFollow.id = "linkFOLLOW";
                 linkFollow.target = "_child";
                 document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              } else {
+                var docWnd = document.getElementById("seoData");
+                docWnd.innerHTML = drop;
               }
-              else {
-                var docWnd = document.getElementById("seoData")
-                  docWnd.innerHTML = drop;
-
-              }      
-              })
-              .catch((er) => {
-
-                alert(rndPage + " error(" + er + ")")
-                console.log(er)
-                document.getElementById("seoData").innerHTML = er
-
-              })
-            }}
-            function error(er) {
-              alert(rndPage + " error(" + er + ")")
-              console.log(er)
-              document.getElementById("seoData").innerHTML = er
-            }
+            })
+            .catch((er) => {
+              alert(rndPage + " error(" + er + ")");
+              console.log(er);
+              document.getElementById("seoData").innerHTML = er;
+            });
+        }
+      }
+      function error(er) {
+        alert(rndPage + " error(" + er + ")");
+        console.log(er);
+        document.getElementById("seoData").innerHTML = er;
+      }
     </script>
   </body>
 </html>
