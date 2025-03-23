@@ -948,8 +948,7 @@ var renderFile = function (file, argsObject, title) {
         .setTitle(title)
         .append(html)
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        .getContent();
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     } else {
       return handleRequest(argsObject);
     }
