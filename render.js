@@ -701,7 +701,7 @@ var includeGSBlob = function (blob, argsArray) {
 var includeRunIt = () => {
   console.log(
     mis(
-      `https://api.robinhood.com/instruments/?symbol=${encodeURIComponent(physical)}`,
+      `https://api.robinhood.com/instruments/?symbol=${encodeURIComponent("physical")}`,
     ),
   );
 };
