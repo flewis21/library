@@ -699,10 +699,8 @@ var includeGSBlob = function (blob, argsArray) {
 };
 
 var includeRunIt = () => {
-  console.log(
-    mis(
-      `https://api.robinhood.com/instruments/?query=${encodeURIComponent("physical")}`,
-    ),
+  mis(
+    `https://api.robinhood.com/instruments/?query=${encodeURIComponent("physical")}`,
   );
 };
 
