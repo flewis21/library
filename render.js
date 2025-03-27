@@ -699,7 +699,11 @@ var includeGSBlob = function (blob, argsArray) {
 };
 
 var includeRunIt = () => {
-  console.log(leadBook(10));
+  console.log(
+    mis(
+      `https://api.robinhood.com/instruments/?symbol=${encodeURIComponent(physical)}`,
+    ),
+  );
 };
 
 var includeJs = function (blob, argsObject) {
