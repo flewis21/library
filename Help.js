@@ -430,6 +430,7 @@ var mis = function (text, maxRetries = 3) {
     }
   } else {
     let response;
+    let location;
     let retries = 0;
     let delay = 1000;
     try {
@@ -454,51 +455,57 @@ var mis = function (text, maxRetries = 3) {
     }
     try {
       if (response) {
-        while (retries < maxRetries) {
-          try {
-            if (response.getResponseCode() === 429) {
-              retries++;
-              delay += 2;
-              Utilities.sleep(delay + Math.random() * 500);
-              Logger.log(`Rate limit hit, retrying in ${delay} ms`);
-            } else {
-              var res = response.getResponseCode();
-            }
-          } catch (error) {
-            Logger.log("Error fetching data: " + error);
+        var res = response.getResponseCode();
+        if (res) {
+          if (res === 429) {
             retries++;
             delay += 2;
-            Utilities.sleep(delay);
+            Utilities.sleep(delay + Math.random() * 500);
+            Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+            while (retries < maxRetries) {
+              try {
+                response = UrlFetchApp.fetch(
+                  supFunc && supFunc.args ? supFunc.args : text,
+                  {
+                    followRedirects: false, // Prevent automatic redirects
+                  },
+                );
+              } catch (error) {
+                Logger.log("Error fetching data: " + error);
+                retries++;
+                delay += 2;
+                Utilities.sleep(delay);
+              }
+            }
+            Logger.log("Max retries reached, failed to fetch data.");
+          } else {
+            if (res >= 300 && res < 400) {
+              // Redirect occurred
+              location = response.getHeaders().Location;
+            } else {
+              // No redirect or other error
+              location = response.getContentText();
+            }
+          }
+        } else {
+          // if (supFunc && supFunc.args) {
+          //   var location = UrlFetchApp.fetch(supFunc.args).getContentText();
+          // } else if (text) {
+          //   var location = UrlFetchApp.fetch(text).getContentText();
+          // }
+          try {
+            location = UrlFetchApp.fetch(
+              supFunc && supFunc.args ? supFunc.args : text,
+            ).getContentText();
+          } catch (error) {
+            Logger.log("Reference error: " + error.toString());
+            console.error("Reference error: " + error.toString());
           }
         }
-        Logger.log("Max retries reached, failed to fetch data.");
       }
     } catch (e) {
       Logger.log("Error resolving TinyURL: " + e.toString());
       console.error("Error resolving TinyURL: ", e.toString());
-    }
-    if (res) {
-      if (res >= 300 && res < 400) {
-        // Redirect occurred
-        var location = response.getHeaders().Location;
-      } else {
-        // No redirect or other error
-        var location = response.getContentText();
-      }
-    } else {
-      // if (supFunc && supFunc.args) {
-      //   var location = UrlFetchApp.fetch(supFunc.args).getContentText();
-      // } else if (text) {
-      //   var location = UrlFetchApp.fetch(text).getContentText();
-      // }
-      try {
-        var location = UrlFetchApp.fetch(
-          supFunc && supFunc.args ? supFunc.args : text,
-        ).getContentText();
-      } catch (error) {
-        Logger.log("Reference error: " + error.toString());
-        console.error("Reference error: " + error.toString());
-      }
     }
     return location;
   }
