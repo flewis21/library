@@ -500,7 +500,7 @@ var mis = function (text, maxRetries = 3) {
         console.error("Reference error: " + error.toString());
       }
     }
-    return text ? location : xkcdRSS();
+    return location;
   }
 };
 var misSt = function (func, someArgs) {
