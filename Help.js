@@ -392,51 +392,90 @@ var seoCapital = function (url) {
     = er})})}`);
   return html.evaluate().getContent();
 };
-var mis = function (text) {
+var mis = function (text, maxRetries = 3) {
   if (!isValidUrl(text).hostname) {
     var supFunc = misSt(text);
     if (supFunc.func) {
       if (supFunc.args) {
         const fx = supFunc.func;
         const payLoad = supFunc.args;
-        var html =
-          HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
-    = document.getElementById("breakUrl");</script>`);
-        html.url =
-          getScriptUrl().toString() + "?func=" + fx + "&args=" + payLoad;
-        html.nav = fx;
-        html.action = payLoad;
-        return html.evaluate().getContent();
+        //     var html =
+        //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+        // = document.getElementById("breakUrl");</script>`);
+        //     html.url =
+        //       getScriptUrl().toString() + "?func=" + fx + "&args=" + payLoad;
+        // html.nav = fx;
+        // html.action = payLoad;
+        //     return html.evaluate().getContent();
       } else if (!supFunc.args) {
         const fx = supFunc.func;
-        var html =
-          HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
-    = document.getElementById("breakUrl");</script>`);
-        html.url = getScriptUrl().toString() + "?func=" + fx;
-        html.nav = fx;
-        return html.evaluate().getContent();
+        //     var html =
+        //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+        // = document.getElementById("breakUrl");</script>`);
+        //     html.url = getScriptUrl().toString() + "?func=" + fx;
+        // html.nav = fx;
+        //     return html.evaluate().getContent();
       }
+      let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
+    = document.getElementById("breakUrl");</script>`;
+      let html = HtmlService.createTemplate(htmlContent);
+      html.url =
+        getScriptUrl().toString() +
+        "?func=" +
+        fx +
+        (payLoad ? "&args=" + payLoad : "");
+      html.nav = fx;
+      html.action = payLoad;
+      return html.evaluate().getContent();
     }
   } else {
+    let response;
+    let retries = 0;
+    let delay = 1000;
     try {
-      if (supFunc) {
-        var response = UrlFetchApp.fetch(supFunc.args, {
+      // if (supFunc) {
+      //   var response = UrlFetchApp.fetch(supFunc.args, {
+      //     followRedirects: false, // Prevent automatic redirects
+      //   });
+      // } else {
+      //   var response = UrlFetchApp.fetch(text, {
+      //     followRedirects: false, // Prevent automatic redirects
+      //   });
+      // }
+      response = UrlFetchApp.fetch(
+        supFunc && supFunc.args ? supFunc.args : text,
+        {
           followRedirects: false, // Prevent automatic redirects
-        });
-      } else {
-        var response = UrlFetchApp.fetch(text, {
-          followRedirects: false, // Prevent automatic redirects
-        });
-      }
+        },
+      );
     } catch (e) {
-      console.error("Error fetching URL:", e);
+      Logger.log("Error fetching URL: ", e.toString());
+      console.error("Error fetching URL: ", e.toString());
     }
     try {
       if (response) {
-        var res = response.getResponseCode();
+        while (retries < maxRetries) {
+          try {
+            if (response.getResponseCode() === 429) {
+              retries++;
+              delay += 2;
+              Utilities.sleep(delay + Math.random() * 500);
+              Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+            } else {
+              var res = response.getResponseCode();
+            }
+          } catch (error) {
+            Logger.log("Error fetching data: " + error);
+            retries++;
+            delay += 2;
+            Utilities.sleep(delay);
+          }
+        }
+        Logger.log("Max retries reached, failed to fetch data.");
       }
     } catch (e) {
       Logger.log("Error resolving TinyURL: " + e.toString());
+      console.error("Error resolving TinyURL: ", e.toString());
     }
     if (res) {
       if (res >= 300 && res < 400) {
@@ -447,10 +486,18 @@ var mis = function (text) {
         var location = response.getContentText();
       }
     } else {
-      if (supFunc) {
-        var location = UrlFetchApp.fetch(supFunc.args).getContentText();
-      } else {
-        var location = UrlFetchApp.fetch(text).getContentText();
+      // if (supFunc && supFunc.args) {
+      //   var location = UrlFetchApp.fetch(supFunc.args).getContentText();
+      // } else if (text) {
+      //   var location = UrlFetchApp.fetch(text).getContentText();
+      // }
+      try {
+        var location = UrlFetchApp.fetch(
+          supFunc && supFunc.args ? supFunc.args : text,
+        ).getContentText();
+      } catch (error) {
+        Logger.log("Reference error: " + error.toString());
+        console.error("Reference error: " + error.toString());
       }
     }
     return authLogic(text) ? location : xkcdRSS();
