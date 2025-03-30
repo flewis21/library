@@ -726,7 +726,9 @@ var fileBrowser = function (folder) {
       var driveFile = DriveApp.getFilesByName(file);
       while (driveFile.hasNext()) {
         var myDriveFile = driveFile.next();
-        var currentDriveFileUrl = myDriveFile.getUrl();
+        var currentDriveFileUrl = {};
+        currentDriveFileUrl.name = myDriveFile.getName();
+        currentDriveFileUrl.url = myDriveFile.getUrl();
         dataTree.push(currentDriveFileUrl);
       }
     }
