@@ -131,7 +131,7 @@
         .then((filedMain) => {
           if (filedMain) {
             var fmRes = JSON.stringify(filedMain);
-            console.log(fmRes[0]);
+            console.log(JSON.parse(fmRes));
             displaySc.innerHTML = "<p>" + fmRes.name + "</p>";
             indexSc.src = fmRes.url;
             // Hide the loading indicator after filtering is complete;
