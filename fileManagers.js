@@ -719,17 +719,20 @@ var fileBrowser = function (folder) {
     var folderFile = eFolder.getFilesByName(file);
     while (folderFile.hasNext()) {
       var myFile = folderFile.next();
-      var currentFileUrl = myFile.getUrl();
-      dataTree.push(currentFileUrl);
+      // var currentFileUrl = myFile.getUrl();
+      dataTree.push({ name: myFile.getName(), url: myFile.getUrl() });
     }
     if (dataTree.length === 0) {
       var driveFile = DriveApp.getFilesByName(file);
       while (driveFile.hasNext()) {
         var myDriveFile = driveFile.next();
-        var currentDriveFileUrl = {};
-        currentDriveFileUrl.name = myDriveFile.getName();
-        currentDriveFileUrl.url = myDriveFile.getUrl();
-        dataTree.push(currentDriveFileUrl);
+        // var currentDriveFileUrl = {};
+        // currentDriveFileUrl.name = ;
+        // currentDriveFileUrl.url = ;
+        dataTree.push({
+          name: myDriveFile.getName(),
+          url: myDriveFile.getUrl(),
+        });
       }
     }
   } else {
