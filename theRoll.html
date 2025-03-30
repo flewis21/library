@@ -132,8 +132,8 @@
           if (filedMain) {
             var fmRes = JSON.stringify(filedMain);
             console.log(JSON.parse(fmRes));
-            displaySc.innerHTML = "<p>" + fmRes.name + "</p>";
-            indexSc.src = fmRes.url;
+            displaySc.innerHTML = "<p>" + JSON.parse(fmRes).name + "</p>";
+            indexSc.src = JSON.parse(fmRes).url;
             // Hide the loading indicator after filtering is complete;
             loadingIndicator.style.display = "none";
             // Show the contentBox after filtering is complete;
