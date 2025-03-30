@@ -130,8 +130,9 @@
       serverside("fileBrowser", [search])
         .then((filedMain) => {
           if (filedMain) {
-            displaySc.innerHTML = "<p>" + filedMain.name + "</p>";
-            indexSc.src = filedMain.url;
+            var fmRes = JSON.parse(filedMain);
+            displaySc.innerHTML = "<p>" + fmRes["name"] + "</p>";
+            indexSc.src = fmRes["url"];
             // Hide the loading indicator after filtering is complete;
             loadingIndicator.style.display = "none";
             // Show the contentBox after filtering is complete;
