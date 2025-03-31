@@ -434,7 +434,7 @@ var mis = function (text, maxRetries = 3) {
         (payLoad ? "&args=" + payLoad : "");
       // var form = formMaker();
       var form = formMaker(
-        [supUrl].join("").toUpperCase(),
+        [fx + " " + payLoad].join("").toUpperCase(),
         "misForms",
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       );
