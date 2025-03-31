@@ -422,14 +422,6 @@ var mis = function (text, maxRetries = 3) {
         fx +
         (payLoad ? "&args=" + payLoad : "");
       var coData = coUtility(text)[0];
-      if (coData) {
-        var coDataName = coData.rndTitle;
-        try {
-          dtlsMain(coDataName);
-        } catch {
-          console.log(coDataName + " does not exist yet!");
-        }
-      }
       if (typeof coData.rndTicker !== "undefined") {
         // var form = formMaker();
         var urlTicker = "https://www.nasdaq.com/search?q=" + coData.rndTicker;
@@ -539,14 +531,6 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       var coData = coUtility(text)[0];
-      if (coData) {
-        var coDataName = coData.rndTitle;
-        try {
-          dtlsMain(coDataName);
-        } catch {
-          console.log(coDataName + " does not exist yet!");
-        }
-      }
       if (typeof coData.rndTicker !== "undefined") {
         // var form = formMaker();
         var urlTicker = "https://www.nasdaq.com/search?q=" + coData.rndTicker;
@@ -649,14 +633,6 @@ var mis = function (text, maxRetries = 3) {
               // Redirect occurred
               location = response.getHeaders().Location;
               var coData = coUtility(text)[0];
-              if (coData) {
-                var coDataName = coData.rndTitle;
-                try {
-                  dtlsMain(coDataName);
-                } catch {
-                  console.log(coDataName + " does not exist yet!");
-                }
-              }
               if (typeof coData.rndTicker !== "undefined") {
                 // var form = formMaker();
                 var urlTicker =
@@ -754,14 +730,6 @@ var mis = function (text, maxRetries = 3) {
               // No redirect or other error
               location = response.getContentText();
               var coData = coUtility(text)[0];
-              if (coData) {
-                var coDataName = coData.rndTitle;
-                try {
-                  dtlsMain(coDataName);
-                } catch {
-                  console.log(coDataName + " does not exist yet!");
-                }
-              }
               if (typeof coData.rndTicker !== "undefined") {
                 // var form = formMaker();
                 var urlTicker =
