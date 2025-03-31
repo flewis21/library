@@ -513,6 +513,7 @@ var mis = function (text, maxRetries = 3) {
         supFunc && supFunc.args ? supFunc.args : text,
         {
           followRedirects: false, // Prevent automatic redirects
+          muteHttpExceptions: true,
         },
       );
     } catch (e) {
@@ -596,6 +597,7 @@ var mis = function (text, maxRetries = 3) {
                   supFunc && supFunc.args ? supFunc.args : text,
                   {
                     followRedirects: false, // Prevent automatic redirects
+                    muteHttpExceptions: true,
                   },
                 );
               } catch (error) {
