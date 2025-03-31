@@ -421,78 +421,62 @@ var mis = function (text, maxRetries = 3) {
         "?func=" +
         fx +
         (payLoad ? "&args=" + payLoad : "");
-      var coData = coUtility(text)[0];
-      if (typeof coData.rndTicker !== "undefined") {
-        // var form = formMaker();
-        var urlTicker = "https://www.nasdaq.com/search?q=" + coData.rndTicker;
-        var form = formMaker(
-          [coData.rndTitle].join("").toUpperCase(),
-          "misForms",
-          time,
-        );
+      // var form = formMaker();
+      var form = formMaker([supUrl].join("").toUpperCase(), "misForms", time);
 
-        if (typeof form === "object") {
-          // fileManager(coData.rndTitle, "Forms")
-          form.addSectionHeaderItem().setTitle(urlTicker).setHelpText(supUrl);
-          form.addTextItem().setTitle("Industry").setRequired(true);
-          form.addTextItem().setTitle("Sector").setRequired(true);
-          form
-            .addParagraphTextItem()
-            .setTitle("Industry/Market Corrections")
-            .setRequired(false);
-          form.addParagraphTextItem().setTitle("News").setRequired(false);
-          form
-            .addParagraphTextItem()
-            .setTitle("Economic/Business Cycles")
-            .setRequired(false);
-          form.addTextItem().setTitle("Stock Price").setRequired(true);
-          form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-          form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Annualized Net Income")
-            .setRequired(false);
-          form.addTextItem().setTitle("Total Equity").setRequired(false);
-          form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Cash & Marketable Securities")
-            .setRequired(true);
-          form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-          form.addTextItem().setTitle("Inventories").setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Long-term Investments")
-            .setRequired(false);
-          form.addTextItem().setTitle("Net PP&E").setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Current Financial Liabilities")
-            .setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Long-term Interest-bearing Debts")
-            .setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Current Year Total Earnings")
-            .setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Base Year Total Earnings")
-            .setRequired(false);
-          form.addTextItem().setTitle("Your Name").setRequired(true);
-          form.addDateItem().setTitle("Birth Date").setRequired(true);
-          form
-            .addParagraphTextItem()
-            .setTitle("Your Message")
-            .setRequired(true);
-          form
-            .setTitle(coData.rndTitle)
-            .setConfirmationMessage("Thanks for your feedback !!");
-          var url = form.getPublishedUrl();
-        }
+      if (typeof form === "object") {
+        // fileManager(coData.rndTitle, "Forms")
+        form.addSectionHeaderItem().setTitle(text).setHelpText(supUrl);
+        form.addTextItem().setTitle("Industry").setRequired(true);
+        form.addTextItem().setTitle("Sector").setRequired(true);
+        form
+          .addParagraphTextItem()
+          .setTitle("Industry/Market Corrections")
+          .setRequired(false);
+        form.addParagraphTextItem().setTitle("News").setRequired(false);
+        form
+          .addParagraphTextItem()
+          .setTitle("Economic/Business Cycles")
+          .setRequired(false);
+        form.addTextItem().setTitle("Stock Price").setRequired(true);
+        form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+        form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+        form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+        form.addTextItem().setTitle("Total Equity").setRequired(false);
+        form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Cash & Marketable Securities")
+          .setRequired(true);
+        form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+        form.addTextItem().setTitle("Inventories").setRequired(true);
+        form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+        form.addTextItem().setTitle("Net PP&E").setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Current Financial Liabilities")
+          .setRequired(true);
+        form
+          .addTextItem()
+          .setTitle("Long-term Interest-bearing Debts")
+          .setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Current Year Total Earnings")
+          .setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Base Year Total Earnings")
+          .setRequired(false);
+        form.addTextItem().setTitle("Your Name").setRequired(true);
+        form.addDateItem().setTitle("Birth Date").setRequired(true);
+        form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+        form
+          .setTitle(coData.rndTitle)
+          .setConfirmationMessage("Thanks for your feedback !!");
+        var url = form.getPublishedUrl();
       }
+
       let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
     = document.getElementById("breakUrl");</script>`;
       let html = HtmlService.createTemplate(htmlContent);
@@ -530,77 +514,60 @@ var mis = function (text, maxRetries = 3) {
     } catch (e) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
-      var coData = coUtility(text)[0];
-      if (typeof coData.rndTicker !== "undefined") {
-        // var form = formMaker();
-        var urlTicker = "https://www.nasdaq.com/search?q=" + coData.rndTicker;
-        var form = formMaker(
-          [coData.rndTitle].join("").toUpperCase(),
-          "misForms",
-          time,
-        );
+      // var form = formMaker();
+      var form = formMaker([e].join("").toUpperCase(), "misForms", time);
 
-        if (typeof form === "object") {
-          // fileManager(coData.rndTitle, "Forms")
-          form.addSectionHeaderItem().setTitle(urlTicker).setHelpText(e);
-          form.addTextItem().setTitle("Industry").setRequired(true);
-          form.addTextItem().setTitle("Sector").setRequired(true);
-          form
-            .addParagraphTextItem()
-            .setTitle("Industry/Market Corrections")
-            .setRequired(false);
-          form.addParagraphTextItem().setTitle("News").setRequired(false);
-          form
-            .addParagraphTextItem()
-            .setTitle("Economic/Business Cycles")
-            .setRequired(false);
-          form.addTextItem().setTitle("Stock Price").setRequired(true);
-          form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-          form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Annualized Net Income")
-            .setRequired(false);
-          form.addTextItem().setTitle("Total Equity").setRequired(false);
-          form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Cash & Marketable Securities")
-            .setRequired(true);
-          form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-          form.addTextItem().setTitle("Inventories").setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Long-term Investments")
-            .setRequired(false);
-          form.addTextItem().setTitle("Net PP&E").setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Current Financial Liabilities")
-            .setRequired(true);
-          form
-            .addTextItem()
-            .setTitle("Long-term Interest-bearing Debts")
-            .setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Current Year Total Earnings")
-            .setRequired(false);
-          form
-            .addTextItem()
-            .setTitle("Base Year Total Earnings")
-            .setRequired(false);
-          form.addTextItem().setTitle("Your Name").setRequired(true);
-          form.addDateItem().setTitle("Birth Date").setRequired(true);
-          form
-            .addParagraphTextItem()
-            .setTitle("Your Message")
-            .setRequired(true);
-          form
-            .setTitle(coData.rndTitle)
-            .setConfirmationMessage("Thanks for your feedback !!");
-          var url = form.getPublishedUrl();
-        }
+      if (typeof form === "object") {
+        // fileManager(coData.rndTitle, "Forms")
+        form.addSectionHeaderItem().setTitle("Error fetching").setHelpText(e);
+        form.addTextItem().setTitle("Industry").setRequired(true);
+        form.addTextItem().setTitle("Sector").setRequired(true);
+        form
+          .addParagraphTextItem()
+          .setTitle("Industry/Market Corrections")
+          .setRequired(false);
+        form.addParagraphTextItem().setTitle("News").setRequired(false);
+        form
+          .addParagraphTextItem()
+          .setTitle("Economic/Business Cycles")
+          .setRequired(false);
+        form.addTextItem().setTitle("Stock Price").setRequired(true);
+        form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+        form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+        form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+        form.addTextItem().setTitle("Total Equity").setRequired(false);
+        form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Cash & Marketable Securities")
+          .setRequired(true);
+        form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+        form.addTextItem().setTitle("Inventories").setRequired(true);
+        form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+        form.addTextItem().setTitle("Net PP&E").setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Current Financial Liabilities")
+          .setRequired(true);
+        form
+          .addTextItem()
+          .setTitle("Long-term Interest-bearing Debts")
+          .setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Current Year Total Earnings")
+          .setRequired(false);
+        form
+          .addTextItem()
+          .setTitle("Base Year Total Earnings")
+          .setRequired(false);
+        form.addTextItem().setTitle("Your Name").setRequired(true);
+        form.addDateItem().setTitle("Birth Date").setRequired(true);
+        form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+        form
+          .setTitle(coData.rndTitle)
+          .setConfirmationMessage("Thanks for your feedback !!");
+        var url = form.getPublishedUrl();
       }
     }
     try {
@@ -632,196 +599,174 @@ var mis = function (text, maxRetries = 3) {
             if (res >= 300 && res < 400) {
               // Redirect occurred
               location = response.getHeaders().Location;
-              var coData = coUtility(text)[0];
-              if (typeof coData.rndTicker !== "undefined") {
-                // var form = formMaker();
-                var urlTicker =
-                  "https://www.nasdaq.com/search?q=" + coData.rndTicker;
-                var form = formMaker(
-                  [coData.rndTitle].join("").toUpperCase(),
-                  "misForms",
-                  time,
-                );
+              // var form = formMaker();
+              var form = formMaker(
+                [location].join("").toUpperCase(),
+                "misForms",
+                time,
+              );
 
-                if (typeof form === "object") {
-                  // fileManager(coData.rndTitle, "Forms")
-                  form
-                    .addSectionHeaderItem()
-                    .setTitle(urlTicker)
-                    .setHelpText(location);
-                  form.addTextItem().setTitle("Industry").setRequired(true);
-                  form.addTextItem().setTitle("Sector").setRequired(true);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Industry/Market Corrections")
-                    .setRequired(false);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("News")
-                    .setRequired(false);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Economic/Business Cycles")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Stock Price").setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Outstanding Shares")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Quarterly Earnings")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Annualized Net Income")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Total Equity")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Retained Earnings")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Cash & Marketable Securities")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Accounts Receivable")
-                    .setRequired(true);
-                  form.addTextItem().setTitle("Inventories").setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Long-term Investments")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Current Financial Liabilities")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Long-term Interest-bearing Debts")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Current Year Total Earnings")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Base Year Total Earnings")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Your Name").setRequired(true);
-                  form.addDateItem().setTitle("Birth Date").setRequired(true);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Your Message")
-                    .setRequired(true);
-                  form
-                    .setTitle(coData.rndTitle)
-                    .setConfirmationMessage("Thanks for your feedback !!");
-                  var url = form.getPublishedUrl();
-                }
+              if (typeof form === "object") {
+                // fileManager(coData.rndTitle, "Forms")
+                form
+                  .addSectionHeaderItem()
+                  .setTitle("Redirect occurred")
+                  .setHelpText(location);
+                form.addTextItem().setTitle("Industry").setRequired(true);
+                form.addTextItem().setTitle("Sector").setRequired(true);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Industry/Market Corrections")
+                  .setRequired(false);
+                form.addParagraphTextItem().setTitle("News").setRequired(false);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Economic/Business Cycles")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Stock Price").setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Outstanding Shares")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Quarterly Earnings")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Annualized Net Income")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Total Equity").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Retained Earnings")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Cash & Marketable Securities")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Accounts Receivable")
+                  .setRequired(true);
+                form.addTextItem().setTitle("Inventories").setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Investments")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Current Financial Liabilities")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Interest-bearing Debts")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Current Year Total Earnings")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Base Year Total Earnings")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Your Name").setRequired(true);
+                form.addDateItem().setTitle("Birth Date").setRequired(true);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Your Message")
+                  .setRequired(true);
+                form
+                  .setTitle(coData.rndTitle)
+                  .setConfirmationMessage("Thanks for your feedback !!");
+                var url = form.getPublishedUrl();
               }
             } else {
               // No redirect or other error
               location = response.getContentText();
-              var coData = coUtility(text)[0];
-              if (typeof coData.rndTicker !== "undefined") {
-                // var form = formMaker();
-                var urlTicker =
-                  "https://www.nasdaq.com/search?q=" + coData.rndTicker;
-                var form = formMaker(
-                  [coData.rndTitle].join("").toUpperCase(),
-                  "misForms",
-                  time,
-                );
+              // var form = formMaker();
+              var form = formMaker(
+                [location].join("").toUpperCase(),
+                "misForms",
+                time,
+              );
 
-                if (typeof form === "object") {
-                  // fileManager(coData.rndTitle, "Forms")
-                  form
-                    .addSectionHeaderItem()
-                    .setTitle(urlTicker)
-                    .setHelpText(location);
-                  form.addTextItem().setTitle("Industry").setRequired(true);
-                  form.addTextItem().setTitle("Sector").setRequired(true);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Industry/Market Corrections")
-                    .setRequired(false);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("News")
-                    .setRequired(false);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Economic/Business Cycles")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Stock Price").setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Outstanding Shares")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Quarterly Earnings")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Annualized Net Income")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Total Equity")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Retained Earnings")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Cash & Marketable Securities")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Accounts Receivable")
-                    .setRequired(true);
-                  form.addTextItem().setTitle("Inventories").setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Long-term Investments")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Current Financial Liabilities")
-                    .setRequired(true);
-                  form
-                    .addTextItem()
-                    .setTitle("Long-term Interest-bearing Debts")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Current Year Total Earnings")
-                    .setRequired(false);
-                  form
-                    .addTextItem()
-                    .setTitle("Base Year Total Earnings")
-                    .setRequired(false);
-                  form.addTextItem().setTitle("Your Name").setRequired(true);
-                  form.addDateItem().setTitle("Birth Date").setRequired(true);
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Your Message")
-                    .setRequired(true);
-                  form
-                    .setTitle(coData.rndTitle)
-                    .setConfirmationMessage("Thanks for your feedback !!");
-                  var url = form.getPublishedUrl();
-                }
+              if (typeof form === "object") {
+                // fileManager(coData.rndTitle, "Forms")
+                form
+                  .addSectionHeaderItem()
+                  .setTitle("No redirect or other error")
+                  .setHelpText(location);
+                form.addTextItem().setTitle("Industry").setRequired(true);
+                form.addTextItem().setTitle("Sector").setRequired(true);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Industry/Market Corrections")
+                  .setRequired(false);
+                form.addParagraphTextItem().setTitle("News").setRequired(false);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Economic/Business Cycles")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Stock Price").setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Outstanding Shares")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Quarterly Earnings")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Annualized Net Income")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Total Equity").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Retained Earnings")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Cash & Marketable Securities")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Accounts Receivable")
+                  .setRequired(true);
+                form.addTextItem().setTitle("Inventories").setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Investments")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Current Financial Liabilities")
+                  .setRequired(true);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Interest-bearing Debts")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Current Year Total Earnings")
+                  .setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Base Year Total Earnings")
+                  .setRequired(false);
+                form.addTextItem().setTitle("Your Name").setRequired(true);
+                form.addDateItem().setTitle("Birth Date").setRequired(true);
+                form
+                  .addParagraphTextItem()
+                  .setTitle("Your Message")
+                  .setRequired(true);
+                form
+                  .setTitle(coData.rndTitle)
+                  .setConfirmationMessage("Thanks for your feedback !!");
+                var url = form.getPublishedUrl();
               }
             }
           }
