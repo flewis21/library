@@ -831,12 +831,19 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
       console.log(
         "calling DriveApp with id of file found in root drive - " + folderId,
       );
-      DriveApp.getFileById(myFile.getId()).moveTo(
-        DriveApp.getFolderById(folderId),
-      );
-      return;
+      try {
+        DriveApp.getFileById(myFile.getId()).moveTo(
+          DriveApp.getFolderById(folderId),
+        );
+        Utilities.sleep(2000);
+        return;
+      } catch (error) {
+        Logger.log("Error moving file: " + error.toString());
+        console.error("Error moving file: " + error.toString());
+        return;
+      }
     } else {
-      return dtlsMain(DriveApp.getFileById(fileX).getName());
+      return driveManager(DriveApp.getFileById(fileX).getName());
     }
   } else {
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
