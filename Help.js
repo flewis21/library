@@ -576,7 +576,7 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form
-          .setTitle("Error fetching URL")
+          .setTitle(text)
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
@@ -689,7 +689,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle("Redirect Occurred")
+                  .setTitle(text)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
@@ -775,7 +775,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle("No redirect or other error")
+                  .setTitle(text)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
