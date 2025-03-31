@@ -427,7 +427,9 @@ var mis = function (text, maxRetries = 3) {
         (payLoad ? "&args=" + payLoad : "");
       html.nav = fx;
       html.action = payLoad;
-      var coData = html.getRawContent();
+      var coData = HtmlService.createHtmlOutput(
+        html.getRawContent(),
+      ).getContent();
       var supUrl =
         getScriptUrl().toString() +
         "?func=" +
