@@ -832,7 +832,7 @@ var isValidUrl = function (url) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
   var protocolEnd = url.indexOf("//");
-  if (protocolEnd === -1) {
+  if (protocolEnd !== -1) {
     protocol = url.substring(0, protocolEnd + 2);
     url = url.substring(protocolEnd + 2);
   }
@@ -848,8 +848,8 @@ var isValidUrl = function (url) {
     query = pathname.substring(queryStart);
     pathname = pathname.substring(0, queryStart);
   }
-  var hostnameRegex = /^([a-zA-Z0-9,-]+)(\.[a-zA-Z]{2,})+$/;
-  if (hostname && hostnameRegex.test(hostname)) {
+  var hostnameRegex = /^([a-zA-Z0-9.-]+)(\.[a-zA-Z]{2,})+$/;
+  if (hostname && !hostnameRegex.test(hostname)) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
   return {
