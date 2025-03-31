@@ -832,10 +832,11 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
         "calling DriveApp with id of file found in root drive - " + folderId,
       );
       try {
-        DriveApp.getFileById(myFile.getId()).moveTo(
+        var thisFileId = myFile.getId();
+        DriveApp.getFileById(thisFileId).moveTo(
           DriveApp.getFolderById(folderId),
         );
-        Utilities.sleep(5000);
+        Utilities.sleep(2000);
         // return;
       } catch (error) {
         Logger.log("Error moving file: " + error.toString());
