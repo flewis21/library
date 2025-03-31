@@ -443,7 +443,7 @@ var mis = function (text, maxRetries = 3) {
         // fileManager(coData.rndTitle, "Forms")
         form
           .addSectionHeaderItem()
-          .setTitle(html.evaluate().getContent())
+          .setTitle(html.getRawContent())
           .setHelpText(supUrl);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
