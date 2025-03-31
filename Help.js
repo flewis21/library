@@ -794,12 +794,12 @@ var mis = function (text, maxRetries = 3) {
   }
 };
 var misSt = function (func, someArgs) {
-  var funcUno = func
-    ? console.log("funcUno = " + typeof funcUno)
-    : console.error("funcUno = " + typeof funcUno);
-  var funcDos = someArgs
-    ? console.log("funcDos = " + typeof funcDos)
-    : console.error("funcDos = " + typeof funcDos);
+  var funcUno = func;
+  // ? console.log("funcUno = " + typeof funcUno)
+  // : console.error("funcUno = " + typeof funcUno);
+  var funcDos = someArgs;
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
   var content = [];
   var keys = [[funcUno].concat(" " + funcDos)].toString().split(",");
@@ -810,9 +810,9 @@ var misSt = function (func, someArgs) {
     } else {
       content.push(pro);
     }
-  })
-    ? console.log("funcDos = " + typeof funcDos)
-    : console.error("funcDos = " + typeof funcDos);
+  });
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
   console.log(
     "misSt returned :\nfunc=:" +
       argsX +
