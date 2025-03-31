@@ -829,7 +829,10 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
     if (myFile) {
       // console.log(myFile)
       console.log(
-        "calling DriveApp with id of file found in root drive - " + folderId,
+        "calling DriveApp with id of file: " +
+          myFile.getId() +
+          " found in root drive - " +
+          folderId,
       );
       try {
         var thisFileId = myFile.getId();
