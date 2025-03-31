@@ -828,16 +828,17 @@ var isValidUrl = function (url) {
   var hostname = "";
   var pathname = "";
   var query = "";
+  if (typeof url !== "string" || url.length === 0) {
+    return { protocol: "", hostname: "", pathname: "", query: "" };
+  }
   var protocolEnd = url.indexOf("//");
   if (protocolEnd === -1) {
-    return { protocol: "", hostname: url, pathname: "", query: "" };
-  } else if (protocolEnd !== -1) {
     protocol = url.substring(0, protocolEnd + 2);
     url = url.substring(protocolEnd + 2);
   }
   var hostnameEnd = url.indexOf("/");
   if (hostnameEnd !== -1) {
-    hostname = url.substring(0, hostnameEnd);
+    hostname = url.substring(0, hostNameEnd);
     pathname = url.substring(hostnameEnd);
   } else {
     hostname = url;
@@ -846,6 +847,10 @@ var isValidUrl = function (url) {
   if (queryStart !== -1) {
     query = pathname.substring(queryStart);
     pathname = pathname.substring(0, queryStart);
+  }
+  var hostnameRegex = /^([a-zA-Z0-9,-]+)(\.[a-zA-Z]{2,})+$/;
+  if (hostname && hostnameRegex.test(hostname)) {
+    return { protocol: "", hostname: "", pathname: "", query: "" };
   }
   return {
     protocol: protocol,
