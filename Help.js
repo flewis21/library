@@ -427,24 +427,22 @@ var mis = function (text, maxRetries = 3) {
         (payLoad ? "&args=" + payLoad : "");
       html.nav = fx;
       html.action = payLoad;
-      var coData = HtmlService.createHtmlOutput(
-        html.getRawContent(),
-      ).getContent();
       var supUrl =
         getScriptUrl().toString() +
         "?func=" +
         fx +
         (payLoad ? "&args=" + payLoad : "");
       // var form = formMaker();
+      var payT = [payLoad ? fx + payLoad : fx].join("").toUpperCase();
       var form = formMaker(
-        [payLoad ? fx + payLoad : fx].join("").toUpperCase(),
+        payT,
         "misForms",
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       );
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form.addSectionHeaderItem().setTitle(coData).setHelpText(supUrl);
+        form.addSectionHeaderItem().setTitle(payT).setHelpText(supUrl);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
