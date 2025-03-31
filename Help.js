@@ -802,7 +802,9 @@ var misSt = function (func, someArgs) {
   // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
   var content = [];
-  var keys = [[funcUno].concat(" " + funcDos)].toString().split(",");
+  var keys = [[funcUno].concat(" " + someArgs ? funcDos : "")]
+    .toString()
+    .split(",");
   keys.forEach((pro) => {
     var bPro = crmT(pro);
     if (bPro >= 0) {
