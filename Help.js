@@ -416,6 +416,17 @@ var mis = function (text, maxRetries = 3) {
         // html.nav = fx;
         //     return html.evaluate().getContent();
       }
+
+      let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
+    = document.getElementById("breakUrl");</script>`;
+      let html = HtmlService.createTemplate(htmlContent);
+      html.url =
+        getScriptUrl().toString() +
+        "?func=" +
+        fx +
+        (payLoad ? "&args=" + payLoad : "");
+      html.nav = fx;
+      html.action = payLoad;
       var supUrl =
         getScriptUrl().toString() +
         "?func=" +
@@ -430,7 +441,10 @@ var mis = function (text, maxRetries = 3) {
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form.addSectionHeaderItem().setTitle(text).setHelpText(supUrl);
+        form
+          .addSectionHeaderItem()
+          .setTitle(html.evaluate().getContent())
+          .setHelpText(supUrl);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
@@ -476,21 +490,10 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form
-          .setTitle(text)
+          .setTitle(supUrl)
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
-
-      let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl 
-    = document.getElementById("breakUrl");</script>`;
-      let html = HtmlService.createTemplate(htmlContent);
-      html.url =
-        getScriptUrl().toString() +
-        "?func=" +
-        fx +
-        (payLoad ? "&args=" + payLoad : "");
-      html.nav = fx;
-      html.action = payLoad;
       `
       return html.evaluate().getContent();`;
     }
@@ -576,9 +579,7 @@ var mis = function (text, maxRetries = 3) {
         form.addTextItem().setTitle("Your Name").setRequired(true);
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-        form
-          .setTitle(text)
-          .setConfirmationMessage("Thanks for your feedback !!");
+        form.setTitle(e).setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
     }
