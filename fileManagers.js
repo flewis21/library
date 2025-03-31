@@ -835,12 +835,12 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
         DriveApp.getFileById(myFile.getId()).moveTo(
           DriveApp.getFolderById(folderId),
         );
-        Utilities.sleep(2000);
-        return;
+        Utilities.sleep(5000);
+        // return;
       } catch (error) {
         Logger.log("Error moving file: " + error.toString());
         console.error("Error moving file: " + error.toString());
-        return;
+        // return;
       }
     } else {
       return driveManager(DriveApp.getFileById(fileX).getName());
