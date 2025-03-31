@@ -434,7 +434,7 @@ var mis = function (text, maxRetries = 3) {
         (payLoad ? "&args=" + payLoad : "");
       // var form = formMaker();
       var form = formMaker(
-        [fx + " " + payLoad].join("").toUpperCase(),
+        [payLoad ? fx + payLoad : fx].join("").toUpperCase(),
         "misForms",
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       );
@@ -802,7 +802,7 @@ var misSt = function (func, someArgs) {
   // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
   var content = [];
-  var keys = [someArgs ? [funcUno].concat(funcDos) : funcUno]
+  var keys = [funcDos ? [funcUno].concat([funcDos]) : [funcUno]]
     .toString()
     .split(",");
   keys.forEach((pro) => {
