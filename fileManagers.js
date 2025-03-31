@@ -836,11 +836,11 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
       );
       try {
         var thisFileId = myFile.getId();
-        DriveApp.getFileById(thisFileId).moveTo(
-          DriveApp.getFolderById(folderId),
-        );
+        var thisFile = DriveApp.getFileById(thisFileId);
+        var thisFolder = DriveApp.getFolderById(folderId);
+        thisFile.moveTo(thisFolder);
         Utilities.sleep(2000);
-        // return;
+        return;
       } catch (error) {
         Logger.log("Error moving file: " + error.toString());
         console.error("Error moving file: " + error.toString());
