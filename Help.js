@@ -494,8 +494,7 @@ var mis = function (text, maxRetries = 3) {
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
-      `
-      return html.evaluate().getContent();`;
+      // return html.evaluate().getContent();
     }
   } else {
     let response;
