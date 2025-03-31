@@ -422,7 +422,11 @@ var mis = function (text, maxRetries = 3) {
         fx +
         (payLoad ? "&args=" + payLoad : "");
       // var form = formMaker();
-      var form = formMaker([supUrl].join("").toUpperCase(), "misForms", time);
+      var form = formMaker(
+        [supUrl].join("").toUpperCase(),
+        "misForms",
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      );
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
@@ -472,7 +476,7 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form
-          .setTitle(coData.rndTitle)
+          .setTitle(text)
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
@@ -515,11 +519,18 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       // var form = formMaker();
-      var form = formMaker([e].join("").toUpperCase(), "misForms", time);
+      var form = formMaker(
+        [e].join("").toUpperCase(),
+        "misForms",
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      );
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form.addSectionHeaderItem().setTitle("Error fetching").setHelpText(e);
+        form
+          .addSectionHeaderItem()
+          .setTitle("Error fetching URL")
+          .setHelpText(e);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
@@ -565,7 +576,7 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form
-          .setTitle(coData.rndTitle)
+          .setTitle("Error fetching URL")
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
@@ -603,7 +614,7 @@ var mis = function (text, maxRetries = 3) {
               var form = formMaker(
                 [location].join("").toUpperCase(),
                 "misForms",
-                time,
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
 
               if (typeof form === "object") {
@@ -678,7 +689,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(coData.rndTitle)
+                  .setTitle("Redirect Occurred")
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
@@ -689,7 +700,7 @@ var mis = function (text, maxRetries = 3) {
               var form = formMaker(
                 [location].join("").toUpperCase(),
                 "misForms",
-                time,
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
 
               if (typeof form === "object") {
@@ -764,7 +775,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(coData.rndTitle)
+                  .setTitle("No redirect or other error")
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
