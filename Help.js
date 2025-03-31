@@ -421,7 +421,7 @@ var mis = function (text, maxRetries = 3) {
         "?func=" +
         fx +
         (payLoad ? "&args=" + payLoad : "");
-      var coData = coUtility(payLoad)[0];
+      var coData = coUtility(text)[0];
       if (coData) {
         var coDataName = coData.rndTitle;
         try {
