@@ -838,7 +838,7 @@ var isValidUrl = function (url) {
   }
   var hostnameEnd = url.indexOf("/");
   if (hostnameEnd !== -1) {
-    hostname = url.substring(0, hostNameEnd);
+    hostname = url.substring(0, hostnameEnd);
     pathname = url.substring(hostnameEnd);
   } else {
     hostname = url;
