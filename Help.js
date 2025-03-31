@@ -427,6 +427,7 @@ var mis = function (text, maxRetries = 3) {
         (payLoad ? "&args=" + payLoad : "");
       html.nav = fx;
       html.action = payLoad;
+      var coData = html.getRawContent();
       var supUrl =
         getScriptUrl().toString() +
         "?func=" +
@@ -441,10 +442,7 @@ var mis = function (text, maxRetries = 3) {
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form
-          .addSectionHeaderItem()
-          .setTitle(html.getRawContent())
-          .setHelpText(supUrl);
+        form.addSectionHeaderItem().setTitle(coData).setHelpText(supUrl);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
