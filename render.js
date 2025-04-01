@@ -702,7 +702,7 @@ var includeRunIt = () => {
   // mis(
   //   `https://api.robinhood.com/instruments/?query=${encodeURIComponent("physical")}`,
   // );
-  mis("rndCoin");
+  console.log(mis("rndCoin"));
 };
 
 var includeJs = function (blob, argsObject) {
