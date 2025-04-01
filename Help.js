@@ -441,7 +441,7 @@ var mis = function (text, maxRetries = 3) {
       // fileManager(coData.rndTitle, "Forms")
       form
         .addSectionHeaderItem()
-        .setTitle(payT().toString())
+        .setTitle(globalThis["payT"]().toString())
         .setHelpText(supUrl);
       form.addTextItem().setTitle("Industry").setRequired(true);
       form.addTextItem().setTitle("Sector").setRequired(true);
