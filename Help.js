@@ -814,9 +814,9 @@ var misSt = function (func, someArgs) {
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
   console.log(
-    "misSt returned :\nfunc=:" +
+    "misSt returned :\nfunc = " +
       argsX +
-      ":\nargs=:" +
+      ":\nargs = " +
       content.toString().replace(/,/g, " "),
   );
   var cString = content.toString().replace(/,/g, " ");
