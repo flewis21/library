@@ -439,7 +439,10 @@ var mis = function (text, maxRetries = 3) {
 
     if (typeof form === "object") {
       // fileManager(coData.rndTitle, "Forms")
-      form.addSectionHeaderItem().setTitle(payT).setHelpText(supUrl);
+      form
+        .addSectionHeaderItem()
+        .setTitle(payT().toString())
+        .setHelpText(supUrl);
       form.addTextItem().setTitle("Industry").setRequired(true);
       form.addTextItem().setTitle("Sector").setRequired(true);
       form
@@ -485,7 +488,7 @@ var mis = function (text, maxRetries = 3) {
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       form
-        .setTitle(supUrl)
+        .setTitle(JSON.parse(supFunc))
         .setConfirmationMessage("Thanks for your feedback !!");
       var url = form.getPublishedUrl();
     }
