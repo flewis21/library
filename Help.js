@@ -426,7 +426,7 @@ var mis = function (text, maxRetries = 3) {
     html.action = payLoad;
     var supUrl =
       getScriptUrl().toString() +
-      "?func=surveyPlayer&args=" +
+      "?func=mis&args=" +
       (payLoad ? fx + "," + payLoad : fx);
     // var form = formMaker();
     var payT = [payLoad ? fx + payLoad : fx].join("").toUpperCase();
