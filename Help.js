@@ -428,10 +428,9 @@ var mis = function (text, maxRetries = 3) {
     //   html.nav = fx;
     //   html.action = payLoad;
     var supUrl =
-      getScriptUrl().toString() +
-      "?func=" +
-      fx +
-      (payLoad ? "&args=" + payLoad : "");
+      getScriptUrl().toString() + "?func=" + fx + payLoad
+        ? "&args=" + payLoad
+        : "";
     // var form = formMaker();
     var payT = [payLoad ? fx + payLoad : fx].join("").toUpperCase();
     var form = formMaker(
@@ -494,6 +493,7 @@ var mis = function (text, maxRetries = 3) {
     }
     // return html.evaluate().getContent();
     // }
+    return url;
   } else {
     let response;
     let location;
