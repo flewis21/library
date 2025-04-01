@@ -488,7 +488,7 @@ var mis = function (text, maxRetries = 3) {
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       form
-        .setTitle(JSON.parse(supFunc))
+        .setTitle(JSON.parse(JSON.stringify(supFunc)))
         .setConfirmationMessage("Thanks for your feedback !!");
       var url = form.getPublishedUrl();
     }
