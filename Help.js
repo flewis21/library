@@ -417,20 +417,18 @@ var mis = function (text, maxRetries = 3) {
     //     return html.evaluate().getContent();
     // }
 
-    //   let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
-    // = document.getElementById("breakUrl");</script>`;
-    //   let html = HtmlService.createTemplate(htmlContent);
-    //   html.url =
-    //     getScriptUrl().toString() +
-    //     "?func=" +
-    //     fx +
-    //     (payLoad ? "&args=" + payLoad : "");
-    //   html.nav = fx;
-    //   html.action = payLoad;
+    let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+    = document.getElementById("breakUrl");</script>`;
+    let html = HtmlService.createTemplate(htmlContent);
+    html.url =
+      getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
+    html.nav = fx;
+    html.action = payLoad;
     var supUrl =
-      getScriptUrl().toString() + "?func=" + fx + payLoad
-        ? "&args=" + payLoad
-        : "";
+      getScriptUrl().toString() +
+      "?func=" +
+      fx +
+      (payLoad ? "&args=" + payLoad : "");
     // var form = formMaker();
     var payT = [payLoad ? fx + payLoad : fx].join("").toUpperCase();
     var form = formMaker(
