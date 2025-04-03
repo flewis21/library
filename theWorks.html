@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html id="test">
   <head>
-    <base target="_top">
+    <base target="_top" />
   </head>
-  <body class="agenda z-depth-5 pulse btn-large card-panel green scale-out scale-in">
-    <div id="loadingIndicator" style="display: none;">
+  <body
+    class="agenda z-depth-5 pulse btn-large card-panel green scale-out scale-in"
+  >
+    <div id="loadingIndicator" style="display: none">
       <nav>
         <a href="" target="_top" id="navBack">Loading...</a>
       </nav>
@@ -14,132 +16,191 @@
       <input value="" class="timepicker" id="pRule" type="text" />
     </div>
     <button id="btn">Run It!</button>
-    <div id="content" style="display: none;">
+    <div id="content" style="display: none">
       <div class="row">
-      <div id="forHtml" class="col s12 I12 m12 card-panel amber">
-      <div class="container" style="clear: both">
-      <iframe 
-        class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-        id="worksFrame"
-        src=""
-        style="width: 100%; height: 80vh"
-        allow="autoplay"
-        allow="encrypted-media"
-        title="Dontime Life Website"
-        frameborder="0"
-        allowfullscreen
-        ></iframe>
-      </div></div></div>
+        <div id="forHtml" class="col s12 I12 m12 card-panel amber">
+          <div class="container" style="clear: both">
+            <iframe
+              class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+              id="worksFrame"
+              src=""
+              style="width: 100%; height: 80vh"
+              allow="autoplay"
+              allow="encrypted-media"
+              title="Dontime Life Website"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
     </div>
-    <script>      
-      console.log(window)
+    <script>
+      console.log(window);
       var folder = "loc";
       var file = "id";
-      const loadingIndicator = document.getElementById('loadingIndicator');
-      const forHTMLContent = document.getElementById("forHtml").innerHTML
-      const workMenu = document.getElementById("navBack")
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const forHTMLContent = document.getElementById("forHtml").innerHTML;
+      const workMenu = document.getElementById("navBack");
       function serverSide(func, args) {
         return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-          resolve(result)})
-        .withFailureHandler(error => {
-          console.log(error)
-            console.log(document.getElementById("test").innerHTML)
-            reject(error)})
-        .runBoilerplate(func, args)})};
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runBoilerplate(func, args);
+        });
+      }
       function clientSide() {
         return new Promise((resolve, reject) => {
-        google.script.url
-        .getLocation(result => {
-          resolve(result)})
-        .withFailureHandler(error => {
-          console.log(error)
-            reject(error)})})};
-      var boxInput = document.getElementById("pRule")
-      var buttonInt = document.getElementById("btn")
-      var placeRule = serverSide("rule")
-          .then((dateRule) => {
-            return dateRule})
-      boxInput.addEventListener('keypress', function(event) {
-        // If the user preses the "Enter" key on the keyboard. 
+          google.script.url
+            .getLocation((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      }
+      var boxInput = document.getElementById("pRule");
+      var buttonInt = document.getElementById("btn");
+      var placeRule = serverSide("rule").then((dateRule) => {
+        return dateRule;
+      });
+      boxInput.addEventListener("keypress", function (event) {
+        // If the user preses the "Enter" key on the keyboard.
         if (event.key === "Enter") {
+          if (boxInput.value.length === 0) {
+            boxInput.value = placeRule;
+            workMenu.href = "#";
+            return;
+          }
+          // Hide the contentBox before filtering
+          content.style.display = "none";
+          // Show the loading indicator
+          loadingIndicator.style.display = "block";
+          plaChag();
+        }
+      });
+      buttonInt.addEventListener("click", function () {
         if (boxInput.value.length === 0) {
           boxInput.value = placeRule;
-          workMenu.href = "#"
-          return}
+          workMenu.href = "#";
+          return;
+        } else {
           // Hide the contentBox before filtering
-          content.style.display = 'none';
+          content.style.display = "none";
           // Show the loading indicator
-          loadingIndicator.style.display = 'block'
-          plaChag()}})
-      buttonInt.addEventListener("click", function() {
-        if (boxInput.value.length === 0) {
-          boxInput.value = placeRule;
-          workMenu.href = "#"
-          return}
-        else {
-          // Hide the contentBox before filtering
-          content.style.display = 'none';
-          // Show the loading indicator
-          loadingIndicator.style.display = 'block'
-          plaChag()}})
+          loadingIndicator.style.display = "block";
+          plaChag();
+        }
+      });
       function plaChag() {
-        console.log("_" + boxInput.value.length + " " + typeof boxInput.value + " _: " + boxInput.value.indexOf(",") + "\n" + boxInput.value.split(""))
+        console.log(
+          "_" +
+            boxInput.value.length +
+            " " +
+            typeof boxInput.value +
+            " _: " +
+            boxInput.value.indexOf(",") +
+            "\n" +
+            boxInput.value.split(""),
+        );
         if (boxInput.value.indexOf(",") === -1) {
-          var funcFlex = boxInput.value
-          console.log("rndFolder,rndFile\n" + funcFlex)
-          var splitSearch = funcFlex.split("")
-          var urlFolder = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
-          console.log(urlFolder)
-          var urlFile = splitSearch[Math.floor(Math.random() * (Math.floor(splitSearch.length)) )]
-          console.log(urlFile)}
-        else {
-          var redAlert = boxInput.value
-          console.log("folder,file\n" + redAlert)
-          var splitSearch = redAlert.split(",")
-          console.log(splitSearch)
+          var funcFlex = boxInput.value;
+          console.log("rndFolder,rndFile\n" + funcFlex);
+          var splitSearch = funcFlex.split("");
+          var urlFolder =
+            splitSearch[
+              Math.floor(Math.random() * Math.floor(splitSearch.length))
+            ];
+          console.log(urlFolder);
+          var urlFile =
+            splitSearch[
+              Math.floor(Math.random() * Math.floor(splitSearch.length))
+            ];
+          console.log(urlFile);
+        } else {
+          var redAlert = boxInput.value;
+          console.log("folder,file\n" + redAlert);
+          var splitSearch = redAlert.split(",");
+          console.log(splitSearch);
           var funcFlex = splitSearch[0];
-          console.log(funcFlex)
+          console.log(funcFlex);
           var urlFolder = splitSearch[1];
-          console.log(urlFolder)
+          console.log(urlFolder);
           var urlFile = splitSearch[2];
-          console.log(urlFile)}
-        console.log([urlFolder,urlFile]);
-        serverSide([funcFlex], [[urlFolder],[urlFile]])
-        .then((filed) => {
-          if (filed !== null){
-          // Show the contentBox after filtering is complete
-          content.style.display = 'block'
-          // Hide the loading indicator after filtering is complete
-          loadingIndicator.style.display = 'none';
-          if (!urlFolder && !urlFile) {
-          document.getElementById("pageBlock").innerHTML = "<p>" + funcFlex + "</p>\n"}
-          else if (urlFolder && !urlFile) {
-          document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + "</p>\n"}
-          else {
-          document.getElementById("pageBlock").innerHTML = "<p>" + urlFolder + ": " +  urlFile + "</p>\n"}
-          console.log(typeof filed + " XX " + [filed].join("").length + " XXX " + filed)
-          if (filed.length === 83 || filed.length === 94 || filed.length === 97 || filed.length === 99 || filed.length === 101 || filed.length === 103 || filed.length === 132 || filed.length === 136 ) {
-            const confirmation = window.confirm("Click OK to continue to the destination."); 
-            if (confirmation) {
-              var linkFollow = document.createElement("a");
-              if (boxInput.value.indexOf(",") === -1) {
-                linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex} //filed;
-              else {
-                linkFollow.href = '<?!= getUrl(ScriptApp) ?>?func=' + funcFlex + '&args=' + urlFolder} //filed;
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_child";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("navBack").href = filed
-              document.getElementById("linkFOLLOW").remove()}}
-          else {
-            document.getElementById("forHtml").innerHTML = filed}}
-        else {
-          clientSide()
-          .then((eObject) => {
-            <?!= handleRequest(eObject) ?>})}})}
+          console.log(urlFile);
+        }
+        console.log([urlFolder, urlFile]);
+        serverSide([funcFlex], [[urlFolder], [urlFile]]).then((filed) => {
+          if (filed !== null) {
+            // Show the contentBox after filtering is complete
+            content.style.display = "block";
+            // Hide the loading indicator after filtering is complete
+            loadingIndicator.style.display = "none";
+            if (!urlFolder && !urlFile) {
+              document.getElementById("pageBlock").innerHTML =
+                "<p>" + funcFlex + "</p>\n";
+            } else if (urlFolder && !urlFile) {
+              document.getElementById("pageBlock").innerHTML =
+                "<p>" + urlFolder + "</p>\n";
+            } else {
+              document.getElementById("pageBlock").innerHTML =
+                "<p>" + urlFolder + ": " + urlFile + "</p>\n";
+            }
+            console.log(
+              typeof filed + " XX " + [filed].join("").length + " XXX " + filed,
+            );
+            if (
+              filed.length === 83 ||
+              filed.length === 94 ||
+              filed.length === 97 ||
+              filed.length === 99 ||
+              filed.length === 101 ||
+              filed.length === 103 ||
+              filed.length === 132 ||
+              filed.length === 136
+            ) {
+              const confirmation = window.confirm(
+                "Click OK to continue to the destination.",
+              );
+              if (confirmation) {
+                var linkFollow = document.createElement("a");
+                if (boxInput.value.indexOf(",") === -1) {
+                  linkFollow.href =
+                    "<?!= getUrl(ScriptApp) ?>?func=" + funcFlex;
+                } //filed;
+                else {
+                  linkFollow.href =
+                    "<?!= getUrl(ScriptApp) ?>?func=" +
+                    funcFlex +
+                    "&args=" +
+                    urlFolder;
+                } //filed;
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_child";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("navBack").href = filed;
+                document.getElementById("linkFOLLOW").remove();
+              }
+            } else {
+              document.getElementById("forHtml").innerHTML = filed;
+            }
+          } else {
+            clientSide().then((eObject) => {
+              handleRequest(eObject);
+            });
+          }
+        });
+      }
     </script>
   </body>
 </html>
