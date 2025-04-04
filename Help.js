@@ -311,11 +311,13 @@ var testlt = function () {
   var arrDRnd = appSort(numVarRnd);
   var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var fParams = gsFParams();
-  var result = fParams["name"].indexOf(searchString);
-  if (result > -1) {
+  var result = fParams.map((rndS) => {
+    return rndS.name === searchString;
+  });
+  if (result) {
     return result;
   } else {
-    return { rndS: searchString, rndF: fParams };
+    return searchString;
   }
 };
 var gsFiles = function () {
