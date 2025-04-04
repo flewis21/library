@@ -311,7 +311,7 @@ var testlt = function () {
   var arrDRnd = appSort(numVarRnd);
   var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var fParams = gsFParams();
-  var result = fParams.map((rndS) => {
+  var result = fParams.find((rndS) => {
     return rndS.name === searchString;
   });
   if (result) {
