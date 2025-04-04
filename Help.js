@@ -311,8 +311,11 @@ var testlt = function () {
   var arrDRnd = appSort(numVarRnd);
   var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var fParams = gsFParams();
-  if (fParams > -1) {
-    return { rdmS: searchString, rdmF: fParams };
+  var result = [fParams].indexOf(searchString);
+  if (result > -1) {
+    return result;
+  } else {
+    return { rndS: searchString, rndF: fParams };
   }
 };
 var gsFiles = function () {
