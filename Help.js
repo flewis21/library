@@ -310,9 +310,9 @@ var testlt = function () {
   );
   var arrDRnd = appSort(numVarRnd);
   var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-  var fParams = gsFParams().indexOf(searchString);
+  var fParams = gsFParams();
   if (fParams > -1) {
-    return searchString;
+    return { rdmS: searchString, rdmF: fParams };
   }
 };
 var gsFiles = function () {
