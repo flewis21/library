@@ -321,6 +321,31 @@ var gsFiles = function () {
   }
   return gsFileList;
 };
+var gsFParams = function () {
+  var gsParamsList = [];
+  var globalScope = this;
+  for (var key in globalScope) {
+    if (typeof globalScope[key] === "function") {
+      try {
+        var funcString = globalScope[key].toString();
+        var params = funcString
+          .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
+          .split(",")
+          .map(function (param) {
+            return param.trim();
+          })
+          .filter(function (param) {
+            return param !== "";
+          });
+        gsParamsList.push({ name: key, parameters: params });
+      } catch (e) {
+        Logger.log("Error processing function: " + key + ". Error: " + e);
+        gsParamsList.push({ name: key, parameters: ["(Unable to parse)"] });
+      }
+    }
+  }
+  return gsParamsList;
+};
 var wwAccess = function (rName, rFunc, rArgs) {
   const Route = {};
   Route.path = function (route, rFunction) {
