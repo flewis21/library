@@ -315,7 +315,7 @@ var testlt = function () {
     return rndS.name === searchString;
   });
   if (result) {
-    return JSON.stringify(result);
+    return result;
   } else {
     return searchString;
   }
