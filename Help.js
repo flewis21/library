@@ -853,6 +853,7 @@ var misSt = function (func, someArgs) {
   );
   var cString = content.toString().replace(/,/g, " ");
   var jsonData = globalThis[argsX.toString()].apply(this, content);
+  console.log("typeof " + typeof jsonData + " jsonDara");
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
