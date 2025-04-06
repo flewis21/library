@@ -820,7 +820,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error resolving TinyURL: " + e.toString());
       console.error("Error resolving TinyURL: ", e.toString());
     }
-    return url;
+    return { index: url, app: supFunc.res };
   }
 };
 var misSt = function (func, someArgs) {
