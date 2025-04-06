@@ -462,7 +462,7 @@ var mis = function (text, maxRetries = 3) {
       "?func=mis&args=" +
       (payLoad ? fx + "," + payLoad : fx);
     // var form = formMaker();
-    var payT = [payLoad ? fx + payLoad : fx].join("").toUpperCase();
+    var payT = [payLoad ? fx + " " + payLoad : fx].join("").toUpperCase();
     var form = formMaker(
       payT,
       "misForms",
