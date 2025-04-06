@@ -852,7 +852,8 @@ var misSt = function (func, someArgs) {
       content.toString().replace(/,/g, " "),
   );
   var cString = content.toString().replace(/,/g, " ");
-  var argsObject = { func: argsX.toString(), args: cString };
+  var jsonData = globalthis[argsX.toString()].apply(this, content);
+  var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
 var isValidUrl = function (url) {
