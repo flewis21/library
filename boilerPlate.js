@@ -232,9 +232,9 @@ function objectOfS(keys, values, time) {
         innerValue !== null
       ) {
         if (innerValue.name && innerValue.parameters) {
-          acc[key][innerKey] = [innerValue.name, ...innerValue.parameters];
+          (acc[key][innerKey] = innerValue.name), innerValue.parameters;
         } else {
-          acc[key][innerKey] = [innerValue.name];
+          acc[key][innerKey] = innerValue.name;
         }
       } else {
         acc[key][innerKey] = innerValue;
