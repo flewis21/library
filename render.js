@@ -1257,7 +1257,6 @@ var renderTemplate = function (blob, argsObject, title) {
       "Error in rendertemplate html: " + errortoString() + "\n" + error.stack
     );
   }
-  tmp.css = css;
   return tmp
     .evaluate()
     .setTitle(title)
