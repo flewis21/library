@@ -852,7 +852,7 @@ var misSt = function (func, someArgs) {
       content.toString().replace(/,/g, " "),
   );
   var cString = content.toString().replace(/,/g, " ");
-  var jsonData = globalthis[argsX.toString()].apply(this, content);
+  var jsonData = globalThis[argsX.toString()].apply(this, content);
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
