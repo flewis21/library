@@ -272,6 +272,7 @@ var crmCalc = function (func) {
   return funFact;
 };
 var crmT = function (func) {
+  func = misSt(func).func;
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
