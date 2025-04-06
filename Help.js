@@ -526,7 +526,7 @@ var mis = function (text, maxRetries = 3) {
     }
     // return html.evaluate().getContent();
     // }
-    return url;
+    return { index: url, app: supFunc.res };
   } else {
     let response;
     let location;
