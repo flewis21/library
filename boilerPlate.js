@@ -226,19 +226,19 @@ function objectOfS(keys, values, time) {
   return keys.reduce((acc, key, index) => {
     acc[key] = {};
     values[index].forEach(([innerKey, innerValue]) => {
-      if (
-        innerKey === "args" &&
-        typeof innerValue === "object" &&
-        innerValue !== null
-      ) {
-        if (innerValue.name && innerValue.parameters) {
-          (acc[key][innerKey] = innerValue.name), innerValue.parameters;
-        } else {
-          acc[key][innerKey] = innerValue.name;
-        }
-      } else {
-        acc[key][innerKey] = innerValue;
-      }
+      // if (
+      //   innerKey === "args" &&
+      //   typeof innerValue === "object" &&
+      //   innerValue !== null
+      // ) {
+      //   if (innerValue.name && innerValue.parameters) {
+      //     acc[key][innerKey] = [innerValue.name, ...innerValue.parameters];
+      //   } else {
+      //     acc[key][innerKey] = [innerValue.name];
+      //   }
+      // } else {
+      acc[key][innerKey] = innerValue;
+      // }
     });
     return acc;
   }, {});
