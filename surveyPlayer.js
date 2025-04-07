@@ -125,8 +125,8 @@ function surveyPlayer(searchString, joinString) {
   = stream;eventG.href 
   = stream;eventL.innerText 
   = "Research"}else {eventV.innerHTML 
-  = JSON.stringify(stream);eventG.href 
-  = stream;eventL.innerText 
+  = stream;eventG.href 
+  = JSON.stringify(stream);eventL.innerText 
   = "Research"}}}).catch((er) => {eventL.innerText 
   = er})}}})})</script></body></html>`);
   if (uti) {
