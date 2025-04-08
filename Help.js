@@ -426,7 +426,8 @@ var seoCapital = function (url) {
   return html.evaluate().getContent();
 };
 var mis = function (text, maxRetries = 3) {
-  if (!isValidUrl(text).hostname) {
+  var validUrl = isValidUrl(text);
+  if (!validUrl.hostname) {
     var supFunc = misSt(text);
     var fx = supFunc.func;
     var payLoad = supFunc.args;
@@ -731,7 +732,7 @@ var mis = function (text, maxRetries = 3) {
               location = response.getContentText();
               // var form = formMaker();
               var form = formMaker(
-                [location].join("").toUpperCase(),
+                [validUrl.pathname].join("").toUpperCase(),
                 "misForms",
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
