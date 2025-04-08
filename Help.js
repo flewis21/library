@@ -555,7 +555,7 @@ var mis = function (text, maxRetries = 3) {
       console.error("Error fetching URL: ", e.toString());
       // var form = formMaker();
       var form = formMaker(
-        [validUrl.query].join("").toUpperCase(),
+        [validUrl.pathname].join("").toUpperCase(),
         "misForms",
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       );
