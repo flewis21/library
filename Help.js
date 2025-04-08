@@ -825,10 +825,10 @@ var mis = function (text, maxRetries = 3) {
   }
 };
 var misSt = function (func, someArgs) {
-  var funcUno = func;
+  var funcUno = decodeURIComponent(func);
   // ? console.log("funcUno = " + typeof funcUno)
   // : console.error("funcUno = " + typeof funcUno);
-  var funcDos = someArgs;
+  var funcDos = decodeURIComponent(someArgs);
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
@@ -837,8 +837,7 @@ var misSt = function (func, someArgs) {
     .toString()
     .split(",");
   keys.forEach((pro) => {
-    var decodeIt = decodeURIComponent(pro);
-    var bPro = crmT(decodeIt);
+    var bPro = crmT(pro);
     if (bPro >= 0) {
       argsX.push(gsFiles()[bPro]);
     } else {
