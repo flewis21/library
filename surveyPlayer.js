@@ -110,7 +110,7 @@ function surveyPlayer(searchString, joinString) {
   = sub.substHost;var rndHost 
   = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];eventH.value 
   = rndHost;});if (!strValue) {eventL.innerText 
-  = "... Loading";serverside("mis").then((stream) => {if (stream) {if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || [stream].indexOf("&entry") > -1) {eventV.innerHTML 
+  = "... Loading";serverside("mis").then((retn) => {var stream = retn.index; if (stream) {if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || [stream].indexOf("&entry") > -1) {eventV.innerHTML 
   = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src 
   = stream;eventG.href 
   = stream;eventL.innerText 
@@ -120,7 +120,7 @@ function surveyPlayer(searchString, joinString) {
   = "Research"}}}).catch((er) => {eventL.innerText 
   = er})}else {document.getElementById("spSearch").value 
   = "";eventL.innerText 
-  = "... Loading " + strValue;serverside("mis", [strValue]).then((stream) => {if (stream) {if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || [stream].indexOf("&entry") > -1) {eventV.innerHTML 
+  = "... Loading " + strValue;serverside("mis", [strValue]).then((retn) => {var stream = retn.index; if (stream) {if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || [stream].indexOf("&entry") > -1) {eventV.innerHTML 
   = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src 
   = stream;eventG.href 
   = stream;eventL.innerText 
