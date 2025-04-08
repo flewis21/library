@@ -610,7 +610,9 @@ var mis = function (text, maxRetries = 3) {
         form.addTextItem().setTitle("Your Name").setRequired(true);
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-        form.setTitle(e).setConfirmationMessage("Thanks for your feedback !!");
+        form
+          .setTitle(validUrl.query)
+          .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
     }
@@ -646,7 +648,7 @@ var mis = function (text, maxRetries = 3) {
               location = response.getHeaders().Location;
               // var form = formMaker();
               var form = formMaker(
-                [location].join("").toUpperCase(),
+                [validUrl.pathname].join("").toUpperCase(),
                 "misForms",
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
@@ -723,7 +725,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(text)
+                  .setTitle(validUrl.query)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
@@ -742,7 +744,7 @@ var mis = function (text, maxRetries = 3) {
                 form
                   .addSectionHeaderItem()
                   .setTitle("No redirect or other error")
-                  .setHelpText(location);
+                  .setHelpText(validUrl.hostname);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
                 form
@@ -809,7 +811,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(text)
+                  .setTitle(validUrl.query)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
