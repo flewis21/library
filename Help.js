@@ -555,7 +555,7 @@ var mis = function (text, maxRetries = 3) {
       console.error("Error fetching URL: ", e.toString());
       // var form = formMaker();
       var form = formMaker(
-        [validUrl.pathname].join("").toUpperCase(),
+        [validUrl].join("").toUpperCase(),
         "misForms",
         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
       );
@@ -611,7 +611,7 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form
-          .setTitle(validUrl.query)
+          .setTitle(validUrl)
           .setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
@@ -648,7 +648,7 @@ var mis = function (text, maxRetries = 3) {
               location = response.getHeaders().Location;
               // var form = formMaker();
               var form = formMaker(
-                [validUrl.pathname].join("").toUpperCase(),
+                [validUrl].join("").toUpperCase(),
                 "misForms",
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
@@ -725,7 +725,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(validUrl.query)
+                  .setTitle(validUrl)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
@@ -734,7 +734,7 @@ var mis = function (text, maxRetries = 3) {
               location = response.getContentText();
               // var form = formMaker();
               var form = formMaker(
-                [validUrl.pathname].join("").toUpperCase(),
+                [validUrl].join("").toUpperCase(),
                 "misForms",
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               );
@@ -811,7 +811,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form
-                  .setTitle(validUrl.query)
+                  .setTitle(validUrl)
                   .setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
