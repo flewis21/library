@@ -837,7 +837,8 @@ var misSt = function (func, someArgs) {
     .toString()
     .split(",");
   keys.forEach((pro) => {
-    var bPro = crmT(pro);
+    var decodeIt = decodeURIComponent(pro);
+    var bPro = crmT(decodeIt);
     if (bPro >= 0) {
       argsX.push(gsFiles()[bPro]);
     } else {
