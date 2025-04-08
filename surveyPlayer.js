@@ -106,7 +106,7 @@ function surveyPlayer(searchString, joinString) {
   = er})});eventH.addEventListener("keypress", function(event) {
   // If the user preses the "Enter" key on the keyboard. 
   if (event.key === "Enter")  {var strValue 
-  = eventH.value;serverside("substanceVegas", [null,null,null,1,1,5]).then((sub)=>{var hosts 
+  = encodeURIComponent(eventH.value);serverside("substanceVegas", [null,null,null,1,1,5]).then((sub)=>{var hosts 
   = sub.substHost;var rndHost 
   = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];eventH.value 
   = rndHost;});if (!strValue) {eventL.innerText 
