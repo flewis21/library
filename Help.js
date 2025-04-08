@@ -655,7 +655,13 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle("Redirect occurred\n" + response.getContentText())
+                  .setTitle(
+                    "Redirect occurred\n" +
+                      UrlFetchApp.fetch(location, {
+                        followRedirects: true,
+                        muteHttpExceptions: true,
+                      }).getContentText(),
+                  )
                   .setHelpText(location);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
