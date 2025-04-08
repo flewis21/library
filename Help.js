@@ -655,7 +655,7 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle("Redirect occurred")
+                  .setTitle("Redirect occurred\n" + response.getContentText())
                   .setHelpText(location);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
@@ -741,7 +741,9 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle("No redirect or other error")
+                  .setTitle(
+                    "No redirect or other error\n" + response.getContentText(),
+                  )
                   .setHelpText(validUrl.hostname);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
