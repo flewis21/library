@@ -715,10 +715,10 @@ var productNamePartial = function (productName) {
     null,
     { muteHttpExceptions: true },
   );
-  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
+  if (res && res.indexOf("DOCTYPE") === -1) {
     try {
-      if (res[0]["items"].length === 0) {
-        return res[0]["first"][0];
+      if (res["items"].length === 0) {
+        return res["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
         return newEPAData(rawData);
