@@ -313,7 +313,7 @@ var needCapital = function (searchString) {
       !searchString,
   );
   const videoSearch = [
-    urlDataSource(`https://flewis21.github.io/foobar`, null, {
+    urlDataSource(searchString, null, {
       muteHttpExceptions: true,
     }),
   ];
@@ -510,7 +510,7 @@ var urlDataSource = function (cokey, url, time, xpath) {
       [cokey].join(""),
     time + ")",
   );
-  return (uti = seoArray.playList);
+  return { uti: seoArray.playList };
   var content = res.getContentText();
   return content;
 
