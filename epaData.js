@@ -453,16 +453,12 @@ var newEPAData = function (rawData) {
 };
 
 var oldEPA = function (rndTitle) {
-  var urlPlayer =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
-  var urlProduct =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
-  var urlEpaRegNo =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
-  var urlCasNo =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
-  var urlPcCode =
-    "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
+  var wAppUrl = getScriptUrl();
+  var urlPlayer = wAppUrl + "?func=misBing&args=";
+  var urlProduct = wAppUrl + "?func=misBing&args=";
+  var urlEpaRegNo = wAppUrl + "?func=misBing&args=";
+  var urlCasNo = wAppUrl + "?func=misBing&args=";
+  var urlPcCode = wAppUrl + "?func=misBing&args=";
   var arrayMath = [`acme`];
   var product =
     rndTitle ||
@@ -713,14 +709,12 @@ var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
 };
 
 var productNamePartial = function (productName) {
-  const res = [
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/riname/" +
-        productName,
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ];
+  const res = urlDataSource(
+    "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/riname/" +
+      productName,
+    null,
+    { muteHttpExceptions: true },
+  );
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
