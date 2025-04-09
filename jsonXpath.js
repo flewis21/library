@@ -485,7 +485,7 @@ var udsCache = function (content) {
   }
 };
 
-var urlDataSource = function (cokey, url, time, xpath) {
+var urlDataSource = function (cokey, url, time, xpath, maxRetries = 3) {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
@@ -501,7 +501,64 @@ var urlDataSource = function (cokey, url, time, xpath) {
   if (typeof cokey === "undefined") {
     var cokey = "url data";
   }
-  // var res = UrlFetchApp.fetch(url, {muteHttpExceptions:true});
+  let response;
+  let location;
+  let retries = 0;
+  let delay = 1000;
+  try {
+    response = UrlFetchApp.fetch(url, {
+      followRedirects: false, // Prevent automatic redirects
+      muteHttpExceptions: true,
+    });
+  } catch (e) {
+    Logger.log("Error fetching URL: ", e.toString());
+    console.error("Error fetching URL: ", e.toString());
+  }
+  try {
+    if (response) {
+      var res = response.getResponseCode();
+      if (res) {
+        if (res === 429) {
+          retries++;
+          delay += 2;
+          Utilities.sleep(delay + Math.random() * 500);
+          Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+          while (retries < maxRetries) {
+            try {
+              response = UrlFetchApp.fetch(
+                supFunc && supFunc.args ? supFunc.args : text,
+                {
+                  followRedirects: false, // Prevent automatic redirects
+                  muteHttpExceptions: true,
+                },
+              );
+            } catch (error) {
+              Logger.log("Error fetching data: " + error);
+              retries++;
+              delay += 2;
+              Utilities.sleep(delay);
+            }
+          }
+          Logger.log("Max retries reached, failed to fetch data.");
+        }
+      } else {
+        if (res >= 300 && res < 400) {
+          // Redirect occurred
+          location = response.getHeaders().Location;
+          var content = UrlFetchApp.fetch(location, {
+            followRedirects: true,
+            muteHttpExceptions: true,
+          }).getContentText();
+        } else {
+          // No redirect or other error
+          var content = response.getContentText();
+        }
+      }
+    }
+  } catch (e) {
+    Logger.log("Error resolving TinyURL: " + e.toString());
+    console.error("Error resolving TinyURL: ", e.toString());
+  }
   var seoArray = seoPastTime([cokey].join(""), time);
   console.log(
     "urlDataSource: \nvar " +
@@ -510,8 +567,7 @@ var urlDataSource = function (cokey, url, time, xpath) {
       [cokey].join(""),
     time + ")",
   );
-  return { uti: seoArray.playList };
-  var content = res.getContentText();
+  // return { uti: seoArray.playList };
   return content;
 
   // if (typeof content === "object")
