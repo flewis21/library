@@ -461,7 +461,7 @@ var mis = function (text, maxRetries = 3) {
     var supUrl =
       getScriptUrl().toString() +
       "?func=mis&args=" +
-      (payLoad ? fx + "," + payLoad : fx);
+      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
     var payT = [payLoad ? fx + " " + payLoad : fx].join("").toUpperCase();
     var form = formMaker(
