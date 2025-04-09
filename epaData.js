@@ -639,7 +639,7 @@ var productRegNo = function (eparegno) {
       { muteHttpExceptions: true },
     ),
   ];
-  if (res && res[0].indexOf("DOCTYPE") === -1) {
+  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
@@ -721,7 +721,7 @@ var productNamePartial = function (productName) {
       { muteHttpExceptions: true },
     ),
   ];
-  if (res && res[0].indexOf("DOCTYPE") === -1) {
+  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
@@ -781,7 +781,7 @@ var productIngName = function (ingredient) {
       { muteHttpExceptions: true },
     ),
   ];
-  if (res && res[0].indexOf("DOCTYPE") === -1) {
+  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
@@ -805,7 +805,7 @@ var productChemCode = function (code) {
       { muteHttpExceptions: true },
     ),
   ];
-  if (res && res[0].indexOf("DOCTYPE") === -1) {
+  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
@@ -829,7 +829,7 @@ var productAbstractNum = function (abstract) {
       { muteHttpExceptions: true },
     ),
   ];
-  if (res && res[0].indexOf("DOCTYPE") === -1) {
+  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
