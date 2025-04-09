@@ -719,11 +719,11 @@ var productNamePartial = function (productName) {
         productName,
       null,
       { muteHttpExceptions: true },
-    ),
+    ).uti,
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
-      if (res[0]["items"] === []) {
+      if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
@@ -779,11 +779,11 @@ var productIngName = function (ingredient) {
         ingredient,
       null,
       { muteHttpExceptions: true },
-    ),
+    ).uti,
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
-      if (res[0]["items"] === []) {
+      if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
@@ -803,11 +803,11 @@ var productChemCode = function (code) {
         encodeURIComponent(code),
       null,
       { muteHttpExceptions: true },
-    ),
+    ).uti,
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
-      if (res[0]["items"] === []) {
+      if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
@@ -827,11 +827,11 @@ var productAbstractNum = function (abstract) {
         encodeURIComponent(abstract),
       null,
       { muteHttpExceptions: true },
-    ),
+    ).uti,
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
-      if (res[0]["items"] === []) {
+      if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
