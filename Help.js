@@ -841,7 +841,7 @@ var misSt = function (func, someArgs) {
   // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
   var content = [];
-  var keys = [funcDos ? [funcUno].concat([funcDos]) : [funcUno]]
+  var keys = [funcDos !== "undefined" ? [funcUno].concat([funcDos]) : [funcUno]]
     .toString()
     .split(",");
   keys.forEach((pro) => {
