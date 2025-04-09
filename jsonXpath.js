@@ -489,7 +489,7 @@ var urlDataSource = function (cokey, url, time, xpath, maxRetries = 3) {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
-      arguments.callee.name +
+      urlDataSource.name +
       "\n!" +
       cokey +
       ", = " +
@@ -525,13 +525,10 @@ var urlDataSource = function (cokey, url, time, xpath, maxRetries = 3) {
           Logger.log(`Rate limit hit, retrying in ${delay} ms`);
           while (retries < maxRetries) {
             try {
-              response = UrlFetchApp.fetch(
-                supFunc && supFunc.args ? supFunc.args : text,
-                {
-                  followRedirects: false, // Prevent automatic redirects
-                  muteHttpExceptions: true,
-                },
-              );
+              response = UrlFetchApp.fetch(url, {
+                followRedirects: false, // Prevent automatic redirects
+                muteHttpExceptions: true,
+              });
             } catch (error) {
               Logger.log("Error fetching data: " + error);
               retries++;
