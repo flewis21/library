@@ -637,7 +637,7 @@ var productRegNo = function (eparegno) {
       "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno,
       null,
       { muteHttpExceptions: true },
-    ).uti,
+    ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
@@ -719,7 +719,7 @@ var productNamePartial = function (productName) {
         productName,
       null,
       { muteHttpExceptions: true },
-    ).uti,
+    ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
@@ -779,7 +779,7 @@ var productIngName = function (ingredient) {
         ingredient,
       null,
       { muteHttpExceptions: true },
-    ).uti,
+    ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
@@ -803,7 +803,7 @@ var productChemCode = function (code) {
         encodeURIComponent(code),
       null,
       { muteHttpExceptions: true },
-    ).uti,
+    ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
@@ -827,7 +827,7 @@ var productAbstractNum = function (abstract) {
         encodeURIComponent(abstract),
       null,
       { muteHttpExceptions: true },
-    ).uti,
+    ),
   ];
   if (res[0].indexOf("DOCTYPE") === -1) {
     try {
