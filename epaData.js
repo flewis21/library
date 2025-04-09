@@ -715,9 +715,9 @@ var productNamePartial = function (productName) {
     null,
     { muteHttpExceptions: true },
   );
-  if (res && res.indexOf("DOCTYPE") === -1) {
+  if (res && typeof res === "object") {
     try {
-      if (res["items"].length === 0) {
+      if (res["items"] && res["items"].length !== 0) {
         return res["first"][0];
       } else {
         const rawData = Utilities.jsonParse(res);
