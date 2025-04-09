@@ -648,10 +648,10 @@ var productRegNo = function (eparegno) {
         return newEPAData(rawData);
       }
     } catch (err) {
+      console.error("Error retrieving reg no" + err);
       return res;
     }
   }
-  return coUtility(ingredient);
 };
 
 var productDistNum = function (distno) {
@@ -730,10 +730,10 @@ var productNamePartial = function (productName) {
         return newEPAData(rawData);
       }
     } catch (err) {
+      console.error("Error retrieving reg no" + err);
       return res;
     }
   }
-  return coUtility(productName);
 };
 
 var productNamePartialV2 = function (productName) {
@@ -790,10 +790,10 @@ var productIngName = function (ingredient) {
         return rawData;
       }
     } catch (err) {
+      console.error("Error retrieving reg no" + err);
       return res;
     }
   }
-  return coUtility(ingredient);
 };
 
 var productChemCode = function (code) {
@@ -814,10 +814,10 @@ var productChemCode = function (code) {
         return newEPAData(rawData);
       }
     } catch (err) {
+      console.error("Error retrieving reg no" + err);
       return res;
     }
   }
-  return coUtility(code);
 };
 
 var productAbstractNum = function (abstract) {
@@ -838,8 +838,8 @@ var productAbstractNum = function (abstract) {
         return newEPAData(rawData);
       }
     } catch (err) {
+      console.error("Error retrieving reg no" + err);
       return res;
     }
   }
-  return coUtility(abstract);
 };
