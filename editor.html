@@ -22,8 +22,8 @@
           </div>
         </div>
         <div class="col s12"><p id="selectedDoc">Selected Document ID:</p></div>
-        <div class="col s12">
-          <button class="btn" id="openDocButton" disabled>Open Document</button>
+        <div class="col s12" id="openDoc" display="none">
+          <button class="btn" id="openDocButton">Open Document</button>
         </div>
       </div>
     </div>
@@ -73,7 +73,7 @@
             .runBoilerplate(func, args);
         });
       }
-      var openDoc = document.getElementById("openDocButton");
+      var openDoc = document.getElementById("openDoc");
       var edIf = document.getElementById("editorFrame");
       var edSrc = document.getElementById("templateSelect").value;
       document
@@ -81,9 +81,9 @@
         .addEventListener("change", function () {
           if (edSrc) {
             edIf.src = edSrc;
-            openDoc.disabled = false;
+            openDoc.display = "block";
           } else {
-            openDoc.disabled = true;
+            openDoc.display = "none";
           }
         });
       document
