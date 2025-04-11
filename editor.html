@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="col s12"><p id="selectedDoc">Selected Document ID:</p></div>
-        <div class="col s12" id="openDoc" display="none">
+        <div class="col s12" id="openDoc" style="display: none">
           <button class="btn" id="openDocButton">Open Document</button>
         </div>
       </div>
@@ -81,9 +81,9 @@
         .addEventListener("change", function () {
           if (edSrc) {
             edIf.src = edSrc;
-            openDoc.display = "block";
+            openDoc.style.display = "block";
           } else {
-            openDoc.display = "none";
+            openDoc.style.display = "";
           }
         });
       document
