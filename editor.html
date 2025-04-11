@@ -73,14 +73,13 @@
             .runBoilerplate(func, args);
         });
       }
-      var docSrc = document.getElementById("selectedDoc").innerHTML;
+      var edIf = document.getElementById("editorFrame");
+      var edSrc = document.getElementById("templateSelect").value;
       document
         .getElementById("openDocButton")
         .addEventListener("click", function () {
           window.open(edSrc);
         });
-      var edIf = document.getElementById("editorFrame");
-      var edSrc = document.getElementById("templateSelect").value;
       document
         .getElementById("templateSelect")
         .addEventListener("change", function () {
