@@ -82,14 +82,14 @@
           if (edSrc) {
             edIf.src = edSrc;
             openDoc.disabled = false;
-            document
-              .getElementById("openDocButton")
-              .addEventListener("click", function () {
-                window.open(edSrc);
-              });
           } else {
             openDoc.disabled = true;
           }
+        });
+      document
+        .getElementById("openDocButton")
+        .addEventListener("click", function () {
+          window.open(edSrc);
         });
     </script>
   </body>
