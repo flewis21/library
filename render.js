@@ -867,6 +867,117 @@ var renderFile = function (file, argsObject, title) {
           .withFailureHandler(error => {
               reject(error)})
           .runBoilerplate(func, args)})}; 
+          $(document).ready(function() {
+            $('select').formSelect();
+
+            $('#templateSelect').change(function() {
+              var selectedTemplateUrl 
+                = $(this).val();
+                if (selectedTemplateUrl) {
+                  $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+                  $("#myForm").show(); // Show the form only after template is loaded.
+                  $("#myForm").empty(); // Clear previous form fields.
+                  // 2. Dynamically create form fields based on template placeholders (requires server-side)
+                  serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+                    placeholders.forEach(function(placeholder) {
+                      var fieldName 
+                        = placeholder.replace(/{{|}}/g, ''); // Extract field name
+                      $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+                      $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+                    });
+                    $("#myForm").append("<button type='submit'>Submit</button>");
+
+
+                    $("#myForm").submit(function(event) {
+                      event.preventDefault();
+
+                      var formData 
+                        = $(this).serializeObject();
+                      serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+                        $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+                      }).catch((error)=>{
+                        console.error("Error:", error);
+                        $("#result").html("<p>Error creating document. Please check the logs.</p>");
+                      })
+
+                    });
+
+                  }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+                $("#editorFrame").prop("src", "");
+                $("#myForm").hide();}
+            });
+
+            $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+              var o 
+                = {};
+              var a 
+                = this.serializeArray();
+              $.each(a, function() {
+                if (o[this.name] !== undefined) {
+                  if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                  }
+                  o[this.name].push(this.value || '');
+                } else {
+                  o[this.name] = this.value || '';
+                }
+              });
+              return o;
+            };
+          });
+        function submitDomain(formData) {
+          serverside("submitDomain", [formData])
+            .then(result => {
+              console.log("Server response:", result);
+              $("#successMessage").text(result); // Display success message
+            })
+            .catch(error => {
+              console.error("Error submitting domain:", error);
+              $("#errorMessage").text(error); // Display error message
+            });
+        }
+
+        $("#domainForm").submit(function(event) {
+          event.preventDefault();
+          const formData = $(this).serializeObject();
+          submitDomain(formData); // Call the function
+        });
+
+        function lookupDomain(searchTerm) {
+          serverside("lookupDomain", [searchTerm])
+            .then(results => {
+              console.log("Lookup results:", results);
+              displaySearchResults(results); // Display results
+            })
+            .catch(error => {
+              console.error("Error looking up domain:", error);
+              $("#errorMessage").text(error); // Display error message
+            });
+        }
+
+        $("#lookupButton").click(function() {
+          const searchTerm = $("#searchTerm").val();
+          lookupDomain(searchTerm);
+        });
+
+        var busa = document.getElementById("artiicleIndex");
+        var busx = document.getElementById("loadingLab");
+        var busc = document.getElementById("contentDiv");
+        busa.addEventListener('keypress', function(event) {
+          // If the user preses the "Enter" key on the keyboard. 
+          if (event.key === "Enter")  {
+            const strValue = busa.value;
+            busx.innerText = "... waiting for " + strValue;
+            serverside("jFund", strValue)
+            .then((article) => {
+              if (article) {
+                // User clicked "No" or X in the title bar.
+                busx.innerText = ""
+                busc.innerHTML = article;}})
+            .catch((er) => {
+              console.log(er)
+              busx.innerText = JSON.stringify(er)})
+            busa.value = ""}})
       </script>
       <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
       <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
