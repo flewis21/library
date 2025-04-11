@@ -75,14 +75,14 @@
       }
       var openDoc = document.getElementById("openDoc");
       var edIf = document.getElementById("editorFrame");
-      var edSrc = document.getElementById("templateSelect").value;
+      var edSrc;
       document
         .getElementById("templateSelect")
         .addEventListener("change", function () {
-          if (edSrc) {
-            edIf.src = edSrc;
-            openDoc.style.display = "block";
-          } else {
+          edSrc = document.getElementById("templateSelect").value;
+          edIf.src = edSrc;
+          openDoc.style.display = "block";
+          if (!edSrc) {
             openDoc.style.display = "";
           }
         });
