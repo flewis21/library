@@ -372,7 +372,7 @@ var builtStyling = function (e) {
       ${content.luxonJs}
       ${content.tabulatorJs}
       <script>
-        ${HtmlService.createTemplate(frame.iframePlayer().appJS(e.parameter["func"], e.parameter["args"])).evaluate().getContent()}
+        ${HtmlService.createTemplate(frame.iframePlayer).evaluate().getContent()}
       </script>
     </body>
   </html>
