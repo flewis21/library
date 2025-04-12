@@ -302,7 +302,7 @@ function styleHtml() {
   return content;
 } //:contentFile('uiAccess');
 
-var builtStyling = function () {
+var builtStyling = function (e) {
   var content = styleHtml();
   var frame = frameHtml();
 
@@ -372,7 +372,7 @@ var builtStyling = function () {
       ${content.luxonJs}
       ${content.tabulatorJs}
       <script>
-        ${HtmlService.createTemplate(frame.iframePlayer).evaluate().getContent()}
+        ${HtmlService.createTemplate(frame.iframePlayer().appJS(e.parameter["func"], e.parameter["args"])).evaluate().getContent()}
       </script>
     </body>
   </html>
