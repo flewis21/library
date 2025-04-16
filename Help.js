@@ -861,8 +861,16 @@ var misSt = function (func, someArgs) {
       content.toString().replace(/,/g, " "),
   );
   var cString = content.toString().replace(/,/g, " ");
-  var jsonData = globalThis[argsX.toString()].apply(this, content);
-  console.log("typeof " + typeof jsonData + " jsonDara");
+  try {
+    var jsonData = globalThis[argsX.toString()].apply(this, content);
+    console.log("typeof " + typeof jsonData + " jsonDara");
+  } catch (er) {
+    console.error(
+      argsX.toLocaleString() + "(" + content + ")  Error: " + er.toString(),
+    );
+    var jsonData =
+      argsX.toLocaleString() + "(" + content + ") error: " + er.toString();
+  }
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
