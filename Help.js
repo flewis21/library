@@ -318,8 +318,14 @@ var testlt = function () {
     var args = {};
     if (result.parameters) {
       result.parameters.forEach((paramName) => {
-        if (paramName === "url") {
+        if (paramName === "time") {
+          args["time"] = Math.floor(
+            (maxTime - (new Date() % (1000 * 60))) / 1000,
+          );
+        } else if (paramName === "url") {
           args["url"] = getScriptUrl();
+        } else if (paramName === "object") {
+          args["object"] = {};
         } else {
           args[paramName] = paramName;
         }
