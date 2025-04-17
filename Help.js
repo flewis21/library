@@ -324,6 +324,27 @@ var testlt = function () {
             (maxTime - (new Date() % (1000 * 60))) / 1000,
           );
           resolvedArgs.push(args["time"]);
+        } else if (paramName === "searchString") {
+          args["searchString"] = substanceVegas(
+            0,
+            [
+              objectOfS(
+                ["parameter"],
+                [[["func", "searchString"]]],
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              ).parameter["func"],
+            ].toString().length,
+            [
+              objectOfS(
+                ["parameter"],
+                [[["func", "searchString"]]],
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              ).parameter["func"],
+            ]
+              .toString()
+              .split(""),
+          ).substWord;
+          resolvedArgs.push(args["searchString"]);
         } else if (paramName === "url") {
           args["url"] = getScriptUrl();
           resolvedArgs.push(args["url"]);
