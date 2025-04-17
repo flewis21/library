@@ -315,8 +315,20 @@ var testlt = function () {
     return rndS.name === searchString;
   });
   if (result) {
+    var args = {};
+    if (result.parameters) {
+      result.parameters.forEach((paramName) => {
+        if (paramName === "url") {
+          args["url"] = getScriptUrl();
+        } else {
+          args[paramName] = paramBane;
+        }
+      });
+    }
+    console.log("Resolved arguments:", args);
     return result;
   } else {
+    console.log("No function parameters found for:", searchString);
     return searchString;
   }
 };
@@ -353,6 +365,11 @@ var gsFParams = function () {
     }
   }
   return gsParamsList;
+};
+var paramVals = function (funcInfo) {
+  var funcUno = funcInfo.name;
+  var funcDos = funcInfo.parameters || [];
+  var gArgs = globalThis[funcUno + "Args"] || globalThis[funcUno];
 };
 var wwAccess = function (rName, rFunc, rArgs) {
   const Route = {};
@@ -841,7 +858,11 @@ var misSt = function (func, someArgs) {
   // : console.error("funcDos = " + typeof funcDos);
   var argsX = [];
   var content = [];
-  var keys = [funcDos !== "undefined" ? [funcUno].concat([funcDos]) : [funcUno]]
+  var keys = [
+    funcDos !== "undefined"
+      ? [funcUno].concat([Object.values(funcDos)])
+      : [funcUno],
+  ]
     .toString()
     .split(",");
   keys.forEach((pro) => {
