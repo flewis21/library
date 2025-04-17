@@ -321,7 +321,7 @@ var testlt = function () {
         if (paramName === "url") {
           args["url"] = getScriptUrl();
         } else {
-          args[paramName] = paramBane;
+          args[paramName] = paramName;
         }
       });
     }
