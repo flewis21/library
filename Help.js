@@ -330,14 +330,14 @@ var testlt = function () {
             [
               objectOfS(
                 ["parameter"],
-                [[["func", "searchString"]]],
+                [[["func", result.name]]],
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               ).parameter["func"],
             ].toString().length,
             [
               objectOfS(
                 ["parameter"],
-                [[["func", "searchString"]]],
+                [[["func", result.name]]],
                 Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
               ).parameter["func"],
             ]
@@ -345,6 +345,27 @@ var testlt = function () {
               .split(""),
           ).substWord;
           resolvedArgs.push(args["searchString"]);
+        } else if (paramName === "varA") {
+          args["varA"] = substanceVegas(
+            0,
+            [
+              objectOfS(
+                ["parameter"],
+                [[["func", result.name]]],
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              ).parameter["func"],
+            ].toString().length,
+            [
+              objectOfS(
+                ["parameter"],
+                [[["func", result.name]]],
+                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              ).parameter["func"],
+            ]
+              .toString()
+              .split(""),
+          ).substWord;
+          resolvedArgs.push(args["varA"]);
         } else if (paramName === "url") {
           args["url"] = getScriptUrl();
           resolvedArgs.push(args["url"]);
