@@ -316,22 +316,29 @@ var testlt = function () {
   });
   if (result) {
     var args = {};
+    var resolvedArgs = [];
     if (result.parameters) {
       result.parameters.forEach((paramName) => {
         if (paramName === "time") {
           args["time"] = Math.floor(
             (maxTime - (new Date() % (1000 * 60))) / 1000,
           );
+          resolvedArgs.push(args["time"]);
         } else if (paramName === "url") {
           args["url"] = getScriptUrl();
+          resolvedArgs.push(args["url"]);
         } else if (paramName === "object") {
           args["object"] = {};
+          resolvedArgs.push(args["object"]);
         } else {
           args[paramName] = paramName;
+          resolvedArgs.push(args[paramName]);
         }
       });
     }
     console.log("Resolved arguments:", args);
+    console.log("Resolved parameters Array:", resolvedArgs);
+    result.parameters = resolvedArgs;
     return result;
   } else {
     console.log("No function parameters found for:", searchString);
