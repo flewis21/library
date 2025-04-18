@@ -960,39 +960,47 @@ var isValidUrl = function (text) {
   var query = "";
   var urlRegex =
     /(https?:\/\/)?([\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\((\)\*\+,;=.]+)/gi;
-  text.match(urlRegex).forEach((url) => {
-    var protocolEnd = url.indexOf("://");
-    if (protocolEnd !== -1) {
-      protocol = url.substring(0, protocolEnd + 3);
-      url = url.substring(protocolEnd + 3);
-    }
-    var hostnameEnd = url.indexOf("/");
-    if (hostnameEnd !== -1) {
-      hostname = url.substring(0, hostnameEnd);
-      pathname = url.substring(hostnameEnd);
-    } else {
-      hostname = url;
-    }
-    var queryStart = pathname.indexOf("?");
-    if (queryStart !== -1) {
-      query = pathname.substring(queryStart);
-      pathname = pathname.substring(0, queryStart);
-    }
-    var hostnameRegex =
-      /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-    if (hostname && !hostnameRegex.test(hostname)) {
-      return { protocol: "", hostname: "", pathname: "", query: "" };
-    }
-    if (protocol && hostname) {
-      return {
-        protocol: protocol,
-        hostname: hostname,
-        pathname: pathname,
-        query: query,
-      };
-    }
-  });
-  return { protocol: "", hostname: "", pathname: "", query: "" };
+  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
+  var matches = text.match(urlRegex);
+  if (matches) {
+    let currentProtocol = "";
+    let currentHostname = "";
+    let currentPathname = "";
+    let currentQuery = "";
+    matches.forEach((url) => {
+      var protocolEnd = url.indexOf("://");
+      if (protocolEnd !== -1) {
+        currentProtocol = url.substring(0, protocolEnd + 3);
+        url = url.substring(protocolEnd + 3);
+      }
+      var hostnameEnd = url.indexOf("/");
+      if (hostnameEnd !== -1) {
+        currentHostname = url.substring(0, hostnameEnd);
+        currentPathname = url.substring(hostnameEnd);
+      } else {
+        currentHostname = url;
+      }
+      var queryStart = pathname.indexOf("?");
+      if (queryStart !== -1) {
+        currentQuery = pathname.substring(queryStart);
+        currentPathname = pathname.substring(0, queryStart);
+      }
+      var hostnameRegex =
+        /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
+      if (currentHostname && hostnameRegex.test(currentHostname)) {
+        if (currentProtocol && currentHostname) {
+          validUrlResult = {
+            protocol: currentProtocol,
+            hostname: currentHostname,
+            pathname: currentPathname,
+            query: currentQuery,
+          };
+          return validUrlResult;
+        }
+      }
+    });
+  }
+  return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
   console.log(
