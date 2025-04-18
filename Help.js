@@ -950,44 +950,48 @@ var misSt = function (func, someArgs) {
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
-var isValidUrl = function (url) {
+var isValidUrl = function (text) {
+  if (typeof text !== "string" || text.length === 0) {
+    return { protocol: "", hostname: "", pathname: "", query: "" };
+  }
   var protocol = "";
   var hostname = "";
   var pathname = "";
   var query = "";
-  if (typeof url !== "string" || url.length === 0) {
-    return { protocol: "", hostname: "", pathname: "", query: "" };
-  }
-  var protocolEnd = url.indexOf("://");
-  if (protocolEnd !== -1) {
-    protocol = url.substring(0, protocolEnd + 3);
-    url = url.substring(protocolEnd + 3);
-  }
-  var hostnameEnd = url.indexOf("/");
-  if (hostnameEnd !== -1) {
-    hostname = url.substring(0, hostnameEnd);
-    pathname = url.substring(hostnameEnd);
-  } else {
-    hostname = url;
-  }
-  var queryStart = pathname.indexOf("?");
-  if (queryStart !== -1) {
-    query = pathname.substring(queryStart);
-    pathname = pathname.substring(0, queryStart);
-  }
-  var hostnameRegex =
-    /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-  if (hostname && !hostnameRegex.test(hostname)) {
-    return { protocol: "", hostname: "", pathname: "", query: "" };
-  }
-  if (protocol && hostname) {
-    return {
-      protocol: protocol,
-      hostname: hostname,
-      pathname: pathname,
-      query: query,
-    };
-  }
+  var urlRegex =
+    /(https?:\/\/)?([\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\((\)\*\+,;=.]+)/gi;
+  text.match(urlRegex).forEach((url) => {
+    var protocolEnd = url.indexOf("://");
+    if (protocolEnd !== -1) {
+      protocol = url.substring(0, protocolEnd + 3);
+      url = url.substring(protocolEnd + 3);
+    }
+    var hostnameEnd = url.indexOf("/");
+    if (hostnameEnd !== -1) {
+      hostname = url.substring(0, hostnameEnd);
+      pathname = url.substring(hostnameEnd);
+    } else {
+      hostname = url;
+    }
+    var queryStart = pathname.indexOf("?");
+    if (queryStart !== -1) {
+      query = pathname.substring(queryStart);
+      pathname = pathname.substring(0, queryStart);
+    }
+    var hostnameRegex =
+      /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
+    if (hostname && !hostnameRegex.test(hostname)) {
+      return { protocol: "", hostname: "", pathname: "", query: "" };
+    }
+    if (protocol && hostname) {
+      return {
+        protocol: protocol,
+        hostname: hostname,
+        pathname: pathname,
+        query: query,
+      };
+    }
+  });
   return { protocol: "", hostname: "", pathname: "", query: "" };
 };
 var vidPlaylist = function (tunPlay) {
