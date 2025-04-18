@@ -499,7 +499,7 @@ var seoCapital = function (url) {
 };
 var mis = function (text, maxRetries = 3) {
   var validUrl = isValidUrl(text);
-  if (!validUrl.hostname) {
+  if (!validUrl.hostname || validUrl.protocol.indexOf(",") > -1) {
     var supFunc = misSt(text);
     var fx = supFunc.func;
     var payLoad = supFunc.args;
