@@ -958,10 +958,10 @@ var isValidUrl = function (url) {
   if (typeof url !== "string" || url.length === 0) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
-  var protocolEnd = url.indexOf("//");
+  var protocolEnd = url.indexOf("://");
   if (protocolEnd !== -1) {
-    protocol = url.substring(0, protocolEnd + 2);
-    url = url.substring(protocolEnd + 2);
+    protocol = url.substring(0, protocolEnd + 3);
+    url = url.substring(protocolEnd + 3);
   }
   var hostnameEnd = url.indexOf("/");
   if (hostnameEnd !== -1) {
@@ -975,16 +975,20 @@ var isValidUrl = function (url) {
     query = pathname.substring(queryStart);
     pathname = pathname.substring(0, queryStart);
   }
-  var hostnameRegex = /^([a-zA-Z0-9.-]+)(\.[a-zA-Z]{2,})+$/;
+  var hostnameRegex =
+    /^([a-zA-Z0-9([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
   if (hostname && !hostnameRegex.test(hostname)) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
-  return {
-    protocol: protocol,
-    hostname: hostname,
-    pathname: pathname,
-    query: query,
-  };
+  if (protocol && hostname) {
+    return {
+      protocol: protocol,
+      hostname: hostname,
+      pathname: pathname,
+      query: query,
+    };
+  }
+  return { protocol: "", hostname: "", pathname: "", query: "" };
 };
 var vidPlaylist = function (tunPlay) {
   console.log(
