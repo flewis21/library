@@ -367,7 +367,7 @@ var testlt = function () {
           ).substWord;
           resolvedArgs.push(args["varA"]);
         } else if (paramName === "url") {
-          args["url"] = getScriptUrl();
+          args["url"] = JSON.stringify(getScriptUrl());
           resolvedArgs.push(args["url"]);
         } else if (paramName === "object") {
           args["object"] = {};
