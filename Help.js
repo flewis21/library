@@ -976,7 +976,7 @@ var isValidUrl = function (url) {
     pathname = pathname.substring(0, queryStart);
   }
   var hostnameRegex =
-    /^([a-zA-Z0-9([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
+    /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
   if (hostname && !hostnameRegex.test(hostname)) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
