@@ -373,6 +373,31 @@ var testlt = function () {
         } else if (paramName === "object") {
           args["object"] = JSON.stringify({});
           resolvedArgs.push(args["object"]);
+        } else if (paramName === "fileX") {
+          var allFolders = folderManager();
+          var folderX = allFolders[numVarRnd];
+          var folderRoot = DriveApp.getFoldersByName(folderX);
+          let fileXName = "undefined";
+          if (folderRoot.hasNext) {
+            var fileBulk = folderRoot.next().getFiles();
+            const fileNames = [];
+            if (fileBulk.hasNext()) {
+              while (fileBulk.hasNext()) {
+                var fileUrl = fileBulk.next();
+                fileNames.push(fileUrl.getName());
+              }
+              if (fileNames.length > 0) {
+                fileXName =
+                  fileNames[Math.floor(Math.random() * fileNames.length)];
+              }
+            }
+          }
+          args["fileX"] = fileXName;
+          resolvedArgs.push(args["fileX"]);
+        } else if (paramName === "folderX") {
+          var allFolders = folderManager();
+          args["folderX"] = allFolders[numVarRnd];
+          resolvedArgs.push(args["folderX"]);
         } else {
           args[paramName] = paramName;
           resolvedArgs.push(args[paramName]);
@@ -963,7 +988,7 @@ var misSt = function (func, someArgs) {
 var isValidUrl = function (text) {
   // var protocol = "";
   // var hostname = "";
-  // var pathname = "";
+  var pathname = "";
   // var query = "";
   var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
   if (typeof text !== "string" || text.length === 0) {
