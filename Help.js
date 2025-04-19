@@ -938,8 +938,17 @@ var misSt = function (func, someArgs) {
   );
   var cString = content.toString().replace(/,/g, " ");
   try {
-    var jsonData = globalThis[argsX.toString()].apply(this, content);
-    console.log("typeof " + typeof jsonData + " jsonDara");
+    var jsonData;
+    if (argsX.length > 0) {
+      jsonData = globalThis[argsX.toString()].apply(this, content);
+      console.log("typeof " + typeof jsonData + " jsonDara");
+    } else {
+      console.log(
+        "function = " + argsX.toString() + " :Skipping .apply(" + content + ")",
+      );
+      jsonData = content;
+      console.log("typeof " + typeof jsonData + " jsonDara");
+    }
   } catch (er) {
     console.error(
       argsX.toLocaleString() + "(" + content + ")  Error: " + er.toString(),
@@ -951,16 +960,16 @@ var misSt = function (func, someArgs) {
   return argsObject;
 };
 var isValidUrl = function (text) {
+  // var protocol = "";
+  // var hostname = "";
+  // var pathname = "";
+  // var query = "";
+  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
   if (typeof text !== "string" || text.length === 0) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
-  var protocol = "";
-  var hostname = "";
-  var pathname = "";
-  var query = "";
   var urlRegex =
     /(https?:\/\/)?([\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\((\)\*\+,;=.]+)/gi;
-  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
   var matches = text.match(urlRegex);
   if (matches) {
     let currentProtocol = "";
