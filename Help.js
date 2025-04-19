@@ -371,7 +371,7 @@ var testlt = function () {
           args["url"] = JSON.stringify(getScriptUrl());
           resolvedArgs.push(args["url"]);
         } else if (paramName === "object") {
-          args["object"] = {};
+          args["object"] = JSON.stringify({});
           resolvedArgs.push(args["object"]);
         } else {
           args[paramName] = paramName;
