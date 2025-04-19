@@ -346,25 +346,26 @@ var testlt = function () {
           ).substWord;
           resolvedArgs.push(args["searchString"]);
         } else if (paramName === "varA") {
-          args["varA"] = substanceVegas(
-            0,
-            [
-              objectOfS(
-                ["parameter"],
-                [[["func", result.name]]],
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-              ).parameter["func"],
-            ].toString().length,
-            [
-              objectOfS(
-                ["parameter"],
-                [[["func", result.name]]],
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-              ).parameter["func"],
-            ]
-              .toString()
-              .split(""),
-          ).substWord;
+          numVarRnd = randNum(
+            arguments.callee.caller.name || arguments.callee.name,
+          );
+          arrDRnd = appSort(numVarRnd);
+          searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+          fParams = gsFParams();
+          result = fParams.find((rndS) => {
+            return rndS.name === searchString;
+          });
+          if (typeof result === "string") {
+            args["varA"] = misSt(result);
+          } else if (
+            typeof result === "object" &&
+            result !== null &&
+            result.name
+          ) {
+            args["varA"] = misSt(result.name, result.parameters);
+          } else {
+            args["varA"] = misSt(result.name);
+          }
           resolvedArgs.push(args["varA"]);
         } else if (paramName === "url") {
           args["url"] = JSON.stringify(getScriptUrl());
