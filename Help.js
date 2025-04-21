@@ -561,7 +561,31 @@ var mis = function (text, maxRetries = 3) {
       "?func=mis&args=" +
       (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
-    var payT = [payLoad ? fx + " (" + JSON.stringify(payLoad) + ")" : fx]
+    let formattedPayload = "";
+    if (payLoad && typeof payLoad === "object") {
+      if (Array.isArray(payLoad)) {
+        formattedPayload = payLoad
+          .map((item) => {
+            if (typeof item === "string") {
+              return item;
+            }
+            return JSON.stringify(item);
+          })
+          .join(", ");
+      } else {
+        var values = Object.values(payLoad)
+          .map((value) => {
+            if (typeof value === "string") {
+              return value;
+            }
+            return JSON.stringify(value);
+          })
+          .join(", ");
+        formattedPayload = values;
+      }
+    } else {
+    }
+    var payT = [formattedPayload ? fx + " (" + formattedPayload + ")" : fx]
       .join("")
       .toUpperCase();
     var form = formMaker(
