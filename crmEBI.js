@@ -1,9 +1,21 @@
 var crmEBI = function (fx) {
-  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + fx + ", = " + !fx)
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      fx +
+      ", = " +
+      !fx,
+  );
   // var fx = e;
-  var objMaster = {miscellaneous: {
-                      section: ["EBI Yes", "EBI No"]}}
-var result = contentApp(`
+  var objMaster = {
+    miscellaneous: {
+      section: ["EBI Yes", "EBI No"],
+    },
+  };
+  var result = contentApp(
+    `
 <!DOCTYPE html>
   <html>
     <head>
@@ -19,14 +31,15 @@ var result = contentApp(`
       <br>
       <div class="center" id="div"><?!= index ?></div>
     </body>
-  </html>`
-, {
-index: 
-(function index() {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name)
-  if (fx === objMaster.miscellaneous.section[0]) {
-  return contentApp(
-  `<!DOCTYPE html>
+  </html>`,
+    {
+      index: (function index() {
+        console.log(
+          JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
+        );
+        if (fx === objMaster.miscellaneous.section[0]) {
+          return contentApp(
+            `<!DOCTYPE html>
     <html>
     <head>
       <title>Yes</title>
@@ -95,11 +108,12 @@ index:
               }
         </script>
       </body>
-    </html>`
-    ,{})
-}  else if (fx === objMaster.miscellaneous.section[1]) {
-  return contentApp(
-  `<!DOCTYPE html>
+    </html>`,
+            {},
+          );
+        } else if (fx === objMaster.miscellaneous.section[1]) {
+          return contentApp(
+            `<!DOCTYPE html>
     <html>
     <head>
       <title>No</title>
@@ -165,15 +179,14 @@ index:
                 alert(er)})}
           </script>
         </body>
-      </html>`
-    ,{})
-}  else if (fx === objMaster) {
-  return contentApp(
-    ``
-    ,{}," ")
-}  else {
-  return contentApp(
-    `<!DOCTYPE html>
+      </html>`,
+            {},
+          );
+        } else if (fx === objMaster) {
+          return contentApp(``, {}, " ");
+        } else {
+          return contentApp(
+            `<!DOCTYPE html>
       <html>
       <head>
         <title>Employee Benefits Inquiry</title>
@@ -213,10 +226,10 @@ index:
         <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 5em">
         <form id="ebiForm" style="font-size: 4.5em">
           <div style="font-size: 1.5em">
-            <p>Hi!</p><p>This is Fabian with WLS Community Benefits!</p><p> Good morning/afternoon!</p><p>How are you today? (Wait for answer)!</p><p>Please tell me your name (again)!</p><p>(Insert <label for="name" style="font-size: 1em">Name</label> here:<input type="text" id="name" name="name" style="font-size: .5em"> or write it down)!</p><p>Thanks!</p><p>Hi<input type="text" id="nameFr" name="nameFriendly" style="font-size: .5em"><label for="nameFr" style="font-size: 1em">Friendly Name</label>!:</p><p>Are you the person who handles employee benefits?(Wait for answer)!</p><h2>May I speak with the person who handles benefits, please?</h2>
-            <p>Hi<input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: .5em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name</label>!:</p><p>This is Fabian with WLS Community Benefits!</p><p>I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</p><p>Can I have a few minutes of your time? (If not, find out what would be a good time to call back)! Do you offer employee benefits?</p><div class="interface dotted_border"><a id="yesHL"><div id="yesOffer"><h3>If yes, continue!</h3></div><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&pid=ImgRaw&r=0" alt="Ask: Do you offer employee benefits?" /></a><a id="noHL"><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&pid=ImgDetMain" alt="Ask: Do you offer employee benefits?" /></a></div><div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank">Contact Me</a></div><br />
-            <p>I want to schedule some time for you to meet with my director to discuss it!</p><p>How is<input placeholder=<?!= ph ?> class="datepicker" type="date" id="date" name="date" style="font-size: .5em"><label for="date" style="font-size: 1em">Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="time" name="time" style="font-size: .5em"><label for="time" style="font-size: 1em">Time</label>?: or<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: .5em"><label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: .5em"><label for="timeAlt" style="font-size: 1em">Alternate Time</label>?:</p>
-            <p>So that we can be better prepared for the meeting let me ask you a few additional questions:</p><label for="email" style="font-size: 1em">Email:</label><p>What is your email address?</p><input type="email" id="email" name="email" style="font-size: .5em"><label for="phone" style="font-size: 1em">Telephone:</label><p>What is your cell phone number or the best way to reach you directly?</p><input type="tel" id="phone" name="phone" style="font-size: .5em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label><p>How many full-time employees do you have?</p><input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: .5em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label><p>How many part-time employees do you have?</p><input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: .5em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><p>Is there someone else at your business you would like to have attend this meeting as well? (get name <input type="text" id="nameAdd" name="nameAdditional" style="font-size: .5em"> and email <input type="email" id="emailAdd" name="emailAdditional" style="font-size: 1em"><label for="emailAdd" style="font-size: 1em">Additional Email</label>):</p><p>Are you the final decision maker about benefits?</p><p>OK!</p><p>Great!</p><p>Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: .5em"><label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: .5em"><label for="timeFin" style="font-size: 1em">Finalized Time:</label>!</p><p>If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</p></div></form><button type="submit" style="font-size: 5em">Submit</button>
+            <p>Hi!</p><p>This is Fabian with WLS Community Benefits!</p><p> Good morning/afternoon!</p><p>How are you today? (Wait for answer)!</p><p>Please tell me your name (again)!</p><p>(Insert: <input type="text" id="name" name="name" style="font-size: 5em"> <label for="name" style="font-size: 1em">Name</label> here or write it down)!</p><p>Thanks!</p><p>Hi<input type="text" id="nameFr" name="nameFriendly" style="font-size: 5em"><label for="nameFr" style="font-size: 1em">Friendly Name</label>!:</p><p>Are you the person who handles employee benefits?(Wait for answer)!</p><h2>May I speak with the person who handles benefits, please?</h2>
+            <p>Hi<input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: 5em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name</label>!:</p><p>This is Fabian with WLS Community Benefits!</p><p>I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</p><p>Can I have a few minutes of your time? (If not, find out what would be a good time to call back)! Do you offer employee benefits?</p><div class="interface dotted_border"><a id="yesHL"><div id="yesOffer"><h3>If yes, continue!</h3></div><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&pid=ImgRaw&r=0" alt="Ask: Do you offer employee benefits?" /></a><a id="noHL"><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&pid=ImgDetMain" alt="Ask: Do you offer employee benefits?" /></a></div><div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank">Contact Me</a></div><br />
+            <p>I want to schedule some time for you to meet with my director to discuss it!</p><p>How is<input placeholder=<?!= ph ?> class="datepicker" type="date" id="date" name="date" style="font-size: 5em"><label for="date" style="font-size: 1em">Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="time" name="time" style="font-size: 5em"><label for="time" style="font-size: 1em">Time</label>?: or<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: 5em"><label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: 5em"><label for="timeAlt" style="font-size: 1em">Alternate Time</label>?:</p>
+            <p>So that we can be better prepared for the meeting let me ask you a few additional questions:</p><label for="email" style="font-size: 1em">Email:</label><p>What is your email address?</p><input type="email" id="email" name="email" style="font-size: 5em"><label for="phone" style="font-size: 1em">Telephone:</label><p>What is your cell phone number or the best way to reach you directly?</p><input type="tel" id="phone" name="phone" style="font-size: 5em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label><p>How many full-time employees do you have?</p><input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: 5em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label><p>How many part-time employees do you have?</p><input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: 5em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><p>Is there someone else at your business you would like to have attend this meeting as well? (get name <input type="text" id="nameAdd" name="nameAdditional" style="font-size: 5em"> and email <input type="email" id="emailAdd" name="emailAdditional" style="font-size: 1em"><label for="emailAdd" style="font-size: 1em">Additional Email</label>):</p><p>Are you the final decision maker about benefits?</p><p>OK!</p><p>Great!</p><p>Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: 5em"><label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: 5em"><label for="timeFin" style="font-size: 1em">Finalized Time:</label>!</p><p>If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</p></div></form><button type="submit" style="font-size: 5em">Submit</button>
         
         <script>
           var sheetRows = document.getElementById('rowIndex');
@@ -322,49 +335,73 @@ index:
                   window.open(edSrc)})
           </script>
       </body>
-      </html>`
-    ,{
-      ph: new Date(new Date()).toLocaleDateString(),
-      bh: new Date(new Date()).toLocaleTimeString(),
-      timeDefault: new Date() - new Date(new Date()).toLocaleTimeString(),
-      dateDefault: new Date() - new Date(new Date()).toLocaleDateString()
-    })
-}  
-})(),
+      </html>`,
+            {
+              ph: new Date(new Date()).toLocaleDateString(),
+              bh: new Date(new Date()).toLocaleTimeString(),
+              timeDefault:
+                new Date() - new Date(new Date()).toLocaleTimeString(),
+              dateDefault:
+                new Date() - new Date(new Date()).toLocaleDateString(),
+            },
+          );
+        }
+      })(),
       link: getUrl(ScriptApp) + "?func=crmEBI&args=" + fx,
-      utf_8: ("\n<meta charset=\"UTF-8\">"),
-      viewport: ("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"),
-      fontAwesome: ("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css\" integrity=\"sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />"),
-      googleApisCss: ("<link href=\"https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap\" rel=\"stylesheet\">"),
-      googleApisIcon: ("\n <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"></link>\n  "),
-      googleApis_preConnect: ("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">"),
-      website:  ("\n * {\n box-sizing: border-box;margin: 0;padding: 0;font-family: \"Roboto\", sans-serif;\n }\n "),
-      html: ("\n html,\n body {\n height: 100%;\n }\n "),
-      main: ("\n main {\n height: 92%;\n margin-top: 10px;\n }\n "),
-      body: ("\n body {\n background-color: #ffc107;\n }\n "),
-      header: ("\n header {\n background-color: rgba(255,255,255,.1);\n color: #a7e1ee;\n font-size: smaller;\n }\n "),
-      header_h1: ("\n header h1 {\n font-family: \"Montserrat\", cursive;\n margin-left: 15px;\n }\n "),
-      grid: ("\n .grid {\n display: grid;\n }\n "),
-      flex_row: ("\n .flex-row {\n display: flex;\n flex-direction: row;\n }\n "),
-      flex_column: ("\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n "),
-    })
-  return result
-}
+      utf_8: '\n<meta charset="UTF-8">',
+      viewport:
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+      fontAwesome:
+        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
+      googleApisCss:
+        '<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">',
+      googleApisIcon:
+        '\n <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>\n  ',
+      googleApis_preConnect:
+        '<link rel="preconnect" href="https://fonts.googleapis.com">',
+      website:
+        '\n * {\n box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;\n }\n ',
+      html: "\n html,\n body {\n height: 100%;\n }\n ",
+      main: "\n main {\n height: 92%;\n margin-top: 10px;\n }\n ",
+      body: "\n body {\n background-color: #ffc107;\n }\n ",
+      header:
+        "\n header {\n background-color: rgba(255,255,255,.1);\n color: #a7e1ee;\n font-size: smaller;\n }\n ",
+      header_h1:
+        '\n header h1 {\n font-family: "Montserrat", cursive;\n margin-left: 15px;\n }\n ',
+      grid: "\n .grid {\n display: grid;\n }\n ",
+      flex_row: "\n .flex-row {\n display: flex;\n flex-direction: row;\n }\n ",
+      flex_column:
+        "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
+    },
+  );
+  return result;
+};
 
 function postEd(ed) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!" + ed + ", = " + !ed,)
-  if (!ed)  {
-    var formData = JSON.parse(convertToObjects([[arguments.callee.name]], ["name"], start))[0]}
-  else {
-    var formData = JSON.parse(ed)}
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      ed +
+      ", = " +
+      !ed,
+  );
+  if (!ed) {
+    var formData = JSON.parse(
+      convertToObjects([[arguments.callee.name]], ["name"], start),
+    )[0];
+  } else {
+    var formData = JSON.parse(ed);
+  }
   // Get form data from the request
   var arrayData = covArrays(formData);
   var colArray = [];
   const keys = Object.keys(formData);
-  keys.forEach(
-    function(key) {
-      console.log(key)
-    colArray.push(JSON.stringify(key))});
+  keys.forEach(function (key) {
+    console.log(key);
+    colArray.push(JSON.stringify(key));
+  });
   // for (var key in formData) {
   //     colArray.push([])
   // for (var val in formData[key]) {
@@ -380,11 +417,11 @@ function postEd(ed) {
   // var postId = postSheet.getId()
   // var postUrl = postSheet.getUrl()
   // return SpreadsheetApp.openById(postId).getUrl()
-  // var postPub = FormApp.openById(postSheet.getId()).getPublishedUrl() 
+  // var postPub = FormApp.openById(postSheet.getId()).getPublishedUrl()
   // return console.log(postPub)
-  return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX; 
+  return spreadSheetCreate(name, name, colArray, arrayData, start).myFileX;
   try {
-    // Send data to AWS 
+    // Send data to AWS
     // var url = "https://YOUR_AWS_ENDPOINT"; // Replace with your AWS endpoint URL
     // var options = {
     //   'method': 'post',
@@ -399,16 +436,16 @@ function postEd(ed) {
     // };
     // var response = UrlFetchApp.fetch(url, options);
     // if (response.getResponseCode() == 200) {
-      // Update Google Sheet if AWS call is successful
-      return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX; 
-      return dtlsPro(busS)
-      // return ContentService.createTextOutput("Data sent to AWS and updated in sheet successfully!");
-      // return ContentService.createTextOutput("Data sent to sheet successfully!");
-      return busS
+    // Update Google Sheet if AWS call is successful
+    return spreadSheetCreate(name, name, colArray, arrayData, start).myFileX;
+    return dtlsPro(busS);
+    // return ContentService.createTextOutput("Data sent to AWS and updated in sheet successfully!");
+    // return ContentService.createTextOutput("Data sent to sheet successfully!");
+    return busS;
     // } else {
     //   return ContentService.createTextOutput("Error sending data to AWS: " + response.getStatusCode() + " - " + response.getContentText());
     // }
-  } catch(error) {
+  } catch (error) {
     // return ContentService.createTextOutput("Error sending data to AWS: " + error);
     return ContentService.createTextOutput("Error sending data: " + error);
   }
@@ -416,14 +453,15 @@ function postEd(ed) {
 
 function leadBook(rowIndex) {
   var rowNum = parseInt(rowIndex);
-  var leadSheet = "https://docs.google.com/spreadsheets/d/1Ykxv-zQiAjNix7w9IwzGTWiO2X0nqw7NkV5PsaEx3lI/edit?gid=356453707#gid=356453707"
-  var leadName = "Custom2025010921011842"
-  var ss = ssGetSheetBySpreadsheetUrl(leadSheet, leadName)
-  var liadSsId = ss.getParent().getId()
-  var sheetArray = SpreadsheetApp.openById(liadSsId).getUrl()
-  var ssData = ss.getDataRange().getValues()
+  var leadSheet =
+    "https://docs.google.com/spreadsheets/d/1Ykxv-zQiAjNix7w9IwzGTWiO2X0nqw7NkV5PsaEx3lI/edit?gid=356453707#gid=356453707";
+  var leadName = "Custom2025010921011842";
+  var ss = ssGetSheetBySpreadsheetUrl(leadSheet, leadName);
+  var liadSsId = ss.getParent().getId();
+  var sheetArray = SpreadsheetApp.openById(liadSsId).getUrl();
+  var ssData = ss.getDataRange().getValues();
   if (rowNum >= 1 && rowNum < ssData.length) {
-    var headers = ssData[0].map(function(header) {
+    var headers = ssData[0].map(function (header) {
       // Normalize headers: remove spaces, convert to camelCase, etc.
       return header.replace(/ /g, "_"); // Replace spaces with underscores
       // or
@@ -437,8 +475,8 @@ function leadBook(rowIndex) {
     for (var j = 0; j < headers.length; j++) {
       rowObject[headers[j]] = row[j];
     }
-    return {url:sheetArray,jsonData:rowObject} ;
+    return { url: sheetArray, jsonData: rowObject };
   } else {
-    return {url:sheetArray,jsonData:null}; // Return null if the row index is out of bounds
+    return { url: sheetArray, jsonData: null }; // Return null if the row index is out of bounds
   }
 }
