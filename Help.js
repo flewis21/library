@@ -618,9 +618,7 @@ var mis = function (text, maxRetries = 3) {
       form.addTextItem().setTitle("Your Name").setRequired(true);
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-      form
-        .setTitle(JSON.stringify(supFunc))
-        .setConfirmationMessage("Thanks for your feedback !!");
+      form.setConfirmationMessage("Thanks for your feedback !!");
       var url = form.getPublishedUrl();
     }
     return { index: url, app: supFunc.res };
@@ -706,9 +704,7 @@ var mis = function (text, maxRetries = 3) {
         form.addTextItem().setTitle("Your Name").setRequired(true);
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-        form
-          .setTitle(JSON.stringify(validUrl))
-          .setConfirmationMessage("Thanks for your feedback !!");
+        form.setConfirmationMessage("Thanks for your feedback !!");
         var url = form.getPublishedUrl();
       }
     }
@@ -826,9 +822,7 @@ var mis = function (text, maxRetries = 3) {
                   .addParagraphTextItem()
                   .setTitle("Your Message")
                   .setRequired(true);
-                form
-                  .setTitle(JSON.stringify(validUrl))
-                  .setConfirmationMessage("Thanks for your feedback !!");
+                form.setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
             } else {
@@ -914,9 +908,7 @@ var mis = function (text, maxRetries = 3) {
                   .addParagraphTextItem()
                   .setTitle("Your Message")
                   .setRequired(true);
-                form
-                  .setTitle(JSON.stringify(validUrl))
-                  .setConfirmationMessage("Thanks for your feedback !!");
+                form.setConfirmationMessage("Thanks for your feedback !!");
                 var url = form.getPublishedUrl();
               }
             }
