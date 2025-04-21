@@ -585,8 +585,8 @@ var mis = function (text, maxRetries = 3) {
       }
     }
     var payT = [
-      formattedPayload || payLoad
-        ? fx + " (" + formattedPayload || payLoad + ")"
+      payLoad || formattedPayload
+        ? fx + " (" + payLoad || formattedPayload + ")"
         : fx,
     ]
       .join("")
