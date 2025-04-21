@@ -561,7 +561,9 @@ var mis = function (text, maxRetries = 3) {
       "?func=mis&args=" +
       (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
-    var payT = [payLoad ? fx + " " + payLoad : fx].join("").toUpperCase();
+    var payT = [payLoad ? fx + " " + JSON.stringify(payLoad) : fx]
+      .join("")
+      .toUpperCase();
     var form = formMaker(
       payT,
       "misForms",
