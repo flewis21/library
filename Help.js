@@ -1012,12 +1012,14 @@ var isValidUrl = function (text) {
   var pathname = "";
   // var query = "";
   var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
+  var allMatches = [];
   if (typeof text !== "string" || text.length === 0) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
   var urlRegex =
     /(https?:\/\/)?([\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\((\)\*\+,;=.]+)/gi;
   var matches = text.match(urlRegex);
+  allMatches = matches ? [...matches] : [];
   if (matches) {
     let currentProtocol = "";
     let currentHostname = "";
@@ -1056,6 +1058,7 @@ var isValidUrl = function (text) {
       }
     });
   }
+  validUrlResult.matches = allMatches;
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
