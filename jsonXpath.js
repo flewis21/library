@@ -507,7 +507,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   let delay = 1000;
   try {
     response = UrlFetchApp.fetch(url, {
-      followRedirects: false, // Prevent automatic redirects
+      followRedirects: true, // Allow automatic redirects
       muteHttpExceptions: true,
     });
   } catch (e) {
@@ -517,6 +517,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   try {
     if (response) {
       var res = response.getResponseCode();
+      console.log(`HTTP response code: ${res}`);
       if (res) {
         if (res === 429) {
           retries++;
@@ -526,7 +527,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
           while (retries < maxRetries) {
             try {
               response = UrlFetchApp.fetch(url, {
-                followRedirects: false, // Prevent automatic redirects
+                followRedirects: true, // Allow automatic redirects
                 muteHttpExceptions: true,
               });
             } catch (error) {
@@ -539,22 +540,50 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
           Logger.log("Max retries reached, failed to fetch data.");
         }
       } else {
+        var conText = response.getContentText();
         if (res >= 300 && res < 400) {
-          // Redirect occurred
           location = response.getHeaders().Location;
           var content = UrlFetchApp.fetch(location, {
             followRedirects: true,
             muteHttpExceptions: true,
           }).getContentText();
         } else {
-          // No redirect or other error
-          var content = response.getContentText();
+          var content = JSON.parse(conText);
         }
       }
     }
   } catch (e) {
     Logger.log("Error resolving TinyURL: " + e.toString());
     console.error("Error resolving TinyURL: ", e.toString());
+  }
+  if (content && xpath) {
+    try {
+      var pathSegments = xpath.split("/");
+      let current = content;
+      for (var segment of pathSegments) {
+        if (segment) {
+          if (current && current.hasOwnProperty(segment)) {
+            current = current[segment];
+          } else if (Array.isArray(current) && !isNaN(parseInt(segment))) {
+            var index = parseInt(segment);
+            if (index >= 0 && index < current.length) {
+              current = current[index];
+            } else {
+              console.warn(`XPath index out of bounds: ${segment}`);
+              return null;
+            }
+          } else {
+            console.warn(`XPath segment not found: ${segment}`);
+            return null;
+          }
+        }
+      }
+      console.log("Successfully applied basic XPath-like navigation.");
+      return current;
+    } catch (e) {
+      Logger.log("Error applying XPath: " + e.toString());
+      console.error("Error applying XPath: ", e.toString());
+    }
   }
   var seoArray = seoPastTime([cokey].join(""), time);
   console.log(
