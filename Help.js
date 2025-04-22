@@ -948,7 +948,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error resolving TinyURL: " + e.toString());
       console.error("Error resolving TinyURL: ", e.toString());
     }
-    return { index: url };
+    return { index: url, app: response.getContentText() || e };
   }
 };
 var misSt = function (func, someArgs) {
