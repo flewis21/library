@@ -599,10 +599,17 @@ var mis = function (text, maxRetries = 3) {
 
     if (typeof form === "object") {
       // fileManager(coData.rndTitle, "Forms")
-      form
-        .addSectionHeaderItem()
-        .setTitle(globalThis[supFunc.func].toString())
-        .setHelpText(supUrl);
+      if (fx) {
+        form
+          .addSectionHeaderItem()
+          .setTitle(globalThis[supFunc.func].toString())
+          .setHelpText(supUrl);
+      } else {
+        form
+          .addSectionHeaderItem()
+          .setTitle("No Function Found")
+          .setHelpText(supUrl);
+      }
       form.addTextItem().setTitle("Industry").setRequired(true);
       form.addTextItem().setTitle("Sector").setRequired(true);
       form
