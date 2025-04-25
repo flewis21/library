@@ -318,6 +318,9 @@ var testlt = function () {
     var args = {};
     var resolvedArgs = [];
     if (result.parameters) {
+      numVarRnd = randNum(
+        arguments.callee.caller.name || arguments.callee.name,
+      );
       result.parameters.forEach((paramName) => {
         if (paramName === "time") {
           args["time"] = Math.floor(
@@ -346,9 +349,6 @@ var testlt = function () {
           ).substWord;
           resolvedArgs.push(args["searchString"]);
         } else if (paramName === "varA") {
-          numVarRnd = randNum(
-            arguments.callee.caller.name || arguments.callee.name,
-          );
           arrDRnd = appSort(numVarRnd);
           searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
           fParams = gsFParams();
