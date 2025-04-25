@@ -325,7 +325,7 @@ var testlt = function () {
             [
               [
                 ["func", result.name],
-                ["args", result.parameters],
+                ["args", JSON.stringify(result.parameters)],
                 ["action", "getData"],
                 ["file", "uiAccess"],
               ],
