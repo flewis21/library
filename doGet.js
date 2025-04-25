@@ -315,8 +315,9 @@ function handleRequest(e) {
 }
 
 function handleGetData() {
+  var rndFunc = testlt();
   var data = {
-    message: testlt(),
+    message: mis(rndFunc.name, rndFunc.parameters),
     timestamp: new Date(),
   };
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
