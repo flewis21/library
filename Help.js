@@ -338,6 +338,12 @@ var testlt = function () {
             (maxTime - (new Date() % (1000 * 60))) / 1000,
           );
           resolvedArgs.push(args["time"]);
+        } else if (paramName === "data") {
+          args["data"] = {
+            message: mis(result.name, result.parameters),
+            timestamp: new Date(),
+          };
+          resolvedArgs.push(args["data"]);
         } else if (paramName === "searchString") {
           args["searchString"] = substanceVegas(
             0,
