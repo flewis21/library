@@ -318,11 +318,24 @@ var testlt = function () {
     var args = {};
     var resolvedArgs = [];
     if (result.parameters) {
-      numVarRnd = randNum(
-        arguments.callee.caller.name || arguments.callee.name,
-      );
       result.parameters.forEach((paramName) => {
-        if (paramName === "time") {
+        if (paramName === "e") {
+          args["e"] = objectOfS(
+            ["parameter"],
+            [
+              [
+                ["func", result.name],
+                ["args", result.parameters],
+                ["action", "getData"],
+                ["file", "uiAccess"],
+              ],
+            ],
+            Math.floor(
+              (this[libName].maxTime - (new Date() % (1000 * 60))) / 1000,
+            ),
+          );
+          resolvedArgs.push(args["e"]);
+        } else if (paramName === "time") {
           args["time"] = Math.floor(
             (maxTime - (new Date() % (1000 * 60))) / 1000,
           );
