@@ -330,9 +330,7 @@ var testlt = function () {
                 ["file", "uiAccess"],
               ],
             ],
-            Math.floor(
-              (this[libName].maxTime - (new Date() % (1000 * 60))) / 1000,
-            ),
+            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
           );
           resolvedArgs.push(args["e"]);
         } else if (paramName === "time") {
