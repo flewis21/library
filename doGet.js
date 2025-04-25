@@ -316,7 +316,7 @@ function handleRequest(e) {
 
 function handleGetData() {
   var data = {
-    message: "Hello from Apps Script Backend!",
+    message: mis("Hello from Apps Script Backend!"),
     timestamp: new Date(),
   };
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
