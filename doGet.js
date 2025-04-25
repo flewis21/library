@@ -307,9 +307,10 @@ function handleRequest(e) {
   } else if (e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
-    return ContentService.createTextOutput("Invalid Request").setMimeType(
-      ContentService.MimeType.TEXT,
-    );
+    return;
+    // return ContentService.createTextOutput("Invalid Request").setMimeType(
+    //   ContentService.MimeType.TEXT,
+    // );
   }
 }
 
