@@ -627,9 +627,12 @@ var mis = function (text, maxRetries = 3) {
         formattedPayload = values;
       }
     }
-    var payT = formattedPayload
-      ? fx + "(" + (formattedPayload || payLoad) + ")"
-      : fx;
+    var payT = fx;
+    if (formattedPayload) {
+      payT += "(" + formattedPayload + ")";
+    } else if (payLoad) {
+      payT += "(" + payLoad + ")";
+    }
     payT = payT.toUpperCase();
     var form = formMaker(
       payT,
