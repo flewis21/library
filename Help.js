@@ -602,7 +602,7 @@ var mis = function (text, maxRetries = 3) {
     var supUrl =
       getScriptUrl().toString() +
       "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
+      (payLoad ? fx + "," + encodeURIComponent(payLoad.join(", ")) : fx);
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
