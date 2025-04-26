@@ -318,6 +318,11 @@ var testlt = function () {
     var args = {};
     var resolvedArgs = [];
     if (result.parameters) {
+      var htmlArray = [
+        `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+      ]
+        .toString()
+        .split(" ");
       result.parameters.forEach((paramName) => {
         if (paramName === "e") {
           args["e"] = objectOfS(
@@ -406,6 +411,11 @@ var testlt = function () {
         } else if (paramName === "object") {
           args["object"] = JSON.stringify({});
           resolvedArgs.push(args["object"]);
+        } else if (paramName === "file") {
+          var rndPage =
+            htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
+          args["file"] = rndPage;
+          resolvedArgs.push(args["file"]);
         } else if (paramName === "fileX") {
           var allFolders = folderManager();
           var folderX = allFolders[numVarRnd];
