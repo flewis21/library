@@ -1037,8 +1037,30 @@ var misSt = function (func, someArgs) {
   try {
     var jsonData;
     if (argsX.length > 0) {
-      jsonData = globalThis[argsX.toString()].apply(this, content);
-      console.log("typeof " + typeof jsonData + " jsonDara");
+      if (argsX.length === 1) {
+        var funcToCall = argsX[0];
+        if (typeof globalThis[funcToCall] === "function") {
+          jsonData = globalThis[funcToCall].apply(this, content);
+          console.log(typeof jsonData + ": typeof jsonDara");
+        } else {
+          console.error("Function not found:", funcToCall);
+          jsonData = `Function not found: ${funcToCall}`;
+        }
+      } else if (argsX.length > 1) {
+        jsonData = [];
+        argsX.forEach(function (funcName) {
+          if (typeof globalThis[funcName] === "function") {
+            var result = globalThis[funcName].apply(this, content);
+            jsonData.push({ [funcName]: result });
+          } else {
+            console.error("Function not found:", funcName);
+            jsonData.push({ [funcName]: `Function not found: ${funcName}` });
+          }
+        });
+        console.log(
+          "typeof " + typeof jsonData + " jsonData (array of results)",
+        );
+      }
     } else {
       console.log(
         "function = " + argsX.toString() + " :Skipping .apply(" + content + ")",
