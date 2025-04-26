@@ -339,8 +339,21 @@ var testlt = function () {
           );
           resolvedArgs.push(args["time"]);
         } else if (paramName === "data") {
+          var rndE = objectOfS(
+            ["parameter"],
+            [
+              [
+                ["func", "mis"],
+                ["args", [result.name, ...result.parameters]],
+              ],
+            ],
+            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          );
+          var funcUno = rndE.parameter["func"];
+          var funcDos = rndE.parameter["args"];
+          var payLoad = globalThis[funcUno].apply(this, funcDos);
           args["data"] = {
-            message: mis(result.name, result.parameters),
+            message: payLoad,
             timestamp: new Date(),
           };
           resolvedArgs.push(args["data"]);
