@@ -357,6 +357,9 @@ var testlt = function () {
             timestamp: new Date(),
           };
           resolvedArgs.push(args["data"]);
+        } else if (paramName === "func") {
+          args["func"] = result.name;
+          resolvedArgs.push(args["func"]);
         } else if (paramName === "searchString") {
           args["searchString"] = substanceVegas(
             0,
