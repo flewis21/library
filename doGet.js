@@ -326,8 +326,11 @@ function handleGetData() {
     ],
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
   );
+  var funcUno = rndE["func"];
+  var funcDos = rndE["args"];
+  var payLoad = globalThis[funcUno].apply(this, funcDos);
   var data = {
-    message: globalThis[rndE["func"]].apply(this, rndE["args"]),
+    message: payLoad,
     timestamp: new Date(),
   };
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
