@@ -328,7 +328,7 @@ function handleGetData() {
   );
   var funcUno = rndE.parameter["func"];
   var funcDos = rndE.parameter["args"];
-  var payLoad = globalThis[funcUno].apply(this, funcDos);
+  var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   var data = {
     message: payLoad,
     timestamp: new Date(),
