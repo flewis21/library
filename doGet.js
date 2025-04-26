@@ -316,8 +316,18 @@ function handleRequest(e) {
 
 function handleGetData() {
   var rndFunc = testlt();
+  var rndE = objectOfS(
+    ["parameter"],
+    [
+      [
+        ["func", "mis"],
+        ["args", [rndFunc.name, ...rndFunc.parameters]],
+      ],
+    ],
+    Math.floor((this[libName].maxTime - (new Date() % (1000 * 60))) / 1000),
+  );
   var data = {
-    message: mis([rndFunc.name, rndFunc.parameters]),
+    message: globalThis[rndE["func"]].apply(this, rndE["args"]),
     timestamp: new Date(),
   };
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
