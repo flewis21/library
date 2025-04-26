@@ -326,8 +326,8 @@ function handleGetData() {
     ],
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
   );
-  var funcUno = rndE["func"];
-  var funcDos = rndE["args"];
+  var funcUno = rndE.parameter["func"];
+  var funcDos = rndE.parameter["args"];
   var payLoad = globalThis[funcUno].apply(this, funcDos);
   var data = {
     message: payLoad,
