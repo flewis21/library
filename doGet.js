@@ -324,7 +324,7 @@ function handleGetData() {
         ["args", [rndFunc.name, ...rndFunc.parameters]],
       ],
     ],
-    Math.floor((this[libName].maxTime - (new Date() % (1000 * 60))) / 1000),
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
   );
   var data = {
     message: globalThis[rndE["func"]].apply(this, rndE["args"]),
