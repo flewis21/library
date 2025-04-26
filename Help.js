@@ -602,7 +602,7 @@ var mis = function (text, maxRetries = 3) {
     var supUrl =
       getScriptUrl().toString() +
       "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad.join(", ")) : fx);
+      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -627,13 +627,10 @@ var mis = function (text, maxRetries = 3) {
         formattedPayload = values;
       }
     }
-    var payT = [
-      formattedPayload || payLoad
-        ? fx + "(" + (formattedPayload || payLoad) + ")"
-        : fx,
-    ]
-      .join("")
-      .toUpperCase();
+    var payT = formattedPayload
+      ? fx + "(" + (formattedPayload || payLoad) + ")"
+      : fx;
+    payT = payT.toUpperCase();
     var form = formMaker(
       payT,
       "misForms",
