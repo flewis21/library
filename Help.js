@@ -315,141 +315,6 @@ var testlt = function () {
     return rndS.name === searchString;
   });
   if (result) {
-    var args = {};
-    var resolvedArgs = [];
-    if (result.parameters) {
-      var htmlArray = [
-        `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
-      ]
-        .toString()
-        .split(" ");
-      result.parameters.forEach((paramName) => {
-        if (paramName === "e") {
-          args["e"] = objectOfS(
-            ["parameter"],
-            [
-              [
-                ["func", result.name],
-                ["args", JSON.stringify(result.parameters)],
-                ["action", "getData"],
-                ["file", "uiAccess"],
-              ],
-            ],
-            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          );
-          resolvedArgs.push(args["e"]);
-        } else if (paramName === "time") {
-          args["time"] = Math.floor(
-            (maxTime - (new Date() % (1000 * 60))) / 1000,
-          );
-          resolvedArgs.push(args["time"]);
-        } else if (paramName === "data") {
-          var rndE = objectOfS(
-            ["parameter"],
-            [
-              [
-                ["func", "mis"],
-                ["args", [result.name, ...result.parameters]],
-              ],
-            ],
-            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          );
-          var funcUno = rndE.parameter["func"];
-          var funcDos = rndE.parameter["args"];
-          var payLoad = globalThis[funcUno].apply(this, funcDos);
-          args["data"] = {
-            message: payLoad,
-            timestamp: new Date(),
-          };
-          resolvedArgs.push(args["data"]);
-        } else if (paramName === "func") {
-          args["func"] = result.name;
-          resolvedArgs.push(args["func"]);
-        } else if (paramName === "searchString") {
-          args["searchString"] = substanceVegas(
-            0,
-            [
-              objectOfS(
-                ["parameter"],
-                [[["func", result.name]]],
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-              ).parameter["func"],
-            ].toString().length,
-            [
-              objectOfS(
-                ["parameter"],
-                [[["func", result.name]]],
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-              ).parameter["func"],
-            ]
-              .toString()
-              .split(""),
-          ).substWord;
-          resolvedArgs.push(args["searchString"]);
-        } else if (paramName === "varA") {
-          arrDRnd = appSort(numVarRnd);
-          searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-          fParams = gsFParams();
-          result = fParams.find((rndS) => {
-            return rndS.name === searchString;
-          });
-          if (typeof result === "string") {
-            args["varA"] = misSt(result);
-          } else if (
-            typeof result === "object" &&
-            result !== null &&
-            result.name
-          ) {
-            args["varA"] = misSt(result.name, result.parameters);
-          } else {
-            args["varA"] = misSt(result.name);
-          }
-          resolvedArgs.push(args["varA"]);
-        } else if (paramName === "url") {
-          args["url"] = getScriptUrl();
-          resolvedArgs.push(args["url"]);
-        } else if (paramName === "object") {
-          args["object"] = JSON.stringify({});
-          resolvedArgs.push(args["object"]);
-        } else if (paramName === "file") {
-          var rndPage =
-            htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
-          args["file"] = rndPage;
-          resolvedArgs.push(args["file"]);
-        } else if (paramName === "fileX") {
-          var allFolders = folderManager();
-          var folderX = allFolders[numVarRnd];
-          var folderRoot = DriveApp.getFoldersByName(folderX);
-          let fileXName = "undefined";
-          if (folderRoot.hasNext) {
-            var fileBulk = folderRoot.next().getFiles();
-            const fileNames = [];
-            if (fileBulk.hasNext()) {
-              while (fileBulk.hasNext()) {
-                var fileUrl = fileBulk.next();
-                fileNames.push(fileUrl.getName());
-              }
-              if (fileNames.length > 0) {
-                fileXName =
-                  fileNames[Math.floor(Math.random() * fileNames.length)];
-              }
-            }
-          }
-          args["fileX"] = fileXName;
-          resolvedArgs.push(args["fileX"]);
-        } else if (paramName === "folderX") {
-          var allFolders = folderManager();
-          args["folderX"] = allFolders[numVarRnd];
-          resolvedArgs.push(args["folderX"]);
-        } else {
-          args[paramName] = paramName;
-          resolvedArgs.push(args[paramName]);
-        }
-      });
-    }
-    console.log("Resolved arguments:", args);
-    console.log("Resolved parameters Array:", resolvedArgs);
-    result.parameters = resolvedArgs;
     return result;
   } else {
     console.log("No function parameters found for:", searchString);
@@ -1027,6 +892,149 @@ var misSt = function (func, someArgs) {
   });
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
+  if (argsX) {
+    argsX.forEach((result) => {
+      var args = {};
+      var resolvedArgs = [];
+      if (content) {
+        var htmlArray = [
+          `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+        ]
+          .toString()
+          .split(" ");
+        content.forEach((paramName) => {
+          if (paramName === "e") {
+            args["e"] = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", result],
+                  ["args", JSON.stringify(content)],
+                  ["action", "getData"],
+                  ["file", "uiAccess"],
+                ],
+              ],
+              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+            );
+            resolvedArgs.push(args["e"]);
+          } else if (paramName === "time") {
+            args["time"] = Math.floor(
+              (maxTime - (new Date() % (1000 * 60))) / 1000,
+            );
+            resolvedArgs.push(args["time"]);
+          } else if (paramName === "data") {
+            var rndE = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", "mis"],
+                  ["args", [result, ...content]],
+                ],
+              ],
+              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+            );
+            var funcUno = rndE.parameter["func"];
+            var funcDos = rndE.parameter["args"];
+            var payLoad = globalThis[funcUno].apply(this, funcDos);
+            args["data"] = {
+              message: payLoad,
+              timestamp: new Date(),
+            };
+            resolvedArgs.push(args["data"]);
+          } else if (paramName === "func") {
+            args["func"] = result;
+            resolvedArgs.push(args["func"]);
+          } else if (paramName === "searchString") {
+            args["searchString"] = substanceVegas(
+              0,
+              [
+                objectOfS(
+                  ["parameter"],
+                  [[["func", result]]],
+                  Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+                ).parameter["func"],
+              ].toString().length,
+              [
+                objectOfS(
+                  ["parameter"],
+                  [[["func", result]]],
+                  Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+                ).parameter["func"],
+              ]
+                .toString()
+                .split(""),
+            ).substWord;
+            resolvedArgs.push(args["searchString"]);
+          } else if (paramName === "varA") {
+            arrDRnd = appSort(numVarRnd);
+            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+            fParams = gsFParams();
+            result = fParams.find((rndS) => {
+              return rndS.name === searchString;
+            });
+            if (typeof result === "string") {
+              args["varA"] = misSt(result);
+            } else if (
+              typeof result === "object" &&
+              result !== null &&
+              result.name
+            ) {
+              args["varA"] = misSt(result.name, result.parameters);
+            } else {
+              args["varA"] = misSt(result.name);
+            }
+            resolvedArgs.push(args["varA"]);
+          } else if (paramName === "url") {
+            args["url"] = getScriptUrl();
+            resolvedArgs.push(args["url"]);
+          } else if (paramName === "object") {
+            args["object"] = JSON.stringify({});
+            resolvedArgs.push(args["object"]);
+          } else if (paramName === "file") {
+            var rndPage =
+              htmlArray[
+                Math.floor(Math.random() * Math.floor(htmlArray.length))
+              ];
+            args["file"] = rndPage;
+            resolvedArgs.push(args["file"]);
+          } else if (paramName === "fileX") {
+            var allFolders = folderManager();
+            var folderX = allFolders[numVarRnd];
+            var folderRoot = DriveApp.getFoldersByName(folderX);
+            let fileXName = "undefined";
+            if (folderRoot.hasNext) {
+              var fileBulk = folderRoot.next().getFiles();
+              const fileNames = [];
+              if (fileBulk.hasNext()) {
+                while (fileBulk.hasNext()) {
+                  var fileUrl = fileBulk.next();
+                  fileNames.push(fileUrl.getName());
+                }
+                if (fileNames.length > 0) {
+                  fileXName =
+                    fileNames[Math.floor(Math.random() * fileNames.length)];
+                }
+              }
+            }
+            args["fileX"] = fileXName;
+            resolvedArgs.push(args["fileX"]);
+          } else if (paramName === "folderX") {
+            var allFolders = folderManager();
+            args["folderX"] = allFolders[numVarRnd];
+            resolvedArgs.push(args["folderX"]);
+          } else {
+            args[paramName] = paramName;
+            resolvedArgs.push(args[paramName]);
+          }
+        });
+      }
+      console.log("Resolved arguments:", args);
+      console.log("Resolved parameters Array:", resolvedArgs);
+      content = resolvedArgs;
+    });
+  } else {
+    console.log("No function parameters found for:", searchString);
+  }
   console.log(
     "misSt returned :\nfunc = " +
       argsX +
