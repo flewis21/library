@@ -873,6 +873,9 @@ var misSt = function (func, someArgs) {
   var funcDos = decodeURIComponent(someArgs);
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
+  var numVarRnd = randNum(
+    arguments.callee.caller.name || arguments.callee.name,
+  );
   var argsX = [];
   var content = [];
   var keys = [
@@ -1022,6 +1025,9 @@ var misSt = function (func, someArgs) {
             var allFolders = folderManager();
             args["folderX"] = allFolders[numVarRnd];
             resolvedArgs.push(args["folderX"]);
+          } else if (paramName === "numIndex") {
+            args["numIndex"] = numVarRnd;
+            resolvedArgs.push(args["numIndex"]);
           } else {
             args[paramName] = paramName;
             resolvedArgs.push(args[paramName]);
