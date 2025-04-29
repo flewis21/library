@@ -896,9 +896,40 @@ var misSt = function (func, someArgs) {
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
   if (argsX) {
+    var fParams = gsFParams();
     argsX.forEach((result) => {
       var args = {};
       var resolvedArgs = [];
+      var searchString = fParams.find((rndS) => {
+        return rndS.name === result;
+      });
+      var orderedArgs = [];
+      if (searchString) {
+        var declaredParams = searchString.parameters;
+        console.log(
+          "Current content: " +
+            content +
+            "\nDeclared parameters: " +
+            declaredParams,
+        );
+        var contentMap = {};
+        content.forEach((item) => {
+          declaredParams.forEach((declaredParam) => {
+            if (item === declaredParam || item.includes(declaredParam)) {
+              contentMap[declaredParam] = item;
+            }
+          });
+        });
+        declaredParams.forEach((paramName) => {
+          if (contentMap.hasOwnProperty(paramName)) {
+            orderedArgs.push(contentMap[paramName]);
+          } else {
+            orderedArgs.push(null);
+          }
+        });
+        console.log("Ordered arguments: " + orderedArgs);
+        content = orderedArgs;
+      }
       if (content) {
         var htmlArray = [
           `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
