@@ -585,6 +585,7 @@ var mis = function (text, maxRetries = 3) {
   } else {
     let response;
     let location;
+    let htmlData;
     let retries = 0;
     let delay = 1000;
     try {
@@ -607,6 +608,7 @@ var mis = function (text, maxRetries = 3) {
     } catch (e) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
+      htmlData = "Error fetching URL: " + e.toString();
       // var form = formMaker();
       var form = formMaker(
         [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -616,10 +618,7 @@ var mis = function (text, maxRetries = 3) {
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form
-          .addSectionHeaderItem()
-          .setTitle("Error fetching URL")
-          .setHelpText(e);
+        form.addSectionHeaderItem().setTitle(htmlData).setHelpText(text);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
@@ -698,6 +697,10 @@ var mis = function (text, maxRetries = 3) {
             if (res >= 300 && res < 400) {
               // Redirect occurred
               location = response.getHeaders().Location;
+              htmlData = UrlFetchApp.fetch(location, {
+                followRedirects: true,
+                muteHttpExceptions: true,
+              }).getContentText();
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -709,13 +712,7 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle(
-                    "Redirect occurred\n" +
-                      UrlFetchApp.fetch(location, {
-                        followRedirects: true,
-                        muteHttpExceptions: true,
-                      }).getContentText(),
-                  )
+                  .setTitle("Redirect occurred\n" + htmlData)
                   .setHelpText(location);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
@@ -788,6 +785,7 @@ var mis = function (text, maxRetries = 3) {
             } else {
               // No redirect or other error
               location = response.getContentText();
+              htmlData = location;
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -799,9 +797,7 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle(
-                    "No redirect or other error\n" + response.getContentText(),
-                  )
+                  .setTitle("No redirect or other error\n" + htmlData)
                   .setHelpText(validUrl.hostname);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
@@ -879,7 +875,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error resolving TinyURL: " + e.toString());
       console.error("Error resolving TinyURL: ", e.toString());
     }
-    return { index: url, app: response.getContentText() || e };
+    return { index: url, app: htmlData };
   }
 };
 var misSt = function (func, someArgs) {
