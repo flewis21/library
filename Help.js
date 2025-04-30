@@ -435,8 +435,11 @@ var mis = function (text, maxRetries = 3) {
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
-    var fx = supFunc.func;
-    var payLoad = supFunc.args;
+    if (supFunc && typeof supFunc === "object" && supFunc.allErrors) {
+      return supFunc.allErrors;
+    }
+    var fx = supFunc?.func;
+    var payLoad = supFunc?.args;
     // if (supFunc.func) {
     // if (supFunc.args) {
     //     var html =
