@@ -1109,6 +1109,12 @@ var misSt = function (func, someArgs) {
           ) {
             args["numIndex"] = numVarRnd;
             resolvedArgs.push(args["numIndex"]);
+          } else if (
+            paramName === "infinitum" ||
+            (paramName === null && declaredParamName === "infinitum")
+          ) {
+            args["infinitum"] = numVarRnd;
+            resolvedArgs.push(args["infinitum"]);
           } else {
             if (paramName !== null) {
               args[paramName] = paramName;
