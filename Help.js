@@ -896,10 +896,12 @@ var misSt = function (func, someArgs) {
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
   if (argsX) {
+    var allErrors = {};
     var fParams = gsFParams();
     argsX.forEach((result) => {
       var args = {};
       var resolvedArgs = [];
+      var missingParams = [];
       var searchString = fParams.find((rndS) => {
         return rndS.name === result;
       });
@@ -936,8 +938,12 @@ var misSt = function (func, someArgs) {
         ]
           .toString()
           .split(" ");
-        content.forEach((paramName) => {
-          if (paramName === "e") {
+        content.forEach((paramName, index) => {
+          var declaredParamName = declaredParams[index];
+          if (
+            paramName === "e" ||
+            (paramName === null && declaredParamName === "e")
+          ) {
             args["e"] = objectOfS(
               ["parameter"],
               [
@@ -951,12 +957,18 @@ var misSt = function (func, someArgs) {
               Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
             );
             resolvedArgs.push(args["e"]);
-          } else if (paramName === "time") {
+          } else if (
+            paramName === "time" ||
+            (paramName === null && declaredParamName === "time")
+          ) {
             args["time"] = Math.floor(
               (maxTime - (new Date() % (1000 * 60))) / 1000,
             );
             resolvedArgs.push(args["time"]);
-          } else if (paramName === "data") {
+          } else if (
+            paramName === "data" ||
+            (paramName === null && declaredParamName === "data")
+          ) {
             var rndE = objectOfS(
               ["parameter"],
               [
@@ -975,10 +987,16 @@ var misSt = function (func, someArgs) {
               timestamp: new Date(),
             };
             resolvedArgs.push(args["data"]);
-          } else if (paramName === "func") {
+          } else if (
+            paramName === "func" ||
+            (paramName === null && declaredParamName === "func")
+          ) {
             args["func"] = result;
             resolvedArgs.push(args["func"]);
-          } else if (paramName === "searchString") {
+          } else if (
+            paramName === "searchString" ||
+            (paramName === null && declaredParamName === "searchString")
+          ) {
             args["searchString"] = substanceVegas(
               0,
               [
@@ -999,7 +1017,10 @@ var misSt = function (func, someArgs) {
                 .split(""),
             ).substWord;
             resolvedArgs.push(args["searchString"]);
-          } else if (paramName === "varA") {
+          } else if (
+            paramName === "varA" ||
+            (paramName === null && declaredParamName === "varA")
+          ) {
             arrDRnd = appSort(numVarRnd);
             searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
             fParams = gsFParams();
@@ -1018,20 +1039,32 @@ var misSt = function (func, someArgs) {
               args["varA"] = misSt(result.name);
             }
             resolvedArgs.push(args["varA"]);
-          } else if (paramName === "url") {
+          } else if (
+            paramName === "url" ||
+            (paramName === null && declaredParamName === "url")
+          ) {
             args["url"] = getScriptUrl();
             resolvedArgs.push(args["url"]);
-          } else if (paramName === "object") {
+          } else if (
+            paramName === "object" ||
+            (paramName === null && declaredParamName === "object")
+          ) {
             args["object"] = JSON.stringify({});
             resolvedArgs.push(args["object"]);
-          } else if (paramName === "file") {
+          } else if (
+            paramName === "file" ||
+            (paramName === null && declaredParamName === "file")
+          ) {
             var rndPage =
               htmlArray[
                 Math.floor(Math.random() * Math.floor(htmlArray.length))
               ];
             args["file"] = rndPage;
             resolvedArgs.push(args["file"]);
-          } else if (paramName === "fileX") {
+          } else if (
+            paramName === "fileX" ||
+            (paramName === null && declaredParamName === "fileX")
+          ) {
             var allFolders = folderManager();
             var folderX = allFolders[numVarRnd];
             var folderRoot = DriveApp.getFoldersByName(folderX);
@@ -1052,23 +1085,44 @@ var misSt = function (func, someArgs) {
             }
             args["fileX"] = fileXName;
             resolvedArgs.push(args["fileX"]);
-          } else if (paramName === "folderX") {
+          } else if (
+            paramName === "folderX" ||
+            (paramName === null && declaredParamName === "folderX")
+          ) {
             var allFolders = folderManager();
             args["folderX"] = allFolders[numVarRnd];
             resolvedArgs.push(args["folderX"]);
-          } else if (paramName === "numIndex") {
+          } else if (
+            paramName === "numIndex" ||
+            (paramName === null && declaredParamName === "numIndex")
+          ) {
             args["numIndex"] = numVarRnd;
             resolvedArgs.push(args["numIndex"]);
           } else {
-            args[paramName] = paramName;
-            resolvedArgs.push(args[paramName]);
+            if (paramName !== null) {
+              args[paramName] = paramName;
+              resolvedArgs.push(args[paramName]);
+            } else {
+              missingParams.push(declaredParamName);
+            }
           }
         });
+        if (missingParams.length === 0) {
+          content = resolvedArgs;
+        } else {
+          allErrors[result] =
+            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+          console.error(allErrors[result]);
+          console.log(allErrors[result]);
+        }
       }
       console.log("Resolved arguments:", args);
       console.log("Resolved parameters Array:", resolvedArgs);
-      content = resolvedArgs;
     });
+    var errorKeys = Object.keys(allErrors);
+    if (errorKeys.length > 0) {
+      return allErrors;
+    }
   } else {
     console.log("No function parameters found for:", searchString);
   }
