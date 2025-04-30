@@ -1023,20 +1023,19 @@ var misSt = function (func, someArgs) {
           ) {
             arrDRnd = appSort(numVarRnd);
             searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-            fParams = gsFParams();
             result = fParams.find((rndS) => {
               return rndS.name === searchString;
             });
             if (typeof result === "string") {
-              args["varA"] = misSt(result);
+              args["varA"] = globalThis[result]();
             } else if (
               typeof result === "object" &&
               result !== null &&
               result.name
             ) {
-              args["varA"] = misSt(result.name, result.parameters);
+              args["varA"] = globalThis[result.name].apply(result.parameters);
             } else {
-              args["varA"] = misSt(result.name);
+              args["varA"] = globalThis[result.name]();
             }
             resolvedArgs.push(args["varA"]);
           } else if (
