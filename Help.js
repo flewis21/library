@@ -435,13 +435,21 @@ var mis = function (text, maxRetries = 3) {
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
-    if (
-      supFunc &&
-      typeof supFunc === "object" &&
-      Object.keys(supFunc).some((key) => supFunc[key].startsWith("Error:"))
-    ) {
-      console.error("Error(s) from misSt:", supFunc);
-      return { error: "misSt returned errors", details: supFunc };
+    if (supFunc && typeof supFunc === "object") {
+      let isError = false;
+      for (var key in supFunc) {
+        if (
+          typeof supFunc[key] === "string" &&
+          supFunc[key].startsWith("Error:")
+        ) {
+          isError = true;
+          break;
+        }
+      }
+      if (isError) {
+        console.error("Error(s) from misSt:", supFunc);
+        return { error: "misSt returned errors", details: supFunc };
+      }
     }
     var fx = supFunc?.func;
     var payLoad = supFunc?.args;
