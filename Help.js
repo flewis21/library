@@ -918,7 +918,12 @@ var misSt = function (func, someArgs) {
         return rndS.name === result;
       });
       var orderedArgs = [];
-      if (searchString) {
+      if (
+        searchString &&
+        searchString !== "undefined" &&
+        searchString !== null &&
+        searchString.parameters
+      ) {
         var declaredParams = searchString.parameters;
         console.log(
           "Current content: " +
@@ -929,8 +934,10 @@ var misSt = function (func, someArgs) {
         var contentMap = {};
         content.forEach((item) => {
           declaredParams.forEach((declaredParam) => {
-            if (item === declaredParam || item.includes(declaredParam)) {
-              contentMap[declaredParam] = item;
+            if (item !== null) {
+              if (item === declaredParam || item.includes(declaredParam)) {
+                contentMap[declaredParam] = item;
+              }
             }
           });
         });
