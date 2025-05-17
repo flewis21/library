@@ -329,6 +329,65 @@ function handleGetData() {
   var funcUno = rndE.parameter["func"];
   var funcDos = rndE.parameter["args"];
   var payLoad = globalThis[funcUno].apply(this, [funcDos]);
+  var pIndex = payLoad.index;
+  var pApp = payLoad.app;
+  var pLink = payLoad.link;
+  var vUrl = isValidUrl(pApp);
+  if (!vUrl.hostname || pApp.indexOf(",") > -1) {
+    let jsonData = null;
+    let htmlDoc = null;
+    let errM = null;
+    if (typeof pApp === "string") {
+      try {
+        jsonData = JSON.parse(pApp);
+      } catch (jsonError) {
+        Logger.log("JSON Parse Error: " + jsonError + ", Input: " + pApp); // Log the error and the input
+        try {
+          htmlDoc = XmlService.parse(pApp);
+          if (
+            !htmlDoc.getRootElement() ||
+            htmlDoc.getRootElement() !== "html"
+          ) {
+            throw new Error(
+              "Not a valid HTML document (no <html> tag or invalid structure).",
+            );
+          }
+        } catch (htmlError) {
+          Logger.log("HTML Parse Error: " + htmlError + ", Input: " + pApp); // Log the error and the input
+          errM = pApp;
+          Logger.log("Response is an error message: " + errM);
+        }
+      }
+      if (jsonData) {
+        payLoad = { jsonData: pLink };
+      } else if (htmlDoc) {
+        payLoad = { htmlDoc: pLink };
+      } else if (errM) {
+        payLoad = { errM: pLink };
+      } else {
+        Logger.log("Empty or unexpected response for string input: " + pApp);
+      }
+    } else if (typeof pApp === "object") {
+      if (Object.keys(pApp) > 0) {
+        payLoad = pApp;
+        Logger.log(
+          "pApp is a non-empty object.  Payload is: " + JSON.stringify(payLoad),
+        );
+      } else {
+        payLoad = payLoad;
+        Logger.log("pApp is an empty object.  No specific action taken.");
+      }
+    }
+  } else {
+    const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+    if (!vLen.includes(pApp.length)) {
+      payLoad = { client: pApp };
+    } else if (vLen.includes(pApp.length)) {
+      payLoad = { webApp: pApp };
+    }
+  }
+
+  Logger.log("The final value of payLoad. " + JSON.stringify(payLoad));
   var data = {
     message: payLoad,
     timestamp: new Date(),
