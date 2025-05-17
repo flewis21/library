@@ -308,7 +308,8 @@ var testlt = function () {
   var numVarRnd = randNum(
     arguments.callee.caller.name || arguments.callee.name,
   );
-  var arrDRnd = appSort(numVarRnd);
+  var arrNum = numVarRnd;
+  var arrDRnd = appSort(arrNum);
   var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
@@ -384,7 +385,7 @@ var seoCapital = function (url) {
   // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
   // const pong = table.map((ping)=>{return ping.substring(0)})
   const html = HtmlService.createTemplate(
-    `<html id="seoCapital"><head><base target="_top"><meta charset="utf-8"><meta name="seoCapital" content="Boilerplate SEO Capital"><meta name="viewport" content="width=device-width, initial-scale=1"><link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" /></head><body><div class="row"><div class="col s12 l12 m12 card-panel amber"><div class="responsive-section"><div class="valign-wrapper col s12 receipt red darken-0 container" id="seoData"><label id="labSEOC"><strong></strong></label></div><div id="divSEOC" class="amber flow-text" style="clear: both;overflow-y: auto;overflow-x: auto;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td style='width: "815px"; height: "100%"'; padding: 0;><div class="responsive-section"><div class="container"><iframe class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" src='${url}' id="w3Res" style='width: "100%";height: "100%"' allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen></iframe></div></div></td></tbody></table></td></tr></tbody></table></div></div></div></div><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /><script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script></body></html>`,
+    `<!DOCTYPE html><html id="seoCapital" lang="en"><head><base target="_top"></base><meta charset="utf-8"></meta><meta name="seoCapital" content="Boilerplate SEO Capital"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" /></head><body><div class="row"><div class="col s12 l12 m12 card-panel amber"><div class="responsive-section"><div class="valign-wrapper col s12 l12 m12 receipt red darken-0 container" id="seoData"><label id="labSEOC"><strong></strong></label></div><div id="divSEOC" class="amber flow-text" style='clear: both;overflow-y: auto;overflow-x: auto;text-align: center width: "840px";height: "100vh"'><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody ><td width="840px" height="100vh" style="padding: 0"><div class="responsive-section"><div class="container"><iframe class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" style='width:"100%";height:"100%"' src='${url}' id="w3Res" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></div></td></tbody></table></td></tr></tbody></table></div></div></div></div><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /><script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script></body></html>`,
   );
   // html.pong = pong.toString().split(",");
   html.research =
@@ -526,13 +527,9 @@ var mis = function (text, maxRetries = 3) {
       if (fx) {
         form
           .addSectionHeaderItem()
-          .setTitle(globalThis[supFunc.func].toString())
-          .setHelpText(supUrl);
+          .setTitle(globalThis[supFunc.func].toString());
       } else {
-        form
-          .addSectionHeaderItem()
-          .setTitle("No Function Found")
-          .setHelpText(supUrl);
+        form.addSectionHeaderItem().setTitle("No Function Found");
       }
       form.addTextItem().setTitle("Industry").setRequired(true);
       form.addTextItem().setTitle("Sector").setRequired(true);
@@ -581,11 +578,13 @@ var mis = function (text, maxRetries = 3) {
       form.setConfirmationMessage("Thanks for your feedback !!");
       var url = form.getPublishedUrl();
     }
-    return { index: url, app: supFunc.res };
+    console.log("Final app:", supFunc.res);
+    return { index: url, app: supFunc.res, link: supUrl };
   } else {
     let response;
     let location;
     let htmlData;
+    let supUrl;
     let retries = 0;
     let delay = 1000;
     try {
@@ -609,6 +608,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       htmlData = "Error fetching URL: " + e.toString();
+      supUrl = text;
       // var form = formMaker();
       var form = formMaker(
         [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -618,7 +618,7 @@ var mis = function (text, maxRetries = 3) {
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        form.addSectionHeaderItem().setTitle(htmlData).setHelpText(text);
+        form.addSectionHeaderItem().setTitle(htmlData);
         form.addTextItem().setTitle("Industry").setRequired(true);
         form.addTextItem().setTitle("Sector").setRequired(true);
         form
@@ -701,6 +701,7 @@ var mis = function (text, maxRetries = 3) {
                 followRedirects: true,
                 muteHttpExceptions: true,
               }).getContentText();
+              supUrl = location;
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -712,8 +713,7 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle("Redirect occurred\n" + htmlData)
-                  .setHelpText(location);
+                  .setTitle("Redirect occurred\n" + htmlData);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
                 form
@@ -786,6 +786,7 @@ var mis = function (text, maxRetries = 3) {
               // No redirect or other error
               location = response.getContentText();
               htmlData = location;
+              supUrl = validUrl.hostname;
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -797,8 +798,7 @@ var mis = function (text, maxRetries = 3) {
                 // fileManager(coData.rndTitle, "Forms")
                 form
                   .addSectionHeaderItem()
-                  .setTitle("No redirect or other error\n" + htmlData)
-                  .setHelpText(validUrl.hostname);
+                  .setTitle("No redirect or other error\n" + htmlData);
                 form.addTextItem().setTitle("Industry").setRequired(true);
                 form.addTextItem().setTitle("Sector").setRequired(true);
                 form
@@ -875,7 +875,8 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error resolving TinyURL: " + e.toString());
       console.error("Error resolving TinyURL: ", e.toString());
     }
-    return { index: url, app: htmlData };
+    console.log("Final app:", htmlData);
+    return { index: url, app: htmlData, link: supUrl };
   }
 };
 var misSt = function (func, someArgs) {
@@ -957,6 +958,9 @@ var misSt = function (func, someArgs) {
         ]
           .toString()
           .split(" ");
+        var allFolders = folderManager();
+        var uniqueCoArray = sheetCalc();
+        var uniqueItemArray = itemCalc();
         content.forEach((paramName, index) => {
           var declaredParamName = declaredParams[index];
           if (
@@ -1012,31 +1016,33 @@ var misSt = function (func, someArgs) {
           ) {
             args["func"] = result;
             resolvedArgs.push(args["func"]);
-          } else if (
-            paramName === "searchString" ||
-            (paramName === null && declaredParamName === "searchString")
-          ) {
-            args["searchString"] = substanceVegas(
-              0,
-              [
-                objectOfS(
-                  ["parameter"],
-                  [[["func", result]]],
-                  Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-                ).parameter["func"],
-              ].toString().length,
-              [
-                objectOfS(
-                  ["parameter"],
-                  [[["func", result]]],
-                  Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-                ).parameter["func"],
-              ]
-                .toString()
-                .split(""),
-            ).substWord;
-            resolvedArgs.push(args["searchString"]);
-          } else if (
+          }
+          // else if (
+          //   paramName === "searchString" ||
+          //   (paramName === null && declaredParamName === "searchString")
+          // ) {
+          //   args["searchString"] = substanceVegas(
+          //     0,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ].toString().length,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ]
+          //       .toString()
+          //       .split(""),
+          //   ).substWord;
+          //   resolvedArgs.push(args["searchString"]);
+          // }
+          else if (
             paramName === "varA" ||
             (paramName === null && declaredParamName === "varA")
           ) {
@@ -1061,7 +1067,8 @@ var misSt = function (func, someArgs) {
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
           ) {
-            args["url"] = getScriptUrl();
+            var folder = allFolders[numVarRnd];
+            args["url"] = fileBrowser(folder).url;
             resolvedArgs.push(args["url"]);
           } else if (
             paramName === "object" ||
@@ -1083,7 +1090,6 @@ var misSt = function (func, someArgs) {
             paramName === "fileX" ||
             (paramName === null && declaredParamName === "fileX")
           ) {
-            var allFolders = folderManager();
             var folderX = allFolders[numVarRnd];
             var folderRoot = DriveApp.getFoldersByName(folderX);
             let fileXName = "undefined";
@@ -1107,7 +1113,6 @@ var misSt = function (func, someArgs) {
             paramName === "folderX" ||
             (paramName === null && declaredParamName === "folderX")
           ) {
-            var allFolders = folderManager();
             args["folderX"] = allFolders[numVarRnd];
             resolvedArgs.push(args["folderX"]);
           } else if (
@@ -1122,6 +1127,49 @@ var misSt = function (func, someArgs) {
           ) {
             args["infinitum"] = numVarRnd;
             resolvedArgs.push(args["infinitum"]);
+          } else if (
+            paramName === "itemName" ||
+            (paramName === null && declaredParamName === "itemName")
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueItemArray.length),
+            );
+            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
+            resolvedArgs.push(args["itemName"]);
+          } else if (
+            paramName === "tunPlay" ||
+            paramName === "searchString" ||
+            paramName === "search" ||
+            (paramName === null && declaredParamName === "tunPlay") ||
+            declaredParamName === "searchString"
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueCoArray.length),
+            );
+            var tiParam = uniqueCoArray[rndItemIndex]["title"];
+            if (paramName === "tunPlay") {
+              args["tunPlay"] = tiParam;
+              resolvedArgs.push(args["tunPlay"]);
+            } else if (paramName === "searchString") {
+              args["searchString"] = tiParam;
+              resolvedArgs.push(args["searchString"]);
+            } else if (paramName === "search") {
+              args["search"] = tiParam;
+              resolvedArgs.push(args["search"]);
+            }
+          } else if (
+            paramName === "stringArray" ||
+            (paramName === null && declaredParamName === "stringArray")
+          ) {
+            args["stringArray"] = appSort(numVarRnd);
+            resolvedArgs.push(args["stringArray"]);
+          } else if (
+            paramName === "argsObject" ||
+            (paramName === null && declaredParamName === "argsObject")
+          ) {
+            var rawVar = mis("VVar");
+            args["argsObject"] = rawVar.app["myVar"];
+            resolvedArgs.push(args["argsObject"]);
           } else {
             if (paramName !== null) {
               args[paramName] = paramName;
@@ -1189,7 +1237,7 @@ var misSt = function (func, someArgs) {
         "function = " + argsX.toString() + " :Skipping .apply(" + content + ")",
       );
       jsonData = content;
-      console.log("typeof " + typeof jsonData + " jsonDara");
+      console.log("typeof " + typeof jsonData + " jsonData");
     }
   } catch (er) {
     console.error(
@@ -1212,7 +1260,7 @@ var isValidUrl = function (text) {
     return { protocol: "", hostname: "", pathname: "", query: "" };
   }
   var urlRegex =
-    /(https?:\/\/)?([\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\((\)\*\+,;=.]+)/gi;
+    /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
   var matches = text.match(urlRegex);
   allMatches = matches ? [...matches] : [];
   if (matches) {
