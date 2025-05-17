@@ -685,11 +685,11 @@ var includeGSFile = function (file, argsArray) {
     .getContent();
 };
 
-var includeGSBlob = function (blob, argsArray) {
+var includeGSBlob = function (blob, argsObject) {
   return renderTemplate(`<?!= appJS ?>`, {
     appJS: async function () {
       try {
-        const content = await serverSide(blob, argsArray);
+        const content = await serverSide(blob, argsObject);
         return content;
       } catch (error_1) {
         console.log(error_1);
