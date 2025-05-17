@@ -101,7 +101,7 @@
             const strValue = eventH.value;
             if (!strValue) {
               eventL.innerText = "... Loading";
-              serverside("driveManager")
+              serverside("fileBrowser", ["videoForms"])
                 .then((stream) => {
                   if (stream) {
                     eventL.innerText = "";
@@ -120,7 +120,8 @@
                         .then((vid) => {
                           if (vid) {
                             document.getElementById("reload01").innerText = "";
-                            document.getElementById("eventRes").src = vid;
+                            document.getElementById("eventRes").src =
+                              JSON.stringify(vid);
                           }
                         })
                         .catch((er) => {
@@ -158,7 +159,8 @@
                             if (vid) {
                               document.getElementById("reload02").innerText =
                                 "";
-                              document.getElementById("eventRes").src = vid;
+                              document.getElementById("eventRes").src =
+                                JSON.stringify(vid);
                             }
                           })
                           .catch((er) => {
@@ -194,7 +196,8 @@
                         .then((vid) => {
                           if (vid) {
                             document.getElementById("reload03").innerText = "";
-                            document.getElementById("eventRes").src = vid;
+                            document.getElementById("eventRes").src =
+                              JSON.stringify(vid);
                           }
                         })
                         .catch((er) => {
@@ -232,7 +235,8 @@
                             if (vid) {
                               document.getElementById("reload04").innerText =
                                 "";
-                              document.getElementById("eventRes").src = vid;
+                              document.getElementById("eventRes").src =
+                                JSON.stringify(vid);
                             }
                           })
                           .catch((er) => {
