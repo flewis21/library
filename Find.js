@@ -12,40 +12,237 @@ var driveManager = function (strNw, time) {
       ", = " +
       time,
   );
-  var iam = JSON.parse(
-    convertToObjects(
-      [[strNw || testlt()]],
-      ["file"],
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-    ),
+
+  console.log(
+    'driveManager: Before iam definition. strNw value: "' +
+      strNw +
+      '", isFalsy: ' +
+      !strNw,
   );
-  var arn = [strNw || testlt()].toString().toLowerCase();
-  if (crmCalc(iam[0]["file"] || arn) !== true) {
-    var eFolder = folderManager();
-    var dataTree = [];
-    var i = 0;
-    var l = eFolder.length - 1;
-    for (i, l; i < l; i++) {
-      var folderRoot = DriveApp.getFoldersByName(eFolder[i]);
-      if (folderRoot.hasNext) {
-        var fileBulk = folderRoot.next().getFiles();
-        if (fileBulk.hasNext()) {
-          while (fileBulk.hasNext()) {
-            var fileUrl = fileBulk.next();
-            var coLate = fileUrl.getName().toLowerCase();
-            if (coLate.indexOf(iam[0]["file"]) !== -1) {
-              var strNwUrl = fileUrl.getUrl();
-              dataTree.push(strNwUrl);
-            }
-          }
-        }
-      }
+  if (!strNw) {
+    console.log("driveManager: strNw is falsy. testlt() will be called.");
+  } else {
+    console.log("driveManager: strNw is truthy. testlt() will NOT be called.");
+  }
+
+  // NOTE: The testlt() call here is still explicit in your code.
+  // This means testlt() will be called regardless of strNw's truthiness
+  // due to its direct placement before the mainStr assignment.
+  var manString = testlt();
+  console.log("driveManager: manString (from testlt()):", manString);
+  var testStrNw = manString.name;
+  console.log("driveManager: testStrNw (manString.name):", testStrNw);
+  var mainStr = strNw || testStrNw;
+  console.log("driveManager: mainStr (strNw || testStrNw):", mainStr);
+
+  var arn = [mainStr].toString().toLowerCase();
+  var iam;
+  try {
+    iam = JSON.parse(
+      convertToObjects(
+        [[mainStr]],
+        ["file"],
+        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      ),
+    );
+    console.log("driveManager: iam successfully parsed:", iam);
+    if (iam && iam[0] && iam[0]["file"]) {
+      console.log('driveManager: iam[0]["file"] is:', iam[0]["file"]);
+    } else {
+      console.warn(
+        'driveManager: iam or iam[0]["file"] is invalid after parsing.',
+      );
     }
-    var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
-    var filedMain = dataTree[rndFiledMain];
-    return filedMain;
+  } catch (e) {
+    console.error("driveManager: Error parsing iam JSON:", e);
+    return null; // Return null if JSON parsing fails
+  }
+
+  var crmCalcResult = crmCalc(iam[0]["file"] || arn);
+  console.log(
+    "driveManager: crmCalc result (index of found function or -1): " +
+      crmCalcResult,
+  );
+
+  // If crmCalcResult is 0 or positive (meaning a function was found),
+  // then we stop execution and return null as per your desired guard logic.
+  if (crmCalcResult >= 0) {
+    console.log(
+      "driveManager: Matching function name found (index: " +
+        crmCalcResult +
+        "). Stopping further DriveApp execution.",
+    );
+    return null;
+  } else {
+    // If crmCalcResult is -1 (meaning no function was found),
+    // then we proceed with the DriveApp search using DriveApp.searchFiles().
+    console.log(
+      "driveManager: No matching function name found. Proceeding with efficient DriveApp search.",
+    );
+
+    var dataTree = [];
+    var targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
+
+    if (!targetFile) {
+      console.warn(
+        "driveManager: targetFile is invalid. Cannot perform DriveApp search. Returning null.",
+      );
+      return null;
+    }
+
+    // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
+    // Construct the search query. 'title contains' searches file names.
+    // Use the exact targetFile for the query.
+    var searchQuery = 'title contains "' + targetFile + '"';
+    console.log(
+      "driveManager: Performing DriveApp search with query:",
+      searchQuery,
+    );
+
+    try {
+      var files = DriveApp.searchFiles(searchQuery);
+
+      while (files.hasNext()) {
+        var file = files.next();
+        var fileUrl = file.getUrl();
+        dataTree.push(fileUrl);
+        console.log("driveManager: Found and added file URL:", fileUrl);
+      }
+    } catch (e) {
+      console.error("driveManager: Error during DriveApp search:", e);
+      return null; // Handle search errors gracefully
+    }
+
+    console.log(
+      "driveManager: Final dataTree length after search:",
+      dataTree.length,
+    );
+
+    if (dataTree.length > 0) {
+      var rndFiledMain = Math.floor(Math.random() * dataTree.length);
+      var filedMain = dataTree[rndFiledMain];
+      console.log(
+        "driveManager: Returning a random found file URL:",
+        filedMain,
+      );
+      return filedMain;
+    } else {
+      console.warn(
+        "driveManager: No matching files found after DriveApp search. Returning null.",
+      );
+      return null;
+    }
   }
 };
+// var driveManager = function (strNw, time) {
+//   console.log(
+//     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+//       "\n" +
+//       arguments.callee.name +
+//       "\nstrNw is !" +
+//       !strNw +
+//       ", = " +
+//       strNw +
+//       "\ntime is !" +
+//       !time +
+//       ", = " +
+//       time,
+//   );
+
+//   // *** ADD THIS LOGGING LINE ***
+//   console.log('driveManager: Before iam definition. strNw value: "' + strNw + '", isFalsy: ' + !strNw);
+//   if (!strNw) {
+//       console.log('driveManager: strNw is falsy. testlt() will be called.');
+//   } else {
+//       console.log('driveManager: strNw is truthy. testlt() will NOT be called.');
+//   }
+
+//   var manString = testlt();
+//   var testStrNw = manString.name;
+//   var mainStr = strNw || testStrNw
+//   var arn = [mainStr].toString().toLowerCase();
+//   var iam = JSON.parse(
+//     convertToObjects(
+//       [[mainStr]],
+//       ["file"],
+//       Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+//     ),
+//   );
+//   var crmCalcResult = crmCalc(iam[0]["file"] || arn); // This will be a number (-1 or >= 0)
+
+//   // Add more detailed logging for crmCalcResult for clarity:
+//   console.log('driveManager: crmCalc result (index of found function or -1): ' + crmCalcResult);
+
+//   // --- MODIFIED IF CONDITION ---
+//   // If crmCalcResult is 0 or positive (meaning a function was found),
+//   // then we stop execution and return.
+//   if (crmCalcResult >= 0) {
+//     console.log('driveManager: Matching function name found (index: ' + crmCalcResult + '). Stopping further DriveApp execution.');
+//     // You need to decide what to return here.
+//     // Returning null is often a good way to indicate "no data found/processed due to condition".
+//     return null;
+//     // Or, if you want to explicitly return the found function name, you could:
+//     // return lowCapApp[crmCalcResult]; // This would require passing appList or lowCapApp back from crmCalc, or re-deriving it.
+//     // For now, let's stick to null to indicate no DriveApp action.
+//   } else {
+//     console.log('driveManager: No matching function name found. Proceeding with DriveApp search.');
+
+//     var eFolder = folderManager();
+//     console.log('driveManager: eFolder (from folderManager):', eFolder);
+//     var dataTree = [];
+//     var i = 0;
+
+//     if (!Array.isArray(eFolder)) {
+//         console.error("driveManager: folderManager did not return an array. Cannot proceed.");
+//         return null;
+//     }
+
+//     var l = eFolder.length;
+//     for (i = 0; i < l; i++) {
+//       var folderName = eFolder[i];
+//       if (!folderName || typeof folderName !== 'string') {
+//           console.warn("driveManager: Invalid folder name at index " + i + ": " + folderName + ". Skipping.");
+//           continue;
+//       }
+//       console.log('driveManager: Looping through folder:', folderName);
+//       var folderRoot = DriveApp.getFoldersByName(folderName);
+//       console.log('driveManager: Folder found by name? (hasNext):', folderRoot.hasNext());
+
+//       // --- FIX IS HERE: Call .next() only ONCE ---
+//       if (folderRoot.hasNext()) {
+//         var folder = folderRoot.next(); // <--- Get the folder object ONCE
+//         console.log('driveManager: Getting files for folder:', folder.getName()); // Use the retrieved folder object
+//         var fileBulk = folder.getFiles();
+//         console.log('driveManager: File found in folder? (fileBulk.hasNext):', fileBulk.hasNext())
+//         if (fileBulk.hasNext()) {
+//           while (fileBulk.hasNext()) {
+//             var fileUrl = fileBulk.next();
+//             var coLate = fileUrl.getName().toLowerCase();
+//             var targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
+//             console.log('driveManager: Checking file name:', coLate, 'against target:', targetFile);
+//             if (targetFile && coLate.indexOf(targetFile) !== -1) {
+//               var strNwUrl = fileUrl.getUrl();
+//               dataTree.push(strNwUrl);
+//               console.log('driveManager: dataTree after adding a URL:', dataTree);
+//             } else if (!targetFile) {
+//                  console.warn("driveManager: iam[0]['file'] is invalid. Cannot filter files.");
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     console.log('driveManager: Final dataTree length:', dataTree.length);
+//     if (dataTree.length > 0) {
+//       var rndFiledMain = Math.floor(Math.random() * dataTree.length);
+//       var filedMain = dataTree[rndFiledMain];
+//       return filedMain;
+//     } else {
+//       console.warn("driveManager: No matching files found after DriveApp search. Returning null.");
+//       return null;
+//     }
+//   }
+// };
 var matchManager = function (folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
   var arn = [narrow || testlt()].toString().toLowerCase();
@@ -146,6 +343,41 @@ var matchManager = function (folderX, narrow, time) {
     };
   }
 };
+// var folderManager = function (folderX, time) {
+//   console.log(
+//     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+//       "\n" +
+//       arguments.callee.name +
+//       "\nfolderX is !" +
+//       !folderX +
+//       ", = " +
+//       folderX +
+//       "\ntime is !" +
+//       !time +
+//       ", = " +
+//       time,
+//   );
+//   var folderTree = [];
+//   var tree = DriveApp.getFolders();
+//   while (tree.hasNext() && tree.next().getFiles().hasNext()) {
+//     folderTree.push(tree.next().getName());
+//   }
+//   if (folderX) {
+//     console.log(
+//       Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\nDeclaring match = folderMatch(" +
+//         folderX,
+//       "folderTree)",
+//     );
+//     var match = folderMatch(folderX, folderTree);
+//     return match;
+//   } else {
+//     return folderTree;
+//   }
+// };
+
 var folderManager = function (folderX, time) {
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
@@ -161,10 +393,17 @@ var folderManager = function (folderX, time) {
       time,
   );
   var folderTree = [];
-  var tree = DriveApp.getFolders();
-  while (tree.hasNext() && tree.next().getFiles().hasNext()) {
-    folderTree.push(tree.next().getName());
+  var tree = DriveApp.getFolders(); // Iterator for folders
+
+  // Corrected while loop: Call next() only once per iteration
+  while (tree.hasNext()) {
+    var folder = tree.next(); // Get the current folder
+    // Now check if this 'folder' has files before adding its name
+    if (folder.getFiles().hasNext()) {
+      folderTree.push(folder.getName());
+    }
   }
+
   if (folderX) {
     console.log(
       Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
@@ -180,6 +419,7 @@ var folderManager = function (folderX, time) {
     return folderTree;
   }
 };
+
 var fileTypeManager = function (fileType) {
   if (fileType === DriveApp.MimeType.GOOGLE_DOCS) {
     return DocumentApp;
