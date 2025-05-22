@@ -447,6 +447,7 @@ var defSBD = function (e) {
     );
   }
 };
+
 var freeSBD = function (func) {
   try {
     if (typeof globalThis[func] == "function") {
@@ -721,8 +722,6 @@ var includeJs = function (blob, argsObject) {
     .evaluate()
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
 };
-
-var maxTime = new Date(6 * 59.9 * 1000);
 
 var myFunction = function (webApp, argsObject) {
   const tmp = HtmlService.createHtmlOutput(webApp);
