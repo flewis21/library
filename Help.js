@@ -1,13 +1,10 @@
 var seoPastTime = function (searchString, time) {
-  searchString
-    ? searchString
-    : (searchString = objectOfS(
-        ["parameter"],
-        [[["func", testlt()]]],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-      ));
-  if (typeof searchString === "object") {
-    searchString = searchString.parameter["func"];
+  var fParams = paramVals(arguments.callee.name);
+  if (typeof searchString === "undefined") {
+    var searchString = resolveParams(fParams)[0];
+  }
+  if (typeof time === "undefined") {
+    var time = resolveParams(fParams)[1];
   }
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
@@ -22,9 +19,6 @@ var seoPastTime = function (searchString, time) {
       ", = " +
       time,
   );
-  if (typeof time === "undefined") {
-    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
-  }
   while (typeof fndOrd !== "object") {
     var uniqueVid = seoYoutube(searchString, time).myIdArr;
     var sorFndOrd = uniqueVid.filter((vidObject) => {
@@ -177,6 +171,13 @@ var seoPastTime = function (searchString, time) {
   }
 };
 var seoYoutube = function (searchString, time) {
+  var fParams = paramVals(arguments.callee.name);
+  if (typeof time === "undefined") {
+    var time = resolveParams(fParams)[1];
+  }
+  if (typeof searchString === "undefined") {
+    var searchString = resolveParams(fParams)[0];
+  }
   console.log(
     Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
@@ -190,12 +191,6 @@ var seoYoutube = function (searchString, time) {
       ", = " +
       time,
   );
-  if (typeof time === "undefined") {
-    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
-  }
-  if (typeof searchString === "undefined") {
-    var searchString = testlt();
-  }
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
   var data = unFilData.getContentText();
@@ -305,12 +300,11 @@ var crmT = function (func) {
   return funFirst;
 };
 var testlt = function () {
-  var numVarRnd = randNum(
-    arguments.callee.caller.name || arguments.callee.name,
-  );
-  var arrNum = numVarRnd;
-  var arrDRnd = appSort(arrNum);
-  var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+  console.log("*** Inside testlt() function. It has been called. ***");
+  // var numVarRnd = randNum;
+  // var arrNum = numVarRnd
+  // var arrDRnd = appSort(arrNum);
+  // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
     return rndS.name === searchString;
@@ -321,6 +315,8 @@ var testlt = function () {
     console.log("No function parameters found for:", searchString);
     return searchString;
   }
+  // Make sure testlt() returns something that JSON.parse expects,
+  // or it will also cause issues down the line.
 };
 var gsFiles = function () {
   var gsFileList = [];
@@ -357,9 +353,354 @@ var gsFParams = function () {
   return gsParamsList;
 };
 var paramVals = function (funcInfo) {
-  var funcUno = funcInfo.name;
-  var funcDos = funcInfo.parameters || [];
-  var gArgs = globalThis[funcUno + "Args"] || globalThis[funcUno];
+  var fParams = gsFParams();
+  var result = fParams.find((rndS) => {
+    return rndS.name === funcInfo;
+  });
+  if (typeof result === "object" && result !== null && result.name) {
+    misArgs =
+      result.parameters && result.parameters.length > 0
+        ? [result.name, ...result.parameters]
+        : [result.name];
+  }
+  return misArgs;
+};
+var resolveParams = function (func, someArgs) {
+  var funcUno = decodeURIComponent(func);
+  // ? console.log("funcUno = " + typeof funcUno)
+  // : console.error("funcUno = " + typeof funcUno);
+  var funcDos = decodeURIComponent(someArgs);
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+  var numVarRnd = randNum(
+    arguments.callee.caller.name || arguments.callee.name,
+  );
+  var argsX = [];
+  var content = [];
+  var keys = [
+    funcDos !== "undefined"
+      ? [funcUno].concat([Object.values(funcDos)])
+      : [funcUno],
+  ]
+    .toString()
+    .split(",");
+  keys.forEach((pro) => {
+    var bPro = crmT(pro);
+    if (bPro >= 0) {
+      argsX.push(gsFiles()[bPro]);
+    } else {
+      content.push(pro);
+    }
+  });
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+  if (argsX) {
+    var allErrors = {};
+    var fParams = gsFParams();
+    var resCount = 0;
+    argsX.forEach((result) => {
+      console.log("argsX result " + resCount + ": " + result);
+      var args = {};
+      var resolvedArgs = [];
+      var missingParams = [];
+      var searchString = fParams.find((rndS) => {
+        return rndS.name === result;
+      });
+      var orderedArgs = [];
+      if (
+        searchString &&
+        searchString !== "undefined" &&
+        searchString !== null &&
+        searchString.parameters
+      ) {
+        var declaredParams = searchString.parameters;
+        console.log(
+          "Current content: " +
+            content +
+            "\nDeclared parameters: " +
+            declaredParams,
+        );
+        var contentMap = {};
+        content.forEach((item) => {
+          declaredParams.forEach((declaredParam) => {
+            if (item !== null) {
+              if (item === declaredParam || item.includes(declaredParam)) {
+                contentMap[declaredParam] = item;
+              }
+            }
+          });
+        });
+        declaredParams.forEach((paramName) => {
+          if (contentMap.hasOwnProperty(paramName)) {
+            orderedArgs.push(contentMap[paramName]);
+          } else {
+            orderedArgs.push(null);
+          }
+        });
+        console.log("Ordered arguments: " + orderedArgs);
+        content = orderedArgs;
+      }
+      if (content) {
+        var htmlArray = [
+          `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+        ]
+          .toString()
+          .split(" ");
+        var allFolders = folderManager();
+        var uniqueCoArray = sheetCalc();
+        var uniqueItemArray = itemCalc();
+        content.forEach((paramName, index) => {
+          var declaredParamName = declaredParams[index];
+          if (
+            paramName === "e" ||
+            (paramName === null && declaredParamName === "e")
+          ) {
+            args["e"] = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", result],
+                  ["args", JSON.stringify(content)],
+                  ["action", "getData"],
+                  ["file", "uiAccess"],
+                ],
+              ],
+              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+            );
+            resolvedArgs.push(args["e"]);
+          } else if (
+            paramName === "time" ||
+            (paramName === null && declaredParamName === "time")
+          ) {
+            args["time"] = Math.floor(
+              (maxTime - (new Date() % (1000 * 60))) / 1000,
+            );
+            resolvedArgs.push(args["time"]);
+          } else if (
+            paramName === "data" ||
+            (paramName === null && declaredParamName === "data")
+          ) {
+            var rndE = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", "mis"],
+                  ["args", [result, ...content]],
+                ],
+              ],
+              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+            );
+            var funcUno = rndE.parameter["func"];
+            var funcDos = rndE.parameter["args"];
+            var payLoad = `globalThis[funcUno].apply(this, funcDos)`;
+            args["data"] = {
+              message: payLoad,
+              timestamp: new Date(),
+            };
+            resolvedArgs.push(args["data"]);
+          } else if (
+            paramName === "func" ||
+            (paramName === null && declaredParamName === "func")
+          ) {
+            args["func"] = result;
+            resolvedArgs.push(args["func"]);
+          }
+          // else if (
+          //   paramName === "searchString" ||
+          //   (paramName === null && declaredParamName === "searchString")
+          // ) {
+          //   args["searchString"] = substanceVegas(
+          //     0,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ].toString().length,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ]
+          //       .toString()
+          //       .split(""),
+          //   ).substWord;
+          //   resolvedArgs.push(args["searchString"]);
+          // }
+          else if (
+            paramName === "varA" ||
+            (paramName === null && declaredParamName === "varA")
+          ) {
+            arrDRnd = appSort(numVarRnd);
+            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+            result = fParams.find((rndS) => {
+              return rndS.name === searchString;
+            });
+            if (typeof result === "string") {
+              args["varA"] = globalThis[result]();
+            } else if (
+              typeof result === "object" &&
+              result !== null &&
+              result.name
+            ) {
+              args["varA"] = globalThis[result.name].apply(result.parameters);
+            } else {
+              args["varA"] = globalThis[result.name]();
+            }
+            resolvedArgs.push(args["varA"]);
+          } else if (
+            paramName === "url" ||
+            (paramName === null && declaredParamName === "url")
+          ) {
+            var folder = allFolders[numVarRnd];
+            args["url"] = fileBrowser(folder).url;
+            resolvedArgs.push(args["url"]);
+          } else if (
+            paramName === "object" ||
+            (paramName === null && declaredParamName === "object")
+          ) {
+            args["object"] = JSON.stringify({});
+            resolvedArgs.push(args["object"]);
+          } else if (
+            paramName === "file" ||
+            (paramName === null && declaredParamName === "file")
+          ) {
+            var rndPage =
+              htmlArray[
+                Math.floor(Math.random() * Math.floor(htmlArray.length))
+              ];
+            args["file"] = rndPage;
+            resolvedArgs.push(args["file"]);
+          } else if (
+            paramName === "fileX" ||
+            (paramName === null && declaredParamName === "fileX")
+          ) {
+            var folderX = allFolders[numVarRnd];
+            var folderRoot = DriveApp.getFoldersByName(folderX);
+            let fileXName = "undefined";
+            if (folderRoot.hasNext) {
+              var fileBulk = folderRoot.next().getFiles();
+              const fileNames = [];
+              if (fileBulk.hasNext()) {
+                while (fileBulk.hasNext()) {
+                  var fileUrl = fileBulk.next();
+                  fileNames.push(fileUrl.getName());
+                }
+                if (fileNames.length > 0) {
+                  fileXName =
+                    fileNames[Math.floor(Math.random() * fileNames.length)];
+                }
+              }
+            }
+            args["fileX"] = fileXName;
+            resolvedArgs.push(args["fileX"]);
+          } else if (
+            paramName === "folderX" ||
+            paramName === "folder" ||
+            (paramName === null && declaredParamName === "folderX") ||
+            declaredParamName === "folder"
+          ) {
+            if (paramName === "folderX") {
+              args["folderX"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folderX"]);
+            } else if (paramName === "folder") {
+              args["folder"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folder"]);
+            }
+          } else if (
+            paramName === "numIndex" ||
+            (paramName === null && declaredParamName === "numIndex")
+          ) {
+            args["numIndex"] = numVarRnd;
+            resolvedArgs.push(args["numIndex"]);
+          } else if (
+            paramName === "infinitum" ||
+            (paramName === null && declaredParamName === "infinitum")
+          ) {
+            args["infinitum"] = numVarRnd;
+            resolvedArgs.push(args["infinitum"]);
+          } else if (
+            paramName === "itemName" ||
+            (paramName === null && declaredParamName === "itemName")
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueItemArray.length),
+            );
+            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
+            resolvedArgs.push(args["itemName"]);
+          } else if (
+            paramName === "tunPlay" ||
+            paramName === "searchString" ||
+            paramName === "rndKey" ||
+            paramName === "search" ||
+            (paramName === null && declaredParamName === "tunPlay") ||
+            declaredParamName === "searchString" ||
+            declaredParamName === "search" ||
+            declaredParamName === "rndKey"
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueCoArray.length),
+            );
+            var tiParam = uniqueCoArray[rndItemIndex]["title"];
+            if (paramName === "tunPlay") {
+              args["tunPlay"] = tiParam;
+              resolvedArgs.push(args["tunPlay"]);
+            } else if (paramName === "searchString") {
+              args["searchString"] = tiParam;
+              resolvedArgs.push(args["searchString"]);
+            } else if (paramName === "rndKey") {
+              args["rndKey"] = tiParam;
+              resolvedArgs.push(args["rndKey"]);
+            } else if (paramName === "search") {
+              args["search"] = tiParam;
+              resolvedArgs.push(args["search"]);
+            }
+          } else if (
+            paramName === "stringArray" ||
+            (paramName === null && declaredParamName === "stringArray")
+          ) {
+            args["stringArray"] = appSort(numVarRnd);
+            resolvedArgs.push(args["stringArray"]);
+          } else if (
+            paramName === "argsObject" ||
+            (paramName === null && declaredParamName === "argsObject")
+          ) {
+            var rawVar = mis("VVar");
+            args["argsObject"] = rawVar.app["myVar"];
+            resolvedArgs.push(args["argsObject"]);
+          } else {
+            if (paramName !== null) {
+              args[paramName] = paramName;
+              resolvedArgs.push(args[paramName]);
+            } else {
+              missingParams.push(declaredParamName);
+            }
+          }
+        });
+        if (missingParams.length === 0) {
+          content = resolvedArgs;
+        } else {
+          allErrors[result] =
+            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+          console.error(allErrors[result]);
+          console.log(allErrors[result]);
+        }
+      }
+      console.log("Resolved arguments:", args);
+      console.log("Resolved parameters Array:", resolvedArgs);
+      resCount++;
+    });
+    var errorKeys = Object.keys(allErrors);
+    if (errorKeys.length > 0) {
+      return allErrors;
+    }
+  } else {
+    console.log("No function parameters found for:", searchString);
+  }
+  return content;
 };
 var wwAccess = function (rName, rFunc, rArgs) {
   const Route = {};
@@ -474,10 +815,10 @@ var mis = function (text, maxRetries = 3) {
     //     return html.evaluate().getContent();
     // }
 
-    let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+    let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
     = document.getElementById("breakUrl");</script>`;
     let html = HtmlService.createTemplate(htmlContent);
-    html.url =
+    html.formUrl =
       getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
     html.nav = fx;
     html.action = payLoad;
@@ -531,47 +872,7 @@ var mis = function (text, maxRetries = 3) {
       } else {
         form.addSectionHeaderItem().setTitle("No Function Found");
       }
-      form.addTextItem().setTitle("Industry").setRequired(true);
-      form.addTextItem().setTitle("Sector").setRequired(true);
-      form
-        .addParagraphTextItem()
-        .setTitle("Industry/Market Corrections")
-        .setRequired(false);
-      form.addParagraphTextItem().setTitle("News").setRequired(false);
-      form
-        .addParagraphTextItem()
-        .setTitle("Economic/Business Cycles")
-        .setRequired(false);
-      form.addTextItem().setTitle("Stock Price").setRequired(true);
-      form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-      form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-      form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
-      form.addTextItem().setTitle("Total Equity").setRequired(false);
-      form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-      form
-        .addTextItem()
-        .setTitle("Cash & Marketable Securities")
-        .setRequired(true);
-      form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-      form.addTextItem().setTitle("Inventories").setRequired(true);
-      form.addTextItem().setTitle("Long-term Investments").setRequired(false);
-      form.addTextItem().setTitle("Net PP&E").setRequired(false);
-      form
-        .addTextItem()
-        .setTitle("Current Financial Liabilities")
-        .setRequired(true);
-      form
-        .addTextItem()
-        .setTitle("Long-term Interest-bearing Debts")
-        .setRequired(false);
-      form
-        .addTextItem()
-        .setTitle("Current Year Total Earnings")
-        .setRequired(false);
-      form
-        .addTextItem()
-        .setTitle("Base Year Total Earnings")
-        .setRequired(false);
+      form.addSectionHeaderItem().setTitle(supFunc.res);
       form.addTextItem().setTitle("Your Name").setRequired(true);
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
@@ -886,9 +1187,7 @@ var misSt = function (func, someArgs) {
   var funcDos = decodeURIComponent(someArgs);
   // ? console.log("funcDos = " + typeof funcDos)
   // : console.error("funcDos = " + typeof funcDos);
-  var numVarRnd = randNum(
-    arguments.callee.caller.name || arguments.callee.name,
-  );
+  var numVarRnd = randNum;
   var argsX = [];
   var content = [];
   var keys = [
@@ -911,7 +1210,9 @@ var misSt = function (func, someArgs) {
   if (argsX) {
     var allErrors = {};
     var fParams = gsFParams();
+    var resCount = 0;
     argsX.forEach((result) => {
+      console.log("argsX result " + resCount + ": " + result);
       var args = {};
       var resolvedArgs = [];
       var missingParams = [];
@@ -959,8 +1260,8 @@ var misSt = function (func, someArgs) {
           .toString()
           .split(" ");
         var allFolders = folderManager();
-        var uniqueCoArray = sheetCalc();
-        var uniqueItemArray = itemCalc();
+        // var uniqueCoArray = sheetCalc;
+        // var uniqueItemArray = itemCalc;
         content.forEach((paramName, index) => {
           var declaredParamName = declaredParams[index];
           if (
@@ -1046,8 +1347,8 @@ var misSt = function (func, someArgs) {
             paramName === "varA" ||
             (paramName === null && declaredParamName === "varA")
           ) {
-            arrDRnd = appSort(numVarRnd);
-            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+            // arrDRnd = appSort(numVarRnd);
+            // searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
             result = fParams.find((rndS) => {
               return rndS.name === searchString;
             });
@@ -1111,10 +1412,17 @@ var misSt = function (func, someArgs) {
             resolvedArgs.push(args["fileX"]);
           } else if (
             paramName === "folderX" ||
-            (paramName === null && declaredParamName === "folderX")
+            paramName === "folder" ||
+            (paramName === null && declaredParamName === "folderX") ||
+            declaredParamName === "folder"
           ) {
-            args["folderX"] = allFolders[numVarRnd];
-            resolvedArgs.push(args["folderX"]);
+            if (paramName === "folderX") {
+              args["folderX"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folderX"]);
+            } else if (paramName === "folder") {
+              args["folder"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folder"]);
+            }
           } else if (
             paramName === "numIndex" ||
             (paramName === null && declaredParamName === "numIndex")
@@ -1139,9 +1447,12 @@ var misSt = function (func, someArgs) {
           } else if (
             paramName === "tunPlay" ||
             paramName === "searchString" ||
+            paramName === "rndKey" ||
             paramName === "search" ||
             (paramName === null && declaredParamName === "tunPlay") ||
-            declaredParamName === "searchString"
+            declaredParamName === "searchString" ||
+            declaredParamName === "search" ||
+            declaredParamName === "rndKey"
           ) {
             var rndItemIndex = Math.floor(
               Math.random() * Math.floor(uniqueCoArray.length),
@@ -1153,6 +1464,9 @@ var misSt = function (func, someArgs) {
             } else if (paramName === "searchString") {
               args["searchString"] = tiParam;
               resolvedArgs.push(args["searchString"]);
+            } else if (paramName === "rndKey") {
+              args["rndKey"] = tiParam;
+              resolvedArgs.push(args["rndKey"]);
             } else if (paramName === "search") {
               args["search"] = tiParam;
               resolvedArgs.push(args["search"]);
@@ -1190,6 +1504,7 @@ var misSt = function (func, someArgs) {
       }
       console.log("Resolved arguments:", args);
       console.log("Resolved parameters Array:", resolvedArgs);
+      resCount++;
     });
     var errorKeys = Object.keys(allErrors);
     if (errorKeys.length > 0) {
@@ -1241,10 +1556,18 @@ var misSt = function (func, someArgs) {
     }
   } catch (er) {
     console.error(
-      argsX.toLocaleString() + "(" + content + ")  Error: " + er.toString(),
+      argsX.toLocaleString() +
+        "(" +
+        content.toString() +
+        ")  Error: " +
+        er.toString(),
     );
     var jsonData =
-      argsX.toLocaleString() + "(" + content + ") error: " + er.toString();
+      argsX.toLocaleString() +
+      "(" +
+      content.toString() +
+      ") Error: " +
+      er.toString();
   }
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
