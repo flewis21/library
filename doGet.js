@@ -316,80 +316,328 @@ function handleRequest(e) {
 
 function handleGetData() {
   var rndFunc = testlt();
-  var rndE = objectOfS(
-    ["parameter"],
-    [
+  // var rndE = objectOfS(
+  //   ["parameter"],
+  //   [
+  //     [
+  //       ["func", "mis"],
+  //       ["args", [rndFunc.name, ...rndFunc.parameters]],
+  //     ],
+  //   ],
+  //   Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+  // );
+  // var funcUno = rndE.parameter["func"];
+  // var funcDos = rndE.parameter["args"];
+  // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
+  // var pIndex = payLoad.index;
+  // var pApp = payLoad.app;
+  // var pLink = payLoad.link;
+  // var vUrl = isValidUrl(pApp);
+  // if (!vUrl.hostname || pApp.indexOf(",") > -1) {
+  //   let jsonData = null;
+  //   let htmlDoc = null;
+  //   let errM = null;
+  //   if (typeof pApp === "string") {
+  //     try {
+  //       jsonData = JSON.parse(pApp);
+  //     }
+  //     catch (jsonError) {
+  //       Logger.log("JSON Parse Error: " + jsonError + ", Input: " + pApp); // Log the error and the input
+  //       try {
+  //         htmlDoc = XmlService.parse(pApp);
+  //         if (!htmlDoc.getRootElement() || htmlDoc.getRootElement() !== "html") {
+  //           throw new Error("Not a valid HTML document (no <html> tag or invalid structure).");
+  //         }
+  //       }
+  //       catch (htmlError) {
+  //         Logger.log("HTML Parse Error: " + htmlError + ", Input: " + pApp);  // Log the error and the input
+  //         errM = pApp;
+  //         Logger.log("Response is an error message: " + errM);
+  //       }
+  //     }
+  //     if (jsonData) {
+  //       payLoad = { "jsonData": pLink };
+  //     }
+  //     else if (htmlDoc) {
+  //       payLoad = { "htmlDoc": pLink };
+  //     }
+  //     else if (errM) {
+  //       payLoad = { "errM": pLink };
+  //     }
+  //     else {
+  //       Logger.log("Empty or unexpected response for string input: " + pApp);
+  //     }
+  //   }
+  //   else if (typeof pApp === "object") {
+  //     if (Object.keys(pApp) > 0) {
+  //       payLoad = pApp
+  //       Logger.log("pApp is a non-empty object.  Payload is: " + JSON.stringify(payLoad));
+  //     }
+  //     else {
+  //       payLoad = payLoad
+  //       Logger.log("pApp is an empty object.  No specific action taken.");
+  //     }}
+  // } else {
+  //     const vLen = [83, 94, 97, 99, 101, 103, 136, 132]
+  //     if (!vLen.includes(pApp.length)) {
+  //       payLoad = { "client": pApp};
+  //     }
+  //     else if (vLen.includes(pApp.length)) {
+  //       payLoad = { "webApp": pApp};
+  //     }
+  //   }
+
+  // Logging
+  var rndFunc = testlt();
+  if (typeof mis === "function") {
+    var misArgs;
+    if (typeof rndFunc === "string") {
+      misArgs = [rndFunc];
+    } else if (
+      typeof rndFunc === "object" &&
+      rndFunc !== null &&
+      rndFunc.name
+    ) {
+      misArgs =
+        rndFunc.parameters && rndFunc.parameters.length > 0
+          ? [rndFunc.name, ...rndFunc.parameters]
+          : [rndFunc.name];
+    } else {
+      console.log("Unexpected rndFunc type: ", rndFunc);
+      misArgs = ["Invalid Entry"];
+    }
+
+    var rndE = objectOfS(
+      ["parameter"],
       [
-        ["func", "mis"],
-        ["args", [rndFunc.name, ...rndFunc.parameters]],
+        [
+          ["func", "mis"],
+          ["args", misArgs],
+          ["action", "getData"],
+        ],
       ],
-    ],
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-  );
-  var funcUno = rndE.parameter["func"];
-  var funcDos = rndE.parameter["args"];
-  var payLoad = globalThis[funcUno].apply(this, [funcDos]);
-  var pIndex = payLoad.index;
-  var pApp = payLoad.app;
-  var pLink = payLoad.link;
-  var vUrl = isValidUrl(pApp);
-  if (!vUrl.hostname || pApp.indexOf(",") > -1) {
-    let jsonData = null;
-    let htmlDoc = null;
-    let errM = null;
-    if (typeof pApp === "string") {
-      try {
-        jsonData = JSON.parse(pApp);
-      } catch (jsonError) {
-        Logger.log("JSON Parse Error: " + jsonError + ", Input: " + pApp); // Log the error and the input
-        try {
-          htmlDoc = XmlService.parse(pApp);
-          if (
-            !htmlDoc.getRootElement() ||
-            htmlDoc.getRootElement() !== "html"
-          ) {
-            throw new Error(
-              "Not a valid HTML document (no <html> tag or invalid structure).",
-            );
-          }
-        } catch (htmlError) {
-          Logger.log("HTML Parse Error: " + htmlError + ", Input: " + pApp); // Log the error and the input
-          errM = pApp;
-          Logger.log("Response is an error message: " + errM);
-        }
-      }
-      if (jsonData) {
-        payLoad = { jsonData: pLink };
-      } else if (htmlDoc) {
-        payLoad = { htmlDoc: pLink };
-      } else if (errM) {
-        payLoad = { errM: pLink };
-      } else {
-        Logger.log("Empty or unexpected response for string input: " + pApp);
-      }
-    } else if (typeof pApp === "object") {
-      if (Object.keys(pApp) > 0) {
-        payLoad = pApp;
-        Logger.log(
-          "pApp is a non-empty object.  Payload is: " + JSON.stringify(payLoad),
-        );
-      } else {
-        payLoad = payLoad;
-        Logger.log("pApp is an empty object.  No specific action taken.");
-      }
-    }
-  } else {
-    const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
-    if (!vLen.includes(pApp.length)) {
-      payLoad = { client: pApp };
-    } else if (vLen.includes(pApp.length)) {
-      payLoad = { webApp: pApp };
-    }
+      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    );
+    console.log(JSON.stringify(rndE));
   }
 
-  Logger.log("The final value of payLoad. " + JSON.stringify(payLoad));
+  // Logging
+  console.log(
+    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      "\n" +
+      arguments.callee.name +
+      "\ne is !" +
+      !rndE +
+      ", = " +
+      JSON.stringify(rndE),
+  );
+
+  var funcUno = rndE.parameter["func"];
+  var funcDos = rndE.parameter["args"];
+  const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+  var payLoad = {}; // Initialize payload
+
+  // --- BEGIN Refactored payLoad processing ---
+  let appL = "";
+  let iframeSrc =
+    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+  let feed = "";
+
+  try {
+    let rawFuncResult = null;
+    if (typeof globalThis[funcUno] === "function") {
+      let parsedFuncArgs = [];
+      if (funcDos) {
+        try {
+          parsedFuncArgs = JSON.parse(funcDos);
+          if (!Array.isArray(parsedFuncArgs)) {
+            parsedFuncArgs = [parsedFuncArgs];
+          }
+        } catch (jsonError) {
+          parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+        }
+      }
+      rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+    } else {
+      console.error(
+        `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
+      );
+      rawFuncResult = {
+        type: "error",
+        message: `Function "${funcUno}" not found.`,
+      };
+    }
+
+    // Helper function to process any value (rawFuncResult or a nested property like .app)
+    function processContent(content) {
+      if (!content) {
+        return { type: "unknown", data: null };
+      }
+
+      // Regex for a basic HTTP/HTTPS URL validation
+      // This regex is fairly comprehensive for common URLs but can be refined if needed.
+      const urlRegex =
+        /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/[a-zA-Z0-9]+\.[^\s]{2,}|[a-zA-Z0-9]+\.[^\s]{2,})$/i;
+
+      // 1. Handle UrlFetchApp.HTTPResponse
+      if (
+        typeof content.getResponseCode === "function" &&
+        typeof content.getContentText === "function"
+      ) {
+        const contentType = content.getHeaders()["Content-Type"] || "";
+        const responseText = content.getContentText();
+
+        if (contentType.includes("application/json")) {
+          try {
+            return { type: "jsonData", data: JSON.parse(responseText) };
+          } catch (e) {
+            return {
+              type: "text",
+              data: `Error parsing JSON from URL fetch: ${responseText}`,
+            };
+          }
+        } else if (contentType.includes("text/html")) {
+          return { type: "html", data: responseText };
+        } else {
+          return { type: "text", data: responseText };
+        }
+      }
+      // 2. Handle Google Apps Script HtmlOutput
+      else if (typeof content.getContent === "function") {
+        return { type: "html", data: content.getContent() };
+      }
+      // 3. Handle String content (URL, JSON, HTML, or plain text)
+      else if (typeof content === "string") {
+        // --- MODIFIED: Use Regex for URL check ---
+        if (urlRegex.test(content)) {
+          return { type: "url", data: content }; // New type "url" for strings
+        }
+        // --- END MODIFIED ---
+
+        try {
+          const parsedJson = JSON.parse(content);
+          return { type: "jsonData", data: parsedJson };
+        } catch (jsonError) {
+          // Not JSON, treat as HTML or plain text
+          if (content.trim().startsWith("<") && content.trim().endsWith(">")) {
+            // More robust HTML check
+            return { type: "html", data: content };
+          } else {
+            return { type: "text", data: content };
+          }
+        }
+      }
+      // 4. Handle Generic Objects
+      else if (typeof content === "object" && content !== null) {
+        // If the object itself contains structured data you want to directly use
+        if (content.html) {
+          // If there's an explicit 'html' property
+          return { type: "html", data: content.html };
+        }
+        if (content.url && urlRegex.test(content.url)) {
+          // Use regex for object.url as well
+          return { type: "url", data: content.url };
+        }
+        // Add other specific object property checks here if needed
+        return { type: "object", data: content }; // Default for other objects
+      }
+      // 5. Default unknown
+      else {
+        return { type: "unknown", data: content };
+      }
+    }
+
+    // Process the main rawFuncResult
+    payLoad = processContent(rawFuncResult);
+
+    // If rawFuncResult was an object and it had an 'app' property,
+    // we should specifically process that 'app' property as well.
+    // This assumes that the 'app' property might override or provide the primary content.
+    if (
+      rawFuncResult &&
+      typeof rawFuncResult === "object" &&
+      rawFuncResult.app
+    ) {
+      console.log("the 'app' property:", rawFuncResult);
+      const appProcessed = processContent(rawFuncResult.app);
+      // Overwrite payLoad if 'app' property yields more specific or desired content
+      // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
+      if (
+        appProcessed.type !== "unknown" ||
+        (appProcessed.data !== null && appProcessed.data !== undefined)
+      ) {
+        payLoad = appProcessed;
+        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+        // represent something distinct from the 'app' content but should still be propagated.
+        if (rawFuncResult.link && !payLoad.link) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        if (rawFuncResult.index && !payLoad.index) {
+          // Only add if payLoad doesn't already have it
+          payLoad.index = rawFuncResult.index;
+        }
+      }
+    }
+
+    console.log("payLoad.type === ", payLoad.type);
+    console.log("payLoad.data === ", payLoad.data);
+
+    // Now, use the structured 'payLoad' to set the final content variables
+    // (This part needs adjustments to handle the new "url" type)
+    if (payLoad.type === "html") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      appL = payLoad.data;
+      feed = `URL provided: ${payLoad.link}`;
+    } else if (payLoad.type === "url") {
+      // --- NEW: Handle "url" type directly ---
+      iframeSrc = payLoad.data; // Assign the URL to iframeSrc
+      appL = `URL provided: ${payLoad.index}`;
+      finalFeedDivContent = `URL provided: ${payLoad.link}`;
+    } else if (payLoad.type === "jsonData") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      appL = `${JSON.stringify(payLoad.data, null, 2)}`;
+      feed = `URL provided: ${payLoad.link}`;
+    } else if (payLoad.type === "text") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      appL = payLoad.data;
+      feed = `URL provided: ${payLoad.link}`;
+    } else if (payLoad.type === "object") {
+      // Here, if payLoad.data is an object, you need to decide how to display it.
+      // It could contain sub-properties you want to render.
+      if (payLoad.data.html || payLoad.data.app) {
+        appL = payLoad.data.html || payLoad.data.app;
+        // If the object itself contains a URL, use it for iframeSrc
+        iframeSrc = payLoad.data.url || iframeSrc;
+      } else if (payLoad.data.url) {
+        // If the object explicitly has a 'url' property
+        iframeSrc = payLoad.data.url;
+        appL = `URL provided: ${payLoad.index}`;
+        feed = `URL provided: ${payLoad.link}`;
+      } else {
+        // Default way to display a generic object: stringify it
+        iframeSrc = payLoad.index; // Assign iframeSrc
+        appL = `${payLoad}`;
+        feed = `URL provided: ${payLoad.link}`;
+      }
+    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
+      feed = `Error: ${payLoad.message || payLoad.data || "Unknown error."}`;
+    }
+  } catch (error) {
+    console.error(`Error during payload processing:`, error);
+    feed = `Critical Error: ${error.message}`;
+    iframeSrc = ""; // Clear iframe on critical error
+  }
+  // --- END Refactored payLoad processing ---
+
+  Logger.log("The final value of content. " + JSON.stringify(appL));
   var data = {
-    message: payLoad,
+    message: {
+      content: appL,
+      info: feed,
+      link: iframeSrc, // Clear iframe on critical error
+    },
     timestamp: new Date(),
   };
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
