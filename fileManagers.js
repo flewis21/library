@@ -141,7 +141,7 @@ var driveSheets = function () {
   );
   var fileList = [];
   while (fileList.length === 0) {
-    fileList = matchManager("Sheets").forms;
+    fileList = matchManager("Sheets").sheets;
   }
   var eFolder = DriveApp.getFoldersByName("Sheets").next();
   var rndFiled = Math.floor(Math.random() * Math.floor(fileList.length));
@@ -178,7 +178,7 @@ var driveSheetsFilter = function (filterFiles) {
   );
   var lowList = [];
   while (lowList.length === 0) {
-    fileList = matchManager("Sheets").forms;
+    fileList = matchManager("Sheets").sheets;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
