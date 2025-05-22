@@ -1881,10 +1881,10 @@ var wanUtil = function (namedVar, time) {
   });
 };
 
-var wsSIPOC = function (fileName, col) {
+var wsSIPOC = function (fileX, col) {
   var result = contentApp("", {
     createSheet: (function () {
-      var spreadSheet = driveOpenFiles(fileName);
+      var spreadSheet = driveSheetsFilter(fileX);
       var ss = SpreadsheetApp.open(spreadSheet);
       var sheets = ss.getSheets();
       var ws = sheets[0].activate();
