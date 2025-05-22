@@ -3,11 +3,7 @@ var dtlsPro = function (e) {
   if (typeof e === "undefined") {
     e
       ? (cokey = e)
-      : (cokey = objectOfS(
-          ["parameter"],
-          [[["func", testlt()]]],
-          Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-        ).parameter["func"]);
+      : (cokey = functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
   }
   var boilerUrl = mis(cokey, time);
   if (boilerUrl) {
