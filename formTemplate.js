@@ -38,7 +38,7 @@ var dtls = function (callFunc, time) {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = maxTime - elaspeTime;
+            var timeToExecute = functionRegistry.maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([formName].join(""));
             // form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
@@ -613,10 +613,10 @@ var dtlsResearchForm = function (topic) {
     : (cokey = objectOfS(
         ["parameter"],
         [[["func", arguments.callee.name]]],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        functionRegistry.time,
       ).parameter["func"]);
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -647,8 +647,10 @@ var dtlsResearchForm = function (topic) {
 };
 
 var dtlsSomeFunction = function (e) {
-  var time = start;
-  var uniqueKey = [randomSubstance(0, 4)];
+  var time = functionRegistry.time;
+  var importedData = globalThis.arrD();
+  var funcStr = randomSubstance(0, 4, importedData).myNewArr;
+  var uniqueKey = [funcStr];
   var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
   var rndCoObjects =
     uniqueCoObjects[
@@ -680,7 +682,7 @@ var dtlsSomeFunction = function (e) {
       covIdArray.map((d) => {
         while (d) {
           var elapsedTime = new Date() - time;
-          var timeToExecute = maxTime - elapsedTime;
+          var timeToExecute = functionRegistry.maxTime - elapsedTime;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form
             .addSectionHeaderItem()
@@ -959,7 +961,7 @@ var filetypeBing = function (e) {
         if (piece) {
           if (piece.indexOf("https://") > -1) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = maxTime - elaspeTime;
+            var timeToExecute = functionRegistry.maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([cokey].join(""));
             form.addSectionHeaderItem().setTitle(piece);
@@ -1329,7 +1331,7 @@ var mainMan = function (mainFile) {
 
 var somMainFunc = async function (e) {
   var elapsedTime = new Date() - start;
-  var timeToExecute = maxTime - elapsedTime;
+  var timeToExecute = functionRegistry.maxTime - elapsedTime;
   while (timeToExecute > 0.3 * 60 * 1000) {
     console.log(timeToExecute);
     dtlsSomeFunction("It's who you know");
@@ -1351,7 +1353,7 @@ var somMainFunc = async function (e) {
     if (elapsedTime == 5 * 60 * 1000) {
       console.log("One minute remainig");
     }
-    if (elapsedTime >= maxTime) {
+    if (elapsedTime >= functionRegistry.maxTime) {
       console.log("maximum execution time exceeded");
     }
   }
