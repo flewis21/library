@@ -1,6 +1,6 @@
 var csvDataSource = function (url, params) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -43,7 +43,7 @@ var csvDataSource = function (url, params) {
 
 var dataRowIndex = function (data, row, index) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -62,7 +62,7 @@ var dataRowIndex = function (data, row, index) {
 
 var dtlsCapital = function (url) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -89,7 +89,7 @@ var dtlsCapital = function (url) {
 
 var forArray = function (arrayData) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -108,7 +108,7 @@ var forArray = function (arrayData) {
 
 var forHeaders = function (objectData) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -125,7 +125,7 @@ var forHeaders = function (objectData) {
 
 var forObjects = function (data, delimiter) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -145,7 +145,7 @@ var forObjects = function (data, delimiter) {
 
 var getSize = function (url, params) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -168,7 +168,7 @@ var getSize = function (url, params) {
 
 var jsonDataX = function (data) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -184,11 +184,7 @@ var jsonDataX = function (data) {
 };
 
 async function jsonFormatter() {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var res = UrlFetchApp.fetch(
     "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1",
   );
@@ -224,7 +220,7 @@ async function jsonFormatter() {
 
 var jsonINIT = function (json) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -273,7 +269,7 @@ var jsonINIT = function (json) {
 
 var jsonXpath = function (jsonXpathDataRange) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -304,7 +300,7 @@ var jsonXpath = function (jsonXpathDataRange) {
 
 var needCapital = function (searchString) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -329,7 +325,7 @@ var needCapital = function (searchString) {
 
 var objectHeaders = function (object, index) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -345,7 +341,7 @@ var objectHeaders = function (object, index) {
 
 var rowsToReturn = function (data, index) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -365,7 +361,7 @@ var rowsToReturn = function (data, index) {
 
 var tabData = function (url, xpath, headers) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -382,7 +378,7 @@ var tabData = function (url, xpath, headers) {
 
 var tabField = function (url, xpath, index, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -401,7 +397,7 @@ var tabField = function (url, xpath, index, time) {
 
 var tabIndex = function (url, xpath, index, headers) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -418,7 +414,7 @@ var tabIndex = function (url, xpath, index, headers) {
 
 var tempArrayNoX = function (url, indexParsed, index) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -436,7 +432,7 @@ var tempArrayNoX = function (url, indexParsed, index) {
 
 var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -462,7 +458,7 @@ var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
 
 var udsCache = function (content) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -487,7 +483,7 @@ var udsCache = function (content) {
 
 var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       urlDataSource.name +
       "\n!" +
@@ -496,7 +492,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
       !cokey,
   );
   if (typeof time === "undefined") {
-    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    time = functionRegistry.time;
   }
   if (typeof cokey === "undefined") {
     var cokey = "url data";
