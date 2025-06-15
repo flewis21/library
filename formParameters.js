@@ -1,6 +1,6 @@
 var formMaker = function (fileName, folderX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -20,7 +20,7 @@ var formMaker = function (fileName, folderX, time) {
     console.log(
       "formMaker: \nfileManager(" + newFile.getId(),
       folderX,
-      time + ")",
+      functionRegistry.time + ")",
     );
     try {
       fileManager(newFile.getId(), folderX, time);
@@ -33,7 +33,7 @@ var formMaker = function (fileName, folderX, time) {
 
 var formsUrlsGlobal = function (fileX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -41,23 +41,23 @@ var formsUrlsGlobal = function (fileX, time) {
       ", = " +
       fileX +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   if (!fileX && !time) {
     var numVarRnd = randNum(arguments.callee.name);
     var arrDRnd = appSort(numVarRnd);
     var fileX = randomSubstance(0, 6, arrDRnd).myNewArr;
-    var time = start;
+    var time = functionRegistry.time;
   }
   if (!time) {
-    var time = start;
+    var time = functionRegistry.time;
   }
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
+    var elaspeTime = new Date() - functionRegistry.time;
+    var timeToExecute = functionRegistry.maxTime - elaspeTime;
     var trueName = treeRoot.next();
     if (trueName.getName() === fileX) {
       // console.log("trueName: " + trueName.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
@@ -67,8 +67,8 @@ var formsUrlsGlobal = function (fileX, time) {
   var dataTree = [];
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
+    var elaspeTime = new Date() - functionRegistry.time;
+    var timeToExecute = functionRegistry.maxTime - elaspeTime;
     var myTree = tree.next();
     dataTree.push(myTree.getId());
     // console.log("myTree: " + myTree.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
@@ -76,8 +76,8 @@ var formsUrlsGlobal = function (fileX, time) {
   for (i = 0, l = dataTree.length; i < l; i++) {
     var numFolder = DriveApp.getFolderById(dataTree[i]).getFiles();
     while (numFolder.hasNext()) {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
+      var elaspeTime = new Date() - functionRegistry.time;
+      var timeToExecute = functionRegistry.maxTime - elaspeTime;
       var trueNumName = numFolder.next();
       // console.log("trueNumName: " + trueNumName.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       if (trueNumName.getName() === fileX) {
@@ -89,7 +89,7 @@ var formsUrlsGlobal = function (fileX, time) {
 
 var searchUrlsGlobal = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -115,7 +115,7 @@ var searchUrlsGlobal = function (fileX) {
 
 var searchUrlsRoot = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -136,7 +136,7 @@ var searchUrlsRoot = function (fileX) {
 
 var searchUrlsTree = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -168,11 +168,7 @@ var searchUrlsTree = function (fileX) {
 };
 
 var searchUrlsRandom = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
 
   var fileTree = [];
   var fileData = [];
@@ -200,7 +196,7 @@ var searchUrlsRandom = function () {
 
 var searchTreeRoot = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -219,7 +215,7 @@ var searchTreeRoot = function (fileX) {
 
 var searchDataTree = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
