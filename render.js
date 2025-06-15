@@ -1,9 +1,5 @@
 var appList = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   return HtmlService.createTemplate(
     `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
         a:link, a:visited {color:black !important;}
@@ -203,7 +199,7 @@ var appList = function () {
 
 var contentApp = function (blob, argsObject) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nblob is !" +
@@ -339,12 +335,14 @@ var contentFile = function (file, argsObject) {
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
 function eTest() {
-  console.log(Math.floor(maxTime - start / 1000));
+  console.log(
+    Math.floor(functionRegistry.maxTime - functionRegistry.time / 1000),
+  );
 }
 
-var fiveTime = new Date(5 * 59.9 * 1000).getMilliseconds();
+globalThis.fiveTime = 5 * 59.9 * 1000;
 
-var fourTime = new Date(4 * 59.9 * 1000).getMilliseconds();
+globalThis.fourTime = 4 * 59.9 * 1000;
 
 var include = function (file, argsObject) {
   console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
@@ -738,11 +736,11 @@ var myFunction = function (webApp, argsObject) {
   return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
 };
 
-var oneTime = new Date(59.9 * 1000).getMilliseconds();
+globalThis.oneTime = 59.9 * 1000;
 
 var renderFile = function (file, argsObject, title) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfile is !" +
@@ -780,6 +778,50 @@ var renderFile = function (file, argsObject, title) {
       <html lang="en">
         <head>
           <?!= builtStyling().evaluate().getContent() ?>
+          <style>
+          
+            /* Remove all default table styling and override inline styles */
+            table, thead, tbody, tr, th, td {
+              all: unset !important; /* This is a powerful reset, removing all inherited and default styles */
+              display: block !important; /* Treat all table elements as block-level to remove table-specific layout */
+            }
+
+            /* You might want to re-add some basic block-level display for structure */
+            table {
+              width: 100% !important; /* Example: set table width */
+              border-collapse: separate !important; /* Override default collapse if present */
+              border-spacing: 0 !important; /* Remove spacing between cells */
+            }
+
+            tr {
+              display: flex !important; /* Use flexbox for rows for more control */
+              width: 100% !important;
+            }
+
+            th, td {
+              flex: 1 !important; /* Make cells equally distribute space within the flex row */
+              padding: 0 !important; /* Remove default padding */
+              margin: 0 !important; /* Remove default margin */
+              border: none !important; /* Remove any default borders */
+              vertical-align: top !important; /* Reset vertical alignment */
+              text-align: left !important; /* Reset text alignment */
+            }
+
+            /* If you have specific classes on your table, you can target them with higher specificity if needed */
+            /* For example, to target the inner table specifically */
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {
+              all: unset !important;
+              display: block !important;
+            }
+
+            /* And for its cells, rows, etc. */
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table tr,
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table td {
+              all: unset !important;
+              display: block !important; /* Or display: flex for rows, display: block for cells */
+            }
+
+          </style>
         </head>
         <body id="renderFile">
       <div class="row">
@@ -1072,11 +1114,7 @@ var renderFile = function (file, argsObject, title) {
 };
 
 var renderTemplate = function (blob, argsObject, title) {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
     try {
@@ -1098,7 +1136,51 @@ var renderTemplate = function (blob, argsObject, title) {
     <html id="renderTemplate">
       <head>
         <?!= builtStyling().evaluate().getContent() ?>
-      </head>
+          <style>
+          
+            /* Remove all default table styling and override inline styles */
+            table, thead, tbody, tr, th, td {
+              all: unset !important; /* This is a powerful reset, removing all inherited and default styles */
+              display: block !important; /* Treat all table elements as block-level to remove table-specific layout */
+            }
+
+            /* You might want to re-add some basic block-level display for structure */
+            table {
+              width: 100% !important; /* Example: set table width */
+              border-collapse: separate !important; /* Override default collapse if present */
+              border-spacing: 0 !important; /* Remove spacing between cells */
+            }
+
+            tr {
+              display: flex !important; /* Use flexbox for rows for more control */
+              width: 100% !important;
+            }
+
+            th, td {
+              flex: 1 !important; /* Make cells equally distribute space within the flex row */
+              padding: 0 !important; /* Remove default padding */
+              margin: 0 !important; /* Remove default margin */
+              border: none !important; /* Remove any default borders */
+              vertical-align: top !important; /* Reset vertical alignment */
+              text-align: left !important; /* Reset text alignment */
+            }
+
+            /* If you have specific classes on your table, you can target them with higher specificity if needed */
+            /* For example, to target the inner table specifically */
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {
+              all: unset !important;
+              display: block !important;
+            }
+
+            /* And for its cells, rows, etc. */
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table tr,
+            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table td {
+              all: unset !important;
+              display: block !important; /* Or display: flex for rows, display: block for cells */
+            }
+
+          </style>
+        </head>
       <body>
       <div class="row">
       <div class="col s12 card-panel amber">
@@ -1386,9 +1468,9 @@ var tagBuilder = function (content) {
   return htmlBody;
 };
 
-var threeTime = new Date(3 * 59.9 * 1000).getMilliseconds();
+globalThis.threeTime = 3 * 59.9 * 1000;
 
-var twoTime = new Date(2 * 59.9 * 1000).getMilliseconds();
+globalThis.twoTime = 2 * 59.9 * 1000;
 
 var wildSBD = function (e) {
   var args = e.parameter["args"];
