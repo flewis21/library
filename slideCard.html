@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Business Card Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f3f4f6; /* Light gray background */
+      }
+      .container {
+        max-width: 800px;
+      }
+      .form-input {
+        @apply mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
+      }
+      .form-label {
+        @apply block text-sm font-medium text-gray-700 mt-4;
+      }
+      .btn-primary {
+        @apply px-6 py-3 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200;
+      }
+    </style>
+  </head>
+  <body
+    class="flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+  >
+    <div class="container bg-white p-8 rounded-lg shadow-xl w-full">
+      <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">
+        Create Your Business Card
+      </h1>
+      <p class="text-center text-gray-600 mb-8">
+        Fill out the details below to generate a new business card slide in your
+        Google Slides presentation.
+      </p>
+
+      <form id="cardForm" class="space-y-6">
+        <div>
+          <label for="name" class="form-label">Full Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-input"
+            placeholder="John Doe"
+            required
+          />
+        </div>
+        <div>
+          <label for="title" class="form-label">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-input"
+            placeholder="Software Engineer"
+          />
+        </div>
+        <div>
+          <label for="company" class="form-label">Company:</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            class="form-input"
+            placeholder="Acme Corporation"
+            required
+          />
+        </div>
+        <div>
+          <label for="phone" class="form-label">Phone:</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            class="form-input"
+            placeholder="(123) 456-7890"
+          />
+        </div>
+        <div>
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            placeholder="john.doe@example.com"
+            required
+          />
+        </div>
+        <div>
+          <label for="website" class="form-label">Website (Optional):</label>
+          <input
+            type="url"
+            id="website"
+            name="website"
+            class="form-input"
+            placeholder="https://www.example.com"
+          />
+        </div>
+        <div>
+          <label for="address" class="form-label">Address (Optional):</label>
+          <textarea
+            id="address"
+            name="address"
+            rows="3"
+            class="form-input resize-y"
+            placeholder="123 Main St, Anytown, USA"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-center mt-8">
+          <button type="submit" class="btn-primary" id="submitBtn">
+            Generate Business Card
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="form-message"
+        class="mt-6 p-4 rounded-md text-center hidden"
+        role="alert"
+      ></div>
+    </div>
+
+    <script>
+      // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
+      const SCRIPT_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+      const cardForm = document.getElementById("cardForm");
+      const formMessage = document.getElementById("form-message");
+      const submitBtn = document.getElementById("submitBtn");
+
+      cardForm.addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        formMessage.classList.add("hidden"); // Hide previous messages
+        formMessage.classList.remove(
+          "bg-green-100",
+          "text-green-800",
+          "bg-red-100",
+          "text-red-800",
+        );
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Generating...";
+
+        const formData = new FormData(cardForm);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        try {
+          const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error ${response.status}: ${errorText}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success) {
+            formMessage.textContent = result.message;
+            formMessage.classList.remove("hidden");
+            formMessage.classList.add("bg-green-100", "text-green-800");
+            cardForm.reset(); // Clear form on success
+          } else {
+            formMessage.textContent = result.message;
+            formMessage.classList.remove("hidden");
+            formMessage.classList.add("bg-red-100", "text-red-800");
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          formMessage.textContent = `Error: ${error.message}`;
+          formMessage.classList.remove("hidden");
+          formMessage.classList.add("bg-red-100", "text-red-800");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Generate Business Card";
+        }
+      });
+    </script>
+  </body>
+</html>
