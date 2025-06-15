@@ -1,6 +1,6 @@
 var crmEBI = function (fx) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
