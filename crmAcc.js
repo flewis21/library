@@ -1,36 +1,59 @@
 var crmAcc = function (fx) {
-  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + fx + ", = " + !fx)
+  console.log(
+    functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      fx +
+      ", = " +
+      !fx,
+  );
   // var fx = e;
-  var objMaster = {miscellaneous: {
-                      section: []}}}
+  var objMaster = {
+    miscellaneous: {
+      section: [],
+    },
+  };
+};
 
 function finEd(ed) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !ed,)
-  if (!ed)  {
-    var formData = JSON.parse(convertToObjects([[testlt()]], ["name"], start))[0]}
-  else {
-    var formData = JSON.parse(ed)}
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !ed,
+  );
+  if (!ed) {
+    var formData = JSON.parse(
+      convertToObjects([[testlt()]], ["name"], start),
+    )[0];
+  } else {
+    var formData = JSON.parse(ed);
+  }
   // Get form data from the request
   var arrayData = covArrays(formData);
-  var flatArray = []
+  var flatArray = [];
   var colArray = [];
   const keys = Object.keys(formData);
-  keys.forEach(
-    function(key) {
-      console.log(key)
-      var cleanKey = key.substring(1, key.length -1);
-    colArray.push(JSON.stringify(cleanKey))});
+  keys.forEach(function (key) {
+    console.log(key);
+    var cleanKey = key.substring(1, key.length - 1);
+    colArray.push(JSON.stringify(cleanKey));
+  });
   for (var key in formData) {
-      flatArray.push(formData[key])
-  // for (var val in formData[key]) {
-  //     flatArray.push(formData[key][val])}
-      }
-      var sicSliceArray = flatArray.slice(1)
-      // return dtlsPro(flatArray)
-    var sheetUrl = "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962"
-    var sheetName = "General Work Invoice"
-    var numCols = colArray.length
-    return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, start).myFileX
+    flatArray.push(formData[key]);
+    // for (var val in formData[key]) {
+    //     flatArray.push(formData[key][val])}
+  }
+  var sicSliceArray = flatArray.slice(1);
+  // return dtlsPro(flatArray)
+  var sheetUrl =
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
+  var sheetName = "General Work Invoice";
+  var numCols = colArray.length;
+  return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, start)
+    .myFileX;
   // var name = formData.name;
   // var email = formData.email;
   // var phone = formData.phone;
@@ -40,37 +63,36 @@ function finEd(ed) {
   // var postId = postSheet.getId()
   // var postUrl = postSheet.getUrl()
   // return SpreadsheetApp.openById(postId).getUrl()
-  // var postPub = FormApp.openById(postSheet.getId()).getPublishedUrl() 
+  // var postPub = FormApp.openById(postSheet.getId()).getPublishedUrl()
   // return console.log(postPub)
-  // return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX; 
+  // return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX;
   // try {
-    // Send data to AWS 
-    // var url = "https://YOUR_AWS_ENDPOINT"; // Replace with your AWS endpoint URL
-    // var options = {
-    //   'method': 'post',
-    //   'contentType': 'application/json',
-    //   'payload': JSON.stringify({
-    //     "name": name,
-    //     "email": email,
-    //     "phone": phone,
-    //     "fullTimeEmployees": fullTimeEmployees,
-    //     "partTimeEmployees": partTimeEmployees
-    //   })
-    // };
-    // var response = UrlFetchApp.fetch(url, options);
-    // if (response.getResponseCode() == 200) {
-      // Update Google Sheet if AWS call is successful
-      // return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX; 
-      // return dtlsPro(busS)
-      // return ContentService.createTextOutput("Data sent to AWS and updated in sheet successfully!");
-      // return ContentService.createTextOutput("Data sent to sheet successfully!");
-      // return busS
-    // } else {
-    //   return ContentService.createTextOutput("Error sending data to AWS: " + response.getStatusCode() + " - " + response.getContentText());
-    // }
+  // Send data to AWS
+  // var url = "https://YOUR_AWS_ENDPOINT"; // Replace with your AWS endpoint URL
+  // var options = {
+  //   'method': 'post',
+  //   'contentType': 'application/json',
+  //   'payload': JSON.stringify({
+  //     "name": name,
+  //     "email": email,
+  //     "phone": phone,
+  //     "fullTimeEmployees": fullTimeEmployees,
+  //     "partTimeEmployees": partTimeEmployees
+  //   })
+  // };
+  // var response = UrlFetchApp.fetch(url, options);
+  // if (response.getResponseCode() == 200) {
+  // Update Google Sheet if AWS call is successful
+  // return spreadSheetCreate(name,name, colArray, arrayData, start).myFileX;
+  // return dtlsPro(busS)
+  // return ContentService.createTextOutput("Data sent to AWS and updated in sheet successfully!");
+  // return ContentService.createTextOutput("Data sent to sheet successfully!");
+  // return busS
+  // } else {
+  //   return ContentService.createTextOutput("Error sending data to AWS: " + response.getStatusCode() + " - " + response.getContentText());
+  // }
   // } catch(error) {
-    // return ContentService.createTextOutput("Error sending data to AWS: " + error);
-    // return ContentService.createTextOutput("Error sending data: " + error);
+  // return ContentService.createTextOutput("Error sending data to AWS: " + error);
+  // return ContentService.createTextOutput("Error sending data: " + error);
   // }
 }
-
