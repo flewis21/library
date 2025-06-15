@@ -4,10 +4,10 @@ var seoPastTime = function (searchString, time) {
     var searchString = resolveParams(fParams)[0];
   }
   if (typeof time === "undefined") {
-    var time = resolveParams(fParams)[1];
+    var time = functionRegistry.time;
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -15,15 +15,15 @@ var seoPastTime = function (searchString, time) {
       ", = " +
       searchString +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   while (typeof fndOrd !== "object") {
     var uniqueVid = seoYoutube(searchString, time).myIdArr;
     var sorFndOrd = uniqueVid.filter((vidObject) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
+      var elaspeTime = new Date() - functionRegistry.time;
+      var timeToExecute = functionRegistry.maxTime - elaspeTime;
       if (
         vidObject.length === 11 &&
         vidObject !== '"' &&
@@ -120,8 +120,8 @@ var seoPastTime = function (searchString, time) {
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - time;
-      var timeToExecute = maxTime - elaspeTime;
+      var elaspeTime = new Date() - functionRegistry.time;
+      var timeToExecute = functionRegistry.maxTime - elaspeTime;
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
           test.indexOf("false") === -1 &&
@@ -173,13 +173,13 @@ var seoPastTime = function (searchString, time) {
 var seoYoutube = function (searchString, time) {
   var fParams = paramVals(arguments.callee.name);
   if (typeof time === "undefined") {
-    var time = resolveParams(fParams)[1];
+    var time = functionRegistry.time;
   }
   if (typeof searchString === "undefined") {
-    var searchString = resolveParams(fParams)[0];
+    var searchString = globalThis.searchString().myNewArr;
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -187,9 +187,9 @@ var seoYoutube = function (searchString, time) {
       ", = " +
       searchString +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
@@ -199,7 +199,7 @@ var seoYoutube = function (searchString, time) {
 };
 var vidFactor = function (data, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -207,12 +207,12 @@ var vidFactor = function (data, time) {
       ", = " +
       data +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   if (typeof time === "undefined") {
-    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    time = functionRegistry.time;
   }
   if (typeof data !== "object") {
     data = [data];
@@ -250,7 +250,7 @@ var crmCalc = function (func) {
     lowCapFunc = func.toLowerCase();
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nlowCapFunc is !" +
@@ -283,7 +283,7 @@ var crmT = function (func) {
     lowCapFunc = func.toLowerCase();
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nlowCapFunc is !" +
@@ -305,9 +305,10 @@ var testlt = function () {
   // var arrNum = numVarRnd
   // var arrDRnd = appSort(arrNum);
   // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+  var ssearchString = globalThis.searchString().myNewArr;
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
-    return rndS.name === searchString;
+    return rndS.name === ssearchString;
   });
   if (result) {
     return result;
@@ -465,16 +466,14 @@ var resolveParams = function (func, someArgs) {
                   ["file", "uiAccess"],
                 ],
               ],
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              functionRegistry.time,
             );
             resolvedArgs.push(args["e"]);
           } else if (
             paramName === "time" ||
             (paramName === null && declaredParamName === "time")
           ) {
-            args["time"] = Math.floor(
-              (maxTime - (new Date() % (1000 * 60))) / 1000,
-            );
+            args["time"] = functionRegistry.time;
             resolvedArgs.push(args["time"]);
           } else if (
             paramName === "data" ||
@@ -488,11 +487,13 @@ var resolveParams = function (func, someArgs) {
                   ["args", [result, ...content]],
                 ],
               ],
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              functionRegistry.time,
             );
             var funcUno = rndE.parameter["func"];
             var funcDos = rndE.parameter["args"];
-            var payLoad = `globalThis[funcUno].apply(this, funcDos)`;
+            if (!funcUno === "resolvedParams") {
+              var payLoad = globalThis[funcUno].apply(this, funcDos);
+            }
             args["data"] = {
               message: payLoad,
               timestamp: new Date(),
@@ -547,7 +548,7 @@ var resolveParams = function (func, someArgs) {
               result.name
             ) {
               args["varA"] = globalThis[result.name].apply(result.parameters);
-            } else {
+            } else if (result !== null && result.name) {
               args["varA"] = globalThis[result.name]();
             }
             resolvedArgs.push(args["varA"]);
@@ -857,11 +858,7 @@ var mis = function (text, maxRetries = 3) {
       payT += "(" + payLoad + ")";
     }
     payT = payT.toUpperCase();
-    var form = formMaker(
-      payT,
-      "misForms",
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-    );
+    var form = formMaker(payT, "misForms", functionRegistry.time);
 
     if (typeof form === "object") {
       // fileManager(coData.rndTitle, "Forms")
@@ -877,7 +874,7 @@ var mis = function (text, maxRetries = 3) {
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       form.setConfirmationMessage("Thanks for your feedback !!");
-      var url = form.getPublishedUrl();
+      var url = globalThis[supFunc.func]?.toString() || form.getPublishedUrl();
     }
     console.log("Final app:", supFunc.res);
     return { index: url, app: supFunc.res, link: supUrl };
@@ -914,7 +911,7 @@ var mis = function (text, maxRetries = 3) {
       var form = formMaker(
         [JSON.stringify(validUrl)].join("").toUpperCase(),
         "misForms",
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        functionRegistry.time,
       );
 
       if (typeof form === "object") {
@@ -965,7 +962,7 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form.setConfirmationMessage("Thanks for your feedback !!");
-        var url = form.getPublishedUrl();
+        var url = htmlData || form.getPublishedUrl();
       }
     }
     try {
@@ -1007,7 +1004,7 @@ var mis = function (text, maxRetries = 3) {
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
                 "misForms",
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+                functionRegistry.time,
               );
 
               if (typeof form === "object") {
@@ -1081,7 +1078,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var url = form.getPublishedUrl();
+                var url = htmlData || form.getPublishedUrl();
               }
             } else {
               // No redirect or other error
@@ -1092,7 +1089,7 @@ var mis = function (text, maxRetries = 3) {
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
                 "misForms",
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+                functionRegistry.time,
               );
 
               if (typeof form === "object") {
@@ -1166,7 +1163,7 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var url = form.getPublishedUrl();
+                var url = htmlData || form.getPublishedUrl();
               }
             }
           }
@@ -1278,16 +1275,14 @@ var misSt = function (func, someArgs) {
                   ["file", "uiAccess"],
                 ],
               ],
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              functionRegistry.time,
             );
             resolvedArgs.push(args["e"]);
           } else if (
             paramName === "time" ||
             (paramName === null && declaredParamName === "time")
           ) {
-            args["time"] = Math.floor(
-              (maxTime - (new Date() % (1000 * 60))) / 1000,
-            );
+            args["time"] = functionRegistry.time;
             resolvedArgs.push(args["time"]);
           } else if (
             paramName === "data" ||
@@ -1301,11 +1296,13 @@ var misSt = function (func, someArgs) {
                   ["args", [result, ...content]],
                 ],
               ],
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+              functionRegistry.time,
             );
             var funcUno = rndE.parameter["func"];
             var funcDos = rndE.parameter["args"];
-            var payLoad = `globalThis[funcUno].apply(this, funcDos)`;
+            if (!funcUno === "misSt") {
+              var payLoad = globalThis[funcUno].apply(this, funcDos);
+            }
             args["data"] = {
               message: payLoad,
               timestamp: new Date(),
@@ -1360,7 +1357,7 @@ var misSt = function (func, someArgs) {
               result.name
             ) {
               args["varA"] = globalThis[result.name].apply(result.parameters);
-            } else {
+            } else if (result && result.name) {
               args["varA"] = globalThis[result.name]();
             }
             resolvedArgs.push(args["varA"]);
@@ -1440,9 +1437,10 @@ var misSt = function (func, someArgs) {
             (paramName === null && declaredParamName === "itemName")
           ) {
             var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueItemArray.length),
+              Math.random() * Math.floor(globalThis.uniqueItemArray().length),
             );
-            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
+            args["itemName"] =
+              globalThis.uniqueItemArray()[rndItemIndex].Description;
             resolvedArgs.push(args["itemName"]);
           } else if (
             paramName === "tunPlay" ||
@@ -1455,9 +1453,9 @@ var misSt = function (func, someArgs) {
             declaredParamName === "rndKey"
           ) {
             var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueCoArray.length),
+              Math.random() * Math.floor(globalThis.uniqueCoArray().length),
             );
-            var tiParam = uniqueCoArray[rndItemIndex]["title"];
+            var tiParam = globalThis.uniqueCoArray()[rndItemIndex]["title"];
             if (paramName === "tunPlay") {
               args["tunPlay"] = tiParam;
               resolvedArgs.push(args["tunPlay"]);
@@ -1629,7 +1627,7 @@ var isValidUrl = function (text) {
 };
 var vidPlaylist = function (tunPlay) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ntunPlay !" +
@@ -1641,7 +1639,7 @@ var vidPlaylist = function (tunPlay) {
   var listGen = objectOfS(
     ["parameter"],
     [[["func", testGen]]],
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    functionRegistry.time,
   ).parameter["func"];
   var noList = [];
   while (noList.length < 3) {
