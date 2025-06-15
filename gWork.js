@@ -1,6 +1,6 @@
 var allTime = function (rndKey, arrD, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -17,7 +17,7 @@ var allTime = function (rndKey, arrD, time) {
       !time,
   );
   if (typeof time === "undefined") {
-    var time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    var time = functionRegistry.time;
   }
   if (typeof rndKey === "undefined" || typeof rndKey === null) {
     var uniqueKey = randomSubstance(0, 4, null, arrD, time).myNewArr;
@@ -117,7 +117,7 @@ var allTime = function (rndKey, arrD, time) {
 
 var covArrays = function (object, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nobject is !" +
@@ -131,8 +131,7 @@ var covArrays = function (object, time) {
   );
   const dataArray = [];
   for (var obj in object) {
-    var elaspeTime =
-      new Date() - Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    var elaspeTime = new Date() - functionRegistry.time;
     dataArray.push([object[obj]]);
   }
   return dataArray;
@@ -143,13 +142,21 @@ var covArrays = function (object, time) {
 
 var covObjects = function (rows, headings, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
+      "\nrows is !" +
+      !rows +
+      " = " +
       rows +
-      ", = " +
-      !rows,
+      "\nheadings is !" +
+      !headings +
+      " = " +
+      headings +
+      "\ntime is !" +
+      !time +
+      " = " +
+      time,
   );
   if (rows) {
     var temp = rows.map(function (row) {
@@ -167,7 +174,7 @@ var covObjects = function (rows, headings, time) {
 
 var needUtility = function (rndClient, arrD, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -298,7 +305,7 @@ var needUtility = function (rndClient, arrD, time) {
 
 var randomSubstance = function (index, loopLength, importedData, arrD, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nindex is !" +
@@ -376,7 +383,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\nArray Data: " +
       arrD +
       "\nTime: " +
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
       " )",
   );
   if (newArr) {
@@ -398,7 +405,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
 
 var seoSheet = function (searchString, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -407,14 +414,14 @@ var seoSheet = function (searchString, time) {
       !searchString,
   );
   if (typeof time === "undefined") {
-    time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    time = functionRegistry.time;
   }
   if (typeof searchString === "undefined") {
     var searchString = "sports medicine";
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\nseoSheet: \nvar " +
       uniqueSeo +
       " = seoTwitter(" +
@@ -595,7 +602,7 @@ var seoSheet = function (searchString, time) {
   if (stringSplit) {
     var testString = testData([stringSplit], time).testArray;
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\nseoSheet: \nvar " +
         testString +
         " = " +
@@ -604,7 +611,7 @@ var seoSheet = function (searchString, time) {
   } else {
     var testString = testData([searchString], time).testArray;
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\nseoSheet: \nvar " +
         testString +
         " = " +
@@ -614,7 +621,7 @@ var seoSheet = function (searchString, time) {
   var lowerCaseS = [];
   if (lowerCaseS.indexOf(testString) === -1) {
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\nseoSheet: \nlowerCaseS.indexOf(" +
         testString +
         ") === -1: " +
@@ -633,7 +640,7 @@ var seoSheet = function (searchString, time) {
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[0][i] !== "undefined") {
           console.log(
-            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+            functionRegistry.time +
               "\nseoSheet: \ntypeof " +
               lowerCaseS[0][i] +
               " !== undefined: " +
@@ -642,7 +649,7 @@ var seoSheet = function (searchString, time) {
           var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             console.log(
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+              functionRegistry.time +
                 "\nseoSheet: \nlowerCaseResearch.includes(" +
                 lowerCaseSearchString +
                 "): " +
@@ -650,7 +657,7 @@ var seoSheet = function (searchString, time) {
             );
             if (lowerCaseS.indexOf(seo) === -1) {
               console.log(
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+                functionRegistry.time +
                   "\nseoSheet: \nlowerCaseS.indexOf(" +
                   seo +
                   ") === -1: " +
