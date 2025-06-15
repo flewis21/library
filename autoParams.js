@@ -29,7 +29,15 @@ const functionRegistry = {
   getParamsList: function () {
     return this.paramsList;
   },
-  // ... other methods to interact with the data ...
+
+  maxTime: 6 * 60 * 1000, // This is a simple numerical value
+
+  // Use a getter for 'time'
+  get time() {
+    return Math.floor(
+      (this.maxTime - (new Date().getTime() % (1000 * 60))) / 1000,
+    );
+  },
 };
 
 // Set some global variables
@@ -50,51 +58,61 @@ globalThis.numVarRnd = (function () {
   return res;
 })();
 // globalThis.allFolders = folderManager();
-// globalThis.uniqueCoArray = (function() {
-//   var secSheet
-//   = (function () {
-//     var ss = (function () {
-//   var ssApp = SpreadsheetApp;
-//   var ss = ssApp.openByUrl("https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962");
-//   return ss;
-// })();
-//       var sheet = ss.getSheetByName("sec");
-//       return sheet;
-
-// })();var secArrays
-//   = secSheet.getDataRange().getValues().slice(1);var arrVals
-//   = secArrays.map((val) => {
-//     return {"cik" : val[0],"ticker" : val[1],"title" : val[2]}
-//   });var rndArrVals
-//   = [];while (rndArrVals.length !== arrVals.length) {
-//     rndArrVals.push(arrVals[Math.floor(Math.random() * (Math.floor(arrVals.length))).valueOf()])
-//   };
-//   return rndArrVals
-// })()
-// globalThis.uniqueItemArray = (function() {
-//   var itemSheet
-//   = (function () {
-//     var ss = (function () {
-//   var ssApp = SpreadsheetApp;
-//   var ss = ssApp.openByUrl("https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962");
-//   return ss;
-// })();
-//       var sheet = ss.getSheetByName("items");
-//       return sheet;
-
-// })();var itemArrays
-//   = itemSheet.getDataRange().getValues().slice(1);var arrVals
-//   = itemArrays.map((val) => {
-//     return {"SKU" : val[0],"Description" : val[1],"Pack Size" : val[2],"Data Entered" : val[3],"Last Modified" : val[4]}
-//   });var rndArrVals
-//   = [];while (rndArrVals.length !== arrVals.length) {
-//     rndArrVals.push(arrVals[Math.floor(Math.random() * (Math.floor(arrVals.length))).valueOf()])
-//   };
-//   return rndArrVals
-// })();
-globalThis.maxTime = new Date(6 * 59.9 * 1000);
-globalThis.time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
-globalThis.arrD = (function () {
+globalThis.uniqueCoArray = function () {
+  var secSheet = (function () {
+    var ss = (function () {
+      var ssApp = SpreadsheetApp;
+      var ss = ssApp.openByUrl(
+        "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+      );
+      return ss;
+    })();
+    var sheet = ss.getSheetByName("sec");
+    return sheet;
+  })();
+  var secArrays = secSheet.getDataRange().getValues().slice(1);
+  var arrVals = secArrays.map((val) => {
+    return { cik: val[0], ticker: val[1], title: val[2] };
+  });
+  var rndArrVals = [];
+  while (rndArrVals.length !== arrVals.length) {
+    rndArrVals.push(
+      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+globalThis.uniqueItemArray = function () {
+  var itemSheet = (function () {
+    var ss = (function () {
+      var ssApp = SpreadsheetApp;
+      var ss = ssApp.openByUrl(
+        "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+      );
+      return ss;
+    })();
+    var sheet = ss.getSheetByName("items");
+    return sheet;
+  })();
+  var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+  var arrVals = itemArrays.map((val) => {
+    return {
+      SKU: val[0],
+      Description: val[1],
+      "Pack Size": val[2],
+      "Data Entered": val[3],
+      "Last Modified": val[4],
+    };
+  });
+  var rndArrVals = [];
+  while (rndArrVals.length !== arrVals.length) {
+    rndArrVals.push(
+      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+globalThis.arrD = function () {
   var titleArray = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -150,7 +168,7 @@ globalThis.arrD = (function () {
     }
   }
   return freqArray;
-})();
+};
 // globalThis.arrD = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
@@ -175,7 +193,7 @@ globalThis.arrD = (function () {
 //     // console.log(freqArray)
 //     return freqArray
 // })();
-globalThis.arrDRnd = (function () {
+globalThis.arrDRnd = function () {
   var titleArray = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -231,7 +249,7 @@ globalThis.arrDRnd = (function () {
     }
   }
   return freqArray;
-})();
+};
 // globalThis.arrDRnd = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
@@ -256,9 +274,9 @@ globalThis.arrDRnd = (function () {
 //     // console.log(freqArray)
 //     return freqArray
 // })();
-globalThis.searchString = (function () {
+globalThis.searchString = function () {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n0 is !" +
@@ -278,10 +296,12 @@ globalThis.searchString = (function () {
       ", = " +
       arrD +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
+  var arrDRnd = globalThis.arrDRnd();
+  var arrD = globalThis.arrD();
   var newArr = [];
   var i = 0 || 0;
   var l = 6 || 1;
@@ -289,14 +309,14 @@ globalThis.searchString = (function () {
   // console.log(arrData.sort((a, b) => a - b))
   if (arrDRnd) {
     for (i, l; i < l; i++) {
-      var elaspeTime = new Date() - time;
+      var elaspeTime = new Date() - functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof arrDRnd: " +  typeof arrDRnd + "\nelaspeTime: " + elaspeTime)
       if (typeof arrDRnd !== "undefined" && typeof arrDRnd !== "string") {
         var myImportData = arrDRnd.sort((a, b) => a - b)[
           Math.floor(Math.random() * arrDRnd.length)
         ];
         newArr.push(myImportData);
-        var elaspeTime = new Date() - time;
+        var elaspeTime = new Date() - functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       } else if (
         typeof arrDRnd !== "undefined" &&
@@ -306,17 +326,17 @@ globalThis.searchString = (function () {
           Math.floor(Math.random() * [arrDRnd].length)
         ];
         newArr.push(myImportData);
-        var elaspeTime = new Date() - time;
+        var elaspeTime = new Date() - functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       }
     }
   } else if (typeof arrD !== "undefined") {
     for (i, l; i < l; i++) {
-      var myArrData = arrD.sort((a, b) => a - b)[
+      var myArrData = sarrD.sort((a, b) => a - b)[
         Math.floor(Math.random() * arrD.length)
       ];
       newArr.push(myArrData);
-      var elaspeTime = new Date() - time;
+      var elaspeTime = new Date() - functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
@@ -330,7 +350,7 @@ globalThis.searchString = (function () {
       "\nArray Data: " +
       arrD +
       "\nTime: " +
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
       " )",
   );
   if (newArr) {
@@ -341,7 +361,7 @@ globalThis.searchString = (function () {
     return { myNewArr: sortNewArr };
     console.log();
   }
-})().myNewArr;
+};
 // globalThis.result = gsFParams().find((rndS) => {
 //       return rndS.name === searchString;
 //     });
