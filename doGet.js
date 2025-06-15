@@ -14,21 +14,42 @@ function doGet(e) {
   validGroup();
   validateFolders();
   validateFiles();
-  e
+  var argsEd = testlt();
+  if (typeof globalThis.mis === "function") {
+    var misArgs;
+    if (typeof argsEd === "string") {
+      misArgs = [argsEd];
+    } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
+      misArgs =
+        argsEd.parameters && argsEd.parameters.length > 0
+          ? [argsEd.name, ...argsEd.parameters]
+          : [argsEd.name];
+    } else {
+      console.log("Unexpected argsEd type: ", argsEd);
+      misArgs = ["Invalid Entry"];
+    }
+  }
+  e && e.parameter && e.parameter["func"]
     ? e
     : (e = objectOfS(
         ["parameter"],
-        [[["func", testlt()]]],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        [
+          [
+            ["func", "mis"],
+            ["args", misArgs],
+            ["action", "getData"],
+          ],
+        ],
+        functionRegistry.time,
       ));
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
       !e +
       ", = " +
-      e,
+      JSON.stringify(e),
   );
   var webAppUrl = getScriptUrl();
   if (typeof e === "object") {
@@ -36,13 +57,13 @@ function doGet(e) {
   } else {
     var fx = e.parameter["func"];
   }
-  var titleArray = [];
+  var titleArray = functionRegistry.getFileList();
   var content = e.parameter["args"];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      titleArray.push(key);
-    }
-  }
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     titleArray.push(key);
+  //   }
+  // }
   var lowCapApp = [appList].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
@@ -51,8 +72,8 @@ function doGet(e) {
       section: titleArray,
     },
   };
-  if (mis(fx)) {
-    var rndStr = testlt();
+  if (fx && typeof globalThis[fx] === "function") {
+    var rndStr = globalThis.searchString().myNewArr;
     return renderTemplate(surveyPlayer(rndStr, rndStr), {}, rndStr);
   } else if (crmT(fx)) {
     try {
@@ -164,14 +185,24 @@ function doGet(e) {
 
     // Return the HTML content
     return renderTemplate(pageHtml, {}, "Finance Landing Page");
-  } else if (fx === objMaster.miscellaneous.section[61]) {
+  } else if (fx === objMaster.miscellaneous.section[59]) {
+    /**
+     * Handles HTTP GET requests.
+     * This is primarily for testing the web app URL directly or serving static content.
+     * Not strictly necessary for this specific POST-only use case, but good practice.
+     * @param {GoogleAppsScript.Events.DoGet} e The event object.
+     * @returns {GoogleAppsScript.HTML.HtmlOutput} A simple HTML page.
+     */
+    return HtmlService.createHtmlOutput(
+      "<h1>Business Card Generator Backend</h1><p>This Apps Script functions as a backend for the Business Card Generator form. Please submit data via a POST request.</p>",
+    );
   } else if (fx === objMaster.miscellaneous.section[71]) {
   } else if (fx === objMaster.miscellaneous.section[81]) {
   } else if (fx === objMaster.miscellaneous.section[91]) {
   } else if (fx === objMaster.miscellaneous.section[100]) {
   } else if (fx === objMaster.miscellaneous.section[101]) {
   } else if (fx === objMaster.miscellaneous.section[111]) {
-    return handleRequest(e).getContent();
+    return handleRequest(e);
   } else if (fx === objMaster.miscellaneous.section[121]) {
   } else if (fx === objMaster.miscellaneous.section[131]) {
   } else if (fx === objMaster.miscellaneous.section[132]) {
@@ -302,9 +333,9 @@ function doGetStop(e) {
 }
 
 function handleRequest(e) {
-  if (e.parameter && e.parameter.action === "getData") {
+  if (e && e.parameter && e.parameter.action === "getData") {
     return handleGetData();
-  } else if (e.parameter && e.parameter.action === "submitForm") {
+  } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
     return;
@@ -416,14 +447,14 @@ function handleGetData() {
           ["action", "getData"],
         ],
       ],
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+      functionRegistry.time,
     );
     console.log(JSON.stringify(rndE));
   }
 
   // Logging
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -660,9 +691,104 @@ function handleFormSubmission(e) {
   }
 }
 
+/**
+ * This Apps Script handles POST requests from a web form to generate business cards
+ * in a Google Slides presentation.
+ *
+ * It duplicates a template slide and replaces placeholders with submitted data.
+ */
+
+// !!! IMPORTANT: REPLACE THIS WITH THE ID OF YOUR GOOGLE SLIDES TEMPLATE PRESENTATION !!!
+// You can find the ID in the URL of your Google Slides presentation:
+// https://docs.google.com/presentation/d/YOUR_PRESENTATION_ID_HERE/edit
+const TEMPLATE_PRESENTATION_ID = "YOUR_GOOGLE_SLIDES_PRESENTATION_ID_HERE";
+
+// The index of the slide in your template presentation that you want to use as a template.
+// Slide indices are 0-based. So, if it's the first slide, use 0. If it's the second, use 1.
+const TEMPLATE_SLIDE_INDEX = 0;
+
+/**
+ * Handles HTTP POST requests.
+ * This function receives data from the web form and processes it to create a new slide.
+ * @param {GoogleAppsScript.Events.DoPost} e The event object containing the POST data.
+ * @returns {GoogleAppsScript.Content.TextOutput} A JSON response indicating success or failure.
+ */
+function doPost(e) {
+  try {
+    // Parse the incoming JSON data from the web form
+    const data = JSON.parse(e.postData.contents);
+
+    // Basic validation for required fields
+    if (!data.name || !data.company || !data.email) {
+      return createJsonResponse(
+        false,
+        "Name, Company, and Email are required.",
+      );
+    }
+
+    // Open the template presentation
+    const presentation = SlidesApp.openById(TEMPLATE_PRESENTATION_ID);
+    const templateSlide = presentation.getSlides()[TEMPLATE_SLIDE_INDEX];
+
+    if (!templateSlide) {
+      throw new Error(
+        `Template slide at index ${TEMPLATE_SLIDE_INDEX} not found.`,
+      );
+    }
+
+    // Duplicate the template slide
+    // The duplicateSlide method adds the new slide at the end of the presentation.
+    const newSlide = templateSlide.duplicate();
+
+    // Define the replacements. Ensure these keys match the 'name' attributes in your HTML form
+    // and the placeholders in your Google Slides template (e.g., {{NAME}}).
+    const replacements = {
+      "{{NAME}}": data.name || "",
+      "{{TITLE}}": data.title || "",
+      "{{COMPANY}}": data.company || "",
+      "{{PHONE}}": data.phone || "",
+      "{{EMAIL}}": data.email || "",
+      "{{WEBSITE}}": data.website || "",
+      "{{ADDRESS}}": data.address || "",
+    };
+
+    // Replace all defined placeholders in the new slide
+    for (const placeholder in replacements) {
+      // replaceAllText is case-insensitive by default.
+      newSlide.replaceAllText(placeholder, replacements[placeholder]);
+    }
+
+    // You can optionally move the new slide to a specific position if needed.
+    // For now, it will be at the end. If you want it at the beginning:
+    // presentation.moveSlide(newSlide, 0);
+
+    return createJsonResponse(true, "Business card created successfully!");
+  } catch (error) {
+    Logger.log("Error creating business card: " + error.message);
+    return createJsonResponse(
+      false,
+      "Error creating business card: " + error.message,
+    );
+  }
+}
+
+/**
+ * Helper function to create a JSON response.
+ * @param {boolean} success Indicates if the operation was successful.
+ * @param {string} message The message to send back.
+ * @returns {GoogleAppsScript.Content.TextOutput} A ContentService TextOutput object.
+ */
+function createJsonResponse(success, message) {
+  return ContentService.createTextOutput(
+    JSON.stringify({ success: success, message: message }),
+  )
+    .setMimeType(ContentService.MimeType.JSON)
+    .getContent();
+}
+
 function misBing(e, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -828,11 +954,7 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 var userClicked = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
   let timeout = null;
@@ -1181,24 +1303,116 @@ var userClicked = function () {
 //   // };
 // }
 
-var runBoilerplate = function (func, someargs) {
+// var runBoilerplate = function (func, someargs) {
+//   console.log(
+//     functionRegistry.time +
+//       "\n" +
+//       arguments.callee.name +
+//       "\nfunc is !" +
+//       !func +
+//       ", = " +
+//       func +
+//       "\nsomeargs is !" +
+//       !someargs +
+//       ", = " +
+//       someargs,
+//   );
+//   var libFunc = func || "doGet";
+//   var args = someargs || [];
+//   return this[libFunc].apply(this, args);
+// };
+
+function runBoilerplate(func, args) {
+  var libName = "foo";
+  // Check if maxTime exists as a global variable
+  const timeRemaining =
+    typeof functionRegistry.maxTime !== "undefined" &&
+    functionRegistry.maxTime instanceof Date
+      ? Math.floor(
+          (functionRegistry.maxTime.getTime() -
+            (new Date().getTime() % (1000 * 60))) /
+            1000,
+        ) // Use .getTime() for Date objects
+      : "N/A"; // Provide a fallback if maxTime is not defined or not a Date
+
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name +
-      "\nfunc is !" +
-      !func +
-      ", = " +
-      func +
-      "\nsomeargs is !" +
-      !someargs +
-      ", = " +
-      someargs,
+    `Time remaining: ${timeRemaining}` +
+      `\nFunction: ${arguments.callee.name}` +
+      `\nfunc: ${func}, args: ${JSON.stringify(args)}`,
   );
-  var libFunc = func || "doGet";
-  var args = someargs || [];
-  return this[libFunc].apply(this, args);
-};
+  try {
+    // If 'foo' is still where your functions like 'mis' are, keep this line.
+    // However, if your functions like 'mis' are also global (e.g., globalThis.mis),
+    // then you might just call them directly or use `this[func]` if `this` refers to the global scope.
+    // Based on the logs, 'mis' and 'yahooSort' seem to be global functions.
+    let rawResult;
+    if (typeof globalThis[func] === "function") {
+      rawResult = globalThis[func].apply(this, args); // Call the global function
+    } else {
+      // Fallback or error if func is not found in globalThis
+      throw new Error(
+        `Function '${globalThis[func]}' not found in global scope.`,
+      );
+    }
+
+    // ... (rest of your processing logic for rawResult)
+    if (
+      rawResult &&
+      typeof rawResult.getContent === "function" &&
+      typeof rawResult.setXFrameOptionsMode === "function"
+    ) {
+      return { type: "html", data: rawResult.getContent() };
+    } else if (
+      rawResult &&
+      typeof rawResult.getResponseCode === "function" &&
+      typeof rawResult.getContentText === "function"
+    ) {
+      const contentType = rawResult.getHeaders()["Content-Type"] || "";
+      const responseText = rawResult.getContentText();
+      if (contentType.includes("application/json")) {
+        try {
+          return { type: "jsonData", data: JSON.parse(responseText) };
+        } catch (e) {
+          return {
+            type: "text",
+            data: `Error parsing JSON from URL fetch: ${responseText}`,
+          };
+        }
+      } else if (contentType.includes("text/html")) {
+        return { type: "html", data: responseText };
+      } else {
+        return { type: "text", data: responseText };
+      }
+    } else if (typeof rawResult === "string") {
+      try {
+        const parsedJson = JSON.parse(rawResult);
+        return { type: "jsonData", data: parsedJson };
+      } catch (jsonError) {
+        if (
+          rawResult.trim().startsWith("<") &&
+          rawResult.trim().endsWith(">")
+        ) {
+          return { type: "html", data: rawResult };
+        } else {
+          return { type: "text", data: rawResult };
+        }
+      }
+    } else if (typeof rawResult === "object" && rawResult !== null) {
+      if (rawResult.html) {
+        return { type: "html", data: rawResult.html };
+      }
+      if (rawResult.url) {
+        return { type: "url", data: rawResult.url };
+      }
+      return { type: "object", data: rawResult };
+    } else {
+      return { type: "unknown", data: rawResult };
+    }
+  } catch (error) {
+    Logger.log("Error in " + func + ": " + error.message);
+    throw new Error(`Server error in ${func}: ${error.message}`);
+  }
+}
 
 var runAll = function (func, args) {
   try {
