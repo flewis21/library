@@ -1,6 +1,6 @@
 var driveManagerFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -53,11 +53,7 @@ var driveManagerFilter = function (filterFiles) {
 };
 
 var driveForms = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("Forms").forms;
@@ -85,7 +81,7 @@ var driveForms = function () {
 
 var driveFormsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -134,11 +130,7 @@ var driveFormsFilter = function (filterFiles) {
 };
 
 var driveSheets = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("Sheets").sheets;
@@ -168,7 +160,7 @@ var driveSheets = function () {
 
 var driveSheetsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -219,11 +211,7 @@ var driveSheetsFilter = function (filterFiles) {
 };
 
 var driveWebForms = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("webForms").forms;
@@ -248,7 +236,7 @@ var driveWebForms = function () {
 
 var driveWebFormsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -298,11 +286,7 @@ var driveWebFormsFilter = function (filterFiles) {
 };
 
 var driveVideoForms = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("videoForms").forms;
@@ -327,7 +311,7 @@ var driveVideoForms = function () {
 
 var driveVideoFormsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -389,11 +373,7 @@ var driveDocBrowser = function () {
 };
 
 var driveDocForms = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("docForms").forms;
@@ -418,7 +398,7 @@ var driveDocForms = function () {
 
 var driveDocFormsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -468,11 +448,7 @@ var driveDocFormsFilter = function (filterFiles) {
 };
 
 var drivePictForms = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("pictForms").forms;
@@ -497,7 +473,7 @@ var drivePictForms = function () {
 
 var drivePictFormsFilter = function (filterFiles) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -548,7 +524,7 @@ var drivePictFormsFilter = function (filterFiles) {
 
 var driveUrls = function (fileX) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -568,192 +544,412 @@ var driveUrls = function (fileX) {
   }
 };
 
-var fileBrowser = function (folder) {
+// var fileBrowser = function (folder) {
+//   console.log(
+//     functionRegistry.time +
+//       "\n" +
+//       arguments.callee.name +
+//       "\n!" +
+//       file +
+//       ", = " +
+//       !file,
+//   );
+//   var fileFiller = function (folder) {
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\n" +
+//         folder,
+//     );
+//     var filesObj;
+//     while (!filesObj == true) {
+//       filesObj = fileMatchManager(folder);
+//     }
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\nfilesObj.length: " +
+//         filesObj.length,
+//     );
+//     var glFiles = [];
+//     for (var key in filesObj) {
+//       glFiles.push(filesObj[key]);
+//     }
+//     var glMov = glFiles[Math.floor(Math.random() * Math.floor(glFiles.length))];
+//     var obMov =
+//       filesObj[Math.floor(Math.random() * Math.floor(filesObj.length))];
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\nglFiles.length: " +
+//         glFiles.length,
+//     );
+//     if (file) {
+//       if (
+//         (glFiles
+//           .join("")
+//           .toLowerCase()
+//           .indexOf([file].join("").toLowerCase()) === -1 &&
+//           glFiles.length > 0) ||
+//         (filesObj
+//           .join("")
+//           .toLowerCase()
+//           .indexOf([file].join("").toLowerCase()) === -1 &&
+//           filesObj.length >= 1)
+//       ) {
+//         console.log(
+//           functionRegistry.time +
+//             "\n" +
+//             arguments.callee.name +
+//             ":\nMoving file = " +
+//             file +
+//             " to file = " +
+//             glMov || obMov,
+//         );
+//         file = glMov || obMov;
+//       } else {
+//         return;
+//       }
+//     } else {
+//       console.log(
+//         functionRegistry.time +
+//           "\n" +
+//           arguments.callee.name +
+//           ":\nfile = " +
+//           glMov || obMov,
+//       );
+//       var file = glMov || obMov;
+//     }
+//     return file;
+//   };
+//   var foldersObj;
+//   var file;
+//   while (!file) {
+//     if (typeof folder === "undefined" || folder === null) {
+//       foldersObj = folderManager();
+//       var glFolders = [];
+//       for (var key in foldersObj) {
+//         glFolders.push(foldersObj[key]);
+//       }
+//       console.log(
+//         functionRegistry.time +
+//           "\n" +
+//           arguments.callee.name +
+//           ":\nglFolders/folderManager().length: " +
+//           glFolders.length,
+//       );
+//       // if (glFolders.indexOf(folder) === -1) {folder} || glFolders.indexOf(folder) === -1}
+//       var folder =
+//         glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
+//       file = fileFiller(folder);
+//     } else {
+//       foldersObj = folderManager(folder);
+//       var folder =
+//         foldersObj[Math.floor(Math.random() * Math.floor(foldersObj.length))];
+//       console.log(
+//         functionRegistry.time +
+//           "\n" +
+//           arguments.callee.name +
+//           ":\nfoldersObj/folderManager(" +
+//           folder +
+//           ").length: " +
+//           foldersObj.length,
+//       );
+//       file = fileFiller(folder);
+//     }
+//   }
+//   //  || glFolders.indexOf(folder) !== -1
+//   if (
+//     typeof folder !== "undefined" ||
+//     folder === null ||
+//     [folder].join("").length > 0
+//   ) {
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\nfolder: " +
+//         folder,
+//     );
+//     var eFolder = DriveApp.getFoldersByName([folder].toString()).next();
+//   } else {
+//     var eFolder = DriveApp;
+//   }
+//   var dataTree = [];
+//   if (
+//     typeof file !== "undefined" ||
+//     file !== null ||
+//     [file].join("").length > 0 ||
+//     glFiles.indexOf(file) !== -1
+//   ) {
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         ":\nfile: " +
+//         file,
+//     );
+//     var folderFile = eFolder.getFilesByName(file);
+//     while (folderFile.hasNext()) {
+//       var myFile = folderFile.next();
+//       // var currentFileUrl = myFile.getUrl();
+//       dataTree.push({ name: myFile.getName(), url: myFile.getUrl() });
+//     }
+//     if (dataTree.length === 0) {
+//       var driveFile = DriveApp.getFilesByName(file);
+//       while (driveFile.hasNext()) {
+//         var myDriveFile = driveFile.next();
+//         // var currentDriveFileUrl = {};
+//         // currentDriveFileUrl.name = ;
+//         // currentDriveFileUrl.url = ;
+//         dataTree.push({
+//           name: myDriveFile.getName(),
+//           url: myDriveFile.getUrl(),
+//         });
+//       }
+//     }
+//   } else {
+//     var folderFile = eFolder;
+//     return folderFile;
+//   }
+//   console.log(
+//     functionRegistry.time +
+//       "\n" +
+//       arguments.callee.name +
+//       ":\n" +
+//       dataTree,
+//   );
+//   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
+//   var filedMain = dataTree[rndFiledMain];
+//   console.log(
+//     functionRegistry.time +
+//       "\n" +
+//       arguments.callee.name +
+//       ":\n" +
+//       filedMain,
+//   );
+//   return filedMain;
+// };
+
+var fileBrowser = function (initialFolder) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      file +
-      ", = " +
-      !file,
+      "\nInitial folder: " +
+      initialFolder,
   );
-  var fileFiller = function (folder) {
-    console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        ":\n" +
-        folder,
-    );
-    var filesObj;
-    while (!filesObj == true) {
-      filesObj = fileMatchManager(folder);
+
+  var selectedFolder = initialFolder;
+  var file = undefined; // Will store the selected file name/ID
+
+  // Determine the folder to start searching in
+  if (typeof selectedFolder === "undefined" || selectedFolder === null) {
+    // If no folder provided, get all folders and pick a random one
+    var allFoldersObj = folderManager(); // Should return an object or array of all folders
+    var allFolderNames = [];
+    for (var key in allFoldersObj) {
+      allFolderNames.push(allFoldersObj[key]);
     }
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\n" +
         arguments.callee.name +
-        ":\nfilesObj.length: " +
-        filesObj.length,
+        ":\nAll folders length: " +
+        allFolderNames.length,
     );
-    var glFiles = [];
+
+    if (allFolderNames.length > 0) {
+      selectedFolder =
+        allFolderNames[Math.floor(Math.random() * allFolderNames.length)];
+    } else {
+      console.error("No folders found by folderManager.");
+      return null; // Or handle as appropriate
+    }
+  }
+  // If an initialFolder was provided, it remains selectedFolder
+
+  console.log(
+    functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      ":\nSelected folder for search: " +
+      selectedFolder,
+  );
+
+  // Function to get files from a given folder
+  var getFilesFromFolder = function (folderName) {
+    console.log(
+      functionRegistry.time +
+        "\ngetFilesFromFolder:\nSearching in: " +
+        folderName,
+    );
+    var filesObj = fileMatchManager(folderName); // Should return files in 'folderName'
+    if (!filesObj) {
+      // Handle case where fileMatchManager returns falsy
+      console.warn(
+        "fileMatchManager returned no files for folder: " + folderName,
+      );
+      return [];
+    }
+    var filesArray = [];
     for (var key in filesObj) {
-      glFiles.push(filesObj[key]);
+      filesArray.push(filesObj[key]);
     }
-    var glMov = glFiles[Math.floor(Math.random() * Math.floor(glFiles.length))];
-    var obMov =
-      filesObj[Math.floor(Math.random() * Math.floor(filesObj.length))];
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        ":\nglFiles.length: " +
-        glFiles.length,
+      functionRegistry.time +
+        "\ngetFilesFromFolder:\nFiles found: " +
+        filesArray.length,
     );
-    if (file) {
-      if (
-        (glFiles
-          .join("")
-          .toLowerCase()
-          .indexOf([file].join("").toLowerCase()) === -1 &&
-          glFiles.length > 0) ||
-        (filesObj
-          .join("")
-          .toLowerCase()
-          .indexOf([file].join("").toLowerCase()) === -1 &&
-          filesObj.length >= 1)
-      ) {
-        console.log(
-          Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-            "\n" +
-            arguments.callee.name +
-            ":\nMoving file = " +
-            file +
-            " to file = " +
-            glMov || obMov,
-        );
-        file = glMov || obMov;
-      } else {
-        return;
-      }
-    } else {
-      console.log(
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-          "\n" +
-          arguments.callee.name +
-          ":\nfile = " +
-          glMov || obMov,
-      );
-      var file = glMov || obMov;
-    }
-    return file;
+    return filesArray;
   };
-  var foldersObj;
-  var file;
-  while (!file) {
-    if (typeof folder === "undefined" || folder === null) {
-      foldersObj = folderManager();
-      var glFolders = [];
-      for (var key in foldersObj) {
-        glFolders.push(foldersObj[key]);
-      }
+
+  // Main loop to find a file
+  var attemptCount = 0;
+  var MAX_ATTEMPTS = 5; // Prevent infinite loops if no files are ever found
+  while (!file && attemptCount < MAX_ATTEMPTS) {
+    attemptCount++;
+
+    var currentFolderToSearch = selectedFolder; // Start with the chosen folder
+
+    // Get files from the current folder
+    var glFiles = getFilesFromFolder(currentFolderToSearch);
+
+    if (glFiles.length > 0) {
+      file = glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
       console.log(
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+        functionRegistry.time +
           "\n" +
           arguments.callee.name +
-          ":\nglFolders/folderManager().length: " +
-          glFolders.length,
+          ":\nRandom file selected: " +
+          file,
       );
-      // if (glFolders.indexOf(folder) === -1) {folder} || glFolders.indexOf(folder) === -1}
-      var folder =
-        glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
-      file = fileFiller(folder);
     } else {
-      foldersObj = folderManager(folder);
-      var folder =
-        foldersObj[Math.floor(Math.random() * Math.floor(foldersObj.length))];
+      // If no files in the specific folder, broaden the search or pick a different folder
       console.log(
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+        functionRegistry.time +
           "\n" +
           arguments.callee.name +
-          ":\nfoldersObj/folderManager(" +
-          folder +
-          ").length: " +
-          foldersObj.length,
+          ": No files found in '" +
+          currentFolderToSearch +
+          "'. Retrying with a different folder if possible.",
       );
-      file = fileFiller(folder);
+      // Option 1: Pick a *different* random folder from all available folders
+      var allFoldersObj = folderManager();
+      var allFolderNames = [];
+      for (var key in allFoldersObj) {
+        allFolderNames.push(allFoldersObj[key]);
+      }
+      if (allFolderNames.length > 0) {
+        selectedFolder =
+          allFolderNames[Math.floor(Math.random() * allFolderNames.length)];
+      } else {
+        // No folders available at all, break out
+        console.error("No folders available to search for files.");
+        break;
+      }
+      // Option 2 (original logic had a global DriveApp search later):
+      // For simplicity here, we're trying a different folder. The original code's global search happens *after* a file is chosen.
     }
   }
-  //  || glFolders.indexOf(folder) !== -1
-  if (
-    typeof folder !== "undefined" ||
-    folder === null ||
-    [folder].join("").length > 0
-  ) {
-    console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        ":\nfolder: " +
-        folder,
+
+  if (!file) {
+    console.error(
+      "Could not find a suitable file after " + MAX_ATTEMPTS + " attempts.",
     );
-    var eFolder = DriveApp.getFoldersByName([folder].toString()).next();
-  } else {
-    var eFolder = DriveApp;
+    return null;
   }
-  var dataTree = [];
-  if (
-    typeof file !== "undefined" ||
-    file !== null ||
-    [file].join("").length > 0 ||
-    glFiles.indexOf(file) !== -1
-  ) {
-    console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        ":\nfile: " +
-        file,
+
+  // Get the actual Drive Folder object
+  var eFolder;
+  try {
+    eFolder = DriveApp.getFoldersByName(selectedFolder).next();
+  } catch (e) {
+    console.error(
+      "Error getting folder '" + selectedFolder + "': " + e.message,
     );
-    var folderFile = eFolder.getFilesByName(file);
-    while (folderFile.hasNext()) {
-      var myFile = folderFile.next();
-      // var currentFileUrl = myFile.getUrl();
+    eFolder = DriveApp; // Fallback to DriveApp if folder not found/accessible
+  }
+
+  var dataTree = [];
+  console.log(
+    functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      ":\nSearching for file: " +
+      file,
+  );
+
+  // Search for the specific file
+  try {
+    var folderFileIterator = eFolder.getFilesByName(file);
+    while (folderFileIterator.hasNext()) {
+      var myFile = folderFileIterator.next();
       dataTree.push({ name: myFile.getName(), url: myFile.getUrl() });
     }
-    if (dataTree.length === 0) {
-      var driveFile = DriveApp.getFilesByName(file);
-      while (driveFile.hasNext()) {
-        var myDriveFile = driveFile.next();
-        // var currentDriveFileUrl = {};
-        // currentDriveFileUrl.name = ;
-        // currentDriveFileUrl.url = ;
+  } catch (e) {
+    console.warn(
+      "Error searching in specific folder for file '" +
+        file +
+        "': " +
+        e.message,
+    );
+  }
+
+  if (dataTree.length === 0) {
+    console.log(
+      functionRegistry.time +
+        "\n" +
+        arguments.callee.name +
+        ": File not found in specific folder. Searching entire Drive.",
+    );
+    try {
+      var driveFileIterator = DriveApp.getFilesByName(file);
+      while (driveFileIterator.hasNext()) {
+        var myDriveFile = driveFileIterator.next();
         dataTree.push({
           name: myDriveFile.getName(),
           url: myDriveFile.getUrl(),
         });
       }
+    } catch (e) {
+      console.error(
+        "Error searching entire Drive for file '" + file + "': " + e.message,
+      );
     }
-  } else {
-    var folderFile = eFolder;
-    return folderFile;
   }
+
+  if (dataTree.length === 0) {
+    console.error(
+      functionRegistry.time +
+        "\n" +
+        arguments.callee.name +
+        ":\nNo files found matching: " +
+        file,
+    );
+    return null; // No file found
+  }
+
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      ":\n" +
-      dataTree,
+      ":\nFound files: " +
+      dataTree.length,
   );
-  var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
+
+  var rndFiledMain = Math.floor(Math.random() * dataTree.length);
   var filedMain = dataTree[rndFiledMain];
+
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      ":\n" +
-      filedMain,
+      ":\nReturning: " +
+      JSON.stringify(filedMain),
   );
   return filedMain;
 };
@@ -765,7 +961,7 @@ var fbTester = function () {
 
 var fileFold = function (folderX, fileX, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
-  var elapsedTime = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+  var elapsedTime = functionRegistry.time;
   var fileFree = [];
   if (
     typeof folderX !== "undefined" ||
@@ -798,7 +994,7 @@ var fileFold = function (folderX, fileX, time) {
 
 var fileManager = function (fileX, folder, time, content, mimeType) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -821,10 +1017,10 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
     var file = DriveApp.getRootFolder().getFilesByName(
       DriveApp.getFileById(fileX).getName(),
     );
-    var elaspeTime = new Date() - time;
+    var elaspeTime = new Date() - functionRegistry.time;
     if (file.hasNext()) {
       var myFile = file.next();
-      var timeToExecute = maxTime - elaspeTime;
+      var timeToExecute = functionRegistry.maxTime - elaspeTime;
     }
     if (myFile) {
       // console.log(myFile)
@@ -858,7 +1054,7 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
 
 var fileMatch = function (fileX, stringArray) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -894,7 +1090,7 @@ var fileMatch = function (fileX, stringArray) {
 
 var fileMatchManager = function (folderX, fileX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -910,7 +1106,7 @@ var fileMatchManager = function (folderX, fileX, time) {
     [folderX].join("").length > 0
   ) {
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\n" +
         arguments.callee.name +
         ":\nfolderX: " +
@@ -922,17 +1118,13 @@ var fileMatchManager = function (folderX, fileX, time) {
         [folderX].join("").length,
     );
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\n" +
         arguments.callee.name +
         ":\nD: folder's null value - ",
     );
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        ":\n" +
-        folderX ===
+      functionRegistry.time + "\n" + arguments.callee.name + ":\n" + folderX ===
         null,
     );
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
@@ -978,7 +1170,7 @@ var fileMatchManager = function (folderX, fileX, time) {
 
 var folderIdGlobal = function (folderX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfolderX is !" +
@@ -986,14 +1178,14 @@ var folderIdGlobal = function (folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
-    var elaspeTime = new Date() - time;
-    var timeToExecute = maxTime - elaspeTime;
+    var elaspeTime = new Date() - functionRegistry.time;
+    var timeToExecute = functionRegistry.maxTime - elaspeTime;
     var myId = tree.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
@@ -1010,7 +1202,7 @@ var folderIdGlobal = function (folderX, time) {
 
 var folderMatch = function (folderX, stringArray) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1050,7 +1242,7 @@ var folderMatch = function (folderX, stringArray) {
 
 var furtFolder = function (folder) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1064,7 +1256,7 @@ var furtFolder = function (folder) {
     var foldersObj = folderManager();
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       ":\nfoldersObj.length: " +
@@ -1076,7 +1268,7 @@ var furtFolder = function (folder) {
     glFolders.push(foldersObj[key]);
   }
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       ":\nglFolders.length: " +
@@ -1097,11 +1289,7 @@ var furtFolder = function (folder) {
 // if (glFolders.indexOf(folder) === -1) {folder}
 
 var rndUrls = function () {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
     var trueName = treeRoot.next();
@@ -1126,11 +1314,7 @@ var rndUrls = function () {
 };
 
 function shareDrive() {
-  console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-      "\n" +
-      arguments.callee.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var dApp = DriveApp;
   var folderIter = dApp.getFolders();
   var driveFiles = [];
@@ -1154,7 +1338,7 @@ function shareDrive() {
 
 var sheetsFileManager = function (fileX, folder, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -1181,9 +1365,9 @@ var sheetsFileManager = function (fileX, folder, time) {
     var idToName = SpreadsheetApp.openById(fileX).getName();
     var file = DriveApp.getRootFolder().getFilesByName(idToName);
     while (file.hasNext()) {
-      var elaspeTime = new Date() - start;
+      var elaspeTime = new Date() - functionRegistry.maxTime;
       var myFile = file.next();
-      var timeToExecute = maxTime - elaspeTime;
+      var timeToExecute = functionRegistry.maxTime - elaspeTime;
       if (myFile.getName() === fileX) {
         myFile.moveTo(DriveApp.getFolderById(folderId));
         return;
