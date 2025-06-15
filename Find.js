@@ -1,6 +1,6 @@
 var driveManager = function (strNw, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nstrNw is !" +
@@ -8,9 +8,9 @@ var driveManager = function (strNw, time) {
       ", = " +
       strNw +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
 
   console.log(
@@ -39,11 +39,7 @@ var driveManager = function (strNw, time) {
   var iam;
   try {
     iam = JSON.parse(
-      convertToObjects(
-        [[mainStr]],
-        ["file"],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-      ),
+      convertToObjects([[mainStr]], ["file"], functionRegistry.time),
     );
     console.log("driveManager: iam successfully parsed:", iam);
     if (iam && iam[0] && iam[0]["file"]) {
@@ -285,35 +281,35 @@ var matchManager = function (folderX, narrow, time) {
         var fileMim = file.getName().toLowerCase();
         var mimeType = file.getMimeType();
         if (fileMim.includes(arn)) {
-          if (mimeType === DriveApp.MimeType.GOOGLE_DOCS) {
+          if (mimeType === MimeType.GOOGLE_DOCS) {
             docList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_SLIDES) {
+          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
             slideList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_SHEETS) {
+          } else if (mimeType === MimeType.GOOGLE_SHEETS) {
             sheetList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_FORMS) {
+          } else if (mimeType === MimeType.GOOGLE_FORMS) {
             formList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_APPS_SCRIPT) {
+          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
             appTree.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.PNG) {
+          } else if (mimeType === MimeType.PNG) {
             pngTree.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.PDF) {
+          } else if (mimeType === MimeType.PDF) {
             pdfTree.push(file.getName());
           }
         } else {
-          if (mimeType === DriveApp.MimeType.GOOGLE_DOCS) {
+          if (mimeType === MimeType.GOOGLE_DOCS) {
             docList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_SLIDES) {
+          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
             slideList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_SHEETS) {
+          } else if (mimeType === MimeType.GOOGLE_SHEETS) {
             sheetList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_FORMS) {
+          } else if (mimeType === MimeType.GOOGLE_FORMS) {
             formList.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.GOOGLE_APPS_SCRIPT) {
+          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
             appTree.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.PNG) {
+          } else if (mimeType === MimeType.PNG) {
             pngTree.push(file.getName());
-          } else if (mimeType === DriveApp.MimeType.PDF) {
+          } else if (mimeType === MimeType.PDF) {
             pdfTree.push(file.getName());
           }
         }
@@ -380,7 +376,7 @@ var matchManager = function (folderX, narrow, time) {
 
 var folderManager = function (folderX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfolderX is !" +
@@ -388,9 +384,9 @@ var folderManager = function (folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   var folderTree = [];
   var tree = DriveApp.getFolders(); // Iterator for folders
@@ -406,7 +402,7 @@ var folderManager = function (folderX, time) {
 
   if (folderX) {
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\n" +
         arguments.callee.name +
         ":\nDeclaring match = folderMatch(" +
@@ -435,7 +431,7 @@ var fileTypeManager = function (fileType) {
 };
 var formsUrls = function (fileX, folderX, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -447,13 +443,13 @@ var formsUrls = function (fileX, folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !time +
+      !functionRegistry.time +
       ", = " +
-      time,
+      functionRegistry.time,
   );
   if ([fileX].join("").length > 0) {
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      functionRegistry.time +
         "\nformUrls: \nDeclaring search = [" +
         fileX +
         "].join(" +
@@ -470,7 +466,7 @@ var formsUrls = function (fileX, folderX, time) {
     try {
       var dataTree = [];
       console.log(
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+        functionRegistry.time +
           "\nformUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
           folderX +
           ").next()",
@@ -501,7 +497,7 @@ var formsUrls = function (fileX, folderX, time) {
       return filed;
     } catch (err) {
       console.log(
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+        functionRegistry.time +
           "\n" +
           arguments.callee.name +
           "\nerr is !" +
