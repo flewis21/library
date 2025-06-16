@@ -820,6 +820,70 @@ var renderFile = function (file, argsObject, title) {
               all: unset !important;
               display: block !important; /* Or display: flex for rows, display: block for cells */
             }
+                #jsonInput {
+                  display: none;
+                  width: 100%;
+                  height: 8vh; /* Or whatever height you need */
+                  margin:10px auto;
+                  padding: 0px;
+                  box-sizing: border-box; /* Include padding in width/height */
+                  border:1px solid #ccc;
+                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
+                  font-size: 14px;
+                  line-height: 1.5; /* Good for readability */
+                  white-space:pre-wrap;
+                  text-align:left;
+                  background-color: #282c34; /* Dark background common for code editors */
+                  color: #abb2bf; /* Light text color for contrast */
+                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
+                  overflow: auto; /* Enable scrolling if content exceeds height */
+
+
+                  /* Focus state */
+                  outline: none; /* Remove default blue outline on focus */
+                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
+                  transition: box-shadow 0.2s ease-in-out;
+                }
+                /* Style for the new textarea */
+                #indexBeta,#player1,#player2 {
+                  /* Basic layout and appearance */
+                  width: 100%;
+                  height: 80vh; /* Or whatever height you need */
+                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
+                  font-size: 14px;
+                  line-height: 1.5; /* Good for readability */
+                  margin:10px auto;
+                  white-space:pre-wrap;
+                  text-align:left;
+                  padding: 0px;
+                  box-sizing: border-box; /* Include padding in width/height */
+                  border: 1px solid #333;
+                  background-color: #282c34; /* Dark background common for code editors */
+                  color: #abb2bf; /* Light text color for contrast */
+                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
+                  overflow: auto; /* Enable scrolling if content exceeds height */
+
+                  /* Hide default textarea scrollbar (optional, but common for custom scrollbars) */
+                  /* If you hide this, you'd need to implement custom scrollbars with JavaScript */
+                  /* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices */
+                  /* &::-webkit-scrollbar { display: none; } */
+                  /* & { -ms-overflow-style: none; scrollbar-width: none; } */
+
+
+                  /* Focus state */
+                  outline: none; /* Remove default blue outline on focus */
+                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
+                  transition: box-shadow 0.2s ease-in-out;
+                };
+
+                #indexBeta,#jsonInput,#player1,#player2:focus {
+                    box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */
+                }
+
+                /* Optional: Placeholder styling */
+                #indexBeta,#jsonInput,#player1,#player2:placeholder {
+                    color: #616e7f;
+                }
 
           </style>
         </head>
@@ -1178,6 +1242,70 @@ var renderTemplate = function (blob, argsObject, title) {
               all: unset !important;
               display: block !important; /* Or display: flex for rows, display: block for cells */
             }
+                #jsonInput {
+                  display: none;
+                  width: 100%;
+                  height: 8vh; /* Or whatever height you need */
+                  margin:10px auto;
+                  padding: 0px;
+                  box-sizing: border-box; /* Include padding in width/height */
+                  border:1px solid #ccc;
+                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
+                  font-size: 14px;
+                  line-height: 1.5; /* Good for readability */
+                  white-space:pre-wrap;
+                  text-align:left;
+                  background-color: #282c34; /* Dark background common for code editors */
+                  color: #abb2bf; /* Light text color for contrast */
+                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
+                  overflow: auto; /* Enable scrolling if content exceeds height */
+
+
+                  /* Focus state */
+                  outline: none; /* Remove default blue outline on focus */
+                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
+                  transition: box-shadow 0.2s ease-in-out;
+                }
+                /* Style for the new textarea */
+                #indexBeta {
+                  /* Basic layout and appearance */
+                  width: 100%;
+                  height: 80vh; /* Or whatever height you need */
+                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
+                  font-size: 14px;
+                  line-height: 1.5; /* Good for readability */
+                  margin:10px auto;
+                  white-space:pre-wrap;
+                  text-align:left;
+                  padding: 0px;
+                  box-sizing: border-box; /* Include padding in width/height */
+                  border: 1px solid #333;
+                  background-color: #282c34; /* Dark background common for code editors */
+                  color: #abb2bf; /* Light text color for contrast */
+                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
+                  overflow: auto; /* Enable scrolling if content exceeds height */
+
+                  /* Hide default textarea scrollbar (optional, but common for custom scrollbars) */
+                  /* If you hide this, you'd need to implement custom scrollbars with JavaScript */
+                  /* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices */
+                  /* &::-webkit-scrollbar { display: none; } */
+                  /* & { -ms-overflow-style: none; scrollbar-width: none; } */
+
+
+                  /* Focus state */
+                  outline: none; /* Remove default blue outline on focus */
+                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
+                  transition: box-shadow 0.2s ease-in-out;
+                };
+
+                #indexBeta,#jsonInput:focus {
+                    box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */
+                }
+
+                /* Optional: Placeholder styling */
+                #indexBeta,#jsonInput::placeholder {
+                    color: #616e7f;
+                }
 
           </style>
         </head>
