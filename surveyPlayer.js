@@ -59,8 +59,69 @@ function surveyPlayer(searchString, joinString) {
     var joinString = [searchString].join("");
   }
   var uti = dtlsSomeFunction(searchString).playList;
-  const html =
-    HtmlService.createTemplate(`<!DOCTYPE html><html id="test"><head><base target="_top"><?!= builtStyling().evaluate().getContent() ?></head><body  id="template"><div class="responsive-section"><div class="row container"><nav class="col s12 menu-img btn-large z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px"><div class=""><a href="<?= link ?>" id="linkload01" target="_blank"><span><h1 class="col s12 receipt center nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large"  style="font-size: 30px" id="reload01"><?= searchTtile ?></h1></span></a></div></nav></div><div class="row"><div class="col s12 card-panel amber"><div class=""><div class="col s12 receipt red"><label id="spLab"><strong>Research</strong></label><div id="loadingSurvey" style="display: none;"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: 3000vh;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 1080px; height: 1920px; padding: 0;"><div id="player1"></div></td></tbody></table></td></tr></tbody></table></div><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 5%;max-width: 100%;height: 100%;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;height:100%"><tbody><td style="width: 1080px; height: 1920px; padding: 0;"><div id="player2" class="col s12 m12 l12"><?!= seoCapital(link) ?></div></td></tbody></table></td></tr></tbody></table><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="spSearch"  value="<?= reValue ?>" type="search" /></div></div></div></div></div></div></div></div></div><script>
+  const html = HtmlService.createTemplate(
+    `<!DOCTYPE html>
+      <html id="test">
+        <head>
+          <base target="_top">
+          <?!= builtStyling().evaluate().getContent() ?>
+              <style>
+                body {
+                  flex-grow: 1;
+                  color:blue;
+                  text-decoration:bold;
+                  flex-flow: row wrap;
+                  grid-column: 1;
+                  grid-row: 1;
+                  text-align: center;
+                  align-content: flex-start;
+                  overflow: auto;
+                }
+              </style>
+            </head>
+        <body  id="template">
+          <div class="responsive-section">
+            <div class="row container">
+              <nav class="col s12 menu-img btn-large z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
+                <div class="">
+                  <a href="<?= link ?>" id="linkload01" target="_blank">
+                    <span>
+                      <h1 class="col s12 receipt center nav-wrapper deep-purple darken-1 z-depth-5 toolbar_icon toolbar_iconHover scale-transition scale-out scale-in btn-large" style="font-size: 30px" id="reload01">
+                        <?= searchTtile ?></h1></span></a></div></nav></div>
+            <div class="container">
+              <div class="row">
+                <div class="col s12 card-panel amber">
+                  <div class="responsive-section">
+                    <div class="container">
+                      <div class="col s12 receipt red">
+                        <label id="spLab">
+                          <strong>
+                            Research</strong></label>
+                        <div id="loadingSurvey" style="display: none;">
+                          <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                            <thead></thead>
+                            <tbody>
+                              <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                                <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                                  <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;">
+                                    <tbody>
+                                      <td>
+                                        <div id="player1"></div></td></tbody></table></td></tr></tbody></table></div>
+                        <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                          <thead></thead>
+                          <tbody>
+                            <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                              <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                                <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;">
+                                  <tbody>
+                                    <td>
+                                      <div id="player2" class="col s10 push-s1">
+                                        <?!= seoCapital(link) ?></div></td></tbody></table></td></tr></tbody></table>
+                        <div class="row">
+                          <div class="col s12 card-panel l12 m12 receipt red">
+                            <div class="z-depth-5 grey toolbar_icon toolbar_iconHover col s12 receipt"><div class="col s12 l12 m12 receipt red">
+                              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="spSearch"  value="<?= reValue ?>" type="search" /></div></div></div></div></div></div></div></div></div></div></div>
+          <script>
     // 1. Load the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api"; // *** FIX THIS URL ***
@@ -382,7 +443,8 @@ function surveyPlayer(searchString, joinString) {
     })
     </script>
   </body>
-</html>`);
+</html>`,
+  );
   if (uti) {
     var idArray = uti.map((piece) => {
       try {
