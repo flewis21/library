@@ -727,51 +727,128 @@ var seoCapital = function (url) {
   // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
   // const pong = table.map((ping)=>{return ping.substring(0)})
   const html = HtmlService.createTemplate(
-    `<!DOCTYPE html><html id="seoCapital" lang="en"><head><base target="_top"></base><meta charset="utf-8"></meta><meta name="seoCapital" content="Boilerplate SEO Capital"></meta><meta name="viewport" content="width=device-width, initial-scale=1"></meta><link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" /></head><body><div class="row"><div class="col s12 l12 m12 card-panel amber"><div class="responsive-section"><div class="valign-wrapper col s12 l12 m12 receipt red darken-0 container" id="seoData"><label id="labSEOC"><strong></strong></label></div><div id="divSEOC" class="amber flow-text" style='clear: both;overflow-y: auto;overflow-x: auto;text-align: center width: "840px";height: "100vh"'><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody ><td width="840px" height="100vh" style="padding: 0"><div class="responsive-section"><div class="container"><iframe class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" style='width:"100%";height:"100%"' src='${url}' id="w3Res" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></div></td></tbody></table></td></tr></tbody></table></div></div></div></div><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /><script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script></body></html>`,
+    `<!DOCTYPE html>
+      <html id="seoCapital" lang="en">
+        <head>
+          <base target="_top"></base>
+          <meta charset="utf-8"></meta>
+          <meta name="seoCapital" content="Boilerplate SEO Capital"></meta>
+          <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
+        </head>
+        <body>
+          <div class="row">
+            <div class="responsive-section">
+                <div class="container" id="seoData">
+                  <label id="labSEOC">
+                    <strong></strong></label>
+                  <div class="row">
+                    <div class="col s12 card-panel amber">
+                      <div class="responsive-section">
+                        <div class="container">
+                          <div id="divSEOC" class="col s12 receipt amber flow-text">
+                            <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                              <thead></thead>
+                              <tbody>
+                                <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                                    <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                                      <tbody >
+                                        <td>
+                                          <div>
+                                            <iframe src='${url}' id="w3Res" width="100%" height="1080vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+          <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        </body>
+      </html>`,
   );
   // html.pong = pong.toString().split(",");
-  html.research =
-    HtmlService.createHtmlOutput(`document.getElementById("w3Search").addEventListener("change", function() {var cap 
-  = document.getElementById("w3Search").value;console.log(cap)})`);
-  html.prefTimeChange =
-    HtmlService.createHtmlOutput(`document.getElementById("w3Search").addEventListener("change", function() {
-    //console.log(document.getElementById("test").innerHTML)
-    // Init a timeout variable to be used below
-    let timeout 
-    = null;(() => {
-    // Clear the timeout if it has already been set.
-    // This will prevent the previous task from executing
-    // if it has been less than <MILLISECONDS>
-    // clearTimeout(timeout);
-    // Make a new timeout set to go off in 1000ms (1 second)
-    // timeout = setTimeout
-    // (function  () {
-    // console.log('Input Value:', textInput.value)}, 5000)();
-    if (typeof url === "undefined") {var urlData 
-    = document.getElementById("breakUrl").value;var url 
-    = urlData.toString()};var prodSearch 
-    = document.getElementById("w3Search").value;var linkFollow 
-    = document.createElement("a");linkFollow.href 
-    = url + "?func=seoCapital" + "&args=" + encodeURIComponent());linkFollow.id 
-    = "linkFOLLOW";linkFollow.target 
-    = "_top";document.body.appendChild(linkFollow);document.getElementById("linkFOLLOW").click();document.getElementById("w3Search").value 
-    = ""})()});`);
-  html.dOMContentLoaded =
-    HtmlService.createHtmlOutput(`document.addEventListener("DOMContentLoaded", function() {let timePicker 
-    = document.getElementById("breakUrl");M.Timepicker.init(timePicker,{defaultTime: "now" })});var elems 
-    = document.getElementById("breakUrl");var instances 
-    = M.FormSelect.init(elems);`);
-  html.recentSearch =
-    HtmlService.createHtmlOutput(`document.addEventListener("DOMContentLoaded", homeW3);function homeW3() {function serverside(func, args) {return new Promise((resolve, reject) => {google.script.run.withSuccessHandler((result) => {resolve(result)}).withFailureHandler((error) => {console.log(error);console.log(document.getElementById("test").innerHTML);reject(error)}).runBoilerplate([func], [args])})};const htmlStructure 
-    = document.getElementById("divSEOC").innerHTML;const results 
-    = document.getElementById("w3Search");const strValue 
-    = results.value;results.addEventListener("change",(e) => {var cap 
-    = e.target.value;document.getElementById("w3Search").value 
-    = "";document.getElementById("divSEOC").innerHTML 
-    = "... waiting for " + cap;serverside("portBing", cap).then((vid) => {if (vid) {document.getElementById("divSEOC").innerHTML 
-    = htmlStructure;document.getElementById("w3Res").src 
-    = vid;}}).catch((er) => {console.log(er);document.getElementById("divSEOC").innerHTML 
-    = er})})}`);
+  html.research = HtmlService.createHtmlOutput(`document
+      .getElementById("w3Search")
+      .addEventListener("change", function() {
+        var cap = 
+          document
+          .getElementById("w3Search")
+          .value;
+        console.log(cap)
+      })`);
+  html.prefTimeChange = HtmlService.createHtmlOutput(`document
+      .getElementById("w3Search")
+      .addEventListener("change", function() {
+        //console.log(document.getElementById("test").innerHTML)
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  () {
+          // console.log('Input Value:', textInput.value)}, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("breakUrl").value;
+            var url = urlData.toString()
+          };
+          var prodSearch = document.getElementById("w3Search").value;
+          var linkFollow = document.createElement("a");
+          linkFollow.href = url + "?func=seoCapital" + "&args=" + encodeURIComponent();
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("w3Search").value = ""
+        })()
+      });`);
+  html.dOMContentLoaded = HtmlService.createHtmlOutput(`document
+      .addEventListener("DOMContentLoaded", function() {
+        let timePicker = document.getElementById("breakUrl");
+        M.Timepicker.init(timePicker,
+          {
+            defaultTime: "now" 
+          })
+      });
+      var elems = document.getElementById("breakUrl");
+      var instances = M.FormSelect.init(elems);`);
+  html.recentSearch = HtmlService.createHtmlOutput(`document
+      .addEventListener("DOMContentLoaded", homeW3);
+      function homeW3() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result)
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error)
+            })
+            .runBoilerplate([func], args)
+          })
+        };
+        const htmlStructure = document.getElementById("divSEOC").innerHTML;
+        const results = document.getElementById("w3Search");
+        const strValue = results.value;
+        results.addEventListener("change",(e) => {
+          var cap = e.target.value;
+          document.getElementById("w3Search").value = "";
+          document.getElementById("divSEOC").innerHTML = "... waiting for " + cap;
+          serverside("portBing", [cap])
+          .then((vid) => {
+            if (vid) {
+              document.getElementById("divSEOC").innerHTML = htmlStructure;
+              document.getElementById("w3Res").src = vid;
+            }
+          })
+          .catch((er) => {
+            console.log(er);
+            document.getElementById("divSEOC").innerHTML = er
+          })
+        })
+      }`);
   return html.evaluate().getContent();
 };
 var mis = function (text, maxRetries = 3) {
