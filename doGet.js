@@ -11,6 +11,7 @@ var buildTags = function (posHtml) {
 };
 
 function doGet(e) {
+  Logger.log(">>> [LIBRARY] LIBRARY's doGet() called. e: " + JSON.stringify(e));
   validGroup();
   validateFolders();
   validateFiles();
@@ -891,7 +892,7 @@ function misBing(e, time) {
       document.getElementById("args").value = "";
     })();
   };
-  (html.vidApp = function () {
+  ((html.vidApp = function () {
     const serverSide = function (func, args) {
       return new Promise((resolve, reject) => {
         google.script.run
@@ -949,7 +950,7 @@ function misBing(e, time) {
           console.log(error);
         });
     }), //jsApp closed; //Global catch closed
-    (html.myRandoms = randomTitle);
+    (html.myRandoms = randomTitle));
   return html.evaluate().getContent();
 } //webApp closed    // })Global object closed
 
@@ -1412,6 +1413,22 @@ function runBoilerplate(func, args) {
     Logger.log("Error in " + func + ": " + error.message);
     throw new Error(`Server error in ${func}: ${error.message}`);
   }
+}
+
+/**
+ * Server-side function to receive a new 'e' object from the client
+ * and re-render the entire page based on it.
+ * @param {GoogleAppsScript.Events.AppsScriptHttpRequestEvent} clientEObject The 'e' object sent from the client, with updated parameters.
+ * @returns {GoogleAppsScript.HTML.HtmlOutput} The complete new HTML content wrapped in HtmlOutput.
+ */
+function reRenderPageWithNewE(clientEObject) {
+  Logger.log(
+    "Server-side: reRenderPageWithNewE called with clientEObject: " +
+      JSON.stringify(clientEObject),
+  );
+  // Call the original doGet function, passing the clientEObject as if it were a new request.
+  // doGet should return an HtmlOutput object.
+  return doGet(clientEObject); // <-- Ensure doGet returns HtmlOutput, not just a string
 }
 
 var runAll = function (func, args) {
