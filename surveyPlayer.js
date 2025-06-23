@@ -115,7 +115,7 @@ function surveyPlayer(searchString, joinString) {
                                 <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%;">
                                   <tbody>
                                     <td>
-                                      <div id="player2" class="col s10 push-s1">
+                                      <div id="player2" class="col s10 m-10 l-10 push-s1 push-m1 push-l1">
                                         <?!= seoCapital(link) ?></div></td></tbody></table></td></tr></tbody></table>
                         <div class="row">
                           <div class="col s12 card-panel l12 m12 receipt red">
