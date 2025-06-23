@@ -133,7 +133,7 @@ var crmGWI = function (fx) {
       //mod the array
       let datePicker = document.getElementById('date');
       M.Datepicker.init(datePicker, {
-      defaultDate: <?!= dateDefault ?>, 
+      defaultDate: "<?!= dateDefault ?>", 
       setDefaultDate: true, 
       minDate: new Date(), 
       disableDayFn: 
