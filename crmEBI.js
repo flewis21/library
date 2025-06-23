@@ -53,17 +53,17 @@ var crmEBI = function (fx) {
     </head>
     <body>
       <h1>Yes</h1>
-      <form id="myForm" style="font-size: 4.5em">
+      <form id="myForm" style="font-size: .2em">
         <div class="header toolbar toolbar-icon">
           <div class="interface dotted_border">
-            <a href='<?= getUrl(ScriptApp) ?>?func=crmEBI' onclick="GameManager.setGameStart('Warrior')" target="_top">
-              <img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&pid=ImgRaw&r=0" alt="Ask: Do you offer employee benefits?" />
+            <a href="<?= getUrl(ScriptApp) ?>?func=crmEBI" onclick="GameManager.setGameStart('Warrior')" target="_top">
+              <img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&amp;pid=ImgRaw&amp;r=0" alt="Ask: Do you offer employee benefits?">
               <div>
-                <p>Are you satisfied with the annual renewals costs of your employee benefits every year?</p>
-                <p>As a small business owner, I know how proud you must be to offer benefits to your employees!</p>
-                <p>However, many small business owners I talk to tell me the costs can be very high!</p>
-                <p>I’m sure it’s the same for you!</p>
-                <p>So, we would like to share some interesting changes the government has made to make the cost of offering benefits more affordable for small businesses!</p>
+                <p>Are you satisfied with the annual renewals costs of your employee benefits every year?
+                As a small business owner, I know how proud you must be to offer benefits to your employees!
+                However, many small business owners I talk to tell me the costs can be very high!
+                I’m sure it’s the same for you!
+                So, we would like to share some interesting changes the government has made to make the cost of offering benefits more affordable for small businesses!</p>
               </div>
             </a>
           </div>
@@ -127,15 +127,15 @@ var crmEBI = function (fx) {
     </head>
     <body>
       <h1>No</h1>
-      <form id="myForm" style="font-size: 4.5em">
+      <form id="myForm" style="font-size: .2em">
         <div class="header toolbar toolbar-icon">
           <div class="interface dotted_border">
-            <a href='<?= getUrl(ScriptApp) ?>?func=crmEBI' onclick="GameManager.setGameStart('Rouge')" target="_top">
-              <img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&pid=ImgDetMain" alt="Ask: Do you offer employee benefits?" />
+            <a href="<?= getUrl(ScriptApp) ?>?func=crmEBI" onclick="GameManager.setGameStart('Rouge')" target="_top">
+              <img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&amp;pid=ImgDetMain" alt="Ask: Do you offer employee benefits?">
               <div>
-                <p>I understand!</p>
-                <p>Several of our business clients have told us how expensive it is to offer benefits!</p>
-                <p>When we showed them how they could offer benefits at lower costs, many were excited and partnered with us, and are now offering benefits to their employees!</p>
+                <p>I understand!
+                Several of our business clients have told us how expensive it is to offer benefits!
+                When we showed them how they could offer benefits at lower costs, many were excited and partnered with us, and are now offering benefits to their employees!</p>
               </div>
             </a>
           </div>
@@ -223,13 +223,13 @@ var crmEBI = function (fx) {
           </div>
         </div>
         <h1><div id="companyName">Employee Benefits Inquiry</div></h1>
-        <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 5em">
-        <form id="ebiForm" style="font-size: 4.5em">
-          <div style="font-size: 1.5em">
-            <p>Hi!</p><p>This is Fabian with WLS Community Benefits!</p><p> Good morning/afternoon!</p><p>How are you today? (Wait for answer)!</p><p>Please tell me your name (again)!</p><p>(Insert <input type="text" id="name" name="name" style="font-size: .6em"> <label for="name" style="font-size: 1em">Name</label>: here or write it down)!</p><p>Thanks!</p><p>Hi<input type="text" id="nameFr" name="nameFriendly" style="font-size: .6em"><label for="nameFr" style="font-size: 1em">Friendly Name</label>!:</p><p>Are you the person who handles employee benefits?(Wait for answer)!</p><h2>May I speak with the person who handles benefits, please?</h2>
-            <p>Hi<input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: .6em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name</label>!:</p><p>This is Fabian with WLS Community Benefits!</p><p>I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</p><p>Can I have a few minutes of your time? (If not, find out what would be a good time to call back)! Do you offer employee benefits?</p><div class="interface dotted_border"><a id="yesHL"><div id="yesOffer"><h3>If yes, continue!</h3></div><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&pid=ImgRaw&r=0" alt="Ask: Do you offer employee benefits?" /></a><a id="noHL"><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&pid=ImgDetMain" alt="Ask: Do you offer employee benefits?" /></a></div><div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank">Contact Me</a></div><br />
-            <p>I want to schedule some time for you to meet with my director to discuss it!</p><p>How is<input placeholder=<?!= ph ?> class="datepicker" type="date" id="date" name="date" style="font-size: .6em"><label for="date" style="font-size: 1em">Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="time" name="time" style="font-size: .6em"><label for="time" style="font-size: 1em">Time</label>?: or<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: .6em"><label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: .6em"><label for="timeAlt" style="font-size: 1em">Alternate Time</label>?:</p>
-            <p>So that we can be better prepared for the meeting let me ask you a few additional questions:</p><label for="email" style="font-size: 1em">Email:</label><p>What is your email address?</p><input type="email" id="email" name="email" style="font-size: .6em"><label for="phone" style="font-size: 1em">Telephone:</label><p>What is your cell phone number or the best way to reach you directly?</p><input type="tel" id="phone" name="phone" style="font-size: .6em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label><p>How many full-time employees do you have?</p><input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: .6em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label><p>How many part-time employees do you have?</p><input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: .6em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><p>Is there someone else at your business you would like to have attend this meeting as well? (get name <input type="text" id="nameAdd" name="nameAdditional" style="font-size: .6em"> and email <input type="email" id="emailAdd" name="emailAdditional" style="font-size: .6em"><label for="emailAdd" style="font-size: 1em">Additional Email</label>):</p><p>Are you the final decision maker about benefits?</p><p>OK!</p><p>Great!</p><p>Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder=<?!= ph ?> class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: .6em"><label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder=<?!= ph ?> class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: .6em"><label for="timeFin" style="font-size: 1em">Finalized Time:</label>!</p><p>If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</p></div></form><button type="submit" style="font-size: 1em">Submit</button>
+        <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 1em">
+        <form id="ebiForm" style="font-size: .2em">
+          <div style="font-size: 5em">
+            <p>Hi!</p><p>This is Fabian with WLS Community Benefits! Good morning/afternoon! How are you today? (Wait for answer)!</p><p>Please tell me your name (again)!(Insert <input type="text" id="name" name="name" style="font-size: 1em"> <label for="name" style="font-size: 1em">Name</label>: here or write it down)! Thanks! Hi<input type="text" id="nameFr" name="nameFriendly" style="font-size: 1em"><label for="nameFr" style="font-size: 1em">Friendly Name</label>!:</p><p>Are you the person who handles employee benefits?(Wait for answer)!</p><h2>May I speak with the person who handles benefits, please?</h2>
+            <p>Hi<input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: 1em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name</label>!: This is Fabian with WLS Community Benefits! I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</p><p>Can I have a few minutes of your time? (If not, find out what would be a good time to call back)! Do you offer employee benefits?</p><div class="interface dotted_border"><a id="yesHL"><div id="yesOffer"><h3>If yes, continue!</h3></div><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&amp;pid=ImgRaw&amp;r=0" alt="Ask: Do you offer employee benefits?"></a><a id="noHL"><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&amp;pid=ImgDetMain" alt="Ask: Do you offer employee benefits?"></a></div><div class="agenda z-depth-5 pulse btn-large card-panel blue scale-out scale-in"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" class="black darken-4 receipt toolbar toolbar_icon toolbar_iconHover scale-out btn-large menu-img z-depth-5 card-panel black scale-transition scale-out scale-in" target="-blank">Contact Me</a></div><br>
+            <p>I want to schedule some time for you to meet with my director to discuss it! How is<input placeholder="<?!=" ph="" ?=""> class="datepicker" type="date" id="date" name="date" style="font-size: .6em"&gt;<label for="date" style="font-size: 1em">Date:</label> at<input placeholder="<?!=" ph="" ?=""> class="timepicker" type="time" id="time" name="time" style="font-size: .6em"&gt;<label for="time" style="font-size: 1em">Time</label>?: or<input placeholder="<?!=" ph="" ?=""> class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: .6em"&gt;<label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder="<?!=" ph="" ?=""> class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: .6em"&gt;<label for="timeAlt" style="font-size: 1em">Alternate Time</label>?:</p>
+            <p>So that we can be better prepared for the meeting let me ask you a few additional questions:<label for="email" style="font-size: 1em">Email:</label>What is your email address?<input type="email" id="email" name="email" style="font-size: 1em"><label for="phone" style="font-size: 1em">Telephone:</label>What is your cell phone number or the best way to reach you directly?<input type="tel" id="phone" name="phone" style="font-size: 1em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label>How many full-time employees do you have?<input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: 1em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label> How many part-time employees do you have?</p><input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: 1em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><p>Is there someone else at your business you would like to have attend this meeting as well? (get name <input type="text" id="nameAdd" name="nameAdditional" style="font-size: 1em"> and email <input type="email" id="emailAdd" name="emailAdditional" style="font-size: 1em"><label for="emailAdd" style="font-size: 1em">Additional Email</label>):</p><p>Are you the final decision maker about benefits?</p><p>OK! Great!</p><p>Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder="<?!=" ph="" ?=""> class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: .6em"&gt;<label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder="<?!=" ph="" ?=""> class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: .6em"&gt;<label for="timeFin" style="font-size: 1em">Finalized Time:</label>!</p><p>If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</p></div></form><button type="submit" style="font-size: 1em">Submit</button>
         
         <script>
           var sheetRows = document.getElementById('rowIndex');
@@ -321,7 +321,7 @@ var crmEBI = function (fx) {
                 //mod the array
                 let datePicker = document.getElementById('date');
                 M.Datepicker.init(datePicker, {
-                defaultDate: <?= dateDefault ?>, 
+                defaultDate: "<?= dateDefault ?>", 
                 setDefaultDate: true, 
                 minDate: new Date(), 
                 disableDayFn: 
