@@ -38,16 +38,18 @@ function busyDates() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var calendars = CalendarApp.getAllCalendars();
   var myCalendar;
-  calendars.map((calendar) => {
-    authLogic(calendar.isMyPrimaryCalendar())
-      ? (function () {
-          myCalendar = calendar.getId();
-          return myCalendar;
-        })()
-      : (function () {
-          return;
-        })();
-  });
+  while (!myCalendar) {
+    calendars.map((calendar) => {
+      authLogic(calendar.isMyPrimaryCalendar())
+        ? (function () {
+            myCalendar = calendar.getId();
+            return myCalendar;
+          })()
+        : (function () {
+            return;
+          })();
+    });
+  }
   var startDate = new Date();
   var endDate = new Date(new Date().setYear(startDate.getFullYear() + 1));
   var busyCalendar = CalendarApp.getCalendarsByName(myCalendar)[0];
