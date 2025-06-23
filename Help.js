@@ -300,7 +300,10 @@ var crmT = function (func) {
   return funFirst;
 };
 var testlt = function () {
-  console.log("*** Inside testlt() function. It has been called. ***");
+  console.log(
+    arguments.callee.caller.name +
+      "\n*** Inside testlt() function. It has been called. ***",
+  );
   // var numVarRnd = randNum;
   // var arrNum = numVarRnd
   // var arrDRnd = appSort(arrNum);
@@ -867,8 +870,29 @@ var mis = function (text, maxRetries = 3) {
         }
       }
       if (isError) {
+        Logger.log("Error(s) from misSt:", supFunc);
         console.error("Error(s) from misSt:", supFunc);
-        return { error: "misSt returned errors", details: supFunc };
+        var earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
+        var errorUrl = text;
+        var form = formMaker(
+          [text].join("").toUpperCase(),
+          "misForms",
+          functionRegistry.time,
+        );
+        if (typeof form === "object") {
+          // fileManager(coData.rndTitle, "Forms")
+          form.addSectionHeaderItem().setTitle(earlyReturn);
+          form.addTextItem().setTitle("Your Name").setRequired(true);
+          form.addDateItem().setTitle("Birth Date").setRequired(true);
+          form
+            .addParagraphTextItem()
+            .setTitle("Your Message")
+            .setRequired(true);
+          form.setConfirmationMessage("Thanks for your feedback !!");
+          var url = earlyReturn || form.getPublishedUrl();
+        }
+        console.log("Final app:", supFunc?.res);
+        return { index: url, app: earlyReturn, link: errorUrl };
       }
     }
     var fx = supFunc?.func;
