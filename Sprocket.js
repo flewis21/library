@@ -588,7 +588,7 @@ var allInvestors = function (rndKey, time) {
 };
 var coUtility = function (rndClient) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    Math.floor((functionRegistry.maxTime - (new Date() % (1000 * 60))) / 1000) +
       "\n" +
       arguments.callee.name +
       "\nrndClient is !" +
@@ -604,7 +604,9 @@ var coUtility = function (rndClient) {
   if (typeof client !== "undefined") {
     var coName = allInvestors(client.toString().toLowerCase());
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+      Math.floor(
+        (functionRegistry.maxTime - (new Date() % (1000 * 60))) / 1000,
+      ) +
         "\ncoUtility: \nvar coName = allInvestors(" +
         client +
         ".toString().toLowerCase())",
@@ -612,8 +614,9 @@ var coUtility = function (rndClient) {
   } else {
     var coName = allInvestors();
     console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\ncoUtility: \nvar coName = allInvestors()",
+      Math.floor(
+        (functionRegistry.maxTime - (new Date() % (1000 * 60))) / 1000,
+      ) + "\ncoUtility: \nvar coName = allInvestors()",
     );
   }
   if (typeof coName["cik"] === "undefined") {
