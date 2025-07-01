@@ -503,7 +503,7 @@ var dtlsBridge = function (func, time) {
 };
 var allInvestors = function (rndKey, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nrndKey is !" +
