@@ -9,9 +9,10 @@ var checkDay = function () {
   var currentEmail = randomEmail;
   var startPageUrl = getUrl(ScriptApp);
   var input = sheetCalc();
-  // console.log(input)
-  for (var i = 0; i < input.length; i++) {
-    var randomKey = Math.floor(Math.random() * Math.floor(input.length)); // Math.floor(Math.random())
+  // console.log(input);
+  var randomKey = Math.floor(Math.random() * Math.floor(input.length));
+  for (var i = randomKey; i < input.length; i++) {
+    // var randomKey = Math.floor(Math.random() * Math.floor(input.length)); // Math.floor(Math.random())
     var currentCik = input[i][randomKey]["cik"];
     var currentTicker = input[i][randomKey]["ticker"];
     var currentTitle = input[i][randomKey]["title"];
