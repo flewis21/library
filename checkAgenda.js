@@ -5,7 +5,7 @@ var checkDay = function () {
   console.log(testList);
   var emails = email();
   var emailsCount = email().toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+  var randomEmail = [emails][Math.floor(Math.random() * emailsCount)];
   var currentEmail = randomEmail;
   var startPageUrl = getUrl(ScriptApp);
   var input = sheetCalc();
@@ -13,12 +13,12 @@ var checkDay = function () {
   var randomKey = Math.floor(Math.random() * Math.floor(input.length));
   for (var i = randomKey; i < input.length; i++) {
     // var randomKey = Math.floor(Math.random() * Math.floor(input.length)); // Math.floor(Math.random())
-    var currentCik = input[i][randomKey]["cik"];
-    var currentTicker = input[i][randomKey]["ticker"];
-    var currentTitle = input[i][randomKey]["title"];
+    var currentCik = input[i]["cik"];
+    var currentTicker = input[i]["ticker"];
+    var currentTitle = input[i]["title"];
 
     var randomCompany = contentFile("checkOnDay", {
-      cik_str: currentCik,
+      cik: currentCik,
       ticker: currentTicker,
       title: currentTitle,
       relatedVideo: videoPlayer(`playList`, currentTitle),
