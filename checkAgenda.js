@@ -8,7 +8,7 @@ var checkDay = function () {
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   var currentEmail = randomEmail;
   var startPageUrl = getUrl(ScriptApp);
-  var input = [urlDataSource("https://www.sec.gov/files/company_tickers.json")];
+  var input = sheetCalc();
   // console.log(input)
   for (var i = 0; i < input.length; i++) {
     var randomKey = Math.floor(Math.random() * Math.floor(13000)); // Math.floor(Math.random())
