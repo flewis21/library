@@ -11,8 +11,8 @@ var checkDay = function () {
   var input = sheetCalc();
   // console.log(input)
   for (var i = 0; i < input.length; i++) {
-    var randomKey = Math.floor(Math.random() * Math.floor(13000)); // Math.floor(Math.random())
-    var currentCik = input[i][randomKey]["cik_str"];
+    var randomKey = Math.floor(Math.random() * Math.floor(input.length)); // Math.floor(Math.random())
+    var currentCik = input[i][randomKey]["cik"];
     var currentTicker = input[i][randomKey]["ticker"];
     var currentTitle = input[i][randomKey]["title"];
 
