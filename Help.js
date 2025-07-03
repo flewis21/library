@@ -1586,7 +1586,7 @@ var misSt = function (func, someArgs) {
           } else {
             if (declaredParamName !== null) {
               args[declaredParamName] = paramName;
-              resolvedArgs.push(args[paramName]);
+              resolvedArgs.push(args[declaredParamName]);
             } else {
               missingParams.push(declaredParamName);
             }
