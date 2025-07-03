@@ -1584,7 +1584,7 @@ var misSt = function (func, someArgs) {
             args["argsObject"] = rawVar.app["myVar"];
             resolvedArgs.push(args["argsObject"]);
           } else {
-            if (paramName !== null) {
+            if (declaredParamName !== null) {
               args[declaredParamName] = paramName;
               resolvedArgs.push(args[paramName]);
             } else {
