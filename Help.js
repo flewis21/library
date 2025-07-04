@@ -1484,11 +1484,11 @@ var misSt = function (func, someArgs) {
             }
             resolvedArgs.push(args["varA"]);
           } else if (
-            paramName === "epaUrl" ||
-            (paramName === null && declaredParamName === "epaUrl")
+            paramName === "epaAUrl" ||
+            (paramName === null && declaredParamName === "epaAUrl")
           ) {
             if (userProvidedValue !== null && userProvidedValue !== undefined) {
-              args["epaUrl"] = userProvidedValue;
+              args["epaAUrl"] = userProvidedValue;
             } else {
               // var folder = allFolders[numVarRnd];
               var data = coUtility(product)[0];
@@ -1577,7 +1577,7 @@ var misSt = function (func, someArgs) {
                       );
                       var isDataKey = uniqueDataKey[1][randomKey];
                       var randomCasNumber = isDataKey["casnumber"];
-                      args["epaUrl"] =
+                      args["epaAUrl"] =
                         "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
                         randomCasNumber +
                         "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
@@ -1586,7 +1586,7 @@ var misSt = function (func, someArgs) {
                 }
               }
             }
-            resolvedArgs.push(args["url"]);
+            resolvedArgs.push(args["epaAUrl"]);
           } else if (
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
