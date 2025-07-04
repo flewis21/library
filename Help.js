@@ -1577,6 +1577,14 @@ var misSt = function (func, someArgs) {
                       );
                       var isDataKey = uniqueDataKey[1][randomKey];
                       var randomCasNumber = isDataKey["casnumber"];
+                      console.log(
+                        "randomCasNumber = " +
+                          isDataKey +
+                          "[" +
+                          casnumber +
+                          "] *** ",
+                        randomCasNumber,
+                      );
                       args["epaAUrl"] =
                         "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
                         randomCasNumber +
