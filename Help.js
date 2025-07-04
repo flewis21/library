@@ -1361,59 +1361,76 @@ var misSt = function (func, someArgs) {
         // var uniqueCoArray = sheetCalc;
         // var uniqueItemArray = itemCalc;
         content.forEach((paramName, index) => {
-          var declaredParamName = declaredParams[index];
+          var declaredParamName = declaredParams[index]; // The actual declared parameter name (e.g., "e", "time", "url")
+          var userProvidedValue = orderedArgs[index]; // This is the value that came from the user, or null if not mapped initially
+
           if (
             paramName === "e" ||
             (paramName === null && declaredParamName === "e")
           ) {
-            args["e"] = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", result],
-                  ["args", JSON.stringify(content)],
-                  ["action", "getData"],
-                  ["file", "uiAccess"],
-                ],
-              ],
-              functionRegistry.time,
-            );
-            resolvedArgs.push(args["e"]);
+            args["e"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result],
+                        ["args", JSON.stringify(content)],
+                        ["action", "getData"],
+                        ["file", "uiAccess"],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+            resolvedArgs.push(JSON.stringify(args["e"]));
           } else if (
             paramName === "time" ||
             (paramName === null && declaredParamName === "time")
           ) {
-            args["time"] = functionRegistry.time;
+            args["time"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : functionRegistry.time;
             resolvedArgs.push(args["time"]);
           } else if (
             paramName === "data" ||
             (paramName === null && declaredParamName === "data")
           ) {
-            var rndE = objectOfS(
-              ["parameter"],
-              [
+            // This one is more complex as it involves calling a function, but the principle is the same:
+            // If userProvidedValue is present, use it. Otherwise, generate the data.
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["data"] = userProvidedValue;
+            } else {
+              var rndE = objectOfS(
+                ["parameter"],
                 [
-                  ["func", "mis"],
-                  ["args", [result, ...content]],
+                  [
+                    ["func", "mis"],
+                    ["args", [result, ...content]],
+                  ],
                 ],
-              ],
-              functionRegistry.time,
-            );
-            var funcUno = rndE.parameter["func"];
-            var funcDos = rndE.parameter["args"];
-            if (!funcUno === "misSt") {
-              var payLoad = globalThis[funcUno].apply(this, funcDos);
+                functionRegistry.time,
+              );
+              var funcUno = rndE.parameter["func"];
+              var funcDos = rndE.parameter["args"];
+              if (!funcUno === "misSt") {
+                var payLoad = globalThis[funcUno].apply(this, funcDos);
+              }
+              args["data"] = {
+                message: payLoad,
+                timestamp: new Date(),
+              };
             }
-            args["data"] = {
-              message: payLoad,
-              timestamp: new Date(),
-            };
             resolvedArgs.push(args["data"]);
           } else if (
             paramName === "func" ||
             (paramName === null && declaredParamName === "func")
           ) {
-            args["func"] = result;
+            args["func"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : result;
             resolvedArgs.push(args["func"]);
           }
           // else if (
@@ -1445,35 +1462,46 @@ var misSt = function (func, someArgs) {
             paramName === "varA" ||
             (paramName === null && declaredParamName === "varA")
           ) {
-            // arrDRnd = appSort(numVarRnd);
-            // searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-            result = fParams.find((rndS) => {
-              return rndS.name === searchString;
-            });
-            if (typeof result === "string") {
-              args["varA"] = globalThis[result]();
-            } else if (
-              typeof result === "object" &&
-              result !== null &&
-              result.name
-            ) {
-              args["varA"] = globalThis[result.name].apply(result.parameters);
-            } else if (result && result.name) {
-              args["varA"] = globalThis[result.name]();
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["varA"] = userProvidedValue;
+            } else {
+              // arrDRnd = appSort(numVarRnd);
+              // searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+              result = fParams.find((rndS) => {
+                return rndS.name === searchString;
+              });
+              if (typeof result === "string") {
+                args["varA"] = globalThis[result]();
+              } else if (
+                typeof result === "object" &&
+                result !== null &&
+                result.name
+              ) {
+                args["varA"] = globalThis[result.name].apply(result.parameters);
+              } else if (result && result.name) {
+                args["varA"] = globalThis[result.name]();
+              }
             }
             resolvedArgs.push(args["varA"]);
           } else if (
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
           ) {
-            var folder = allFolders[numVarRnd];
-            args["url"] = fileBrowser(folder).url;
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["url"] = userProvidedValue;
+            } else {
+              var folder = allFolders[numVarRnd];
+              args["url"] = fileBrowser(folder).url;
+            }
             resolvedArgs.push(args["url"]);
           } else if (
             paramName === "object" ||
             (paramName === null && declaredParamName === "object")
           ) {
-            args["object"] = JSON.stringify({});
+            args["object"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : JSON.stringify({});
             resolvedArgs.push(args["object"]);
           } else if (
             paramName === "file" ||
@@ -1483,7 +1511,10 @@ var misSt = function (func, someArgs) {
               htmlArray[
                 Math.floor(Math.random() * Math.floor(htmlArray.length))
               ];
-            args["file"] = rndPage;
+            args["file"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : rndPage;
             resolvedArgs.push(args["file"]);
           } else if (
             paramName === "fileX" ||
@@ -1506,7 +1537,10 @@ var misSt = function (func, someArgs) {
                 }
               }
             }
-            args["fileX"] = fileXName;
+            args["fileX"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : fileXName;
             resolvedArgs.push(args["fileX"]);
           } else if (
             paramName === "folderX" ||
@@ -1515,23 +1549,35 @@ var misSt = function (func, someArgs) {
             declaredParamName === "folder"
           ) {
             if (paramName === "folderX") {
-              args["folderX"] = allFolders[numVarRnd];
+              args["folderX"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : allFolders[numVarRnd];
               resolvedArgs.push(args["folderX"]);
             } else if (paramName === "folder") {
-              args["folder"] = allFolders[numVarRnd];
+              args["folder"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : allFolders[numVarRnd];
               resolvedArgs.push(args["folder"]);
             }
           } else if (
             paramName === "numIndex" ||
             (paramName === null && declaredParamName === "numIndex")
           ) {
-            args["numIndex"] = numVarRnd;
+            args["numIndex"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : numVarRnd;
             resolvedArgs.push(args["numIndex"]);
           } else if (
             paramName === "infinitum" ||
             (paramName === null && declaredParamName === "infinitum")
           ) {
-            args["infinitum"] = numVarRnd;
+            args["infinitum"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : numVarRnd;
             resolvedArgs.push(args["infinitum"]);
           } else if (
             paramName === "itemName" ||
@@ -1541,7 +1587,9 @@ var misSt = function (func, someArgs) {
               Math.random() * Math.floor(globalThis.uniqueItemArray().length),
             );
             args["itemName"] =
-              globalThis.uniqueItemArray()[rndItemIndex].Description;
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : globalThis.uniqueItemArray()[rndItemIndex].Description;
             resolvedArgs.push(args["itemName"]);
           } else if (
             paramName === "tunPlay" ||
@@ -1558,34 +1606,53 @@ var misSt = function (func, someArgs) {
             );
             var tiParam = globalThis.uniqueCoArray()[rndItemIndex]["title"];
             if (paramName === "tunPlay") {
-              args["tunPlay"] = tiParam;
+              args["tunPlay"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : tiParam;
               resolvedArgs.push(args["tunPlay"]);
             } else if (paramName === "searchString") {
-              args["searchString"] = tiParam;
+              args["searchString"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : tiParam;
               resolvedArgs.push(args["searchString"]);
             } else if (paramName === "rndKey") {
-              args["rndKey"] = tiParam;
+              args["rndKey"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : tiParam;
               resolvedArgs.push(args["rndKey"]);
             } else if (paramName === "search") {
-              args["search"] = tiParam;
+              args["search"] =
+                userProvidedValue !== null && userProvidedValue !== undefined
+                  ? userProvidedValue
+                  : tiParam;
               resolvedArgs.push(args["search"]);
             }
           } else if (
             paramName === "stringArray" ||
             (paramName === null && declaredParamName === "stringArray")
           ) {
-            args["stringArray"] = appSort(numVarRnd);
+            args["stringArray"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : appSort(numVarRnd);
             resolvedArgs.push(args["stringArray"]);
           } else if (
             paramName === "argsObject" ||
             (paramName === null && declaredParamName === "argsObject")
           ) {
             var rawVar = mis("VVar");
-            args["argsObject"] = rawVar.app["myVar"];
+            args["argsObject"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : rawVar.app["myVar"];
             resolvedArgs.push(args["argsObject"]);
           } else {
             if (declaredParamName !== null) {
-              args[declaredParamName] = paramName;
+              // For these, we just take the user's value (which is 'paramName' here, coming from orderedArgs)
+              args[declaredParamName] = userProvidedValue;
               resolvedArgs.push(args[declaredParamName]);
             } else {
               missingParams.push(declaredParamName);
