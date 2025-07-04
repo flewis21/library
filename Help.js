@@ -1484,6 +1484,110 @@ var misSt = function (func, someArgs) {
             }
             resolvedArgs.push(args["varA"]);
           } else if (
+            paramName === "epaUrl" ||
+            (paramName === null && declaredParamName === "epaUrl")
+          ) {
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["epaUrl"] = userProvidedValue;
+            } else {
+              // var folder = allFolders[numVarRnd];
+              var data = coUtility(product)[0];
+              if (typeof data.rndTitle !== "undefined") {
+                var test = productNamePartial(
+                  [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor(
+                          [data.rndTitle.replace(/,./g, "")]
+                            .toString()
+                            .split(" ").length,
+                        ),
+                    )
+                  ],
+                );
+              }
+              if (typeof test !== "undefined") {
+                var test2 = productRegNo(test["eparegno"]);
+                if ([test2].indexOf("companyinfo") !== -1) {
+                  var productCo = [];
+                  for (var i = 0, l = test2["companyinfo"].length; i < l; i++) {
+                    var isCompany = test2["companyinfo"][i]["name"];
+                    productCo.push(isCompany);
+                  }
+                  var uniqueCo = [];
+                  for (var i = 0, l = productCo.length; i < l; i++) {
+                    var epaCo = coUtility(productCo[i]);
+                    uniqueCo.push(epaCo);
+                  }
+                  var randomCik = uniqueCo[0];
+                  var coInfo = uniqueCo[0][0].rndTitle;
+                  var secReport = uniqueCo[0][0].secUrl;
+                  var stkTicker = uniqueCo[0][0].rndTicker;
+                  var watchV = uniqueCo[0][0].videoItem;
+                  var playVid = uniqueCo[0][0].videoItemUrl;
+                } else {
+                  var coInfo = data.rndTitle;
+                  var secReport = data.secUrl;
+                  var stkTicker = data.rndTicker;
+                  var watchV = data.videoItem;
+                  var playVid = data.videoItemUrl;
+                }
+                if ([test2].indexOf("active_ingredients") !== -1) {
+                  var uniqueData = [];
+                  for (
+                    var i = 0, l = test2["active_ingredients"].length;
+                    i < l;
+                    i++
+                  ) {
+                    var isIngredient =
+                      test2["active_ingredients"][i]["active_ing"];
+                    if (isIngredient) {
+                      var pIName = productIngName(isIngredient);
+                      if (typeof pIName !== "undefined") {
+                        uniqueData.push(
+                          pIName["items"] || pIName["first"] || pIName,
+                        );
+                      }
+                    }
+                  }
+                  if (typeof uniqueData[0][0]["rndTitle"] === "undefined") {
+                    var uniqueDataArray = [];
+                    for (var i = 0, l = uniqueData.length; i < l; i++) {
+                      if (uniqueData[i].length !== 0) {
+                        uniqueData[i].map((item) => {
+                          uniqueDataArray.push(item);
+                        });
+                      }
+                    }
+                    const matches = [];
+                    uniqueDataArray
+                      .sort((a, b) => a - b)
+                      .filter((ac) => {
+                        if (
+                          JSON.stringify(ac["eparegnumber"])
+                            .toLowerCase()
+                            .includes(test2["eparegno"])
+                        )
+                          matches.push(ac);
+                      });
+                    var uniqueDataKey = [matches].entries().next().value;
+                    if (typeof uniqueDataKey[1].length !== 0) {
+                      var randomKey = Math.floor(
+                        Math.random() * Math.floor(matches.length),
+                      );
+                      var isDataKey = uniqueDataKey[1][randomKey];
+                      var randomCasNumber = isDataKey["casnumber"];
+                      args["epaUrl"] =
+                        "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+                        randomCasNumber +
+                        "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                    }
+                  }
+                }
+              }
+            }
+            resolvedArgs.push(args["url"]);
+          } else if (
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
           ) {
