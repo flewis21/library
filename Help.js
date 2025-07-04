@@ -1489,9 +1489,119 @@ var misSt = function (func, someArgs) {
           ) {
             if (userProvidedValue !== null && userProvidedValue !== undefined) {
               args["epaAUrl"] = userProvidedValue;
-            } else {
-              // var folder = allFolders[numVarRnd];
+            }
+            // else {
+            //   // var folder = allFolders[numVarRnd];
+            //   var data = coUtility(product)[0];
+            //   if (typeof data.rndTitle !== "undefined") {
+            //     var test = productNamePartial(
+            //       [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+            //         Math.floor(
+            //           Math.random() *
+            //             Math.floor(
+            //               [data.rndTitle.replace(/,./g, "")]
+            //                 .toString()
+            //                 .split(" ").length,
+            //             ),
+            //         )
+            //       ],
+            //     );
+            //   }
+            //   if (typeof test !== "undefined") {
+            //     var test2 = productRegNo(test["eparegno"]);
+            //     if ([test2].indexOf("companyinfo") !== -1) {
+            //       var productCo = [];
+            //       for (var i = 0, l = test2["companyinfo"].length; i < l; i++) {
+            //         var isCompany = test2["companyinfo"][i]["name"];
+            //         productCo.push(isCompany);
+            //       }
+            //       var uniqueCo = [];
+            //       for (var i = 0, l = productCo.length; i < l; i++) {
+            //         var epaCo = coUtility(productCo[i]);
+            //         uniqueCo.push(epaCo);
+            //       }
+            //       var randomCik = uniqueCo[0];
+            //       var coInfo = uniqueCo[0][0].rndTitle;
+            //       var secReport = uniqueCo[0][0].secUrl;
+            //       var stkTicker = uniqueCo[0][0].rndTicker;
+            //       var watchV = uniqueCo[0][0].videoItem;
+            //       var playVid = uniqueCo[0][0].videoItemUrl;
+            //     } else {
+            //       var coInfo = data.rndTitle;
+            //       var secReport = data.secUrl;
+            //       var stkTicker = data.rndTicker;
+            //       var watchV = data.videoItem;
+            //       var playVid = data.videoItemUrl;
+            //     }
+            //     if ([test2].indexOf("active_ingredients") !== -1) {
+            //       var uniqueData = [];
+            //       for (
+            //         var i = 0, l = test2["active_ingredients"].length;
+            //         i < l;
+            //         i++
+            //       ) {
+            //         var isIngredient =
+            //           test2["active_ingredients"][i]["active_ing"];
+            //         if (isIngredient) {
+            //           var pIName = productIngName(isIngredient);
+            //           if (typeof pIName !== "undefined") {
+            //             uniqueData.push(
+            //               pIName["items"] || pIName["first"] || pIName,
+            //             );
+            //           }
+            //         }
+            //       }
+            //       if (typeof uniqueData[0][0]["rndTitle"] === "undefined") {
+            //         var uniqueDataArray = [];
+            //         for (var i = 0, l = uniqueData.length; i < l; i++) {
+            //           if (uniqueData[i].length !== 0) {
+            //             uniqueData[i].map((item) => {
+            //               uniqueDataArray.push(item);
+            //             });
+            //           }
+            //         }
+            //         const matches = [];
+            //         uniqueDataArray
+            //           .sort((a, b) => a - b)
+            //           .filter((ac) => {
+            //             if (
+            //               JSON.stringify(ac["eparegnumber"])
+            //                 .toLowerCase()
+            //                 .includes(test2["eparegno"])
+            //             )
+            //               matches.push(ac);
+            //           });
+            //         var uniqueDataKey = [matches].entries().next().value;
+            //         if (typeof uniqueDataKey[1].length !== 0) {
+            //           var randomKey = Math.floor(
+            //             Math.random() * Math.floor(matches.length),
+            //           );
+            //           var isDataKey = uniqueDataKey[1][randomKey];
+            //           var randomCasNumber = isDataKey["casnumber"];
+            //           console.log(
+            //             "randomCasNumber = " +
+            //               isDataKey +
+            //               "[" +
+            //               casnumber +
+            //               "] *** ",
+            //             randomCasNumber,
+            //           );
+            //           args["epaAUrl"] =
+            //             "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+            //             randomCasNumber +
+            //             "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
+            // resolvedArgs.push(args["epaAUrl"]);
+            else {
+              // No userProvidedValue
+              console.log("DEBUG: Generating epaAUrl...");
               var data = coUtility(product)[0];
+              console.log("DEBUG: data from coUtility:", data);
+
               if (typeof data.rndTitle !== "undefined") {
                 var test = productNamePartial(
                   [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
@@ -1505,10 +1615,19 @@ var misSt = function (func, someArgs) {
                     )
                   ],
                 );
+                console.log("DEBUG: test from productNamePartial:", test);
+              } else {
+                console.log("DEBUG: data.rndTitle is undefined.");
               }
+
               if (typeof test !== "undefined") {
                 var test2 = productRegNo(test["eparegno"]);
-                if ([test2].indexOf("companyinfo") !== -1) {
+                console.log("DEBUG: test2 from productRegNo:", test2);
+
+                // Corrected check
+                if (test2 && test2.hasOwnProperty("companyinfo")) {
+                  console.log("DEBUG: test2 has companyinfo.");
+                  // ... (company info logic) ...
                   var productCo = [];
                   for (var i = 0, l = test2["companyinfo"].length; i < l; i++) {
                     var isCompany = test2["companyinfo"][i]["name"];
@@ -1526,13 +1645,21 @@ var misSt = function (func, someArgs) {
                   var watchV = uniqueCo[0][0].videoItem;
                   var playVid = uniqueCo[0][0].videoItemUrl;
                 } else {
+                  console.log(
+                    "DEBUG: test2 does NOT have companyinfo or is undefined/null.",
+                  );
+                  // ... (fallback logic) ...
                   var coInfo = data.rndTitle;
                   var secReport = data.secUrl;
                   var stkTicker = data.rndTicker;
                   var watchV = data.videoItem;
                   var playVid = data.videoItemUrl;
                 }
-                if ([test2].indexOf("active_ingredients") !== -1) {
+
+                // Corrected check
+                if (test2 && test2.hasOwnProperty("active_ingredients")) {
+                  console.log("DEBUG: test2 has active_ingredients.");
+                  // ... (ingredient logic) ...
                   var uniqueData = [];
                   for (
                     var i = 0, l = test2["active_ingredients"].length;
@@ -1550,51 +1677,47 @@ var misSt = function (func, someArgs) {
                       }
                     }
                   }
-                  if (typeof uniqueData[0][0]["rndTitle"] === "undefined") {
-                    var uniqueDataArray = [];
-                    for (var i = 0, l = uniqueData.length; i < l; i++) {
-                      if (uniqueData[i].length !== 0) {
-                        uniqueData[i].map((item) => {
-                          uniqueDataArray.push(item);
-                        });
-                      }
-                    }
-                    const matches = [];
-                    uniqueDataArray
-                      .sort((a, b) => a - b)
-                      .filter((ac) => {
-                        if (
-                          JSON.stringify(ac["eparegnumber"])
-                            .toLowerCase()
-                            .includes(test2["eparegno"])
-                        )
-                          matches.push(ac);
-                      });
-                    var uniqueDataKey = [matches].entries().next().value;
-                    if (typeof uniqueDataKey[1].length !== 0) {
-                      var randomKey = Math.floor(
-                        Math.random() * Math.floor(matches.length),
-                      );
-                      var isDataKey = uniqueDataKey[1][randomKey];
-                      var randomCasNumber = isDataKey["casnumber"];
-                      console.log(
-                        "randomCasNumber = " +
-                          isDataKey +
-                          "[" +
-                          casnumber +
-                          "] *** ",
-                        randomCasNumber,
-                      );
-                      args["epaAUrl"] =
-                        "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
-                        randomCasNumber +
-                        "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
-                    }
+                  if (
+                    typeof uniqueDataKey !== "undefined" &&
+                    uniqueDataKey[1] &&
+                    uniqueDataKey[1].length > 0
+                  ) {
+                    // ... randomKey, isDataKey, randomCasNumber ...
+                    var randomKey = Math.floor(
+                      Math.random() * Math.floor(matches.length),
+                    );
+                    var isDataKey = uniqueDataKey[1][randomKey];
+                    var randomCasNumber = isDataKey["casnumber"];
+
+                    console.log(
+                      "DEBUG: randomCasNumber generated:",
+                      randomCasNumber,
+                    );
+                    args["epaAUrl"] = "..."; // Only assign here if randomCasNumber is valid
+                  } else {
+                    console.log(
+                      "DEBUG: No uniqueDataKey or matches for CAS number generation.",
+                    );
                   }
+                } else {
+                  console.log(
+                    "DEBUG: test2 does NOT have active_ingredients or is undefined/null.",
+                  );
                 }
+              } else {
+                console.log(
+                  "DEBUG: 'test' is undefined, cannot proceed with test2.",
+                );
+              }
+              // IMPORTANT: If epaAUrl wasn't set, explicitly set it to a default or null to avoid pushing undefined.
+              if (args["epaAUrl"] === undefined) {
+                args["epaAUrl"] = null; // Or a default error URL
+                console.log(
+                  "DEBUG: epaAUrl could not be generated, setting to null.",
+                );
               }
             }
-            resolvedArgs.push(args["epaAUrl"]);
+            resolvedArgs.push(args["epaAUrl"]); // This pushes whatever args["epaAUrl"] is at this point.
           } else if (
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
