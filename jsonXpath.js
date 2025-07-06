@@ -496,11 +496,18 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   }
   if (typeof cokey === "undefined") {
     var rndStr = globalThis.uniqueItemArray();
+<<<<<<< Updated upstream
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var cokey = rndStrObj["Description"];
   }
 
+=======
+    var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var cokey = rndStrObj["Description"];
+  }
+  
+>>>>>>> Stashed changes
   if (typeof url === "undefined") {
     var rndFol = furtFolder();
     var url = fileBrowser(rndFol).url;
