@@ -271,10 +271,10 @@ var splitArr = function (rows, idx, query) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      rows +
+      "\nrows is ! " +
+      !rows +
       ", = " +
-      !rows,
+      rows,
   );
   return rows.filter(function (a) {
     return a[idx] == query;
@@ -286,10 +286,10 @@ var splitArrHeadings = function (test) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      test +
+      "\n is ! " +
+      !test +
       ", = " +
-      !test,
+      test,
   );
   var headings = [];
   for (var key in test) {
@@ -303,10 +303,10 @@ var splitArrRange = function (test) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      test +
+      "\n is ! " +
+      !test +
       ", = " +
-      !test,
+      test,
   );
   var headings = [];
   for (var key in test) {
@@ -329,10 +329,10 @@ var splitNoX = function (content, pushIndex) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      content +
+      "\n is ! " +
+      !content +
       ", = " +
-      !content,
+      content,
   );
   var json = content;
   // console.log(json);
@@ -371,10 +371,10 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      splitXContent +
+      "\n is ! " +
+      !splitXContent +
       ", = " +
-      !splitXContent,
+      splitXContent,
   );
   if (splitXContent) {
     var json = splitXContent;
@@ -411,18 +411,18 @@ var substanceVegas = function (
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      index +
-      ", = " +
+      "\n is ! " +
       !index +
-      "\n!" +
-      loopLength +
       ", = " +
+      index +
+      "\n is ! " +
       !loopLength +
-      "\n!" +
-      importedData +
       ", = " +
-      !importedData,
+      loopLength +
+      "\n is ! " +
+      !importedData +
+      ", = " +
+      importedData,
   );
   var arrData = importedData || [
     "e",
@@ -565,14 +565,14 @@ var testData = function (sourceData, time) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      sourceData +
-      ", = " +
+      "\n is ! " +
       !sourceData +
-      "\n!" +
-      time +
       ", = " +
-      !time,
+      sourceData +
+      "\n is ! " +
+      !time +
+      ", = " +
+      time,
   );
   if (typeof time === "undefined") {
     var time = start;
@@ -698,10 +698,10 @@ var testObject = function (dataArray, fVarHeaders) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      dataArray +
+      "\n is ! " +
+      !dataArray +
       ", = " +
-      !dataArray,
+      dataArray,
   );
   myRows = testData(dataArray);
   myObject = covObjects(myRows, FVar(fVarHeaders));

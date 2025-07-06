@@ -340,28 +340,6 @@ function edgarData()companyInfo) {console.log(companyInfo);}`);
 // ("\n <div  id=\"table-body\"></div>\n  <script>\n  const mydata = \"".concat(JSON.stringify(testData("data")), "\" \n \n  const tbody = document.getElementById(\"table-body\")\n   const htmlBody = mydata.forEach(function(r) {\n   console.log(r)\n   console.log(mydata)\n   const link = document.createElement(\"a\");\n  link.textContent = ".concat("\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"", ";\n   tbody.innerHtml(link);\n  })\n   </script>\n  ")), { textContent: "\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"" });
 //} 
 
-
-
-var epaA = function(epaAUrl){
-  const epaA = splitNoX(urlDataSource(epaAUrl));
-  return epaA
-}
-
-var epaB = function(epaBurl, epaC, uniA, epaBdelimiter){
-  const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
-  return epaB
-}
-
-var epaC = function(epaCurl, epaD, uniA, epaCdelimiter){
-  const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
-  return epaC
-}
-
-var epaD = function(epaDurl, epaDXpath, epaDdelimiter){
-  const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
-  return epaD
-}
-
 var oldSEC = function(rndTitle) {
   var urlCompany = "<?= getScriptUrl() ?>?func=surveyPlayer&args="
   var urlTicker = "https://www.nasdaq.com/search?q="

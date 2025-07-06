@@ -257,6 +257,38 @@ var epaData = function (e) {
 // (contentApp("\n <head>\n  \n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n  <script>\n document.addEventListener(\"DOMContentLoaded\", function() {\n  let timePicker = document.getElementById(\"prefTime\");\n M.Timepicker.init(timePicker, { defaultTime: \"now\" })\n })\n \n  document.getElementById(\"btn\").addEventListener(\"click\", function() {\n  google.script.run.runItLog();\n  })\n </script>\n \n </body>\n ", { runIt: contentApp("\n <button id=\"btn\">Run It!</button>"), timePicker: contentApp("\n  <div class=\"agenda container col s1\">\n  <input class=\"timepicker\" id=\"prefTime\" type=\"text\" />\n  </div>\n "), ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }));
 //(e, contentApp("\n <head>\n  \n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n \n </body>\n ", { ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }))
 
+
+
+var epaA = function(epaAUrl) {
+  console.log(
+    functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      "\nepaAUrl is !" +
+      !epaAUrl +
+      ", = " +
+      epaAUrl,
+  );
+  const urlSrc = urlDataSource(epaAUrl);
+  const epaA = splitNoX(urlSrc);
+  return epaA
+}
+
+var epaB = function(epaBurl, epaC, uniA, epaBdelimiter){
+  const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
+  return epaB
+}
+
+var epaC = function(epaCurl, epaD, uniA, epaCdelimiter){
+  const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
+  return epaC
+}
+
+var epaD = function(epaDurl, epaDXpath, epaDdelimiter){
+  const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
+  return epaD
+}
+
 var epaIng = function (e) {
   var urlProduct =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";

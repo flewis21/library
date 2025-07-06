@@ -344,10 +344,10 @@ var rowsToReturn = function (data, index) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      data +
+      "\n is ! " +
+      !data +
       ", = " +
-      !data,
+      data,
   );
   if (data) {
     var rowsToReturn = data.filter(function (a) {
@@ -495,7 +495,14 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
     time = functionRegistry.time;
   }
   if (typeof cokey === "undefined") {
-    var cokey = "url data";
+    var rndStr = globalThis.uniqueItemArray();
+    var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var cokey = rndStrObj["Description"];
+  }
+  
+  if (typeof url === "undefined") {
+    var rndFol = furtFolder();
+    var url = fileBrowser(rndFol).url;
   }
   let response;
   let location;
@@ -590,7 +597,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
     time + ")",
   );
   // return { uti: seoArray.playList };
-  return content;
+  return content || seoArray.playList;
 
   // if (typeof content === "object")
   // {var json = Utilities.jsonParse(content);
