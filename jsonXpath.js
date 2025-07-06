@@ -589,15 +589,20 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
     }
   }
   var seoArray = seoPastTime([cokey].join(""), time);
+  var listArr = seoArray.playList.map((id) => {
+    var arrLi = "http://youtube.com/watch?v=" + id
+    return arrLi
+  })
+  
   console.log(
     "urlDataSource: \nvar " +
-      seoArray.playList +
+      listArr +
       " = seoPastTime(" +
       [cokey].join(""),
     time + ")",
   );
   // return { uti: seoArray.playList };
-  return content || seoArray.playList;
+  return content || listArr;
 
   // if (typeof content === "object")
   // {var json = Utilities.jsonParse(content);
