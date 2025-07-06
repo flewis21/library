@@ -496,10 +496,11 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   }
   if (typeof cokey === "undefined") {
     var rndStr = globalThis.uniqueItemArray();
-    var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var rndStrObj =
+      rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var cokey = rndStrObj["Description"];
   }
-  
+
   if (typeof url === "undefined") {
     var rndFol = furtFolder();
     var url = fileBrowser(rndFol).url;
@@ -590,15 +591,12 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   }
   var seoArray = seoPastTime([cokey].join(""), time);
   var listArr = seoArray.playList.map((id) => {
-    var arrLi = "http://youtube.com/watch?v=" + id
-    return arrLi
-  })
-  
+    var arrLi = "http://youtube.com/watch?v=" + id;
+    return arrLi;
+  });
+
   console.log(
-    "urlDataSource: \nvar " +
-      listArr +
-      " = seoPastTime(" +
-      [cokey].join(""),
+    "urlDataSource: \nvar " + listArr + " = seoPastTime(" + [cokey].join(""),
     time + ")",
   );
   // return { uti: seoArray.playList };
