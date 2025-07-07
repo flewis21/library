@@ -542,19 +542,43 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
             }
           }
           Logger.log("Max retries reached, failed to fetch data.");
+        } 
+        else {
+          var conText = response.getContentText();
+          if (res >= 300 && res < 400) {
+            location = response.getHeaders().Location;
+            var content = UrlFetchApp.fetch(location, {
+              followRedirects: true,
+              muteHttpExceptions: true,
+            }).getContentText();
+          } 
+          else {
+              if (
+                typeof response.getResponseCode === "function" &&
+                typeof response.getContentText === "function"
+              ) {
+                const contentType = response.getHeaders()["Content-Type"] || "";
+                const responseText = response.getContentText();
+
+                if (contentType.includes("application/json")) {
+                  try {
+                    var content = { type: "jsonData", data: JSON.parse(responseText) };
+                  } catch (e) {
+                    var content = {
+                      type: "text",
+                      data: `Error parsing JSON from URL fetch: ${responseText}`,
+                    };
+                  }
+                } else if (contentType.includes("text/html")) {
+                  var content = { type: "html", data: responseText };
+                } else {
+                  var content = { type: "text", data: responseText };
+                }
+              }
+            // var content = JSON.parse(conText);
+          }
         }
-      } else {
-        var conText = response.getContentText();
-        if (res >= 300 && res < 400) {
-          location = response.getHeaders().Location;
-          var content = UrlFetchApp.fetch(location, {
-            followRedirects: true,
-            muteHttpExceptions: true,
-          }).getContentText();
-        } else {
-          var content = JSON.parse(conText);
-        }
-      }
+      } 
     }
   } catch (e) {
     Logger.log("Error resolving TinyURL: " + e.toString());
@@ -590,10 +614,10 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
     }
   }
   var seoArray = seoPastTime([cokey].join(""), time);
-  var listArr = seoArray.playList.map((id) => {
+  var listArr = JSON.stringify(seoArray.playList.map((id) => {
     var arrLi = "http://youtube.com/watch?v=" + id;
     return arrLi;
-  });
+  }));
 
   console.log(
     "urlDataSource: \nvar " + listArr + " = seoPastTime(" + [cokey].join(""),

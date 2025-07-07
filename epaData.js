@@ -269,8 +269,134 @@ var epaA = function(epaAUrl) {
       ", = " +
       epaAUrl,
   );
+  if (typeof epaAUrl === "undefined") {
+    // No userProvidedValue
+    let args = {};
+    console.log("DEBUG: Generating epaAUrl...");
+    var rndStr = globalThis.uniqueItemArray();
+    var rndStrObj =
+      rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var product = rndStrObj["Description"];
+    var data = coUtility(product)[0];
+    console.log("DEBUG: data from coUtility:", data);
+
+    if (typeof data.rndTitle !== "undefined") {
+        var dataTest = [data.rndTitle.replace(/,./g, "")].toString().split(" ")
+        var rnddaTe =
+          Math.floor(
+            Math.random() *
+              Math.floor(
+                [data.rndTitle.replace(/,./g, "")]
+                  .toString()
+                  .split(" ").length,
+              ),
+          )
+      var test = productNamePartial(dataTest[rnddaTe]);
+      console.log("DEBUG: test from productNamePartial:", test);
+    } else {
+      console.log("DEBUG: data.rndTitle is undefined.");
+    }
+
+    if (typeof test !== "undefined" && test["eparegno"]) {
+      var test2 = productRegNo(test["eparegno"]);
+      console.log("DEBUG: test2 from productRegNo:", test2);
+
+      // Corrected check
+      if (test2 && test2.hasOwnProperty("companyinfo")) {
+        console.log("DEBUG: test2 has companyinfo.");
+        // ... (company info logic) ...
+        var productCo = [];
+        for (var i = 0, l = test2["companyinfo"].length; i < l; i++) {
+          var isCompany = test2["companyinfo"][i]["name"];
+          productCo.push(isCompany);
+        }
+        var uniqueCo = [];
+        for (var i = 0, l = productCo.length; i < l; i++) {
+          var epaCo = coUtility(productCo[i]);
+          uniqueCo.push(epaCo);
+        }
+        var randomCik = uniqueCo[0];
+        var coInfo = uniqueCo[0][0].rndTitle;
+        var secReport = uniqueCo[0][0].secUrl;
+        var stkTicker = uniqueCo[0][0].rndTicker;
+        var watchV = uniqueCo[0][0].videoItem;
+        var playVid = uniqueCo[0][0].videoItemUrl;
+      } else {
+        console.log(
+          "DEBUG: test2 does NOT have companyinfo or is undefined/null.",
+        );
+        // ... (fallback logic) ...
+        var coInfo = data.rndTitle;
+        var secReport = data.secUrl;
+        var stkTicker = data.rndTicker;
+        var watchV = data.videoItem;
+        var playVid = data.videoItemUrl;
+      }
+
+      // Corrected check
+      if (test2 && test2.hasOwnProperty("active_ingredients")) {
+        console.log("DEBUG: test2 has active_ingredients.");
+        // ... (ingredient logic) ...
+        var uniqueData = [];
+        for (
+          var i = 0, l = test2["active_ingredients"].length;
+          i < l;
+          i++
+        ) {
+          var isIngredient =
+            test2["active_ingredients"][i]["active_ing"];
+          if (isIngredient) {
+            var pIName = productIngName(isIngredient);
+            if (typeof pIName !== "undefined") {
+              uniqueData.push(
+                pIName["items"] || pIName["first"] || pIName,
+              );
+            }
+          }
+        }
+        if (
+          typeof uniqueDataKey !== "undefined" &&
+          uniqueDataKey[1] &&
+          uniqueDataKey[1].length > 0
+        ) {
+          // ... randomKey, isDataKey, randomCasNumber ...
+          var randomKey = Math.floor(
+            Math.random() * Math.floor(matches.length),
+          );
+          var isDataKey = uniqueDataKey[1][randomKey];
+          var randomCasNumber = isDataKey["casnumber"];
+
+          console.log(
+            "DEBUG: randomCasNumber generated:",
+            randomCasNumber,
+          );
+          args["epaAUrl"] = "..."; // Only assign here if randomCasNumber is valid
+        } else {
+          console.log(
+            "DEBUG: No uniqueDataKey or matches for CAS number generation.",
+          );
+        }
+      } else {
+        console.log(
+          "DEBUG: test2 does NOT have active_ingredients or is undefined/null.",
+        );
+      }
+    } else {
+      console.log(
+        "DEBUG: 'test' may be undefined, cannot proceed with test2.",
+      );
+    }
+    // IMPORTANT: If epaAUrl wasn't set, explicitly set it to a default or null to avoid pushing undefined.
+    if (args["epaAUrl"] === undefined) {
+      args["epaAUrl"] = test["message"].info; // Or a default error URL
+      console.log(
+        "DEBUG: epaAUrl could not be generated, setting to test info.",
+      );
+    }
+  epaAUrl = args["epaAUrl"]
+  }
   const urlSrc = urlDataSource(epaAUrl);
-  const epaA = splitNoX(urlSrc);
+  const epaA = splitNoX(urlSrc["data"]);
   return epaA
 }
 
@@ -662,17 +788,14 @@ var productTime = function (product) {
 var productRegNo = function (eparegno) {
   const res = [
     urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno,
-      null,
-      { muteHttpExceptions: true },
-    ),
+      "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno),
   ];
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
-        const rawData = Utilities.jsonParse(res);
+        const rawData = JSON.parse(res);
         return newEPAData(rawData);
       }
     } catch (err) {
@@ -683,7 +806,7 @@ var productRegNo = function (eparegno) {
 };
 
 var productDistNum = function (distno) {
-  const rawData = Utilities.jsonParse([
+  const rawData = JSON.parse([
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
         encodeURIComponent(distno),
@@ -695,7 +818,7 @@ var productDistNum = function (distno) {
 };
 
 var productFullName = function (productName) {
-  const rawData = Utilities.jsonParse([
+  const rawData = JSON.parse([
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
         encodeURIComponent(productName),
@@ -741,29 +864,81 @@ var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
 };
 
 var productNamePartial = function (productName) {
-  const res = urlDataSource(
-    "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/riname/" +
-      productName,
-    null,
-    { muteHttpExceptions: true },
-  );
-  if (res && typeof res === "object") {
-    try {
-      if (res["items"] && res["items"].length !== 0) {
-        return res["first"][0];
-      } else {
-        const rawData = Utilities.jsonParse(res);
-        return newEPAData(rawData);
-      }
-    } catch (err) {
-      console.error("Error retrieving reg no" + err);
-      return res;
+  let appL = "";
+  let iframeSrc =
+    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+  let feed = "";
+
+  const url = 
+    "https://search.epa.gov/epasearch/?querytext=" +
+      productName
+  const res = urlDataSource(url);
+  if (res.type === "html") {
+    iframeSrc = res.index; // Assign iframeSrc
+    appL = res.data;
+    feed = res.link || url;
+  } else if (res.type === "url") {
+    // --- NEW: Handle "url" type directly ---
+    iframeSrc = res.data; // Assign the URL to iframeSrc
+    appL = res.index || url;
+    finalFeedDivContent = res.link || url;
+  } else if (res.type === "jsonData") {
+    iframeSrc = res.index || url; // Assign iframeSrc
+    appL = `${JSON.stringify(res.data, null, 2)}`;
+    feed = res.link || url;
+  } else if (res.type === "text") {
+    iframeSrc = res.index || url; // Assign iframeSrc
+    appL = res.data;
+    feed = res.link || url;
+  } else if (res.type === "object") {
+    // Here, if payLoad.data is an object, you need to decide how to display it.
+    // It could contain sub-properties you want to render.
+    if (res.data.html || res.data.app) {
+      appL = res.data.html || res.data.app;
+      // If the object itself contains a URL, use it for iframeSrc
+      iframeSrc = res.data.url || iframeSrc;
+    } else if (payLoad.data.url) {
+      // If the object explicitly has a 'url' property
+      iframeSrc = res.data.url || url;
+      appL = res.index || url;
+      feed = res.link || url;
+    } else {
+      // Default way to display a generic object: stringify it
+      iframeSrc = res.index || url; // Assign iframeSrc
+      appL = `${res}`;
+      feed = res.link || url;
     }
+  } else if (res.type === "unknown" || res.type === "error") {
+    feed = `Error: ${res.message || res.data || "Unknown error."}`;
   }
-};
+  // if (res && typeof res === "object") {
+  //   try {
+  //     if (res["items"] && res["items"].length !== 0) {
+  //       return res["first"][0];
+  //     } else {
+  //       const rawData = JSON.parse(res);
+  //       return newEPAData(rawData);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error retrieving reg no" + err);
+  //     return res;
+  //   }
+  // }
+
+  Logger.log("The final value of content. " + JSON.stringify(appL));
+  var data = {
+    message: {
+      content: appL,
+      info: feed,
+      link: iframeSrc, // Clear iframe on critical error
+    },
+    timestamp: new Date(),
+  };
+  return data
+  };
 
 var productNamePartialV2 = function (productName) {
-  const rawData = Utilities.jsonParse([
+  const rawData = JSON.parse([
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
         encodeURIComponent(productName),
@@ -775,7 +950,7 @@ var productNamePartialV2 = function (productName) {
 };
 
 var productNumPartial = function (productNum) {
-  const rawData = Utilities.jsonParse([
+  const rawData = JSON.parse([
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
         encodeURIComponent(productNum),
@@ -787,7 +962,7 @@ var productNumPartial = function (productNum) {
 };
 
 var productNumPartialV2 = function (productNum) {
-  const rawData = Utilities.jsonParse([
+  const rawData = JSON.parse([
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
         encodeURIComponent(productNum),
@@ -812,7 +987,7 @@ var productIngName = function (ingredient) {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
-        const rawData = Utilities.jsonParse(res);
+        const rawData = JSON.parse(res);
         return rawData;
       }
     } catch (err) {
@@ -836,7 +1011,7 @@ var productChemCode = function (code) {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
-        const rawData = Utilities.jsonParse(res);
+        const rawData = JSON.parse(res);
         return newEPAData(rawData);
       }
     } catch (err) {
@@ -860,7 +1035,7 @@ var productAbstractNum = function (abstract) {
       if (res[0]["items"].length === 0) {
         return res[0]["first"][0];
       } else {
-        const rawData = Utilities.jsonParse(res);
+        const rawData = JSON.parse(res);
         return newEPAData(rawData);
       }
     } catch (err) {
