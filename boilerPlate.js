@@ -324,7 +324,7 @@ var splitArrRange = function (test) {
 //   for (var col in values[row])
 //     {rows[row].push(values[row][col]);}
 
-var splitNoX = function (content, pushIndex) {
+var splitNoX = function (json, pushIndex) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -334,7 +334,7 @@ var splitNoX = function (content, pushIndex) {
       ", = " +
       content,
   );
-  var json = content;
+  // var json = content;
   // console.log(json);
   var pathArray = [];
   // console.log(pathArray);
