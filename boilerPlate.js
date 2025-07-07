@@ -349,7 +349,7 @@ var splitNoX = function (json, pushIndex) {
   }
   // return json
   if (typeof json === "undefined") {
-    console.log("Invalid request")
+    console.log("Invalid request");
     return "Invalid request";
   } else if (typeof json === "object") {
     // console.log("JSON is an Object!")
@@ -359,7 +359,7 @@ var splitNoX = function (json, pushIndex) {
       tempArr.push([obj, json[obj]][pushIndex]);
       // console.log(tempArr)
     }
-    console.log(tempArr)
+    console.log(tempArr);
     return tempArr;
   } else if (typeof json !== "object") {
     console.log("JSON is not an Object!");
