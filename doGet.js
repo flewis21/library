@@ -667,7 +667,7 @@ function handleGetData() {
   var data = {
     message: {
       content: appL,
-      info: iframrSrc,
+      info: iframeSrc,
       link: feed, // Clear iframe on critical error
     },
     timestamp: new Date(),
