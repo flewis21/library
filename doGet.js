@@ -666,8 +666,8 @@ function handleGetData() {
   Logger.log("The final value of content. " + JSON.stringify(appL));
   var data = {
     message: {
-      content: appL,
-      info: iframeSrc,
+      content: iframeSrc,
+      info: appL,
       link: feed, // Clear iframe on critical error
     },
     timestamp: new Date(),
