@@ -1004,7 +1004,7 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
   );
   if (typeof fileX !== "undefined" && typeof folder !== "undefined") {
     console.log(
-      "Declaring folderId calling folderIdGlobal(" + folder + ", time)",
+      "Declaring folderId calling folderIdGlobal(" + folder, time + ")",
     );
     var folderId = folderIdGlobal(folder, time);
     // console.log("Declaring folderIdName calling DriveApp.getFileById(" + folderId + ").getName() to get the folder name")
@@ -1012,15 +1012,15 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
     console.log(
       "Declaring file calling DriveApp.getRootFolder().getFilesByName(" +
         DriveApp.getFileById(fileX).getName() +
-        ").next() to search the root folder for the file",
+        ") to search the root folder for the file",
     );
     var file = DriveApp.getRootFolder().getFilesByName(
       DriveApp.getFileById(fileX).getName(),
     );
-    var elaspeTime = new Date() - functionRegistry.time;
+    var elaspeTime = formatTime(functionRegistry.time);
     if (file.hasNext()) {
       var myFile = file.next();
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var timeToExecute = formatTime(functionRegistry.timeLeftToExecute);
     }
     if (myFile) {
       // console.log(myFile)
@@ -1106,7 +1106,7 @@ var fileMatchManager = function (folderX, fileX, time) {
     [folderX].join("").length > 0
   ) {
     console.log(
-      functionRegistry.time +
+      functionRegistry.elapsedTime +
         "\n" +
         arguments.callee.name +
         ":\nfolderX: " +
@@ -1118,13 +1118,13 @@ var fileMatchManager = function (folderX, fileX, time) {
         [folderX].join("").length,
     );
     console.log(
-      functionRegistry.time +
+      functionRegistry.elapsedTime +
         "\n" +
         arguments.callee.name +
         ":\nD: folder's null value - ",
     );
     console.log(
-      functionRegistry.time + "\n" + arguments.callee.name + ":\n" + folderX ===
+      functionRegistry.elapsedTime + "\n" + arguments.callee.name + ":\n" + folderX ===
         null,
     );
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
@@ -1178,14 +1178,17 @@ var folderIdGlobal = function (folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
-  var tree = DriveApp.getFolders();
+  if (typeof folderX === "undefined") {
+    var folderX = furtFolder()
+  } 
+  var tree = DriveApp.getFoldersByName(folderX);
   while (tree.hasNext()) {
-    var elaspeTime = new Date() - functionRegistry.time;
-    var timeToExecute = functionRegistry.maxTime - elaspeTime;
+    var elaspeTime = formatTime(functionRegistry.time);
+    var timeToExecute = formatTime(functionRegistry.timeLeftToExecute);
     var myId = tree.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
@@ -1245,15 +1248,21 @@ var furtFolder = function (folder) {
     functionRegistry.time +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      folder +
+      "\nfolder is !" +
+      !folder +
       ", = " +
-      !folder,
+      folder,
   );
+  functionRegistry.gTree()
+  var tree = functionRegistry.getFolderList()
   if (folder) {
-    var foldersObj = folderManager(folder);
+    var foldersObj = tree[tree.indexOf(folder)];
+    return folder;
   } else {
-    var foldersObj = folderManager();
+    var foldersObj = tree;
+    var folder =
+      foldersObj[Math.floor(Math.random() * Math.floor(foldersObj.length))];
+    return folder;
   }
   console.log(
     functionRegistry.time +

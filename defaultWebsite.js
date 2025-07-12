@@ -386,6 +386,37 @@ var defaultWebsite = function (e) {
   }
 };
 
+function formatTime(milliseconds) {
+    if (milliseconds < 0) {
+        return "Time travel detected! (Negative elapsed time)";
+    }
+
+    var seconds = Math.floor(milliseconds / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+
+    seconds %= 60;
+    minutes %= 60;
+    hours %= 24;
+
+    var parts = [];
+    if (days > 0) {
+        parts.push(days + " days");
+    }
+    if (hours > 0) {
+        parts.push(hours + " hours");
+    }
+    if (minutes > 0) {
+        parts.push(minutes + " minutes");
+    }
+    if (seconds > 0 || parts.length === 0) { // Include seconds if nothing else, or if there are other parts
+        parts.push(seconds + " seconds");
+    }
+
+    return parts.join(", ");
+}
+
 var funcCalc = function () {
   var appList = [];
   for (var key in globalThis) {

@@ -209,7 +209,7 @@ var contentApp = function (blob, argsObject) {
       "\nargsObject is !" +
       !argsObject +
       " = " +
-      argsObject,
+      JSON.stringify(argsObject),
   );
   try {
     const tmp = HtmlService.createTemplate(

@@ -658,7 +658,7 @@ function handleGetData() {
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
-    feed = `Critical Error: ${error.message}`;
+    appL = `Critical Error: ${error.message}`;
     iframeSrc = ""; // Clear iframe on critical error
   }
   // --- END Refactored payLoad processing ---

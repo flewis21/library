@@ -8,9 +8,10 @@ var formMaker = function (fileName, folderX, time) {
       ", = " +
       !fileName,
   );
-  if (typeof formsUrls(fileName, folderX, time) !== "undefined") {
+  var forEx = formsUrls(fileName, folderX, time)
+  if (typeof forEx !== "undefined") {
     console.log("formMaker: \nformsUrls(" + fileName, folderX, time + ")");
-    return formsUrls(fileName, folderX, time);
+    return forEx;
   }
   if (fileName !== "") {
     console.log(
@@ -20,7 +21,7 @@ var formMaker = function (fileName, folderX, time) {
     console.log(
       "formMaker: \nfileManager(" + newFile.getId(),
       folderX,
-      functionRegistry.time + ")",
+      time + ")",
     );
     try {
       fileManager(newFile.getId(), folderX, time);

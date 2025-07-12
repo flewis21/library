@@ -1228,18 +1228,22 @@ var overFlow = function () {
 };
 
 var geneFrame = function (reference) {
+  if (typeof reference === "undefined") {
+    var reference = functionRegistry.htmlFile
+  }
   return HtmlService.createTemplate(
     contentApp(
       `
     <? var rndClient = function() { ?>
-    <?  return new Promise((resolve) => {resolve(formMaker(file, "videoForms"))})} ?>
+    <?  return new Promise((resolve) => {resolve(formMaker(file, folder, time))})} ?>
     <? var clientRes = rndClient()
     .then((resu) => {return resu})
     .catch((err) => {console.log(err)}) ?>
-    <? var form = FormApp.openByUrl(JSON.stringify(formMaker(file, "videoForms"))) ?>
+    <? var form = FormApp.openByUrl(JSON.stringify(formMaker(file, folder, time))) ?>
     <? var vidId = coUtility(file)[0].playlistArr ?>
-    <? if (vidId.length > 0) {?>
-    <? vidId.map((id)=>{return form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl("https://youtube.com/watch?v=" + id)})} ?>
+    <? if (vidId.length > 0) { ?>
+       <? vidId.map((id) => { ?>
+        <? return form.addVideoItem().setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl("https://youtube.com/watch?v=" + id)})} ?>
     <? var formUrl = form.getPublishedUrl() ?>
     <div class="row">
     <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
@@ -1264,18 +1268,37 @@ var geneFrame = function (reference) {
       allowfullscreen
       ></iframe>
     </div></div></div></div>
-    <script>document.addEventListener("DOMContentLoaded", lasVegas)
-    function lasVegas() {
-      
-      document.getElementById("vegas").innerHTML = <?= formsUrls(file, "videoForms") ?>
-      }</script>`,
+    <script>
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              console.log("Success handling:", result);
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.error("Error handling:", error);
+              alert("An error occurred: " + error.message);
+              reject(error);
+            })
+            .runBoilerplate(func, args);
+        });
+      }
+      document.addEventListener("DOMContentLoaded", lasVegas)
+      function lasVegas() {
+        var argo = <?= file ?>
+        serverside("formsUrls", [argo,"videoForms"]).then((gen) => {
+          document.getElementById("vegas").innerHTML = JSON.stringify(gen)
+        })
+      }
+    </script>`,
       {
         file: reference,
+        time: functionRegistry.time,
+        folder: furtFolder()
       },
     ),
-  )
-    .evaluate()
-    .getContent();
+  );
 };
 
 var mainMan = function (mainFile) {

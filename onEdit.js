@@ -26,6 +26,82 @@ var endPoint = function(end, return_type) {
     return pathEnd;
 }
 
+// --- NEW SERVER-SIDE FUNCTION: calculateTravelCosts ---
+/**
+ * Calculates labor, gas, and total costs based on travel distance and duration
+ * between two addresses using GoogleMaps DirectionFinder.
+ * @param {string} deliveryAddress The starting address.
+ * @param {string} pickupAddress The destination address.
+ * @returns {object} An object containing calculated labor, gas, total, distance, and travel time.
+ */
+function calculateTravelCosts(deliveryAddress, pickupAddress) {
+  // --- Define your rates here ---
+  const GAS_COST_PER_MILE = 0.65; // Example: $0.65 per mile
+  const LABOR_RATE_PER_HOUR = 50; // Example: $50 per hour
+  // --- End of rates ---
+
+  try {
+    // Ensure Google Maps API service is enabled in Apps Script (Services -> Google Maps API -> Add)
+    var directions = GoogleMaps.newDirectionFinder()
+      .setOrigin(deliveryAddress)
+      .setDestination(pickupAddress)
+      .setMode(GoogleMaps.Mode.DRIVING) // Assuming driving for calculation
+      .setUnits(GoogleMaps.UnitSystem.IMPERIAL) // Use Imperial units (miles, feet)
+      .getDirections();
+
+    if (!directions || !directions.routes || directions.routes.length === 0) {
+      throw new Error("Could not find a route between the specified addresses.");
+    }
+
+    // A route can have multiple 'legs' if there are waypoints, but for origin-destination, it's usually one leg.
+    var leg = directions.routes[0].legs[0];
+    var distanceMiles = leg.distance.value / 1609.34; // Convert meters to miles (1 mile = 1609.34 meters)
+    var durationSeconds = leg.duration.value;
+    var durationMinutes = Math.round(durationSeconds / 60); // Convert seconds to minutes
+
+    var calculatedGas = distanceMiles * GAS_COST_PER_MILE;
+    var calculatedLabor = (durationMinutes / 60) * LABOR_RATE_PER_HOUR; // Convert minutes to hours for labor rate
+
+    var totalCost = calculatedGas + calculatedLabor;
+
+    return {
+      labor: calculatedLabor,
+      gas: calculatedGas,
+      total: totalCost,
+      distanceMiles: distanceMiles,
+      travelTimeMinutes: durationMinutes,
+      formattedDistance: leg.distance.text, // e.g., "10.5 mi"
+      formattedDuration: leg.duration.text, // e.g., "20 mins"
+    };
+
+  } catch (error) {
+    console.error("Error in calculateTravelCosts:", error);
+    // Throw error back to client to be handled by .withFailureHandler
+    throw new Error("Failed to calculate travel costs: " + error.message);
+  }
+}
+
+
+// --- Existing Server-Side Functions (unchanged) ---
+function getSuggestions(partialAddress) {
+  try {
+    var geocoder = GoogleMaps.newGeocoder();
+    var response = geocoder.geocode(partialAddress);
+
+    var suggestions = [];
+    if (response.results && response.results.length > 0) {
+      response.results.forEach(function(result) {
+        suggestions.push(result.formatted_address);
+      });
+    }
+    console.log('Suggestions for "' + partialAddress + '":', suggestions);
+    return suggestions;
+  } catch (error) {
+    console.error("Error in getSuggestions:", error);
+    throw new Error("Failed to get address suggestions: " + error.message);
+  }
+}
+
 var kiloPoint = function(startCoord, end) {
     var rndStart = delAddress().startPoint;
     var rndEnd = delAddress().endPoint;

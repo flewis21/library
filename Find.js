@@ -384,9 +384,9 @@ var folderManager = function (folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   var folderTree = [];
   var tree = DriveApp.getFolders(); // Iterator for folders

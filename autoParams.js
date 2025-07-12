@@ -31,17 +31,127 @@ const functionRegistry = {
   },
 
   maxTime: 6 * 60 * 1000, // This is a simple numerical value
+  _startTime: null,       // Private variable to store the timestamp when the process begins
+
+  /**
+   * Starts the global timer for your process.
+   * This should be called only ONCE at the beginning of your main execution.
+   */
+  startProcessTimer: function() {
+    if (this._startTime === null) {
+      this._startTime = new Date().getTime();
+      console.log("Process timer started at:", new Date(this._startTime).toLocaleString());
+    } else {
+      console.warn("Process timer has already started. Call resetProcessTimer() if you want to restart.");
+    }
+  },
+
+  /**
+   * Resets the global timer. Call this if you want to start a completely new execution cycle.
+   */
+  resetProcessTimer: function() {
+    this._startTime = null;
+    console.log("Process timer reset.");
+  },
+
+  /**
+   * Get the elapsed time since the process started.
+   * Returns 0 if the timer hasn't been started.
+   * @returns {number} Elapsed time in milliseconds.
+   */
+  get time() {
+    if (this._startTime === null) {
+      return 0;
+    }
+    return new Date().getTime() - this._startTime;
+  },
+
+  /**
+   * Get the time remaining until the 'maxTime' timeout is reached.
+   * Returns 'maxTime' if the timer hasn't been started.
+   * Ensures the returned value is not negative.
+   * @returns {number} Time left to execute in milliseconds.
+   */
+  get timeLeftToExecute() {
+    if (this._startTime === null) {
+      return this.maxTime; // Full time remaining if not started
+    }
+    const elapsed = this.time;
+    const remaining = this.maxTime - elapsed;
+    return Math.max(0, remaining); // Ensure remaining time doesn't go below zero
+  },
+
+  /**
+   * Helper to get elapsed time in seconds for easier readability.
+   * @returns {number} Elapsed time in seconds.
+   */
+  get elapsedTimeInSeconds() {
+    return Math.floor(this.time / 1000);
+  },
+
+  /**
+   * Helper to get time left in seconds for easier readability.
+   * @returns {number} Time left in seconds.
+   */
+  get timeLeftInSeconds() {
+    return Math.floor(this.timeLeftToExecute / 1000);
+  },
+
+  // You can add other functions and properties to functionRegistry here
 
   // Use a getter for 'time'
-  get time() {
-    return Math.floor(
-      (this.maxTime - (new Date().getTime() % (1000 * 60))) / 1000,
-    );
+  // get time() {
+  //   return Math.floor(
+  //     (this.maxTime - (new Date().getTime() % (1000 * 60))) / 1000,
+  //   );
+  // },  
+  // Use a getter for 'time' to represent the remaining time in the current 6-minute cycle
+  // get time() {
+  //   // Get the current time in milliseconds since the Unix Epoch
+  //   const currentTimeMs = new Date().getTime();
+
+  //   // Calculate how many milliseconds have passed within the *current* 6-minute cycle
+  //   // This uses the modulo operator with maxTime
+  //   const msPassedInCurrentCycle = currentTimeMs % this.maxTime;
+
+  //   // Calculate the remaining time in milliseconds for the current cycle
+  //   const remainingMsInCycle = this.maxTime - msPassedInCurrentCycle;
+
+  //   // Convert the remaining milliseconds to seconds and floor it
+  //   return Math.floor(remainingMsInCycle / 1000);
+  // },
+
+  // ... other properties or methods ...
+  htmlArray: [
+    "index", "proMedia", "epaWebsite", "callBack", "oddChances", "jsGame", "checkOnDay", "uiAccess", "popUpOpen", "congressLeg", "congressMembers", "jFundamentals", "gnuFree", "myGNUFreeJS",
+  ],
+
+  get htmlFile() {
+    return this.htmlArray[Math.floor(Math.random() * (Math.floor(this.htmlArray.length))
+    )]
+  },
+  
+  folderTree: [],
+  
+  gTree: function() {
+    var tree = DriveApp.getFolders(); // Iterator for folders
+    // Corrected while loop: Call next() only once per iteration
+    while (tree.hasNext()) {
+      var folder = tree.next(); // Get the current folder
+      // Now check if this 'folder' has files before adding its name
+      if (folder.getFiles().hasNext()) {
+        this.folderTree.push(folder.getName());
+      }
+    }
+  },
+  getFolderList: function () {
+    return this.folderTree;
   },
 };
 
 // Set some global variables
 functionRegistry.initialize();
+functionRegistry.startProcessTimer();
 // globalThis.htmlArray = [
 //   `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
 // ]

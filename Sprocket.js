@@ -15,7 +15,7 @@ var dtlsPro = function (e) {
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var isProduct = matchManager("Forms", [cokey].join("").toLowerCase());
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -29,7 +29,7 @@ var dtlsPro = function (e) {
       return formUrl;
     }
   }
-  var time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+  var time = functionRegistry.time;
   var seoArray = seoPastTime([cokey].join(""), time);
   var uti = seoArray.playList;
   var coData = coUtility(cokey)[0];
@@ -62,7 +62,7 @@ var dtlsPro = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -121,7 +121,7 @@ var dtlsPro = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -179,12 +179,12 @@ var portBing = function (e) {
       : (cokey = objectOfS(
           ["parameter"],
           [[["func", testlt()]]],
-          Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          functionRegistry.time,
         ).parameter["func"]);
   }
   var boilerUrl = mis(
     cokey,
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    functionRegistry.time,
   );
   if (boilerUrl) {
     return boilerUrl;
@@ -195,7 +195,7 @@ var portBing = function (e) {
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var seoArray = seoPastTime(
     [cokey].join(""),
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    functionRegistry.time,
   );
   var uti = seoArray.playList;
   var coData = coUtility(cokey)[0];
@@ -215,7 +215,7 @@ var portBing = function (e) {
       var form = formMaker(
         [cokey].join("").toUpperCase(),
         "webForms",
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        functionRegistry.time,
       );
       if (typeof form === "object") {
         form
@@ -233,8 +233,8 @@ var portBing = function (e) {
             if (piece) {
               var elaspeTime =
                 new Date() -
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
-              var timeToExecute = maxTime - elaspeTime;
+                functionRegistry.time;
+              var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -290,8 +290,8 @@ var portBing = function (e) {
             if (piece) {
               var elaspeTime =
                 new Date() -
-                Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
-              var timeToExecute = maxTime - elaspeTime;
+                functionRegistry.time;
+              var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -343,10 +343,10 @@ var dtlsBridge = function (func, time) {
     : (func = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        functionRegistry.time,
       ).parameter["func"]);
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfunc is !" +
@@ -466,7 +466,7 @@ var dtlsBridge = function (func, time) {
           if (piece) {
             var elaspeTime =
               new Date() -
-              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+              functionRegistry.time;
             var timeToExecute = maxTime - elaspeTime;
             form.addPageBreakItem().setTitle([formName].join(""));
             form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
@@ -629,7 +629,7 @@ var coUtility = function (rndClient) {
 };
 var dtlsMain = function (file) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfile is !" +
@@ -639,10 +639,10 @@ var dtlsMain = function (file) {
   );
   var isProduct = driveManager(
     file,
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    functionRegistry.time,
   );
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
