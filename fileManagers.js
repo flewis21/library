@@ -1004,7 +1004,8 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
   );
   if (typeof fileX !== "undefined" && typeof folder !== "undefined") {
     console.log(
-      "Declaring folderId calling folderIdGlobal(" + folder, time + ")",
+      "Declaring folderId calling folderIdGlobal(" + folder,
+      time + ")",
     );
     var folderId = folderIdGlobal(folder, time);
     // console.log("Declaring folderIdName calling DriveApp.getFileById(" + folderId + ").getName() to get the folder name")
@@ -1124,7 +1125,11 @@ var fileMatchManager = function (folderX, fileX, time) {
         ":\nD: folder's null value - ",
     );
     console.log(
-      functionRegistry.elapsedTime + "\n" + arguments.callee.name + ":\n" + folderX ===
+      functionRegistry.elapsedTime +
+        "\n" +
+        arguments.callee.name +
+        ":\n" +
+        folderX ===
         null,
     );
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
@@ -1183,8 +1188,8 @@ var folderIdGlobal = function (folderX, time) {
       time,
   );
   if (typeof folderX === "undefined") {
-    var folderX = furtFolder()
-  } 
+    var folderX = furtFolder();
+  }
   var tree = DriveApp.getFoldersByName(folderX);
   while (tree.hasNext()) {
     var elaspeTime = formatTime(functionRegistry.time);
@@ -1205,7 +1210,7 @@ var folderIdGlobal = function (folderX, time) {
 
 var folderMatch = function (folderX, stringArray) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1245,7 +1250,7 @@ var folderMatch = function (folderX, stringArray) {
 
 var furtFolder = function (folder) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfolder is !" +
@@ -1253,8 +1258,8 @@ var furtFolder = function (folder) {
       ", = " +
       folder,
   );
-  functionRegistry.gTree()
-  var tree = functionRegistry.getFolderList()
+  functionRegistry.gTree();
+  var tree = functionRegistry.getFolderList();
   if (folder) {
     var foldersObj = tree[tree.indexOf(folder)];
     return folder;
@@ -1265,7 +1270,7 @@ var furtFolder = function (folder) {
     return folder;
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nfoldersObj.length: " +
@@ -1277,7 +1282,7 @@ var furtFolder = function (folder) {
     glFolders.push(foldersObj[key]);
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nglFolders.length: " +
