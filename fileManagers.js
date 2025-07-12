@@ -1090,7 +1090,7 @@ var fileMatch = function (fileX, stringArray) {
 
 var fileMatchManager = function (folderX, fileX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1106,7 +1106,7 @@ var fileMatchManager = function (folderX, fileX, time) {
     [folderX].join("").length > 0
   ) {
     console.log(
-      functionRegistry.elapsedTime +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ":\nfolderX: " +
@@ -1118,7 +1118,7 @@ var fileMatchManager = function (folderX, fileX, time) {
         [folderX].join("").length,
     );
     console.log(
-      functionRegistry.elapsedTime +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ":\nD: folder's null value - ",
