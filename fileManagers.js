@@ -1175,7 +1175,7 @@ var fileMatchManager = function (folderX, fileX, time) {
 
 var folderIdGlobal = function (folderX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfolderX is !" +
@@ -1192,8 +1192,8 @@ var folderIdGlobal = function (folderX, time) {
   }
   var tree = DriveApp.getFoldersByName(folderX);
   while (tree.hasNext()) {
-    var elaspeTime = formatTime(functionRegistry.time);
-    var timeToExecute = formatTime(functionRegistry.timeLeftToExecute);
+    var elaspeTime = functionRegistry.time;
+    var timeToExecute = functionRegistry.timeLeftToExecute;
     var myId = tree.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
