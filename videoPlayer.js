@@ -53,13 +53,10 @@ return content.evaluate().getContent()
   }
 
 function needPastTime(searchString) {
-  console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + searchString + ", = " + !searchString)
-  if (typeof time === "undefined") {
-    time = start
-  }
+  console.log(functionRegistry.time + "\n" + arguments.callee.name + "\n!" + searchString + ", = " + !searchString)
   while (typeof fndOrd !== "object") {
   if (typeof searchString === "undefined") {
-    var searchString = "influencer"
+    var searchString = globalThis.searchString().myNewArr
   }
   const data = UrlFetchApp.fetch(`http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`, {muteHTTPExceptions: true})
   const videoSearch = data.getContentText();
@@ -139,8 +136,8 @@ function needPastTime(searchString) {
       while (rndRes.length === 0) {
   randomKey = Math.floor(Math.random() * (Math.floor(fndOrd.length)))// Math.floor(Math.random());
     rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - time
-      var timeToExecute = maxTime - elaspeTime
+      var elaspeTime = functionRegistry.time
+      var timeToExecute = functionRegistry.timeLeftToExecute
       for (var i=0,l=randomKey; i<l;i++) {
         if (test.indexOf("false") === -1&&test.indexOf("var") === -1&&test.indexOf("=") === -1&&test.indexOf(".") === -1&&test.indexOf("(") === -1&&test.indexOf(")") === -1&&test.indexOf("_") === -1&&test.indexOf(";") === -1&&test.indexOf('"') === -1&&test.indexOf("Error") === -1&&test.indexOf("error") === -1&&test.indexOf("Codes") === -1&&test.indexOf("siz23") === -1&&test.indexOf(":") === -1&&test.indexOf("{}") === -1&&test.indexOf("}") === -1&&test.indexOf("<") === -1&&test.indexOf(">") === -1&&test.indexOf("r[1]+r[3],a") === -1&&test.indexOf("EdgeWorksp") === -1&&test.indexOf("new XMLHttp") === -1) {
       if ( JSON.stringify(i) >= 3) {break}
@@ -198,7 +195,7 @@ function  videoPlayer(searchString) {
   const idArray = uti.map((piece) => {
     console.log(typeof piece)
     if (typeof piece  === "undefined") {
-      console.log("it's " + typeof piece)
+      console.log("it's typeof piece  === " + typeof piece)
       return} 
     else
     {return piece } 

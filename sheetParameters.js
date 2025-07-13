@@ -746,8 +746,8 @@ var pastSeo = function (namedVar, time) {
     fileManager([namedVar].join("").toUpperCase(), "Forms", time);
     seoPlaylist.map((d) => {
       while (d) {
-        var elapsedTime = new Date() - functionRegistry.time;
-        var timeToExecute = functionRegistry.maxTime - elapsedTime;
+        var elapsedTime = functionRegistry.time;
+        var timeToExecute = functionRegistry.timeLeftToExecute;
         form.addPageBreakItem().setTitle([namedVar].join(""));
         form
           .addSectionHeaderItem()
@@ -873,8 +873,8 @@ var pictBing = function (searchString, time) {
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - functionRegistry.time;
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
       var e = 0;
       var q = randomKey;
       for (var e, q; e < q; i++) {
@@ -1212,8 +1212,8 @@ var seoPictTime = function (searchString, time) {
   );
   var uniqueVid = seoPictures(searchString, time);
   var sorFndOrd = uniqueVid.filter((vidObject) => {
-    var elaspeTime = new Date() - functionRegistry.time;
-    var timeToExecute = functionRegistry.maxTime - elaspeTime;
+    var elaspeTime = functionRegistry.time;
+    var timeToExecute = functionRegistry.timeLeftToExecute;
     var i = 0;
     var l = [vidObject].join("").split(" ").length;
     for (i, l; i < l; i++) {
@@ -1256,8 +1256,8 @@ var seoPictTime = function (searchString, time) {
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - functionRegistry.time;
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
         console.log(
           functionRegistry.time +
