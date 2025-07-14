@@ -40,7 +40,7 @@ const functionRegistry = {
   startProcessTimer: function() {
     if (this._startTime === null) {
       this._startTime = new Date().getTime();
-      console.log("Process timer started at:", new Date(this._startTime).toLocaleString());
+      console.log("Process timer started at:", new Date(this._startTime).toISOString());
     } else {
       console.warn("Process timer has already started. Call resetProcessTimer() if you want to restart.");
     }

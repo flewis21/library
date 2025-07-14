@@ -172,21 +172,18 @@ var dtlsPro = function (e) {
   return formUrl;
 };
 var portBing = function (e) {
+  console.log("portBing = function (" + e + ")")
   var cokey;
   if (typeof e === "undefined") {
-    e
-      ? (cokey = e)
-      : (cokey = objectOfS(
-          ["parameter"],
-          [[["func", testlt()]]],
-          functionRegistry.time,
-        ).parameter["func"]);
-  }
-  var boilerUrl = mis(
-    cokey,
-    functionRegistry.time,
-  );
-  if (boilerUrl) {
+    var rndStr = globalThis.uniqueItemArray();
+    var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var searchBing = rndStrObj["Description"];
+  };
+  e
+    ? (cokey = e)
+    : (cokey = searchBing);
+  var boilerUrl = misSt(cokey).res[0];
+  if (boilerUrl !== cokey) {
     return boilerUrl;
   }
   var coHelpText =
@@ -278,7 +275,12 @@ var portBing = function (e) {
         return formUrl;
       }
     } else {
-      if (typeof form === "object") {
+        var form = formMaker(
+          [cokey].join("").toUpperCase(),
+          "webForms",
+          functionRegistry.time,
+        );
+        if (typeof form === "object") {
         form
           .addTextItem()
           .setTitle("CUSTOM SEARCH")

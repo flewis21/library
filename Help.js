@@ -1357,7 +1357,7 @@ var misSt = function (func, someArgs) {
         ]
           .toString()
           .split(" ");
-        var allFolders = folderManager();
+        var allFolders = functionRegistry.getFolderList();
         // var uniqueCoArray = sheetCalc;
         // var uniqueItemArray = itemCalc;
         content.forEach((paramName, index) => {
@@ -1756,7 +1756,7 @@ var misSt = function (func, someArgs) {
             paramName === "fileX" ||
             (paramName === null && declaredParamName === "fileX")
           ) {
-            var folderX = allFolders[numVarRnd];
+            var folderX = allFolders[numVarRnd()];
             var folderRoot = DriveApp.getFoldersByName(folderX);
             let fileXName = "undefined";
             if (folderRoot.hasNext) {
