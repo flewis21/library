@@ -1,13 +1,6 @@
 var seoPastTime = function (searchString, time) {
-  var fParams = paramVals(arguments.callee.name);
-  if (typeof searchString === "undefined") {
-    var searchString = resolveParams(fParams)[0];
-  }
-  if (typeof time === "undefined") {
-    var time = functionRegistry.time;
-  }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -15,15 +8,18 @@ var seoPastTime = function (searchString, time) {
       ", = " +
       searchString +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
+  if (typeof searchString === "undefined") {
+    var searchString = globalThis.searchString().myNewArr;
+  }
   while (typeof fndOrd !== "object") {
-    var uniqueVid = seoYoutube(searchString, time).myIdArr;
+    var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
     var sorFndOrd = uniqueVid.filter((vidObject) => {
-      var elaspeTime = new Date() - functionRegistry.time;
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
       if (
         vidObject.length === 11 &&
         vidObject !== '"' &&
@@ -78,6 +74,10 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf("JSON.parse(") === -1 &&
         vidObject.indexOf("_w._sydConv") === -1 &&
         vidObject.indexOf("o.Prefetchi") === -1 &&
+        vidObject.indexOf("\"inversion\"") === -1 &&
+        vidObject.indexOf("Math.min(h-") === -1 &&
+        vidObject.indexOf("regexEsc(a)") === -1 &&
+        vidObject.indexOf("\"origin-tri") === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
         vidObject.indexOf(",") === -1
@@ -120,8 +120,8 @@ var seoPastTime = function (searchString, time) {
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = new Date() - functionRegistry.time;
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
           test.indexOf("false") === -1 &&
@@ -159,7 +159,7 @@ var seoPastTime = function (searchString, time) {
           return;
         }
       });
-      if (JSON.stringify(i) >= 3) {
+      if (JSON.stringify(i) >= 0) {
         break;
       }
     }
@@ -171,15 +171,8 @@ var seoPastTime = function (searchString, time) {
   }
 };
 var seoYoutube = function (searchString, time) {
-  var fParams = paramVals(arguments.callee.name);
-  if (typeof time === "undefined") {
-    var time = functionRegistry.time;
-  }
-  if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
-  }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -187,10 +180,13 @@ var seoYoutube = function (searchString, time) {
       ", = " +
       searchString +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
+  if (typeof searchString === "undefined") {
+    var searchString = globalThis.searchString().myNewArr;
+  }
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
   var data = unFilData.getContentText();
@@ -199,21 +195,18 @@ var seoYoutube = function (searchString, time) {
 };
 var vidFactor = function (data, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
       !data +
       ", = " +
-      data +
+      data.substring(0,100) +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
-  if (typeof time === "undefined") {
-    time = functionRegistry.time;
-  }
   if (typeof data !== "object") {
     data = [data];
   }
@@ -221,15 +214,17 @@ var vidFactor = function (data, time) {
   var idArray = [];
   data.map((vidData) => {
     try {
-      dataArray.push(
-        vidData.slice(vidData.indexOf(`v=`)).toString().split(`v=`),
-      );
+      var veqIndex = vidData.indexOf(`v=`);
+      var veqResult = vidData.slice(veqIndex).split(`v=`)
+      dataArray.push(veqResult);
     } catch (error) {
-      return;
+      Logger.log('dataArray.push failed');
     }
   });
   for (var i = 0, l = dataArray[0].length; i < l; i++) {
-    idArray.push(dataArray[0][i].toString().substring(0, 11));
+    var veqStr = dataArray[0][i]
+    var veqLoop = veqStr.substring(0, 11);
+    idArray.push(veqLoop);
   }
   return { vidArray: idArray };
 };

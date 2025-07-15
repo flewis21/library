@@ -1,3 +1,80 @@
+/**
+ * Calculates estimated travel costs (labor, gas, total) and time
+ * between a delivery and pickup address using an external Directions API.
+ * @param {string} deliveryAddress The starting address.
+ * @param {string} pickupAddress The destination address.
+ * @returns {object} An object containing calculated labor, gas, total, and travel time in minutes.
+ */
+function calculateTravelCosts(deliveryAddress, pickupAddress) {
+  console.log("Calculating travel costs for:", deliveryAddress, "to", pickupAddress);
+
+  // --- Configuration (replace with your actual values) ---
+  const DIRECTIONS_API_KEY = 'YOUR_DIRECTIONS_API_KEY'; // Get this from Mapbox, TomTom, HERE, etc.
+  // Example for Mapbox: const MAPBOX_DIRECTIONS_BASE_URL = 'https://api.mapbox.com/directions/v5/mapbox/driving/';
+  // Example for HERE: const HERE_ROUTING_BASE_URL = 'https://router.hereapi.com/v8/routes';
+
+  const COST_PER_MINUTE_LABOR = 1.25; // Example: $1.25 per minute for labor
+  const COST_PER_MILE_GAS = 0.50;    // Example: $0.50 per mile for gas
+
+  try {
+    // --- Step 1: Call an External Directions API ---
+    // This is highly dependent on the chosen API. The example below is conceptual.
+    // You'd typically need to geocode the addresses first if the Directions API
+    // only accepts coordinates, or if it has a built-in geocoding step.
+    
+    // For simplicity, let's assume the API directly takes addresses or handles geocoding internally.
+    // If using Mapbox, for instance, you'd typically geocode addresses to lat/lon first.
+    // For a more robust solution, you might chain a geocoding step here if your chosen
+    // directions API strictly requires coordinates.
+
+    let travelTimeMinutes = 0;
+    let travelDistanceMiles = 0;
+
+    // --- Using a placeholder for API call, you'd replace this with actual UrlFetchApp.fetch() ---
+    // Example conceptual API call (NOT REAL, just for illustration)
+    // You MUST replace this with a real API integration.
+    // For Mapbox, it often involves:
+    // 1. Geocoding deliveryAddress to deliveryLat, deliveryLon
+    // 2. Geocoding pickupAddress to pickupLat, pickupLon
+    // 3. Calling Mapbox Directions:
+    //    `https://api.mapbox.com/directions/v5/mapbox/driving/${deliveryLon},${deliveryLat};${pickupLon},${pickupLat}?access_token=${DIRECTIONS_API_KEY}`
+    // Then parsing the 'routes[0].duration' and 'routes[0].distance' from the response.
+
+    // Let's simulate a successful API call for demonstration purposes
+    // In a real scenario, this would be the result of UrlFetchApp.fetch() and parsing.
+    // For a proper implementation, refer to the documentation of your chosen Directions API.
+
+    // Using dummy values for now until a real API is integrated
+    // You'd replace this section with actual API fetching and parsing
+    const DUMMY_DISTANCE_MILES = 15; // Example: 15 miles
+    const DUMMY_DURATION_SECONDS = 900; // Example: 900 seconds = 15 minutes
+
+    travelDistanceMiles = DUMMY_DISTANCE_MILES;
+    travelTimeMinutes = DUMMY_DURATION_SECONDS / 60; // Convert seconds to minutes
+
+    console.log(`Estimated travel distance: ${travelDistanceMiles} miles`);
+    console.log(`Estimated travel time: ${travelTimeMinutes} minutes`);
+
+
+    // --- Step 2: Calculate Costs ---
+    const laborCost = travelTimeMinutes * COST_PER_MINUTE_LABOR;
+    const gasCost = travelDistanceMiles * COST_PER_MILE_GAS;
+    const totalCost = laborCost + gasCost;
+
+    return {
+      labor: parseFloat(laborCost.toFixed(2)),
+      gas: parseFloat(gasCost.toFixed(2)),
+      total: parseFloat(totalCost.toFixed(2)),
+      travelTimeMinutes: parseInt(travelTimeMinutes) // Return as integer minutes
+    };
+
+  } catch (error) {
+    console.error("Error in calculateTravelCosts:", error);
+    // Propagate a user-friendly error message back to the client
+    throw new Error("Failed to calculate travel costs: " + error.message);
+  }
+}
+
 var delAddress = function() {
     var ws = ssGetSheetBySpreadsheetUrl("https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962", "General Work Invoice");
     var address = ws.getRange(2,5,ws.getRange("E2").getDataRegion().getLastRow(),1).getValues();
@@ -26,78 +103,48 @@ var endPoint = function(end, return_type) {
     return pathEnd;
 }
 
-// --- NEW SERVER-SIDE FUNCTION: calculateTravelCosts ---
 /**
- * Calculates labor, gas, and total costs based on travel distance and duration
- * between two addresses using GoogleMaps DirectionFinder.
- * @param {string} deliveryAddress The starting address.
- * @param {string} pickupAddress The destination address.
- * @returns {object} An object containing calculated labor, gas, total, distance, and travel time.
+ * Fetches address suggestions from an external geocoding API (e.g., OpenCage).
+ * @param {string} partialAddress The partial address string to get suggestions for.
+ * @returns {string[]} An array of formatted address suggestions.
  */
-function calculateTravelCosts(deliveryAddress, pickupAddress) {
-  // --- Define your rates here ---
-  const GAS_COST_PER_MILE = 0.65; // Example: $0.65 per mile
-  const LABOR_RATE_PER_HOUR = 50; // Example: $50 per hour
-  // --- End of rates ---
-
-  try {
-    // Ensure Google Maps API service is enabled in Apps Script (Services -> Google Maps API -> Add)
-    var directions = GoogleMaps.newDirectionFinder()
-      .setOrigin(deliveryAddress)
-      .setDestination(pickupAddress)
-      .setMode(GoogleMaps.Mode.DRIVING) // Assuming driving for calculation
-      .setUnits(GoogleMaps.UnitSystem.IMPERIAL) // Use Imperial units (miles, feet)
-      .getDirections();
-
-    if (!directions || !directions.routes || directions.routes.length === 0) {
-      throw new Error("Could not find a route between the specified addresses.");
-    }
-
-    // A route can have multiple 'legs' if there are waypoints, but for origin-destination, it's usually one leg.
-    var leg = directions.routes[0].legs[0];
-    var distanceMiles = leg.distance.value / 1609.34; // Convert meters to miles (1 mile = 1609.34 meters)
-    var durationSeconds = leg.duration.value;
-    var durationMinutes = Math.round(durationSeconds / 60); // Convert seconds to minutes
-
-    var calculatedGas = distanceMiles * GAS_COST_PER_MILE;
-    var calculatedLabor = (durationMinutes / 60) * LABOR_RATE_PER_HOUR; // Convert minutes to hours for labor rate
-
-    var totalCost = calculatedGas + calculatedLabor;
-
-    return {
-      labor: calculatedLabor,
-      gas: calculatedGas,
-      total: totalCost,
-      distanceMiles: distanceMiles,
-      travelTimeMinutes: durationMinutes,
-      formattedDistance: leg.distance.text, // e.g., "10.5 mi"
-      formattedDuration: leg.duration.text, // e.g., "20 mins"
-    };
-
-  } catch (error) {
-    console.error("Error in calculateTravelCosts:", error);
-    // Throw error back to client to be handled by .withFailureHandler
-    throw new Error("Failed to calculate travel costs: " + error.message);
-  }
-}
-
-
-// --- Existing Server-Side Functions (unchanged) ---
 function getSuggestions(partialAddress) {
-  try {
-    var geocoder = GoogleMaps.newGeocoder();
-    var response = geocoder.geocode(partialAddress);
+  // IMPORTANT: Replace 'YOUR_OPENCAGE_API_KEY' with your actual API key
+  // It's best practice to store this in User Properties or a dedicated configuration
+  // to avoid hardcoding it directly. For demonstration, it's here.
+  const OPENCAGE_API_KEY = 'YOUR_OPENCAGE_API_KEY'; 
 
-    var suggestions = [];
-    if (response.results && response.results.length > 0) {
-      response.results.forEach(function(result) {
-        suggestions.push(result.formatted_address);
+  // Encode the partial address to be safe for URL
+  const encodedPartialAddress = encodeURIComponent(partialAddress);
+
+  // Construct the API endpoint URL for OpenCage
+  // 'limit=5' gets up to 5 suggestions, 'countrycode=us' restricts to United States
+  const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodedPartialAddress}&key=${OPENCAGE_API_KEY}&limit=5&countrycode=us`;
+
+  try {
+    // Fetch data from the OpenCage API
+    const response = UrlFetchApp.fetch(apiUrl, { muteHttpExceptions: true });
+    if (response.getResponseCode() !== 200) {
+      console.error("API Error Code:", response.getResponseCode());
+      console.error("API Error Response:", response.getContentText());
+      throw new Error(`API request failed: ${response.getContentText()}`);
+    }
+    const jsonResponse = JSON.parse(response.getContentText());
+
+    const suggestions = [];
+    if (jsonResponse.results && jsonResponse.results.length > 0) {
+      jsonResponse.results.forEach(function(result) {
+        // OpenCage typically uses 'formatted' for the full address string
+        suggestions.push(result.formatted);
       });
     }
+
     console.log('Suggestions for "' + partialAddress + '":', suggestions);
     return suggestions;
+
   } catch (error) {
-    console.error("Error in getSuggestions:", error);
+    console.error("Error in getSuggestions (using OpenCage):", error);
+    // Propagate a user-friendly error message back to the client
     throw new Error("Failed to get address suggestions: " + error.message);
   }
 }

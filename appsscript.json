@@ -1,5 +1,7 @@
 {
   "timeZone": "America/New_York",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
   "dependencies": {
     "enabledAdvancedServices": [
       {
@@ -20,15 +22,9 @@
     ],
     "libraries": [
       {
-        "userSymbol": "DistanceProject",
-        "libraryId": "1lvHkptRYP7Nw2ljEg-MweelbqvGvd2rRnta79NKuPCqHlTdPuunewT9F",
-        "version": "0",
-        "developmentMode": true
-      },
-      {
         "userSymbol": "MacrosandCustomFunctions",
-        "version": "0",
         "libraryId": "1EcDu8RLqksGN4WjYrXXC-BQhAUe0CafsQffl-A4PoJHc0usEe2TP5Qrt",
+        "version": "0",
         "developmentMode": true
       }
     ]
@@ -36,7 +32,5 @@
   "webapp": {
     "executeAs": "USER_ACCESSING",
     "access": "ANYONE"
-  },
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8"
+  }
 }
