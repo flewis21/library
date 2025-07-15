@@ -1229,7 +1229,7 @@ var overFlow = function () {
 
 var geneFrame = function (reference) {
   if (typeof reference === "undefined") {
-    var reference = functionRegistry.htmlFile
+    var reference = functionRegistry.htmlFile;
   }
   return HtmlService.createTemplate(
     contentApp(
@@ -1295,7 +1295,7 @@ var geneFrame = function (reference) {
       {
         file: reference,
         time: functionRegistry.time,
-        folder: furtFolder()
+        folder: furtFolder(),
       },
     ),
   );

@@ -326,7 +326,6 @@
 //           }
 //         }
 
-
 //         document.addEventListener('DOMContentLoaded', function() {
 //           // Materialize Datepicker Initialization
 //           serverside('busyDates', [])
@@ -361,7 +360,6 @@
 //           const totalInput = document.getElementById('total');
 //           const delTimeInput = document.getElementById('delTime');
 //           const calculationStatusSpan = document.getElementById('calculationStatus');
-
 
 //           if (calculateCostsBtn && delAddrInput && pickAddrInput && labInput && gasInput && totalInput && delTimeInput && calculationStatusSpan) {
 //               calculateCostsBtn.addEventListener('click', () => {
@@ -398,7 +396,6 @@
 //           } else {
 //               console.error("One or more elements for cost calculation not found.");
 //           }
-
 
 //           // Form Submission Logic (existing code)
 //           var form = document.getElementById('myForm');
@@ -858,7 +855,6 @@ var crmGWI = function (fx) {
           {
             ph: new Date(new Date()).toLocaleDateString(),
             dateDefault: new Date() - new Date(new Date()).toLocaleDateString(),
-            
           },
         );
       })(),

@@ -1,35 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html id="checkOnDay">
   <head>
-    <base target="_top">
-    <meta name="checkOnDay" content="Boilerplate Agenda">
+    <base target="_top" />
+    <meta name="checkOnDay" content="Boilerplate Agenda" />
     <style>
-      a:link, a:visited {color:black !important;}
-      a:hover, a:active{ 
-        color:white  !important;
-        text-decoration:none  !important;}
-      body: {background: blue !important;}
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: white !important;
+        text-decoration: none !important;
+      }
+      body: {
+        background: blue !important;
+      }
     </style>
   </head>
   <body class="blue">
-    <? var randomSECCo = coUtility()[0] ?> 
-    <? var myVid = randomSECCo.rndTitle ?>      
-    <? var infoLink = randomSECCo.videoItemUrl ?>
+    <? var randomSECCo = coUtility()[0] ?> <? var myVid = randomSECCo.rndTitle
+    ?> <? var infoLink = randomSECCo.videoItemUrl ?>
     <nav>
-      <a href="<?!= getUrl(ScriptApp) ?>?func=renderFile&args=checkOnDay"  target="_top">Company of the day!</a>
+      <a
+        href="<?!= getUrl(ScriptApp) ?>?func=renderFile&args=checkOnDay"
+        target="_top"
+        >Company of the day!</a
+      >
     </nav>
-      <div class="row">
+    <div class="row">
       <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-      <div class="container" style="clear: both">
-      <div class="col s12 receipt deep-purple darken-1">
-        <div>
-        <p><em> Hello Scroll!</em>, <br>
-          <span id="title"><?!= randomSECCo.rndTitle ?><h2 id="ticker"><?!= randomSECCo.rndTicker ?></h2> is ready to trade. </span><br> 
-          Best Regards. <br>
-        P.S. Click <a href="https://www.sec.gov/edgar/browse/?CIK=<?!= randomSECCo.rndCik ?>&owner=exclude" target="_blank" id="cik"><?!= randomSECCo.rndCik ?></a> for Info at the SEC</p>
-    </div></div></div></div></div>
-    <div id="videoPage"> 
-      <?!= seoIndex(myVid) ?>
+        <div class="container" style="clear: both">
+          <div class="col s12 receipt deep-purple darken-1">
+            <div>
+              <p>
+                <em> Hello Scroll!</em>, <br />
+                <span id="title"
+                  ><?!= randomSECCo.rndTitle ?>
+                  <h2 id="ticker"><?!= randomSECCo.rndTicker ?></h2>
+                  is ready to trade. </span
+                ><br />
+                Best Regards. <br />
+                P.S. Click
+                <a
+                  href="https://www.sec.gov/edgar/browse/?CIK=<?!= randomSECCo.rndCik ?>&owner=exclude"
+                  target="_blank"
+                  id="cik"
+                  ><?!= randomSECCo.rndCik ?></a
+                >
+                for Info at the SEC
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div id="videoPage"><?!= seoIndex(myVid) ?></div>
   </body>
 </html>

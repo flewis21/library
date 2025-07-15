@@ -1,4 +1,4 @@
-function posHtml(){
+function posHtml() {
   const content = HtmlService.createTemplate(`<!DOCTYPE html>
     <html lang="en">
       <head>
@@ -161,6 +161,6 @@ function posHtml(){
           </section>
         </main>
       </body>
-    </html>`)
-  return content.getRawContent()}
-
+    </html>`);
+  return content.getRawContent();
+}

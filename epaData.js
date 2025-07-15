@@ -257,9 +257,7 @@ var epaData = function (e) {
 // (contentApp("\n <head>\n  \n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n  <script>\n document.addEventListener(\"DOMContentLoaded\", function() {\n  let timePicker = document.getElementById(\"prefTime\");\n M.Timepicker.init(timePicker, { defaultTime: \"now\" })\n })\n \n  document.getElementById(\"btn\").addEventListener(\"click\", function() {\n  google.script.run.runItLog();\n  })\n </script>\n \n </body>\n ", { runIt: contentApp("\n <button id=\"btn\">Run It!</button>"), timePicker: contentApp("\n  <div class=\"agenda container col s1\">\n  <input class=\"timepicker\" id=\"prefTime\" type=\"text\" />\n  </div>\n "), ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }));
 //(e, contentApp("\n <head>\n  \n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n \n </body>\n ", { ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }))
 
-
-
-var epaA = function(epaAUrl) {
+var epaA = function (epaAUrl) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -281,16 +279,13 @@ var epaA = function(epaAUrl) {
     console.log("DEBUG: data from coUtility:", data);
 
     if (typeof data.rndTitle !== "undefined") {
-        var dataTest = [data.rndTitle.replace(/,./g, "")].toString().split(" ")
-        var rnddaTe =
+      var dataTest = [data.rndTitle.replace(/,./g, "")].toString().split(" ");
+      var rnddaTe = Math.floor(
+        Math.random() *
           Math.floor(
-            Math.random() *
-              Math.floor(
-                [data.rndTitle.replace(/,./g, "")]
-                  .toString()
-                  .split(" ").length,
-              ),
-          )
+            [data.rndTitle.replace(/,./g, "")].toString().split(" ").length,
+          ),
+      );
       var test = productNamePartial(dataTest[rnddaTe]);
       console.log("DEBUG: test from productNamePartial:", test);
     } else {
@@ -338,19 +333,12 @@ var epaA = function(epaAUrl) {
         console.log("DEBUG: test2 has active_ingredients.");
         // ... (ingredient logic) ...
         var uniqueData = [];
-        for (
-          var i = 0, l = test2["active_ingredients"].length;
-          i < l;
-          i++
-        ) {
-          var isIngredient =
-            test2["active_ingredients"][i]["active_ing"];
+        for (var i = 0, l = test2["active_ingredients"].length; i < l; i++) {
+          var isIngredient = test2["active_ingredients"][i]["active_ing"];
           if (isIngredient) {
             var pIName = productIngName(isIngredient);
             if (typeof pIName !== "undefined") {
-              uniqueData.push(
-                pIName["items"] || pIName["first"] || pIName,
-              );
+              uniqueData.push(pIName["items"] || pIName["first"] || pIName);
             }
           }
         }
@@ -366,10 +354,7 @@ var epaA = function(epaAUrl) {
           var isDataKey = uniqueDataKey[1][randomKey];
           var randomCasNumber = isDataKey["casnumber"];
 
-          console.log(
-            "DEBUG: randomCasNumber generated:",
-            randomCasNumber,
-          );
+          console.log("DEBUG: randomCasNumber generated:", randomCasNumber);
           args["epaAUrl"] = "..."; // Only assign here if randomCasNumber is valid
         } else {
           console.log(
@@ -382,9 +367,7 @@ var epaA = function(epaAUrl) {
         );
       }
     } else {
-      console.log(
-        "DEBUG: 'test' may be undefined, cannot proceed with test2.",
-      );
+      console.log("DEBUG: 'test' may be undefined, cannot proceed with test2.");
     }
     // IMPORTANT: If epaAUrl wasn't set, explicitly set it to a default or null to avoid pushing undefined.
     if (args["epaAUrl"] === undefined) {
@@ -393,27 +376,27 @@ var epaA = function(epaAUrl) {
         "DEBUG: epaAUrl could not be generated, setting to test info.",
       );
     }
-  epaAUrl = args["epaAUrl"]
+    epaAUrl = args["epaAUrl"];
   }
   const urlSrc = urlDataSource(epaAUrl);
   const epaA = splitNoX(urlSrc["data"]);
-  return epaA
-}
+  return epaA;
+};
 
-var epaB = function(epaBurl, epaC, uniA, epaBdelimiter){
+var epaB = function (epaBurl, epaC, uniA, epaBdelimiter) {
   const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
-  return epaB
-}
+  return epaB;
+};
 
-var epaC = function(epaCurl, epaD, uniA, epaCdelimiter){
+var epaC = function (epaCurl, epaD, uniA, epaCdelimiter) {
   const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
-  return epaC
-}
+  return epaC;
+};
 
-var epaD = function(epaDurl, epaDXpath, epaDdelimiter){
+var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
   const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
-  return epaD
-}
+  return epaD;
+};
 
 var epaIng = function (e) {
   var urlProduct =
@@ -787,8 +770,7 @@ var productTime = function (product) {
 
 var productRegNo = function (eparegno) {
   const res = [
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno),
+    urlDataSource("https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno),
   ];
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
@@ -869,9 +851,7 @@ var productNamePartial = function (productName) {
     "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
   let feed = "";
 
-  const url = 
-    "https://search.epa.gov/epasearch/?querytext=" +
-      productName
+  const url = "https://search.epa.gov/epasearch/?querytext=" + productName;
   const res = urlDataSource(url);
   if (res.type === "html") {
     iframeSrc = res.index; // Assign iframeSrc
@@ -934,8 +914,8 @@ var productNamePartial = function (productName) {
     },
     timestamp: new Date(),
   };
-  return data
-  };
+  return data;
+};
 
 var productNamePartialV2 = function (productName) {
   const rawData = JSON.parse([

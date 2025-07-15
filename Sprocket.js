@@ -172,16 +172,15 @@ var dtlsPro = function (e) {
   return formUrl;
 };
 var portBing = function (e) {
-  console.log("portBing = function (" + e + ")")
+  console.log("portBing = function (" + e + ")");
   var cokey;
   if (typeof e === "undefined") {
     var rndStr = globalThis.uniqueItemArray();
-    var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
+    var rndStrObj =
+      rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var searchBing = rndStrObj["Description"];
-  };
-  e
-    ? (cokey = e)
-    : (cokey = searchBing);
+  }
+  e ? (cokey = e) : (cokey = searchBing);
   var boilerUrl = misSt(cokey).res[0];
   if (boilerUrl !== cokey) {
     return boilerUrl;
@@ -190,10 +189,7 @@ var portBing = function (e) {
     "http://www.bing.com/search?q=" +
     encodeURIComponent(e) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
-  var seoArray = seoPastTime(
-    [cokey].join(""),
-    functionRegistry.time,
-  );
+  var seoArray = seoPastTime([cokey].join(""), functionRegistry.time);
   var uti = seoArray.playList;
   var coData = coUtility(cokey)[0];
   if (coData) {
@@ -228,9 +224,7 @@ var portBing = function (e) {
         uti.map((piece) => {
           while (piece) {
             if (piece) {
-              var elaspeTime =
-                new Date() -
-                functionRegistry.time;
+              var elaspeTime = new Date() - functionRegistry.time;
               var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
@@ -275,12 +269,12 @@ var portBing = function (e) {
         return formUrl;
       }
     } else {
-        var form = formMaker(
-          [cokey].join("").toUpperCase(),
-          "webForms",
-          functionRegistry.time,
-        );
-        if (typeof form === "object") {
+      var form = formMaker(
+        [cokey].join("").toUpperCase(),
+        "webForms",
+        functionRegistry.time,
+      );
+      if (typeof form === "object") {
         form
           .addTextItem()
           .setTitle("CUSTOM SEARCH")
@@ -290,9 +284,7 @@ var portBing = function (e) {
         uti.map((piece) => {
           while (piece) {
             if (piece) {
-              var elaspeTime =
-                new Date() -
-                functionRegistry.time;
+              var elaspeTime = new Date() - functionRegistry.time;
               var timeToExecute = functionRegistry.maxTime - elaspeTime;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
@@ -466,9 +458,7 @@ var dtlsBridge = function (func, time) {
       [jsFunc].map((piece) => {
         while (piece) {
           if (piece) {
-            var elaspeTime =
-              new Date() -
-              functionRegistry.time;
+            var elaspeTime = new Date() - functionRegistry.time;
             var timeToExecute = maxTime - elaspeTime;
             form.addPageBreakItem().setTitle([formName].join(""));
             form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
@@ -639,10 +629,7 @@ var dtlsMain = function (file) {
       ", = " +
       file,
   );
-  var isProduct = driveManager(
-    file,
-    functionRegistry.time,
-  );
+  var isProduct = driveManager(file, functionRegistry.time);
   console.log(
     functionRegistry.time +
       "\n" +

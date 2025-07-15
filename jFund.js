@@ -1,23 +1,36 @@
 var jFund = function (fx) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !fx)
-                                            // var fx = e;
-                                            var objMaster = 
-                  {
-                  arrays: 
-                  {
-                      lessons: ["arrays"],
-                      },
-                  objects: 
-                  {
-                      lessons: ["objects", "objMethods", "loops"],
-                      challenges: ["tip_Calculator", "dynamicSentence1", "dynamicSentence2", "objBMI"]
-                      },
-                  miscellaneous: 
-                  {
-                      section: ["test", "ssTest", "The Simple Webapp Trio", "Journalism Web App"]
-                      }
-          }
-var result = contentApp(`
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !fx,
+  );
+  // var fx = e;
+  var objMaster = {
+    arrays: {
+      lessons: ["arrays"],
+    },
+    objects: {
+      lessons: ["objects", "objMethods", "loops"],
+      challenges: [
+        "tip_Calculator",
+        "dynamicSentence1",
+        "dynamicSentence2",
+        "objBMI",
+      ],
+    },
+    miscellaneous: {
+      section: [
+        "test",
+        "ssTest",
+        "The Simple Webapp Trio",
+        "Journalism Web App",
+      ],
+    },
+  };
+  var result = contentApp(
+    `
 <!DOCTYPE html>
   <html>
     <head>
@@ -28,13 +41,15 @@ var result = contentApp(`
       <br>
       <div id="div"><?!= index ?></div>
     </body>
-  </html>`
-, {
-index: 
-(function index() {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name)
-  if (fx === objMaster.objects.challenges[1]) {
-          return contentApp(`
+  </html>`,
+    {
+      index: (function index() {
+        console.log(
+          JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
+        );
+        if (fx === objMaster.objects.challenges[1]) {
+          return contentApp(
+            `
 <html>
   <head></head>
   <body>
@@ -55,9 +70,13 @@ index:
             }
     </script>
   </body>
-</html>`,{},"dynamicSentence1")
-} else if (fx === objMaster.objects.challenges[2]) {
-  return contentApp(`
+</html>`,
+            {},
+            "dynamicSentence1",
+          );
+        } else if (fx === objMaster.objects.challenges[2]) {
+          return contentApp(
+            `
   <html>
     <head></head>
     <body>
@@ -96,10 +115,13 @@ index:
       </script>
     </body>
   </html>
-    `,{},"dynamicSentence2")
-} else if (fx === objMaster.objects.challenges[3]) {
- 
-return contentApp(`
+    `,
+            {},
+            "dynamicSentence2",
+          );
+        } else if (fx === objMaster.objects.challenges[3]) {
+          return contentApp(
+            `
 <html>
   <head></head>
   <body>
@@ -152,10 +174,13 @@ var bmiJohn = {
     }
     </script>
   </body>
-</html>`,{},"objBMI")
-} else if (fx === objMaster.objects.challenges[0])
-{
-return contentApp(`
+</html>`,
+            {},
+            "objBMI",
+          );
+        } else if (fx === objMaster.objects.challenges[0]) {
+          return contentApp(
+            `
   <html>
     <head></head>
     <body>
@@ -188,12 +213,14 @@ return contentApp(`
         }
       </script>
     </body>
-  </html>`,{},"tip_Calculator")
-}
-if (fx === objMaster.arrays.lessons[0])
-{
-return contentApp(
-  `<html>
+  </html>`,
+            {},
+            "tip_Calculator",
+          );
+        }
+        if (fx === objMaster.arrays.lessons[0]) {
+          return contentApp(
+            `<html>
     <head></head>
     <body>
       <div id="arrEd">Waiting....</div>
@@ -232,11 +259,13 @@ return contentApp(
           }
       </script>
     </body>
-  </html>`,{},"arrays")
-} else if (fx === objMaster.objects.lessons[0])
-{
-return contentApp(
-`<html>
+  </html>`,
+            {},
+            "arrays",
+          );
+        } else if (fx === objMaster.objects.lessons[0]) {
+          return contentApp(
+            `<html>
   <head></head>
   <body>
     <div id="objEd">Waiting....</div>
@@ -270,12 +299,13 @@ return contentApp(
       }
     </script>
   </body>
-</html>`
-,
-{},"objects")
-} else if (fx === objMaster.objects.lessons[2]) {
-return contentApp(
-  `<html>
+</html>`,
+            {},
+            "objects",
+          );
+        } else if (fx === objMaster.objects.lessons[2]) {
+          return contentApp(
+            `<html>
     <head></head>
     <body>
       <div id="loopEd">Waiting....</div>
@@ -317,10 +347,13 @@ return contentApp(
         }
       </script>
     </body>
-  </html>`,{},"loops")
-} else if (fx === objMaster.objects.lessons[1]) {
-return contentApp(
-  `<html>
+  </html>`,
+            {},
+            "loops",
+          );
+        } else if (fx === objMaster.objects.lessons[1]) {
+          return contentApp(
+            `<html>
     <head></head>
     <body>
       <div id="objMEd">Waiting....</div>
@@ -374,11 +407,13 @@ return contentApp(
       }
       </script>
     </body>
-  </html>`,{},"objMethods")
-} else if (fx === objMaster.miscellaneous.section[0])
-{
-return contentApp(
-  `<html>
+  </html>`,
+            {},
+            "objMethods",
+          );
+        } else if (fx === objMaster.miscellaneous.section[0]) {
+          return contentApp(
+            `<html>
     <head></head>
     <body>
       <div id="testScr">Waiting...</div>
@@ -410,11 +445,13 @@ return contentApp(
         }
       </script>
     </body>
-  </html>`,{},"test")
-} else if (fx === objMaster.miscellaneous.section[1])
-{
-return contentApp(
-  `<html>
+  </html>`,
+            {},
+            "test",
+          );
+        } else if (fx === objMaster.miscellaneous.section[1]) {
+          return contentApp(
+            `<html>
     <head></head>
     <body>
       <div id="test2">Waiting...</div>
@@ -433,10 +470,13 @@ return contentApp(
           }
         </script>
       </body>
-    </html>`,{},"ssTest")
-} else if (fx === objMaster.miscellaneous.section[2]) {
-  return contentApp(
-    `
+    </html>`,
+            {},
+            "ssTest",
+          );
+        } else if (fx === objMaster.miscellaneous.section[2]) {
+          return contentApp(
+            `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -507,11 +547,13 @@ return contentApp(
   </script>
 </body>
 
-</html>`,{},"The Simple Webapp Trio"
-  )
-} else if (fx === objMaster.miscellaneous.section[3]) {
-  return contentApp(
-    `<!DOCTYPE html>
+</html>`,
+            {},
+            "The Simple Webapp Trio",
+          );
+        } else if (fx === objMaster.miscellaneous.section[3]) {
+          return contentApp(
+            `<!DOCTYPE html>
 <html>
 <head><title>Journalism Web App</title></head>
 <body>
@@ -599,45 +641,66 @@ function displayError(error) {
 
 </script>
 </body>
-</html>`
-    ,{}," ")}  
-  else if (fx === objMaster) {
-  return contentApp(
-    ``
-    ,{}," ")
-}
-})(),
-link: getUrl(ScriptApp) + "?default=jFun&fx=" + fx,
-utf_8: ("\n<meta charset=\"UTF-8\">"),
-viewport: ("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"),
-fontAwesome: ("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css\" integrity=\"sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />"),
-googleApisCss: ("<link href=\"https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap\" rel=\"stylesheet\">"),
-googleApisIcon: ("\n <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"></link>\n  "),
-googleApis_preConnect: ("<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">"),
-website:  ("\n * {\n box-sizing: border-box;margin: 0;padding: 0;font-family: \"Roboto\", sans-serif;\n }\n "),
-html: ("\n html,\n body {\n height: 100%;\n }\n "),
-main: ("\n main {\n height: 92%;\n margin-top: 10px;\n }\n "),
-body: ("\n body {\n background-color: #ffc107;\n }\n "),
-header: ("\n header {\n background-color: rgba(255,255,255,.1);\n color: #a7e1ee;\n font-size: smaller;\n }\n "),
-header_h1: ("\n header h1 {\n font-family: \"Montserrat\", cursive;\n margin-left: 15px;\n }\n "),
-grid: ("\n .grid {\n display: grid;\n }\n "),
-flex_row: ("\n .flex-row {\n display: flex;\n flex-direction: row;\n }\n "),
-flex_column: ("\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n "),
-})
-return result
-}
+</html>`,
+            {},
+            " ",
+          );
+        } else if (fx === objMaster) {
+          return contentApp(``, {}, " ");
+        }
+      })(),
+      link: getUrl(ScriptApp) + "?default=jFun&fx=" + fx,
+      utf_8: '\n<meta charset="UTF-8">',
+      viewport:
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+      fontAwesome:
+        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />',
+      googleApisCss:
+        '<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Montserrat:ital@1&family=Oswald&family=Roboto&display=swap" rel="stylesheet">',
+      googleApisIcon:
+        '\n <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>\n  ',
+      googleApis_preConnect:
+        '<link rel="preconnect" href="https://fonts.googleapis.com">',
+      website:
+        '\n * {\n box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;\n }\n ',
+      html: "\n html,\n body {\n height: 100%;\n }\n ",
+      main: "\n main {\n height: 92%;\n margin-top: 10px;\n }\n ",
+      body: "\n body {\n background-color: #ffc107;\n }\n ",
+      header:
+        "\n header {\n background-color: rgba(255,255,255,.1);\n color: #a7e1ee;\n font-size: smaller;\n }\n ",
+      header_h1:
+        '\n header h1 {\n font-family: "Montserrat", cursive;\n margin-left: 15px;\n }\n ',
+      grid: "\n .grid {\n display: grid;\n }\n ",
+      flex_row: "\n .flex-row {\n display: flex;\n flex-direction: row;\n }\n ",
+      flex_column:
+        "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
+    },
+  );
+  return result;
+};
 
 // Server-side (Code.gs)
 // Helper function for fetching data (using Promises for async handling)
 function fetchData(url, options) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !url)
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !url,
+  );
   return new Promise((resolve, reject) => {
     try {
       var response = UrlFetchApp.fetch(url, options);
       if (response.getResponseCode() == 200) {
         resolve(JSON.parse(response.getContentText()));
       } else {
-        reject("HTTP Error: " + response.getResponseCode() + " - " + response.getContentText());
+        reject(
+          "HTTP Error: " +
+            response.getResponseCode() +
+            " - " +
+            response.getContentText(),
+        );
       }
     } catch (error) {
       reject("Fetch Error: " + error);
@@ -647,9 +710,17 @@ function fetchData(url, options) {
 
 // Function to fetch news articles from News API
 function getNewsArticles(query, apiKey, pageSize = 10, page = 1) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !query)
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !query,
+  );
   if (!apiKey) {
-    return Promise.reject("News API key is missing. Please set it in script properties.");
+    return Promise.reject(
+      "News API key is missing. Please set it in script properties.",
+    );
   }
   var url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&apiKey=${apiKey}&pageSize=${pageSize}&page=${page}`; // Use template literals and encodeURIComponent
   return fetchData(url);
@@ -657,9 +728,17 @@ function getNewsArticles(query, apiKey, pageSize = 10, page = 1) {
 
 // Function to fetch top headlines from News API
 function getTopHeadlines(country, category, apiKey, pageSize = 10, page = 1) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !country)
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !country,
+  );
   if (!apiKey) {
-    return Promise.reject("News API key is missing. Please set it in script properties.");
+    return Promise.reject(
+      "News API key is missing. Please set it in script properties.",
+    );
   }
   var url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}&pageSize=${pageSize}&page=${page}`; // Use template literals
   return fetchData(url);
@@ -667,64 +746,87 @@ function getTopHeadlines(country, category, apiKey, pageSize = 10, page = 1) {
 
 // Function to summarize text using a hypothetical summarization API (replace with a real API)
 function summarizeText(text, summarizationApiKey) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !text)
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !text,
+  );
   if (!summarizationApiKey) {
     return Promise.reject("Summarization API Key Missing");
   }
   var url = "YOUR_SUMMARIZATION_API_ENDPOINT"; // Replace with actual endpoint
   var options = {
-    'method': 'post',
-    'contentType': 'application/json',
-    'payload': JSON.stringify({ "text": text }),
-    'headers': {
-      "Authorization": "Bearer " + summarizationApiKey
-    }
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify({ text: text }),
+    headers: {
+      Authorization: "Bearer " + summarizationApiKey,
+    },
   };
   return fetchData(url, options);
 }
 
 function getScriptProperty(propName) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !propName)
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !propName,
+  );
   return PropertiesService.getScriptProperties().getProperty(propName);
 }
 
 // Helper Function to make server calls with promises (included in HTML)
-function callServerFunction(functionName, args){
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !functionName)
+function callServerFunction(functionName, args) {
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !functionName,
+  );
   return new Promise((resolve, reject) => {
     google.script.run
       .withSuccessHandler(resolve)
       .withFailureHandler(reject)
       [functionName](...args);
-  })
+  });
 }
 
-var superTest = function(e) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!ed, = " + !e)
-var html = contentApp("\n   <body id='test'>\n<a id='caller' href='<?!= link ?>'>Update</a>\n<div id='div'>Waiting...</div><br>\n<script id='gold' type='text/javascript'>\ndocument.defaultView.addEventListener('DOMContentLoaded', test);\n<?!= misc ?>\n\n</script>\n    </body>\n   "
-,
-{
-misc: 
-function test(e)
-                {
-  console.log(eval(e.target));
-  "use strict";
-  var mx = this.link;
-  var data = function(write)
-                      {
-console.log(document.getElementById("test").innerHTML)
-// google.script.run.withSuccessHandler(function(written)
-                                                      // {
-document.getElementById("div").innerHTML=JSON.stringify(write);
-                                                      // }).runAll("boilerplate.proMediaSnip", []);
-                      }
-  var go = function()
-                      {
-google.script.run.withSuccessHandler(data).runAlleval("breakthrough", [])
-                      }
-document.getElementById('caller').onclick = go;
-                },
-link: getUrl(ScriptApp) + "?default=ssTest",
-})
-return html
-}
+var superTest = function (e) {
+  console.log(
+    JSON.stringify(this["start"]) +
+      "\n" +
+      arguments.callee.name +
+      "\n!ed, = " +
+      !e,
+  );
+  var html = contentApp(
+    "\n   <body id='test'>\n<a id='caller' href='<?!= link ?>'>Update</a>\n<div id='div'>Waiting...</div><br>\n<script id='gold' type='text/javascript'>\ndocument.defaultView.addEventListener('DOMContentLoaded', test);\n<?!= misc ?>\n\n</script>\n    </body>\n   ",
+    {
+      misc: function test(e) {
+        console.log(eval(e.target));
+        ("use strict");
+        var mx = this.link;
+        var data = function (write) {
+          console.log(document.getElementById("test").innerHTML);
+          // google.script.run.withSuccessHandler(function(written)
+          // {
+          document.getElementById("div").innerHTML = JSON.stringify(write);
+          // }).runAll("boilerplate.proMediaSnip", []);
+        };
+        var go = function () {
+          google.script.run
+            .withSuccessHandler(data)
+            .runAlleval("breakthrough", []);
+        };
+        document.getElementById("caller").onclick = go;
+      },
+      link: getUrl(ScriptApp) + "?default=ssTest",
+    },
+  );
+  return html;
+};

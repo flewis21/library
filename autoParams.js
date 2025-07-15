@@ -31,25 +31,30 @@ const functionRegistry = {
   },
 
   maxTime: 6 * 60 * 1000, // This is a simple numerical value
-  _startTime: null,       // Private variable to store the timestamp when the process begins
+  _startTime: null, // Private variable to store the timestamp when the process begins
 
   /**
    * Starts the global timer for your process.
    * This should be called only ONCE at the beginning of your main execution.
    */
-  startProcessTimer: function() {
+  startProcessTimer: function () {
     if (this._startTime === null) {
       this._startTime = new Date().getTime();
-      console.log("Process timer started at:", new Date(this._startTime).toISOString());
+      console.log(
+        "Process timer started at:",
+        new Date(this._startTime).toISOString(),
+      );
     } else {
-      console.warn("Process timer has already started. Call resetProcessTimer() if you want to restart.");
+      console.warn(
+        "Process timer has already started. Call resetProcessTimer() if you want to restart.",
+      );
     }
   },
 
   /**
    * Resets the global timer. Call this if you want to start a completely new execution cycle.
    */
-  resetProcessTimer: function() {
+  resetProcessTimer: function () {
     this._startTime = null;
     console.log("Process timer reset.");
   },
@@ -104,7 +109,7 @@ const functionRegistry = {
   //   return Math.floor(
   //     (this.maxTime - (new Date().getTime() % (1000 * 60))) / 1000,
   //   );
-  // },  
+  // },
   // Use a getter for 'time' to represent the remaining time in the current 6-minute cycle
   // get time() {
   //   // Get the current time in milliseconds since the Unix Epoch
@@ -123,17 +128,31 @@ const functionRegistry = {
 
   // ... other properties or methods ...
   htmlArray: [
-    "index", "proMedia", "epaWebsite", "callBack", "oddChances", "jsGame", "checkOnDay", "uiAccess", "popUpOpen", "congressLeg", "congressMembers", "jFundamentals", "gnuFree", "myGNUFreeJS",
+    "index",
+    "proMedia",
+    "epaWebsite",
+    "callBack",
+    "oddChances",
+    "jsGame",
+    "checkOnDay",
+    "uiAccess",
+    "popUpOpen",
+    "congressLeg",
+    "congressMembers",
+    "jFundamentals",
+    "gnuFree",
+    "myGNUFreeJS",
   ],
 
   get htmlFile() {
-    return this.htmlArray[Math.floor(Math.random() * (Math.floor(this.htmlArray.length))
-    )]
+    return this.htmlArray[
+      Math.floor(Math.random() * Math.floor(this.htmlArray.length))
+    ];
   },
-  
+
   folderTree: [],
-  
-  gTree: function() {
+
+  gTree: function () {
     var tree = DriveApp.getFolders(); // Iterator for folders
     // Corrected while loop: Call next() only once per iteration
     while (tree.hasNext()) {

@@ -1,4 +1,5 @@
-function myFunction() {`Alright, let's create a slide presentation outline specifically tailored for a PowerCore seven-minute pitch, using Google Apps Script as a tool to demonstrate your expertise and generate referrals.
+function myFunction() {
+  `Alright, let's create a slide presentation outline specifically tailored for a PowerCore seven-minute pitch, using Google Apps Script as a tool to demonstrate your expertise and generate referrals.
 
 Presentation Title: "Streamlining [Client's Industry] Operations with Google Apps Script Automation" (Replace "[Client's Industry]" with your target industry)
 
@@ -60,4 +61,5 @@ Practice: Rehearse your presentation to ensure it fits within the seven-minute t
 Focus on Benefits: Emphasize the "so what?" factor for your target clients.
 Referral Focused: Every slide should be designed to push the audience towards making referrals.
 Know your audience: Powercore members are business people, so speak to business problems and solutions.
-By following this structure, you can create a compelling presentation that showcases your expertise, generates referrals, and helps you grow your business.`}
+By following this structure, you can create a compelling presentation that showcases your expertise, generates referrals, and helps you grow your business.`;
+}

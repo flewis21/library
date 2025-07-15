@@ -65,8 +65,8 @@ function dateTime(date) {
       </script>
     </body>
   </html>`);
-  (dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString()),
-    (dateTime.timeDefault = new Date(date).toLocaleTimeString());
+  ((dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString()),
+    (dateTime.timeDefault = new Date(date).toLocaleTimeString()));
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
     contentApp(

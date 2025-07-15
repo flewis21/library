@@ -10,10 +10,12 @@
           <div class="input-field col s12">
             <select id="templateSelect">
               <option value="" disabled selected>Choose a Template Doc</option>
-              <? var files = DriveApp.searchFiles('mimeType = "application/vnd.google-apps.document"'); ?>
-               <? while (files.hasNext()) { ?> 
-                <? var file = files.next(); ?>
-                <option value="<?= file.getUrl() ?>"><?= file.getName() ?></option>
+              <? var files = DriveApp.searchFiles('mimeType =
+              "application/vnd.google-apps.document"'); ?> <? while
+              (files.hasNext()) { ?> <? var file = files.next(); ?>
+              <option value="<?= file.getUrl() ?>">
+                <?= file.getName() ?>
+              </option>
               <? } ?>
             </select>
             <label for="templateSelect">Select a Google Doc</label>

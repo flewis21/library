@@ -1,62 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <base target="_top">
-    <meta charset="utf-8">
-    <meta name="appList" content="Boilerplate Function List">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <base target="_top" />
+    <meta charset="utf-8" />
+    <meta name="appList" content="Boilerplate Function List" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Acme"
+      rel="stylesheet"
+    />
     <style>
-      a:link, a:visited {color:black !important;}
-      a:hover, a:active{ 
-        color:white  !important;
-        text-decoration:none  !important;}
+      a:link,
+      a:visited {
+        color: black !important;
+      }
+      a:hover,
+      a:active {
+        color: white !important;
+        text-decoration: none !important;
+      }
     </style>
   </head>
   <body>
-    <? var folderMain = folderManager() ?>
-    <? var fileList = [] ?>
-    <? while (fileList.length === 0) {
-        var rndFolder = Math.floor(Math.random() * (Math.floor(folderMain.length)));
-        var folder = folderMain[rndFolder]
-        fileList = matchManager(folder).sheets 
-    } ?>
-    <? var eFolder = DriveApp.getFoldersByName(folder).next() ?>
-    <? var rndFiled = Math.floor(Math.random() * (Math.floor(fileList.length))); ?>
-    <? var file = fileList[rndFiled] ?>
-    <? var folderFile = eFolder.getFilesByName(file) ?>
-    <? var dataTree = [] ?>
-    <?   while (folderFile.hasNext()) { 
-      var myFile = folderFile.next()
-      var currentFileUrl =  myFile.getUrl();
-      dataTree.push(currentFileUrl)} ?>
-    <? var rndFiledMain = Math.floor(Math.random() * (Math.floor(dataTree.length))) ?>
-    <? var filedMain = dataTree[rndFiledMain] ?>
-    <div id="pageBlock"><p><?= folder ?>:  <?= file ?></p></div>
+    <? var folderMain = folderManager() ?> <? var fileList = [] ?> <? while
+    (fileList.length === 0) { var rndFolder = Math.floor(Math.random() *
+    (Math.floor(folderMain.length))); var folder = folderMain[rndFolder]
+    fileList = matchManager(folder).sheets } ?> <? var eFolder =
+    DriveApp.getFoldersByName(folder).next() ?> <? var rndFiled =
+    Math.floor(Math.random() * (Math.floor(fileList.length))); ?> <? var file =
+    fileList[rndFiled] ?> <? var folderFile = eFolder.getFilesByName(file) ?> <?
+    var dataTree = [] ?> <? while (folderFile.hasNext()) { var myFile =
+    folderFile.next() var currentFileUrl = myFile.getUrl();
+    dataTree.push(currentFileUrl)} ?> <? var rndFiledMain =
+    Math.floor(Math.random() * (Math.floor(dataTree.length))) ?> <? var
+    filedMain = dataTree[rndFiledMain] ?>
+    <div id="pageBlock">
+      <p><?= folder ?>: <?= file ?></p>
+    </div>
     <div class="row">
-    <div class="col s12 I12 m12 card-panel amber ">
-    <div class="container" style="clear: both">
-    <iframe 
-      id="indexDrive"
-      class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" 
-      src=""
-      style="width:100%;height:180vh"
-      allow="autoplay"
-      allow="encrypted-media"
-      title="Dontime Life Website"
-      frameborder="0"
-      allowfullscreen
-      ></iframe>
-    </div></div></div>
+      <div class="col s12 I12 m12 card-panel amber">
+        <div class="container" style="clear: both">
+          <iframe
+            id="indexDrive"
+            class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large"
+            src=""
+            style="width: 100%; height: 180vh"
+            allow="autoplay"
+            allow="encrypted-media"
+            title="Dontime Life Website"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-      document,addEventListener("DOMContentLoaded", pageScript);
+      (document, addEventListener("DOMContentLoaded", pageScript));
       function pageScript() {
-        document.getElementById("indexDrive")
-          .src = "<?= filedMain ?>"
+        document.getElementById("indexDrive").src = "<?= filedMain ?>";
       }
     </script>
-
   </body>
 </html>

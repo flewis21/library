@@ -74,10 +74,10 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf("JSON.parse(") === -1 &&
         vidObject.indexOf("_w._sydConv") === -1 &&
         vidObject.indexOf("o.Prefetchi") === -1 &&
-        vidObject.indexOf("\"inversion\"") === -1 &&
+        vidObject.indexOf('"inversion"') === -1 &&
         vidObject.indexOf("Math.min(h-") === -1 &&
         vidObject.indexOf("regexEsc(a)") === -1 &&
-        vidObject.indexOf("\"origin-tri") === -1 &&
+        vidObject.indexOf('"origin-tri') === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
         vidObject.indexOf(",") === -1
@@ -201,7 +201,7 @@ var vidFactor = function (data, time) {
       "\ndata is !" +
       !data +
       ", = " +
-      data.substring(0,100) +
+      data.substring(0, 100) +
       "\ntime is !" +
       !time +
       ", = " +
@@ -215,14 +215,14 @@ var vidFactor = function (data, time) {
   data.map((vidData) => {
     try {
       var veqIndex = vidData.indexOf(`v=`);
-      var veqResult = vidData.slice(veqIndex).split(`v=`)
+      var veqResult = vidData.slice(veqIndex).split(`v=`);
       dataArray.push(veqResult);
     } catch (error) {
-      Logger.log('dataArray.push failed');
+      Logger.log("dataArray.push failed");
     }
   });
   for (var i = 0, l = dataArray[0].length; i < l; i++) {
-    var veqStr = dataArray[0][i]
+    var veqStr = dataArray[0][i];
     var veqLoop = veqStr.substring(0, 11);
     idArray.push(veqLoop);
   }

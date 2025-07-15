@@ -8,7 +8,7 @@ var formMaker = function (fileName, folderX, time) {
       ", = " +
       !fileName,
   );
-  var forEx = formsUrls(fileName, folderX, time)
+  var forEx = formsUrls(fileName, folderX, time);
   if (typeof forEx !== "undefined") {
     console.log("formMaker: \nformsUrls(" + fileName, folderX, time + ")");
     return forEx;

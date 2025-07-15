@@ -1,248 +1,430 @@
-<!DOCTYPE html>
+<!doctype html>
 <html id="myGNUFreeJS">
   <head>
-    <base target="_self">
-    <meta name="myGNUFreeJS" content="Boilerplate Linux Template">
+    <base target="_self" />
+    <meta name="myGNUFreeJS" content="Boilerplate Linux Template" />
     <style>
-      a:link, a:visited {
-        color:black !important;
-        text-decoration:none !important;
+      a:link,
+      a:visited {
+        color: black !important;
+        text-decoration: none !important;
         flex-flow: row wrap !important;
         grid-column: 1 !important;
         grid-row: 1 !important;
         align-content: flex-start !important;
         z-index: 0 !important;
         height: 100% !important;
-        overflow: auto !important;}
-      a:hover, a:active{ 
-        color:pink  !important;
-        text-decoration:none  !important;}
+        overflow: auto !important;
+      }
+      a:hover,
+      a:active {
+        color: pink !important;
+        text-decoration: none !important;
+      }
     </style>
   </head>
   <body>
     <nav>
-      <a id="userClickedNext" href='#' onclick="nextFunc">Load</a>
-      <a id="userClickedAgain" href='#' onclick="againFunc">Reload</a>
+      <a id="userClickedNext" href="#" onclick="nextFunc">Load</a>
+      <a id="userClickedAgain" href="#" onclick="againFunc">Reload</a>
     </nav>
-    <input class="datepicker menu-img z-depth-5 card-panel red scale-transition scale-out scale-in" id="prefDate" type="text" />
-    <div id="template">
-    </div>
+    <input
+      class="datepicker menu-img z-depth-5 card-panel red scale-transition scale-out scale-in"
+      id="prefDate"
+      type="text"
+    />
+    <div id="template"></div>
   </body>
-    <script>
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
+  <script>
+    function serverside(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
           .withSuccessHandler((result) => {
-            resolve(result)})
+            resolve(result);
+          })
           .withFailureHandler((error) => {
-              console.log(error)
-              console.log(document.getElementById("test").innerHTML)
-              reject(error)})
-          .runBoilerplate(func, args)})};
-      var againCap = ""
-      function updateFunc() {
-        serverside("gsFiles")
-        .then((drop) => {
-          var rndNumDrop = Math.floor(Math.random() * (Math.floor(drop.length)))
-          var rndFunc = drop[rndNumDrop]
-          localStorage.setItem("gsSearch", rndFunc);
-          console.log(arguments.callee.name + "\n" + rndFunc + "...")
-          document.getElementById("template").innerHTML = "waiting for upDateFunc: " + rndFunc + "..."
-          serverside(rndFunc)
+            console.log(error);
+            console.log(document.getElementById("test").innerHTML);
+            reject(error);
+          })
+          .runBoilerplate(func, args);
+      });
+    }
+    var againCap = "";
+    function updateFunc() {
+      serverside("gsFiles").then((drop) => {
+        var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+        var rndFunc = drop[rndNumDrop];
+        localStorage.setItem("gsSearch", rndFunc);
+        console.log(arguments.callee.name + "\n" + rndFunc + "...");
+        document.getElementById("template").innerHTML =
+          "waiting for upDateFunc: " + rndFunc + "...";
+        serverside(rndFunc)
           .then((droplet) => {
-            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")" )
-            alert(arguments.callee.name + "\ndroplet.length = " + droplet.length)
+            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            alert(
+              arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            );
             if (typeof droplet === null) {
-              return}
-            if (droplet.length === 99 || droplet.length === 86 || droplet.length === 101 || droplet.length === 112) {
-              serverside("seoCapital", droplet)
-              .then((myFile) => {
-                alert(arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")" )
-                document.getElementById("template").innerHTML = JSON.stringify(myFile)})}
-            else {
-              alert(arguments.callee.name + "\n" + droplet.length + " is not the required length")
+              return;
+            }
+            if (
+              droplet.length === 99 ||
+              droplet.length === 86 ||
+              droplet.length === 101 ||
+              droplet.length === 112
+            ) {
+              serverside("seoCapital", droplet).then((myFile) => {
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")",
+                );
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(myFile);
+              });
+            } else {
+              alert(
+                arguments.callee.name +
+                  "\n" +
+                  droplet.length +
+                  " is not the required length",
+              );
               serverside("getScriptUrl")
-              .then((cChange) => {
-                console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
                   if (cChange.length === 112 || cChange.length === 86) {
                     // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
                     if (confirmation) {
                       var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc
+                      linkFollow.href = cChange + "?func=" + rndFunc;
                       linkFollow.id = "linkFOLLOW";
                       linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
+                      linkFollow.rel = "noopener noreferrer";
                       document.body.appendChild(linkFollow);
                       document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-                  else {
-                    var docWnd = document.getElementById("template")
-                    docWnd.innerHTML = cChange}})
-              .catch((er) => {
-                alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
-                console.log(arguments.callee.name + "\n" + er)
-                document.getElementById("template").innerHTML = JSON.stringify(er)})}})
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  alert(
+                    arguments.callee.name +
+                      "\n" +
+                      rndFunc +
+                      " error(" +
+                      er +
+                      ")",
+                  );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            }
+          })
           .catch((er) => {
-            alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
+            alert(
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            );
             serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
-              if (cChange.length === 112 || cChange.length === 86) {
-                // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-              else {
-                var docWnd = document.getElementById("template")
-                docWnd.innerHTML = cChange}})
-            .catch((er) => {
-              alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
-              console.log(arguments.callee.name + "\n" + er)
-              document.getElementById("template").innerHTML = JSON.stringify(er)})})})}
-      document.getElementById("userClickedNext").addEventListener("click", nextFunc)  
-      function nextFunc() {
-        serverside("gsFiles")
-        .then((drop) => {
-          var rndNumDrop = Math.floor(Math.random() * (Math.floor(drop.length)))
-          var rndFunc = drop[rndNumDrop]
-          localStorage.setItem("gsSearch", rndFunc);
-          console.log(rndFunc + "...")
-          document.getElementById("template").innerHTML = "waiting for nextFunc: " + rndFunc + "..."
-          serverside(rndFunc)
+              .then((cChange) => {
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
+                if (cChange.length === 112 || cChange.length === 86) {
+                  // console.log(cChange)
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                } else {
+                  var docWnd = document.getElementById("template");
+                  docWnd.innerHTML = cChange;
+                }
+              })
+              .catch((er) => {
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(er);
+              });
+          });
+      });
+    }
+    document
+      .getElementById("userClickedNext")
+      .addEventListener("click", nextFunc);
+    function nextFunc() {
+      serverside("gsFiles").then((drop) => {
+        var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+        var rndFunc = drop[rndNumDrop];
+        localStorage.setItem("gsSearch", rndFunc);
+        console.log(rndFunc + "...");
+        document.getElementById("template").innerHTML =
+          "waiting for nextFunc: " + rndFunc + "...";
+        serverside(rndFunc)
           .then((droplet) => {
-            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")" )
-            alert(arguments.callee.name + "\ndroplet.length = " + droplet.length)
+            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            alert(
+              arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            );
             if (droplet.length === 99) {
-              serverside("seoCapital", droplet)
-              .then((myFile) => {
-                alert(rndFunc + "(" + myFile + ")" )
-                if (myFile.length === 99 || myFile.length === 86 || myFile.length === 101 || myFile.length === 112) {
+              serverside("seoCapital", droplet).then((myFile) => {
+                alert(rndFunc + "(" + myFile + ")");
+                if (
+                  myFile.length === 99 ||
+                  myFile.length === 86 ||
+                  myFile.length === 101 ||
+                  myFile.length === 112
+                ) {
                   // console.log(cChange)
                   var linkFollow = document.createElement("a");
-                  linkFollow.href = myFile + "?func=" + rndFunc
+                  linkFollow.href = myFile + "?func=" + rndFunc;
                   linkFollow.id = "linkFOLLOW";
                   linkFollow.target = "_blank";
                   document.body.appendChild(linkFollow);
                   document.getElementById("linkFOLLOW").click();
-                  document.getElementById("linkFOLLOW").remove()}
-                else {
-                document.getElementById("template").innerHTML = JSON.stringify(myFile)}})}
-            else {
-              alert(arguments.callee.name + "\n" + droplet.length + " is not the required length")
+                  document.getElementById("linkFOLLOW").remove();
+                } else {
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(myFile);
+                }
+              });
+            } else {
+              alert(
+                arguments.callee.name +
+                  "\n" +
+                  droplet.length +
+                  " is not the required length",
+              );
               serverside("getScriptUrl")
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
+                  if (cChange.length === 112 || cChange.length === 86) {
+                    // console.log(cChange)
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
+                    if (confirmation) {
+                      var linkFollow = document.createElement("a");
+                      linkFollow.href = cChange + "?func=" + rndFunc;
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  alert(
+                    arguments.callee.name +
+                      "\n" +
+                      rndFunc +
+                      " error(" +
+                      er +
+                      ")",
+                  );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            }
+          })
+          .catch((er) => {
+            alert(
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            );
+            serverside("getScriptUrl")
               .then((cChange) => {
-                console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
                 if (cChange.length === 112 || cChange.length === 86) {
                   // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-                else {
-                  var docWnd = document.getElementById("template")
-                  docWnd.innerHTML = cChange}})
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                } else {
+                  var docWnd = document.getElementById("template");
+                  docWnd.innerHTML = cChange;
+                }
+              })
               .catch((er) => {
-                alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
-                console.log(arguments.callee.name + "\n" + er)
-                document.getElementById("template").innerHTML = JSON.stringify(er)})}})
-          .catch((er) => {
-            alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
-            serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
-              if (cChange.length === 112 || cChange.length === 86) {
-                // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-            else {
-              var docWnd = document.getElementById("template")
-              docWnd.innerHTML = cChange}})
-            .catch((er) => {
-              alert(arguments.callee.name + "\n" + rndFunc + " error(" + er + ")")
-              console.log(arguments.callee.name + "\n" + er)
-              document.getElementById("template").innerHTML = JSON.stringify(er)})})})}
-      document.getElementById("userClickedAgain").addEventListener("click", againFunc)  
-      function againFunc() {
-        againCap = localStorage.getItem("gsSearch");
-        document.getElementById("template").innerHTML = "waiting for againFunc: " + againCap + "..."
-        serverside(againCap)
+                alert(
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(er);
+              });
+          });
+      });
+    }
+    document
+      .getElementById("userClickedAgain")
+      .addEventListener("click", againFunc);
+    function againFunc() {
+      againCap = localStorage.getItem("gsSearch");
+      document.getElementById("template").innerHTML =
+        "waiting for againFunc: " + againCap + "...";
+      serverside(againCap)
         .then((droplet) => {
-          alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")" )
-          alert(arguments.callee.name + "\ndroplet.length = " + droplet.length)
-          if (droplet.length === 99 || droplet.length === 101 || droplet.length === 112 || droplet.length === 86) {
-            serverside("seoCapital", droplet)
-            .then((myFile) => {
-              alert(arguments.callee.name + "\n" + againCap + "(" + myFile + ")" )
-              document.getElementById("template").innerHTML = JSON.stringify(myFile)})}
-          else {
-            alert(arguments.callee.name + "\n" + droplet.length + " is not the required length")
+          alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
+          alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
+          if (
+            droplet.length === 99 ||
+            droplet.length === 101 ||
+            droplet.length === 112 ||
+            droplet.length === 86
+          ) {
+            serverside("seoCapital", droplet).then((myFile) => {
+              alert(
+                arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
+              );
+              document.getElementById("template").innerHTML =
+                JSON.stringify(myFile);
+            });
+          } else {
+            alert(
+              arguments.callee.name +
+                "\n" +
+                droplet.length +
+                " is not the required length",
+            );
             serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
-              if (cChange.length === 112 || cChange.length === 86) {
-                // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + againCap
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-              else {
-                var docWnd = document.getElementById("template")
-                docWnd.innerHTML = cChange}})
-            .catch((er) => {
-              alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")")
-              console.log(arguments.callee.name + "\n" + er)
-              document.getElementById("template").innerHTML = JSON.stringify(er)})}})
+              .then((cChange) => {
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
+                if (cChange.length === 112 || cChange.length === 86) {
+                  // console.log(cChange)
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + againCap;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                } else {
+                  var docWnd = document.getElementById("template");
+                  docWnd.innerHTML = cChange;
+                }
+              })
+              .catch((er) => {
+                alert(
+                  arguments.callee.name +
+                    "\n" +
+                    againCap +
+                    " error(" +
+                    er +
+                    ")",
+                );
+                console.log(arguments.callee.name + "\n" + er);
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(er);
+              });
+          }
+        })
         .catch((er) => {
-          alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")")
+          alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
           serverside("getScriptUrl")
-          .then((cChange) => {
-            console.log(arguments.callee.name + "\n" + typeof cChange + " with length = " + cChange.length)
-            if (droplet.length === 86 || cChange.length === 112) {
-              // console.log(cChange)
-                    const confirmation = window.confirm("Click OK to continue to the destination."); 
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + againCap
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel="noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove()}}
-            else {
-              var docWnd = document.getElementById("template")
-              docWnd.innerHTML = cChange}})
-          .catch((er) => {
-            alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")")
-            console.log(arguments.callee.name + "\n" + er)
-            document.getElementById("template").innerHTML = JSON.stringify(er)})})}
-    </script>
+            .then((cChange) => {
+              console.log(
+                arguments.callee.name +
+                  "\n" +
+                  typeof cChange +
+                  " with length = " +
+                  cChange.length,
+              );
+              if (droplet.length === 86 || cChange.length === 112) {
+                // console.log(cChange)
+                const confirmation = window.confirm(
+                  "Click OK to continue to the destination.",
+                );
+                if (confirmation) {
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href = cChange + "?func=" + againCap;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                }
+              } else {
+                var docWnd = document.getElementById("template");
+                docWnd.innerHTML = cChange;
+              }
+            })
+            .catch((er) => {
+              alert(
+                arguments.callee.name + "\n" + againCap + " error(" + er + ")",
+              );
+              console.log(arguments.callee.name + "\n" + er);
+              document.getElementById("template").innerHTML =
+                JSON.stringify(er);
+            });
+        });
+    }
+  </script>
 </html>

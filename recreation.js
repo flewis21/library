@@ -1,8 +1,19 @@
-function youTube(e)
-  {var usr = e;
-  if (!usr)
-    {var username =  [`cornea transplant usa atlanta georgia kidney`].toString().split(" ")[Math.floor(Math.random() * (Math.floor([`cornea transplant US Atlanta GA`].toString().split(" ").length)))];}
-  else {var username = usr;}
+function youTube(e) {
+  var usr = e;
+  if (!usr) {
+    var username = [`cornea transplant usa atlanta georgia kidney`]
+      .toString()
+      .split(" ")[
+      Math.floor(
+        Math.random() *
+          Math.floor(
+            [`cornea transplant US Atlanta GA`].toString().split(" ").length,
+          ),
+      )
+    ];
+  } else {
+    var username = usr;
+  }
   // var username = e.parameter["uname"] || `cornea transplant US, Atlanta, GA`;
   // const uniqueVid = needPastTime(username);
   // const randomKey = Math.floor(Math.random() * (Math.floor(uniqueVid.length)))// Math.floor(Math.random());
@@ -52,63 +63,74 @@ function youTube(e)
       </html>`);
   content.myVideo = username;
   content.myTitle = username;
-  content.topScript =
-function()
-  {console.log(document.getElementById("test").innerHTML)
-  // Init a timeout variable to be used below
-  let timeout = null;
-  (() => {// Clear the timeout if it has already been set.
-  // This will prevent the previous task from executing
-  // if it has been less than <MILLISECONDS>
-  // clearTimeout(timeout);
+  content.topScript = function () {
+    console.log(document.getElementById("test").innerHTML);
+    // Init a timeout variable to be used below
+    let timeout = null;
+    (() => {
+      // Clear the timeout if it has already been set.
+      // This will prevent the previous task from executing
+      // if it has been less than <MILLISECONDS>
+      // clearTimeout(timeout);
 
-  // Make a new timeout set to go off in 1000ms (1 second)
-  // timeout = setTimeout
-  // (function  () {// console.log('Input Value:', textInput.value);}, 5000)();
-  if (typeof url === "undefined")
-    {var urlData = document.getElementById("url").value;
-    var url = urlData.toString()}
-  var uname = document.getElementById("username").value;
-  var linkFollow = document.createElement("a");
-  linkFollow.href = url + "?func=youTube" + "&args=" + uname;
-  linkFollow.id = "linkFOLLOW";
-  linkFollow.target = "_top";
-  document.body.appendChild(linkFollow);
-  document.getElementById("linkFOLLOW").click();
-  document.getElementById("username").value = "";})()}
+      // Make a new timeout set to go off in 1000ms (1 second)
+      // timeout = setTimeout
+      // (function  () {// console.log('Input Value:', textInput.value);}, 5000)();
+      if (typeof url === "undefined") {
+        var urlData = document.getElementById("url").value;
+        var url = urlData.toString();
+      }
+      var uname = document.getElementById("username").value;
+      var linkFollow = document.createElement("a");
+      linkFollow.href = url + "?func=youTube" + "&args=" + uname;
+      linkFollow.id = "linkFOLLOW";
+      linkFollow.target = "_top";
+      document.body.appendChild(linkFollow);
+      document.getElementById("linkFOLLOW").click();
+      document.getElementById("username").value = "";
+    })();
+  };
   content.gamer = getUrl(ScriptApp);
-  content.email =
-function()
-  {var emails = validate()
-  var emailsCount = validate().toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)]
-  return randomEmail};
-  content.appJs =
-function() 
-  {const busyCalendar = 
-function()
-  {// mod the array
-  let timePicker = document.getElementById('prefTime');
-  M.Timepicker.init(timePicker, { defaultTime: "now" });
-  const serverSide =
-function (func, args)
-  {return new Promise((resolve, reject) => 
-    {google.script.run.withSuccessHandler(result => {resolve(result)})
-      .withFailureHandler(error => 
-        {console.log(document.getElementById("test").innerHTML)
-        reject(error)})
-      .runAll(`boilerplate.${[func]}`, [args])})};
-serverSide('busyDates', [])
-  .then((disabledDays) => 
-    {let datePicker = document.getElementById('prefDate');
-    M.Datepicker
-      .init(datePicker, 
-           {minDate: new Date(), 
-           setDefaultDate: true,
-           disableDayFn: 
-function(day) 
-  {return disabledDays.indexOf(day.valueOf()) > -1;}});})
-  .catch((error) => {console.log(error)});};
-busyCalendar()};
-  return content.evaluate().getContent()}
-
+  content.email = function () {
+    var emails = validate();
+    var emailsCount = validate().toString().split(",").length;
+    var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+    return randomEmail;
+  };
+  content.appJs = function () {
+    const busyCalendar = function () {
+      // mod the array
+      let timePicker = document.getElementById("prefTime");
+      M.Timepicker.init(timePicker, { defaultTime: "now" });
+      const serverSide = function (func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result);
+            })
+            .withFailureHandler((error) => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error);
+            })
+            .runAll(`boilerplate.${[func]}`, [args]);
+        });
+      };
+      serverSide("busyDates", [])
+        .then((disabledDays) => {
+          let datePicker = document.getElementById("prefDate");
+          M.Datepicker.init(datePicker, {
+            minDate: new Date(),
+            setDefaultDate: true,
+            disableDayFn: function (day) {
+              return disabledDays.indexOf(day.valueOf()) > -1;
+            },
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    busyCalendar();
+  };
+  return content.evaluate().getContent();
+}
