@@ -417,13 +417,13 @@ var folderManager = function (folderX, time) {
 };
 
 var fileTypeManager = function (fileType) {
-  if (fileType === DriveApp.MimeType.GOOGLE_DOCS) {
+  if (fileType === MimeType.GOOGLE_DOCS) {
     return DocumentApp;
-  } else if (fileType === DriveApp.MimeType.GOOGLE_SLIDES) {
+  } else if (fileType === MimeType.GOOGLE_SLIDES) {
     return SlidesApp;
-  } else if (fileType === DriveApp.MimeType.GOOGLE_SHEETS) {
+  } else if (fileType === MimeType.GOOGLE_SHEETS) {
     return SpreadsheetApp;
-  } else if (fileType === DriveApp.MimeType.GOOGLE_FORMS) {
+  } else if (fileType === MimeType.GOOGLE_FORMS) {
     return FormApp;
   } else {
     console.warn("Unsupported file type: " + fileType);

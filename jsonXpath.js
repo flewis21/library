@@ -501,7 +501,7 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
     var cokey = rndStrObj["Description"];
   }
 
-  if (typeof url === "undefined") {
+  if (typeof url === "undefined" || !isValidUrl(url).hostname) {
     var rndFol = furtFolder();
     var url = fileBrowser(rndFol).url;
   }

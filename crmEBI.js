@@ -22,6 +22,44 @@ var crmEBI = function (fx) {
       <base target="_self">
       <style>
         <?!= website ?>
+        .app-container {
+          background-color: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 90%;
+          max-width: 800px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          position: relative;
+        }
+        nav {
+          width: 100%;
+          background-color: #4CAF50;
+          padding: 15px 0;
+          text-align: center;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+        }
+        nav a {
+          color: white !important;
+          font-size: 1.2em;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+          background-color: #45a049;
+        }
+        @media (max-width: 600px) {
+          .app-container {
+            width: 95%;
+            padding: 15px;
+          }
+        }
       </style>
     </head>
     <body>
@@ -29,7 +67,7 @@ var crmEBI = function (fx) {
         <a id="caller" href="<?= getUrl(ScriptApp) ?>?func=crmEBI&args=${fx}" target="_top">update</a>
       </nav>
       <br>
-      <div class="center" id="div"><?!= index ?></div>
+      <div class="center app-container" id="div"><?!= index ?></div>
     </body>
   </html>`,
     {
@@ -49,6 +87,91 @@ var crmEBI = function (fx) {
         a:hover, a:active{ 
           color:white  !important;
           text-decoration:none  !important;}
+        html, body {
+          height: 100%;
+        }
+        body: {color:metallic grey !important;
+              font-size: 4.5em;
+              margin-top: 10px;
+              flex: 0 0 60px;
+              justify-content: space-around;
+              align-items: center;
+              border: solid .5px;
+              border-radius: 10px;
+              margin: 0px 15px 5px 15px;
+              background-color: #ffc107;
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
+              padding: 20px;}
+        h1 {
+          font-size: 2.5em;
+          color: #333;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        form label {
+          font-size: 1em;
+          color: #555;
+          margin-bottom: 5px;
+          display: block;
+        }
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 1em;
+        }
+        form button[type="submit"] {
+          background-color: #007bff;
+          color: white;
+          padding: 12px 25px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1.1em;
+          transition: background-color 0.3s ease;
+          display: block;
+          margin-top: 20px;
+        }
+        form button[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+        @media (max-width: 600px) {
+          h1 {
+            font-size: 2em;
+          }
+          form label, form input, form button {
+            font-size: 0.9em;
+          }
+        }
+        .autocomplete-suggestions {
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            z-index: 100;
+            position: absolute;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: -15px;
+            left: 0;
+        }
+        .autocomplete-suggestions div {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .autocomplete-suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+        .autocomplete-suggestions div:last-child {
+            border-bottom: none;
+        }
       </style>
     </head>
     <body>
@@ -123,6 +246,91 @@ var crmEBI = function (fx) {
         a:hover, a:active{ 
           color:white  !important;
           text-decoration:none  !important;}
+        html, body {
+          height: 100%;
+        }
+        body: {color:metallic grey !important;
+              font-size: 4.5em;
+              margin-top: 10px;
+              flex: 0 0 60px;
+              justify-content: space-around;
+              align-items: center;
+              border: solid .5px;
+              border-radius: 10px;
+              margin: 0px 15px 5px 15px;
+              background-color: #ffc107;
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
+              padding: 20px;}
+        h1 {
+          font-size: 2.5em;
+          color: #333;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        form label {
+          font-size: 1em;
+          color: #555;
+          margin-bottom: 5px;
+          display: block;
+        }
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 1em;
+        }
+        form button[type="submit"] {
+          background-color: #007bff;
+          color: white;
+          padding: 12px 25px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1.1em;
+          transition: background-color 0.3s ease;
+          display: block;
+          margin-top: 20px;
+        }
+        form button[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+        @media (max-width: 600px) {
+          h1 {
+            font-size: 2em;
+          }
+          form label, form input, form button {
+            font-size: 0.9em;
+          }
+        }
+        .autocomplete-suggestions {
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            z-index: 100;
+            position: absolute;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: -15px;
+            left: 0;
+        }
+        .autocomplete-suggestions div {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .autocomplete-suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+        .autocomplete-suggestions div:last-child {
+            border-bottom: none;
+        }
       </style>
     </head>
     <body>
@@ -196,16 +404,91 @@ var crmEBI = function (fx) {
           a:hover, a:active{ 
             color:white  !important;
             text-decoration:none  !important;}
+          html, body {
+            height: 100%;
+          }
           body: {color:metallic grey !important;
                 font-size: 4.5em;
-                height: 92%;
                 margin-top: 10px;
                 flex: 0 0 60px;
                 justify-content: space-around;
                 align-items: center;
                 border: solid .5px;
                 border-radius: 10px;
-                margin: 0px 15px 5px 15px;}
+                margin: 0px 15px 5px 15px;
+                background-color: #ffc107;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                padding: 20px;}
+          h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+          }
+          form label {
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+          }
+          form input[type="text"],
+          form input[type="date"],
+          form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+          }
+          form button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin-top: 20px;
+          }
+          form button[type="submit"]:hover {
+            background-color: #0056b3;
+          }
+          @media (max-width: 600px) {
+            h1 {
+              font-size: 2em;
+            }
+            form label, form input, form button {
+              font-size: 0.9em;
+            }
+          }
+          .autocomplete-suggestions {
+              border: 1px solid #ccc;
+              max-height: 200px;
+              overflow-y: auto;
+              background-color: white;
+              z-index: 100;
+              position: absolute;
+              width: 100%;
+              box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              margin-top: -15px;
+              left: 0;
+          }
+          .autocomplete-suggestions div {
+              padding: 8px 12px;
+              cursor: pointer;
+              border-bottom: 1px solid #eee;
+          }
+          .autocomplete-suggestions div:hover {
+              background-color: #f0f0f0;
+          }
+          .autocomplete-suggestions div:last-child {
+              border-bottom: none;
+          }
         </style>
       </head>
       <body>
@@ -250,7 +533,6 @@ var crmEBI = function (fx) {
             return new Promise((resolve, reject) => {
               google.script.run
               .withSuccessHandler((result) => {
-                alert("Success handling: ")
                   resolve(result)})
               .withFailureHandler((error) => {
                 alert("Error handling: ")
@@ -313,7 +595,91 @@ var crmEBI = function (fx) {
                   document.getElementById("cClinkFOLLOW").remove()}}})
                 .catch((er) => {
                   alert(er)})})}
-                serverside('busyDates', [])
+
+            function debounce(func, delay) {
+              let timeout;
+              return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+              };
+            }
+
+            function setupAutocomplete(inputId, suggestionsDivId) {
+              const input = document.getElementById(inputId);
+              const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+              if (input && suggestionsDiv) {
+                const fetchSuggestions = debounce((query) => {
+                  if (query.length < 3) {
+                    suggestionsDiv.innerHTML = '';
+                    return;
+                  }
+                  serverside('seoPastTime', [query])
+                    .then(playList => {
+                      var suggestions = playList.playList
+                      console.log('seoPastTime, [' + query + ']:' + JSON.stringify(suggestions))
+                      suggestionsDiv.innerHTML = '';
+                      if (suggestions && suggestions.length > 0) {
+                        suggestions.forEach(suggestion => {
+                          console.log("https://youtube.com/watch?v=" + suggestion)
+                          var newLink = "https://youtube.com/watch?v=" + suggestion
+                          const div = document.createElement('div');
+                          div.textContent = "https://youtube.com/watch?v=" + suggestion;
+                          div.addEventListener('click', () => {
+                            window.open(newLink, '_blank')
+                            suggestionsDiv.innerHTML = '';
+                          });
+                          suggestionsDiv.appendChild(div);
+                        });
+                      }
+                    })
+                    .catch(error => {
+                      console.error("Error fetching address suggestions for " + inputId + ":", error);
+                      suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                    });
+                }, 300);
+
+                input.addEventListener('input', (event) => {
+                  fetchSuggestions(event.target.value);
+                });
+
+                document.addEventListener('click', (event) => {
+                  if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+                    suggestionsDiv.innerHTML = '';
+                  }
+                });
+
+                input.addEventListener('keydown', (event) => {
+                  if (event.key === 'Escape') {
+                      suggestionsDiv.innerHTML = '';
+                      input.blur();
+                  }
+                });
+
+              } else {
+                  console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+              }
+            }
+
+            // Setup Autocomplete for Pickup Address
+            setupAutocomplete('companyName', 'companyNameSuggestions');
+
+            // Setup Autocomplete for Pickup Address
+            setupAutocomplete('name', 'nameSuggestions');
+
+            // Setup Autocomplete for Delivery Address
+            setupAutocomplete('nameFr', 'nameFrSuggestions');
+
+            // Setup Autocomplete for Pickup Address
+            setupAutocomplete('nameBM', 'nameBMSuggestions');
+
+            // Setup Autocomplete for Pickup Address
+            setupAutocomplete('nameAdd', 'nameAddSuggestions');
+
+            
+
+            serverside('busyDates', [])
                 .then((disabledDays) => {
                 let timePicker = document.getElementById('time');
                 M.Timepicker.init(timePicker, {

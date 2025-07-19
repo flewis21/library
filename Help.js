@@ -970,10 +970,14 @@ var mis = function (text, maxRetries = 3) {
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       form.setConfirmationMessage("Thanks for your feedback !!");
-      var url = globalThis[supFunc.func]?.toString() || form.getPublishedUrl();
+      var webAppObj = 
+        {
+          funcStr: globalThis[supFunc.func]?.toString(),
+          url: form.getPublishedUrl()
+        };
     }
     console.log("Final app:", supFunc.res);
-    return { index: url, app: supFunc.res, link: supUrl };
+    return { index: webAppObj, app: supFunc.res, link: supUrl };
   } else {
     let response;
     let location;
@@ -1058,7 +1062,11 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form.setConfirmationMessage("Thanks for your feedback !!");
-        var url = htmlData || form.getPublishedUrl();
+        var responseObj = 
+          {
+            dataStr: htmlData, 
+            url: form.getPublishedUrl()
+          };
       }
     }
     try {
@@ -1174,7 +1182,11 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var url = htmlData || form.getPublishedUrl();
+                var responseObj = 
+                  {
+                    dataStr: htmlData, 
+                    url: form.getPublishedUrl()
+                  };
               }
             } else {
               // No redirect or other error
@@ -1259,7 +1271,11 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var url = htmlData || form.getPublishedUrl();
+                var responseObj = 
+                  {
+                    dataStr: htmlData, 
+                    url: form.getPublishedUrl()
+                  };
               }
             }
           }
@@ -1270,7 +1286,7 @@ var mis = function (text, maxRetries = 3) {
       console.error("Error resolving TinyURL: ", e.toString());
     }
     console.log("Final app:", htmlData);
-    return { index: url, app: htmlData, link: supUrl };
+    return { index: responseObj, app: htmlData, link: supUrl };
   }
 };
 var misSt = function (func, someArgs) {
@@ -1394,7 +1410,7 @@ var misSt = function (func, someArgs) {
           ) {
             // This one is more complex as it involves calling a function, but the principle is the same:
             // If userProvidedValue is present, use it. Otherwise, generate the data.
-            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+            if (userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)) {
               args["data"] = userProvidedValue;
             } else {
               var rndE = objectOfS(
@@ -1718,7 +1734,7 @@ var misSt = function (func, someArgs) {
             paramName === "url" ||
             (paramName === null && declaredParamName === "url")
           ) {
-            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+            if (userProvidedValue !== null && userProvidedValue !== undefined && isValidUrl(userProvidedValue).hostname) {
               args["url"] = userProvidedValue;
             } else {
               var folder = allFolders[numVarRnd];
@@ -1751,7 +1767,7 @@ var misSt = function (func, someArgs) {
             paramName === "fileX" ||
             (paramName === null && declaredParamName === "fileX")
           ) {
-            var folderX = allFolders[numVarRnd()];
+            var folderX = functionRegistry.getFolderList()[numVarRnd()];
             var folderRoot = DriveApp.getFoldersByName(folderX);
             let fileXName = "undefined";
             if (folderRoot.hasNext) {

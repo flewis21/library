@@ -711,7 +711,6 @@ var crmGWI = function (fx) {
         return new Promise((resolve, reject) => {
           google.script.run
           .withSuccessHandler((result) => {
-            alert("Success handling: ")
               resolve(result)})
           .withFailureHandler((error) => {
             alert("Error handling: ")
@@ -739,15 +738,18 @@ var crmGWI = function (fx) {
               return;
             }
             serverside('seoPastTime', [query])
-              .then(suggestions => {
-                console.log('seoPastTime, [' + query + ']:' + suggestions)
+              .then(playList => {
+                var suggestions = playList.playList
+                console.log('seoPastTime, [' + query + ']:' + JSON.stringify(suggestions))
                 suggestionsDiv.innerHTML = '';
                 if (suggestions && suggestions.length > 0) {
                   suggestions.forEach(suggestion => {
+                    console.log("https://youtube.com/watch?v=" + suggestion)
+                    var newLink = "https://youtube.com/watch?v=" + suggestion
                     const div = document.createElement('div');
-                    div.textContent = suggestion;
+                    div.textContent = "https://youtube.com/watch?v=" + suggestion;
                     div.addEventListener('click', () => {
-                      input.value = suggestion;
+                      window.open(newLink, '_blank')
                       suggestionsDiv.innerHTML = '';
                     });
                     suggestionsDiv.appendChild(div);
@@ -798,14 +800,25 @@ var crmGWI = function (fx) {
       const delTimeInput = document.getElementById('delTime');
       const calculationStatusSpan = document.getElementById('calculationStatus');
 
-
       if (calculateCostsBtn && delAddrInput && pickAddrInput && labInput && gasInput && totalInput && delTimeInput && calculationStatusSpan) {
           calculateCostsBtn.addEventListener('click', () => {
               const deliveryAddress = delAddrInput.value.trim();
               const pickupAddress = pickAddrInput.value.trim();
+              const travelTimeMinutes = parseFloat(delTimeInput.value.trim());
+
+              // --- Configuration (these should match your server-side values for consistency) ---
+              const COST_PER_MINUTE_LABOR = 1.25; // Example: $1.25 per minute for labor
+              const COST_PER_MILE_GAS = 0.50; // This will be tricky if not using distance directly
+
 
               if (!deliveryAddress || !pickupAddress) {
                   alert('Please enter both Delivery and Pickup Addresses to calculate costs.');
+                  return;
+              }
+
+              if (isNaN(travelTimeMinutes) || travelTimeMinutes < 0) {
+                  alert('Please enter a valid positive number for Delivery Time.');
+                  delTimeInput.value = ''; // Clear invalid input
                   return;
               }
 
@@ -814,10 +827,25 @@ var crmGWI = function (fx) {
 
               serverside('calculateTravelCosts', [deliveryAddress, pickupAddress])
                   .then(results => {
-                      labInput.value = results.labor.toFixed(2);
-                      gasInput.value = results.gas.toFixed(2);
-                      totalInput.value = results.total.toFixed(2);
-                      delTimeInput.value = results.travelTimeMinutes; // Populate delivery time with travel duration
+              
+                      // Since gas cost is per mile, and we only have time, we can either:
+                      // 1. Omit gas calculation for manual time input, or
+                      // 2. Estimate distance from time (e.g., average speed)
+                      // For simplicity here, we'll make gas cost proportional to time for manual input,
+                      // or you could choose to leave it to manual entry.
+                      const distanceMult = travelTimeMinutes / 15
+                      const ESTIMATED_AVG_SPEED_MPH = 30; // Example average speed
+                      const estimatedDistanceMiles = (travelTimeMinutes / 60) * ESTIMATED_AVG_SPEED_MPH; // Convert minutes to hours
+                                        
+                      const laborCost =  results.labor * distanceMult;
+                      const gasCost = results.gas * distanceMult; // Still based on estimated distance for gas
+                      const totalCost = laborCost + gasCost;
+                      const totalTravelTimeMinutes = results.travelTimeMinutes * distanceMult
+
+                      labInput.value = laborCost.toFixed(2);
+                      gasInput.value = gasCost.toFixed(2);
+                      totalInput.value = totalCost.toFixed(2);
+                      delTimeInput.value = totalTravelTimeMinutes; // Populate delivery time with travel duration
                       calculationStatusSpan.textContent = 'Done!';
                       console.log('Calculation Results:', results);
                   })

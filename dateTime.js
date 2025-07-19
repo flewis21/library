@@ -25,52 +25,43 @@ function dateTime(date) {
       </div>
       <div id="error_log"></div>
       <script>
-        document.addEventListener(
-          'DOMContentLoaded'
-          , function() {
+        document.addEventListener('DOMContentLoaded', function() {
           let timePicker = document.getElementById('prefTime');
           M.Timepicker.init(
-          timePicker
-          , {
-          defaultTime: "now"}); 
+            timePicker, {
+            defaultTime: "now"}); 
           function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler(result => {
-                resolve(result)})
-            .withFailureHandler(error => {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
                 console.log(error)
                 console.log(document.getElementById("test").innerHTML)
                 reject(error)})
-            .runBoilerplate([func], [args])})}; 
+              .runBoilerplate(func, args)})}; 
           serverside('busyDates', [])
           .then((disabledDays) => {
           //mod the array
           let datePicker = document.getElementById('prefDate');
           M.Datepicker.init(
-          datePicker
-          , {
-          defaultDate: <?= dateDefault ?>
-          , setDefaultDate: true
-          , minDate: new Date()
-          , disableDayFn: function(
-            day
-            ){
-          return disabledDays.indexOf(
-          day.valueOf()
-          ) > -1;}})})
+          datePicker, {
+            defaultDate: "<?!= dateDefault ?>", 
+            setDefaultDate: true, 
+            minDate: new Date(), 
+            disableDayFn: function(day) {
+              return disabledDays.indexOf(day.valueOf()) > -1;}})})
           .catch((er) => {
-            document.getElementById("error_log").innerHTML = er
+            document.getElementById("error_log").innerHTML = JSON.stringify(er)
           });});
       </script>
     </body>
   </html>`);
-  ((dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString()),
-    (dateTime.timeDefault = new Date(date).toLocaleTimeString()));
+  dateTime.dateDefault = new Date() - new Date(date).toLocaleDateString();
+  dateTime.timeDefault = new Date(date).toLocaleTimeString();
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+    contentApp(`
   <html id="dateTimeTimePicker">
     <head>
       <base target="_top">
@@ -100,8 +91,7 @@ function dateTime(date) {
     ),
   ).getContent();
   dateTime.datePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+    contentApp(`
   <html id="dateTimeDatePicker">
     <head>
       <base target="_top">

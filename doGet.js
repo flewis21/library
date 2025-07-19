@@ -502,6 +502,7 @@ function handleGetData() {
 
     // Helper function to process any value (rawFuncResult or a nested property like .app)
     function processContent(content) {
+      content
       if (!content) {
         return { type: "unknown", data: null };
       }
@@ -591,7 +592,47 @@ function handleGetData() {
       rawFuncResult.app
     ) {
       console.log("the 'app' property:", rawFuncResult);
-      const appProcessed = processContent(rawFuncResult.app);
+      rawFuncResult.app
+      let appProcessed;
+
+      // Check if rawFuncResult.app exists and is an object
+      if (rawFuncResult.app && typeof rawFuncResult.app === 'object' && !Array.isArray(rawFuncResult.app)) {
+        // If it's a non-array object, you can safely attempt to spread its values
+        // Choose one of the options from the previous response based on your exact need:
+
+        // Option 3: Spread all values (the arrays) of the app object
+        appProcessed = processContent(Object.values(rawFuncResult.app));
+
+        /*
+        // Option 1: Spread the individual content arrays (most common intent)
+        appProcessed = processContent([
+          rawFuncResult.index,
+          ...(rawFuncResult.app.cik || []), // Use || [] to handle cases where cik might be missing
+          ...(rawFuncResult.app.ticker || []),
+          ...(rawFuncResult.app.title || [])
+        ]);
+
+        // Option 2: Spread the arrays themselves as elements
+        appProcessed = processContent([
+          rawFuncResult.index,
+          rawFuncResult.app.cik,
+          rawFuncResult.app.ticker,
+          rawFuncResult.app.title
+        ]);
+        */
+
+      } else {
+        // Handle cases where rawFuncResult.app is not a suitable object,
+        // e.g., it's null, undefined, an array, or a primitive.
+        // You might want to log a warning, assign a default value, or throw an error.
+        console.warn("rawFuncResult.app is not a valid object for spreading. Value:", rawFuncResult.app);
+
+        // Example: Just include rawFuncResult.index or a placeholder
+        // appProcessed = processContent([rawFuncResult.index]);
+
+        // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
+        appProcessed = processContent(rawFuncResult.app);
+      }
       // Overwrite payLoad if 'app' property yields more specific or desired content
       // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
       if (
@@ -609,6 +650,14 @@ function handleGetData() {
         if (rawFuncResult.index && !payLoad.index) {
           // Only add if payLoad doesn't already have it
           payLoad.index = rawFuncResult.index;
+        }
+        if (rawFuncResult.index.dataStr && !payLoad.index.dataStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        if (rawFuncResult.index.url && !payLoad.index.url) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
         }
       }
     }
