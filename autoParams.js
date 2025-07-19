@@ -29,6 +29,46 @@ const functionRegistry = {
   getParamsList: function () {
     return this.paramsList;
   },
+  
+  htmlArray: [
+    "index",
+    "proMedia",
+    "epaWebsite",
+    "callBack",
+    "oddChances",
+    "jsGame",
+    "checkOnDay",
+    "uiAccess",
+    "popUpOpen",
+    "congressLeg",
+    "congressMembers",
+    "jFundamentals",
+    "gnuFree",
+    "myGNUFreeJS",
+  ],
+
+  get htmlFile() {
+    return this.htmlArray[
+      Math.floor(Math.random() * Math.floor(this.htmlArray.length))
+    ];
+  },
+
+  folderTree: [],
+
+  gTree: function () {
+    var tree = DriveApp.getFolders(); // Iterator for folders
+    // Corrected while loop: Call next() only once per iteration
+    while (tree.hasNext()) {
+      var folder = tree.next(); // Get the current folder
+      // Now check if this 'folder' has files before adding its name
+      if (folder.getFiles().hasNext()) {
+        this.folderTree.push(folder.getName());
+      }
+    }
+  },
+  getFolderList: function () {
+    return this.folderTree;
+  },
 
   maxTime: 6 * 60 * 1000, // This is a simple numerical value
   _startTime: null, // Private variable to store the timestamp when the process begins
@@ -127,45 +167,6 @@ const functionRegistry = {
   // },
 
   // ... other properties or methods ...
-  htmlArray: [
-    "index",
-    "proMedia",
-    "epaWebsite",
-    "callBack",
-    "oddChances",
-    "jsGame",
-    "checkOnDay",
-    "uiAccess",
-    "popUpOpen",
-    "congressLeg",
-    "congressMembers",
-    "jFundamentals",
-    "gnuFree",
-    "myGNUFreeJS",
-  ],
-
-  get htmlFile() {
-    return this.htmlArray[
-      Math.floor(Math.random() * Math.floor(this.htmlArray.length))
-    ];
-  },
-
-  folderTree: [],
-
-  gTree: function () {
-    var tree = DriveApp.getFolders(); // Iterator for folders
-    // Corrected while loop: Call next() only once per iteration
-    while (tree.hasNext()) {
-      var folder = tree.next(); // Get the current folder
-      // Now check if this 'folder' has files before adding its name
-      if (folder.getFiles().hasNext()) {
-        this.folderTree.push(folder.getName());
-      }
-    }
-  },
-  getFolderList: function () {
-    return this.folderTree;
-  },
 };
 
 // Set some global variables

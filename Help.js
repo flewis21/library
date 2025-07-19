@@ -171,19 +171,19 @@ var seoPastTime = function (searchString, time) {
   }
 };
 var seoYoutube = function (searchString, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nsearchString is !" +
-      !searchString +
-      ", = " +
-      searchString +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nsearchString is !" +
+  //     !searchString +
+  //     ", = " +
+  //     searchString +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
   }
@@ -194,19 +194,19 @@ var seoYoutube = function (searchString, time) {
   return { myIdArr: idArray };
 };
 var vidFactor = function (data, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\ndata is !" +
-      !data +
-      ", = " +
-      data.substring(0, 100) +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\ndata is !" +
+  //     !data +
+  //     ", = " +
+  //     data.substring(0, 100) +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof data !== "object") {
     data = [data];
   }
@@ -551,10 +551,11 @@ var resolveParams = function (func, someArgs) {
             }
             resolvedArgs.push(args["varA"]);
           } else if (
-            paramName === "url" ||
-            (paramName === null && declaredParamName === "url")
+            paramName === "url" || paramName === "companyNameUrl"
+            (paramName === null && (declaredParamName === "url" || declaredParamName === "companyNameUrl"))
           ) {
-            var folder = allFolders[numVarRnd];
+            functionRegistry.gTree
+            var folder = functionRegistry.getFolderList()[numVarRnd];
             args["url"] = fileBrowser(folder).url;
             resolvedArgs.push(args["url"]);
           } else if (
@@ -1731,16 +1732,32 @@ var misSt = function (func, someArgs) {
             }
             resolvedArgs.push(args["epaAUrl"]); // This pushes whatever args["epaAUrl"] is at this point.
           } else if (
-            paramName === "url" ||
-            (paramName === null && declaredParamName === "url")
+            paramName === "url" || paramName === "companyNameUrl" ||
+            (paramName === null && (declaredParamName === "url" || declaredParamName === "companyNameUrl"))
           ) {
             if (userProvidedValue !== null && userProvidedValue !== undefined && isValidUrl(userProvidedValue).hostname) {
-              args["url"] = userProvidedValue;
+              if (paramName === "url") {
+                args["url"] = userProvidedValue;
+              }
+              else if (paramName === "companyNameUrl") {
+                args["companyNameUrl"] = userProvidedValue;
+              }
             } else {
-              var folder = allFolders[numVarRnd];
-              args["url"] = fileBrowser(folder).url;
+              functionRegistry.gTree
+              var folder = functionRegistry.getFolderList()[numVarRnd];
+              if (paramName === "url") {
+                args["url"] = fileBrowser(folder).url ;
+              }
+              else if (paramName === "companyNameUrl") {
+                args["companyNameUrl"] = fileBrowser(folder).url ;
+              }
             }
-            resolvedArgs.push(args["url"]);
+            if (paramName === "url") {
+              resolvedArgs.push(args["url"]);
+            }
+            else if (paramName === "companyNameUrl") {
+              resolvedArgs.push(args["companyNameUrl"]);
+            }
           } else if (
             paramName === "object" ||
             (paramName === null && declaredParamName === "object")
@@ -1759,7 +1776,7 @@ var misSt = function (func, someArgs) {
                 Math.floor(Math.random() * Math.floor(htmlArray.length))
               ];
             args["file"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
+              userProvidedValue !== null && userProvidedValue !== undefined && /<[a-z][\s\S]*>/i.test(userProvidedValue)
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
@@ -1892,7 +1909,7 @@ var misSt = function (func, someArgs) {
           ) {
             var rawVar = mis("VVar");
             args["argsObject"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
+              userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)
                 ? userProvidedValue
                 : rawVar.app["myVar"];
             resolvedArgs.push(args["argsObject"]);
