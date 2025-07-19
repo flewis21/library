@@ -61,7 +61,8 @@ function dateTime(date) {
   dateTime.timeDefault = new Date(date).toLocaleTimeString();
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    contentApp(`
+    contentApp(
+      `
   <html id="dateTimeTimePicker">
     <head>
       <base target="_top">
@@ -91,7 +92,8 @@ function dateTime(date) {
     ),
   ).getContent();
   dateTime.datePicker = HtmlService.createHtmlOutput(
-    contentApp(`
+    contentApp(
+      `
   <html id="dateTimeDatePicker">
     <head>
       <base target="_top">

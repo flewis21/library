@@ -29,7 +29,7 @@ const functionRegistry = {
   getParamsList: function () {
     return this.paramsList;
   },
-  
+
   htmlArray: [
     "index",
     "proMedia",
