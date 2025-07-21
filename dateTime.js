@@ -24,25 +24,34 @@ function dateTime(date) {
         <?!= timePicker ?>
       </div>
       <div id="error_log"></div>
-      <script>
+      <script> 
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler(result => {
+                resolve(result)})
+            .withFailureHandler(error => {
+              console.log(error)
+              console.log(document.getElementById("test").innerHTML)
+              reject(error)})
+            .runBoilerplate(func, args)})}; 
         document.addEventListener('DOMContentLoaded', function() {
           let timePicker = document.getElementById('prefTime');
           M.Timepicker.init(
             timePicker, {
-            defaultTime: "now"}); 
-          function serverside(func, args) {
-            return new Promise((resolve, reject) => {
-              google.script.run
-              .withSuccessHandler(result => {
-                  resolve(result)})
-              .withFailureHandler(error => {
-                console.log(error)
-                console.log(document.getElementById("test").innerHTML)
-                reject(error)})
-              .runBoilerplate(func, args)})}; 
+            defaultTime: "now"});
           serverside('busyDates', [])
-          .then((disabledDays) => {
-          //mod the array
+          .then((response) => { 
+            // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let disabledDays = [];
+            if (response && response.type === "object" && Array.isArray(response.data)) {
+              disabledDays = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              disabledDays = [];
+            }//mod the array
           let datePicker = document.getElementById('prefDate');
           M.Datepicker.init(
           datePicker, {
@@ -61,8 +70,7 @@ function dateTime(date) {
   dateTime.timeDefault = new Date(date).toLocaleTimeString();
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+    contentApp(`
   <html id="dateTimeTimePicker">
     <head>
       <base target="_top">
@@ -92,8 +100,7 @@ function dateTime(date) {
     ),
   ).getContent();
   dateTime.datePicker = HtmlService.createHtmlOutput(
-    contentApp(
-      `
+    contentApp(`
   <html id="dateTimeDatePicker">
     <head>
       <base target="_top">

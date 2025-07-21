@@ -551,15 +551,10 @@ var resolveParams = function (func, someArgs) {
             }
             resolvedArgs.push(args["varA"]);
           } else if (
-            paramName === "url" ||
-            paramName ===
-              "companyNameUrl"(
-                paramName === null &&
-                  (declaredParamName === "url" ||
-                    declaredParamName === "companyNameUrl"),
-              )
+            paramName === "url" || paramName === "companyNameUrl"
+            (paramName === null && (declaredParamName === "url" || declaredParamName === "companyNameUrl"))
           ) {
-            functionRegistry.gTree;
+            functionRegistry.gTree
             var folder = functionRegistry.getFolderList()[numVarRnd];
             args["url"] = fileBrowser(folder).url;
             resolvedArgs.push(args["url"]);
@@ -976,10 +971,11 @@ var mis = function (text, maxRetries = 3) {
       form.addDateItem().setTitle("Birth Date").setRequired(true);
       form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       form.setConfirmationMessage("Thanks for your feedback !!");
-      var webAppObj = {
-        funcStr: globalThis[supFunc.func]?.toString(),
-        url: form.getPublishedUrl(),
-      };
+      var webAppObj = 
+        {
+          funcStr: globalThis[supFunc.func]?.toString(),
+          url: form.getPublishedUrl()
+        };
     }
     console.log("Final app:", supFunc.res);
     return { index: webAppObj, app: supFunc.res, link: supUrl };
@@ -1067,10 +1063,11 @@ var mis = function (text, maxRetries = 3) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
         form.setConfirmationMessage("Thanks for your feedback !!");
-        var responseObj = {
-          dataStr: htmlData,
-          url: form.getPublishedUrl(),
-        };
+        var responseObj = 
+          {
+            dataStr: htmlData, 
+            url: form.getPublishedUrl()
+          };
       }
     }
     try {
@@ -1186,10 +1183,11 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var responseObj = {
-                  dataStr: htmlData,
-                  url: form.getPublishedUrl(),
-                };
+                var responseObj = 
+                  {
+                    dataStr: htmlData, 
+                    url: form.getPublishedUrl()
+                  };
               }
             } else {
               // No redirect or other error
@@ -1274,10 +1272,11 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Your Message")
                   .setRequired(true);
                 form.setConfirmationMessage("Thanks for your feedback !!");
-                var responseObj = {
-                  dataStr: htmlData,
-                  url: form.getPublishedUrl(),
-                };
+                var responseObj = 
+                  {
+                    dataStr: htmlData, 
+                    url: form.getPublishedUrl()
+                  };
               }
             }
           }
@@ -1412,11 +1411,7 @@ var misSt = function (func, someArgs) {
           ) {
             // This one is more complex as it involves calling a function, but the principle is the same:
             // If userProvidedValue is present, use it. Otherwise, generate the data.
-            if (
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              Array.isArray(userProvidedValue)
-            ) {
+            if (userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)) {
               args["data"] = userProvidedValue;
             } else {
               var rndE = objectOfS(
@@ -1737,34 +1732,30 @@ var misSt = function (func, someArgs) {
             }
             resolvedArgs.push(args["epaAUrl"]); // This pushes whatever args["epaAUrl"] is at this point.
           } else if (
-            paramName === "url" ||
-            paramName === "companyNameUrl" ||
-            (paramName === null &&
-              (declaredParamName === "url" ||
-                declaredParamName === "companyNameUrl"))
+            paramName === "url" || paramName === "companyNameUrl" ||
+            (paramName === null && (declaredParamName === "url" || declaredParamName === "companyNameUrl"))
           ) {
-            if (
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              isValidUrl(userProvidedValue).hostname
-            ) {
+            if (userProvidedValue !== null && userProvidedValue !== undefined && isValidUrl(userProvidedValue).hostname) {
               if (paramName === "url") {
                 args["url"] = userProvidedValue;
-              } else if (paramName === "companyNameUrl") {
+              }
+              else if (paramName === "companyNameUrl") {
                 args["companyNameUrl"] = userProvidedValue;
               }
             } else {
-              functionRegistry.gTree;
+              functionRegistry.gTree
               var folder = functionRegistry.getFolderList()[numVarRnd];
               if (paramName === "url") {
-                args["url"] = fileBrowser(folder).url;
-              } else if (paramName === "companyNameUrl") {
-                args["companyNameUrl"] = fileBrowser(folder).url;
+                args["url"] = fileBrowser(folder).url ;
+              }
+              else if (paramName === "companyNameUrl") {
+                args["companyNameUrl"] = fileBrowser(folder).url ;
               }
             }
             if (paramName === "url") {
               resolvedArgs.push(args["url"]);
-            } else if (paramName === "companyNameUrl") {
+            }
+            else if (paramName === "companyNameUrl") {
               resolvedArgs.push(args["companyNameUrl"]);
             }
           } else if (
@@ -1785,9 +1776,7 @@ var misSt = function (func, someArgs) {
                 Math.floor(Math.random() * Math.floor(htmlArray.length))
               ];
             args["file"] =
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              /<[a-z][\s\S]*>/i.test(userProvidedValue)
+              userProvidedValue !== null && userProvidedValue !== undefined && /<[a-z][\s\S]*>/i.test(userProvidedValue)
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
@@ -1920,9 +1909,7 @@ var misSt = function (func, someArgs) {
           ) {
             var rawVar = mis("VVar");
             args["argsObject"] =
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              Array.isArray(userProvidedValue)
+              userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)
                 ? userProvidedValue
                 : rawVar.app["myVar"];
             resolvedArgs.push(args["argsObject"]);

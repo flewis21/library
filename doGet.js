@@ -502,7 +502,7 @@ function handleGetData() {
 
     // Helper function to process any value (rawFuncResult or a nested property like .app)
     function processContent(content) {
-      content;
+      content
       if (!content) {
         return { type: "unknown", data: null };
       }
@@ -592,15 +592,11 @@ function handleGetData() {
       rawFuncResult.app
     ) {
       console.log("the 'app' property:", rawFuncResult);
-      rawFuncResult.app;
+      rawFuncResult.app
       let appProcessed;
 
       // Check if rawFuncResult.app exists and is an object
-      if (
-        rawFuncResult.app &&
-        typeof rawFuncResult.app === "object" &&
-        !Array.isArray(rawFuncResult.app)
-      ) {
+      if (rawFuncResult.app && typeof rawFuncResult.app === 'object' && !Array.isArray(rawFuncResult.app)) {
         // If it's a non-array object, you can safely attempt to spread its values
         // Choose one of the options from the previous response based on your exact need:
 
@@ -624,14 +620,12 @@ function handleGetData() {
           rawFuncResult.app.title
         ]);
         */
+
       } else {
         // Handle cases where rawFuncResult.app is not a suitable object,
         // e.g., it's null, undefined, an array, or a primitive.
         // You might want to log a warning, assign a default value, or throw an error.
-        console.warn(
-          "rawFuncResult.app is not a valid object for spreading. Value:",
-          rawFuncResult.app,
-        );
+        console.warn("rawFuncResult.app is not a valid object for spreading. Value:", rawFuncResult.app);
 
         // Example: Just include rawFuncResult.index or a placeholder
         // appProcessed = processContent([rawFuncResult.index]);
