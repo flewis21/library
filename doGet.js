@@ -1379,7 +1379,7 @@ var userClicked = function () {
 // };
 
 function runBoilerplate(func, args) {
-  console.log("boilerplate doGet: line 1382")
+  console.log("boilerplate doGet: line 1382");
   var libName = "foo";
   // Check if maxTime exists as a global variable
   const timeRemaining =

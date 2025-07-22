@@ -229,7 +229,7 @@ var vidFactor = function (data, time) {
   return { vidArray: idArray };
 };
 var crmCalc = function (func) {
-  console.log("boilerplate Help: line 232")
+  console.log("boilerplate Help: line 232");
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -263,7 +263,7 @@ var crmCalc = function (func) {
   return funFact;
 };
 var crmT = function (func) {
-  console.log("boilerplate Help: line 265")
+  console.log("boilerplate Help: line 265");
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -367,7 +367,7 @@ var paramVals = function (funcInfo) {
   return misArgs;
 };
 var resolveParams = function (func, someArgs) {
-  console.log("boilerplate Help: line 368")
+  console.log("boilerplate Help: line 368");
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
   var numVarRnd = randNum(
@@ -500,8 +500,7 @@ var resolveParams = function (func, someArgs) {
           ) {
             args["func"] = result;
             resolvedArgs.push(args["func"]);
-          }
-          else if (
+          } else if (
             paramName === "varA" ||
             (paramName === null && declaredParamName === "varA")
           ) {
@@ -679,37 +678,37 @@ var resolveParams = function (func, someArgs) {
   }
   return content;
 };
-  // ? console.log("funcUno = " + typeof funcUno)
-  // : console.error("funcUno = " + typeof funcUno);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
-          // else if (
-          //   paramName === "searchString" ||
-          //   (paramName === null && declaredParamName === "searchString")
-          // ) {
-          //   args["searchString"] = substanceVegas(
-          //     0,
-          //     [
-          //       objectOfS(
-          //         ["parameter"],
-          //         [[["func", result]]],
-          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          //       ).parameter["func"],
-          //     ].toString().length,
-          //     [
-          //       objectOfS(
-          //         ["parameter"],
-          //         [[["func", result]]],
-          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          //       ).parameter["func"],
-          //     ]
-          //       .toString()
-          //       .split(""),
-          //   ).substWord;
-          //   resolvedArgs.push(args["searchString"]);
-          // }
+// ? console.log("funcUno = " + typeof funcUno)
+// : console.error("funcUno = " + typeof funcUno);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// else if (
+//   paramName === "searchString" ||
+//   (paramName === null && declaredParamName === "searchString")
+// ) {
+//   args["searchString"] = substanceVegas(
+//     0,
+//     [
+//       objectOfS(
+//         ["parameter"],
+//         [[["func", result]]],
+//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+//       ).parameter["func"],
+//     ].toString().length,
+//     [
+//       objectOfS(
+//         ["parameter"],
+//         [[["func", result]]],
+//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+//       ).parameter["func"],
+//     ]
+//       .toString()
+//       .split(""),
+//   ).substWord;
+//   resolvedArgs.push(args["searchString"]);
+// }
 var wwAccess = function (rName, rFunc, rArgs) {
   const Route = {};
   Route.path = function (route, rFunction) {
@@ -855,11 +854,11 @@ var seoCapital = function (url) {
       }`);
   return html.evaluate().getContent();
 };
-  // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
-  // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
-  // const pong = table.map((ping)=>{return ping.substring(0)})
+// const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
+// const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
+// const pong = table.map((ping)=>{return ping.substring(0)})
 var mis = function (text, maxRetries = 3) {
-  console.log("boilerolate Help: line 859")
+  console.log("boilerolate Help: line 859");
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
@@ -1296,7 +1295,7 @@ var mis = function (text, maxRetries = 3) {
   }
 };
 var misSt = function (func, someArgs) {
-  console.log("boilerplate Help: line 1296")
+  console.log("boilerplate Help: line 1296");
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
   var numVarRnd = randNum;
@@ -2012,14 +2011,14 @@ var misSt = function (func, someArgs) {
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
-  // ? console.log("funcUno = " + typeof funcUno)
-  // : console.error("funcUno = " + typeof funcUno);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
-        // var uniqueCoArray = sheetCalc;
-        // var uniqueItemArray = itemCalc;
+// ? console.log("funcUno = " + typeof funcUno)
+// : console.error("funcUno = " + typeof funcUno);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// var uniqueCoArray = sheetCalc;
+// var uniqueItemArray = itemCalc;
 var isValidUrl = function (text) {
   // var protocol = "";
   // var hostname = "";

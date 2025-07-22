@@ -217,14 +217,14 @@ var contentApp = function (blob, argsObject) {
         .setMimeType(ContentService.MimeType.JSON)
         .getContent(),
     );
-  console.log("boilerplate render: line 220")
+    console.log("boilerplate render: line 220");
     if (argsObject) {
       const keys = Object.keys(argsObject);
       keys.forEach(function (key) {
         tmp[key] = argsObject[key];
       });
     }
-  console.log("boilerplate render: line 227")
+    console.log("boilerplate render: line 227");
     return tmp
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)

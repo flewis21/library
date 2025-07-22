@@ -170,9 +170,9 @@ const functionRegistry = {
 };
 
 // Set some global variables
-console.log("boilerplate autoParams: line 175")
+console.log("boilerplate autoParams: line 175");
 functionRegistry.initialize();
-console.log("boilerplate autoParams: line 177")
+console.log("boilerplate autoParams: line 177");
 functionRegistry.startProcessTimer();
 // globalThis.htmlArray = [
 //   `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
@@ -407,11 +407,7 @@ globalThis.arrDRnd = function () {
 //     return freqArray
 // })();
 globalThis.searchString = function () {
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.caller.name,
-  );
+  console.log(functionRegistry.time + "\n" + arguments.callee.caller.name);
   var arrDRnd = globalThis.arrDRnd();
   var arrD = globalThis.arrD();
   var newArr = [];
@@ -452,7 +448,7 @@ globalThis.searchString = function () {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
-  console.log("boilerplate autoParams: line 455")
+  console.log("boilerplate autoParams: line 455");
   console.log(
     "randomSubstance: \n( \0: " +
       0 +
