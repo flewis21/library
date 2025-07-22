@@ -170,7 +170,9 @@ const functionRegistry = {
 };
 
 // Set some global variables
+console.log("boilerplate autoParams: line 175")
 functionRegistry.initialize();
+console.log("boilerplate autoParams: line 177")
 functionRegistry.startProcessTimer();
 // globalThis.htmlArray = [
 //   `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
@@ -408,27 +410,7 @@ globalThis.searchString = function () {
   console.log(
     functionRegistry.time +
       "\n" +
-      arguments.callee.name +
-      "\n0 is !" +
-      !0 +
-      ", = " +
-      0 +
-      "\n6 is !" +
-      !6 +
-      ", = " +
-      6 +
-      "\narrDRnd is !" +
-      !arrDRnd +
-      ", = " +
-      arrDRnd +
-      "\narrD is !" +
-      !arrD +
-      ", = " +
-      arrD +
-      "\ntime is !" +
-      !functionRegistry.time +
-      ", = " +
-      functionRegistry.time,
+      arguments.callee.caller.name,
   );
   var arrDRnd = globalThis.arrDRnd();
   var arrD = globalThis.arrD();
@@ -470,6 +452,7 @@ globalThis.searchString = function () {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
+  console.log("boilerplate autoParams: line 455")
   console.log(
     "randomSubstance: \n( \0: " +
       0 +

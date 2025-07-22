@@ -229,6 +229,7 @@ var vidFactor = function (data, time) {
   return { vidArray: idArray };
 };
 var crmCalc = function (func) {
+  console.log("boilerplate Help: line 232")
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -262,6 +263,7 @@ var crmCalc = function (func) {
   return funFact;
 };
 var crmT = function (func) {
+  console.log("boilerplate Help: line 265")
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -365,12 +367,9 @@ var paramVals = function (funcInfo) {
   return misArgs;
 };
 var resolveParams = function (func, someArgs) {
+  console.log("boilerplate Help: line 368")
   var funcUno = decodeURIComponent(func);
-  // ? console.log("funcUno = " + typeof funcUno)
-  // : console.error("funcUno = " + typeof funcUno);
   var funcDos = decodeURIComponent(someArgs);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
   var numVarRnd = randNum(
     arguments.callee.caller.name || arguments.callee.name,
   );
@@ -391,8 +390,6 @@ var resolveParams = function (func, someArgs) {
       content.push(pro);
     }
   });
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
   if (argsX) {
     var allErrors = {};
     var fParams = gsFParams();
@@ -504,31 +501,6 @@ var resolveParams = function (func, someArgs) {
             args["func"] = result;
             resolvedArgs.push(args["func"]);
           }
-          // else if (
-          //   paramName === "searchString" ||
-          //   (paramName === null && declaredParamName === "searchString")
-          // ) {
-          //   args["searchString"] = substanceVegas(
-          //     0,
-          //     [
-          //       objectOfS(
-          //         ["parameter"],
-          //         [[["func", result]]],
-          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          //       ).parameter["func"],
-          //     ].toString().length,
-          //     [
-          //       objectOfS(
-          //         ["parameter"],
-          //         [[["func", result]]],
-          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-          //       ).parameter["func"],
-          //     ]
-          //       .toString()
-          //       .split(""),
-          //   ).substWord;
-          //   resolvedArgs.push(args["searchString"]);
-          // }
           else if (
             paramName === "varA" ||
             (paramName === null && declaredParamName === "varA")
@@ -707,6 +679,37 @@ var resolveParams = function (func, someArgs) {
   }
   return content;
 };
+  // ? console.log("funcUno = " + typeof funcUno)
+  // : console.error("funcUno = " + typeof funcUno);
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+          // else if (
+          //   paramName === "searchString" ||
+          //   (paramName === null && declaredParamName === "searchString")
+          // ) {
+          //   args["searchString"] = substanceVegas(
+          //     0,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ].toString().length,
+          //     [
+          //       objectOfS(
+          //         ["parameter"],
+          //         [[["func", result]]],
+          //         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+          //       ).parameter["func"],
+          //     ]
+          //       .toString()
+          //       .split(""),
+          //   ).substWord;
+          //   resolvedArgs.push(args["searchString"]);
+          // }
 var wwAccess = function (rName, rFunc, rArgs) {
   const Route = {};
   Route.path = function (route, rFunction) {
@@ -727,9 +730,6 @@ Route.path = function (route, callback) {
   return (Route[route] = callback);
 };
 var seoCapital = function (url) {
-  // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
-  // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
-  // const pong = table.map((ping)=>{return ping.substring(0)})
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
       <html id="seoCapital" lang="en">
@@ -855,7 +855,11 @@ var seoCapital = function (url) {
       }`);
   return html.evaluate().getContent();
 };
+  // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
+  // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
+  // const pong = table.map((ping)=>{return ping.substring(0)})
 var mis = function (text, maxRetries = 3) {
+  console.log("boilerolate Help: line 859")
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
@@ -1292,12 +1296,9 @@ var mis = function (text, maxRetries = 3) {
   }
 };
 var misSt = function (func, someArgs) {
+  console.log("boilerplate Help: line 1296")
   var funcUno = decodeURIComponent(func);
-  // ? console.log("funcUno = " + typeof funcUno)
-  // : console.error("funcUno = " + typeof funcUno);
   var funcDos = decodeURIComponent(someArgs);
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
   var numVarRnd = randNum;
   var argsX = [];
   var content = [];
@@ -1316,8 +1317,6 @@ var misSt = function (func, someArgs) {
       content.push(pro);
     }
   });
-  // ? console.log("funcDos = " + typeof funcDos)
-  // : console.error("funcDos = " + typeof funcDos);
   if (argsX) {
     var allErrors = {};
     var fParams = gsFParams();
@@ -1371,8 +1370,6 @@ var misSt = function (func, someArgs) {
           .toString()
           .split(" ");
         var allFolders = functionRegistry.getFolderList();
-        // var uniqueCoArray = sheetCalc;
-        // var uniqueItemArray = itemCalc;
         content.forEach((paramName, index) => {
           var declaredParamName = declaredParams[index]; // The actual declared parameter name (e.g., "e", "time", "url")
           var userProvidedValue = orderedArgs[index]; // This is the value that came from the user, or null if not mapped initially
@@ -2015,6 +2012,14 @@ var misSt = function (func, someArgs) {
   var argsObject = { func: argsX.toString(), args: cString, res: jsonData };
   return argsObject;
 };
+  // ? console.log("funcUno = " + typeof funcUno)
+  // : console.error("funcUno = " + typeof funcUno);
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+  // ? console.log("funcDos = " + typeof funcDos)
+  // : console.error("funcDos = " + typeof funcDos);
+        // var uniqueCoArray = sheetCalc;
+        // var uniqueItemArray = itemCalc;
 var isValidUrl = function (text) {
   // var protocol = "";
   // var hostname = "";
