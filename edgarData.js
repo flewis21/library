@@ -432,7 +432,7 @@ var oldSEC = function (rndTitle) {
   // console.log(Utilities.jsonStringify([titleMatches]))
   var coTable = matches
     .map((r) => {
-      return `<tr><td><a class="waves-effect waves-light btn" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCik}${encodeURIComponent(r[0]["cik"])}&owner=exclude" target="_blank">${r[0]["cik"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_top">${r[0]["title"]}</a></td></tr>`;
+      return `<tr><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCik}${encodeURIComponent(r[0]["cik"])}&owner=exclude" target="_blank">${r[0]["cik"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_top">${r[0]["title"]}</a></td></tr>`;
     })
     .toString()
     .replace(/,/g, "");
@@ -449,9 +449,9 @@ var oldSEC = function (rndTitle) {
       <table class="striped centered highlight amber responsive-table z-depth-5" style="width:100%">
         <thead>
           <tr style="justify-content: space-around;overflow: auto;border-radius: 50%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <th>Ticker</th>
-            <th>Company Identification Key</th>
-            <th>Company Name</th>
+            <th class="waves-effect scale-transition scale-out scale-in waves-light btn">Ticker</th>
+            <th class="waves-effect scale-transition scale-out scale-in waves-light btn">Company Identification Key</th>
+            <th class="waves-effect scale-transition scale-out scale-in waves-light btn">Company Name</th>
           </tr>
         </thead>
         <tbody id="epaData">
