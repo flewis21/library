@@ -1,5 +1,10 @@
 var driveManagerFilter = function (filterFiles) {
-  console.log("boilerplate fileManagers: line 2\ndriveManagerFilter(filterFiles: " + filterFiles + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 2\ndriveManagerFilter(filterFiles: " +
+      filterFiles +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -54,7 +59,9 @@ var driveManagerFilter = function (filterFiles) {
 };
 
 var driveForms = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -82,7 +89,9 @@ var driveForms = function () {
 };
 
 var driveFormsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -133,7 +142,9 @@ var driveFormsFilter = function (filterFiles) {
 };
 
 var driveSheets = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -163,7 +174,9 @@ var driveSheets = function () {
 };
 
 var driveSheetsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -216,7 +229,9 @@ var driveSheetsFilter = function (filterFiles) {
 };
 
 var driveWebForms = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -241,7 +256,9 @@ var driveWebForms = function () {
 };
 
 var driveWebFormsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -293,7 +310,9 @@ var driveWebFormsFilter = function (filterFiles) {
 };
 
 var driveVideoForms = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -318,7 +337,9 @@ var driveVideoForms = function () {
 };
 
 var driveVideoFormsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -370,7 +391,9 @@ var driveVideoFormsFilter = function (filterFiles) {
 };
 
 var driveDocBrowser = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   var files = DriveApp.searchFiles(
     'mimeType = "application/vnd.google-apps.document"',
   );
@@ -383,7 +406,9 @@ var driveDocBrowser = function () {
 };
 
 var driveDocForms = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -408,7 +433,9 @@ var driveDocForms = function () {
 };
 
 var driveDocFormsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -460,7 +487,9 @@ var driveDocFormsFilter = function (filterFiles) {
 };
 
 var drivePictForms = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
@@ -485,7 +514,9 @@ var drivePictForms = function () {
 };
 
 var drivePictFormsFilter = function (filterFiles) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -537,7 +568,9 @@ var drivePictFormsFilter = function (filterFiles) {
 };
 
 var driveUrls = function (fileX) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -750,7 +783,12 @@ var driveUrls = function (fileX) {
 // };
 
 var fileBrowser = function (initialFolder) {
-  console.log("boilerplate fileManagers: line 753\nfileBrowser(initialFolder: " + initialFolder + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 753\nfileBrowser(initialFolder: " +
+      initialFolder +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -798,7 +836,12 @@ var fileBrowser = function (initialFolder) {
 
   // Function to get files from a given folder
   var getFilesFromFolder = function (folderName) {
-  console.log("boilerplate fileManagers: line 801\ngetFilesFromFolder(folderName: " + folderName + ")\n " + arguments.callee.caller.name);
+    console.log(
+      "boilerplate fileManagers: line 801\ngetFilesFromFolder(folderName: " +
+        folderName +
+        ")\n " +
+        arguments.callee.caller.name,
+    );
     console.log(
       functionRegistry.time +
         "\ngetFilesFromFolder:\nSearching in: " +
@@ -972,13 +1015,17 @@ var fileBrowser = function (initialFolder) {
 };
 
 var fbTester = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   var res = fileBrowser("main");
   return res;
 };
 
 var fileFold = function (folderX, fileX, time) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
   var elapsedTime = functionRegistry.time;
   var fileFree = [];
@@ -1012,7 +1059,20 @@ var fileFold = function (folderX, fileX, time) {
 };
 
 var fileManager = function (fileX, folder, time, content, mimeType) {
-  console.log("boilerplate fileManagers: line 1015\nfileManager(fileX: " + fileX + ", folder: " + folder + ", time: " + time + ", content: " + content + ", mimeType: " + mimeType + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 1015\nfileManager(fileX: " +
+      fileX +
+      ", folder: " +
+      folder +
+      ", time: " +
+      time +
+      ", content: " +
+      content +
+      ", mimeType: " +
+      mimeType +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1074,7 +1134,9 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
 };
 
 var fileMatch = function (fileX, stringArray) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1111,7 +1173,16 @@ var fileMatch = function (fileX, stringArray) {
 };
 
 var fileMatchManager = function (folderX, fileX, time) {
-  console.log("boilerplate fileManagers: line 1114\nfileMatchManager(folderX: " + folderX + ", fileX: " + fileX + ", time: " + time + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 1114\nfileMatchManager(folderX: " +
+      folderX +
+      ", fileX: " +
+      fileX +
+      ", time: " +
+      time +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1196,7 +1267,14 @@ var fileMatchManager = function (folderX, fileX, time) {
 //   return fileTree}
 
 var folderIdGlobal = function (folderX, time) {
-  console.log("boilerplate fileManagers: line 1199\nfolderIdGlobal(folderX: " + folderX + ", time: " + time + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 1199\nfolderIdGlobal(folderX: " +
+      folderX +
+      ", time: " +
+      time +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1232,7 +1310,9 @@ var folderIdGlobal = function (folderX, time) {
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
 
 var folderMatch = function (folderX, stringArray) {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1273,7 +1353,12 @@ var folderMatch = function (folderX, stringArray) {
 };
 
 var furtFolder = function (folder) {
-  console.log("boilerplate fileManagers: line 1276\nfurtFolder(folder: " + folder + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 1276\nfurtFolder(folder: " +
+      folder +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1328,7 +1413,9 @@ var furtFolder = function (folder) {
 // if (glFolders.indexOf(folder) === -1) {folder}
 
 var rndUrls = function () {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
@@ -1354,7 +1441,9 @@ var rndUrls = function () {
 };
 
 function shareDrive() {
-  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var dApp = DriveApp;
   var folderIter = dApp.getFolders();
@@ -1378,7 +1467,16 @@ function shareDrive() {
 }
 
 var sheetsFileManager = function (fileX, folder, time) {
-  console.log("boilerplate fileManagers: line 1381\nsheetsFileManager(fileX: " + fileX + ", folder: " + folder + ", time: " + time + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate fileManagers: line 1381\nsheetsFileManager(fileX: " +
+      fileX +
+      ", folder: " +
+      folder +
+      ", time: " +
+      time +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +

@@ -198,7 +198,14 @@ var appList = function () {
 // </div>
 
 var contentApp = function (blob, argsObject) {
-  console.log("boilerplate render: line 201\ncontentApp(blob: " + blob + ", argsObject: " + argsObject + ")\n" + arguments.callee.caller.name);
+  console.log(
+    "boilerplate render: line 201\ncontentApp(blob: " +
+      blob +
+      ", argsObject: " +
+      argsObject +
+      ")\n" +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1179,7 +1186,16 @@ var renderFile = function (file, argsObject, title) {
 };
 
 var renderTemplate = function (blob, argsObject, title) {
-  console.log("boilerplate render: line 201\nrenderTemplate(blob: " + blob + ", argsObject: " + argsObject + ", title: " + title + ")\n" + arguments.callee.caller.name);
+  console.log(
+    "boilerplate render: line 201\nrenderTemplate(blob: " +
+      blob +
+      ", argsObject: " +
+      argsObject +
+      ", title: " +
+      title +
+      ")\n" +
+      arguments.callee.caller.name,
+  );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
