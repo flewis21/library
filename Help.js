@@ -923,8 +923,7 @@ var mis = function (text, maxRetries = 3) {
       text +
       ", maxRetries: " +
       maxRetries +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")\n ",
   );
   console.log("boilerolate Help: line 859");
   var validUrl = isValidUrl(text);
