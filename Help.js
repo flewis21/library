@@ -1,4 +1,5 @@
 var seoPastTime = function (searchString, time) {
+  console.log("boilerplate Help: line 2\nseoPastTime(searchString: " + searchString + ", time: " + time + ")\n " + arguments.callee.caller.name);
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -171,6 +172,7 @@ var seoPastTime = function (searchString, time) {
   }
 };
 var seoYoutube = function (searchString, time) {
+  console.log("boilerplate Help: line 175\nseoYoutube(searchString: " + searchString + ", time: " + time + ")\n " + arguments.callee.caller.name);
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -194,6 +196,7 @@ var seoYoutube = function (searchString, time) {
   return { myIdArr: idArray };
 };
 var vidFactor = function (data, time) {
+  console.log("boilerplate Help: line 199\nvidFactor(data: " + data + ", time: " + time + ")\n " + arguments.callee.caller.name);
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -229,7 +232,7 @@ var vidFactor = function (data, time) {
   return { vidArray: idArray };
 };
 var crmCalc = function (func) {
-  console.log("boilerplate Help: line 232");
+  console.log("boilerplate Help: line 232\ncrmCalc(func: " + func + ")\n " + arguments.callee.caller.name);
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -263,7 +266,7 @@ var crmCalc = function (func) {
   return funFact;
 };
 var crmT = function (func) {
-  console.log("boilerplate Help: line 265");
+  console.log("boilerplate Help: line 265\ncrmT(func: " + func + ")\n " + arguments.callee.caller.name);
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -297,6 +300,7 @@ var crmT = function (func) {
   return funFirst;
 };
 var testlt = function () {
+  console.log("boilerplate Help: line 305\ntestlt(: " +  + ")\n " + arguments.callee.caller.name);
   console.log(
     arguments.callee.caller.name +
       "\n*** Inside testlt() function. It has been called. ***",
@@ -320,6 +324,7 @@ var testlt = function () {
   // or it will also cause issues down the line.
 };
 var gsFiles = function () {
+  console.log("boilerplate Help: line 329\ngsFiles(: " +  + ")\n " + arguments.callee.caller.name);
   var gsFileList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -329,6 +334,7 @@ var gsFiles = function () {
   return gsFileList;
 };
 var gsFParams = function () {
+  console.log("boilerplate Help: line 339\ngsFParams(: " +  + ")\n " + arguments.callee.caller.name);
   var gsParamsList = [];
   var globalScope = this;
   for (var key in globalScope) {
@@ -354,6 +360,7 @@ var gsFParams = function () {
   return gsParamsList;
 };
 var paramVals = function (funcInfo) {
+  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
     return rndS.name === funcInfo;
@@ -367,7 +374,7 @@ var paramVals = function (funcInfo) {
   return misArgs;
 };
 var resolveParams = function (func, someArgs) {
-  console.log("boilerplate Help: line 368");
+  console.log("boilerplate Help: line 368\n(: " +  + ")\n " + arguments.callee.caller.name);
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
   var numVarRnd = randNum(
@@ -710,6 +717,7 @@ var resolveParams = function (func, someArgs) {
 //   resolvedArgs.push(args["searchString"]);
 // }
 var wwAccess = function (rName, rFunc, rArgs) {
+  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
   const Route = {};
   Route.path = function (route, rFunction) {
     Route[route] = rFunction;
@@ -729,6 +737,7 @@ Route.path = function (route, callback) {
   return (Route[route] = callback);
 };
 var seoCapital = function (url) {
+  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
       <html id="seoCapital" lang="en">
@@ -858,6 +867,7 @@ var seoCapital = function (url) {
 // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
 // const pong = table.map((ping)=>{return ping.substring(0)})
 var mis = function (text, maxRetries = 3) {
+  console.log("boilerplate Help: line 873\nmis(text: " + text + ", maxRetries: " + maxRetries + ")\n " + arguments.callee.caller.name);
   console.log("boilerolate Help: line 859");
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
@@ -1295,7 +1305,7 @@ var mis = function (text, maxRetries = 3) {
   }
 };
 var misSt = function (func, someArgs) {
-  console.log("boilerplate Help: line 1296");
+  console.log("boilerplate Help: line 1298\nmisSt(func: " + func + "someArgs: " + someArgs + ")\n " + arguments.callee.caller.name);
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
   var numVarRnd = randNum;
@@ -2020,6 +2030,7 @@ var misSt = function (func, someArgs) {
 // var uniqueCoArray = sheetCalc;
 // var uniqueItemArray = itemCalc;
 var isValidUrl = function (text) {
+  console.log("boilerplate Help: line 2036\nisValidUrl(text: " + text + ")\n " + arguments.callee.caller.name);
   // var protocol = "";
   // var hostname = "";
   var pathname = "";
@@ -2075,6 +2086,7 @@ var isValidUrl = function (text) {
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
+  console.log("boilerplate : line \n(: " +  + ")\n " + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +

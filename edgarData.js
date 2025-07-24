@@ -432,7 +432,7 @@ var oldSEC = function (rndTitle) {
   // console.log(Utilities.jsonStringify([titleMatches]))
   var coTable = matches
     .map((r) => {
-      return `<tr><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCik}${encodeURIComponent(r[0]["cik"])}&owner=exclude" target="_blank">${r[0]["cik"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_top">${r[0]["title"]}</a></td></tr>`;
+      return `<tr><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlTicker}${encodeURIComponent(r[0]["ticker"])}&page=1&sort_by=relevence&langcode=en" target="_blank">${r[0]["ticker"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCik}${encodeURIComponent(r[0]["cik"])}&owner=exclude" target="_blank">${r[0]["cik"]}</a></td><td><a class="waves-effect scale-transition scale-out scale-in waves-light" href="${urlCompany}${encodeURIComponent(r[0]["title"])}" target="_blank">${r[0]["title"]}</a></td></tr>`;
     })
     .toString()
     .replace(/,/g, "");

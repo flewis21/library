@@ -1,4 +1,5 @@
 function surveyPlayer(searchString, joinString) {
+  console.log("boilerplate surveyPlayer: line 2\nsurveyPlayer(searchString: " + searchString + ", joinString: " + joinString + ")\n " + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +

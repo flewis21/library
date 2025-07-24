@@ -198,6 +198,7 @@ var appList = function () {
 // </div>
 
 var contentApp = function (blob, argsObject) {
+  console.log("boilerplate render: line 201\ncontentApp(blob: " + blob + ", argsObject: " + argsObject + ")\n" + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +
@@ -217,14 +218,12 @@ var contentApp = function (blob, argsObject) {
         .setMimeType(ContentService.MimeType.JSON)
         .getContent(),
     );
-    console.log("boilerplate render: line 220");
     if (argsObject) {
       const keys = Object.keys(argsObject);
       keys.forEach(function (key) {
         tmp[key] = argsObject[key];
       });
     }
-    console.log("boilerplate render: line 227");
     return tmp
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
@@ -1180,6 +1179,7 @@ var renderFile = function (file, argsObject, title) {
 };
 
 var renderTemplate = function (blob, argsObject, title) {
+  console.log("boilerplate render: line 201\nrenderTemplate(blob: " + blob + ", argsObject: " + argsObject + ", title: " + title + ")\n" + arguments.callee.caller.name);
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
