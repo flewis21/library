@@ -1,3 +1,265 @@
+/**
+ * Creates a new Google Form with a random structure and content,
+ * leveraging available FormsApp properties and methods from the provided documentation.
+ *
+ * NOTE: Programmatic control over font styles and direct theme color
+ * setting (beyond the initial form creation) is NOT available via the FormsApp API.
+ * The form will use Google Forms' default theme or the last manually applied theme.
+ *
+ * @returns {string} The URL of the newly created random Google Form.
+ */
+function createRandomForm() {
+  // --- Configuration for randomness ---
+  const FORM_TITLES = [
+    "Random Survey", "Quick Feedback Form", "Daily Check-in",
+    "Mystery Questionnaire", "Event Registration", "Project Status Update",
+    "Abstract Data Collection", "Whimsical Inquiry", "Customer Poll",
+    "Service Evaluation", "Product Interest Form"
+  ];
+  const FORM_DESCRIPTIONS = [
+    "A randomly generated form to gather insights.",
+    "Please fill out this form at your leisure. Content is randomized.",
+    "Exploring the possibilities of programmatic form creation.",
+    "This form was created by an algorithm. Enjoy!",
+    "Your input helps us understand randomness better.",
+    "An automated inquiry for diverse data points.",
+    "Completely random, yet surprisingly functional."
+  ];
+  const QUESTION_WORDS = [
+    "Name", "Email", "Date", "Preference", "Opinion", "Favorite", "Quantity",
+    "Description", "Rating", "Contact", "Experience", "Level", "Choice",
+    "Details", "Location", "Time", "Duration", "Feedback"
+  ];
+  const CHOICE_WORDS = [
+    "Option A", "Choice B", "Value C", "Item D", "Selection E", "Yes", "No", "Maybe",
+    "Agree", "Disagree", "Red", "Blue", "Green", "Small", "Medium", "Large"
+  ];
+
+  const MIN_SECTIONS = 1;
+  const MAX_SECTIONS = 3;
+  const MIN_QUESTIONS_PER_SECTION = 2;
+  const MAX_QUESTIONS_PER_SECTION = 7;
+
+  // --- Create the Form ---
+  const formTitle = FORM_TITLES[Math.floor(Math.random() * FORM_TITLES.length)];
+  const form = FormApp.create(formTitle);
+  Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+
+  // --- Set Basic Form Properties ---
+  const formDescription = FORM_DESCRIPTIONS[Math.floor(Math.random() * FORM_DESCRIPTIONS.length)];
+  form.setDescription(formDescription);
+
+  // Randomly decide to collect email or not
+  form.setCollectEmail(Math.random() < 0.5);
+
+  // Randomly decide to show progress bar for multi-section forms
+  if (Math.random() < 0.7) {
+    form.setProgressBar(true); // Using setProgressBar as found in Form methods
+  }
+
+  // --- Add Sections and Questions ---
+  const numSections = Math.floor(Math.random() * (MAX_SECTIONS - MIN_SECTIONS + 1)) + MIN_SECTIONS;
+
+  for (let s = 0; s < numSections; s++) {
+    if (s > 0) { // Add page break for subsequent sections
+      form.addPageBreakItem()
+        .setTitle(`Section ${s + 1}: ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} Details`)
+        .setHelpText(`This is a random section for more ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} related questions.`);
+    }
+
+    const numQuestions = Math.floor(Math.random() * (MAX_QUESTIONS_PER_SECTION - MIN_QUESTIONS_PER_SECTION + 1)) + MIN_QUESTIONS_PER_SECTION;
+
+    for (let q = 0; q < numQuestions; q++) {
+      // All ItemTypes that have corresponding add...Item() methods and are not UNSUPPORTED
+      const itemTypes = [
+        FormApp.ItemType.TEXT,
+        FormApp.ItemType.PARAGRAPH_TEXT,
+        FormApp.ItemType.MULTIPLE_CHOICE,
+        FormApp.ItemType.CHECKBOX,
+        FormApp.ItemType.LIST,
+        FormApp.ItemType.DATE,
+        FormApp.ItemType.DATETIME,
+        FormApp.ItemType.DURATION,
+        FormApp.ItemType.TIME,
+        FormApp.ItemType.SCALE,
+        FormApp.ItemType.RATING,
+        FormApp.ItemType.GRID,
+        FormApp.ItemType.CHECKBOX_GRID,
+        FormApp.ItemType.SECTION_HEADER, // Can add section headers within sections
+        FormApp.ItemType.IMAGE,
+        FormApp.ItemType.VIDEO
+      ];
+      const randomType = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+
+      const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? '?' : ''}`;
+      const isRequired = Math.random() < 0.7; // 70% chance of being required
+
+      switch (randomType) {
+        case FormApp.ItemType.TEXT:
+          const textItem = form.addTextItem().setTitle(questionTitle + " (Short Text)");
+          if (isRequired) textItem.setRequired(true);
+          if (Math.random() < 0.4) { // Add random text/number validation
+            const validationType = Math.floor(Math.random() * 5); // More text validations
+            let validationBuilder = FormApp.createTextValidation();
+            switch (validationType) {
+              case 0: validationBuilder.requireNumber(); break;
+              case 1: validationBuilder.requireTextContainsPattern("test"); break;
+              case 2: validationBuilder.requireTextIsEmail(); break;
+              case 3: validationBuilder.requireTextIsUrl(); break;
+              case 4: validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); break;
+            }
+            textItem.setValidation(validationBuilder.withCustomMessage("Please follow the specific text rule.").build());
+          }
+          break;
+
+        case FormApp.ItemType.PARAGRAPH_TEXT:
+          const paragraphItem = form.addParagraphTextItem().setTitle(questionTitle + " (Long Text)");
+          if (isRequired) paragraphItem.setRequired(true);
+          if (Math.random() < 0.3) { // Add random length validation
+            // **** CORRECTED: Use createParagraphTextValidation() ****
+            paragraphItem.setValidation(FormApp.createParagraphTextValidation()
+              .requireTextLengthGreaterThanOrEqualTo(20)
+              .withCustomMessage("Please write at least 20 characters.")
+              .build());
+          }
+          break;
+
+        case FormApp.ItemType.MULTIPLE_CHOICE:
+          const mcItem = form.addMultipleChoiceItem().setTitle(questionTitle + " (Choose One)");
+          const mcChoices = [];
+          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) { // 2-4 choices
+            mcChoices.push(mcItem.createChoice(CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)]));
+          }
+          mcItem.setChoices(mcChoices);
+          if (isRequired) mcItem.setRequired(true);
+          if (Math.random() < 0.2) mcItem.showOtherOption(true); // Randomly add 'Other' option
+          break;
+
+        case FormApp.ItemType.CHECKBOX:
+          const cbItem = form.addCheckboxItem().setTitle(questionTitle + " (Select All That Apply)");
+          const cbChoices = [];
+          for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) { // 2-5 choices
+            cbChoices.push(CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)]);
+          }
+          cbItem.setChoices(cbChoices);
+          if (isRequired) cbItem.setRequired(true);
+          if (Math.random() < 0.3) { // Add random checkbox validation
+            cbItem.setValidation(FormApp.createCheckboxValidation()
+              .setHelpText("Select between 1 and 3 options.")
+              .requireSelectBetween(1, 3)
+              .build());
+          }
+          if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
+          break;
+
+        case FormApp.ItemType.LIST:
+          const listItem = form.addListItem().setTitle(questionTitle + " (Dropdown)");
+          const listChoices = [];
+          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) { // 2-4 choices
+            listChoices.push(listItem.createChoice(CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)]));
+          }
+          listItem.setChoices(listChoices);
+          if (isRequired) listItem.setRequired(true);
+          break;
+
+        case FormApp.ItemType.DATE:
+          const dateItem = form.addDateItem().setTitle(questionTitle + " (Date)");
+          if (isRequired) dateItem.setRequired(true);
+          dateItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
+          break;
+
+        case FormApp.ItemType.DATETIME:
+          const dateTimeItem = form.addDateTimeItem().setTitle(questionTitle + " (Date & Time)");
+          if (isRequired) dateTimeItem.setRequired(true);
+          dateTimeItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
+          break;
+
+        case FormApp.ItemType.DURATION:
+          const durationItem = form.addDurationItem().setTitle(questionTitle + " (Duration)");
+          if (isRequired) durationItem.setRequired(true);
+          break;
+
+        case FormApp.ItemType.TIME:
+          const timeItem = form.addTimeItem().setTitle(questionTitle + " (Time)");
+          if (isRequired) timeItem.setRequired(true);
+          break;
+
+        case FormApp.ItemType.SCALE:
+          const scaleItem = form.addScaleItem().setTitle(questionTitle + " (Rating Scale)");
+          scaleItem.setLowerBound(1);
+          scaleItem.setUpperBound(Math.floor(Math.random() * 5) + 5); // Scale of 1 to 5-9
+          if (Math.random() < 0.5) scaleItem.setLabels("Lowest", "Highest");
+          if (isRequired) scaleItem.setRequired(true);
+          break;
+
+        case FormApp.ItemType.RATING:
+          const ratingItem = form.addRatingItem().setTitle(questionTitle + " (Icon Rating)");
+          ratingItem.setRatingScaleLevel(Math.floor(Math.random() * 5) + 5); // Scale of 5-9
+          const ratingIcons = [
+            FormApp.RatingIconType.STAREnum,
+            FormApp.RatingIconType.HEARTEnum,
+            FormApp.RatingIconType.THUMB_UPEnum
+          ];
+          ratingItem.setRatingIcon(ratingIcons[Math.floor(Math.random() * ratingIcons.length)]);
+          if (isRequired) ratingItem.setRequired(true);
+          break;
+
+        case FormApp.ItemType.GRID:
+          const gridItem = form.addGridItem().setTitle(questionTitle + " (Radio Grid)");
+          gridItem.setRows(["Row 1", "Row 2", "Row 3"]);
+          gridItem.setColumns(["Disagree", "Neutral", "Agree"]);
+          if (isRequired) gridItem.setRequired(true);
+          if (Math.random() < 0.3) {
+            gridItem.setValidation(FormApp.createGridValidation().requireLimitOneResponsePerColumn().build());
+          }
+          break;
+
+        case FormApp.ItemType.CHECKBOX_GRID:
+          const checkboxGridItem = form.addCheckboxGridItem().setTitle(questionTitle + " (Checkbox Grid)");
+          checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
+          checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
+          if (isRequired) checkboxGridItem.setRequired(true);
+          if (Math.random() < 0.3) {
+            checkboxGridItem.setValidation(FormApp.createCheckboxGridValidation().requireLimitOneResponsePerColumn().build());
+          }
+          break;
+
+        case FormApp.ItemType.SECTION_HEADER:
+          const sectionHeaderItem = form.addSectionHeaderItem().setTitle(questionTitle + " (New Section)");
+          if (Math.random() < 0.7) {
+            sectionHeaderItem.setHelpText("This is a random section header for organization.");
+          }
+          break;
+
+        case FormApp.ItemType.IMAGE:
+          const imageItem = form.addImageItem().setTitle(questionTitle + " (Image)");
+          // Use a public image URL or provide a Blob
+          imageItem.setImage(DriveApp.getFileById('YOUR_PUBLIC_IMAGE_FILE_ID_HERE').getBlob()); // Replace with a real public image ID
+          // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+          // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+          imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+          const alignments = [FormApp.Alignment.LEFT, FormApp.Alignment.CENTER, FormApp.Alignment.RIGHT];
+          imageItem.setAlignment(alignments[Math.floor(Math.random() * alignments.length)]);
+          break;
+
+        case FormApp.ItemType.VIDEO:
+          const videoItem = form.addVideoItem().setTitle(questionTitle + " (Video)");
+          // Use a valid YouTube video ID
+          videoItem.setVideoUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ'); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
+          videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
+          const videoAlignments = [FormApp.Alignment.LEFT, FormApp.Alignment.CENTER, FormApp.Alignment.RIGHT];
+          videoItem.setAlignment(videoAlignments[Math.floor(Math.random() * videoAlignments.length)]);
+          break;
+      }
+    }
+  }
+
+  // --- Log and Return Form URL ---
+  const formUrl = form.getPublishedUrl();
+  Logger.log(`Random Form Created: ${formUrl}`);
+  return formUrl;
+}
+
 var dtls = function (callFunc, time) {
   var callFunc = testlt().name;
   var appList = [];

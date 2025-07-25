@@ -347,7 +347,7 @@ function handleRequest(e) {
 }
 
 function handleGetData() {
-  var rndFunc = testlt();
+  // var rndFunc = testlt();
   // var rndE = objectOfS(
   //   ["parameter"],
   //   [
@@ -659,11 +659,11 @@ function handleGetData() {
         }
         if (rawFuncResult.index.dataStr && !payLoad.index.dataStr) {
           // Only add if payLoad doesn't already have it
-          payLoad.link = rawFuncResult.link;
+          payLoad.dataData = rawFuncResult.index.dataStr;
         }
         if (rawFuncResult.index.url && !payLoad.index.url) {
           // Only add if payLoad doesn't already have it
-          payLoad.link = rawFuncResult.link;
+          payLoad.dataIndex = rawFuncResult.index.url;
         }
       }
     }
@@ -674,42 +674,42 @@ function handleGetData() {
     // Now, use the structured 'payLoad' to set the final content variables
     // (This part needs adjustments to handle the new "url" type)
     if (payLoad.type === "html") {
-      iframeSrc = payLoad.index; // Assign iframeSrc
-      appL = payLoad.data;
+      iframeSrc = payLoad.index || payLoad.dataIndex ; // Assign iframeSrc
+      appL = payLoad.data || payLoad.dataData;
       feed = `URL provided: ${payLoad.link}`;
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
-      iframeSrc = payLoad.data; // Assign the URL to iframeSrc
-      appL = `URL provided: ${payLoad.index}`;
+      iframeSrc = payLoad.data || payLoad.dataData; // Assign the URL to iframeSrc
+      appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
       finalFeedDivContent = `URL provided: ${payLoad.link}`;
     } else if (payLoad.type === "jsonData") {
-      iframeSrc = payLoad.index; // Assign iframeSrc
-      appL = `${JSON.stringify(payLoad.data, null, 2)}`;
+      iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
+      appL = `${JSON.stringify(payLoad.data || payLoad.dataData, null, 2)}`;
       feed = `URL provided: ${payLoad.link}`;
     } else if (payLoad.type === "text") {
-      iframeSrc = payLoad.index; // Assign iframeSrc
-      appL = payLoad.data;
+      iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
+      appL = payLoad.data || payLoad.dataData;
       feed = `URL provided: ${payLoad.link}`;
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
-        appL = payLoad.data.html || payLoad.data.app;
+        appL = payLoad.data.html || payLoad.data.app || payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
-        iframeSrc = payLoad.data.url || iframeSrc;
+        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
-        iframeSrc = payLoad.data.url;
-        appL = `URL provided: ${payLoad.index}`;
+        iframeSrc = payLoad.data.url || payLoad.dataIndex;
+        appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
         feed = `URL provided: ${payLoad.link}`;
       } else {
         // Default way to display a generic object: stringify it
-        iframeSrc = payLoad.index; // Assign iframeSrc
+        iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
         appL = `${payLoad}`;
         feed = `URL provided: ${payLoad.link}`;
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
-      feed = `Error: ${payLoad.message || payLoad.data || "Unknown error."}`;
+      feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);

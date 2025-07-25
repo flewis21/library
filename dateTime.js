@@ -17,6 +17,51 @@ function dateTime(date) {
       <meta name="dateTime" content="Boilerplate Date and Time Function">
       <meta name=viewport content="width=device-width, initial-scale=1">
       <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+      <style>
+      
+        /* This is the most likely culprit based on your computed styles */
+        /* Make the date numbers a dark color */
+        .datepicker-day-button {
+          color: #424242 !important; /* A dark gray. Using !important ensures it overrides Materialize defaults and your other styles. */
+        }
+
+        /* Consider other states for the datepicker buttons if needed */
+        /* Example: If today's date also disappears */
+        .datepicker-table td.is-today .datepicker-day-button {
+            color: #ff9800 !important; /* Example: orange for today's date */
+        }
+        /* Example: If selected dates' numbers disappear (often they should be white on a colored background) */
+        .datepicker-table td.is-selected .datepicker-day-button {
+            color: white !important; /* Keep white if the selected background is dark */
+        }
+
+        /*
+        IMPORTANT NOTE ON YOUR GLOBAL TABLE RESETS:
+        You have:
+        table, thead, tbody, tr, th, td {
+          all: unset !important;
+          display: block !important;
+        }
+        AND
+        th, td {
+          flex: 1 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          border: none !important;
+          vertical-align: top !important;
+          text-align: left !important;
+        }
+
+        While the "color" fix above should work, these extremely aggressive table resets
+        could cause other layout issues with the Materialize datepicker (which uses a table).
+        If you encounter further layout problems (e.g., misalignment of days, weird spacing),
+        you might need to make these table resets less global or more specific to *only* the tables
+        you intend to radically change (like your .receipt table),
+        and *not* apply them to the datepicker's internal table.
+        For now, apply the color fix first, as it's the direct solution to the numbers being invisible.
+        */
+
+      </style>
     </head>
     <body>
       <div class="container">
