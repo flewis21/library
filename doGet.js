@@ -674,7 +674,7 @@ function handleGetData() {
     // Now, use the structured 'payLoad' to set the final content variables
     // (This part needs adjustments to handle the new "url" type)
     if (payLoad.type === "html") {
-      iframeSrc = payLoad.index || payLoad.dataIndex ; // Assign iframeSrc
+      iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = `URL provided: ${payLoad.link}`;
     } else if (payLoad.type === "url") {

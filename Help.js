@@ -360,8 +360,7 @@ var testlt = function () {
 };
 var gsFiles = function () {
   console.log(
-    "boilerplate Help: line 329\ngsFiles(: )\n " +
-      arguments.callee.caller.name,
+    "boilerplate Help: line 329\ngsFiles(: )\n " + arguments.callee.caller.name,
   );
   var gsFileList = [];
   for (var key in globalThis) {
@@ -949,10 +948,12 @@ var mis = function (text, maxRetries = 3) {
         );
         if (typeof form === "object") {
           // fileManager(coData.rndTitle, "Forms")
-          Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+          Logger.log(
+            `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+          );
 
           // --- Set Basic Form Properties ---
-          
+
           // Randomly decide to collect email or not
           form.setCollectEmail(Math.random() < 0.5);
 
@@ -963,7 +964,6 @@ var mis = function (text, maxRetries = 3) {
 
           // --- Add Sections and Questions ---
 
-          
           form.addSectionHeaderItem().setTitle(earlyReturn);
           if (Math.random() < 0.7) {
             form.addTextItem().setTitle("Your Name").setRequired(true);
@@ -1051,7 +1051,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
 
       // --- Set Basic Form Properties ---
-      
+
       // Randomly decide to collect email or not
       form.setCollectEmail(Math.random() < 0.5);
 
@@ -1062,7 +1062,6 @@ var mis = function (text, maxRetries = 3) {
 
       // --- Add Sections and Questions ---
 
-      
       if (fx) {
         form
           .addSectionHeaderItem()
@@ -1074,10 +1073,7 @@ var mis = function (text, maxRetries = 3) {
       if (Math.random() < 0.7) {
         form.addTextItem().setTitle("Your Name").setRequired(true);
         form.addDateItem().setTitle("Birth Date").setRequired(true);
-        form
-          .addParagraphTextItem()
-          .setTitle("Your Message")
-          .setRequired(true);
+        form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       }
       form.setConfirmationMessage("Thanks for your feedback !!");
       var webAppObj = {
@@ -1125,10 +1121,12 @@ var mis = function (text, maxRetries = 3) {
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+        Logger.log(
+          `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+        );
 
         // --- Set Basic Form Properties ---
-        
+
         // Randomly decide to collect email or not
         form.setCollectEmail(Math.random() < 0.5);
 
@@ -1248,7 +1246,9 @@ var mis = function (text, maxRetries = 3) {
 
               if (typeof form === "object") {
                 // fileManager(coData.rndTitle, "Forms")
-                Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+                Logger.log(
+                  `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+                );
 
                 // --- Set Basic Form Properties ---
 
@@ -1261,7 +1261,7 @@ var mis = function (text, maxRetries = 3) {
                 }
 
                 // --- Add Sections and Questions ---
-  
+
                 form
                   .addSectionHeaderItem()
                   .setTitle("Redirect occurred\n" + htmlData);
@@ -1280,21 +1280,39 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Stock Price").setRequired(true);
-                  form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-                  form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Outstanding Shares")
+                    .setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Quarterly Earnings")
+                    .setRequired(true);
                 }
-                form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Annualized Net Income")
+                  .setRequired(false);
                 form.addTextItem().setTitle("Total Equity").setRequired(false);
-                form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Retained Earnings")
+                  .setRequired(false);
                 if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Cash & Marketable Securities")
                     .setRequired(true);
-                  form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Accounts Receivable")
+                    .setRequired(true);
                   form.addTextItem().setTitle("Inventories").setRequired(true);
                 }
-                form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Investments")
+                  .setRequired(false);
                 form.addTextItem().setTitle("Net PP&E").setRequired(false);
                 if (Math.random() < 0.7) {
                   form
@@ -1342,7 +1360,9 @@ var mis = function (text, maxRetries = 3) {
 
               if (typeof form === "object") {
                 // fileManager(coData.rndTitle, "Forms")
-                Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+                Logger.log(
+                  `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+                );
 
                 // --- Set Basic Form Properties ---
 
@@ -1355,7 +1375,7 @@ var mis = function (text, maxRetries = 3) {
                 }
 
                 // --- Add Sections and Questions ---
-                
+
                 form
                   .addSectionHeaderItem()
                   .setTitle("No redirect or other error\n" + htmlData);
@@ -1374,21 +1394,39 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Stock Price").setRequired(true);
-                  form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-                  form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Outstanding Shares")
+                    .setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Quarterly Earnings")
+                    .setRequired(true);
                 }
-                form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Annualized Net Income")
+                  .setRequired(false);
                 form.addTextItem().setTitle("Total Equity").setRequired(false);
-                form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Retained Earnings")
+                  .setRequired(false);
                 if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Cash & Marketable Securities")
                     .setRequired(true);
-                  form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+                  form
+                    .addTextItem()
+                    .setTitle("Accounts Receivable")
+                    .setRequired(true);
                   form.addTextItem().setTitle("Inventories").setRequired(true);
                 }
-                form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+                form
+                  .addTextItem()
+                  .setTitle("Long-term Investments")
+                  .setRequired(false);
                 form.addTextItem().setTitle("Net PP&E").setRequired(false);
                 if (Math.random() < 0.7) {
                   form
@@ -1469,7 +1507,7 @@ var misSt = function (func, someArgs) {
     var resCount = 0;
     argsX.forEach((result) => {
       // --- STEP 2: At the very beginning of the forEach loop ---
-      console.log('--- Inside argsX.forEach loop, BEFORE any other logic ---');
+      console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
       console.log('Current "result" (function name):', result);
       console.log('Value of "content" at start of this iteration:', content); // <-- This will show the problem.
 
