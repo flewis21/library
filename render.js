@@ -200,7 +200,7 @@ var appList = function () {
 var contentApp = function (blob, argsObject) {
   console.log(
     "boilerplate render: line 201\ncontentApp(blob: " +
-      blob.substring(0,9) +
+      blob.substring(0, 9) +
       "..., argsObject: " +
       JSON.stringify(argsObject) +
       ")\n" +
@@ -213,7 +213,7 @@ var contentApp = function (blob, argsObject) {
       "\nblob is !" +
       !blob +
       " = " +
-      blob.substring(0,9) +
+      blob.substring(0, 9) +
       "...\nargsObject is !" +
       !argsObject +
       " = " +
@@ -1188,7 +1188,7 @@ var renderFile = function (file, argsObject, title) {
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
     "boilerplate render: line 201\nrenderTemplate(blob: " +
-      blob.substring(0,9) +
+      blob.substring(0, 9) +
       "..., argsObject: " +
       JSON.stringify(argsObject) +
       ", title: " +

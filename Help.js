@@ -212,7 +212,7 @@ var seoYoutube = function (searchString, time) {
 var vidFactor = function (data, time) {
   console.log(
     "boilerplate Help: line 199\nvidFactor(data: " +
-      data.substring(0,9) +
+      data.substring(0, 9) +
       "..., time: " +
       time +
       ")\n " +
@@ -2238,431 +2238,588 @@ var mis = function (text, maxRetries = 3) {
 // var uniqueItemArray = itemCalc;
 
 var misSt = function (func, someArgs) {
-    console.log(
-        "boilerplate Help: line 1298\nmisSt(func: " +
-        func +
-        ", someArgs: " +
-        someArgs +
-        ")\n " +
-        arguments.callee.caller.name,
-    );
+  console.log(
+    "boilerplate Help: line 1298\nmisSt(func: " +
+      func +
+      ", someArgs: " +
+      someArgs +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
 
-    var funcUno = decodeURIComponent(func);
-    var funcDos = decodeURIComponent(someArgs);
-    var numVarRnd = randNum; // Assuming randNum is globally accessible
+  var funcUno = decodeURIComponent(func);
+  var funcDos = decodeURIComponent(someArgs);
+  var numVarRnd = randNum; // Assuming randNum is globally accessible
 
-    var argsX = [];    // Holds function names found
-    var initialContent = []; // Renamed to clearly indicate initial, raw arguments
+  var argsX = []; // Holds function names found
+  var initialContent = []; // Renamed to clearly indicate initial, raw arguments
 
-    var keys = [
-        funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
-            ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
-            : [funcUno],
-    ].toString().split(",");
+  var keys = [
+    funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
+      ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
+      : [funcUno],
+  ]
+    .toString()
+    .split(",");
 
-    keys.forEach((pro) => {
-        var bPro = crmT(pro); // Assuming crmT is globally accessible
-        if (bPro >= 0) {
-            argsX.push(gsFiles()[bPro]); // Assuming gsFiles is globally accessible
-        } else {
-            initialContent.push(pro); // Store raw arguments here
-        }
-    });
+  keys.forEach((pro) => {
+    var bPro = crmT(pro); // Assuming crmT is globally accessible
+    if (bPro >= 0) {
+      argsX.push(gsFiles()[bPro]); // Assuming gsFiles is globally accessible
+    } else {
+      initialContent.push(pro); // Store raw arguments here
+    }
+  });
 
-    let holdResolvedArgsX = [];
+  let holdResolvedArgsX = [];
 
-    if (argsX.length > 0) { // Check if there are functions to process
-        var allErrors = {};
-        var fParams = gsFParams(); // Assuming gsFParams is globally accessible
-        var resCount = 0;
+  if (argsX.length > 0) {
+    // Check if there are functions to process
+    var allErrors = {};
+    var fParams = gsFParams(); // Assuming gsFParams is globally accessible
+    var resCount = 0;
 
-        argsX.forEach((result) => { // 'result' is the function name (e.g., 'renderFile')
-            console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
-            console.log('Current "result" (function name):', result);
-            console.log('Value of "initialContent" at start of this iteration:', initialContent);
+    argsX.forEach((result) => {
+      // 'result' is the function name (e.g., 'renderFile')
+      console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
+      console.log('Current "result" (function name):', result);
+      console.log(
+        'Value of "initialContent" at start of this iteration:',
+        initialContent,
+      );
 
-            console.log("argsX result " + resCount + ": " + result);
-            var args = {}; // Arguments for the current function call
-            var resolvedArgs = []; // Resolved arguments array for the current function
-            var missingParams = []; // Parameters that couldn't be resolved
+      console.log("argsX result " + resCount + ": " + result);
+      var args = {}; // Arguments for the current function call
+      var resolvedArgs = []; // Resolved arguments array for the current function
+      var missingParams = []; // Parameters that couldn't be resolved
 
-            var searchString = fParams.find((fP) => fP.name === result);
-            var declaredParams = []; // Initialize here for wider scope
+      var searchString = fParams.find((fP) => fP.name === result);
+      var declaredParams = []; // Initialize here for wider scope
 
-            if (searchString && searchString.parameters) {
-                declaredParams = searchString.parameters;
-                console.log(
-                    "Current initialContent: " +
-                    initialContent +
-                    "\nDeclared parameters for " + result + ": " +
-                    declaredParams,
+      if (searchString && searchString.parameters) {
+        declaredParams = searchString.parameters;
+        console.log(
+          "Current initialContent: " +
+            initialContent +
+            "\nDeclared parameters for " +
+            result +
+            ": " +
+            declaredParams,
+        );
+
+        // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
+        // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
+        var orderedArgsForCurrentFunc = [];
+        var contentMap = {}; // Reset contentMap for each function
+
+        // First, populate contentMap with any named matches (if initialContent is not just positional)
+        // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
+        var htmlArray = [
+          `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
+        ]
+          .toString()
+          .split(" ");
+        var allFolders = functionRegistry.getFolderList();
+
+        initialContent.forEach((item) => {
+          console.log(
+            "DEBUG: boilerplate Help: line 2309\nmisSt\norderedArgsForCurrentFunc:",
+            orderedArgsForCurrentFunc,
+          );
+          declaredParams.forEach((declaredParam) => {
+            // More precise matching for named arguments or specific values
+            if (item === declaredParam) {
+              // Exact match for a declared parameter name
+              contentMap[declaredParam] = item;
+            }
+            // If you also want to match if the item *contains* the declared param, be very careful:
+            // else if (typeof item === 'string' && item.includes(declaredParam)) {
+            //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
+            //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
+            //    contentMap[declaredParam] = item;
+            // }
+          });
+        });
+
+        // Then, build orderedArgsForCurrentFunc based on declaredParams order
+        // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
+        declaredParams.forEach((paramName, index) => {
+          console.log(
+            "DEBUG: boilerplate Help: line 2327\nmisSt\norderedArgsForCurrentFunc:",
+            orderedArgsForCurrentFunc,
+          );
+          // Try to get a positional argument first from initialContent
+          if (
+            initialContent[index] !== undefined &&
+            initialContent[index] !== null
+          ) {
+            orderedArgsForCurrentFunc.push(initialContent[index]);
+          }
+          // Fallback to contentMap if a named argument was found, and not already set positionally
+          else if (contentMap.hasOwnProperty(paramName)) {
+            orderedArgsForCurrentFunc.push(contentMap[paramName]);
+          }
+          // Otherwise, the parameter is missing for now
+          else {
+            orderedArgsForCurrentFunc.push(null);
+          }
+        });
+
+        console.log(
+          "Ordered arguments for " + result + ": " + orderedArgsForCurrentFunc,
+        );
+
+        // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
+        // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
+        declaredParams.forEach((declaredParamName, index) => {
+          console.log(
+            "DEBUG: boilerplate Help: line 2347\nmisSt\norderedArgsForCurrentFunc:",
+            orderedArgsForCurrentFunc,
+          );
+          let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
+
+          console.log(
+            'Value of "' + declaredParamName + '" (userProvidedValue):',
+            userProvidedValue,
+          );
+
+          // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
+          // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
+          if (declaredParamName === "e") {
+            args["e"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result],
+                        ["args", JSON.stringify(initialContent)],
+                        ["action", "getData"],
+                        ["file", "uiAccess"],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+            resolvedArgs.push(JSON.stringify(args["e"]));
+          } else if (declaredParamName === "time") {
+            args["time"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : functionRegistry.time;
+            resolvedArgs.push(args["time"]);
+          } else if (declaredParamName === "data") {
+            if (
+              userProvidedValue !== null &&
+              userProvidedValue !== undefined &&
+              Array.isArray(userProvidedValue)
+            ) {
+              args["data"] = userProvidedValue;
+            } else {
+              var rndE = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", "mis"],
+                    ["args", [result, ...initialContent]],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+              var funcUnoMis = rndE.parameter["func"];
+              var funcDosMis = rndE.parameter["args"];
+              var payLoad = null; // Initialize payLoad
+
+              // Ensure globalThis[funcUnoMis] exists before calling
+              if (funcUnoMis === "misSt") {
+                // Prevent infinite recursion
+                console.warn(
+                  "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
                 );
+                payLoad = "Recursive call prevented.";
+              } else if (typeof globalThis[funcUnoMis] === "function") {
+                payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+              } else {
+                console.warn(
+                  "Function for 'data' parameter not found:",
+                  funcUnoMis,
+                );
+                payLoad = "Function not found for data generation.";
+              }
 
-                // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
-                // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
-                var orderedArgsForCurrentFunc = [];
-                var contentMap = {}; // Reset contentMap for each function
-                
-                // First, populate contentMap with any named matches (if initialContent is not just positional)
-                // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-                var htmlArray = [
-                  `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
-                ]
-                  .toString()
-                  .split(" ");
-                var allFolders = functionRegistry.getFolderList();
-                
-                initialContent.forEach((item) => {
-                  console.log("DEBUG: boilerplate Help: line 2309\nmisSt\norderedArgsForCurrentFunc:", orderedArgsForCurrentFunc);
-                    declaredParams.forEach((declaredParam) => {
-                        // More precise matching for named arguments or specific values
-                        if (item === declaredParam) { // Exact match for a declared parameter name
-                             contentMap[declaredParam] = item;
+              args["data"] = { message: payLoad, timestamp: new Date() };
+            }
+            resolvedArgs.push(args["data"]);
+          } else if (declaredParamName === "func") {
+            args["func"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : result;
+            resolvedArgs.push(args["func"]);
+          } else if (declaredParamName === "varA") {
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["varA"] = userProvidedValue;
+            } else {
+              // Simplified random function call logic
+              let randomFuncResult = null;
+              const randomFuncName = searchString; // Use searchString to derive function name if needed
+              if (
+                typeof randomFuncName === "string" &&
+                typeof globalThis[randomFuncName] === "function"
+              ) {
+                randomFuncResult = globalThis[randomFuncName]();
+              } else if (
+                typeof randomFuncName === "object" &&
+                randomFuncName !== null &&
+                randomFuncName.name &&
+                typeof globalThis[randomFuncName.name] === "function"
+              ) {
+                randomFuncResult = globalThis[randomFuncName.name].apply(
+                  this,
+                  randomFuncName.parameters || [],
+                );
+              }
+              args["varA"] = randomFuncResult;
+            }
+            resolvedArgs.push(args["varA"]);
+          } else if (declaredParamName === "epaAUrl") {
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args["epaAUrl"] = userProvidedValue;
+            } else {
+              console.log("DEBUG: Generating epaAUrl...");
+              var data = coUtility(product)[0]; // Assuming 'product' is accessible
+              console.log("DEBUG: data from coUtility:", data);
+
+              let generatedUrl = null;
+              if (data && typeof data.rndTitle !== "undefined") {
+                var test = productNamePartial(
+                  [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                    Math.floor(
+                      Math.random() *
+                        Math.floor(
+                          [data.rndTitle.replace(/,./g, "")]
+                            .toString()
+                            .split(" ").length,
+                        ),
+                    )
+                  ],
+                );
+                console.log("DEBUG: test from productNamePartial:", test);
+
+                if (test && typeof test.eparegno !== "undefined") {
+                  var test2 = productRegNo(test.eparegno);
+                  console.log("DEBUG: test2 from productRegNo:", test2);
+
+                  if (
+                    test2 &&
+                    test2.hasOwnProperty("active_ingredients") &&
+                    test2.active_ingredients.length > 0
+                  ) {
+                    var uniqueData = [];
+                    test2.active_ingredients.forEach((ing) => {
+                      if (ing.active_ing) {
+                        var pIName = productIngName(ing.active_ing);
+                        if (typeof pIName !== "undefined") {
+                          uniqueData.push(
+                            pIName["items"] || pIName["first"] || pIName,
+                          );
                         }
-                        // If you also want to match if the item *contains* the declared param, be very careful:
-                        // else if (typeof item === 'string' && item.includes(declaredParam)) {
-                        //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
-                        //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
-                        //    contentMap[declaredParam] = item;
-                        // }
+                      }
                     });
-                });
 
-                // Then, build orderedArgsForCurrentFunc based on declaredParams order
-                // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
-                declaredParams.forEach((paramName, index) => {
-                  console.log("DEBUG: boilerplate Help: line 2327\nmisSt\norderedArgsForCurrentFunc:", orderedArgsForCurrentFunc);
-                    // Try to get a positional argument first from initialContent
-                    if (initialContent[index] !== undefined && initialContent[index] !== null) {
-                        orderedArgsForCurrentFunc.push(initialContent[index]);
-                    } 
-                    // Fallback to contentMap if a named argument was found, and not already set positionally
-                    else if (contentMap.hasOwnProperty(paramName)) {
-                        orderedArgsForCurrentFunc.push(contentMap[paramName]);
-                    } 
-                    // Otherwise, the parameter is missing for now
-                    else {
-                        orderedArgsForCurrentFunc.push(null);
+                    if (uniqueData.length > 0) {
+                      // Flatten uniqueData if it's an array of arrays
+                      let flatUniqueData = [];
+                      uniqueData.forEach((arr) => {
+                        if (Array.isArray(arr)) {
+                          flatUniqueData.push(...arr);
+                        } else {
+                          flatUniqueData.push(arr);
+                        }
+                      });
+
+                      const matches = flatUniqueData.filter(
+                        (ac) =>
+                          ac &&
+                          ac.eparegnumber &&
+                          String(ac.eparegnumber)
+                            .toLowerCase()
+                            .includes(String(test2.eparegno).toLowerCase()),
+                      );
+
+                      if (matches.length > 0) {
+                        var randomKey = Math.floor(
+                          Math.random() * matches.length,
+                        );
+                        var isDataKey = matches[randomKey];
+                        var randomCasNumber = isDataKey["casnumber"];
+
+                        console.log(
+                          "DEBUG: randomCasNumber generated:",
+                          randomCasNumber,
+                        );
+                        if (randomCasNumber) {
+                          generatedUrl =
+                            "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+                            randomCasNumber +
+                            "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                        }
+                      }
                     }
-                });
-
-                console.log("Ordered arguments for " + result + ": " + orderedArgsForCurrentFunc);
-
-                // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
-                // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
-                declaredParams.forEach((declaredParamName, index) => {
-                  console.log("DEBUG: boilerplate Help: line 2347\nmisSt\norderedArgsForCurrentFunc:", orderedArgsForCurrentFunc);
-                    let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
-
-                    console.log('Value of "' + declaredParamName + '" (userProvidedValue):', userProvidedValue);
-
-                    // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
-                    // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-                    if (declaredParamName === "e") {
-                        args["e"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : objectOfS(["parameter"], [[["func", result], ["args", JSON.stringify(initialContent)], ["action", "getData"], ["file", "uiAccess"],],], functionRegistry.time,);
-                        resolvedArgs.push(JSON.stringify(args["e"]));
-                    } else if (declaredParamName === "time") {
-                        args["time"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : functionRegistry.time;
-                        resolvedArgs.push(args["time"]);
-                    } else if (declaredParamName === "data") {
-                        if (userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)) {
-                            args["data"] = userProvidedValue;
-                        } else {
-                            var rndE = objectOfS(["parameter"], [[["func", "mis"], ["args", [result, ...initialContent]],],], functionRegistry.time,);
-                            var funcUnoMis = rndE.parameter["func"];
-                            var funcDosMis = rndE.parameter["args"];
-                            var payLoad = null; // Initialize payLoad
-
-                            // Ensure globalThis[funcUnoMis] exists before calling
-                            if (funcUnoMis === "misSt") { // Prevent infinite recursion
-                                console.warn("Attempted to call misSt recursively from 'data' parameter generation. Skipping.");
-                                payLoad = "Recursive call prevented.";
-                            } else if (typeof globalThis[funcUnoMis] === "function") {
-                                payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
-                            } else {
-                                console.warn("Function for 'data' parameter not found:", funcUnoMis);
-                                payLoad = "Function not found for data generation.";
-                            }
-                            
-                            args["data"] = { message: payLoad, timestamp: new Date(), };
-                        }
-                        resolvedArgs.push(args["data"]);
-                    } else if (declaredParamName === "func") {
-                        args["func"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : result;
-                        resolvedArgs.push(args["func"]);
-                    } else if (declaredParamName === "varA") {
-                        if (userProvidedValue !== null && userProvidedValue !== undefined) {
-                            args["varA"] = userProvidedValue;
-                        } else {
-                            // Simplified random function call logic
-                            let randomFuncResult = null;
-                            const randomFuncName = searchString; // Use searchString to derive function name if needed
-                            if (typeof randomFuncName === "string" && typeof globalThis[randomFuncName] === "function") {
-                                randomFuncResult = globalThis[randomFuncName]();
-                            } else if (typeof randomFuncName === "object" && randomFuncName !== null && randomFuncName.name && typeof globalThis[randomFuncName.name] === "function") {
-                                randomFuncResult = globalThis[randomFuncName.name].apply(this, randomFuncName.parameters || []);
-                            }
-                            args["varA"] = randomFuncResult;
-                        }
-                        resolvedArgs.push(args["varA"]);
-                    } else if (declaredParamName === "epaAUrl") {
-                        if (userProvidedValue !== null && userProvidedValue !== undefined) {
-                            args["epaAUrl"] = userProvidedValue;
-                        } else {
-                            console.log("DEBUG: Generating epaAUrl...");
-                            var data = coUtility(product)[0]; // Assuming 'product' is accessible
-                            console.log("DEBUG: data from coUtility:", data);
-
-                            let generatedUrl = null;
-                            if (data && typeof data.rndTitle !== "undefined") {
-                                var test = productNamePartial([data.rndTitle.replace(/,./g, "")].toString().split(" ")[
-                                    Math.floor(Math.random() * Math.floor([data.rndTitle.replace(/,./g, "")].toString().split(" ").length))
-                                ]);
-                                console.log("DEBUG: test from productNamePartial:", test);
-
-                                if (test && typeof test.eparegno !== "undefined") {
-                                    var test2 = productRegNo(test.eparegno);
-                                    console.log("DEBUG: test2 from productRegNo:", test2);
-
-                                    if (test2 && test2.hasOwnProperty("active_ingredients") && test2.active_ingredients.length > 0) {
-                                        var uniqueData = [];
-                                        test2.active_ingredients.forEach(ing => {
-                                            if (ing.active_ing) {
-                                                var pIName = productIngName(ing.active_ing);
-                                                if (typeof pIName !== "undefined") {
-                                                    uniqueData.push(pIName["items"] || pIName["first"] || pIName);
-                                                }
-                                            }
-                                        });
-
-                                        if (uniqueData.length > 0) {
-                                            // Flatten uniqueData if it's an array of arrays
-                                            let flatUniqueData = [];
-                                            uniqueData.forEach(arr => {
-                                                if (Array.isArray(arr)) {
-                                                    flatUniqueData.push(...arr);
-                                                } else {
-                                                    flatUniqueData.push(arr);
-                                                }
-                                            });
-
-                                            const matches = flatUniqueData.filter(ac =>
-                                                ac && ac.eparegnumber &&
-                                                String(ac.eparegnumber).toLowerCase().includes(String(test2.eparegno).toLowerCase())
-                                            );
-                                            
-                                            if (matches.length > 0) {
-                                                var randomKey = Math.floor(Math.random() * matches.length);
-                                                var isDataKey = matches[randomKey];
-                                                var randomCasNumber = isDataKey["casnumber"];
-
-                                                console.log("DEBUG: randomCasNumber generated:", randomCasNumber);
-                                                if (randomCasNumber) {
-                                                    generatedUrl = "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" + randomCasNumber + "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            args["epaAUrl"] = generatedUrl; // Assign the generated URL (or null if not found)
-                            console.log("DEBUG: Final epaAUrl for args:", args["epaAUrl"]);
-                        }
-                        resolvedArgs.push(args["epaAUrl"]);
-                    } else if (declaredParamName === "url" || declaredParamName === "companyNameUrl") {
-                        if (userProvidedValue !== null && userProvidedValue !== undefined && isValidUrl(userProvidedValue).hostname) {
-                            args[declaredParamName] = userProvidedValue;
-                        } else {
-                            // Assuming functionRegistry.gTree and fileBrowser are accessible
-                            var folder = functionRegistry.getFolderList()[numVarRnd];
-                            args[declaredParamName] = fileBrowser(folder).url;
-                        }
-                        resolvedArgs.push(args[declaredParamName]);
-                    } else if (declaredParamName === "object") {
-                        args["object"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : JSON.stringify({});
-                        resolvedArgs.push(args["object"]);
-                    } else if (declaredParamName === "file") {
-                        var rndPage = htmlArray[Math.floor(Math.random() * htmlArray.length)];
-                        args["file"] = userProvidedValue !== null && userProvidedValue !== undefined && /<[a-z][\s\S]*>/i.test(userProvidedValue)
-                            ? userProvidedValue
-                            : rndPage;
-                        resolvedArgs.push(args["file"]);
-                    } else if (declaredParamName === "fileX") {
-                        var folderX = functionRegistry.getFolderList()[numVarRnd()];
-                        var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
-                        let fileXName = "undefined";
-                        if (folderRoot.hasNext) {
-                            var fileBulk = folderRoot.next().getFiles();
-                            const fileNames = [];
-                            if (fileBulk.hasNext()) {
-                                while (fileBulk.hasNext()) {
-                                    var fileUrl = fileBulk.next();
-                                    fileNames.push(fileUrl.getName());
-                                }
-                                if (fileNames.length > 0) {
-                                    fileXName = fileNames[Math.floor(Math.random() * fileNames.length)];
-                                }
-                            }
-                        }
-                        args["fileX"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : fileXName;
-                        resolvedArgs.push(args["fileX"]);
-                    } else if (declaredParamName === "folderX" || declaredParamName === "folder") {
-                        args[declaredParamName] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : allFolders[numVarRnd]; // allFolders should be defined or passed
-                        resolvedArgs.push(args[declaredParamName]);
-                    } else if (declaredParamName === "numIndex" || declaredParamName === "infinitum") {
-                        args[declaredParamName] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : numVarRnd;
-                        resolvedArgs.push(args[declaredParamName]);
-                    } else if (declaredParamName === "itemName") {
-                        var rndItemIndex = Math.floor(Math.random() * Math.floor(globalThis.uniqueItemArray().length));
-                        args["itemName"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : globalThis.uniqueItemArray()[rndItemIndex].Description;
-                        resolvedArgs.push(args["itemName"]);
-                    } else if (["tunPlay", "searchString", "rndKey", "search"].includes(declaredParamName)) {
-                        var rndCoIndex = Math.floor(Math.random() * Math.floor(globalThis.uniqueCoArray().length));
-                        var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
-                        args[declaredParamName] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : tiParam;
-                        resolvedArgs.push(args[declaredParamName]);
-                    } else if (declaredParamName === "stringArray") {
-                        args["stringArray"] = userProvidedValue !== null && userProvidedValue !== undefined
-                            ? userProvidedValue
-                            : appSort(numVarRnd); // Assuming appSort is accessible
-                        resolvedArgs.push(args["stringArray"]);
-                    } else if (declaredParamName === "argsObject") {
-                        var rawVar = mis("VVar"); // Assuming 'mis' is accessible
-                        args["argsObject"] = userProvidedValue !== null && userProvidedValue !== undefined && Array.isArray(userProvidedValue)
-                            ? userProvidedValue
-                            : rawVar.app["myVar"];
-                        resolvedArgs.push(args["argsObject"]);
-                    } else {
-                        // Generic handler for other declared parameters not covered by specific logic
-                        if (userProvidedValue !== null && userProvidedValue !== undefined) {
-                            args[declaredParamName] = userProvidedValue;
-                        } else {
-                            missingParams.push(declaredParamName);
-                            args[declaredParamName] = null; // Assign null, but mark as missing
-                        }
-                        resolvedArgs.push(args[declaredParamName]);
-                    }
-                }); // End of declaredParams.forEach
-
-                if (missingParams.length === 0) {
-                    // No need to reassign 'content' here. It should remain the initial input.
-                    // The 'args' and 'resolvedArgs' are the output for the current function.
-                } else {
-                    allErrors[result] = `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
-                    console.error(allErrors[result]);
+                  }
                 }
-            } else {
-                console.warn("No declared parameters found for function:", result);
+              }
+              args["epaAUrl"] = generatedUrl; // Assign the generated URL (or null if not found)
+              console.log("DEBUG: Final epaAUrl for args:", args["epaAUrl"]);
             }
-
-            console.log("Resolved arguments for " + result + ":", args);
-            console.log("Resolved parameters Array for " + result + ":", resolvedArgs);
-            resCount++;
-
-            holdResolvedArgsX.push(resolvedArgs)
-
-            // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
-            // For now, it's scoped to each iteration.
-        }); // End of argsX.forEach
-
-        var errorKeys = Object.keys(allErrors);
-        if (errorKeys.length > 0) {
-            return allErrors;
-        }
-    } else {
-        console.log("No functions found to call in argsX.");
-    }
-
-    // --- Final Execution and Return ---
-    // The previous structure was applying 'content' to the called functions.
-    // Now, 'initialContent' holds the original args, and 'resolvedArgs' (from the loop) holds the processed args per function.
-    // You need to decide how to pass arguments to the actual function call.
-    // If argsX has one function, you'd likely pass `resolvedArgs` from that iteration.
-    // If argsX has multiple functions, you'll need to store `resolvedArgs` for each function in an array.
-
-    // This section needs careful review based on how you intend to use `args` and `resolvedArgs`
-    // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
-
-    var finalResultData = null; // To store the output of the function call(s)
-    if (argsX.length > 0) {
-        if (argsX.length === 1) {
-            var funcToCall = argsX[0];
-            // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
-            // might not be correct if `argsX` has multiple functions.
-            // Best to save the resolved args from inside the loop to a map/array.
-            // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
-            // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
-            const lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
-
-            if (typeof globalThis[funcToCall] === "function") {
-                try {
-                    finalResultData = globalThis[funcToCall].apply(this, lastResolvedArgs);
-                    console.log(`typeof ${typeof finalResultData}: finalResultData (from direct call)`);
-                } catch (e) {
-                    console.error(`Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`);
-                    finalResultData = `Error calling function: ${e.toString()}`;
+            resolvedArgs.push(args["epaAUrl"]);
+          } else if (
+            declaredParamName === "url" ||
+            declaredParamName === "companyNameUrl"
+          ) {
+            if (
+              userProvidedValue !== null &&
+              userProvidedValue !== undefined &&
+              isValidUrl(userProvidedValue).hostname
+            ) {
+              args[declaredParamName] = userProvidedValue;
+            } else {
+              // Assuming functionRegistry.gTree and fileBrowser are accessible
+              var folder = functionRegistry.getFolderList()[numVarRnd];
+              args[declaredParamName] = fileBrowser(folder).url;
+            }
+            resolvedArgs.push(args[declaredParamName]);
+          } else if (declaredParamName === "object") {
+            args["object"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : JSON.stringify({});
+            resolvedArgs.push(args["object"]);
+          } else if (declaredParamName === "file") {
+            var rndPage =
+              htmlArray[Math.floor(Math.random() * htmlArray.length)];
+            args["file"] =
+              userProvidedValue !== null &&
+              userProvidedValue !== undefined &&
+              /<[a-z][\s\S]*>/i.test(userProvidedValue)
+                ? userProvidedValue
+                : rndPage;
+            resolvedArgs.push(args["file"]);
+          } else if (declaredParamName === "fileX") {
+            var folderX = functionRegistry.getFolderList()[numVarRnd()];
+            var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
+            let fileXName = "undefined";
+            if (folderRoot.hasNext) {
+              var fileBulk = folderRoot.next().getFiles();
+              const fileNames = [];
+              if (fileBulk.hasNext()) {
+                while (fileBulk.hasNext()) {
+                  var fileUrl = fileBulk.next();
+                  fileNames.push(fileUrl.getName());
                 }
-            } else {
-                console.error("Function not found:", funcToCall);
-                finalResultData = `Function not found: ${funcToCall}`;
+                if (fileNames.length > 0) {
+                  fileXName =
+                    fileNames[Math.floor(Math.random() * fileNames.length)];
+                }
+              }
             }
-        } else { // Multiple functions in argsX
-             finalResultData = [];
-             argsX.forEach((funcName, index) => {
-                 // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
-                 // For now, this part assumes `resolvedArgs` would be globally available or stored.
-                 // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
-                 // For simplicity, let's assume if there are multiple, they all get the initialContent (or the last resolvedArgs).
-                 // This is where a Map or Array of objects would be useful: `[{funcName: 'f1', args: ['a','b']}, {funcName: 'f2', args: ['c','d']}]`
-                 // For this example, let's assume you intend to pass the *initial* raw arguments to all of them if multiple.
-                 // You'll need to decide on the correct arguments to pass for each function in a multi-function scenario.
+            args["fileX"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : fileXName;
+            resolvedArgs.push(args["fileX"]);
+          } else if (
+            declaredParamName === "folderX" ||
+            declaredParamName === "folder"
+          ) {
+            args[declaredParamName] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : allFolders[numVarRnd]; // allFolders should be defined or passed
+            resolvedArgs.push(args[declaredParamName]);
+          } else if (
+            declaredParamName === "numIndex" ||
+            declaredParamName === "infinitum"
+          ) {
+            args[declaredParamName] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : numVarRnd;
+            resolvedArgs.push(args[declaredParamName]);
+          } else if (declaredParamName === "itemName") {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(globalThis.uniqueItemArray().length),
+            );
+            args["itemName"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : globalThis.uniqueItemArray()[rndItemIndex].Description;
+            resolvedArgs.push(args["itemName"]);
+          } else if (
+            ["tunPlay", "searchString", "rndKey", "search"].includes(
+              declaredParamName,
+            )
+          ) {
+            var rndCoIndex = Math.floor(
+              Math.random() * Math.floor(globalThis.uniqueCoArray().length),
+            );
+            var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
+            args[declaredParamName] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : tiParam;
+            resolvedArgs.push(args[declaredParamName]);
+          } else if (declaredParamName === "stringArray") {
+            args["stringArray"] =
+              userProvidedValue !== null && userProvidedValue !== undefined
+                ? userProvidedValue
+                : appSort(numVarRnd); // Assuming appSort is accessible
+            resolvedArgs.push(args["stringArray"]);
+          } else if (declaredParamName === "argsObject") {
+            var rawVar = mis("VVar"); // Assuming 'mis' is accessible
+            args["argsObject"] =
+              userProvidedValue !== null &&
+              userProvidedValue !== undefined &&
+              Array.isArray(userProvidedValue)
+                ? userProvidedValue
+                : rawVar.app["myVar"];
+            resolvedArgs.push(args["argsObject"]);
+          } else {
+            // Generic handler for other declared parameters not covered by specific logic
+            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              args[declaredParamName] = userProvidedValue;
+            } else {
+              missingParams.push(declaredParamName);
+              args[declaredParamName] = null; // Assign null, but mark as missing
+            }
+            resolvedArgs.push(args[declaredParamName]);
+          }
+        }); // End of declaredParams.forEach
 
-                 if (typeof globalThis[funcName] === "function") {
-                     try {
-                         // Pass initialContent or a specifically resolved arg for THIS funcName
-                         var resultForFunc = globalThis[funcName].apply(this, initialContent); // Using initialContent for simplicity for now
-                         finalResultData.push({ [funcName]: resultForFunc });
-                     } catch (e) {
-                         console.error(`Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`);
-                         finalResultData.push({ [funcName]: `Error calling function: ${e.toString()}` });
-                     }
-                 } else {
-                     console.error("Function not found:", funcName);
-                     finalResultData.push({ [funcName]: `Function not found: ${funcName}` });
-                 }
-             });
-             console.log(`typeof ${typeof finalResultData} finalResultData (array of results)`);
+        if (missingParams.length === 0) {
+          // No need to reassign 'content' here. It should remain the initial input.
+          // The 'args' and 'resolvedArgs' are the output for the current function.
+        } else {
+          allErrors[result] =
+            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+          console.error(allErrors[result]);
         }
-    } else {
-        console.log("No function to call: Skipping .apply(" + initialContent + ")");
-        finalResultData = initialContent;
-        console.log(`typeof ${typeof finalResultData} finalResultData`);
-    }
+      } else {
+        console.warn("No declared parameters found for function:", result);
+      }
 
-    var argsObject = {
-        func: argsX.toString(), // Consider joining with something like ', ' for readability
-        args: initialContent.toString().replace(/,/g, " "), // This is the original raw args
-        res: finalResultData, // The actual result of the function call(s)
-    };
-    return argsObject;
+      console.log("Resolved arguments for " + result + ":", args);
+      console.log(
+        "Resolved parameters Array for " + result + ":",
+        resolvedArgs,
+      );
+      resCount++;
+
+      holdResolvedArgsX.push(resolvedArgs);
+
+      // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
+      // For now, it's scoped to each iteration.
+    }); // End of argsX.forEach
+
+    var errorKeys = Object.keys(allErrors);
+    if (errorKeys.length > 0) {
+      return allErrors;
+    }
+  } else {
+    console.log("No functions found to call in argsX.");
+  }
+
+  // --- Final Execution and Return ---
+  // The previous structure was applying 'content' to the called functions.
+  // Now, 'initialContent' holds the original args, and 'resolvedArgs' (from the loop) holds the processed args per function.
+  // You need to decide how to pass arguments to the actual function call.
+  // If argsX has one function, you'd likely pass `resolvedArgs` from that iteration.
+  // If argsX has multiple functions, you'll need to store `resolvedArgs` for each function in an array.
+
+  // This section needs careful review based on how you intend to use `args` and `resolvedArgs`
+  // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
+
+  var finalResultData = null; // To store the output of the function call(s)
+  if (argsX.length > 0) {
+    if (argsX.length === 1) {
+      var funcToCall = argsX[0];
+      // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
+      // might not be correct if `argsX` has multiple functions.
+      // Best to save the resolved args from inside the loop to a map/array.
+      // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
+      // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
+      const lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
+
+      if (typeof globalThis[funcToCall] === "function") {
+        try {
+          finalResultData = globalThis[funcToCall].apply(
+            this,
+            lastResolvedArgs,
+          );
+          console.log(
+            `typeof ${typeof finalResultData}: finalResultData (from direct call)`,
+          );
+        } catch (e) {
+          console.error(
+            `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
+          );
+          finalResultData = `Error calling function: ${e.toString()}`;
+        }
+      } else {
+        console.error("Function not found:", funcToCall);
+        finalResultData = `Function not found: ${funcToCall}`;
+      }
+    } else {
+      // Multiple functions in argsX
+      finalResultData = [];
+      argsX.forEach((funcName, index) => {
+        // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
+        // For now, this part assumes `resolvedArgs` would be globally available or stored.
+        // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
+        // For simplicity, let's assume if there are multiple, they all get the initialContent (or the last resolvedArgs).
+        // This is where a Map or Array of objects would be useful: `[{funcName: 'f1', args: ['a','b']}, {funcName: 'f2', args: ['c','d']}]`
+        // For this example, let's assume you intend to pass the *initial* raw arguments to all of them if multiple.
+        // You'll need to decide on the correct arguments to pass for each function in a multi-function scenario.
+
+        if (typeof globalThis[funcName] === "function") {
+          try {
+            // Pass initialContent or a specifically resolved arg for THIS funcName
+            var resultForFunc = globalThis[funcName].apply(
+              this,
+              initialContent,
+            ); // Using initialContent for simplicity for now
+            finalResultData.push({ [funcName]: resultForFunc });
+          } catch (e) {
+            console.error(
+              `Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`,
+            );
+            finalResultData.push({
+              [funcName]: `Error calling function: ${e.toString()}`,
+            });
+          }
+        } else {
+          console.error("Function not found:", funcName);
+          finalResultData.push({
+            [funcName]: `Function not found: ${funcName}`,
+          });
+        }
+      });
+      console.log(
+        `typeof ${typeof finalResultData} finalResultData (array of results)`,
+      );
+    }
+  } else {
+    console.log("No function to call: Skipping .apply(" + initialContent + ")");
+    finalResultData = initialContent;
+    console.log(`typeof ${typeof finalResultData} finalResultData`);
+  }
+
+  var argsObject = {
+    func: argsX.toString(), // Consider joining with something like ', ' for readability
+    args: initialContent.toString().replace(/,/g, " "), // This is the original raw args
+    res: finalResultData, // The actual result of the function call(s)
+  };
+  return argsObject;
 };
 
 var isValidUrl = function (text) {
