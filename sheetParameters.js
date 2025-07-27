@@ -673,8 +673,8 @@ var mapValues = function (data, index) {
       "\ndata is !" +
       !data +
       ", = " +
-      data +
-      "\nindex is !" +
+      data[0] +
+      "...\nindex is !" +
       !index +
       ", = " +
       index,

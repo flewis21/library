@@ -200,9 +200,9 @@ var appList = function () {
 var contentApp = function (blob, argsObject) {
   console.log(
     "boilerplate render: line 201\ncontentApp(blob: " +
-      blob +
-      ", argsObject: " +
-      argsObject +
+      blob.substring(0,9) +
+      "..., argsObject: " +
+      JSON.stringify(argsObject) +
       ")\n" +
       arguments.callee.caller.name,
   );
@@ -213,8 +213,8 @@ var contentApp = function (blob, argsObject) {
       "\nblob is !" +
       !blob +
       " = " +
-      blob +
-      "\nargsObject is !" +
+      blob.substring(0,9) +
+      "...\nargsObject is !" +
       !argsObject +
       " = " +
       JSON.stringify(argsObject),
@@ -758,7 +758,7 @@ var renderFile = function (file, argsObject, title) {
       "\nargsObject is !" +
       !argsObject +
       " = " +
-      argsObject +
+      JSON.stringify(argsObject) +
       "\ntitle is !" +
       !title +
       " = " +
@@ -1188,9 +1188,9 @@ var renderFile = function (file, argsObject, title) {
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
     "boilerplate render: line 201\nrenderTemplate(blob: " +
-      blob +
-      ", argsObject: " +
-      argsObject +
+      blob.substring(0,9) +
+      "..., argsObject: " +
+      JSON.stringify(argsObject) +
       ", title: " +
       title +
       ")\n" +

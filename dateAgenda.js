@@ -219,7 +219,7 @@ var dateModel = function (days) {
       "\ndays is !" +
       !days +
       ", = " +
-      days,
+      days[0],
   );
   var uniqueDays = [];
   if (days) {

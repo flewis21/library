@@ -123,8 +123,8 @@ var covArrays = function (object, time) {
       "\nobject is !" +
       !object +
       ", = " +
-      object +
-      "\ntime is !" +
+      JSON.stringify(object[0]) +
+      "...\ntime is !" +
       !time +
       ", = " +
       time,

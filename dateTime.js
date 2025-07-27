@@ -35,6 +35,50 @@ function dateTime(date) {
             color: white !important; /* Keep white if the selected background is dark */
         }
 
+
+        /* --- SPECIFIC OVERRIDES FOR MATERIALIZE DATEPICKER --- */
+
+        .datepicker-container table {
+          /* Re-establish standard table display */
+          display: table !important;
+          width: 100% !important; /* Ensure it takes full width of its container */
+          border-collapse: collapse !important; /* Standard table styling */
+        }
+
+        .datepicker-container thead {
+          display: table-header-group !important;
+        }
+
+        .datepicker-container tbody {
+          display: table-row-group !important;
+        }
+
+        .datepicker-container tr {
+          display: table-row !important;
+        }
+
+        .datepicker-container th,
+        .datepicker-container td {
+          /* Re-establish table cell display */
+          display: table-cell !important;
+          /* Undo flex and reset padding/margin/border that your global rules removed */
+          flex: none !important; /* Crucial to undo flex: 1 */
+          padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */
+          margin: 0 !important;
+          border: none !important;
+          vertical-align: middle !important; /* Standard for cells */
+          text-align: center !important; /* Days of week and numbers are typically centered */
+        }
+
+        /* Also ensure the color fix is here with high specificity */
+        .datepicker-container .datepicker-day-button {
+          color: #424242 !important;
+        }
+
+        /* You may need to inspect Materialize's default CSS to fine-tune padding, line-height, etc.,
+          as "all: unset" also removes these. This is why Strategy 1 is preferred. */
+          
+
         /*
         IMPORTANT NOTE ON YOUR GLOBAL TABLE RESETS:
         You have:
