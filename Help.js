@@ -2281,6 +2281,7 @@ var misSt = function (func, someArgs) {
 
     argsX.forEach((result) => {
       // 'result' is the function name (e.g., 'renderFile')
+      // --- STEP 2: At the very beginning of the forEach loop ---
       console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
       console.log('Current "result" (function name):', result);
       console.log(
