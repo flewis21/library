@@ -101,8 +101,8 @@ var seoPastTime = function (searchString, time) {
       sorFndOrd.sort((a, b) => {
         while (a !== b && fndOrd.indexOf(a) === -1) {
           if (a.localeCompare(b) === -1) {
-            fndOrd.push(a); 
-          } 
+            fndOrd.push(a);
+          }
         }
         while (a === b && fndOrd.indexOf(a) === -1) {
           fndOrd.push(a);
