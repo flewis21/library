@@ -801,63 +801,76 @@ var crmGWI = function (fx) {
       const calculationStatusSpan = document.getElementById('calculationStatus');
 
       if (calculateCostsBtn && delAddrInput && pickAddrInput && labInput && gasInput && totalInput && delTimeInput && calculationStatusSpan) {
-          calculateCostsBtn.addEventListener('click', () => {
-              const deliveryAddress = delAddrInput.value.trim();
-              const pickupAddress = pickAddrInput.value.trim();
-              const travelTimeMinutes = parseFloat(delTimeInput.value.trim());
+        calculateCostsBtn.addEventListener('click', () => {
+            const deliveryAddress = delAddrInput.value.trim();
+            const pickupAddress = pickAddrInput.value.trim();
+            const travelTimeMinutes = parseFloat(delTimeInput.value.trim());
 
-              // --- Configuration (these should match your server-side values for consistency) ---
-              const COST_PER_MINUTE_LABOR = 1.25; // Example: $1.25 per minute for labor
-              const COST_PER_MILE_GAS = 0.50; // This will be tricky if not using distance directly
+            // --- Configuration (these should match your server-side values for consistency) ---
+            const COST_PER_MINUTE_LABOR = 1.25; // Example: $1.25 per minute for labor
+            const COST_PER_MILE_GAS = 0.50; // This will be tricky if not using distance directly
 
 
-              if (!deliveryAddress || !pickupAddress) {
-                  alert('Please enter both Delivery and Pickup Addresses to calculate costs.');
-                  return;
-              }
+            if (!deliveryAddress || !pickupAddress) {
+                alert('Please enter both Delivery and Pickup Addresses to calculate costs.');
+                return;
+            }
 
-              if (isNaN(travelTimeMinutes) || travelTimeMinutes < 0) {
-                  alert('Please enter a valid positive number for Delivery Time.');
-                  delTimeInput.value = ''; // Clear invalid input
-                  return;
-              }
+            if (isNaN(travelTimeMinutes) || travelTimeMinutes < 0) {
+                alert('Please enter a valid positive number for Delivery Time.');
+                delTimeInput.value = ''; // Clear invalid input
+                return;
+            }
 
-              calculateCostsBtn.disabled = true; // Disable button during calculation
-              calculationStatusSpan.textContent = 'Calculating...';
+            calculateCostsBtn.disabled = true; // Disable button during calculation
+            calculationStatusSpan.textContent = 'Calculating...';
 
-              serverside('calculateTravelCosts', [deliveryAddress, pickupAddress])
-                  .then(results => {
-              
-                      // Since gas cost is per mile, and we only have time, we can either:
-                      // 1. Omit gas calculation for manual time input, or
-                      // 2. Estimate distance from time (e.g., average speed)
-                      // For simplicity here, we'll make gas cost proportional to time for manual input,
-                      // or you could choose to leave it to manual entry.
-                      const distanceMult = travelTimeMinutes / 15
-                      const ESTIMATED_AVG_SPEED_MPH = 30; // Example average speed
-                      const estimatedDistanceMiles = (travelTimeMinutes / 60) * ESTIMATED_AVG_SPEED_MPH; // Convert minutes to hours
-                                        
-                      const laborCost =  results.labor * distanceMult;
-                      const gasCost = results.gas * distanceMult; // Still based on estimated distance for gas
-                      const totalCost = laborCost + gasCost;
-                      const totalTravelTimeMinutes = results.travelTimeMinutes * distanceMult
+            serverside('calculateTravelCosts', [deliveryAddress, pickupAddress])
+              .then((response) => { 
+                // Rename 'results' to 'response' or 'payload' to avoid confusion
+                // Access the actual array from the 'data' property
+                let results = {};
+                if (response && response.type === "object") {
+                  results = response.data;
+                } else {
+                  console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+                  // Fallback to empty array if the structure is not as expected
+                  results = {};
+                }//mod the array
+          
+                // Since gas cost is per mile, and we only have time, we can either:
+                // 1. Omit gas calculation for manual time input, or
+                // 2. Estimate distance from time (e.g., average speed)
+                // For simplicity here, we'll make gas cost proportional to time for manual input,
+                // or you could choose to leave it to manual entry.
+                const distanceMult = travelTimeMinutes / 15
+                const ESTIMATED_AVG_SPEED_MPH = 30; // Example average speed
+                const estimatedDistanceMiles = (travelTimeMinutes / 60) * ESTIMATED_AVG_SPEED_MPH; // Convert minutes to hours
+                                  
+                const laborCost =  results.labor * distanceMult;
+                const laborCostStyle = laborCost.toFixed(2);
+                const gasCost = results.gas * distanceMult; // Still based on estimated distance for gas
+                const gasCostStyle = gasCost.toFixed(2);
+                const totalCost = laborCost + gasCost;
+                const totalCostStyle = totalCost.toFixed(2);
+                const totalTravelTimeMinutes = results.travelTimeMinutes * distanceMult;
 
-                      labInput.value = laborCost.toFixed(2);
-                      gasInput.value = gasCost.toFixed(2);
-                      totalInput.value = totalCost.toFixed(2);
-                      delTimeInput.value = totalTravelTimeMinutes; // Populate delivery time with travel duration
-                      calculationStatusSpan.textContent = 'Done!';
-                      console.log('Calculation Results:', results);
-                  })
-                  .catch(error => {
-                      console.error('Error during cost calculation:', error);
-                      calculationStatusSpan.textContent = 'Error: ' + error.message;
-                      alert('Could not calculate costs: ' + error.message);
-                  })
-                  .finally(() => {
-                      calculateCostsBtn.disabled = false; // Re-enable button
-                      setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
-                  });
+                labInput.value = laborCostStyle
+                gasInput.value = gasCostStyle
+                totalInput.value = totalCostStyle
+                delTimeInput.value = totalTravelTimeMinutes; // Populate delivery time with travel duration
+                calculationStatusSpan.textContent = 'Done!';
+                console.log('Calculation Results:', results);
+              })
+              .catch(error => {
+                  console.error('Error during cost calculation:', error);
+                  calculationStatusSpan.textContent = 'Error: ' + error.message;
+                  alert('Could not calculate costs: ' + error.message);
+              })
+              .finally(() => {
+                  calculateCostsBtn.disabled = false; // Re-enable button
+                  setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
+              });
           });
       } else {
           console.error("One or more elements for cost calculation not found.");
@@ -865,16 +878,25 @@ var crmGWI = function (fx) {
 
 
       serverside('busyDates', [])
-      .then((disabledDays) => {
-      //mod the array
-      let datePicker = document.getElementById('date');
-      M.Datepicker.init(datePicker, {
-      defaultDate: "<?!= dateDefault ?>", 
-      setDefaultDate: true, 
-      minDate: new Date(), 
-      disableDayFn: 
-        function(day) {
-          return disabledDays.indexOf(day.valueOf()) > -1;}})})
+      .then((response) => { 
+        // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+        // Access the actual array from the 'data' property
+        let disabledDays = [];
+        if (response && response.type === "object" && Array.isArray(response.data)) {
+          disabledDays = response.data;
+        } else {
+          console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+          // Fallback to empty array if the structure is not as expected
+          disabledDays = [];
+        }//mod the array
+        let datePicker = document.getElementById('date');
+        M.Datepicker.init(datePicker, {
+        defaultDate: "<?!= dateDefault ?>", 
+        setDefaultDate: true, 
+        minDate: new Date(), 
+        disableDayFn: 
+          function(day) {
+            return disabledDays.indexOf(day.valueOf()) > -1;}})})
       .catch((er) => {
         alert(er)})
       </script>

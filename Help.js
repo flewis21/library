@@ -23,7 +23,8 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
   }
-  while (typeof fndOrd !== "object") {
+  let fndOrd = [];
+  while (fndOrd.length === 0) {
     var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
     var sorFndOrd = uniqueVid.filter((vidObject) => {
       var elaspeTime = functionRegistry.time;
@@ -88,6 +89,7 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf('"origin-tri') === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
+        vidObject.indexOf("r.offsetHei") === -1 &&
         vidObject.indexOf(",") === -1
       ) {
         return vidObject;
@@ -96,29 +98,17 @@ var seoPastTime = function (searchString, time) {
     var i = 0;
     var l = sorFndOrd.length;
     for (i, l; i < l; i++) {
-      var fndOrd = [];
       sorFndOrd.sort((a, b) => {
         while (a !== b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
-            return;
-          }
-          fndOrd.push(a);
+          if (a.localeCompare(b) === -1) {
+            fndOrd.push(a); 
+          } 
         }
         while (a === b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
-            return;
-          }
           fndOrd.push(a);
         }
         while (b !== a && fndOrd.indexOf(b) === -1) {
-          if (fndOrd.indexOf(b) > -1) {
-            return;
-          }
-          fndOrd.push(b);
-          while (b === a && fndOrd.indexOf(b) === -1) {
-            if (fndOrd.indexOf(b) > -1) {
-              return;
-            }
+          if (a.localeCompare(b) === 1) {
             fndOrd.push(b);
           }
         }
@@ -179,14 +169,14 @@ var seoPastTime = function (searchString, time) {
   }
 };
 var seoYoutube = function (searchString, time) {
-  console.log(
-    "boilerplate Help: line 175\nseoYoutube(searchString: " +
-      searchString +
-      ", time: " +
-      time +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
+  // console.log(
+  //   "boilerplate Help: line 175\nseoYoutube(searchString: " +
+  //     searchString +
+  //     ", time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -210,14 +200,14 @@ var seoYoutube = function (searchString, time) {
   return { myIdArr: idArray };
 };
 var vidFactor = function (data, time) {
-  console.log(
-    "boilerplate Help: line 199\nvidFactor(data: " +
-      data.substring(0, 9) +
-      "..., time: " +
-      time +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
+  // console.log(
+  //   "boilerplate Help: line 199\nvidFactor(data: " +
+  //     data.substring(0, 9) +
+  //     "..., time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -2281,7 +2271,6 @@ var misSt = function (func, someArgs) {
 
     argsX.forEach((result) => {
       // 'result' is the function name (e.g., 'renderFile')
-      // --- STEP 2: At the very beginning of the forEach loop ---
       console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
       console.log('Current "result" (function name):', result);
       console.log(
