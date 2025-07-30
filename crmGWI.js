@@ -1047,12 +1047,16 @@ function acceptQuote(formDataJson) {
   try {
     if (!formDataJson) {
       formData = JSON.parse(
-        convertToObjects([[arguments.callee.name]], ["name"], functionRegistry.time),
+        convertToObjects(
+          [[arguments.callee.name]],
+          ["name"],
+          functionRegistry.time,
+        ),
       )[0];
-      console.log('Fake formData for quote acceptance:', formData);
+      console.log("Fake formData for quote acceptance:", formData);
     } else {
       formData = JSON.parse(formDataJson);
-      console.log('Received formData for quote acceptance:', formData);
+      console.log("Received formData for quote acceptance:", formData);
     }
     // Get form data from the request
     var arrayData = covArrays(formData);
@@ -1069,30 +1073,43 @@ function acceptQuote(formDataJson) {
       timestamp: new Date(),
     };
     const name = dataName.message.info["delAddr"];
-    const rawSpreadSheet = spreadSheetCreate(name, name, colArray, arrayData, start)
-    console.log("SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ", rawSpreadSheet.myFileX)
+    const rawSpreadSheet = spreadSheetCreate(
+      name,
+      name,
+      colArray,
+      arrayData,
+      start,
+    );
+    console.log(
+      "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
+      rawSpreadSheet.myFileX,
+    );
     const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
 
     // --- Your Logic Here ---
 
     // Example 1: Update a Google Sheet (assuming you have a spreadsheet ID)
-    const ssId = rawSpreadSheet.myFileXId || 'YOUR_SPREADSHEET_ID_HERE'; // <--- IMPORTANT: Replace with your actual Spreadsheet ID
-    const sheetName = ss.getSheetName() || 'Accepted Quotes'; // Or your main data sheet
+    const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE"; // <--- IMPORTANT: Replace with your actual Spreadsheet ID
+    const sheetName = ss.getSheetName() || "Accepted Quotes"; // Or your main data sheet
     const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
 
     if (!sheet) {
-      throw new Error(`Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`);
+      throw new Error(
+        `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
+      );
     }
 
     // Append a new row with the accepted quote data
     // You'll need to map your formData keys to sheet columns
-    const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    const headerRow = sheet
+      .getRange(1, 1, 1, sheet.getLastColumn())
+      .getValues()[0];
     const newRow = [];
 
     // Example mapping: populate newRow based on headerRow and formData
     // This is a robust way to ensure data goes into correct columns
-    headerRow.forEach(header => {
-      const key = header.toLowerCase().replace(/[^a-z0-9]/g, ''); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+    headerRow.forEach((header) => {
+      const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
       if (formData.hasOwnProperty(key)) {
         newRow.push(formData[key]);
       } else {
@@ -1103,7 +1120,7 @@ function acceptQuote(formDataJson) {
         } else if (header === "Status") {
           newRow.push("Quote Accepted");
         } else {
-          newRow.push(''); // Empty for unmapped columns
+          newRow.push(""); // Empty for unmapped columns
         }
       }
     });
@@ -1118,7 +1135,7 @@ function acceptQuote(formDataJson) {
     // newRow.push(formData.total);
 
     sheet.appendRow(newRow);
-    console.log('Quote data appended to sheet:', sheetName);
+    console.log("Quote data appended to sheet:", sheetName);
 
     // Example 2: Generate a PDF Invoice (requires Google Drive integration)
     // This is more complex and would involve creating a Google Doc/Sheet template,
@@ -1139,21 +1156,20 @@ function acceptQuote(formDataJson) {
     // console.log('Email confirmation sent.');
 
     return "Quote Accepted Successfully!"; // Return a success message or a URL for redirection
-
   } catch (error) {
-    console.error('Error in acceptQuote:', error);
+    console.error("Error in acceptQuote:", error);
     // It's good practice to re-throw or return an error object so the client-side catch block works
-    throw new Error('Failed to process quote acceptance: ' + error.message);
+    throw new Error("Failed to process quote acceptance: " + error.message);
   }
 }
 
 // You'll also need to ensure 'runBoilerplate' is defined, likely in your main Code.gs file
 // For example:
 function runBoilerplate(funcName, args) {
-  if (typeof this[funcName] === 'function') {
+  if (typeof this[funcName] === "function") {
     return this[funcName].apply(this, args);
   } else {
-    throw new Error('Function ' + funcName + ' not found.');
+    throw new Error("Function " + funcName + " not found.");
   }
 }
 

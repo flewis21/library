@@ -101,8 +101,8 @@ var seoPastTime = function (searchString, time) {
       sorFndOrd.sort((a, b) => {
         while (a !== b && fndOrd.indexOf(a) === -1) {
           if (a.localeCompare(b) === -1) {
-            fndOrd.push(a); 
-          } 
+            fndOrd.push(a);
+          }
         }
         while (a === b && fndOrd.indexOf(a) === -1) {
           fndOrd.push(a);
@@ -322,8 +322,7 @@ var crmT = function (func) {
 };
 var testlt = function () {
   console.log(
-    "boilerplate Help: line 325\ntestlt(: )\n " +
-      arguments.callee.caller.name,
+    "boilerplate Help: line 325\ntestlt(: )\n " + arguments.callee.caller.name,
   );
   console.log(
     arguments.callee.caller.name +
