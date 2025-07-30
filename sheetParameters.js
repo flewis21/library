@@ -1414,30 +1414,49 @@ var sheetsMaker = function (fileName, folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
-  if (fileName) {
+  if (fileName? fileName:"base") {
     var unique = 0;
-    var oldFile = "https://";
-    var newFileName = fileName;
-    var fileNameList = matchManager(folderX);
-    var oldMatch = [].push(
-      fileNameList.sheets.map((t) => {
-        return t === fileName;
-      }),
+    // var oldFile = "https://";
+    var fileNameList = matchManager(folderX? folderX:"Sheets");
+    fileNameList.sheets.map((t) => {
+      var isTaken = t === fileName? fileName:"base"
+      if (isTaken === true) {
+        fileName = fileName? fileName:"base" + unique
+        unique++
+        return
+      } 
+      else {
+        return
+      };
+    });
+    var newFileName = fileName? fileName:"base";
+    console.log(
+      functionRegistry.time +
+        "\n" +
+        arguments.callee.name +
+        "\nnewFileName is !" +
+        !newFileName +
+        ", = " +
+        newFileName,
     );
-    while (oldMatch) {
-      newFileName = fileName + unique;
-      unique++;
-      oldMatch = [].push(
-        fileNameList.sheets.map((t) => {
-          return t === newFileName;
-        }),
-      );
-    }
-    var newFile = SpreadsheetApp.create(newFileName);
+  // while (fileNameList.sheets[matches]) {
+    //   newFileName = fileName + unique;
+    //   unique++;
+    //   oldMatch = [].push(
+    //     fileNameList.sheets.map((t) => {
+    //       if (t === newFileName) {
+    //         oldMatch = t
+    //       } else {
+    //         oldMatch = ""
+    //       };
+    //     }),
+    //   );
+    // }
+    var newFile = SpreadsheetApp.create(newFileName.toString());
     console.log(
       functionRegistry.time +
         "\n" +
@@ -1445,14 +1464,75 @@ var sheetsMaker = function (fileName, folderX, time) {
         "\nnewFile is !" +
         !newFile +
         ", = " +
-        !newFile
-        ? newFile.getName()
-        : "",
+        newFile,
     );
     sheetsFileManager(newFile.getId(), folderX, start);
     return newFile;
   }
 };
+
+// var sheetsMaker = function (fileName, folderX, time) {
+//   console.log(
+//     functionRegistry.time +
+//       "\n" +
+//       arguments.callee.name +
+//       "\nfileName is !" +
+//       !fileName +
+//       ", = " +
+//       fileName +
+//       "\nfolderX is !" +
+//       !folderX +
+//       ", = " +
+//       folderX +
+//       "\ntime is !" +
+//       !time +
+//       ", = " +
+//       time,
+//   );
+
+//   if (fileName) {
+//     let unique = 0; // Use let for block scope
+//     var oldFile = "https://"; // This variable seems unused or misleading
+//     let newFileName = fileName; // Use let for block scope
+
+//     // Assuming matchManager(folderX) returns an object with a 'sheets' property that is an array of sheet names
+//     const fileNameList = matchManager(folderX);
+
+//     // --- FIX START ---
+//     // Function to check if a fileName already exists in the list
+//     const isFileNameTaken = (nameToCheck) => {
+//       // Use .some() which returns true if at least one element satisfies the condition
+//       // It's much more efficient than map and push for this purpose.
+//       return fileNameList.sheets.some(t => t === nameToCheck);
+//     };
+
+//     // Check if the initial fileName is taken
+//     let isTaken = isFileNameTaken(newFileName);
+
+//     // Loop while the generated newFileName is already taken
+//     while (isTaken) {
+//       newFileName = fileName + unique;
+//       unique++;
+//       isTaken = isFileNameTaken(newFileName); // Update the check for the new name
+//     }
+//     // --- FIX END ---
+
+//     var newFile = SpreadsheetApp.create(newFileName);
+//     console.log(
+//       functionRegistry.time +
+//         "\n" +
+//         arguments.callee.name +
+//         "\nnewFile is !" +
+//         !newFile +
+//         ", = " +
+//         (newFile ? newFile.getName() : ""), // Corrected ternary logic for console.log
+//     );
+
+//     // Assuming sheetsFileManager and start are defined elsewhere
+//     sheetsFileManager(newFile.getId(), folderX, start);
+//     return newFile;
+//   }
+// };
 
 var sheetSeo = function (namedVar, time) {
   var pageArray = [];
@@ -1540,7 +1620,135 @@ function spreadSheet() {
   return ss;
 }
 
-var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
+// var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nfileX is !" +
+  //     !fileX +
+  //     ", = " +
+  //     fileX +
+  //     "\nsheetName is !" +
+  //     !sheetName +
+  //     ", = " +
+  //     sheetName +
+  //     "\nrowHeaders is !" +
+  //     !rowHeaders +
+  //     ", = " +
+  //     rowHeaders +
+  //     "\ndata is !" +
+  //     !data +
+  //     ", = " +
+  //     data +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
+
+  // // Declare variables here, outside the try block
+//   var ssNewFile, ssId;
+  
+//   if (!fileX) {
+//     console.log("fileX is ! ", !fileX)
+//     var fileX = testlt();
+//     console.log("testlt ", fileX)
+//   }
+//   try {
+//   console.log(
+//     "boilerplate sheetParameters: line 1660\nspreadSheetCreate(fileX: " +
+//       fileX +
+//       ")\n " +
+//       arguments.callee.caller.name,
+//   );
+  
+//     var ss = sheetsMaker(fileX, "Sheets", start);
+//     if (ss && ss.getUrl()) { // Good practice to check for ss object
+//       console.log(
+//         "boilerplate sheetParameters: line 1669\nspreadSheetCreate(ss.getUrl(): " +
+//           ss.getUrl() +
+//           ")\n " +
+//           arguments.callee.caller.name,
+//       );
+      // var sheet = ss.getSheets()[0].activate();
+      // if (!sheetName) {
+      //   var sheetName = testlt();
+      // }
+      // console.log(
+      //   "boilerplate sheetParameters: line 1679\nspreadSheetCreate(sheetName: " +
+      //     sheetName +
+      //     ")\n " +
+      //     arguments.callee.caller.name,
+      // );
+      // var ws = sheet.setName([sheetName][0]);
+      // var headers = [];
+      // if (!rowHeaders) {
+      //   var rowHeaders = [testlt()];
+      // }
+      // console.log(
+      //   "boilerplate sheetParameters: line 1690\nspreadSheetCreate(rowHeaders: " +
+      //     rowHeaders +
+      //     ")\n " +
+      //     arguments.callee.caller.name,
+      // );
+      // rowHeaders.map((h) => {
+      //   headers.push([h][0]);
+      // });
+      // ws.appendRow(headers);
+      // var dataArray = [];
+      // if (!data) {
+      //   var data = JSON.parse(
+      //     convertToObjects([[arguments.callee.name]], ["name"], start),
+      //   )[0];
+      // }
+      // console.log(
+      //   "boilerplate sheetParameters: line 1706\nspreadSheetCreate(data: " +
+      //     data +
+      //     ")\n " +
+      //     arguments.callee.caller.name,
+      // );
+      // for (var key in data) {
+      //   dataArray.push(data[key]);
+      // }
+      // console.log(
+      //   "boilerplate sheetParameters: line 1715\nspreadSheetCreate(dataArray: " +
+      //     dataArray +
+      //     ")\n " +
+      //     arguments.callee.caller.name,
+      // );
+      // var sicSliceArray = dataArray.slice(0);
+      // var dRange = ws.getDataRange().getValues();
+      // var col = dRange[0].length;
+      // var rowDRange = ws.getLastRow();
+      // var colDRange = ws.getLastColumn();
+      // ws.getRange(2, 1, [sicSliceArray].length, headers.length).setValues(
+      //   sicSliceArray,
+      // );
+      // console.log(
+      //   functionRegistry.time +
+      //     "\nCalled function: " +
+      //     arguments.callee.name +
+      //     "\nCaller function: " +
+      //     arguments.callee.caller.name +
+      //     "\nNew file with name " +
+      //     fileX +
+      //     " was created!",
+      // );
+
+      // // Assign values to the pre-declared variables
+//       ssId = ss.getId();
+//       console.log("SpreadsheetApp.openById(ssId).getUrl() ", ss.getUrl());
+//       ssNewFile = ss.getUrl();
+//     }
+//   } catch (error) {
+//     return "Error creating spreadSheet: " + error;
+//   }
+//   // The variables ssNewFile and ssId are now available here,
+//   // and will either have their assigned values or remain undefined.
+//   return { myFileX: ssNewFile, myFileXId: ssId };
+// };
+var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {  
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1562,25 +1770,59 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
       ", = " +
       data +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
+
+  // Declare variables here, outside the try block
+  
+  // Use 'let' instead of 'var' for block-scoping
+  let ssNewFile, ssId;
+  
   if (!fileX) {
-    var fileX = testlt();
+    console.log("fileX is ! ", !fileX);
+    let fileX = testlt(); // Also use let here
+    console.log("testlt ", fileX);
   }
+  
   try {
-    var ss = sheetsMaker(fileX, "Sheets", start);
-    if (ss) {
+    console.log(
+      "boilerplate sheetParameters: line 1660\nspreadSheetCreate(fileX: " +
+        fileX +
+        ")\n " +
+        arguments.callee.caller.name,
+    );
+    
+    let ss = sheetsMaker(fileX, "Sheets", start); // Use let here too
+    if (ss && ss.getUrl()) {
+      console.log(
+        "boilerplate sheetParameters: line 1669\nspreadSheetCreate(ss.getUrl(): " +
+          ss.getUrl() +
+          ")\n " +
+          arguments.callee.caller.name,
+      );      
       var sheet = ss.getSheets()[0].activate();
       if (!sheetName) {
         var sheetName = testlt();
       }
+      console.log(
+        "boilerplate sheetParameters: line 1679\nspreadSheetCreate(sheetName: " +
+          sheetName +
+          ")\n " +
+          arguments.callee.caller.name,
+      );
       var ws = sheet.setName([sheetName][0]);
       var headers = [];
       if (!rowHeaders) {
         var rowHeaders = [testlt()];
       }
+      console.log(
+        "boilerplate sheetParameters: line 1690\nspreadSheetCreate(rowHeaders: " +
+          rowHeaders +
+          ")\n " +
+          arguments.callee.caller.name,
+      );
       rowHeaders.map((h) => {
         headers.push([h][0]);
       });
@@ -1591,17 +1833,30 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
           convertToObjects([[arguments.callee.name]], ["name"], start),
         )[0];
       }
+      console.log(
+        "boilerplate sheetParameters: line 1706\nspreadSheetCreate(data: " +
+          data +
+          ")\n " +
+          arguments.callee.caller.name,
+      );
       for (var key in data) {
         dataArray.push(data[key]);
       }
+      console.log(
+        "boilerplate sheetParameters: line 1715\nspreadSheetCreate(dataArray: " +
+          dataArray +
+          ")\n " +
+          arguments.callee.caller.name,
+      );
       var sicSliceArray = dataArray.slice(0);
       var dRange = ws.getDataRange().getValues();
       var col = dRange[0].length;
       var rowDRange = ws.getLastRow();
       var colDRange = ws.getLastColumn();
-      ws.getRange(2, 1, [sicSliceArray].length, headers.length).setValues(
-        sicSliceArray,
-      );
+      // ws.getRange(2, 1, [sicSliceArray].length, headers.length).setValues(
+      //   sicSliceArray,
+      // );
+      ws.getRange(2, 1, 1, headers.length).setValues([sicSliceArray]);
       console.log(
         functionRegistry.time +
           "\nCalled function: " +
@@ -1612,12 +1867,18 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
           fileX +
           " was created!",
       );
-      var ssId = ss.getId();
-      var ssNewFile = SpreadsheetApp.openById(ssId).getUrl();
+
+      // Assign values to the pre-declared variables
+      ssId = ss.getId();
+      ssNewFile = ss.getUrl();
     }
   } catch (error) {
     return "Error creating spreadSheet: " + error;
   }
+
+  // Add a final check to see the variable values right before return
+  console.log("Final return values: ", { myFileX: ssNewFile, myFileXId: ssId });
+
   return { myFileX: ssNewFile, myFileXId: ssId };
 };
 // data.map((o)=>{var sheetCol =[o].join("").split(",");var sheetArr = sheetCol.map((arr)=>{return arr});dataArray.push(sheetArr[0])});console.log("called function: " + arguments.callee.name + "\nfile name: " + fileX);console.log("called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs);SpreadsheetApp.openByUrl(ss);console.log("called function: " + arguments.callee.name + "\nSheet name: " + ss.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nName of this sheet is " + sheet.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nSheet name changed to " + ws.getName());console.log("called function: " + arguments.callee.name + "\nName of active sheet" + ss.getActiveSheet().getName());var dataCol = dataArray;var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();var newFile = formsUrls(fileX,"Sheets", rowHeaders, data, start);

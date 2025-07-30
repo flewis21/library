@@ -748,10 +748,10 @@ function postEd(ed) {
     JSON.stringify(this["start"]) +
       "\n" +
       arguments.callee.name +
-      "\n!" +
-      ed +
+      "\n is !" +
+      !ed +
       ", = " +
-      !ed,
+      ed,
   );
   if (!ed) {
     var formData = JSON.parse(

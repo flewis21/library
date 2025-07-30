@@ -1477,23 +1477,23 @@ var sheetsFileManager = function (fileX, folder, time) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\nfileX is !" +
-      !fileX +
-      ", = " +
-      fileX +
-      "\nfolder is !" +
-      !folder +
-      ", = " +
-      folder +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nfileX is !" +
+  //     !fileX +
+  //     ", = " +
+  //     fileX +
+  //     "\nfolder is !" +
+  //     !folder +
+  //     ", = " +
+  //     folder +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (!fileX) {
     var fileX = arguments.callee.name;
   }
@@ -1505,9 +1505,9 @@ var sheetsFileManager = function (fileX, folder, time) {
     var idToName = SpreadsheetApp.openById(fileX).getName();
     var file = DriveApp.getRootFolder().getFilesByName(idToName);
     while (file.hasNext()) {
-      var elaspeTime = new Date() - functionRegistry.maxTime;
+      var elaspeTime = functionRegistry.time;
       var myFile = file.next();
-      var timeToExecute = functionRegistry.maxTime - elaspeTime;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
       if (myFile.getName() === fileX) {
         myFile.moveTo(DriveApp.getFolderById(folderId));
         return;

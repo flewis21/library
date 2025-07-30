@@ -675,18 +675,23 @@ var crmGWI = function (fx) {
             <label for="id" style="font-size: 1em">Id:</label>
             <input type="number" id="id" name="id"><br><br>
 
-        <button type="button" id="calculateCostsBtn" class="btn waves-effect waves-light">
+            <button type="button" id="calculateCostsBtn" class="btn waves-effect waves-light">
               Calculate Costs <i class="material-icons right">location_on</i>
-          </button>
-          <span id="calculationStatus" style="margin-left: 10px; color: grey;"></span>
-          <br><br>
+            </button>
+            <span id="calculationStatus" style="margin-left: 10px; color: grey;"></span>
+            <br><br>
 
+            <button type="button" id="acceptQuoteBtn" class="btn waves-effect waves-light" style="background-color: #28a745; margin-top: 10px;" disabled>
+                Accept Quote <i class="material-icons right">check_circle</i>
+            </button>
+            <br><br>
       </div>
       <button type="submit">Submit</button>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-      var form = document.getElementById('myForm');
+      // NEW: Get reference to the form itself to collect all data easily
+      const form = document.getElementById('myForm'); // Assuming your form has id="myForm"
       form.addEventListener('submit', function(event) {
         event.preventDefault();
         var formData = {};
@@ -800,6 +805,9 @@ var crmGWI = function (fx) {
       const delTimeInput = document.getElementById('delTime');
       const calculationStatusSpan = document.getElementById('calculationStatus');
 
+      // NEW: Get reference to the Accept Quote button
+      const acceptQuoteBtn = document.getElementById('acceptQuoteBtn');
+      
       if (calculateCostsBtn && delAddrInput && pickAddrInput && labInput && gasInput && totalInput && delTimeInput && calculationStatusSpan) {
         calculateCostsBtn.addEventListener('click', () => {
             const deliveryAddress = delAddrInput.value.trim();
@@ -823,7 +831,9 @@ var crmGWI = function (fx) {
             }
 
             calculateCostsBtn.disabled = true; // Disable button during calculation
+            acceptQuoteBtn.disabled = true; // NEW: Disable accept button during calculation
             calculationStatusSpan.textContent = 'Calculating...';
+
 
             serverside('calculateTravelCosts', [deliveryAddress, pickupAddress])
               .then((response) => { 
@@ -860,6 +870,7 @@ var crmGWI = function (fx) {
                 totalInput.value = totalCostStyle
                 delTimeInput.value = totalTravelTimeMinutes; // Populate delivery time with travel duration
                 calculationStatusSpan.textContent = 'Done!';
+                acceptQuoteBtn.disabled = false; // NEW: Enable accept button after successful calculation
                 console.log('Calculation Results:', results);
               })
               .catch(error => {
@@ -869,9 +880,55 @@ var crmGWI = function (fx) {
               })
               .finally(() => {
                   calculateCostsBtn.disabled = false; // Re-enable button
-                  setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
+                  // Don't clear status immediately if user needs to see "Done!" before clicking Accept
+                  // setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
               });
           });
+
+        // NEW: Event listener for the Accept Quote button
+        acceptQuoteBtn.addEventListener('click', () => {
+          // 1. Gather all form data
+          const formData = {};
+          for (var i = 0; i < myForm.elements.length; i++) {
+            var element = myForm.elements[i];
+            // Only include elements with a name and a value
+            if (element.name && element.value) {
+              formData[element.name] = element.value;
+            }
+          }
+
+          // Optional: Add a confirmation dialog
+          if (!confirm('Are you sure you want to accept this quote and submit?')) {
+            return; // User cancelled
+          }
+
+          // Disable buttons during submission
+          acceptQuoteBtn.disabled = true;
+          calculateCostsBtn.disabled = true;
+          calculationStatusSpan.textContent = 'Submitting Quote...';
+
+          // 2. Send data to a new server-side function
+          serverside("acceptQuote", [JSON.stringify(formData)])
+            .then((submitResult) => {
+              console.log('Quote accepted successfully:', submitResult);
+              calculationStatusSpan.textContent = 'Quote Accepted!';
+              alert('Quote accepted and submitted successfully!');
+              // Optional: Redirect or clear form after successful submission
+              // window.top.location.href = getUrl(ScriptApp); // Redirect to homepage or confirmation page
+              // myForm.reset(); // Clear the form
+            })
+            .catch((error) => {
+              console.error('Error accepting quote:', error);
+              calculationStatusSpan.textContent = 'Error submitting: ' + error.message;
+              alert('Failed to accept quote: ' + error.message);
+            })
+            .finally(() => {
+              acceptQuoteBtn.disabled = false; // Re-enable (or keep disabled if form is reset/redirected)
+              calculateCostsBtn.disabled = false;
+              setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
+            });
+        });
+
       } else {
           console.error("One or more elements for cost calculation not found.");
       }
@@ -976,6 +1033,130 @@ function workEd(ed) {
   return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, start)
     .myFileX;
 }
+
+// Assume getUrl and ScriptApp are defined elsewhere or passed in context if this is a templated function
+
+/**
+ * Server-side function to handle quote acceptance.
+ * This function receives the client-side form data after calculation.
+ * @param {string} formDataJson A JSON string of the form data.
+ * @return {string} A confirmation message or URL.
+ */
+function acceptQuote(formDataJson) {
+  let formData;
+  try {
+    if (!formDataJson) {
+      formData = JSON.parse(
+        convertToObjects([[arguments.callee.name]], ["name"], functionRegistry.time),
+      )[0];
+      console.log('Fake formData for quote acceptance:', formData);
+    } else {
+      formData = JSON.parse(formDataJson);
+      console.log('Received formData for quote acceptance:', formData);
+    }
+    // Get form data from the request
+    var arrayData = covArrays(formData);
+    var colArray = [];
+    const keys = Object.keys(formData);
+    keys.forEach(function (key) {
+      console.log(key);
+      colArray.push(JSON.stringify(key));
+    });
+    var dataName = {
+      message: {
+        info: formData,
+      },
+      timestamp: new Date(),
+    };
+    const name = dataName.message.info["delAddr"];
+    const rawSpreadSheet = spreadSheetCreate(name, name, colArray, arrayData, start)
+    console.log("SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ", rawSpreadSheet.myFileX)
+    const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
+
+    // --- Your Logic Here ---
+
+    // Example 1: Update a Google Sheet (assuming you have a spreadsheet ID)
+    const ssId = rawSpreadSheet.myFileXId || 'YOUR_SPREADSHEET_ID_HERE'; // <--- IMPORTANT: Replace with your actual Spreadsheet ID
+    const sheetName = ss.getSheetName() || 'Accepted Quotes'; // Or your main data sheet
+    const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
+
+    if (!sheet) {
+      throw new Error(`Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`);
+    }
+
+    // Append a new row with the accepted quote data
+    // You'll need to map your formData keys to sheet columns
+    const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    const newRow = [];
+
+    // Example mapping: populate newRow based on headerRow and formData
+    // This is a robust way to ensure data goes into correct columns
+    headerRow.forEach(header => {
+      const key = header.toLowerCase().replace(/[^a-z0-9]/g, ''); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+      if (formData.hasOwnProperty(key)) {
+        newRow.push(formData[key]);
+      } else {
+        // Handle cases where a form field doesn't directly map to a header
+        // Or if you want to add static data like a timestamp
+        if (header === "Timestamp") {
+          newRow.push(new Date());
+        } else if (header === "Status") {
+          newRow.push("Quote Accepted");
+        } else {
+          newRow.push(''); // Empty for unmapped columns
+        }
+      }
+    });
+
+    // A simpler (less robust against column changes) way if you know exact order:
+    // newRow.push(formData.date);
+    // newRow.push(formData.car);
+    // newRow.push(formData.delPick);
+    // // ... and so on for all your fields
+    // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
+    // newRow.push(formData.gas);
+    // newRow.push(formData.total);
+
+    sheet.appendRow(newRow);
+    console.log('Quote data appended to sheet:', sheetName);
+
+    // Example 2: Generate a PDF Invoice (requires Google Drive integration)
+    // This is more complex and would involve creating a Google Doc/Sheet template,
+    // filling it with data, and saving it as a PDF.
+    // var invoicePdfUrl = generateInvoicePdf(formData);
+
+    // Example 3: Send an Email Confirmation (requires MailApp or GmailApp)
+    // MailApp.sendEmail({
+    //   to: "client@example.com", // Get client email from formData or other source
+    //   subject: "Your Quote for " + formData.car + " is Accepted!",
+    //   htmlBody: `Dear Client,<br><br>
+    //              Your quote for the General Work Invoice has been successfully accepted.<br>
+    //              Total Cost: $${parseFloat(formData.total || 0).toFixed(2)}<br><br>
+    //              We will be in touch shortly to schedule the service.<br><br>
+    //              Thank you!`,
+    //   // attachments: [invoicePdfBlob] // If you generated a PDF
+    // });
+    // console.log('Email confirmation sent.');
+
+    return "Quote Accepted Successfully!"; // Return a success message or a URL for redirection
+
+  } catch (error) {
+    console.error('Error in acceptQuote:', error);
+    // It's good practice to re-throw or return an error object so the client-side catch block works
+    throw new Error('Failed to process quote acceptance: ' + error.message);
+  }
+}
+
+// You'll also need to ensure 'runBoilerplate' is defined, likely in your main Code.gs file
+// For example:
+function runBoilerplate(funcName, args) {
+  if (typeof this[funcName] === 'function') {
+    return this[funcName].apply(this, args);
+  } else {
+    throw new Error('Function ' + funcName + ' not found.');
+  }
+}
+
 // for (var val in formData[key]) {
 //     flatArray.push(formData[key][val])}
 
