@@ -204,38 +204,99 @@ function pdfTimesheet() {
   );
 }
 
-function saveAsPDFToFolder(url, sheetname) {
-  const ss = urlSpreadSheet(url);
-  const sheets = ss.getSheets();
-  const ws = ssGetSheetBySpreadsheetUrl(url, sheetname);
-  const pdfFilename = ws.getSheetName();
-  const folders = DriveApp.getFolders();
-  const folderNames = folders.next().getName();
-  if (folderNames.includes(sheetname).valueOf() === false) {
-    folders.next().createFolder(sheetname);
-  }
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].getName().includes(pdfFilename) === false) {
-      sheets[i].hideSheet();
-      console.log(
-        "Is " +
-          sheets[i].getName() +
-          " hidden?" +
-          " " +
-          sheets[i].isSheetHidden(),
-      );
-    } else {
-      sheets[i].showSheet();
-      console.log(
-        "Is " +
-          sheets[i].getName() +
-          " hidden?" +
-          " " +
-          sheets[i].isSheetHidden(),
-      );
+// function saveAsPDFToFolder(url, sheetname) {
+//   const ss = urlSpreadSheet(url);
+//   const sheets = ss.getSheets();
+//   const ws = ssGetSheetBySpreadsheetUrl(url, sheetname);
+//   const pdfFilename = ws.getSheetName();
+//   const folders = DriveApp.getFolders();
+//   const folderNames = folders.next().getName();
+//   if (folderNames.includes(sheetname).valueOf() === false) {
+//     folders.next().createFolder(sheetname);
+//   }
+//   for (var i = 0; i < sheets.length; i++) {
+//     if (sheets[i].getName().includes(pdfFilename) === false) {
+//       sheets[i].hideSheet();
+//       console.log(
+//         "Is " +
+//           sheets[i].getName() +
+//           " hidden?" +
+//           " " +
+//           sheets[i].isSheetHidden(),
+//       );
+//     } else {
+//       sheets[i].showSheet();
+//       console.log(
+//         "Is " +
+//           sheets[i].getName() +
+//           " hidden?" +
+//           " " +
+//           sheets[i].isSheetHidden(),
+//       );
+//     }
+//   }
+//   pdfFolder = DriveApp.getFoldersByName(sheetname).next();
+//   const blob = ws.getParent().getBlob().getAs("Application/pdf");
+//   pdfFolder.createFile(blob).setName(pdfFilename);
+// }
+
+/**
+ * Saves a single sheet from a spreadsheet as a PDF in a Google Drive folder.
+ * Creates the folder if it doesn't exist.
+ * @param {string} spreadsheetUrl The URL of the Google Spreadsheet.
+ * @param {string} sheetname The name of the specific sheet to save as a PDF.
+ * @return {string} The URL of the created PDF file.
+ */
+function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
+  try {
+    const ss = SpreadsheetApp.openByUrl(spreadsheetUrl);
+    const sheet = ss.getSheetByName(sheetname);
+
+    if (!sheet) {
+      throw new Error(`Sheet "${sheetname}" not found in the spreadsheet.`);
     }
+
+    // Get or create the folder
+    let pdfFolder;
+    const folders = DriveApp.getFoldersByName(sheetname);
+    if (folders.hasNext()) {
+      pdfFolder = folders.next();
+    } else {
+      pdfFolder = DriveApp.createFolder(sheetname);
+    }
+
+    // Generate the URL for the PDF of the single sheet
+    const url = `https://docs.google.com/spreadsheets/d/${ss.getId()}/export?` +
+                `format=pdf&` +
+                `gid=${sheet.getSheetId()}&` +
+                `portrait=true&` +
+                `fitw=true&` +
+                `size=A4`;
+    
+    // Fetch the PDF blob
+    const token = ScriptApp.getOAuthToken();
+    const response = UrlFetchApp.fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      muteHttpExceptions: true
+    });
+
+    if (response.getResponseCode() !== 200) {
+      throw new Error(`Failed to fetch PDF. Response code: ${response.getResponseCode()}`);
+    }
+
+    const pdfBlob = response.getBlob().setName(`${sheetname}.pdf`);
+
+    // Create the file in the folder and return its URL
+    const pdfFile = pdfFolder.createFile(pdfBlob);
+    
+    Logger.log(`PDF created for sheet "${sheetname}" at: ${pdfFile.getUrl()}`);
+    
+    return pdfFile.getUrl();
+    
+  } catch (error) {
+    Logger.log("Error in saveAsPDFToFolder: " + error.toString());
+    throw error; // Re-throw to be handled by the caller
   }
-  pdfFolder = DriveApp.getFoldersByName(sheetname).next();
-  const blob = ws.getParent().getBlob().getAs("Application/pdf");
-  pdfFolder.createFile(blob).setName(pdfFilename);
 }

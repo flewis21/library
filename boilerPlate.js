@@ -74,7 +74,7 @@ var convertToObjects = function (rows, headings, time) {
       "\nrows is !" +
       !rows +
       ", = " +
-      rows +
+      rows[0] +
       "\nheadings is !" +
       !headings +
       ", = " +

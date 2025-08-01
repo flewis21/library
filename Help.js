@@ -2873,7 +2873,7 @@ var isValidUrl = function (text) {
 };
 var vidPlaylist = function (tunPlay) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line \n(: )\n " + arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +

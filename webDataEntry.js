@@ -140,7 +140,7 @@ function dataEntry() {
 }
 
 var chaseFunction = function (xfactor) {
-  var xfactor = "Car";
+  // var xfactor = "Car";
   var ssWs = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "General Work Invoice",
@@ -151,16 +151,15 @@ var chaseFunction = function (xfactor) {
   var headerFactor = headerArray[0].map((dx) => {
     return dx[0];
   });
-  var arrayJobs = JSON.stringify(convertToObjects(data, headerFactor));
+  var arrayJobs = JSON.parse(convertToObjects(data, headerFactor));
+  console.log("JSON.parse(convertToObjects(data, headerFactor))", [arrayJobs][0][0])
   if (xfactor) {
-    if (arrayJobs.indexOf(xfactor) > -1) {
       if (
         [xfactor].join("").toLowerCase() === ["Date"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Date"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             var friendNeat = new Date(neatR).toDateString(); // .toLocaleString()// .toLocaleDateString()
             booleFactor.push(friendNeat);
@@ -172,9 +171,8 @@ var chaseFunction = function (xfactor) {
 
       if ([xfactor].join("").toLowerCase() === ["Car"].join("").toLowerCase()) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Car"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -188,9 +186,8 @@ var chaseFunction = function (xfactor) {
         ["Delivery/Pickup"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Delivery/Pickup"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -203,9 +200,8 @@ var chaseFunction = function (xfactor) {
         [xfactor].join("").toLowerCase() === ["Vin/Stk"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Vin/Stk"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -219,9 +215,8 @@ var chaseFunction = function (xfactor) {
         ["Delivery Address"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Delivery Address"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -232,9 +227,8 @@ var chaseFunction = function (xfactor) {
 
       if ([xfactor].join("").toLowerCase() === ["Lab"].join("").toLowerCase()) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Lab"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -245,9 +239,8 @@ var chaseFunction = function (xfactor) {
 
       if ([xfactor].join("").toLowerCase() === ["Gas"].join("").toLowerCase()) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Gas"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -260,9 +253,8 @@ var chaseFunction = function (xfactor) {
         [xfactor].join("").toLowerCase() === ["Total"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Total"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -276,9 +268,8 @@ var chaseFunction = function (xfactor) {
         ["Delivery Time (hours)"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Delivery Time (hours)"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -292,9 +283,8 @@ var chaseFunction = function (xfactor) {
         ["Pickup address"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Pickup address"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -305,9 +295,8 @@ var chaseFunction = function (xfactor) {
 
       if ([xfactor].join("").toLowerCase() === ["id"].join("").toLowerCase()) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["id"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -321,9 +310,8 @@ var chaseFunction = function (xfactor) {
         ["Search Column"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Search Column"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -337,9 +325,8 @@ var chaseFunction = function (xfactor) {
         ["Sales Person"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Sales Person"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -352,9 +339,8 @@ var chaseFunction = function (xfactor) {
         [xfactor].join("").toLowerCase() === ["Complete"].join("").toLowerCase()
       ) {
         var booleFactor = [];
-        JSON.parse(arrayJobs).map((dx) => {
+        [arrayJobs][0].map((dx) => {
           var neatR = dx["Complete"];
-          console.log(typeof neatR === "string");
           if ([neatR].join("").length > 0) {
             booleFactor.push(neatR);
           }
@@ -362,13 +348,11 @@ var chaseFunction = function (xfactor) {
 
         return booleFactor;
       }
-    }
   }
 
   var booleFactor = [];
-  JSON.parse(arrayJobs).map((dx) => {
+  [arrayJobs][0].map((dx) => {
     var neatR = dx;
-    console.log(typeof neatR === "object");
     if ([neatR["Description"]].join("").length > 0) {
       // var friendNeat = new Date(neatR).toDateString()// .toLocaleString()// .toLocaleDateString()
       booleFactor.push(neatR);

@@ -732,41 +732,69 @@ var crmGWI = function (fx) {
         };
       }
 
-      function setupAutocomplete(inputId, suggestionsDivId) {
+      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+        // Client-side code
+        const localSuggestionsCache = {};
         const input = document.getElementById(inputId);
         const suggestionsDiv = document.getElementById(suggestionsDivId);
 
-        if (input && suggestionsDiv) {
-          const fetchSuggestions = debounce((query) => {
-            if (query.length < 3) {
-              suggestionsDiv.innerHTML = '';
-              return;
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+        
+        serverside('chaseFunction', [columnName])
+          .then((response) => { 
+            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let fullList = {};
+            if (response && response.type === "object") {
+              fullList = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = {};
             }
-            serverside('seoPastTime', [query])
-              .then(playList => {
-                var suggestions = playList.playList
-                console.log('seoPastTime, [' + query + ']:' + JSON.stringify(suggestions))
+            localSuggestionsCache[columnName] = fullList
+            console.log('Successfully fetched full list for', columnName);
+            console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + ":", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
                 suggestionsDiv.innerHTML = '';
-                if (suggestions && suggestions.length > 0) {
-                  suggestions.forEach(suggestion => {
-                    console.log("https://youtube.com/watch?v=" + suggestion)
-                    var newLink = "https://youtube.com/watch?v=" + suggestion
-                    const div = document.createElement('div');
-                    div.textContent = "https://youtube.com/watch?v=" + suggestion;
-                    div.addEventListener('click', () => {
-                      window.open(newLink, '_blank')
-                      suggestionsDiv.innerHTML = '';
-                    });
-                    suggestionsDiv.appendChild(div);
-                  });
-                }
-              })
-              .catch(error => {
-                console.error("Error fetching address suggestions for " + inputId + ":", error);
-                suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
               });
-          }, 300);
+              suggestionsDiv.appendChild(div);
+            });
+          }
 
+        }, 300);
+        
+        if (input && suggestionsDiv) {
           input.addEventListener('input', (event) => {
             fetchSuggestions(event.target.value);
           });
@@ -790,10 +818,10 @@ var crmGWI = function (fx) {
       }
 
       // Setup Autocomplete for Delivery Address
-      setupAutocomplete('delAddr', 'delAddrSuggestions');
+      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
 
       // Setup Autocomplete for Pickup Address
-      setupAutocomplete('pickAddr', 'pickAddrSuggestions');
+      setupAutocomplete('pickAddr', 'pickAddrSuggestions', "Pickup address");
 
       // NEW: Calculate Costs button logic
       const calculateCostsBtn = document.getElementById('calculateCostsBtn');
@@ -846,7 +874,8 @@ var crmGWI = function (fx) {
                   console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
                   // Fallback to empty array if the structure is not as expected
                   results = {};
-                }//mod the array
+                }
+                //mod the array
           
                 // Since gas cost is per mile, and we only have time, we can either:
                 // 1. Omit gas calculation for manual time input, or
@@ -1036,6 +1065,133 @@ function workEd(ed) {
 
 // Assume getUrl and ScriptApp are defined elsewhere or passed in context if this is a templated function
 
+// /**
+//  * Server-side function to handle quote acceptance.
+//  * This function receives the client-side form data after calculation.
+//  * @param {string} formDataJson A JSON string of the form data.
+//  * @return {string} A confirmation message or URL.
+//  */
+// function acceptQuote(formDataJson) {
+//   let formData;
+//   try {
+//     if (!formDataJson) {
+      // formData = JSON.parse(
+      //   convertToObjects(
+      //     [[arguments.callee.name]],
+      //     ["name"],
+      //     functionRegistry.time,
+      //   ),
+      // )[0];
+      // console.log("Fake formData for quote acceptance:", formData);
+//     } else {
+//       formData = JSON.parse(formDataJson);
+//       console.log("Received formData for quote acceptance:", formData);
+//     }
+    // // Get form data from the request
+    // var arrayData = covArrays(formData);
+    // var colArray = [];
+    // const keys = Object.keys(formData);
+    // keys.forEach(function (key) {
+    //   console.log(key);
+    //   colArray.push(JSON.stringify(key));
+    // });
+    // var dataName = {
+    //   message: {
+    //     info: formData,
+    //   },
+    //   timestamp: new Date(),
+    // };
+    // const name = dataName.message.info["delAddr"];
+    // const rawSpreadSheet = spreadSheetCreate(
+    //   name,
+    //   name,
+    //   colArray,
+    //   arrayData,
+    //   start,
+    // );
+    // console.log(
+    //   "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
+    //   rawSpreadSheet.myFileX,
+    // );
+//     const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
+
+//     // --- Your Logic Here ---
+
+//     // Example 1: Update a Google Sheet (assuming you have a spreadsheet ID)
+//     const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE"; // <--- IMPORTANT: Replace with your actual Spreadsheet ID
+//     const sheetName = ss.getSheetName() || "Accepted Quotes"; // Or your main data sheet
+//     const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
+
+    // if (!sheet) {
+    //   throw new Error(
+    //     `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
+    //   );
+    // }
+
+    // // Append a new row with the accepted quote data
+    // // You'll need to map your formData keys to sheet columns
+    // const headerRow = sheet
+    //   .getRange(1, 1, 1, sheet.getLastColumn())
+    //   .getValues()[0];
+    // const newRow = [];
+
+    // // Example mapping: populate newRow based on headerRow and formData
+    // // This is a robust way to ensure data goes into correct columns
+    // headerRow.forEach((header) => {
+    //   const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+    //   if (formData.hasOwnProperty(key)) {
+    //     newRow.push(formData[key]);
+    //   } else {
+    //     // Handle cases where a form field doesn't directly map to a header
+    //     // Or if you want to add static data like a timestamp
+    //     if (header === "Timestamp") {
+    //       newRow.push(new Date());
+    //     } else if (header === "Status") {
+    //       newRow.push("Quote Accepted");
+    //     } else {
+    //       newRow.push(""); // Empty for unmapped columns
+    //     }
+    //   }
+    // });
+
+    // // A simpler (less robust against column changes) way if you know exact order:
+    // // newRow.push(formData.date);
+    // // newRow.push(formData.car);
+    // // newRow.push(formData.delPick);
+    // // // ... and so on for all your fields
+    // // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
+    // // newRow.push(formData.gas);
+    // // newRow.push(formData.total);
+
+//     sheet.appendRow(newRow);
+//     console.log("Quote data appended to sheet:", sheetName);
+
+//     // Example 2: Generate a PDF Invoice (requires Google Drive integration)
+//     // This is more complex and would involve creating a Google Doc/Sheet template,
+//     // filling it with data, and saving it as a PDF.
+//     // var invoicePdfUrl = generateInvoicePdf(formData);
+
+//     // Example 3: Send an Email Confirmation (requires MailApp or GmailApp)
+//     // MailApp.sendEmail({
+//     //   to: "client@example.com", // Get client email from formData or other source
+//     //   subject: "Your Quote for " + formData.car + " is Accepted!",
+//     //   htmlBody: `Dear Client,<br><br>
+//     //              Your quote for the General Work Invoice has been successfully accepted.<br>
+//     //              Total Cost: $${parseFloat(formData.total || 0).toFixed(2)}<br><br>
+//     //              We will be in touch shortly to schedule the service.<br><br>
+//     //              Thank you!`,
+//     //   // attachments: [invoicePdfBlob] // If you generated a PDF
+//     // });
+//     // console.log('Email confirmation sent.');
+
+//     return "Quote Accepted Successfully!"; // Return a success message or a URL for redirection
+//   } catch (error) {
+//     console.error("Error in acceptQuote:", error);
+//     // It's good practice to re-throw or return an error object so the client-side catch block works
+//     throw new Error("Failed to process quote acceptance: " + error.message);
+//   }
+// }
+
 /**
  * Server-side function to handle quote acceptance.
  * This function receives the client-side form data after calculation.
@@ -1045,7 +1201,9 @@ function workEd(ed) {
 function acceptQuote(formDataJson) {
   let formData;
   try {
+    // ... (rest of your existing code to parse formData)
     if (!formDataJson) {
+      // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
           [[arguments.callee.name]],
@@ -1058,6 +1216,8 @@ function acceptQuote(formDataJson) {
       formData = JSON.parse(formDataJson);
       console.log("Received formData for quote acceptance:", formData);
     }
+    
+    // ... (your existing code to get keys, create the new spreadsheet)
     // Get form data from the request
     var arrayData = covArrays(formData);
     var colArray = [];
@@ -1084,15 +1244,22 @@ function acceptQuote(formDataJson) {
       "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
       rawSpreadSheet.myFileX,
     );
-    const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
-
-    // --- Your Logic Here ---
-
-    // Example 1: Update a Google Sheet (assuming you have a spreadsheet ID)
-    const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE"; // <--- IMPORTANT: Replace with your actual Spreadsheet ID
-    const sheetName = ss.getSheetName() || "Accepted Quotes"; // Or your main data sheet
+    // Assuming `rawSpreadSheet.myFileX` is the URL of your new spreadsheet
+    // and `ss.getSheetName()` is the name of the sheet you want to PDF.
+    const newSpreadsheetUrl = rawSpreadSheet.myFileX;
+    const sheetToPDF = ss.getSheetName() || "Accepted Quotes";
+    
+    // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
+    const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
+    console.log("Invoice PDF generated at: " + invoicePdfUrl);
+    // --- END OF NEW CODE ---
+    
+    // ... (your existing code to append row to the main sheet)
+    const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE";
+    const sheetName = ss.getSheetName() || "Accepted Quotes";
     const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
 
+    // ... (your existing code to append a new row)
     if (!sheet) {
       throw new Error(
         `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
@@ -1133,32 +1300,26 @@ function acceptQuote(formDataJson) {
     // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
     // newRow.push(formData.gas);
     // newRow.push(formData.total);
-
+    
     sheet.appendRow(newRow);
     console.log("Quote data appended to sheet:", sheetName);
 
-    // Example 2: Generate a PDF Invoice (requires Google Drive integration)
-    // This is more complex and would involve creating a Google Doc/Sheet template,
-    // filling it with data, and saving it as a PDF.
-    // var invoicePdfUrl = generateInvoicePdf(formData);
-
-    // Example 3: Send an Email Confirmation (requires MailApp or GmailApp)
+    // Now, you can use the `invoicePdfUrl` in your email logic.
+    // Example 3: Send an Email Confirmation (modified)
     // MailApp.sendEmail({
     //   to: "client@example.com", // Get client email from formData or other source
     //   subject: "Your Quote for " + formData.car + " is Accepted!",
     //   htmlBody: `Dear Client,<br><br>
-    //              Your quote for the General Work Invoice has been successfully accepted.<br>
-    //              Total Cost: $${parseFloat(formData.total || 0).toFixed(2)}<br><br>
-    //              We will be in touch shortly to schedule the service.<br><br>
-    //              Thank you!`,
-    //   // attachments: [invoicePdfBlob] // If you generated a PDF
+    //             Your quote has been accepted. You can view your invoice here: <a href="${invoicePdfUrl}">View Invoice</a>`,
+    //   // Note: You can't directly attach a URL, but linking to it is effective.
     // });
     // console.log('Email confirmation sent.');
+    
+    // You can return the PDF URL to the client-side for them to display or download.
+    return invoicePdfUrl; 
 
-    return "Quote Accepted Successfully!"; // Return a success message or a URL for redirection
   } catch (error) {
     console.error("Error in acceptQuote:", error);
-    // It's good practice to re-throw or return an error object so the client-side catch block works
     throw new Error("Failed to process quote acceptance: " + error.message);
   }
 }
