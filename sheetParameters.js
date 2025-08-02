@@ -1568,23 +1568,28 @@ var sheetsUrls = function (fileX, folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+       time,
   );
   if (typeof fileX === "undefined") {
-    var fileX = testlt();
+    var fileX = testlt().name;
   }
-  var fileNameList = matchManager(folderX, fileX);
+  var fileNameList = matchManager(folderX? folderX:"Sheets", fileX);
+  var mineField = [];
   if (fileNameList) {
-    var mineField = [];
-    fileNameList.map((repo) => {
-      if (repo.toLowerCase().includes([fileX].toString().toLowerCase())) {
-        var mineFile = DriveApp.getFilesByName(repo).next().getId();
-        mineField.push(mineFile);
-      }
-    });
-    return mineField;
+    while (mineField.length === 0) {
+      fileNameList.sheets.map((repo) => {
+        if (repo.toLowerCase().includes([fileX].toString().toLowerCase())) {
+          var mineFile = DriveApp.getFilesByName(repo).next().getId();
+          if (DriveApp.getFileById(mineFile).getMimeType() === MimeType.GOOGLE_SHEETS) {
+            mineField.push(mineFile);
+          }
+        }
+      });
+      fileX = testlt().name
+    }
+    return mineField[Math.floor(Math.random() * (Math.floor(mineField.length)))];
   } else {
     var treeRoot = DriveApp.getRootFolder().getFiles();
     while (treeRoot.hasNext()) {

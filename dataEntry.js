@@ -249,7 +249,10 @@ function pdfTimesheet() {
  */
 function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
   try {
-    const ss = SpreadsheetApp.openByUrl(spreadsheetUrl);
+    spreadsheetUrl? spreadsheetUrl = spreadsheetUrl:spreadsheetUrl = SpreadsheetApp.openById(sheetsUrls()).getUrl();
+    console.log("SpreadsheetApp.openByUrl(sheetsUrls()[0]) ", sheetsUrls())
+    var ss =  SpreadsheetApp?.openByUrl(spreadsheetUrl);
+    sheetname? sheetname = sheetname:sheetname = ss.getSheetName()
     const sheet = ss.getSheetByName(sheetname);
 
     if (!sheet) {
@@ -266,39 +269,75 @@ function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
     }
 
     // Generate the URL for the PDF of the single sheet
-    const url =
-      `https://docs.google.com/spreadsheets/d/${ss.getId()}/export?` +
-      `format=pdf&` +
-      `gid=${sheet.getSheetId()}&` +
-      `portrait=true&` +
-      `fitw=true&` +
-      `size=A4`;
-
+    const url = `https://docs.google.com/spreadsheets/d/${ss.getId()}/export?` +
+                `format=pdf&` +
+                `gid=${sheet.getSheetId()}&` +
+                `portrait=true&` +
+                `fitw=true&` +
+                `size=A4`;
+    
     // Fetch the PDF blob
     const token = ScriptApp.getOAuthToken();
     const response = UrlFetchApp.fetch(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`
       },
-      muteHttpExceptions: true,
+      muteHttpExceptions: true
     });
 
     if (response.getResponseCode() !== 200) {
-      throw new Error(
-        `Failed to fetch PDF. Response code: ${response.getResponseCode()}`,
-      );
+      throw new Error(`Failed to fetch PDF. Response code: ${response.getResponseCode()}`);
     }
 
     const pdfBlob = response.getBlob().setName(`${sheetname}.pdf`);
 
     // Create the file in the folder and return its URL
     const pdfFile = pdfFolder.createFile(pdfBlob);
-
+    
     Logger.log(`PDF created for sheet "${sheetname}" at: ${pdfFile.getUrl()}`);
-
+    
     return pdfFile.getUrl();
+    
   } catch (error) {
     Logger.log("Error in saveAsPDFToFolder: " + error.toString());
     throw error; // Re-throw to be handled by the caller
   }
 }
+
+/**
+ * Creates a PDF invoice from a Google Doc template.
+ * @param {object} orderData The data for the quote.
+ * @return {string} The URL of the generated PDF file.
+ */
+function createInvoicePDF(orderData) {
+  const templateDocId = "YOUR_INVOICE_TEMPLATE_DOC_ID_HERE"; // ⚠️ Replace with your Google Doc ID
+  const outputFolderId = "YOUR_PDF_OUTPUT_FOLDER_ID_HERE"; // ⚠️ Replace with your Google Drive folder ID
+
+  // Open the template document
+  const doc = DocumentApp.openById(templateDocId);
+  const body = doc.getBody();
+
+  // Replace placeholders in the document with actual data
+  // Example placeholders: {{date}}, {{car}}, {{total}}, {{delAddr}}, etc.
+  body.replaceText("{{date}}", orderData.date);
+  body.replaceText("{{car}}", orderData.car);
+  body.replaceText("{{vinSTK}}", orderData.vinSTK);
+  body.replaceText("{{delAddr}}", orderData.delAddr);
+  body.replaceText("{{pickAddr}}", orderData.pickAddr);
+  body.replaceText("{{lab}}", `$${parseFloat(orderData.lab).toFixed(2)}`);
+  body.replaceText("{{gas}}", `$${parseFloat(orderData.gas).toFixed(2)}`);
+  body.replaceText("{{total}}", `$${parseFloat(orderData.total).toFixed(2)}`);
+  body.replaceText("{{delTime}}", orderData.delTime);
+
+  // Save the temporary doc as a PDF
+  const pdfFile = doc.saveAndClose().getAs("application/pdf");
+  const folder = DriveApp.getFolderById(outputFolderId);
+  const file = folder.createFile(pdfFile).setName(`Invoice_${orderData.vinSTK}.pdf`);
+
+  // Log and return the PDF file URL
+  console.log("Invoice PDF created: " + file.getUrl());
+  return file.getUrl();
+}
+
+// ⚠️ Note: You will need to create a Google Doc with placeholders like {{date}}, {{car}}, etc.,
+// and a folder in Google Drive to store the PDFs.

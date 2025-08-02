@@ -650,7 +650,8 @@ var crmGWI = function (fx) {
             <input type="text" id="delPick" name="delPick"><br><br>
 
             <label for="vinSTK" style="font-size: 1em">Vin/STK#:</label>
-            <input type="text" id="vinSTK" name="vinSTK"><br><br>
+            <input type="text" id="vinSTK" name="vinSTK">
+            <div id="vinSTKSuggestions" class="autocomplete-suggestions"></div><br><br>
 
             <label for="delAddr" style="font-size: 1em">Delivery Address:</label>
             <input type="text" id="delAddr" name="delAddr">
@@ -752,7 +753,7 @@ var crmGWI = function (fx) {
             if (response && response.type === "object") {
               fullList = response.data;
             } else {
-              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
               // Fallback to empty array if the structure is not as expected
               fullList = {};
             }
@@ -823,6 +824,9 @@ var crmGWI = function (fx) {
       // Setup Autocomplete for Pickup Address
       setupAutocomplete('pickAddr', 'pickAddrSuggestions', "Pickup address");
 
+      // Setup Autocomplete for Pickup Address
+      setupAutocomplete('vinSTK', 'vinSTKSuggestions', "Vin/Stk");
+
       // NEW: Calculate Costs button logic
       const calculateCostsBtn = document.getElementById('calculateCostsBtn');
       const delAddrInput = document.getElementById('delAddr');
@@ -871,7 +875,7 @@ var crmGWI = function (fx) {
                 if (response && response.type === "object") {
                   results = response.data;
                 } else {
-                  console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+                  console.warn("Expected an object with an array in 'data' from calculateTravelCosts, received:", response);
                   // Fallback to empty array if the structure is not as expected
                   results = {};
                 }
@@ -938,7 +942,29 @@ var crmGWI = function (fx) {
 
           // 2. Send data to a new server-side function
           serverside("acceptQuote", [JSON.stringify(formData)])
-            .then((submitResult) => {
+            .then((response) => { 
+                // Rename 'submitResult' to 'response' or 'payload' to avoid confusion
+                // Access the actual array from the 'data' property
+                let submitResult = {};
+                if (response && response.type === "object") {
+                  submitResult = response.data;
+                } else if (response && /<[a-z][\s\S]*>/i.test(response.data)) {
+                  submitResult = response.data
+                  try {
+                    document.open();
+                    document.write(submitResult);
+                    document.close();
+                    console.log("Client-side: Page re-rendered with new content from server.");
+                  } 
+                  catch (error) {
+                    console.error("Client-side Error during full re-render:", error);
+                    alert("Error re-rendering: " + error.message);
+                  }
+                } else {
+                  console.warn("Expected an object with an array in 'data' from acceptQuote, received:", response);
+                  // Fallback to empty array if the structure is not as expected
+                  submitResult = {};
+                }
               console.log('Quote accepted successfully:', submitResult);
               calculationStatusSpan.textContent = 'Quote Accepted!';
               alert('Quote accepted and submitted successfully!');
@@ -1075,45 +1101,45 @@ function workEd(ed) {
 //   let formData;
 //   try {
 //     if (!formDataJson) {
-// formData = JSON.parse(
-//   convertToObjects(
-//     [[arguments.callee.name]],
-//     ["name"],
-//     functionRegistry.time,
-//   ),
-// )[0];
-// console.log("Fake formData for quote acceptance:", formData);
+      // formData = JSON.parse(
+      //   convertToObjects(
+      //     [[arguments.callee.name]],
+      //     ["name"],
+      //     functionRegistry.time,
+      //   ),
+      // )[0];
+      // console.log("Fake formData for quote acceptance:", formData);
 //     } else {
 //       formData = JSON.parse(formDataJson);
 //       console.log("Received formData for quote acceptance:", formData);
 //     }
-// // Get form data from the request
-// var arrayData = covArrays(formData);
-// var colArray = [];
-// const keys = Object.keys(formData);
-// keys.forEach(function (key) {
-//   console.log(key);
-//   colArray.push(JSON.stringify(key));
-// });
-// var dataName = {
-//   message: {
-//     info: formData,
-//   },
-//   timestamp: new Date(),
-// };
-// const name = dataName.message.info["delAddr"];
-// const rawSpreadSheet = spreadSheetCreate(
-//   name,
-//   name,
-//   colArray,
-//   arrayData,
-//   start,
-// );
-// console.log(
-//   "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
-//   rawSpreadSheet.myFileX,
-// );
-//     const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
+    // // Get form data from the request
+    // var arrayData = covArrays(formData);
+    // var colArray = [];
+    // const keys = Object.keys(formData);
+    // keys.forEach(function (key) {
+    //   console.log(key);
+    //   colArray.push(JSON.stringify(key));
+    // });
+    // var dataName = {
+    //   message: {
+    //     info: formData,
+    //   },
+    //   timestamp: new Date(),
+    // };
+    // const name = dataName.message.info["delAddr"];
+    // const rawSpreadSheet = spreadSheetCreate(
+    //   name,
+    //   name,
+    //   colArray,
+    //   arrayData,
+    //   start,
+    // );
+    // console.log(
+    //   "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
+    //   rawSpreadSheet.myFileX,
+    // );
+    // const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
 
 //     // --- Your Logic Here ---
 
@@ -1122,46 +1148,46 @@ function workEd(ed) {
 //     const sheetName = ss.getSheetName() || "Accepted Quotes"; // Or your main data sheet
 //     const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
 
-// if (!sheet) {
-//   throw new Error(
-//     `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
-//   );
-// }
+    // if (!sheet) {
+    //   throw new Error(
+    //     `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
+    //   );
+    // }
 
-// // Append a new row with the accepted quote data
-// // You'll need to map your formData keys to sheet columns
-// const headerRow = sheet
-//   .getRange(1, 1, 1, sheet.getLastColumn())
-//   .getValues()[0];
-// const newRow = [];
+    // // Append a new row with the accepted quote data
+    // // You'll need to map your formData keys to sheet columns
+    // const headerRow = sheet
+    //   .getRange(1, 1, 1, sheet.getLastColumn())
+    //   .getValues()[0];
+    // const newRow = [];
 
-// // Example mapping: populate newRow based on headerRow and formData
-// // This is a robust way to ensure data goes into correct columns
-// headerRow.forEach((header) => {
-//   const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
-//   if (formData.hasOwnProperty(key)) {
-//     newRow.push(formData[key]);
-//   } else {
-//     // Handle cases where a form field doesn't directly map to a header
-//     // Or if you want to add static data like a timestamp
-//     if (header === "Timestamp") {
-//       newRow.push(new Date());
-//     } else if (header === "Status") {
-//       newRow.push("Quote Accepted");
-//     } else {
-//       newRow.push(""); // Empty for unmapped columns
-//     }
-//   }
-// });
+    // // Example mapping: populate newRow based on headerRow and formData
+    // // This is a robust way to ensure data goes into correct columns
+    // headerRow.forEach((header) => {
+    //   const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+    //   if (formData.hasOwnProperty(key)) {
+    //     newRow.push(formData[key]);
+    //   } else {
+    //     // Handle cases where a form field doesn't directly map to a header
+    //     // Or if you want to add static data like a timestamp
+    //     if (header === "Timestamp") {
+    //       newRow.push(new Date());
+    //     } else if (header === "Status") {
+    //       newRow.push("Quote Accepted");
+    //     } else {
+    //       newRow.push(""); // Empty for unmapped columns
+    //     }
+    //   }
+    // });
 
-// // A simpler (less robust against column changes) way if you know exact order:
-// // newRow.push(formData.date);
-// // newRow.push(formData.car);
-// // newRow.push(formData.delPick);
-// // // ... and so on for all your fields
-// // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
-// // newRow.push(formData.gas);
-// // newRow.push(formData.total);
+    // // A simpler (less robust against column changes) way if you know exact order:
+    // // newRow.push(formData.date);
+    // // newRow.push(formData.car);
+    // // newRow.push(formData.delPick);
+    // // // ... and so on for all your fields
+    // // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
+    // // newRow.push(formData.gas);
+    // // newRow.push(formData.total);
 
 //     sheet.appendRow(newRow);
 //     console.log("Quote data appended to sheet:", sheetName);
@@ -1216,7 +1242,7 @@ function acceptQuote(formDataJson) {
       formData = JSON.parse(formDataJson);
       console.log("Received formData for quote acceptance:", formData);
     }
-
+    
     // ... (your existing code to get keys, create the new spreadsheet)
     // Get form data from the request
     var arrayData = covArrays(formData);
@@ -1233,9 +1259,10 @@ function acceptQuote(formDataJson) {
       timestamp: new Date(),
     };
     const name = dataName.message.info["delAddr"];
+    const sheetId = dataName.message.info["Vin/STK"];
     const rawSpreadSheet = spreadSheetCreate(
       name,
-      name,
+      sheetId,
       colArray,
       arrayData,
       start,
@@ -1244,16 +1271,17 @@ function acceptQuote(formDataJson) {
       "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
       rawSpreadSheet.myFileX,
     );
+    const ss = SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX);
     // Assuming `rawSpreadSheet.myFileX` is the URL of your new spreadsheet
     // and `ss.getSheetName()` is the name of the sheet you want to PDF.
     const newSpreadsheetUrl = rawSpreadSheet.myFileX;
     const sheetToPDF = ss.getSheetName() || "Accepted Quotes";
-
+    
     // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
     const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
     console.log("Invoice PDF generated at: " + invoicePdfUrl);
     // --- END OF NEW CODE ---
-
+    
     // ... (your existing code to append row to the main sheet)
     const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE";
     const sheetName = ss.getSheetName() || "Accepted Quotes";
@@ -1300,7 +1328,7 @@ function acceptQuote(formDataJson) {
     // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
     // newRow.push(formData.gas);
     // newRow.push(formData.total);
-
+    
     sheet.appendRow(newRow);
     console.log("Quote data appended to sheet:", sheetName);
 
@@ -1314,9 +1342,11 @@ function acceptQuote(formDataJson) {
     //   // Note: You can't directly attach a URL, but linking to it is effective.
     // });
     // console.log('Email confirmation sent.');
-
+    
     // You can return the PDF URL to the client-side for them to display or download.
-    return invoicePdfUrl;
+    return renderFile("slideCard",formData, "Success")
+    return invoicePdfUrl; 
+
   } catch (error) {
     console.error("Error in acceptQuote:", error);
     throw new Error("Failed to process quote acceptance: " + error.message);
