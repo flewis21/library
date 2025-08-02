@@ -132,9 +132,7 @@
 
     <script>
       // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
-      const SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbw5BDE31vSn1VDu7J80EvH-dCEeBCfP4gF7g_YkF3MP6VmbPAXIFRhl8PriKjf_Skoz/exec" ||
-        "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+      const SCRIPT_URL = <?= getScriptUrl() ?> || "YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
       const cardForm = document.getElementById("cardForm");
       const formMessage = document.getElementById("form-message");

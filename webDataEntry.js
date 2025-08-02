@@ -152,201 +152,202 @@ var chaseFunction = function (xfactor) {
     return dx[0];
   });
   var arrayJobs = JSON.parse(convertToObjects(data, headerFactor));
-  console.log(
-    "JSON.parse(convertToObjects(data, headerFactor))",
-    [arrayJobs][0][0],
-  );
+  console.log("JSON.parse(convertToObjects(data, headerFactor))", [arrayJobs][0][0])
   if (xfactor) {
-    if ([xfactor].join("").toLowerCase() === ["Date"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Date"];
-        if ([neatR].join("").length > 0) {
-          var friendNeat = new Date(neatR).toDateString(); // .toLocaleString()// .toLocaleDateString()
-          booleFactor.push(friendNeat);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() === ["Date"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Date"];
+          if ([neatR].join("").length > 0) {
+            var friendNeat = new Date(neatR).toDateString(); // .toLocaleString()// .toLocaleDateString()
+            booleFactor.push(friendNeat);
+          }
+        });
 
-      return JSON.stringify(booleFactor);
-    }
+        return JSON.stringify(booleFactor);
+      }
 
-    if ([xfactor].join("").toLowerCase() === ["Car"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Car"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if ([xfactor].join("").toLowerCase() === ["Car"].join("").toLowerCase()) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Car"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Delivery/Pickup"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Delivery/Pickup"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Delivery/Pickup"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Delivery/Pickup"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() === ["Vin/Stk"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Vin/Stk"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() === ["Vin/Stk"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Vin/Stk"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Delivery Address"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Delivery Address"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Delivery Address"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Delivery Address"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if ([xfactor].join("").toLowerCase() === ["Lab"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Lab"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if ([xfactor].join("").toLowerCase() === ["Lab"].join("").toLowerCase()) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Lab"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if ([xfactor].join("").toLowerCase() === ["Gas"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Gas"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if ([xfactor].join("").toLowerCase() === ["Gas"].join("").toLowerCase()) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Gas"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if ([xfactor].join("").toLowerCase() === ["Total"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Total"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() === ["Total"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Total"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Delivery Time (hours)"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Delivery Time (hours)"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Delivery Time (hours)"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Delivery Time (hours)"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Pickup address"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Pickup address"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Pickup address"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Pickup address"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if ([xfactor].join("").toLowerCase() === ["id"].join("").toLowerCase()) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["id"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if ([xfactor].join("").toLowerCase() === ["id"].join("").toLowerCase()) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["id"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Search Column"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Search Column"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Search Column"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Search Column"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() ===
-      ["Sales Person"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Sales Person"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() ===
+        ["Sales Person"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Sales Person"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
 
-    if (
-      [xfactor].join("").toLowerCase() === ["Complete"].join("").toLowerCase()
-    ) {
-      var booleFactor = [];
-      [arrayJobs][0].map((dx) => {
-        var neatR = dx["Complete"];
-        if ([neatR].join("").length > 0) {
-          booleFactor.push(neatR);
-        }
-      });
+      if (
+        [xfactor].join("").toLowerCase() === ["Complete"].join("").toLowerCase()
+      ) {
+        var booleFactor = [];
+        [arrayJobs][0].map((dx) => {
+          var neatR = dx["Complete"];
+          if ([neatR].join("").length > 0) {
+            booleFactor.push(neatR);
+          }
+        });
 
-      return booleFactor;
-    }
+        return booleFactor;
+      }
   }
 
   var booleFactor = [];

@@ -2872,7 +2872,9 @@ var isValidUrl = function (text) {
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: )\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +
