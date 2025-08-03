@@ -315,19 +315,19 @@ var contentCDN = function (url, argsObject) {
 };
 
 var contentFile = function (file, argsObject) {
-  console.log("contentFile = function (file, argsObject) ", file, argsObject)
+  console.log("contentFile = function (file, argsObject) ", file, argsObject);
   try {
     const tmp = HtmlService.createTemplateFromFile(
       ContentService.createTextOutput(file)
         .setMimeType(ContentService.MimeType.JSON)
         .getContent(),
     );
-  console.log(
-    "boilerplate render: line 326\ncontentFile(tmp: " +
-      JSON.stringify(tmp) +
-      ")\n" +
-      arguments.callee.caller.name,
-  );
+    console.log(
+      "boilerplate render: line 326\ncontentFile(tmp: " +
+        JSON.stringify(tmp) +
+        ")\n" +
+        arguments.callee.caller.name,
+    );
     if (argsObject) {
       const keys = Object.keys(argsObject);
       console.log(
