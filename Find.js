@@ -285,10 +285,7 @@ var matchManager = function (folderX, narrow, time) {
             docList.push(file.getName());
           } else if (mimeType === MimeType.GOOGLE_SLIDES) {
             slideList.push(file.getName());
-          } else if (
-            folderX === "Sheets" &&
-            mimeType === MimeType.GOOGLE_SHEETS
-          ) {
+          } else if (folderX === "Sheets" && mimeType === MimeType.GOOGLE_SHEETS) {
             sheetList.push(file.getName());
           } else if (mimeType === MimeType.GOOGLE_FORMS) {
             formList.push(file.getName());

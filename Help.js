@@ -2259,7 +2259,7 @@ var misSt = function (func, someArgs) {
     }
   });
 
-  let holdResolvedArgsX = [];
+  let holdResolvedArgsX;
 
   if (argsX.length > 0) {
     // Check if there are functions to process
@@ -2308,6 +2308,38 @@ var misSt = function (func, someArgs) {
           .toString()
           .split(" ");
         var allFolders = functionRegistry.getFolderList();
+        if (!payLoad) {
+          var rndE = objectOfS(
+            ["parameter"],
+            [
+              [
+                ["func", result],
+                ["args", [...initialContent]],
+              ],
+            ],
+            functionRegistry.time,
+          );
+          var funcUnoMis = rndE.parameter["func"];
+          var funcDosMis = rndE.parameter["args"];
+          var payLoad = null; // Initialize payLoad
+
+          // Ensure globalThis[funcUnoMis] exists before calling
+          if ((funcUnoMis.indexOf("mis") !== -1 || funcDosMis.indexOf("mis") !== -1 )|| (funcUnoMis.indexOf("misSt") !== -1 || funcDosMis.indexOf("misSt") !== -1)) {
+            // Prevent infinite recursion
+            console.warn(
+              "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+            );
+            payLoad = "Recursive call prevented.";
+          } else if (typeof globalThis[funcUnoMis] === "function") {
+            payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+          } else {
+            console.warn(
+              "Function for 'data' parameter not found:",
+              funcUnoMis,
+            );
+            payLoad = "Function not found for data generation.";
+          }
+        }
 
         initialContent.forEach((item) => {
           console.log(
@@ -2404,36 +2436,36 @@ var misSt = function (func, someArgs) {
             ) {
               args["data"] = userProvidedValue;
             } else {
-              var rndE = objectOfS(
-                ["parameter"],
-                [
-                  [
-                    ["func", "mis"],
-                    ["args", [result, ...initialContent]],
-                  ],
-                ],
-                functionRegistry.time,
-              );
-              var funcUnoMis = rndE.parameter["func"];
-              var funcDosMis = rndE.parameter["args"];
-              var payLoad = null; // Initialize payLoad
+              // var rndE = objectOfS(
+              //   ["parameter"],
+              //   [
+              //     [
+              //       ["func", "mis"],
+              //       ["args", [result, ...initialContent]],
+              //     ],
+              //   ],
+              //   functionRegistry.time,
+              // );
+              // var funcUnoMis = rndE.parameter["func"];
+              // var funcDosMis = rndE.parameter["args"];
+              // var payLoad = null; // Initialize payLoad
 
-              // Ensure globalThis[funcUnoMis] exists before calling
-              if (funcUnoMis === "misSt") {
-                // Prevent infinite recursion
-                console.warn(
-                  "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
-                );
-                payLoad = "Recursive call prevented.";
-              } else if (typeof globalThis[funcUnoMis] === "function") {
-                payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
-              } else {
-                console.warn(
-                  "Function for 'data' parameter not found:",
-                  funcUnoMis,
-                );
-                payLoad = "Function not found for data generation.";
-              }
+              // // Ensure globalThis[funcUnoMis] exists before calling
+              // if (funcUnoMis === "misSt") {
+              //   // Prevent infinite recursion
+              //   console.warn(
+              //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+              //   );
+              //   payLoad = "Recursive call prevented.";
+              // } else if (typeof globalThis[funcUnoMis] === "function") {
+              //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+              // } else {
+              //   console.warn(
+              //     "Function for 'data' parameter not found:",
+              //     funcUnoMis,
+              //   );
+              //   payLoad = "Function not found for data generation.";
+              // }
 
               args["data"] = { message: payLoad, timestamp: new Date() };
             }
@@ -2589,7 +2621,7 @@ var misSt = function (func, someArgs) {
             args["file"] =
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
-              /<[a-z][\s\S]*>/i.test(userProvidedValue)
+              (/<[a-z][\s\S]*>/i.test(userProvidedValue) || typeof userProvidedValue === "string")
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
@@ -2664,13 +2696,12 @@ var misSt = function (func, someArgs) {
                 : appSort(numVarRnd); // Assuming appSort is accessible
             resolvedArgs.push(args["stringArray"]);
           } else if (declaredParamName === "argsObject") {
-            var rawVar = mis("VVar"); // Assuming 'mis' is accessible
             args["argsObject"] =
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
               Array.isArray(userProvidedValue)
                 ? userProvidedValue
-                : rawVar.app["myVar"];
+                : JSON.stringify({ message: payLoad, timestamp: new Date() });
             resolvedArgs.push(args["argsObject"]);
           } else {
             // Generic handler for other declared parameters not covered by specific logic
@@ -2703,7 +2734,7 @@ var misSt = function (func, someArgs) {
       );
       resCount++;
 
-      holdResolvedArgsX.push(resolvedArgs);
+      holdResolvedArgsX = resolvedArgs;
 
       // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
       // For now, it's scoped to each iteration.
@@ -2716,7 +2747,12 @@ var misSt = function (func, someArgs) {
   } else {
     console.log("No functions found to call in argsX.");
   }
-
+  console.log(
+    "misSt returned :\nfunc = " +
+      argsX +
+      ":\nargs = " +
+      holdResolvedArgsX.toString().replace(/,/g, " "),
+  );
   // --- Final Execution and Return ---
   // The previous structure was applying 'content' to the called functions.
   // Now, 'initialContent' holds the original args, and 'resolvedArgs' (from the loop) holds the processed args per function.
@@ -2745,7 +2781,7 @@ var misSt = function (func, someArgs) {
             lastResolvedArgs,
           );
           console.log(
-            `typeof ${typeof finalResultData}: finalResultData (from direct call)`,
+            `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
           );
         } catch (e) {
           console.error(
@@ -2872,7 +2908,9 @@ var isValidUrl = function (text) {
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: )\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +

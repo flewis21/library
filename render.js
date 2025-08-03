@@ -315,21 +315,45 @@ var contentCDN = function (url, argsObject) {
 };
 
 var contentFile = function (file, argsObject) {
-  const tmp = HtmlService.createTemplateFromFile(
-    ContentService.createTextOutput(file)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent(),
+  console.log("contentFile = function (file, argsObject) ", file, argsObject)
+  try {
+    const tmp = HtmlService.createTemplateFromFile(
+      ContentService.createTextOutput(file)
+        .setMimeType(ContentService.MimeType.JSON)
+        .getContent(),
+    );
+  console.log(
+    "boilerplate render: line 326\ncontentFile(tmp: " +
+      JSON.stringify(tmp) +
+      ")\n" +
+      arguments.callee.caller.name,
   );
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+    if (argsObject) {
+      const keys = Object.keys(argsObject);
+      console.log(
+        "boilerplate render: line 336\ncontentFile(keys: " +
+          keys[0] +
+          ")\n" +
+          arguments.callee.caller.name,
+      );
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
+    }
+    console.log(
+      "boilerplate render: line 348\ncontentFile(tmp: " +
+        JSON.stringify(tmp[0]) +
+        ")\n" +
+        arguments.callee.caller.name,
+    );
+    return tmp
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .getContent();
+  } catch (error) {
+    console.log("error in contentFile: " + error);
+    return "Error rendering template.";
   }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -341,37 +365,6 @@ var contentFile = function (file, argsObject) {
 // END IF
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
-
-function eTest() {
-  console.log(
-    Math.floor(functionRegistry.maxTime - functionRegistry.time / 1000),
-  );
-}
-
-globalThis.fiveTime = 5 * 59.9 * 1000;
-
-globalThis.fourTime = 4 * 59.9 * 1000;
-
-var include = function (file, argsObject) {
-  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const tmp = HtmlService.createHtmlOutputFromFile(file);
-  if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-
-    // tmp["list"] = htmlListArray;
-  } // END IF
-  // Route[file] = argsObject
-  return tmp
-    .asTemplate()
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
-    .getBlob()
-    .getDataAsString();
-};
 
 var defSBD = function (e) {
   var args = [
@@ -454,6 +447,12 @@ var defSBD = function (e) {
   }
 };
 
+function eTest() {
+  console.log(
+    Math.floor(functionRegistry.maxTime - functionRegistry.time / 1000),
+  );
+}
+
 var freeSBD = function (func) {
   try {
     if (typeof globalThis[func] == "function") {
@@ -519,6 +518,36 @@ var freeSBD = function (func) {
     throw new Error(
       "Could not create template from file or function: " + foobarr,
     );
+  }
+};
+
+globalThis.fiveTime = 5 * 59.9 * 1000;
+
+globalThis.fourTime = 4 * 59.9 * 1000;
+
+var include = function (file, argsObject) {
+  console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
+  try {
+    const tmp = HtmlService.createHtmlOutputFromFile(file);
+    if (argsObject) {
+      const keys = Object.keys(argsObject);
+
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
+
+      // tmp["list"] = htmlListArray;
+    } // END IF
+    // Route[file] = argsObject
+    return tmp
+      .asTemplate()
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
+      .getBlob()
+      .getDataAsString();
+  } catch (error) {
+    console.log("error in include: " + error);
+    return "Error rendering template.";
   }
 };
 
