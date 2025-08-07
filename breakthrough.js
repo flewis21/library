@@ -756,9 +756,11 @@ var rndTrial = function (infinitum) {
       trial.push({ tails: fin });
     }
 
-    while (coinHead !== coinTail && safetyCounter < MAX_TRIES) { // Add the safety check
+    while (coinHead !== coinTail && safetyCounter < MAX_TRIES) {
+      // Add the safety check
       judge++;
-      coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+      coin =
+        infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
       if (coin === fin) {
         coinHead++;
         trial.push({ heads: fin });
@@ -769,7 +771,7 @@ var rndTrial = function (infinitum) {
       safetyCounter++; // Increment the counter
     }
   });
-    // infinitum.map((fin) => {
+  // infinitum.map((fin) => {
   //   // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
   //   coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
   //   // if (coin === 1) {

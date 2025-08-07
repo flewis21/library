@@ -1570,26 +1570,29 @@ var sheetsUrls = function (fileX, folderX, time) {
       "\ntime is !" +
       !time +
       ", = " +
-       time,
+      time,
   );
   if (typeof fileX === "undefined") {
     var fileX = testlt().name;
   }
-  var fileNameList = matchManager(folderX? folderX:"Sheets", fileX);
+  var fileNameList = matchManager(folderX ? folderX : "Sheets", fileX);
   var mineField = [];
   if (fileNameList) {
     while (mineField.length === 0) {
       fileNameList.sheets.map((repo) => {
         if (repo.toLowerCase().includes([fileX].toString().toLowerCase())) {
           var mineFile = DriveApp.getFilesByName(repo).next().getId();
-          if (DriveApp.getFileById(mineFile).getMimeType() === MimeType.GOOGLE_SHEETS) {
+          if (
+            DriveApp.getFileById(mineFile).getMimeType() ===
+            MimeType.GOOGLE_SHEETS
+          ) {
             mineField.push(mineFile);
           }
         }
       });
-      fileX = testlt().name
+      fileX = testlt().name;
     }
-    return mineField[Math.floor(Math.random() * (Math.floor(mineField.length)))];
+    return mineField[Math.floor(Math.random() * Math.floor(mineField.length))];
   } else {
     var treeRoot = DriveApp.getRootFolder().getFiles();
     while (treeRoot.hasNext()) {

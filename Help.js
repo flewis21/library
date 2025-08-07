@@ -2380,7 +2380,12 @@ var misSt = function (func, someArgs) {
           var payLoad = null; // Initialize payLoad
 
           // Ensure globalThis[funcUnoMis] exists before calling
-          if ((funcUnoMis.indexOf("mis") !== -1 || funcDosMis.indexOf("mis") !== -1 )|| (funcUnoMis.indexOf("misSt") !== -1 || funcDosMis.indexOf("misSt") !== -1)) {
+          if (
+            funcUnoMis.indexOf("mis") !== -1 ||
+            funcDosMis.indexOf("mis") !== -1 ||
+            funcUnoMis.indexOf("misSt") !== -1 ||
+            funcDosMis.indexOf("misSt") !== -1
+          ) {
             // Prevent infinite recursion
             console.warn(
               "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
@@ -2677,7 +2682,8 @@ var misSt = function (func, someArgs) {
             args["file"] =
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
-              (/<[a-z][\s\S]*>/i.test(userProvidedValue) || typeof userProvidedValue === "string")
+              (/<[a-z][\s\S]*>/i.test(userProvidedValue) ||
+                typeof userProvidedValue === "string")
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
@@ -2964,9 +2970,7 @@ var isValidUrl = function (text) {
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
-  console.log(
-    "boilerplate : line \n(: )\n " + arguments.callee.caller.name,
-  );
+  console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +

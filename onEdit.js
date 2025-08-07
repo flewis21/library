@@ -162,11 +162,7 @@ function getSuggestions(partialAddress) {
 var kiloPoint = function (startCoord, end) {
   var rndStart = delAddress().startPoint;
   var rndEnd = delAddress().endPoint;
-  var path = chaseFunction(
-    startCoord || rndStart,
-    end || rndEnd,
-    "kilometers",
-  );
+  var path = chaseFunction(startCoord || rndStart, end || rndEnd, "kilometers");
   return path;
 };
 
@@ -201,11 +197,8 @@ var minutePoint = function (startCoord, end) {
   var rndStart = delAddress().startPoint;
   var rndEnd = delAddress().endPoint;
   var path =
-    chaseFunction(
-      startCoord || rndStart,
-      end || rndEnd,
-      "minutes",
-    ) + chaseFunction(end || rndEnd, start || rndStart, "minutes");
+    chaseFunction(startCoord || rndStart, end || rndEnd, "minutes") +
+    chaseFunction(end || rndEnd, start || rndStart, "minutes");
   return path;
 };
 
