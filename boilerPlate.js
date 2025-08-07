@@ -236,10 +236,7 @@ function objectOfS(keys, values, time) {
       acc[key][innerKey] = innerValue;
       // }
     });
-    console.log(
-      "values[index].forEach(([innerKey, innerValue]) => {acc[key][innerKey] = innerValue;}); ",
-      acc,
-    );
+    console.log("values[index].forEach(([innerKey, innerValue]) => {acc[key][innerKey] = innerValue;}); ", acc)
     return acc;
   }, {});
 }

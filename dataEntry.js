@@ -249,12 +249,10 @@ function pdfTimesheet() {
  */
 function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
   try {
-    spreadsheetUrl
-      ? (spreadsheetUrl = spreadsheetUrl)
-      : (spreadsheetUrl = SpreadsheetApp.openById(sheetsUrls()).getUrl());
-    console.log("SpreadsheetApp.openByUrl(sheetsUrls()[0]) ", sheetsUrls());
-    var ss = SpreadsheetApp?.openByUrl(spreadsheetUrl);
-    sheetname ? (sheetname = sheetname) : (sheetname = ss.getSheetName());
+    spreadsheetUrl? spreadsheetUrl = spreadsheetUrl:spreadsheetUrl = SpreadsheetApp.openById(sheetsUrls()).getUrl();
+    console.log("SpreadsheetApp.openByUrl(sheetsUrls()[0]) ", sheetsUrls())
+    var ss =  SpreadsheetApp?.openByUrl(spreadsheetUrl);
+    sheetname? sheetname = sheetname:sheetname = ss.getSheetName()
     const sheet = ss.getSheetByName(sheetname);
 
     if (!sheet) {
@@ -271,37 +269,35 @@ function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
     }
 
     // Generate the URL for the PDF of the single sheet
-    const url =
-      `https://docs.google.com/spreadsheets/d/${ss.getId()}/export?` +
-      `format=pdf&` +
-      `gid=${sheet.getSheetId()}&` +
-      `portrait=true&` +
-      `fitw=true&` +
-      `size=A4`;
-
+    const url = `https://docs.google.com/spreadsheets/d/${ss.getId()}/export?` +
+                `format=pdf&` +
+                `gid=${sheet.getSheetId()}&` +
+                `portrait=true&` +
+                `fitw=true&` +
+                `size=A4`;
+    
     // Fetch the PDF blob
     const token = ScriptApp.getOAuthToken();
     const response = UrlFetchApp.fetch(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`
       },
-      muteHttpExceptions: true,
+      muteHttpExceptions: true
     });
 
     if (response.getResponseCode() !== 200) {
-      throw new Error(
-        `Failed to fetch PDF. Response code: ${response.getResponseCode()}`,
-      );
+      throw new Error(`Failed to fetch PDF. Response code: ${response.getResponseCode()}`);
     }
 
     const pdfBlob = response.getBlob().setName(`${sheetname}.pdf`);
 
     // Create the file in the folder and return its URL
     const pdfFile = pdfFolder.createFile(pdfBlob);
-
+    
     Logger.log(`PDF created for sheet "${sheetname}" at: ${pdfFile.getUrl()}`);
-
+    
     return pdfFile.getUrl();
+    
   } catch (error) {
     Logger.log("Error in saveAsPDFToFolder: " + error.toString());
     throw error; // Re-throw to be handled by the caller
@@ -336,9 +332,7 @@ function createInvoicePDF(orderData) {
   // Save the temporary doc as a PDF
   const pdfFile = doc.saveAndClose().getAs("application/pdf");
   const folder = DriveApp.getFolderById(outputFolderId);
-  const file = folder
-    .createFile(pdfFile)
-    .setName(`Invoice_${orderData.vinSTK}.pdf`);
+  const file = folder.createFile(pdfFile).setName(`Invoice_${orderData.vinSTK}.pdf`);
 
   // Log and return the PDF file URL
   console.log("Invoice PDF created: " + file.getUrl());

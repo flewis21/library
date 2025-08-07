@@ -955,7 +955,11 @@ var mis = function (text, maxRetries = 3) {
           form.addSectionHeaderItem().setTitle(earlyReturn);
           if (Math.random() < 0.7) {
             form.addTextItem().setTitle("Your Name").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
             form.addDateItem().setTitle("Birth Date").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
             form
               .addParagraphTextItem()
               .setTitle("Your Message")
@@ -1057,10 +1061,20 @@ var mis = function (text, maxRetries = 3) {
       } else {
         form.addSectionHeaderItem().setTitle("No Function Found");
       }
-      form.addSectionHeaderItem().setTitle(supFunc.res);
+      if (supFunc && supFunc.res) {
+        if (typeof supFunc.res === "object") {
+          form.addSectionHeaderItem().setTitle(JSON.stringify(supFunc.res));
+        } else {
+          form.addSectionHeaderItem().setTitle(supFunc.res);
+        }
+      }
       if (Math.random() < 0.7) {
         form.addTextItem().setTitle("Your Name").setRequired(true);
+      }
+      if (Math.random() < 0.7) {
         form.addDateItem().setTitle("Birth Date").setRequired(true);
+      }
+      if (Math.random() < 0.7) {
         form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
       }
       form.setConfirmationMessage("Thanks for your feedback !!");
@@ -1128,6 +1142,8 @@ var mis = function (text, maxRetries = 3) {
         form.addSectionHeaderItem().setTitle(htmlData);
         if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Industry").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Sector").setRequired(true);
         }
         form
@@ -1141,7 +1157,11 @@ var mis = function (text, maxRetries = 3) {
           .setRequired(false);
         if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Stock Price").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
         }
         form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
@@ -1152,7 +1172,11 @@ var mis = function (text, maxRetries = 3) {
             .addTextItem()
             .setTitle("Cash & Marketable Securities")
             .setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Inventories").setRequired(true);
         }
         form.addTextItem().setTitle("Long-term Investments").setRequired(false);
@@ -1177,7 +1201,11 @@ var mis = function (text, maxRetries = 3) {
           .setRequired(false);
         if (Math.random() < 0.7) {
           form.addTextItem().setTitle("Your Name").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form.addDateItem().setTitle("Birth Date").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
           form
             .addParagraphTextItem()
             .setTitle("Your Message")
@@ -1255,7 +1283,9 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("Redirect occurred\n" + htmlData);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Industry").setRequired(true);
-                  form.addTextItem().setTitle("Sector").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
+                  form.addTextItem().setTitle("Industry").setRequired(true);
                 }
                 form
                   .addParagraphTextItem()
@@ -1268,10 +1298,14 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Stock Price").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Outstanding Shares")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Quarterly Earnings")
@@ -1291,10 +1325,14 @@ var mis = function (text, maxRetries = 3) {
                     .addTextItem()
                     .setTitle("Cash & Marketable Securities")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Accounts Receivable")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Inventories").setRequired(true);
                 }
                 form
@@ -1322,7 +1360,11 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Your Name").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form.addDateItem().setTitle("Birth Date").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addParagraphTextItem()
                     .setTitle("Your Message")
@@ -1369,6 +1411,8 @@ var mis = function (text, maxRetries = 3) {
                   .setTitle("No redirect or other error\n" + htmlData);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Industry").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Sector").setRequired(true);
                 }
                 form
@@ -1382,10 +1426,14 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Stock Price").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Outstanding Shares")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Quarterly Earnings")
@@ -1405,10 +1453,14 @@ var mis = function (text, maxRetries = 3) {
                     .addTextItem()
                     .setTitle("Cash & Marketable Securities")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addTextItem()
                     .setTitle("Accounts Receivable")
                     .setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Inventories").setRequired(true);
                 }
                 form
@@ -1436,7 +1488,11 @@ var mis = function (text, maxRetries = 3) {
                   .setRequired(false);
                 if (Math.random() < 0.7) {
                   form.addTextItem().setTitle("Your Name").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form.addDateItem().setTitle("Birth Date").setRequired(true);
+                }
+                if (Math.random() < 0.7) {
                   form
                     .addParagraphTextItem()
                     .setTitle("Your Message")
@@ -2324,12 +2380,7 @@ var misSt = function (func, someArgs) {
           var payLoad = null; // Initialize payLoad
 
           // Ensure globalThis[funcUnoMis] exists before calling
-          if (
-            funcUnoMis.indexOf("mis") !== -1 ||
-            funcDosMis.indexOf("mis") !== -1 ||
-            funcUnoMis.indexOf("misSt") !== -1 ||
-            funcDosMis.indexOf("misSt") !== -1
-          ) {
+          if ((funcUnoMis.indexOf("mis") !== -1 || funcDosMis.indexOf("mis") !== -1 )|| (funcUnoMis.indexOf("misSt") !== -1 || funcDosMis.indexOf("misSt") !== -1)) {
             // Prevent infinite recursion
             console.warn(
               "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
@@ -2626,8 +2677,7 @@ var misSt = function (func, someArgs) {
             args["file"] =
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
-              (/<[a-z][\s\S]*>/i.test(userProvidedValue) ||
-                typeof userProvidedValue === "string")
+              (/<[a-z][\s\S]*>/i.test(userProvidedValue) || typeof userProvidedValue === "string")
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
@@ -2914,7 +2964,9 @@ var isValidUrl = function (text) {
   return validUrlResult;
 };
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate : line \n(: )\n " + arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +

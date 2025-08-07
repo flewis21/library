@@ -238,7 +238,9 @@ var contentApp = function (blob, argsObject) {
       .getContent();
   } catch (error) {
     console.log("error in contentApp: " + error);
-    return "Error rendering template.";
+    throw new Error(
+      "Error in contentApp html: " + error.toString() + "\n" + error.stack
+    );
   }
 }; // or throw error.
 
@@ -315,19 +317,19 @@ var contentCDN = function (url, argsObject) {
 };
 
 var contentFile = function (file, argsObject) {
-  console.log("contentFile = function (file, argsObject) ", file, argsObject);
+  console.log("contentFile = function (file, argsObject) ", file, argsObject)
   try {
     const tmp = HtmlService.createTemplateFromFile(
       ContentService.createTextOutput(file)
         .setMimeType(ContentService.MimeType.JSON)
         .getContent(),
     );
-    console.log(
-      "boilerplate render: line 326\ncontentFile(tmp: " +
-        JSON.stringify(tmp) +
-        ")\n" +
-        arguments.callee.caller.name,
-    );
+  console.log(
+    "boilerplate render: line 326\ncontentFile(tmp: " +
+      JSON.stringify(tmp) +
+      ")\n" +
+      arguments.callee.caller.name,
+  );
     if (argsObject) {
       const keys = Object.keys(argsObject);
       console.log(
@@ -352,7 +354,9 @@ var contentFile = function (file, argsObject) {
       .getContent();
   } catch (error) {
     console.log("error in contentFile: " + error);
-    return "Error rendering template.";
+    throw new Error(
+      "Error in contentFile html: " + error.toString() + "\n" + error.stack
+    );
   }
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -547,7 +551,9 @@ var include = function (file, argsObject) {
       .getDataAsString();
   } catch (error) {
     console.log("error in include: " + error);
-    return "Error rendering template.";
+    throw new Error(
+      "Error in include html: " + error.toString() + "\n" + error.stack
+    );
   }
 };
 
@@ -669,7 +675,7 @@ var includeGSFile = function (file, argsArray) {
       : console.error("keys = " + typeof keys);
   } catch (error) {
     console.error(error);
-    return "Error in includeGSFile appJS " + error;
+    throw new Error("Error in includeGSFile appJS: " + error.toString() + "\n" + error.stack);
   }
   if (argsArray) {
     try {
@@ -681,7 +687,7 @@ var includeGSFile = function (file, argsArray) {
         : console.error("keys = " + typeof keys);
     } catch (error) {
       console.error(error);
-      return "Error in includeGSFile args " + error;
+      throw new Error("Error in includeGSFile args: " + error.toString() + "\n" + error.stack);
     }
   }
   try {
@@ -1298,7 +1304,9 @@ var renderFile = function (file, argsObject, title) {
     }
   } catch (error) {
     console.log("error in renderTemplate: " + error);
-    return "Error rendering template.";
+    throw new Error(
+      "Error in renderFile html: " + error.toString() + "\n" + error.stack
+    );
   }
 };
 
@@ -1796,8 +1804,8 @@ var renderTemplate = function (blob, argsObject, title) {
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);
-    return (
-      "Error in rendertemplate html: " + errortoString() + "\n" + error.stack
+    throw new Error(
+      "Error in rendertemplate html: " + error.toString() + "\n" + error.stack
     );
   }
   return tmp

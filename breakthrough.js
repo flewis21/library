@@ -1,6 +1,6 @@
 var breakthrough = function (chance, time) {
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -16,7 +16,7 @@ var breakthrough = function (chance, time) {
   var rndUsername = objectOfS(
     ["parameter"],
     [[["func", arguments.callee.name]]],
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+    time,
   ).parameter["func"];
   var noChance =
     rndUsername[Math.floor(Math.random() * Math.floor(rndUsername.length))];
@@ -742,59 +742,86 @@ var rndTrial = function (infinitum) {
     console.log(typeof [infinitum] + " " + infinitum);
   }
   var coin;
+
+  var safetyCounter = 0; // Initialize a safety counter
+  const MAX_TRIES = 10000; // Set a reasonable maximum number of iterations
+
   infinitum.map((fin) => {
-    // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
     coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
-    // if (coin === 1) {
-    //   coinHead++
-    // trial.push({
-    //   heads: fin})}
-    // else {
-    //   coinTail++
-    // trial.push({
-    //   tails: fin})}
     if (coin === fin) {
       coinHead++;
-      trial.push({
-        heads: fin,
-      });
+      trial.push({ heads: fin });
     } else {
       coinTail++;
-      trial.push({
-        tails: fin,
-      });
+      trial.push({ tails: fin });
     }
-    while (coinHead !== coinTail) {
+
+    while (coinHead !== coinTail && safetyCounter < MAX_TRIES) { // Add the safety check
       judge++;
-      // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
-      coin =
-        infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
-      // if (coin === 1) {
-      //   coinHead++
-      // trial.push({
-      //   heads: fin})}
-      // else {
-      //   coinTail++
-      // trial.push({
-      //   tails: fin})}
+      coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
       if (coin === fin) {
         coinHead++;
-        trial.push({
-          heads: fin,
-        });
+        trial.push({ heads: fin });
       } else {
         coinTail++;
-        trial.push({
-          tails: fin,
-        });
+        trial.push({ tails: fin });
       }
-      // if (trial[0]["heads"] && trial[judge]["tails"] || trial[0]["tails"] && trial[judge]["heads"]){
-      // break}
-      // else {
-      // for (var i=judge,l=trial.length;i<l;i++) {
-      //   console.log(JSON.stringify(trial[judge])) }}
+      safetyCounter++; // Increment the counter
     }
   });
+    // infinitum.map((fin) => {
+  //   // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
+  //   coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+  //   // if (coin === 1) {
+  //   //   coinHead++
+  //   // trial.push({
+  //   //   heads: fin})}
+  //   // else {
+  //   //   coinTail++
+  //   // trial.push({
+  //   //   tails: fin})}
+  //   if (coin === fin) {
+  //     coinHead++;
+  //     trial.push({
+  //       heads: fin,
+  //     });
+  //   } else {
+  //     coinTail++;
+  //     trial.push({
+  //       tails: fin,
+  //     });
+  //   }
+  //   while (coinHead !== coinTail) {
+  //     judge++;
+  //     // coin = [0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))]
+  //     coin =
+  //       infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
+  //     // if (coin === 1) {
+  //     //   coinHead++
+  //     // trial.push({
+  //     //   heads: fin})}
+  //     // else {
+  //     //   coinTail++
+  //     // trial.push({
+  //     //   tails: fin})}
+  //     if (coin === fin) {
+  //       coinHead++;
+  //       trial.push({
+  //         heads: fin,
+  //       });
+  //     } else {
+  //       coinTail++;
+  //       trial.push({
+  //         tails: fin,
+  //       });
+  //     }
+  //     // if (trial[0]["heads"] && trial[judge]["tails"] || trial[0]["tails"] && trial[judge]["heads"]){
+  //     // break}
+  //     // else {
+  //     // for (var i=judge,l=trial.length;i<l;i++) {
+  //     //   console.log(JSON.stringify(trial[judge])) }}
+  //   }
+  // });
   console.log(trial);
   // console.log("Delete this comment");
   // return trial
@@ -824,6 +851,57 @@ var rndTrial = function (infinitum) {
   });
   return formUrl;
 };
+
+// var rndTrial = function (infinitum) {
+//   var trial = [];
+//   var coinHead = 0;
+//   var coinTail = 0;
+//   var maxTosses = 1000; // Define a maximum number of tosses to prevent an infinite loop
+
+//   if (!infinitum) {
+//     infinitum = [0, 1];
+//   } else {
+//     infinitum = infinitum.split(" ");
+//   }
+
+//   // Simulate coin tosses up to a maximum limit
+//   for (let i = 0; i < maxTosses; i++) {
+//     let coin = infinitum[Math.floor(Math.random() * infinitum.length)];
+//     let result = (coin === infinitum[0]) ? { heads: coin } : { tails: coin };
+//     trial.push(result);
+
+//     if (result.heads) {
+//       coinHead++;
+//     } else {
+//       coinTail++;
+//     }
+
+//     // You can add a break condition here if needed, but it's risky
+//     if (coinHead === coinTail && coinHead > 0) {
+//       console.log(`Equal heads and tails reached after ${i + 1} tosses.`);
+//       break;
+//     }
+//   }
+
+//   // ... rest of the code to create the form ...
+//   var form = FormApp.create("Coin Trial").setDescription(
+//     trial.length + " Tosses",
+//   );
+//   var formUrl = form.getPublishedUrl();
+
+//   // You would need to re-write the mapping logic for the form creation.
+//   var headStart = 0;
+//   var tailEnd = 0;
+//   trial.forEach((toss) => {
+//     if (toss.heads) {
+//       form.addSectionHeaderItem().setTitle("heads " + toss.heads).setHelpText(headStart++ + " tosses");
+//     } else {
+//       form.addSectionHeaderItem().setTitle("tails " + toss.tails).setHelpText(tailEnd++ + " tosses");
+//     }
+//   });
+
+//   return formUrl;
+// };
 
 var rndWinner = function (infinitum) {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)

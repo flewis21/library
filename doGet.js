@@ -676,20 +676,20 @@ function handleGetData() {
     if (payLoad.type === "html") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
-      feed = `URL provided: ${payLoad.link}`;
+      feed = `${payLoad.link}`;
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.data || payLoad.dataData; // Assign the URL to iframeSrc
       appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
-      finalFeedDivContent = `URL provided: ${payLoad.link}`;
+      feed = `${payLoad.link}`;
     } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = `${JSON.stringify(payLoad.data || payLoad.dataData, null, 2)}`;
-      feed = `URL provided: ${payLoad.link}`;
+      feed = `${payLoad.link}`;
     } else if (payLoad.type === "text") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
-      feed = `URL provided: ${payLoad.link}`;
+      feed = `${payLoad.link}`;
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
@@ -706,7 +706,7 @@ function handleGetData() {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
         appL = `${payLoad}`;
-        feed = `URL provided: ${payLoad.link}`;
+        feed = `${payLoad.link}`;
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
@@ -714,7 +714,7 @@ function handleGetData() {
   } catch (error) {
     console.error(`Error during payload processing:`, error);
     appL = `Critical Error: ${error.message}`;
-    iframeSrc = ""; // Clear iframe on critical error
+    // iframeSrc = ""; // Clear iframe on critical error
   }
   // --- END Refactored payLoad processing ---
 

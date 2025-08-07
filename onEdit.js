@@ -106,7 +106,7 @@ var delAddress = function () {
 
 var endPoint = function (end, return_type) {
   var rndEnd = delAddress().endPoint;
-  var pathEnd = DistanceProject.GOOGLEMAPS(
+  var pathEnd = chaseFunction(
     "4510 Split Creek Dr, Douglasville, Ga, 30135",
     end || rndEnd,
     return_type,
@@ -162,7 +162,7 @@ function getSuggestions(partialAddress) {
 var kiloPoint = function (startCoord, end) {
   var rndStart = delAddress().startPoint;
   var rndEnd = delAddress().endPoint;
-  var path = DistanceProject.GOOGLEMAPS(
+  var path = chaseFunction(
     startCoord || rndStart,
     end || rndEnd,
     "kilometers",
@@ -192,8 +192,8 @@ var milePoint = function (startCoord, end) {
     var end = delAddress().endPoint;
   }
   var path =
-    DistanceProject.GOOGLEMAPS(startCoord, end, "miles") +
-    DistanceProject.GOOGLEMAPS(end, startCoord, "miles");
+    chaseFunction(startCoord, end, "miles") +
+    chaseFunction(end, startCoord, "miles");
   return path;
 };
 
@@ -201,11 +201,11 @@ var minutePoint = function (startCoord, end) {
   var rndStart = delAddress().startPoint;
   var rndEnd = delAddress().endPoint;
   var path =
-    DistanceProject.GOOGLEMAPS(
+    chaseFunction(
       startCoord || rndStart,
       end || rndEnd,
       "minutes",
-    ) + DistanceProject.GOOGLEMAPS(end || rndEnd, start || rndStart, "minutes");
+    ) + chaseFunction(end || rndEnd, start || rndStart, "minutes");
   return path;
 };
 
@@ -359,7 +359,7 @@ var stampRowInventoryCheck = function (e) {
 };
 
 var startPoint = function (start, return_type) {
-  var pathStart = DistanceProject.GOOGLEMAPS(
+  var pathStart = chaseFunction(
     start,
     "4510 Split Creek Dr, Douglasville, Ga, 30135",
     return_type,
