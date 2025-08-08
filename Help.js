@@ -24,15 +24,22 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
-    items = [{"Description": searchString}]
+    items = [{ Description: searchString }];
   }
-    // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
-  var rndItenIndex = Math.floor(Math.random() * (Math.floor(items.length)));
-  var searchString = "http://" + items[rndItenIndex]["Description"].split(" ").sort((a,b) => {
-    const priorityA = charPriority.get(a);
-    const priorityB = charPriority.get(b);
-    return priorityA - priorityB;
-  }).join("").replace(/,/g, "") + ".com" // .searchString().myNewArr;
+  // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
+  var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+  var searchString =
+    "http://" +
+    items[rndItenIndex]["Description"]
+      .split(" ")
+      .sort((a, b) => {
+        const priorityA = charPriority.get(a);
+        const priorityB = charPriority.get(b);
+        return priorityA - priorityB;
+      })
+      .join("")
+      .replace(/,/g, "") +
+    ".com"; // .searchString().myNewArr;
   var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
   let fndOrd = [];
   while (fndOrd.length === 0) {
@@ -126,14 +133,24 @@ var seoPastTime = function (searchString, time) {
           }
         });
       }
-    } 
-    else {
-        var domainSearch = isValidUrl("https://www.godaddy.com/domainsearch/find?domainToCheck=" + searchString).url
-        // var unFilData = mis(domainSearch)
-        // var data = unFilData.app
-        return domainSearch
-        searchString = "http://" + items[Math.floor(Math.random() * (Math.floor(items.length)))]["Description"].split(" ").join("").replace(/,/g, "") + ".com";
-        uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
+    } else {
+      var domainSearch = isValidUrl(
+        "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
+          searchString,
+      ).url;
+      // var unFilData = mis(domainSearch)
+      // var data = unFilData.app
+      return domainSearch;
+      searchString =
+        "http://" +
+        items[Math.floor(Math.random() * Math.floor(items.length))][
+          "Description"
+        ]
+          .split(" ")
+          .join("")
+          .replace(/,/g, "") +
+        ".com";
+      uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
     }
   }
   if (fndOrd) {
@@ -213,8 +230,11 @@ var seoYoutube = function (searchString, time) {
   // );
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
-    var rndItenIndex = Math.floor(Math.random() * (Math.floor(items.length)))
-    var searchString = "http://" + items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") + ".com" // .searchString().myNewArr;
+    var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+    var searchString =
+      "http://" +
+      items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") +
+      ".com"; // .searchString().myNewArr;
   }
   var rndSearch = isValidUrl(searchString).pathname;
   if (rndSearch) {
@@ -222,7 +242,7 @@ var seoYoutube = function (searchString, time) {
     var data = unFilData.getContentText();
     var idArray = vidFactor(data, time).vidArray;
   }
-  return { myIdArr: idArray || []};
+  return { myIdArr: idArray || [] };
   // var data = mis(rndSearch).app;
 };
 var vidFactor = function (data, time) {
@@ -2986,7 +3006,11 @@ var isValidUrl = function (text) {
             hostname: currentHostname,
             pathname: currentPathname,
             query: currentQuery,
-            url: currentProtocol + currentHostname + currentPathname + currentQuery,
+            url:
+              currentProtocol +
+              currentHostname +
+              currentPathname +
+              currentQuery,
           };
           return validUrlResult;
         }
