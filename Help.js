@@ -20,12 +20,22 @@ var seoPastTime = function (searchString, time) {
       ", = " +
       time,
   );
+  let items;
   if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
+    items = globalThis.uniqueItemArray();
+  } else {
+    items = [{"Description": searchString}]
   }
+    // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
+  var rndItenIndex = Math.floor(Math.random() * (Math.floor(items.length)));
+  var searchString = "http://" + items[rndItenIndex]["Description"].split(" ").sort((a,b) => {
+    const priorityA = charPriority.get(a);
+    const priorityB = charPriority.get(b);
+    return priorityA - priorityB;
+  }).join("").replace(/,/g, "") + ".com" // .searchString().myNewArr;
+  var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
   let fndOrd = [];
   while (fndOrd.length === 0) {
-    var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
     var sorFndOrd = uniqueVid.filter((vidObject) => {
       var elaspeTime = functionRegistry.time;
       var timeToExecute = functionRegistry.timeLeftToExecute;
@@ -89,30 +99,41 @@ var seoPastTime = function (searchString, time) {
         vidObject.indexOf('"origin-tri') === -1 &&
         vidObject.indexOf("get") === -1 &&
         vidObject.indexOf("&&") === -1 &&
+        vidObject.indexOf('""X-UA-Compa"') === -1 &&
         vidObject.indexOf("r.offsetHei") === -1 &&
         vidObject.indexOf(",") === -1
       ) {
         return vidObject;
       }
     });
-    var i = 0;
-    var l = sorFndOrd.length;
-    for (i, l; i < l; i++) {
-      sorFndOrd.sort((a, b) => {
-        while (a !== b && fndOrd.indexOf(a) === -1) {
-          if (a.localeCompare(b) === -1) {
+    if (sorFndOrd.length > 0) {
+      var i = 0;
+      var l = sorFndOrd.length;
+      for (i, l; i < l; i++) {
+        sorFndOrd.sort((a, b) => {
+          while (a !== b && fndOrd.indexOf(a) === -1) {
+            if (a.localeCompare(b) === -1) {
+              fndOrd.push(a);
+            }
+          }
+          while (a === b && fndOrd.indexOf(a) === -1) {
             fndOrd.push(a);
           }
-        }
-        while (a === b && fndOrd.indexOf(a) === -1) {
-          fndOrd.push(a);
-        }
-        while (b !== a && fndOrd.indexOf(b) === -1) {
-          if (a.localeCompare(b) === 1) {
-            fndOrd.push(b);
+          while (b !== a && fndOrd.indexOf(b) === -1) {
+            if (a.localeCompare(b) === 1) {
+              fndOrd.push(b);
+            }
           }
-        }
-      });
+        });
+      }
+    } 
+    else {
+        var domainSearch = isValidUrl("https://www.godaddy.com/domainsearch/find?domainToCheck=" + searchString).url
+        // var unFilData = mis(domainSearch)
+        // var data = unFilData.app
+        return domainSearch
+        searchString = "http://" + items[Math.floor(Math.random() * (Math.floor(items.length)))]["Description"].split(" ").join("").replace(/,/g, "") + ".com";
+        uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
     }
   }
   if (fndOrd) {
@@ -191,13 +212,18 @@ var seoYoutube = function (searchString, time) {
   //     time,
   // );
   if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
+    var items = globalThis.uniqueItemArray();
+    var rndItenIndex = Math.floor(Math.random() * (Math.floor(items.length)))
+    var searchString = "http://" + items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") + ".com" // .searchString().myNewArr;
   }
-  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
-  var data = unFilData.getContentText();
-  var idArray = vidFactor(data, time).vidArray;
-  return { myIdArr: idArray };
+  var rndSearch = isValidUrl(searchString).pathname;
+  if (rndSearch) {
+    var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
+    var data = unFilData.getContentText();
+    var idArray = vidFactor(data, time).vidArray;
+  }
+  return { myIdArr: idArray || []};
+  // var data = mis(rndSearch).app;
 };
 var vidFactor = function (data, time) {
   // console.log(
@@ -229,16 +255,16 @@ var vidFactor = function (data, time) {
   data.map((vidData) => {
     try {
       var veqIndex = vidData.indexOf(`v=`);
-      var veqResult = vidData.slice(veqIndex).split(`v=`);
-      dataArray.push(veqResult);
+      dataArray = vidData.slice(veqIndex).split(`v=`);
     } catch (error) {
       Logger.log("dataArray.push failed");
     }
   });
-  for (var i = 0, l = dataArray[0].length; i < l; i++) {
-    var veqStr = dataArray[0][i];
-    var veqLoop = veqStr.substring(0, 11);
-    idArray.push(veqLoop);
+  for (var i = 0, l = dataArray.length; i < l; i++) {
+    var idValue = dataArray[i].substring(0, 11);
+    if (idValue) {
+      idArray.push(idValue);
+    }
   }
   return { vidArray: idArray };
 };
@@ -2960,6 +2986,7 @@ var isValidUrl = function (text) {
             hostname: currentHostname,
             pathname: currentPathname,
             query: currentQuery,
+            url: currentProtocol + currentHostname + currentPathname + currentQuery,
           };
           return validUrlResult;
         }
