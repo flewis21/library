@@ -28,16 +28,15 @@ var seoPastTime = function (searchString, time) {
   }
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString =
-    items[rndItenIndex]["Description"]
-      .split(" ")
-      .sort((a, b) => {
-        const priorityA = charPriority.get(a);
-        const priorityB = charPriority.get(b);
-        return priorityA - priorityB;
-      })
-      .join("")
-      .replace(/,/g, ""); // .searchString().myNewArr;
+  var searchString = items[rndItenIndex]["Description"]
+    .split(" ")
+    .sort((a, b) => {
+      const priorityA = charPriority.get(a);
+      const priorityB = charPriority.get(b);
+      return priorityA - priorityB;
+    })
+    .join("")
+    .replace(/,/g, ""); // .searchString().myNewArr;
   var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
   let fndOrd = [];
   while (fndOrd.length === 0) {
@@ -958,7 +957,7 @@ var mis = function (text, maxRetries = 3) {
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
     while (!supFunc.func) {
-      supFunc = misSt(testlt().name)
+      supFunc = misSt(testlt().name);
     }
     if (supFunc && typeof supFunc === "object") {
       let isError = false;
