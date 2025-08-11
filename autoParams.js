@@ -211,74 +211,74 @@ customOrder.forEach((char, index) => {
 });
 
 // Example array to sort (e.g., letters from a scrambled word)
-const scrambledWordLetters = ["l", "e", "h", "l", "o"]; // To form "hello"
+// const scrambledWordLetters = ["l", "e", "h", "l", "o"]; // To form "hello"
 
-scrambledWordLetters.sort((a, b) => {
-  const priorityA = charPriority.get(a);
-  const priorityB = charPriority.get(b);
+// scrambledWordLetters.sort((a, b) => {
+//   const priorityA = charPriority.get(a);
+//   const priorityB = charPriority.get(b);
 
-  // Handle cases where a character might not be in your customOrder (optional, but good practice)
-  // For this example, assuming all characters are in customOrder
-  if (priorityA === undefined || priorityB === undefined) {
-    // You might throw an error, put them at the end, or define custom logic
-    // For simplicity, let's assume all chars are found.
-    console.warn("Character not found in custom order:", a, b);
-    // Fallback to alphabetical for unknown chars, or push them to end
-    if (priorityA === undefined && priorityB !== undefined) return 1; // Unknown to end
-    if (priorityA !== undefined && priorityB === undefined) return -1; // Known to front
-    return 0; // Both unknown, keep original order
-  }
+//   // Handle cases where a character might not be in your customOrder (optional, but good practice)
+//   // For this example, assuming all characters are in customOrder
+//   if (priorityA === undefined || priorityB === undefined) {
+//     // You might throw an error, put them at the end, or define custom logic
+//     // For simplicity, let's assume all chars are found.
+//     console.warn("Character not found in custom order:", a, b);
+//     // Fallback to alphabetical for unknown chars, or push them to end
+//     if (priorityA === undefined && priorityB !== undefined) return 1; // Unknown to end
+//     if (priorityA !== undefined && priorityB === undefined) return -1; // Known to front
+//     return 0; // Both unknown, keep original order
+//   }
 
-  // Compare based on their priorities (lower index means higher priority, so a - b)
-  return priorityA - priorityB;
-});
+//   // Compare based on their priorities (lower index means higher priority, so a - b)
+//   return priorityA - priorityB;
+// });
 
-console.log(scrambledWordLetters); // Output based on your custom order: ["e", "l", "l", "o", "h"]
+// console.log(scrambledWordLetters); // Output based on your custom order: ["e", "l", "l", "o", "h"]
 
-// Let's try sorting the custom order itself to show it works
-const arrToSort = [
-  "e",
-  "t",
-  "a",
-  "o",
-  "n",
-  "r",
-  "i",
-  "s",
-  "h",
-  "d",
-  "l",
-  "f",
-  "c",
-  "m",
-  "u",
-  "g",
-  "y",
-  "p",
-  "w",
-  "b",
-  "v",
-  "k",
-  "x",
-  "j",
-  "q",
-  "z",
-];
-arrToSort.sort((a, b) => {
-  const priorityA = charPriority.get(a);
-  const priorityB = charPriority.get(b);
-  return priorityA - priorityB;
-});
-console.log(arrToSort); // Output: ["e", "t", "a", "o", "n", "r", "i", "s", "h", "d", "l", "f", "c", "m", "u", "g", "y", "p", "w", "b", "v", "k", "x", "j", "q", "z"] (the original custom order, as expected)
+// // Let's try sorting the custom order itself to show it works
+// const arrToSort = [
+//   "e",
+//   "t",
+//   "a",
+//   "o",
+//   "n",
+//   "r",
+//   "i",
+//   "s",
+//   "h",
+//   "d",
+//   "l",
+//   "f",
+//   "c",
+//   "m",
+//   "u",
+//   "g",
+//   "y",
+//   "p",
+//   "w",
+//   "b",
+//   "v",
+//   "k",
+//   "x",
+//   "j",
+//   "q",
+//   "z",
+// ];
+// arrToSort.sort((a, b) => {
+//   const priorityA = charPriority.get(a);
+//   const priorityB = charPriority.get(b);
+//   return priorityA - priorityB;
+// });
+// console.log(arrToSort); // Output: ["e", "t", "a", "o", "n", "r", "i", "s", "h", "d", "l", "f", "c", "m", "u", "g", "y", "p", "w", "b", "v", "k", "x", "j", "q", "z"] (the original custom order, as expected)
 
-// Example with a different mix
-const mixedLetters = ["z", "a", "q", "e", "s"];
-mixedLetters.sort((a, b) => {
-  const priorityA = charPriority.get(a);
-  const priorityB = charPriority.get(b);
-  return priorityA - priorityB;
-});
-console.log(mixedLetters); // Output: ["e", "a", "s", "q", "z"] (e first, then a, then s, q, z)
+// // Example with a different mix
+// const mixedLetters = ["z", "a", "q", "e", "s"];
+// mixedLetters.sort((a, b) => {
+//   const priorityA = charPriority.get(a);
+//   const priorityB = charPriority.get(b);
+//   return priorityA - priorityB;
+// });
+// console.log(mixedLetters); // Output: ["e", "a", "s", "q", "z"] (e first, then a, then s, q, z)
 // globalThis.htmlArray = [
 //   `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
 // ]

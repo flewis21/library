@@ -29,7 +29,6 @@ var seoPastTime = function (searchString, time) {
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
   var searchString =
-    "http://" +
     items[rndItenIndex]["Description"]
       .split(" ")
       .sort((a, b) => {
@@ -38,8 +37,7 @@ var seoPastTime = function (searchString, time) {
         return priorityA - priorityB;
       })
       .join("")
-      .replace(/,/g, "") +
-    ".com"; // .searchString().myNewArr;
+      .replace(/,/g, ""); // .searchString().myNewArr;
   var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
   let fndOrd = [];
   while (fndOrd.length === 0) {
@@ -959,6 +957,9 @@ var mis = function (text, maxRetries = 3) {
   var validUrl = isValidUrl(text);
   if (!validUrl.hostname || text.indexOf(",") > -1) {
     var supFunc = misSt(text);
+    while (!supFunc.func) {
+      supFunc = misSt(testlt().name)
+    }
     if (supFunc && typeof supFunc === "object") {
       let isError = false;
       for (var key in supFunc) {
@@ -2859,7 +2860,7 @@ var misSt = function (func, someArgs) {
     "misSt returned :\nfunc = " +
       argsX +
       ":\nargs = " +
-      holdResolvedArgsX.toString().replace(/,/g, " "),
+      holdResolvedArgsX?.toString().replace(/,/g, " "),
   );
   // --- Final Execution and Return ---
   // The previous structure was applying 'content' to the called functions.
