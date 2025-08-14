@@ -1382,11 +1382,12 @@ function runBoilerplate(func, args, callCount = 0) {
   // === GUARDRAIL STARTS HERE ===
   const MAX_RECURSION_DEPTH = 10; // Or a more suitable number for your app
   if (callCount >= MAX_RECURSION_DEPTH) {
-    throw new Error(`Maximum recursion depth (${MAX_RECURSION_DEPTH}) exceeded. This indicates a potential infinite loop.`);
+    throw new Error(
+      `Maximum recursion depth (${MAX_RECURSION_DEPTH}) exceeded. This indicates a potential infinite loop.`,
+    );
   }
   // === GUARDRAIL ENDS HERE ===
 
-  
   var libName = "foo";
   // Check if maxTime exists as a global variable
   const timeRemaining =
@@ -1414,7 +1415,7 @@ function runBoilerplate(func, args, callCount = 0) {
       // Pass the updated callCount to the next function
       // NOTE: You'll need to modify the function being called to accept this new parameter.
       // rawResult = globalThis[func].apply(this, args); // Call the global function
-      rawResult = globalThis[func].apply(this, [...args, callCount + 1]); 
+      rawResult = globalThis[func].apply(this, [...args, callCount + 1]);
     } else {
       // Fallback or error if func is not found in globalThis
       throw new Error(

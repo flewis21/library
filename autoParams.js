@@ -176,15 +176,53 @@ console.log("boilerplate autoParams: line 177");
 functionRegistry.startProcessTimer();
 // A hypothetical frequency-based order for the Zulu alphabet
 const zuluFrequencyOrder = [
-    "a", "u", "i", "e", "o", "m", "n", "s", "h", "k", "l", "t", "b",
-    "p", "g", "d", "y", "z", "w", "v", "f", "r", "c", "j", "q", "x",
-    "ng", "sh", "ph", "bh", "hl", "th", "ch", "kh", "ts", "mb",
-    "tsh", "dl", "nc", "nd", "nq", "nt"
+  "a",
+  "u",
+  "i",
+  "e",
+  "o",
+  "m",
+  "n",
+  "s",
+  "h",
+  "k",
+  "l",
+  "t",
+  "b",
+  "p",
+  "g",
+  "d",
+  "y",
+  "z",
+  "w",
+  "v",
+  "f",
+  "r",
+  "c",
+  "j",
+  "q",
+  "x",
+  "ng",
+  "sh",
+  "ph",
+  "bh",
+  "hl",
+  "th",
+  "ch",
+  "kh",
+  "ts",
+  "mb",
+  "tsh",
+  "dl",
+  "nc",
+  "nd",
+  "nq",
+  "nt",
 ];
 
 const zuluFreqPriority = new Map();
 zuluFrequencyOrder.forEach((char, index) => {
-    zuluFreqPriority.set(char, index);
+  zuluFreqPriority.set(char, index);
 });
 // Function to get the priority of the first letter/multigraph
 const getZuluFreqPriority = (word) => {
@@ -205,14 +243,48 @@ const getZuluFreqPriority = (word) => {
   return Infinity; // For empty strings
 };
 const zuluOrder = [
-    "a", "b", "bh", "c", "ch", "d", "dl", "e", "f", "g", "h", "hh",
-    "hl", "i", "j", "k", "kh", "l", "m", "n", "o", "p", "ph", "q",
-    "r", "s", "sh", "t", "th", "ts", "tsh", "u", "v", "w", "x", "y", "z"
+  "a",
+  "b",
+  "bh",
+  "c",
+  "ch",
+  "d",
+  "dl",
+  "e",
+  "f",
+  "g",
+  "h",
+  "hh",
+  "hl",
+  "i",
+  "j",
+  "k",
+  "kh",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "ph",
+  "q",
+  "r",
+  "s",
+  "sh",
+  "t",
+  "th",
+  "ts",
+  "tsh",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
 ];
 
 const zuluPriority = new Map();
 zuluOrder.forEach((char, index) => {
-    zuluPriority.set(char, index);
+  zuluPriority.set(char, index);
 });
 // Function to get the priority of the first letter/multigraph
 const getZuluPriority = (word) => {
