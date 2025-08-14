@@ -174,6 +174,64 @@ console.log("boilerplate autoParams: line 175");
 functionRegistry.initialize();
 console.log("boilerplate autoParams: line 177");
 functionRegistry.startProcessTimer();
+// A hypothetical frequency-based order for the Zulu alphabet
+const zuluFrequencyOrder = [
+    "a", "u", "i", "e", "o", "m", "n", "s", "h", "k", "l", "t", "b",
+    "p", "g", "d", "y", "z", "w", "v", "f", "r", "c", "j", "q", "x",
+    "ng", "sh", "ph", "bh", "hl", "th", "ch", "kh", "ts", "mb",
+    "tsh", "dl", "nc", "nd", "nq", "nt"
+];
+
+const zuluFreqPriority = new Map();
+zuluFrequencyOrder.forEach((char, index) => {
+    zuluFreqPriority.set(char, index);
+});
+// Function to get the priority of the first letter/multigraph
+const getZuluFreqPriority = (word) => {
+  const lowercaseWord = word.toLowerCase();
+
+  // Check for multigraphs first, as they are longer
+  for (const key of zuluFrequencyOrder) {
+    if (lowercaseWord.startsWith(key)) {
+      return zuluFreqPriority.get(key);
+    }
+  }
+
+  // If no multigraph is found, check for single letters
+  if (lowercaseWord.length > 0) {
+    return zuluFreqPriority.get(lowercaseWord.charAt(0));
+  }
+
+  return Infinity; // For empty strings
+};
+const zuluOrder = [
+    "a", "b", "bh", "c", "ch", "d", "dl", "e", "f", "g", "h", "hh",
+    "hl", "i", "j", "k", "kh", "l", "m", "n", "o", "p", "ph", "q",
+    "r", "s", "sh", "t", "th", "ts", "tsh", "u", "v", "w", "x", "y", "z"
+];
+
+const zuluPriority = new Map();
+zuluOrder.forEach((char, index) => {
+    zuluPriority.set(char, index);
+});
+// Function to get the priority of the first letter/multigraph
+const getZuluPriority = (word) => {
+  const lowercaseWord = word.toLowerCase();
+
+  // Check for multigraphs first, as they are longer
+  for (const key of zuluOrder) {
+    if (lowercaseWord.startsWith(key)) {
+      return zuluPriority.get(key);
+    }
+  }
+
+  // If no multigraph is found, check for single letters
+  if (lowercaseWord.length > 0) {
+    return zuluPriority.get(lowercaseWord.charAt(0));
+  }
+
+  return Infinity; // For empty strings
+};
 const customOrder = [
   "e",
   "t",
@@ -205,9 +263,9 @@ const customOrder = [
 
 // Step 1: Create a lookup map for quick access to priority/rank
 // Lower index in customOrder means higher priority (comes earlier in sort)
-const charPriority = new Map();
+const freqPriority = new Map();
 customOrder.forEach((char, index) => {
-  charPriority.set(char, index);
+  freqPriority.set(char, index);
 });
 
 // Example array to sort (e.g., letters from a scrambled word)
