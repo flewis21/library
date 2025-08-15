@@ -520,7 +520,7 @@ var resolveParams = function (func, someArgs) {
       }
       if (content) {
         var htmlArray = [
-          `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+          `Untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
         ]
           .toString()
           .split(" ");
@@ -2729,7 +2729,7 @@ var misSt = function (func, someArgs) {
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
               (/<[a-z][\s\S]*>/i.test(userProvidedValue) ||
-                typeof userProvidedValue === "string")
+                (typeof userProvidedValue === "string" && userProvidedValue !== "file"))
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
