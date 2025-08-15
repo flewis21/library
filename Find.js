@@ -541,35 +541,76 @@ var validateFiles = function () {
   return emailList;
   console.log(emailList);
 };
-var validateFolders = function () {
-  // Grant or Deny access
-  const folderList = (() => {
-    const folders = DriveApp.getFolders();
-    const folderNames = folders.next().getName();
-    const sharedFolders = [];
+// var validateFolders = function () {
+//   // Grant or Deny access
+//   const folderList = (() => {
+//     const folders = DriveApp.getFolders();
+//     const folderNames = folders.next().getName();
+//     const sharedFolders = [];
+//     try {
+//       for (var i = 0; i < folderNames.length; i++) {
+//         [folderNames].map((name) => {
+//           if (sharedFolders.indexOf(name) === -1) {
+//             sharedFolders.push(name);
+//           }
+//         });
+//         folder = DriveApp.getFoldersByName(sharedFolders).next();
+//       }
+//     } catch (e) {
+//       // Access denied.
+//       return false;
+//     }
+//     // Access granted.
+//     // List all users with Editor permission.
+//     return folder.getEditors().map((editor) => {
+//       return editor.getEmail();
+//       console.log(editor.getEmail());
+//     });
+//   })();
+//   // return emailList
+//   console.log(folderList);
+// };
+function validateFolders() {
+  // Get all folders from the user's Drive.
+  const folders = DriveApp.getFolders();
+  const sharedFolderEmails = [];
+
+  // Iterate through all folders.
+  while (folders.hasNext()) {
+    const folder = folders.next();
+    
+    // You cannot check if a folder is "shared" with DriveApp alone.
+    // The presence of editors is one way to infer it's shared.
+    
     try {
-      for (var i = 0; i < folderNames.length; i++) {
-        [folderNames].map((name) => {
-          if (sharedFolders.indexOf(name) === -1) {
-            sharedFolders.push(name);
-          }
+      const editors = folder.getEditors();
+
+      // If the folder has editors, it is considered a shared folder.
+      if (editors.length > 0) {
+        const folderName = folder.getName();
+        console.log(`Found shared folder: ${folderName}`);
+
+        // Get the emails of all editors for this folder.
+        const editorEmails = editors.map(editor => editor.getEmail());
+        
+        // Push an object with the folder name and its editors to our list.
+        sharedFolderEmails.push({
+          name: folderName,
+          editors: editorEmails
         });
-        folder = DriveApp.getFoldersByName(sharedFolders).next();
       }
     } catch (e) {
-      // Access denied.
-      return false;
+      // This catch block is useful if a folder throws an access error,
+      // but DriveApp.getFolders() typically only returns folders the user can access.
+      console.log(`Could not access folder: ${folder.getName()}`);
     }
-    // Access granted.
-    // List all users with Editor permission.
-    return folder.getEditors().map((editor) => {
-      return editor.getEmail();
-      console.log(editor.getEmail());
-    });
-  })();
-  // return emailList
-  console.log(folderList);
-};
+  }
+
+  // Log the results.
+  console.log("Shared Folders and Editors:", sharedFolderEmails);
+  
+  return sharedFolderEmails;
+}
 var validGroup = function () {
   const hasAccess = (() => {
     let isMemberOfGroup = false;

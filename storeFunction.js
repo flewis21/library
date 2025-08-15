@@ -44,7 +44,7 @@ var storeFunction = function (xfactor) {
   }
 
   var booleFactor = [];
-  JSON.parse(arrayJobs).map((dx) => {
+  covArrays(arrayJobs).map((dx) => {
     var neatR = dx;
     // console.log(typeof neatR === "object")
     if ([neatR["Description"]].join("").length > 0) {

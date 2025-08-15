@@ -453,6 +453,18 @@ var idSpreadSheet = function (id) {
   }
 };
 
+var insertSheetSS = function(url, sheetName) {
+  var ss = ssGetSheetBySpreadsheetUrl(url);
+  if (!sheetName) {
+    var sheetName = testlt().name;
+  }
+  ss.insertSheet(sheetName);
+  // var sheet = ssGetSheetBySpreadsheetUrl(
+  //   url,
+  //   sheetName,
+  // );
+}
+
 var jsonToSpreadsheet = function (data, time) {
   data
     ? data
@@ -665,6 +677,29 @@ var jsonXSpreadsheet = function (rndTitle, time) {
 // {console.log('Input Value:', textInput.value);}, 5000)();
 //Global object closed
 
+function lookupDomain(searchTerm) {
+  // var ss = SpreadsheetApp.getActiveSpreadsheet();
+  // var sheet = ss.getSheetByName("DomainListings");
+  var sheet = ssGetSheetBySpreadsheetUrl(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "DomainListings",
+  );
+  var data = sheet.getDataRange().getValues(); // Get all data (optimize for large datasets later)
+  var results = [];
+  for (var i = 1; i < data.length; i++) {
+    // Skip header row
+    if (data[i][0].toLowerCase().includes(searchTerm.toLowerCase())) {
+      // Simple search
+      results.push({
+        domain: data[i][0],
+        price: data[i][1],
+        email: data[i][2],
+      });
+    }
+  }
+  return results;
+}
+
 var mapValues = function (data, index) {
   console.log(
     functionRegistry.time +
@@ -730,8 +765,8 @@ var needBing = function (searchString, time) {
 };
 
 var needPong = function (searchString) {
-  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  var data = [urlDataSource(rndSearch, null, { muteHttpExceptions: true })];
+  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString? searchString:"")}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var data = urlDataSource(rndSearch, searchString);
   var txt = seoBites(searchString, seoFactor(data).split(","));
   console.log(txt.length);
   return {
@@ -846,9 +881,7 @@ var pictBing = function (searchString, time) {
   // var searchString =  "Drones"
   if (typeof searchString !== "undefined") {
     const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    const search = [
-      urlDataSource(rndSearch, { muteHttpExceptions: true }, time),
-    ];
+    const search = urlDataSource(rndSearch, searchString, time);
     // var i = 0
     // var l = [search].join("").split(" ").length
     // for (i,l;i<l;i++) {
@@ -962,6 +995,30 @@ var proTest = function () {
   // console.log(typeof vidObject)
   //  console.log(uniqueVid)
 };
+
+function renameSheetSafely(ss, newSheetName) {
+  var sheet = ss?.getSheets()[0];
+  var sheetName = newSheetName; // Set your desired new sheet name here
+
+  // Get the current sheet name
+  var currentName = sheet.getName();
+
+  // Get the last row with content
+  var lastRow = sheet.getLastRow();
+  // Get the last column with content
+  var lastColumn = sheet.getLastColumn();
+
+  // Check if the sheet name is the default name
+  var isDefaultName = (currentName === 'Sheet1' || currentName === 'Sheet2' || currentName === 'Sheet3' || currentName === 'Untitled');
+
+  // Check if the sheet is empty (no content)
+  var isEmpty = (lastRow === 0 && lastColumn === 0);
+
+  // Rename the sheet only if it has a default name AND is empty
+  if (isDefaultName && isEmpty) {
+    sheet.setName(sheetName);
+  }
+}
 
 var rndString = function (inputArray, time) {
   inputArray
@@ -1788,7 +1845,6 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
   let ssNewFile, ssId;
 
   if (!fileX) {
-    console.log("fileX is ! ", !fileX);
     let fileX = testlt(); // Also use let here
     console.log("testlt ", fileX);
   }
@@ -1984,6 +2040,11 @@ var ssGetSheetBySpreadsheetId = function (id, sheetname) {
   }
 };
 
+/**
+ * @param {string} url The URL of the spreadsheet.
+ * @param {string} sheetname The name of the sheet to get.
+ * @returns {SpreadsheetApp.Spreadsheet|SpreadsheetApp.Sheet} The Spreadsheet or Sheet object.
+ */
 var ssGetSheetBySpreadsheetUrl = function (url, sheetname) {
   if (url) {
     var ss = urlSpreadSheet(url);
@@ -2044,6 +2105,22 @@ function ssSheetName() {
     var sheetName = sheet.getSheetName();
     return sheetName;
   }
+}
+
+function submitDomain(formData) {
+  // var ss = SpreadsheetApp.getActiveSpreadsheet();
+  // var sheet = ss.getSheetByName("DomainListings"); // Replace with your sheet name
+  var sheet = ssGetSheetBySpreadsheetUrl(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "DomainListings",
+  );
+  sheet.appendRow([
+    formData.domain,
+    formData.price,
+    formData.email,
+    "Available",
+  ]); // Add other fields
+  return "Domain listing submitted successfully!";
 }
 
 var taxiService = function () {

@@ -175,9 +175,11 @@ var lockR = function (row, col) {
 
 var lockRange = function (row, col) {
   var ws = ssSheet();
-  var range = ws.getDataRange().getValues();
-  var lock = range.map(openRange(row, col));
-  return (ss, ws, range, lock);
+  if (ws) {
+    var range = ws.getDataRange().getValues();
+    var lock = range.map(openRange(row, col));
+    return (ws, range, lock);
+  }
 };
 
 var milePoint = function (startCoord, end) {

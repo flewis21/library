@@ -1085,8 +1085,8 @@ var dtlsSomeFunction = function (e) {
     if (typeof form === "object") {
       covIdArray.map((d) => {
         while (d) {
-          var elapsedTime = new Date() - time;
-          var timeToExecute = functionRegistry.maxTime - elapsedTime;
+          var elapsedTime = functionRegistry.time;
+          var timeToExecute = functionRegistry.timeLeftToExecute;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form
             .addSectionHeaderItem()
@@ -1095,7 +1095,7 @@ var dtlsSomeFunction = function (e) {
             .addVideoItem()
             .setAlignment(FormApp.Alignment.CENTER)
             .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + d);
+            .setVideoUrl("https://youtube.com/watch?v=" + d? d:"");
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000

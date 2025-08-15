@@ -137,7 +137,7 @@ var seoPastTime = function (searchString, time) {
       ).url;
       // var unFilData = mis(domainSearch)
       // var data = unFilData.app
-      return domainSearch;
+      return { playList: domainSearch };
       searchString =
         "http://" +
         items[Math.floor(Math.random() * Math.floor(items.length))][
@@ -448,7 +448,7 @@ var paramVals = function (funcInfo) {
 };
 var resolveParams = function (func, someArgs) {
   console.log(
-    "boilerplate Help: line 368\n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate Help: line 451\nresolveParams(func: " + func + ", someArgs: " + someArgs + ")\n " + arguments.callee.caller.name,
   );
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
@@ -2728,8 +2728,8 @@ var misSt = function (func, someArgs) {
             args["file"] =
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
-              (/<[a-z][\s\S]*>/i.test(userProvidedValue) ||
-                (typeof userProvidedValue === "string" &&
+              typeof userProvidedValue === "string" &&
+                (/<[a-z][\s\S]*>/i.test(userProvidedValue ||
                   userProvidedValue !== "file"))
                 ? userProvidedValue
                 : rndPage;

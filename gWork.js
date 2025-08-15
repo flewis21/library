@@ -61,56 +61,58 @@ var allTime = function (rndKey, arrD, time) {
       [coKey].join(""),
     time + ")",
   );
-  if (!seoArray.keys().next()) {
-    var idArray = seoArray.playList;
-    var randomPlaylist = [];
-    for (var i = 1, l = idArray.length; i < l; i++) {
-      const randomVidKey = Math.floor(
-        Math.random() * Math.floor(idArray.length),
-      );
-      randomPlaylist.push(
-        idArray.filter((rp) => {
-          return rp === idArray[randomVidKey];
-        }),
-      );
-    }
-    var vidPlaylist = function () {
-      const randomVidKey = Math.floor(
-        Math.random() * Math.floor(randomPlaylist.length),
-      );
-      var playListSorted = randomPlaylist.sort((a, b) => a - b);
-      var videoObject = covObjects(playListSorted, ["youtubeID"], time);
-      console.log(
-        "allTime: \nvar " +
-          JSON.stringify(videoObject) +
-          " = covObjects(" +
-          playListSorted,
-        ["youtubeID"],
-        time + ")",
-      );
-      if (typeof videoObject["youtubeID"] !== "undefined") {
-        var uniqueVidKey = [videoObject].entries().next().value;
+  if (seoArray && Array.isArray(seoArray)) {
+    if (!seoArray.keys().next()) {
+      var idArray = seoArray.playList;
+      var randomPlaylist = [];
+      for (var i = 1, l = idArray.length; i < l; i++) {
+        const randomVidKey = Math.floor(
+          Math.random() * Math.floor(idArray.length),
+        );
+        randomPlaylist.push(
+          idArray.filter((rp) => {
+            return rp === idArray[randomVidKey];
+          }),
+        );
+      }
+      var vidPlaylist = function () {
+        const randomVidKey = Math.floor(
+          Math.random() * Math.floor(randomPlaylist.length),
+        );
+        var playListSorted = randomPlaylist.sort((a, b) => a - b);
+        var videoObject = covObjects(playListSorted, ["youtubeID"], time);
         console.log(
           "allTime: \nvar " +
-            uniqueVidKey +
-            " = "[videoObject].entries().next().value,
+            JSON.stringify(videoObject) +
+            " = covObjects(" +
+            playListSorted,
+          ["youtubeID"],
+          time + ")",
         );
-        var randomVid = uniqueVidKey[1][randomVidKey];
-        var rVideo = randomVid["youtubeID"];
-        return rVideo;
-      }
-    };
-    var sortaPlay = randomPlaylist.sort((a, b) => a - b);
-    var randomVideo =
-      vidPlaylist() ||
-      sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
-    var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
-    return {
-      title: rndKey || coKey,
-      rndVideoId: randomVideo,
-      videoPlaylist: randomPlaylist,
-      videoUrl: youtubeUrl,
-    };
+        if (typeof videoObject["youtubeID"] !== "undefined") {
+          var uniqueVidKey = [videoObject].entries().next().value;
+          console.log(
+            "allTime: \nvar " +
+              uniqueVidKey +
+              " = "[videoObject].entries().next().value,
+          );
+          var randomVid = uniqueVidKey[1][randomVidKey];
+          var rVideo = randomVid["youtubeID"];
+          return rVideo;
+        }
+      };
+      var sortaPlay = randomPlaylist.sort((a, b) => a - b);
+      var randomVideo =
+        vidPlaylist() ||
+        sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
+      var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+      return {
+        title: rndKey || coKey,
+        rndVideoId: randomVideo,
+        videoPlaylist: randomPlaylist,
+        videoUrl: youtubeUrl,
+      };
+    }
   }
 };
 // console.log("allTime: \nrndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time);Youtube Widget;console.log(typeof seoArray);Math.floor(Math.random());Math.floor(Math.random());console.log(seoArray.playList)
@@ -158,7 +160,7 @@ var covObjects = function (rows, headings, time) {
       " = " +
       time,
   );
-  if (rows) {
+  if (rows && Array.isArray(rows)) {
     var temp = rows.map(function (row) {
       var myObj = {};
       headings.forEach(function (heading, index) {

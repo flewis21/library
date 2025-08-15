@@ -769,9 +769,7 @@ var productTime = function (product) {
 };
 
 var productRegNo = function (eparegno) {
-  const res = [
-    urlDataSource("https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno),
-  ];
+  const res = urlDataSource("https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno);
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
@@ -788,26 +786,16 @@ var productRegNo = function (eparegno) {
 };
 
 var productDistNum = function (distno) {
-  const rawData = JSON.parse([
-    urlDataSource(
+  const rawData = JSON.parse(urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
-        encodeURIComponent(distno),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ]);
+        encodeURIComponent(distno)));
   return newEPAData(rawData);
 };
 
 var productFullName = function (productName) {
-  const rawData = JSON.parse([
-    urlDataSource(
+  const rawData = JSON.parse(urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
-        encodeURIComponent(productName),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ]);
+        encodeURIComponent(productName)));
   return newEPAData(rawData);
 };
 
@@ -852,7 +840,7 @@ var productNamePartial = function (productName) {
   let feed = "";
 
   const url = "https://search.epa.gov/epasearch/?querytext=" + productName;
-  const res = urlDataSource(url);
+  const res = mis(url);
   if (res.type === "html") {
     iframeSrc = res.index; // Assign iframeSrc
     appL = res.data;
@@ -918,50 +906,32 @@ var productNamePartial = function (productName) {
 };
 
 var productNamePartialV2 = function (productName) {
-  const rawData = JSON.parse([
-    urlDataSource(
+  const rawData = JSON.parse(urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
-        encodeURIComponent(productName),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ]);
+        encodeURIComponent(productName)));
   return newEPAData(rawData);
 };
 
 var productNumPartial = function (productNum) {
-  const rawData = JSON.parse([
-    urlDataSource(
+  const rawData = JSON.parse(urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
-        encodeURIComponent(productNum),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ]);
+        encodeURIComponent(productNum)));
   return newEPAData(rawData);
 };
 
 var productNumPartialV2 = function (productNum) {
-  const rawData = JSON.parse([
+  const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
-        encodeURIComponent(productNum),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ]);
+        encodeURIComponent(productNum),),
+  );
   return newEPAData(rawData);
 };
 
 var productIngName = function (ingredient) {
-  var res = [
-    urlDataSource(
+  var res = urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
-        ingredient,
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ];
+        ingredient,);
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
@@ -978,14 +948,9 @@ var productIngName = function (ingredient) {
 };
 
 var productChemCode = function (code) {
-  const res = [
-    urlDataSource(
+  const res = urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
-        encodeURIComponent(code),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ];
+        encodeURIComponent(code),);
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
@@ -1002,14 +967,9 @@ var productChemCode = function (code) {
 };
 
 var productAbstractNum = function (abstract) {
-  const res = [
-    urlDataSource(
+  const res = urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
-        encodeURIComponent(abstract),
-      null,
-      { muteHttpExceptions: true },
-    ),
-  ];
+        encodeURIComponent(abstract));
   if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
     try {
       if (res[0]["items"].length === 0) {
