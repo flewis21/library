@@ -448,7 +448,12 @@ var paramVals = function (funcInfo) {
 };
 var resolveParams = function (func, someArgs) {
   console.log(
-    "boilerplate Help: line 451\nresolveParams(func: " + func + ", someArgs: " + someArgs + ")\n " + arguments.callee.caller.name,
+    "boilerplate Help: line 451\nresolveParams(func: " +
+      func +
+      ", someArgs: " +
+      someArgs +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   var funcUno = decodeURIComponent(func);
   var funcDos = decodeURIComponent(someArgs);
@@ -2729,8 +2734,9 @@ var misSt = function (func, someArgs) {
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
               typeof userProvidedValue === "string" &&
-                (/<[a-z][\s\S]*>/i.test(userProvidedValue ||
-                  userProvidedValue !== "file"))
+              /<[a-z][\s\S]*>/i.test(
+                userProvidedValue || userProvidedValue !== "file",
+              )
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
