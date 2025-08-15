@@ -2729,7 +2729,8 @@ var misSt = function (func, someArgs) {
               userProvidedValue !== null &&
               userProvidedValue !== undefined &&
               (/<[a-z][\s\S]*>/i.test(userProvidedValue) ||
-                (typeof userProvidedValue === "string" && userProvidedValue !== "file"))
+                (typeof userProvidedValue === "string" &&
+                  userProvidedValue !== "file"))
                 ? userProvidedValue
                 : rndPage;
             resolvedArgs.push(args["file"]);
