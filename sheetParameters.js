@@ -453,7 +453,7 @@ var idSpreadSheet = function (id) {
   }
 };
 
-var insertSheetSS = function (url, sheetName) {
+var insertSheetSS = function(url, sheetName) {
   var ss = ssGetSheetBySpreadsheetUrl(url);
   if (!sheetName) {
     var sheetName = testlt().name;
@@ -463,7 +463,7 @@ var insertSheetSS = function (url, sheetName) {
   //   url,
   //   sheetName,
   // );
-};
+}
 
 var jsonToSpreadsheet = function (data, time) {
   data
@@ -765,7 +765,7 @@ var needBing = function (searchString, time) {
 };
 
 var needPong = function (searchString) {
-  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString ? searchString : "")}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString? searchString:"")}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = urlDataSource(rndSearch, searchString);
   var txt = seoBites(searchString, seoFactor(data).split(","));
   console.log(txt.length);
@@ -1009,14 +1009,10 @@ function renameSheetSafely(ss, newSheetName) {
   var lastColumn = sheet.getLastColumn();
 
   // Check if the sheet name is the default name
-  var isDefaultName =
-    currentName === "Sheet1" ||
-    currentName === "Sheet2" ||
-    currentName === "Sheet3" ||
-    currentName === "Untitled";
+  var isDefaultName = (currentName === 'Sheet1' || currentName === 'Sheet2' || currentName === 'Sheet3' || currentName === 'Untitled');
 
   // Check if the sheet is empty (no content)
-  var isEmpty = lastRow === 0 && lastColumn === 0;
+  var isEmpty = (lastRow === 0 && lastColumn === 0);
 
   // Rename the sheet only if it has a default name AND is empty
   if (isDefaultName && isEmpty) {

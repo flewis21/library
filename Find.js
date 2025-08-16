@@ -578,10 +578,10 @@ function validateFolders() {
   // Iterate through all folders.
   while (folders.hasNext()) {
     const folder = folders.next();
-
+    
     // You cannot check if a folder is "shared" with DriveApp alone.
     // The presence of editors is one way to infer it's shared.
-
+    
     try {
       const editors = folder.getEditors();
 
@@ -591,12 +591,12 @@ function validateFolders() {
         console.log(`Found shared folder: ${folderName}`);
 
         // Get the emails of all editors for this folder.
-        const editorEmails = editors.map((editor) => editor.getEmail());
-
+        const editorEmails = editors.map(editor => editor.getEmail());
+        
         // Push an object with the folder name and its editors to our list.
         sharedFolderEmails.push({
           name: folderName,
-          editors: editorEmails,
+          editors: editorEmails
         });
       }
     } catch (e) {
@@ -608,7 +608,7 @@ function validateFolders() {
 
   // Log the results.
   console.log("Shared Folders and Editors:", sharedFolderEmails);
-
+  
   return sharedFolderEmails;
 }
 var validGroup = function () {
