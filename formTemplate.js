@@ -1095,7 +1095,7 @@ var dtlsSomeFunction = function (e) {
             .addVideoItem()
             .setAlignment(FormApp.Alignment.CENTER)
             .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + d? d:"");
+            .setVideoUrl("https://youtube.com/watch?v=" + d ? d : "");
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000
