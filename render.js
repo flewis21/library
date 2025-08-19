@@ -603,7 +603,7 @@ var includeGSFile = function (file, argsArray) {
   var misStArrayArgs = misSt(argsArray)
     ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
     : console.error("misStArrayArgs = " + typeof misStArrayArgs);
-  if (misStArrayFile.args) {
+  if (misStArrayFile?.args) {
     var fileNames = misStArrayFile.args;
     if (fileNames) {
       file = [fileNames][0];

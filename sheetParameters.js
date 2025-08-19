@@ -448,7 +448,7 @@ var createSheetHeader = function (headers) {
 var idSpreadSheet = function (id) {
   var ssApp = SpreadsheetApp;
   if (id) {
-    var ss = ssApp.openById(id);
+    var ss = ssApp?.openById(id);
     return ss;
   }
 };
@@ -734,7 +734,7 @@ var needBing = function (searchString, time) {
     var playBill = [bill].join("").split(" ");
     const table = [];
     data.map((point) => {
-      var resSERP = point.indexOf("SERP");
+      var resSERP = point?.indexOf("SERP");
       var serpSplit = point.slice(resSERP).toString().split("SERP");
       table.push(serpSplit);
       // var resSrc2 = point.indexOf("src2=")

@@ -1155,17 +1155,19 @@ var fileMatch = function (fileX, stringArray) {
       var l = searchFileStr.length;
     }
     var fileXIndex = [];
-    stringArray.map((file) => {
-      // var sfi = searchFileStr
-      var matchFile = [fileX].join("").toLowerCase();
-      var testFile = [file].join("").toLowerCase();
-      var fxi = testFile.indexOf(matchFile);
-      if (fxi > -1) {
-        // var properFile = file
-        var myObj = convertToObjects([[file]], [fxi])[0];
-        fileXIndex.push(file);
-      }
-    });
+    if (Array.isArray(stringArray)) {
+      stringArray.map((file) => {
+        // var sfi = searchFileStr
+        var matchFile = [fileX].join("").toLowerCase();
+        var testFile = [file].join("").toLowerCase();
+        var fxi = testFile.indexOf(matchFile);
+        if (fxi > -1) {
+          // var properFile = file
+          var myObj = convertToObjects([[file]], [fxi])[0];
+          fileXIndex.push(file);
+        }
+      });
+    }
     return fileXIndex;
   } else {
     return;
@@ -1414,30 +1416,41 @@ var furtFolder = function (folder) {
 
 var rndUrls = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 1417\nrndUrls(: )\n " + arguments.callee.caller.name,
   );
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  // console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var treeRoot = DriveApp.getRootFolder().getFiles();
+  var truArray = [];
   while (treeRoot.hasNext()) {
     var trueName = treeRoot.next();
-    console.log(
-      trueName.getName() +
-        " || / || " +
-        trueName.getName()[
-          Object.keys(trueName.getName())[
-            Math.floor(
-              Math.random() *
-                Math.floor(Object.keys(trueName.getName()).length),
-            )
-          ]
-        ],
-    );
-    var truArray = [];
+    // console.log(
+    //   trueName.getName() +
+    //     " || / || " +
+    //     trueName.getName()[
+    //       Object.keys(trueName.getName())[
+    //         Math.floor(
+    //           Math.random() *
+    //             Math.floor(Object.keys(trueName.getName()).length),
+    //         )
+    //       ]
+    //     ],
+    // );
     for (var i = 0, l = trueName.getName().length; i < l; i++) {
-      console.log(truArray.push([trueName.getName()][i]));
+      var tmpName = trueName.getName()
+      var tmpUrl =  trueName.getUrl()
+      var rndUrlObj = {
+        fileName:tmpName, 
+        fileUrl: tmpUrl
+      }
+      // var temRndName = tmpName[i]
+      // truArray.push(tmpName);
     }
-    if (trueName.getName()) return trueName.getUrl();
+    if (rndUrlObj) {
+      truArray.push(rndUrlObj);
+    }
   }
+  var stringedRoot = [truArray][0][Math.floor(Math.random() * (Math.floor(truArray.length)))];
+  return stringedRoot
 };
 
 function shareDrive() {

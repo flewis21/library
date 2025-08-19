@@ -451,7 +451,7 @@ var dtlsBridge = function (func, time) {
                 .toLowerCase()
                 .indexOf([formName].join("").toLowerCase())
             ]
-          ].toString(),
+          ]?.toString(),
         );
     }
     if (typeof jsFunc === "object") {

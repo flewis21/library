@@ -439,14 +439,14 @@ var rndControl = function (infinitum) {
     coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
     penny = Math.floor(Math.random() * Math.floor(coin));
     if (penny !== coin) {
-      trial.push({
+      trial?.push({
         tails: fin,
       });
       coinTail++;
     }
     // if (penny === coin)
     else {
-      trial.push({
+      trial?.push({
         heads: coin,
       });
       coinHead++;
@@ -461,7 +461,7 @@ var rndControl = function (infinitum) {
         infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
       penny = Math.floor(Math.random() * Math.floor(coin));
       if (penny === coin) {
-        trial.push({
+        trial?.push({
           heads: coin,
         });
         coinHead++;
@@ -471,7 +471,7 @@ var rndControl = function (infinitum) {
       }
       // if (penny !== coin)
       else {
-        trial.push({
+        trial?.push({
           tails: fin,
         });
         coinTail++;

@@ -671,10 +671,10 @@ var sheetWebsite = function (e) {
 // return webApp.evaluate().setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 // console.log("Array of Objects: " + Utilities.jsonStringify(arrData[0]))
 
-function userSite() {
-  var website = SitesApp.getSites();
-  console.log(website);
-  return {
-    mySites: website,
-  };
-}
+// function userSite() {
+//   var website = SitesApp.getSites();
+//   console.log(website);
+//   return {
+//     mySites: website,
+//   };
+// }

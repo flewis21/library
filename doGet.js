@@ -5,7 +5,7 @@ var buildTags = function (posHtml) {
     Route[route] = callback;
   };
   Route.path("tagBar", tagBuilder);
-  return authLogic(validate())
+  return authLogic(validGroup())
     ? Route["tagBar"](posHtml())
     : contentFile("uiAccess");
 };

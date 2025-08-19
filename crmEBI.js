@@ -758,7 +758,14 @@ function postEd(ed) {
       convertToObjects([[arguments.callee.name]], ["name"], start),
     )[0];
   } else {
-    var formData = JSON.parse(ed);
+    try {
+      var formData = JSON.parse(ed);
+    }
+    catch(error) {
+      JSON.parse(
+      convertToObjects([[arguments.callee.name]], ["name"], start),
+    )[0];
+    }
   }
   // Get form data from the request
   var arrayData = covArrays(formData);

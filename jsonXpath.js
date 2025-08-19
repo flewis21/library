@@ -350,9 +350,9 @@ var rowsToReturn = function (data, index) {
       data,
   );
   if (data) {
-    var rowsToReturn = data.filter(function (a) {
+    var rowsToReturn = Array.isArray(data)? data.filter(function (a) {
       return a[index];
-    });
+    }):data;
     return {
       myData: rowsToReturn,
     };
@@ -616,10 +616,10 @@ var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
   }
   var seoArray = seoPastTime([cokey].join(""), time);
   var listArr = JSON.stringify(
-    seoArray.playList.map((id) => {
+    Array.isArray(seoArray.playList)? seoArray.playList.map((id) => {
       var arrLi = "http://youtube.com/watch?v=" + id;
       return arrLi;
-    }),
+    }):seoArray.playList,
   );
 
   console.log(

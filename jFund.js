@@ -710,13 +710,13 @@ function fetchData(url, options) {
 
 // Function to fetch news articles from News API
 function getNewsArticles(query, apiKey, pageSize = 10, page = 1) {
-  console.log(
-    JSON.stringify(this["start"]) +
-      "\n" +
-      arguments.callee.name +
-      "\n!ed, = " +
-      !query,
-  );
+  // console.log(
+  //   JSON.stringify(this["start"]) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!ed, = " +
+  //     !query,
+  // );
   if (!apiKey) {
     return Promise.reject(
       "News API key is missing. Please set it in script properties.",

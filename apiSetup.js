@@ -36,7 +36,7 @@ function apiSetup() {
 }
 
 function apiSetupActive() {
-  var ssId = ssSheet().getSheetId();
+  var ssId = ssSheet()?.getSheetId();
   var cprops = PropertiesService.getScriptProperties();
   var scriptKey = cprops.setProperty("sheetkey", ssId);
   return scriptKey;
