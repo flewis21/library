@@ -1436,12 +1436,12 @@ var rndUrls = function () {
     //     ],
     // );
     for (var i = 0, l = trueName.getName().length; i < l; i++) {
-      var tmpName = trueName.getName()
-      var tmpUrl =  trueName.getUrl()
+      var tmpName = trueName.getName();
+      var tmpUrl = trueName.getUrl();
       var rndUrlObj = {
-        fileName:tmpName, 
-        fileUrl: tmpUrl
-      }
+        fileName: tmpName,
+        fileUrl: tmpUrl,
+      };
       // var temRndName = tmpName[i]
       // truArray.push(tmpName);
     }
@@ -1449,8 +1449,10 @@ var rndUrls = function () {
       truArray.push(rndUrlObj);
     }
   }
-  var stringedRoot = [truArray][0][Math.floor(Math.random() * (Math.floor(truArray.length)))];
-  return stringedRoot
+  var stringedRoot = [truArray][0][
+    Math.floor(Math.random() * Math.floor(truArray.length))
+  ];
+  return stringedRoot;
 };
 
 function shareDrive() {

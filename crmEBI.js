@@ -760,11 +760,10 @@ function postEd(ed) {
   } else {
     try {
       var formData = JSON.parse(ed);
-    }
-    catch(error) {
+    } catch (error) {
       JSON.parse(
-      convertToObjects([[arguments.callee.name]], ["name"], start),
-    )[0];
+        convertToObjects([[arguments.callee.name]], ["name"], start),
+      )[0];
     }
   }
   // Get form data from the request
