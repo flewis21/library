@@ -1024,10 +1024,10 @@ var fbTester = function () {
 
 var fileFold = function (folderX, fileX, time) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 1027\nfileFold()\n " + arguments.callee.caller.name,
   );
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
-  var elapsedTime = functionRegistry.time;
+  var elapsedTime = functionRegistry.timeLeftInSeconds;
   var fileFree = [];
   if (
     typeof folderX !== "undefined" ||
@@ -1074,7 +1074,7 @@ var fileManager = function (fileX, folder, time, content, mimeType) {
       arguments.callee.caller.name,
   );
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +

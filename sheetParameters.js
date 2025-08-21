@@ -1417,9 +1417,9 @@ var seoTwitter = function (folderX, searchString, time) {
       "= " +
       !searchString +
       "\n!" +
-      functionRegistry.time +
+      time +
       "= " +
-      !functionRegistry.time,
+      !time,
   );
   if (typeof time === "undefined") {
     time = functionRegistry.time;
