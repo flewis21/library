@@ -25,7 +25,7 @@ var donorsChoice = function () {
           <a href="${inventoryUrl}" class="nav__link"  data-link>Inventory</a>
         </nav>
       </div>
-      <?!= includeBlob("index").getContent(); ?>`,
+      <?!= includeBlob("Untitled").getContent(); ?>`,
   )
     .evaluate()
     .getContent(); //:contentFile('uiAccess');
