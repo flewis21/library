@@ -219,26 +219,28 @@ var contentApp = function (blob, argsObject) {
       " = " +
       JSON.stringify(argsObject),
   );
-  let api
+  let api;
   try {
     api = ContentService.createTextOutput(blob)
-        .setMimeType(ContentService.MimeType.JSON)
-        .getContent()
-  } 
-  catch (error) {
+      .setMimeType(ContentService.MimeType.JSON)
+      .getContent();
+  } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
       "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
     );
   }
-  
-  let tmp
+
+  let tmp;
   try {
-    tmp = HtmlService.createTemplate(api)
+    tmp = HtmlService.createTemplate(api);
   } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
-      "Error in contentApp HTML template: " + error.toString() + "\n" + error.stack,
+      "Error in contentApp HTML template: " +
+        error.toString() +
+        "\n" +
+        error.stack,
     );
   }
   try {
@@ -248,8 +250,7 @@ var contentApp = function (blob, argsObject) {
         tmp[key] = argsObject[key];
       });
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
       "Error in contentApp template: " + error.toString() + "\n" + error.stack,
@@ -260,11 +261,14 @@ var contentApp = function (blob, argsObject) {
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .getContent()
+      .getContent();
   } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
-      "Error in contentApp evaluation: " + error.toString() + "\n" + error.stack,
+      "Error in contentApp evaluation: " +
+        error.toString() +
+        "\n" +
+        error.stack,
     );
   }
 }; // or throw error.
