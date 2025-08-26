@@ -660,8 +660,7 @@ function handleGetData() {
         if (rawFuncResult.index && rawFuncResult.index.funcStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.funcStr;
-        }
-        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.dataStr;
         }
@@ -709,7 +708,9 @@ function handleGetData() {
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-        appL = payLoad.dataData.concat("\n\n\n\n" + JSON.stringify(payLoad.data,null,2));
+        appL = payLoad.dataData.concat(
+          "\n\n\n\n" + JSON.stringify(payLoad.data, null, 2),
+        );
         feed = payLoad.link;
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
