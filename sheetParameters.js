@@ -1082,14 +1082,8 @@ var rndString = function (inputArray, time) {
 // console.log("Recieved str: " + str + " from randomSubstance with testString: " + testString)
 
 var seoBites = function (searchString, idArray, time) {
-  searchString
-    ? searchString
-    : (searchString = globalThis.searchString().myNewArr);
-  if (typeof searchString === "object") {
-    searchString = searchString.parameter["func"];
-  }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -1101,18 +1095,24 @@ var seoBites = function (searchString, idArray, time) {
       ", = " +
       idArray +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   if (typeof time === "undefined") {
     time = functionRegistry.time;
   }
   const uniqueSeo = [];
   const searchWords = [];
+  searchString
+    ? searchString
+    : (searchString = globalThis.searchString().myNewArr);
+  if (typeof searchString === "object") {
+    searchString = searchString.parameter["func"];
+  }
   const searchUI = [searchString].join("").split(" ");
   searchUI.map((l) => {
-    var elaspeTime = new Date() - functionRegistry.time;
+    var elaspeTime = functionRegistry.time;
     console.log(
       functionRegistry.time +
         "\nseoBites: \nsearchString: " +
@@ -1120,7 +1120,7 @@ var seoBites = function (searchString, idArray, time) {
         "\nl: " +
         l +
         "\nelaspeTime: " +
-        elaspeTime,
+        formatTime(elaspeTime),
     );
     searchWords.push(l);
   });
@@ -1130,7 +1130,8 @@ var seoBites = function (searchString, idArray, time) {
         console.log(
           functionRegistry.time + "\nseoBites: \nw is !" + !w + " !== '': " + w,
         );
-        if (w.indexOf(w[0].includes(searchWords[i])) !== -1) {
+        var hasId = w[0].includes(searchWords[i])
+        if (w.indexOf(hasId) !== -1) {
           console.log(
             functionRegistry.time +
               "\nseoBites: \nw is !" +
@@ -1424,14 +1425,18 @@ var seoTwitter = function (folderX, searchString, time) {
   if (typeof time === "undefined") {
     time = functionRegistry.time;
   }
-  if (typeof searchString === "undefined") {
-    var searchString = testlt();
-  }
   var data = [];
   var foldCounter = 0;
-  var foldData = folderManager(folderX);
+  var foldData = folderManager(folderX && folderX !== "folderX"? folderX:"");
+  var minFold = fileFold(foldData[foldCounter]);
+  var rndString = minFold[Math.floor(Math.random() * (Math.floor(minFold.length)))]
+  if (!searchString) {
+    var searchString = rndString;
+  }
+  else if (searchString === "searchString") {
+    searchString = rndString;
+  }
   while (data.length === 0) {
-    var minFold = fileFold(foldData[foldCounter]);
     data = minFold.filter((p) => {
       if (p === searchString) {
         console.log("seoTwitter: \n" + p + " === " + searchString);
@@ -1444,13 +1449,13 @@ var seoTwitter = function (folderX, searchString, time) {
       foldCounter++;
     }
   }
-  for (var key in foldData) {
+  for (var key in minFold) {
     if (
-      foldData[key]
+      minFold[key]
         .toLowerCase()
         .includes([searchString].toString().toLowerCase())
     ) {
-      data.push(foldData[key]);
+      data.push(minFold[key]);
     }
   }
   var idArray = [seoFactor(data, time).factorData].toString().split("\n");

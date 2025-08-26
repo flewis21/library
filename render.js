@@ -626,12 +626,12 @@ var includeBlob = function (file, argsObject) {
 };
 
 var includeGSFile = function (file, argsArray) {
-  var misStArrayFile = misSt(file, argsArray)
-    ? console.log("misStArrayFile = " + typeof misStArrayFile)
-    : console.error("misStArrayFile = " + typeof misStArrayFile);
+  var misStArrayFile = misSt([file, argsArray])
+    // ? console.log("misStArrayFile = " + typeof misStArrayFile)
+    // : console.error("misStArrayFile = " + typeof misStArrayFile);
   var misStArrayArgs = misSt(argsArray)
-    ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
-    : console.error("misStArrayArgs = " + typeof misStArrayArgs);
+    // ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
+    // : console.error("misStArrayArgs = " + typeof misStArrayArgs);
   if (misStArrayFile?.args) {
     var fileNames = misStArrayFile.args;
     if (fileNames) {

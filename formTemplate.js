@@ -403,7 +403,7 @@ function createRandomForm() {
 }
 
 var dtls = function (callFunc, time) {
-  var callFunc = testlt().name;
+  ;
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -413,8 +413,8 @@ var dtls = function (callFunc, time) {
   var rdmNumForName = Math.floor(Math.random() * Math.floor(appList.length));
   var keysFunc = seoSheet(appList[rdmNumForName]).keyWords;
   var formName =
-    callFunc.name ||
-    keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))][0];
+    callFunc && callFunc !== "callFunc"? callFunc:
+    keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))];
   if (
     [appList].join().toLowerCase().includes([formName].join("").toLowerCase())
   ) {

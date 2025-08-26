@@ -8,7 +8,7 @@ var testJSON = function (e, rows) {
   var query = rows;
   // console.log(" QUERY -:_ " + query)
   if (query != null) {
-    var rowsToReturn = rows.filter(function (a) {
+    var rowsToReturn = rows?.filter(function (a) {
       return a[0] == query;
     });
     return (webApp = HtmlService.createTemplate(

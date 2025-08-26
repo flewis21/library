@@ -653,15 +653,19 @@ function handleGetData() {
           // Only add if payLoad doesn't already have it
           payLoad.link = rawFuncResult.link;
         }
-        if (rawFuncResult.index && !payLoad.index) {
+        // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+        //   // Only add if payLoad doesn't already have it
+        //   payLoad.index = rawFuncResult.index;
+        // }
+        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
           // Only add if payLoad doesn't already have it
-          payLoad.index = rawFuncResult.index;
+          payLoad.dataData = rawFuncResult.index.funcStr;
         }
-        if (rawFuncResult.index.dataStr && !payLoad.index.dataStr) {
+        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.dataStr;
         }
-        if (rawFuncResult.index.url && !payLoad.index.url) {
+        if (rawFuncResult.index && rawFuncResult.index.url) {
           // Only add if payLoad doesn't already have it
           payLoad.dataIndex = rawFuncResult.index.url;
         }
@@ -705,8 +709,8 @@ function handleGetData() {
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-        appL = `${payLoad}`;
-        feed = `${payLoad.link}`;
+        appL = payLoad.dataData.concat("\n\n\n\n" + JSON.stringify(payLoad.data,null,2));
+        feed = payLoad.link;
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;

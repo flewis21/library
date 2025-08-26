@@ -14,18 +14,23 @@ var driveManagerFilter = function (filterFiles) {
       ", = " +
       !filterFiles,
   );
-  var folderMain = folderManager();
   var fileList = [];
   var lowList = [];
+  // var rndFolder = Math.floor(Math.random() * Math.floor(folderMain.length));
+  // folder = folderMain[rndFolder];
+  var folderMain = folderManager();
+  var fileHelperFunction = function() {
+    var rndFolder = folderMain[Math.floor(Math.random() * Math.floor(folderMain.length))]
+    return matchManager(rndFolder).forms;
+  }
+  fileList = fileHelperFunction()
+  var rndFile = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    var rndFolder = Math.floor(Math.random() * Math.floor(folderMain.length));
-    folder = folderMain[rndFolder];
-    fileList = matchManager(folder).forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndFile].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -33,7 +38,7 @@ var driveManagerFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndFile].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -60,7 +65,7 @@ var driveManagerFilter = function (filterFiles) {
 
 var driveForms = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 63\ndriveForms()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
@@ -90,7 +95,7 @@ var driveForms = function () {
 
 var driveFormsFilter = function (filterFiles) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 93\ndriveFormsFilter(filterFiles: " + filterFiles +")\n " + arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +
@@ -101,14 +106,16 @@ var driveFormsFilter = function (filterFiles) {
       ", = " +
       !filterFiles,
   );
+  var fileList = [];
   var lowList = [];
+  fileList = matchManager("Forms").forms;
+  var rndForm = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("Forms").forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndForm].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -116,7 +123,7 @@ var driveFormsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndForm].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -143,7 +150,7 @@ var driveFormsFilter = function (filterFiles) {
 
 var driveSheets = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 146\ndriveSheets()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
@@ -175,7 +182,7 @@ var driveSheets = function () {
 
 var driveSheetsFilter = function (filterFiles) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 178\ndriveSheetsFilter(filterFiles: " + filterFiles +")\n " + arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +
@@ -186,14 +193,16 @@ var driveSheetsFilter = function (filterFiles) {
       ", = " +
       !filterFiles,
   );
+  var fileList = [];
   var lowList = [];
+  fileList = matchManager("Sheets").sheets;
+  var rndSheet = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("Sheets").sheets;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndSheet].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -201,7 +210,7 @@ var driveSheetsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndSheet].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -230,7 +239,7 @@ var driveSheetsFilter = function (filterFiles) {
 
 var driveWebForms = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 233\n()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
@@ -257,7 +266,7 @@ var driveWebForms = function () {
 
 var driveWebFormsFilter = function (filterFiles) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 260\ndriveWebFormsFilter(filterFiles: " + filterFiles +")\n " + arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +
@@ -270,13 +279,14 @@ var driveWebFormsFilter = function (filterFiles) {
   );
   var fileList = [];
   var lowList = [];
+  fileList = matchManager("webForms").forms;
+  var rndWebForm = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("webForms").forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndWebForm].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -284,7 +294,7 @@ var driveWebFormsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndWebForm].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -311,7 +321,7 @@ var driveWebFormsFilter = function (filterFiles) {
 
 var driveVideoForms = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 314\ndriveVideoForms()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
@@ -351,13 +361,14 @@ var driveVideoFormsFilter = function (filterFiles) {
   );
   var fileList = [];
   var lowList = [];
+  fileList = matchManager("videoForms").forms;
+  var rndVideoForm = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("videoForms").forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndVideoForm].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -365,7 +376,7 @@ var driveVideoFormsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndVideoForm].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -392,7 +403,7 @@ var driveVideoFormsFilter = function (filterFiles) {
 
 var driveDocBrowser = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 395\ndriveDocBrowser()\n " + arguments.callee.caller.name,
   );
   var files = DriveApp.searchFiles(
     'mimeType = "application/vnd.google-apps.document"',
@@ -407,7 +418,7 @@ var driveDocBrowser = function () {
 
 var driveDocForms = function () {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 410\ndriveDocForms()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   var fileList = [];
@@ -434,7 +445,7 @@ var driveDocForms = function () {
 
 var driveDocFormsFilter = function (filterFiles) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 437\ndriveDocFormsFilter(filterFiles: " + filterFiles +")\n " + arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +
@@ -447,13 +458,14 @@ var driveDocFormsFilter = function (filterFiles) {
   );
   var fileList = [];
   var lowList = [];
+  fileList = matchManager("docForms").forms;
+  var rndDoc = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("docForms").forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndDoc].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -461,7 +473,7 @@ var driveDocFormsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndDoc].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -528,13 +540,14 @@ var drivePictFormsFilter = function (filterFiles) {
   );
   var fileList = [];
   var lowList = [];
+  fileList = matchManager("pictForms").forms;
+  var rndPictForm = fileList[Math.floor(Math.random() * (Math.floor(fileList.length)))]
   while (lowList.length === 0) {
-    fileList = matchManager("pictForms").forms;
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListEx =
         fileList[i]
           .toLowerCase()
-          .indexOf([filterFiles].join("").toLowerCase()) > -1;
+          .indexOf([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndPictForm].join("").toLowerCase()) > -1;
       if (lowListEx) {
         lowList.push(fileList[i]);
       }
@@ -542,7 +555,7 @@ var drivePictFormsFilter = function (filterFiles) {
     for (i = 0, l = fileList.length; i < l; i++) {
       var lowListIn = fileList[i]
         .toLowerCase()
-        .includes([filterFiles].join("").toLowerCase());
+        .includes([filterFiles && filterFiles !== "filterFiles"? filterFiles:rndPictForm].join("").toLowerCase());
       if (lowListIn) {
         if (lowList.indexOf(fileList[i]) === -1) {
           lowList.push(fileList[i]);
@@ -1337,7 +1350,7 @@ var folderMatch = function (folderX, stringArray) {
     var stringArray = folderManager();
   }
   var folderXIndex = [];
-  stringArray.map((folder) => {
+  Array.isArray(stringArray)? stringArray.map((folder) => {
     // var sfi = searchFileStr
     var xStr = [folder].join("").toLowerCase();
     var xFold = [folderX].join("").toLowerCase();
@@ -1350,7 +1363,7 @@ var folderMatch = function (folderX, stringArray) {
         folderXIndex.push(folder);
       }
     }
-  });
+  }):folderXIndex.push(stringArray);;
   return folderXIndex;
 };
 

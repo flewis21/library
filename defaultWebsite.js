@@ -439,13 +439,13 @@ var getScriptUrl = function () {
 };
 
 var getUrl = function (appInterface) {
-  var url = appInterface.getService().getUrl();
+  var url = appInterface?.getService().getUrl();
   return url;
 };
 
 var prepareDataBrain = function (data, ratio = 29) {
   if (data) {
-    return data.map((row) => {
+    return Array.isArray(data)? data.map((row) => {
       const rings = Object.values(row).slice(0, 1);
       const values = Object.values(row).slice(1);
       authLogic(values[values.indexOf("M")] === "M")
@@ -471,7 +471,7 @@ var prepareDataBrain = function (data, ratio = 29) {
         input: values,
         output: [rings[0] / ratio],
       };
-    });
+    }):data;
   }
 };
 
