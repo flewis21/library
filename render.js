@@ -320,9 +320,8 @@ var contentTemplate = function (file, argsObject) {
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
       .getContent();
-  }
-  catch (error) {
-    console.error("Exception: ", error.toString())
+  } catch (error) {
+    console.error("Exception: ", error.toString());
   }
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -631,12 +630,12 @@ var includeBlob = function (file, argsObject) {
 };
 
 var includeGSFile = function (file, argsArray) {
-  var misStArrayFile = misSt([file, argsArray])
-    // ? console.log("misStArrayFile = " + typeof misStArrayFile)
-    // : console.error("misStArrayFile = " + typeof misStArrayFile);
-  var misStArrayArgs = misSt(argsArray)
-    // ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
-    // : console.error("misStArrayArgs = " + typeof misStArrayArgs);
+  var misStArrayFile = misSt([file, argsArray]);
+  // ? console.log("misStArrayFile = " + typeof misStArrayFile)
+  // : console.error("misStArrayFile = " + typeof misStArrayFile);
+  var misStArrayArgs = misSt(argsArray);
+  // ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
+  // : console.error("misStArrayArgs = " + typeof misStArrayArgs);
   if (misStArrayFile?.args) {
     var fileNames = misStArrayFile.args;
     if (fileNames) {

@@ -2996,19 +2996,25 @@ var vidFactor = function (data, time) {
   //     ", = " +
   //     time,
   // );
-  if (typeof data !== "object" && typeof data !== "undefined" && data !== null) {
+  if (
+    typeof data !== "object" &&
+    typeof data !== "undefined" &&
+    data !== null
+  ) {
     data = [data];
   }
   var dataArray = [];
   var idArray = [];
-  Array.isArray(data)? data.map((vidData) => {
-    try {
-      var veqIndex = vidData?.indexOf(`v=`);
-      dataArray = vidData?.slice(veqIndex).split(`v=`);
-    } catch (error) {
-      Logger.log("dataArray.push failed");
-    }
-  }):null;
+  Array.isArray(data)
+    ? data.map((vidData) => {
+        try {
+          var veqIndex = vidData?.indexOf(`v=`);
+          dataArray = vidData?.slice(veqIndex).split(`v=`);
+        } catch (error) {
+          Logger.log("dataArray.push failed");
+        }
+      })
+    : null;
   for (var i = 0, l = dataArray.length; i < l; i++) {
     var idValue = dataArray[i].substring(0, 11);
     if (idValue) {
@@ -3108,9 +3114,8 @@ var wwAccess = function (rName, rFunc, rArgs) {
     const args = rArgs;
     try {
       return Route[rName](args);
-    }
-    catch (error) {
-      console.error("Type Error: ", error.toString())
+    } catch (error) {
+      console.error("Type Error: ", error.toString());
     }
   } else {
     console.error("Invalid function name: " + rFunc);

@@ -470,9 +470,8 @@ var udsCache = function (content) {
   );
   try {
     var data = JSON.parse(content);
-  }
-  catch (error) {
-    console.error("Syntax Error: ", error.toString())
+  } catch (error) {
+    console.error("Syntax Error: ", error.toString());
   }
   if (data) {
     for (var key in data) {

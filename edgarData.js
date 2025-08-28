@@ -786,7 +786,9 @@ var yahooSort = function (ticker, time) {
     for (var key in uniqueKey) {
       var elaspeTime = new Date() - start;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-      priceArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketPrice"]);
+      priceArray.push(
+        uniqueKey[key]["result"][0]["price"]["regularMarketPrice"],
+      );
       timeArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketTime"]);
       currencyArray.push(uniqueKey[key]["result"][0]["price"]["currency"]);
       currencySymArray.push(
@@ -805,9 +807,8 @@ var yahooSort = function (ticker, time) {
       currency: priceCurrency,
       currencySymbol: priceCurrencySymbol,
     };
-  }
-  catch (error) {
-    console.error("Syntax Error: ", error.toString())
+  } catch (error) {
+    console.error("Syntax Error: ", error.toString());
   }
   var arrData = [
     "e",

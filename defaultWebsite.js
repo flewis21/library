@@ -445,33 +445,35 @@ var getUrl = function (appInterface) {
 
 var prepareDataBrain = function (data, ratio = 29) {
   if (data) {
-    return Array.isArray(data)? data.map((row) => {
-      const rings = Object.values(row).slice(0, 1);
-      const values = Object.values(row).slice(1);
-      authLogic(values[values.indexOf("M")] === "M")
-        ? (function () {
-            const male = values.splice(values.indexOf("M"), 1);
-            values.splice(0, 0, male[0]);
-          })()
-        : authLogic(values[values.indexOf("F")] === "F")
-          ? (function () {
-              const female = values.splice(values.indexOf("F"), 1);
-              values.splice(0, 0, female[0]);
-            })()
-          : authLogic(values[values.indexOf("I")] === "I")
+    return Array.isArray(data)
+      ? data.map((row) => {
+          const rings = Object.values(row).slice(0, 1);
+          const values = Object.values(row).slice(1);
+          authLogic(values[values.indexOf("M")] === "M")
             ? (function () {
-                const inConclusive = values.splice(values.indexOf("I"), 1);
-                values.splice(0, 0, inConclusive[0]);
+                const male = values.splice(values.indexOf("M"), 1);
+                values.splice(0, 0, male[0]);
               })()
-            : (function () {
-                return;
-              })();
-      values[0] = sexToNumber(values[0]);
-      return {
-        input: values,
-        output: [rings[0] / ratio],
-      };
-    }):data;
+            : authLogic(values[values.indexOf("F")] === "F")
+              ? (function () {
+                  const female = values.splice(values.indexOf("F"), 1);
+                  values.splice(0, 0, female[0]);
+                })()
+              : authLogic(values[values.indexOf("I")] === "I")
+                ? (function () {
+                    const inConclusive = values.splice(values.indexOf("I"), 1);
+                    values.splice(0, 0, inConclusive[0]);
+                  })()
+                : (function () {
+                    return;
+                  })();
+          values[0] = sexToNumber(values[0]);
+          return {
+            input: values,
+            output: [rings[0] / ratio],
+          };
+        })
+      : data;
   }
 };
 
