@@ -777,33 +777,38 @@ var yahooSort = function (ticker, time) {
       { muteHttpExceptions: true },
     ),
   ];
-  var uniqueKey = JSON.parse(data);
-  var priceArray = [];
-  var timeArray = [];
-  var currencyArray = [];
-  var currencySymArray = [];
-  for (var key in uniqueKey) {
-    var elaspeTime = new Date() - start;
-    // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
-    priceArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketPrice"]);
-    timeArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketTime"]);
-    currencyArray.push(uniqueKey[key]["result"][0]["price"]["currency"]);
-    currencySymArray.push(
-      uniqueKey[key]["result"][0]["price"]["currencySymbol"],
-    );
+  try {
+    var uniqueKey = JSON.parse(data);
+    var priceArray = [];
+    var timeArray = [];
+    var currencyArray = [];
+    var currencySymArray = [];
+    for (var key in uniqueKey) {
+      var elaspeTime = new Date() - start;
+      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelaspeTime: " + elaspeTime)
+      priceArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketPrice"]);
+      timeArray.push(uniqueKey[key]["result"][0]["price"]["regularMarketTime"]);
+      currencyArray.push(uniqueKey[key]["result"][0]["price"]["currency"]);
+      currencySymArray.push(
+        uniqueKey[key]["result"][0]["price"]["currencySymbol"],
+      );
+    }
+    {
+    }
+    var stockPrice = [priceArray[0]["fmt"]];
+    var priceTime = [timeArray[0]];
+    var priceCurrency = [currencyArray[0]];
+    var priceCurrencySymbol = [currencySymArray[0]];
+    return {
+      price: stockPrice,
+      time: priceTime,
+      currency: priceCurrency,
+      currencySymbol: priceCurrencySymbol,
+    };
   }
-  {
+  catch (error) {
+    console.error("Syntax Error: ", error.toString())
   }
-  var stockPrice = [priceArray[0]["fmt"]];
-  var priceTime = [timeArray[0]];
-  var priceCurrency = [currencyArray[0]];
-  var priceCurrencySymbol = [currencySymArray[0]];
-  return {
-    price: stockPrice,
-    time: priceTime,
-    currency: priceCurrency,
-    currencySymbol: priceCurrencySymbol,
-  };
   var arrData = [
     "e",
     "t",

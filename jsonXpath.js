@@ -468,7 +468,12 @@ var udsCache = function (content) {
       ", = " +
       !content,
   );
-  var data = JSON.parse(content);
+  try {
+    var data = JSON.parse(content);
+  }
+  catch (error) {
+    console.error("Syntax Error: ", error.toString())
+  }
   if (data) {
     for (var key in data) {
       var foo = data[key]["title"];

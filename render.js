@@ -308,17 +308,22 @@ var contentBlob = function (blob, argsObject) {
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
 var contentTemplate = function (file, argsObject) {
-  var tmp = HtmlService.createTemplateFromFile(file);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+  try {
+    var tmp = HtmlService.createTemplateFromFile(file);
+    if (argsObject) {
+      var keys = Object.keys(argsObject);
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
+    }
+    return tmp
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
+      .getContent();
   }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
-    .getContent();
+  catch (error) {
+    console.error("Exception: ", error.toString())
+  }
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -626,12 +631,12 @@ var includeBlob = function (file, argsObject) {
 };
 
 var includeGSFile = function (file, argsArray) {
-  var misStArrayFile = misSt([file, argsArray]);
-  // ? console.log("misStArrayFile = " + typeof misStArrayFile)
-  // : console.error("misStArrayFile = " + typeof misStArrayFile);
-  var misStArrayArgs = misSt(argsArray);
-  // ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
-  // : console.error("misStArrayArgs = " + typeof misStArrayArgs);
+  var misStArrayFile = misSt([file, argsArray])
+    // ? console.log("misStArrayFile = " + typeof misStArrayFile)
+    // : console.error("misStArrayFile = " + typeof misStArrayFile);
+  var misStArrayArgs = misSt(argsArray)
+    // ? console.log("misStArrayArgs = " + typeof misStArrayArgs)
+    // : console.error("misStArrayArgs = " + typeof misStArrayArgs);
   if (misStArrayFile?.args) {
     var fileNames = misStArrayFile.args;
     if (fileNames) {

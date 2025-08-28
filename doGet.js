@@ -660,7 +660,8 @@ function handleGetData() {
         if (rawFuncResult.index && rawFuncResult.index.funcStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.funcStr;
-        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        }
+        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.dataStr;
         }
@@ -684,15 +685,15 @@ function handleGetData() {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.data || payLoad.dataData; // Assign the URL to iframeSrc
       appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
-      feed = `${payLoad.link}`;
+      feed = payLoad.link;
     } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-      appL = `${JSON.stringify(payLoad.data || payLoad.dataData, null, 2)}`;
-      feed = `${payLoad.link}`;
+      appL = JSON.stringify(payLoad.data || payLoad.dataData, null, 2);
+      feed = payLoad.link;
     } else if (payLoad.type === "text") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
-      feed = `${payLoad.link}`;
+      feed = payLoad.link;
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
@@ -708,9 +709,7 @@ function handleGetData() {
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-        appL = payLoad.dataData.concat(
-          "\n\n\n\n" + JSON.stringify(payLoad.data, null, 2),
-        );
+        appL = payLoad.dataData.concat("\n\n\n\n" + JSON.stringify(payLoad.data,null,2));
         feed = payLoad.link;
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
@@ -718,7 +717,7 @@ function handleGetData() {
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
-    appL = `Critical Error: ${error.message}`;
+    appL = `Critical Error: ${error.stack}`;
     // iframeSrc = ""; // Clear iframe on critical error
   }
   // --- END Refactored payLoad processing ---

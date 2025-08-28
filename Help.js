@@ -1,290 +1,3 @@
-var seoPastTime = function (searchString, time) {
-  console.log(
-    "boilerplate Help: line 2\nseoPastTime(searchString: " +
-      searchString +
-      ", time: " +
-      time +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nsearchString is !" +
-      !searchString +
-      ", = " +
-      searchString +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
-  let items;
-  if (typeof searchString === "undefined") {
-    items = globalThis.uniqueItemArray();
-  } else {
-    items = [{ Description: searchString }];
-  }
-  // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
-  var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString = items[rndItenIndex]["Description"]
-    .split("")
-    .sort((a, b) => {
-      const priorityA = getZuluFreqPriority(a.toLowerCase());
-      const priorityB = getZuluFreqPriority(b.toLowerCase());
-      return priorityA - priorityB;
-    })
-    .join("")
-    .replace(/,/g, ""); // .searchString().myNewArr;
-  var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
-  let fndOrd = [];
-  while (fndOrd.length === 0) {
-    var sorFndOrd = uniqueVid.filter((vidObject) => {
-      var elaspeTime = functionRegistry.time;
-      var timeToExecute = functionRegistry.timeLeftToExecute;
-      if (
-        vidObject.length === 11 &&
-        vidObject !== '"' &&
-        vidObject.toLowerCase !== "http" &&
-        vidObject.toLowerCase !== "result" &&
-        vidObject.toLowerCase !== "content" &&
-        vidObject.toLowerCase !== "data" &&
-        vidObject.toLowerCase !== "length" &&
-        vidObject.toLowerCase !== "ajax" &&
-        vidObject.toLowerCase !== "if" &&
-        vidObject.toLowerCase !== "attrib" &&
-        vidObject.toLowerCase !== "get" &&
-        vidObject.toLowerCase !== "null" &&
-        vidObject.toLowerCase !== "saving" &&
-        vidObject.toLowerCase !== "location" &&
-        vidObject.toLowerCase !== "has" &&
-        vidObject.toLowerCase !== "query" &&
-        vidObject.toLowerCase !== "res" &&
-        vidObject.toLowerCase !== "acc" &&
-        vidObject.toLowerCase !== "hybrid" &&
-        vidObject.toLowerCase !== "amp" &&
-        vidObject.indexOf("=") === -1 &&
-        vidObject.indexOf("query") === -1 &&
-        vidObject.indexOf(";") === -1 &&
-        vidObject.indexOf("ajax") === -1 &&
-        vidObject.indexOf("whole") === -1 &&
-        vidObject.indexOf("document.qu") === -1 &&
-        vidObject.indexOf("inner") === -1 &&
-        vidObject.indexOf("strong") === -1 &&
-        vidObject.indexOf("ing") === -1 &&
-        vidObject.indexOf("brid") === -1 &&
-        vidObject.indexOf("ctrl") === -1 &&
-        vidObject.indexOf("location") === -1 &&
-        vidObject.indexOf("wiki") === -1 &&
-        vidObject.indexOf("//") === -1 &&
-        vidObject.indexOf("Html") === -1 &&
-        vidObject.indexOf("data") === -1 &&
-        vidObject.indexOf("undefined") === -1 &&
-        vidObject.indexOf("client") === -1 &&
-        vidObject.indexOf("/") === -1 &&
-        vidObject.indexOf("peri") === -1 &&
-        vidObject.indexOf("ten") === -1 &&
-        vidObject.indexOf("out") === -1 &&
-        vidObject.indexOf("new") === -1 &&
-        vidObject.indexOf("]") === -1 &&
-        vidObject.indexOf("localStorag") === -1 &&
-        vidObject.indexOf("t.loadEvent") === -1 &&
-        vidObject.indexOf("[") === -1 &&
-        vidObject.indexOf("a.severity") === -1 &&
-        vidObject.indexOf("cont") === -1 &&
-        vidObject.indexOf("\\") === -1 &&
-        vidObject.indexOf("JSON.parse(") === -1 &&
-        vidObject.indexOf("_w._sydConv") === -1 &&
-        vidObject.indexOf("o.Prefetchi") === -1 &&
-        vidObject.indexOf('"inversion"') === -1 &&
-        vidObject.indexOf("Math.min(h-") === -1 &&
-        vidObject.indexOf("regexEsc(a)") === -1 &&
-        vidObject.indexOf('"origin-tri') === -1 &&
-        vidObject.indexOf("get") === -1 &&
-        vidObject.indexOf("&&") === -1 &&
-        vidObject.indexOf('""X-UA-Compa"') === -1 &&
-        vidObject.indexOf("r.offsetHei") === -1 &&
-        vidObject.indexOf(",") === -1
-      ) {
-        return vidObject;
-      }
-    });
-    if (sorFndOrd.length > 0) {
-      var i = 0;
-      var l = sorFndOrd.length;
-      for (i, l; i < l; i++) {
-        sorFndOrd.sort((a, b) => {
-          while (a !== b && fndOrd.indexOf(a) === -1) {
-            if (a.localeCompare(b) === -1) {
-              fndOrd.push(a);
-            }
-          }
-          while (a === b && fndOrd.indexOf(a) === -1) {
-            fndOrd.push(a);
-          }
-          while (b !== a && fndOrd.indexOf(b) === -1) {
-            if (a.localeCompare(b) === 1) {
-              fndOrd.push(b);
-            }
-          }
-        });
-      }
-    } else {
-      var domainSearch = isValidUrl(
-        "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
-          encodeURIComponent(searchString),
-      ).url;
-      // var unFilData = mis(domainSearch)
-      // var data = unFilData.app
-      return { playList: domainSearch };
-      searchString =
-        "http://" +
-        items[Math.floor(Math.random() * Math.floor(items.length))][
-          "Description"
-        ]
-          .split(" ")
-          .join("")
-          .replace(/,/g, "") +
-        ".com";
-      uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
-    }
-  }
-  if (fndOrd) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
-    var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = functionRegistry.time;
-      var timeToExecute = functionRegistry.timeLeftToExecute;
-      for (var i = 0, l = randomKey; i < l; i++) {
-        if (
-          test.indexOf("false") === -1 &&
-          test.indexOf("var") === -1 &&
-          test.indexOf("=") === -1 &&
-          test.indexOf(".") === -1 &&
-          test.indexOf("(") === -1 &&
-          test.indexOf(")") === -1 &&
-          test.indexOf("_") === -1 &&
-          test.indexOf(";") === -1 &&
-          test.indexOf('"') === -1 &&
-          test.indexOf("Error") === -1 &&
-          test.indexOf("error") === -1 &&
-          test.indexOf("Codes") === -1 &&
-          test.indexOf("siz23") === -1 &&
-          test.indexOf(":") === -1 &&
-          test.indexOf("{}") === -1 &&
-          test.indexOf("}") === -1 &&
-          test.indexOf("<") === -1 &&
-          test.indexOf(">") === -1 &&
-          test.indexOf("EdgeWorksp") === -1
-        ) {
-          if (i >= 100) {
-            break;
-          }
-          return test[i];
-        }
-      }
-    });
-    var rndSort = [];
-    for (var i = 0, l = rndRes.length; i < l; i++) {
-      rndRes.filter((o) => {
-        rndSort.push(o !== rndRes[i]);
-        if (rndSort.length === rndRes.length) {
-          return;
-        }
-      });
-      if (JSON.stringify(i) >= 0) {
-        break;
-      }
-    }
-    var sorKind = rndSort.toString().split(" ");
-    var revKind = sorKind.reverse();
-    var popKind = revKind.pop();
-    var rndKind = popKind.split(",");
-    return { playList: rndRes.sort((a, b) => a - b) };
-  }
-};
-var seoYoutube = function (searchString, time) {
-  // console.log(
-  //   "boilerplate Help: line 175\nseoYoutube(searchString: " +
-  //     searchString +
-  //     ", time: " +
-  //     time +
-  //     ")\n " +
-  //     arguments.callee.caller.name,
-  // );
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\nsearchString is !" +
-  //     !searchString +
-  //     ", = " +
-  //     searchString +
-  //     "\ntime is !" +
-  //     !time +
-  //     ", = " +
-  //     time,
-  // );
-  if (typeof searchString === "undefined") {
-    var items = globalThis.uniqueItemArray();
-    var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-    var searchString =
-      "http://" +
-      items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") +
-      ".com"; // .searchString().myNewArr;
-  }
-  var rndSearch = isValidUrl(searchString).pathname;
-  if (rndSearch) {
-    var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
-    var data = unFilData.getContentText();
-    var idArray = vidFactor(data, time).vidArray;
-  }
-  return { myIdArr: idArray || [] };
-  // var data = mis(rndSearch).app;
-};
-var vidFactor = function (data, time) {
-  // console.log(
-  //   "boilerplate Help: line 199\nvidFactor(data: " +
-  //     data.substring(0, 9) +
-  //     "..., time: " +
-  //     time +
-  //     ")\n " +
-  //     arguments.callee.caller.name,
-  // );
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\ndata is !" +
-  //     !data +
-  //     ", = " +
-  //     data.substring(0, 100) +
-  //     "\ntime is !" +
-  //     !time +
-  //     ", = " +
-  //     time,
-  // );
-  if (typeof data !== "object") {
-    data = [data];
-  }
-  var dataArray = [];
-  var idArray = [];
-  data.map((vidData) => {
-    try {
-      var veqIndex = vidData.indexOf(`v=`);
-      dataArray = vidData.slice(veqIndex).split(`v=`);
-    } catch (error) {
-      Logger.log("dataArray.push failed");
-    }
-  });
-  for (var i = 0, l = dataArray.length; i < l; i++) {
-    var idValue = dataArray[i].substring(0, 11);
-    if (idValue) {
-      idArray.push(idValue);
-    }
-  }
-  return { vidArray: idArray };
-};
 var crmCalc = function (func) {
   console.log(
     "boilerplate Help: line 232\ncrmCalc(func: " +
@@ -324,6 +37,7 @@ var crmCalc = function (func) {
   }
   return funFact;
 };
+
 var crmT = function (func) {
   console.log(
     "boilerplate Help: line 265\ncrmT(func: " +
@@ -363,32 +77,7 @@ var crmT = function (func) {
   }
   return funFirst;
 };
-var testlt = function () {
-  console.log(
-    "boilerplate Help: line 325\ntestlt(: )\n " + arguments.callee.caller?.name,
-  );
-  console.log(
-    arguments.callee.caller.name +
-      "\n*** Inside testlt() function. It has been called. ***",
-  );
-  // var numVarRnd = randNum;
-  // var arrNum = numVarRnd
-  // var arrDRnd = appSort(arrNum);
-  // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-  var ssearchString = globalThis.searchString().myNewArr;
-  var fParams = gsFParams();
-  var result = fParams.find((rndS) => {
-    return rndS.name === ssearchString;
-  });
-  if (result) {
-    return result;
-  } else {
-    console.log("No function parameters found for:", searchString);
-    return searchString;
-  }
-  // Make sure testlt() returns something that JSON.parse expects,
-  // or it will also cause issues down the line.
-};
+
 var gsFiles = function () {
   console.log(
     "boilerplate Help: line 329\ngsFiles(: )\n " + arguments.callee.caller.name,
@@ -401,6 +90,7 @@ var gsFiles = function () {
   }
   return gsFileList;
 };
+
 var gsFParams = function () {
   console.log(
     "boilerplate Help: line 339\ngsFParams(: )\n " +
@@ -430,523 +120,74 @@ var gsFParams = function () {
   }
   return gsParamsList;
 };
-var paramVals = function (funcInfo) {
+
+var isValidUrl = function (text) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
-  );
-  var fParams = gsFParams();
-  var result = fParams.find((rndS) => {
-    return rndS.name === funcInfo;
-  });
-  if (typeof result === "object" && result !== null && result.name) {
-    misArgs =
-      result.parameters && result.parameters.length > 0
-        ? [result.name, ...result.parameters]
-        : [result.name];
-  }
-  return misArgs;
-};
-var resolveParams = function (func, someArgs) {
-  console.log(
-    "boilerplate Help: line 451\nresolveParams(func: " +
-      func +
-      ", someArgs: " +
-      someArgs +
+    "boilerplate Help: line 2036\nisValidUrl(text: " +
+      text +
       ")\n " +
       arguments.callee.caller.name,
   );
-  var funcUno = decodeURIComponent(func);
-  var funcDos = decodeURIComponent(someArgs);
-  var numVarRnd = randNum(
-    arguments.callee.caller.name || arguments.callee.name,
-  );
-  var argsX = [];
-  var content = [];
-  var keys = [
-    funcDos !== "undefined"
-      ? [funcUno].concat([Object.values(funcDos)])
-      : [funcUno],
-  ]
-    .toString()
-    .split(",");
-  keys.forEach((pro) => {
-    var bPro = crmT(pro);
-    if (bPro >= 0) {
-      argsX.push(gsFiles()[bPro]);
-    } else {
-      content.push(pro);
-    }
-  });
-  if (argsX) {
-    var allErrors = {};
-    var fParams = gsFParams();
-    var resCount = 0;
-    argsX.forEach((result) => {
-      console.log("argsX result " + resCount + ": " + result);
-      var args = {};
-      var resolvedArgs = [];
-      var missingParams = [];
-      var searchString = fParams.find((rndS) => {
-        return rndS.name === result;
-      });
-      var orderedArgs = [];
-      if (
-        searchString &&
-        searchString !== "undefined" &&
-        searchString !== null &&
-        searchString.parameters
-      ) {
-        var declaredParams = searchString.parameters;
-        console.log(
-          "Current content: " +
-            content +
-            "\nDeclared parameters: " +
-            declaredParams,
-        );
-        var contentMap = {};
-        content.forEach((item) => {
-          declaredParams.forEach((declaredParam) => {
-            if (item !== null) {
-              if (item === declaredParam || item.includes(declaredParam)) {
-                contentMap[declaredParam] = item;
-              }
-            }
-          });
-        });
-        declaredParams.forEach((paramName) => {
-          if (contentMap.hasOwnProperty(paramName)) {
-            orderedArgs.push(contentMap[paramName]);
-          } else {
-            orderedArgs.push(null);
-          }
-        });
-        console.log("Ordered arguments: " + orderedArgs);
-        content = orderedArgs;
+  // var protocol = "";
+  // var hostname = "";
+  var pathname = "";
+  // var query = "";
+  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
+  var allMatches = [];
+  if (typeof text !== "string" || text.length === 0) {
+    return { protocol: "", hostname: "", pathname: "", query: "" };
+  }
+  var urlRegex =
+    /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
+  var matches = text.match(urlRegex);
+  allMatches = matches ? [...matches] : [];
+  if (matches) {
+    let currentProtocol = "";
+    let currentHostname = "";
+    let currentPathname = "";
+    let currentQuery = "";
+    matches.forEach((url) => {
+      var protocolEnd = url.indexOf("://");
+      if (protocolEnd !== -1) {
+        currentProtocol = url.substring(0, protocolEnd + 3);
+        url = url.substring(protocolEnd + 3);
       }
-      if (content) {
-        var htmlArray = [
-          `Untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
-        ]
-          .toString()
-          .split(" ");
-        var allFolders = folderManager();
-        var uniqueCoArray = sheetCalc();
-        var uniqueItemArray = itemCalc();
-        content.forEach((paramName, index) => {
-          var declaredParamName = declaredParams[index];
-          if (
-            paramName === "e" ||
-            (paramName === null && declaredParamName === "e")
-          ) {
-            args["e"] = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", result],
-                  ["args", JSON.stringify(content)],
-                  ["action", "getData"],
-                  ["file", "uiAccess"],
-                ],
-              ],
-              functionRegistry.time,
-            );
-            resolvedArgs.push(args["e"]);
-          } else if (
-            paramName === "time" ||
-            (paramName === null && declaredParamName === "time")
-          ) {
-            args["time"] = functionRegistry.time;
-            resolvedArgs.push(args["time"]);
-          } else if (
-            paramName === "data" ||
-            (paramName === null && declaredParamName === "data")
-          ) {
-            var rndE = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", "mis"],
-                  ["args", [result, ...content]],
-                ],
-              ],
-              functionRegistry.time,
-            );
-            var funcUno = rndE.parameter["func"];
-            var funcDos = rndE.parameter["args"];
-            if (!funcUno === "resolvedParams") {
-              var payLoad = globalThis[funcUno].apply(this, funcDos);
-            }
-            args["data"] = {
-              message: payLoad,
-              timestamp: new Date(),
-            };
-            resolvedArgs.push(args["data"]);
-          } else if (
-            paramName === "func" ||
-            (paramName === null && declaredParamName === "func")
-          ) {
-            args["func"] = result;
-            resolvedArgs.push(args["func"]);
-          } else if (
-            paramName === "varA" ||
-            (paramName === null && declaredParamName === "varA")
-          ) {
-            arrDRnd = appSort(numVarRnd);
-            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-            result = fParams.find((rndS) => {
-              return rndS.name === searchString;
-            });
-            if (typeof result === "string") {
-              args["varA"] = globalThis[result]();
-            } else if (
-              typeof result === "object" &&
-              result !== null &&
-              result.name
-            ) {
-              args["varA"] = globalThis[result.name].apply(result.parameters);
-            } else if (result !== null && result.name) {
-              args["varA"] = globalThis[result.name]();
-            }
-            resolvedArgs.push(args["varA"]);
-          } else if (
-            paramName === "url" ||
-            paramName ===
-              "companyNameUrl"(
-                paramName === null &&
-                  (declaredParamName === "url" ||
-                    declaredParamName === "companyNameUrl"),
-              )
-          ) {
-            functionRegistry.gTree;
-            var folder = functionRegistry.getFolderList()[numVarRnd];
-            args["url"] = fileBrowser(folder).url;
-            resolvedArgs.push(args["url"]);
-          } else if (
-            paramName === "object" ||
-            (paramName === null && declaredParamName === "object")
-          ) {
-            args["object"] = JSON.stringify({});
-            resolvedArgs.push(args["object"]);
-          } else if (
-            paramName === "file" ||
-            (paramName === null && declaredParamName === "file")
-          ) {
-            var rndPage =
-              htmlArray[
-                Math.floor(Math.random() * Math.floor(htmlArray.length))
-              ];
-            args["file"] = rndPage;
-            resolvedArgs.push(args["file"]);
-          } else if (
-            paramName === "fileX" ||
-            (paramName === null && declaredParamName === "fileX")
-          ) {
-            var folderX = allFolders[numVarRnd];
-            var folderRoot = DriveApp.getFoldersByName(folderX);
-            let fileXName = "undefined";
-            if (folderRoot.hasNext) {
-              var fileBulk = folderRoot.next().getFiles();
-              const fileNames = [];
-              if (fileBulk.hasNext()) {
-                while (fileBulk.hasNext()) {
-                  var fileUrl = fileBulk.next();
-                  fileNames.push(fileUrl.getName());
-                }
-                if (fileNames.length > 0) {
-                  fileXName =
-                    fileNames[Math.floor(Math.random() * fileNames.length)];
-                }
-              }
-            }
-            args["fileX"] = fileXName;
-            resolvedArgs.push(args["fileX"]);
-          } else if (
-            paramName === "folderX" ||
-            paramName === "folder" ||
-            (paramName === null && declaredParamName === "folderX") ||
-            declaredParamName === "folder"
-          ) {
-            if (paramName === "folderX") {
-              args["folderX"] = allFolders[numVarRnd];
-              resolvedArgs.push(args["folderX"]);
-            } else if (paramName === "folder") {
-              args["folder"] = allFolders[numVarRnd];
-              resolvedArgs.push(args["folder"]);
-            }
-          } else if (
-            paramName === "numIndex" ||
-            (paramName === null && declaredParamName === "numIndex")
-          ) {
-            args["numIndex"] = numVarRnd;
-            resolvedArgs.push(args["numIndex"]);
-          } else if (
-            paramName === "infinitum" ||
-            (paramName === null && declaredParamName === "infinitum")
-          ) {
-            args["infinitum"] = numVarRnd;
-            resolvedArgs.push(args["infinitum"]);
-          } else if (
-            paramName === "itemName" ||
-            (paramName === null && declaredParamName === "itemName")
-          ) {
-            var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueItemArray.length),
-            );
-            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
-            resolvedArgs.push(args["itemName"]);
-          } else if (
-            paramName === "tunPlay" ||
-            paramName === "searchString" ||
-            paramName === "rndKey" ||
-            paramName === "search" ||
-            (paramName === null && declaredParamName === "tunPlay") ||
-            declaredParamName === "searchString" ||
-            declaredParamName === "search" ||
-            declaredParamName === "rndKey"
-          ) {
-            var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueCoArray.length),
-            );
-            var tiParam = uniqueCoArray[rndItemIndex]["title"];
-            if (paramName === "tunPlay") {
-              args["tunPlay"] = tiParam;
-              resolvedArgs.push(args["tunPlay"]);
-            } else if (paramName === "searchString") {
-              args["searchString"] = tiParam;
-              resolvedArgs.push(args["searchString"]);
-            } else if (paramName === "rndKey") {
-              args["rndKey"] = tiParam;
-              resolvedArgs.push(args["rndKey"]);
-            } else if (paramName === "search") {
-              args["search"] = tiParam;
-              resolvedArgs.push(args["search"]);
-            }
-          } else if (
-            paramName === "stringArray" ||
-            (paramName === null && declaredParamName === "stringArray")
-          ) {
-            args["stringArray"] = appSort(numVarRnd);
-            resolvedArgs.push(args["stringArray"]);
-          } else if (
-            paramName === "argsObject" ||
-            (paramName === null && declaredParamName === "argsObject")
-          ) {
-            var rawVar = mis("VVar");
-            args["argsObject"] = rawVar.app["myVar"];
-            resolvedArgs.push(args["argsObject"]);
-          } else {
-            if (paramName !== null) {
-              args[paramName] = paramName;
-              resolvedArgs.push(args[paramName]);
-            } else {
-              missingParams.push(declaredParamName);
-            }
-          }
-        });
-        if (missingParams.length === 0) {
-          content = resolvedArgs;
-        } else {
-          allErrors[result] =
-            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
-          console.error(allErrors[result]);
-          console.log(allErrors[result]);
+      var hostnameEnd = url.indexOf("/");
+      if (hostnameEnd !== -1) {
+        currentHostname = url.substring(0, hostnameEnd);
+        currentPathname = url.substring(hostnameEnd);
+      } else {
+        currentHostname = url;
+      }
+      var queryStart = pathname.indexOf("?");
+      if (queryStart !== -1) {
+        currentQuery = pathname.substring(queryStart);
+        currentPathname = pathname.substring(0, queryStart);
+      }
+      var hostnameRegex =
+        /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
+      if (currentHostname && hostnameRegex.test(currentHostname)) {
+        if (currentProtocol && currentHostname) {
+          validUrlResult = {
+            protocol: currentProtocol,
+            hostname: currentHostname,
+            pathname: currentPathname,
+            query: currentQuery,
+            url:
+              currentProtocol +
+              currentHostname +
+              currentPathname +
+              currentQuery,
+          };
+          return validUrlResult;
         }
       }
-      console.log("Resolved arguments:", args);
-      console.log("Resolved parameters Array:", resolvedArgs);
-      resCount++;
     });
-    var errorKeys = Object.keys(allErrors);
-    if (errorKeys.length > 0) {
-      return allErrors;
-    }
-  } else {
-    console.log("No function parameters found for:", searchString);
   }
-  return content;
+  validUrlResult.matches = allMatches;
+  return validUrlResult;
 };
-// ? console.log("funcUno = " + typeof funcUno)
-// : console.error("funcUno = " + typeof funcUno);
-// ? console.log("funcDos = " + typeof funcDos)
-// : console.error("funcDos = " + typeof funcDos);
-// ? console.log("funcDos = " + typeof funcDos)
-// : console.error("funcDos = " + typeof funcDos);
-// else if (
-//   paramName === "searchString" ||
-//   (paramName === null && declaredParamName === "searchString")
-// ) {
-//   args["searchString"] = substanceVegas(
-//     0,
-//     [
-//       objectOfS(
-//         ["parameter"],
-//         [[["func", result]]],
-//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-//       ).parameter["func"],
-//     ].toString().length,
-//     [
-//       objectOfS(
-//         ["parameter"],
-//         [[["func", result]]],
-//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-//       ).parameter["func"],
-//     ]
-//       .toString()
-//       .split(""),
-//   ).substWord;
-//   resolvedArgs.push(args["searchString"]);
-// }
-var wwAccess = function (rName, rFunc, rArgs) {
-  console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
-  );
-  const Route = {};
-  Route.path = function (route, rFunction) {
-    Route[route] = rFunction;
-  };
-  if (this.hasOwnProperty(rFunc)) {
-    var funcS = this[rFunc]; // Get the actual function
-    Route.path(rName, funcS); // Associate the function with the route
-    const args = rArgs;
-    return Route[rName](args);
-  } else {
-    console.error("Invalid function name: " + rFunc);
-    return "Invalid function name";
-  }
-};
-const Route = {};
-Route.path = function (route, callback) {
-  return (Route[route] = callback);
-};
-var seoCapital = function (url) {
-  console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
-  );
-  const html = HtmlService.createTemplate(
-    `<!DOCTYPE html>
-      <html id="seoCapital" lang="en">
-        <head>
-          <base target="_top"></base>
-          <meta charset="utf-8"></meta>
-          <meta name="seoCapital" content="Boilerplate SEO Capital"></meta>
-          <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-          <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
-        </head>
-        <body>
-          <div class="row">
-            <div class="responsive-section">
-                <div class="container" id="seoData">
-                  <label id="labSEOC">
-                    <strong></strong></label>
-                  <div class="row">
-                    <div class="col s12 card-panel amber">
-                      <div class="responsive-section">
-                        <div class="container">
-                          <div id="divSEOC" class="col s12 receipt amber flow-text">
-                            <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
-                              <thead></thead>
-                              <tbody>
-                                <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                                    <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
-                                      <tbody >
-                                        <td>
-                                          <div>
-                                            <iframe src='${url}' id="w3Res" width="100%" height="1080vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
-          <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        </body>
-      </html>`,
-  );
-  // html.pong = pong.toString().split(",");
-  html.research = HtmlService.createHtmlOutput(`document
-      .getElementById("w3Search")
-      .addEventListener("change", function() {
-        var cap = 
-          document
-          .getElementById("w3Search")
-          .value;
-        console.log(cap)
-      })`);
-  html.prefTimeChange = HtmlService.createHtmlOutput(`document
-      .getElementById("w3Search")
-      .addEventListener("change", function() {
-        //console.log(document.getElementById("test").innerHTML)
-        // Init a timeout variable to be used below
-        let timeout = null;
-        (() => {
-          // Clear the timeout if it has already been set.
-          // This will prevent the previous task from executing
-          // if it has been less than <MILLISECONDS>
-          // clearTimeout(timeout);
-          // Make a new timeout set to go off in 1000ms (1 second)
-          // timeout = setTimeout
-          // (function  () {
-          // console.log('Input Value:', textInput.value)}, 5000)();
-          if (typeof url === "undefined") {
-            var urlData = document.getElementById("breakUrl").value;
-            var url = urlData.toString()
-          };
-          var prodSearch = document.getElementById("w3Search").value;
-          var linkFollow = document.createElement("a");
-          linkFollow.href = url + "?func=seoCapital" + "&args=" + encodeURIComponent();
-          linkFollow.id = "linkFOLLOW";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("w3Search").value = ""
-        })()
-      });`);
-  html.dOMContentLoaded = HtmlService.createHtmlOutput(`document
-      .addEventListener("DOMContentLoaded", function() {
-        let timePicker = document.getElementById("breakUrl");
-        M.Timepicker.init(timePicker,
-          {
-            defaultTime: "now" 
-          })
-      });
-      var elems = document.getElementById("breakUrl");
-      var instances = M.FormSelect.init(elems);`);
-  html.recentSearch = HtmlService.createHtmlOutput(`document
-      .addEventListener("DOMContentLoaded", homeW3);
-      function homeW3() {
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result)
-            })
-            .withFailureHandler((error) => {
-              console.log(error);
-              console.log(document.getElementById("test").innerHTML);
-              reject(error)
-            })
-            .runBoilerplate([func], args)
-          })
-        };
-        const htmlStructure = document.getElementById("divSEOC").innerHTML;
-        const results = document.getElementById("w3Search");
-        const strValue = results.value;
-        results.addEventListener("change",(e) => {
-          var cap = e.target.value;
-          document.getElementById("w3Search").value = "";
-          document.getElementById("divSEOC").innerHTML = "... waiting for " + cap;
-          serverside("portBing", [cap])
-          .then((vid) => {
-            if (vid) {
-              document.getElementById("divSEOC").innerHTML = htmlStructure;
-              document.getElementById("w3Res").src = vid;
-            }
-          })
-          .catch((er) => {
-            console.log(er);
-            document.getElementById("divSEOC").innerHTML = er
-          })
-        })
-      }`);
-  return html.evaluate().getContent();
-};
+
 // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
 // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
 // const pong = table.map((ping)=>{return ping.substring(0)})
@@ -1567,6 +808,7 @@ var mis = function (text, maxRetries = 3) {
     return { index: responseObj, app: htmlData, link: supUrl };
   }
 };
+
 // var misSt = function (func, someArgs) {
 //   console.log(
 //     "boilerplate Help: line 1298\nmisSt(func: " +
@@ -2961,72 +2203,821 @@ var misSt = function (func, someArgs) {
   return argsObject;
 };
 
-var isValidUrl = function (text) {
+var paramVals = function (funcInfo) {
   console.log(
-    "boilerplate Help: line 2036\nisValidUrl(text: " +
-      text +
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
+  var fParams = gsFParams();
+  var result = fParams.find((rndS) => {
+    return rndS.name === funcInfo;
+  });
+  if (typeof result === "object" && result !== null && result.name) {
+    misArgs =
+      result.parameters && result.parameters.length > 0
+        ? [result.name, ...result.parameters]
+        : [result.name];
+  }
+  return misArgs;
+};
+
+var resolveParams = function (func, someArgs) {
+  console.log(
+    "boilerplate Help: line 451\nresolveParams(func: " +
+      func +
+      ", someArgs: " +
+      someArgs +
       ")\n " +
       arguments.callee.caller.name,
   );
-  // var protocol = "";
-  // var hostname = "";
-  var pathname = "";
-  // var query = "";
-  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
-  var allMatches = [];
-  if (typeof text !== "string" || text.length === 0) {
-    return { protocol: "", hostname: "", pathname: "", query: "" };
+  var funcUno = decodeURIComponent(func);
+  var funcDos = decodeURIComponent(someArgs);
+  var numVarRnd = randNum(
+    arguments.callee.caller.name || arguments.callee.name,
+  );
+  var argsX = [];
+  var content = [];
+  var keys = [
+    funcDos !== "undefined"
+      ? [funcUno].concat([Object.values(funcDos)])
+      : [funcUno],
+  ]
+    .toString()
+    .split(",");
+  keys.forEach((pro) => {
+    var bPro = crmT(pro);
+    if (bPro >= 0) {
+      argsX.push(gsFiles()[bPro]);
+    } else {
+      content.push(pro);
+    }
+  });
+  if (argsX) {
+    var allErrors = {};
+    var fParams = gsFParams();
+    var resCount = 0;
+    argsX.forEach((result) => {
+      console.log("argsX result " + resCount + ": " + result);
+      var args = {};
+      var resolvedArgs = [];
+      var missingParams = [];
+      var searchString = fParams.find((rndS) => {
+        return rndS.name === result;
+      });
+      var orderedArgs = [];
+      if (
+        searchString &&
+        searchString !== "undefined" &&
+        searchString !== null &&
+        searchString.parameters
+      ) {
+        var declaredParams = searchString.parameters;
+        console.log(
+          "Current content: " +
+            content +
+            "\nDeclared parameters: " +
+            declaredParams,
+        );
+        var contentMap = {};
+        content.forEach((item) => {
+          declaredParams.forEach((declaredParam) => {
+            if (item !== null) {
+              if (item === declaredParam || item.includes(declaredParam)) {
+                contentMap[declaredParam] = item;
+              }
+            }
+          });
+        });
+        declaredParams.forEach((paramName) => {
+          if (contentMap.hasOwnProperty(paramName)) {
+            orderedArgs.push(contentMap[paramName]);
+          } else {
+            orderedArgs.push(null);
+          }
+        });
+        console.log("Ordered arguments: " + orderedArgs);
+        content = orderedArgs;
+      }
+      if (content) {
+        var htmlArray = [
+          `Untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+        ]
+          .toString()
+          .split(" ");
+        var allFolders = folderManager();
+        var uniqueCoArray = sheetCalc();
+        var uniqueItemArray = itemCalc();
+        content.forEach((paramName, index) => {
+          var declaredParamName = declaredParams[index];
+          if (
+            paramName === "e" ||
+            (paramName === null && declaredParamName === "e")
+          ) {
+            args["e"] = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", result],
+                  ["args", JSON.stringify(content)],
+                  ["action", "getData"],
+                  ["file", "uiAccess"],
+                ],
+              ],
+              functionRegistry.time,
+            );
+            resolvedArgs.push(args["e"]);
+          } else if (
+            paramName === "time" ||
+            (paramName === null && declaredParamName === "time")
+          ) {
+            args["time"] = functionRegistry.time;
+            resolvedArgs.push(args["time"]);
+          } else if (
+            paramName === "data" ||
+            (paramName === null && declaredParamName === "data")
+          ) {
+            var rndE = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", "mis"],
+                  ["args", [result, ...content]],
+                ],
+              ],
+              functionRegistry.time,
+            );
+            var funcUno = rndE.parameter["func"];
+            var funcDos = rndE.parameter["args"];
+            if (!funcUno === "resolvedParams") {
+              var payLoad = globalThis[funcUno].apply(this, funcDos);
+            }
+            args["data"] = {
+              message: payLoad,
+              timestamp: new Date(),
+            };
+            resolvedArgs.push(args["data"]);
+          } else if (
+            paramName === "func" ||
+            (paramName === null && declaredParamName === "func")
+          ) {
+            args["func"] = result;
+            resolvedArgs.push(args["func"]);
+          } else if (
+            paramName === "varA" ||
+            (paramName === null && declaredParamName === "varA")
+          ) {
+            arrDRnd = appSort(numVarRnd);
+            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+            result = fParams.find((rndS) => {
+              return rndS.name === searchString;
+            });
+            if (typeof result === "string") {
+              args["varA"] = globalThis[result]();
+            } else if (
+              typeof result === "object" &&
+              result !== null &&
+              result.name
+            ) {
+              args["varA"] = globalThis[result.name].apply(result.parameters);
+            } else if (result !== null && result.name) {
+              args["varA"] = globalThis[result.name]();
+            }
+            resolvedArgs.push(args["varA"]);
+          } else if (
+            paramName === "url" ||
+            paramName ===
+              "companyNameUrl"(
+                paramName === null &&
+                  (declaredParamName === "url" ||
+                    declaredParamName === "companyNameUrl"),
+              )
+          ) {
+            functionRegistry.gTree;
+            var folder = functionRegistry.getFolderList()[numVarRnd];
+            args["url"] = fileBrowser(folder).url;
+            resolvedArgs.push(args["url"]);
+          } else if (
+            paramName === "object" ||
+            (paramName === null && declaredParamName === "object")
+          ) {
+            args["object"] = JSON.stringify({});
+            resolvedArgs.push(args["object"]);
+          } else if (
+            paramName === "file" ||
+            (paramName === null && declaredParamName === "file")
+          ) {
+            var rndPage =
+              htmlArray[
+                Math.floor(Math.random() * Math.floor(htmlArray.length))
+              ];
+            args["file"] = rndPage;
+            resolvedArgs.push(args["file"]);
+          } else if (
+            paramName === "fileX" ||
+            (paramName === null && declaredParamName === "fileX")
+          ) {
+            var folderX = allFolders[numVarRnd];
+            var folderRoot = DriveApp.getFoldersByName(folderX);
+            let fileXName = "undefined";
+            if (folderRoot.hasNext) {
+              var fileBulk = folderRoot.next().getFiles();
+              const fileNames = [];
+              if (fileBulk.hasNext()) {
+                while (fileBulk.hasNext()) {
+                  var fileUrl = fileBulk.next();
+                  fileNames.push(fileUrl.getName());
+                }
+                if (fileNames.length > 0) {
+                  fileXName =
+                    fileNames[Math.floor(Math.random() * fileNames.length)];
+                }
+              }
+            }
+            args["fileX"] = fileXName;
+            resolvedArgs.push(args["fileX"]);
+          } else if (
+            paramName === "folderX" ||
+            paramName === "folder" ||
+            (paramName === null && declaredParamName === "folderX") ||
+            declaredParamName === "folder"
+          ) {
+            if (paramName === "folderX") {
+              args["folderX"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folderX"]);
+            } else if (paramName === "folder") {
+              args["folder"] = allFolders[numVarRnd];
+              resolvedArgs.push(args["folder"]);
+            }
+          } else if (
+            paramName === "numIndex" ||
+            (paramName === null && declaredParamName === "numIndex")
+          ) {
+            args["numIndex"] = numVarRnd;
+            resolvedArgs.push(args["numIndex"]);
+          } else if (
+            paramName === "infinitum" ||
+            (paramName === null && declaredParamName === "infinitum")
+          ) {
+            args["infinitum"] = numVarRnd;
+            resolvedArgs.push(args["infinitum"]);
+          } else if (
+            paramName === "itemName" ||
+            (paramName === null && declaredParamName === "itemName")
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueItemArray.length),
+            );
+            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
+            resolvedArgs.push(args["itemName"]);
+          } else if (
+            paramName === "tunPlay" ||
+            paramName === "searchString" ||
+            paramName === "rndKey" ||
+            paramName === "search" ||
+            (paramName === null && declaredParamName === "tunPlay") ||
+            declaredParamName === "searchString" ||
+            declaredParamName === "search" ||
+            declaredParamName === "rndKey"
+          ) {
+            var rndItemIndex = Math.floor(
+              Math.random() * Math.floor(uniqueCoArray.length),
+            );
+            var tiParam = uniqueCoArray[rndItemIndex]["title"];
+            if (paramName === "tunPlay") {
+              args["tunPlay"] = tiParam;
+              resolvedArgs.push(args["tunPlay"]);
+            } else if (paramName === "searchString") {
+              args["searchString"] = tiParam;
+              resolvedArgs.push(args["searchString"]);
+            } else if (paramName === "rndKey") {
+              args["rndKey"] = tiParam;
+              resolvedArgs.push(args["rndKey"]);
+            } else if (paramName === "search") {
+              args["search"] = tiParam;
+              resolvedArgs.push(args["search"]);
+            }
+          } else if (
+            paramName === "stringArray" ||
+            (paramName === null && declaredParamName === "stringArray")
+          ) {
+            args["stringArray"] = appSort(numVarRnd);
+            resolvedArgs.push(args["stringArray"]);
+          } else if (
+            paramName === "argsObject" ||
+            (paramName === null && declaredParamName === "argsObject")
+          ) {
+            var rawVar = mis("VVar");
+            args["argsObject"] = rawVar.app["myVar"];
+            resolvedArgs.push(args["argsObject"]);
+          } else {
+            if (paramName !== null) {
+              args[paramName] = paramName;
+              resolvedArgs.push(args[paramName]);
+            } else {
+              missingParams.push(declaredParamName);
+            }
+          }
+        });
+        if (missingParams.length === 0) {
+          content = resolvedArgs;
+        } else {
+          allErrors[result] =
+            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+          console.error(allErrors[result]);
+          console.log(allErrors[result]);
+        }
+      }
+      console.log("Resolved arguments:", args);
+      console.log("Resolved parameters Array:", resolvedArgs);
+      resCount++;
+    });
+    var errorKeys = Object.keys(allErrors);
+    if (errorKeys.length > 0) {
+      return allErrors;
+    }
+  } else {
+    console.log("No function parameters found for:", searchString);
   }
-  var urlRegex =
-    /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-  var matches = text.match(urlRegex);
-  allMatches = matches ? [...matches] : [];
-  if (matches) {
-    let currentProtocol = "";
-    let currentHostname = "";
-    let currentPathname = "";
-    let currentQuery = "";
-    matches.forEach((url) => {
-      var protocolEnd = url.indexOf("://");
-      if (protocolEnd !== -1) {
-        currentProtocol = url.substring(0, protocolEnd + 3);
-        url = url.substring(protocolEnd + 3);
-      }
-      var hostnameEnd = url.indexOf("/");
-      if (hostnameEnd !== -1) {
-        currentHostname = url.substring(0, hostnameEnd);
-        currentPathname = url.substring(hostnameEnd);
-      } else {
-        currentHostname = url;
-      }
-      var queryStart = pathname.indexOf("?");
-      if (queryStart !== -1) {
-        currentQuery = pathname.substring(queryStart);
-        currentPathname = pathname.substring(0, queryStart);
-      }
-      var hostnameRegex =
-        /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-      if (currentHostname && hostnameRegex.test(currentHostname)) {
-        if (currentProtocol && currentHostname) {
-          validUrlResult = {
-            protocol: currentProtocol,
-            hostname: currentHostname,
-            pathname: currentPathname,
-            query: currentQuery,
-            url:
-              currentProtocol +
-              currentHostname +
-              currentPathname +
-              currentQuery,
+  return content;
+};
+// ? console.log("funcUno = " + typeof funcUno)
+// : console.error("funcUno = " + typeof funcUno);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// ? console.log("funcDos = " + typeof funcDos)
+// : console.error("funcDos = " + typeof funcDos);
+// else if (
+//   paramName === "searchString" ||
+//   (paramName === null && declaredParamName === "searchString")
+// ) {
+//   args["searchString"] = substanceVegas(
+//     0,
+//     [
+//       objectOfS(
+//         ["parameter"],
+//         [[["func", result]]],
+//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+//       ).parameter["func"],
+//     ].toString().length,
+//     [
+//       objectOfS(
+//         ["parameter"],
+//         [[["func", result]]],
+//         Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+//       ).parameter["func"],
+//     ]
+//       .toString()
+//       .split(""),
+//   ).substWord;
+//   resolvedArgs.push(args["searchString"]);
+// }
+
+var seoCapital = function (url) {
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
+  const html = HtmlService.createTemplate(
+    `<!DOCTYPE html>
+      <html id="seoCapital" lang="en">
+        <head>
+          <base target="_top"></base>
+          <meta charset="utf-8"></meta>
+          <meta name="seoCapital" content="Boilerplate SEO Capital"></meta>
+          <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
+        </head>
+        <body>
+          <div class="row">
+            <div class="responsive-section">
+                <div class="container" id="seoData">
+                  <label id="labSEOC">
+                    <strong></strong></label>
+                  <div class="row">
+                    <div class="col s12 card-panel amber">
+                      <div class="responsive-section">
+                        <div class="container">
+                          <div id="divSEOC" class="col s12 receipt amber flow-text">
+                            <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                              <thead></thead>
+                              <tbody>
+                                <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                                    <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                                      <tbody >
+                                        <td>
+                                          <div>
+                                            <iframe src='${url}' id="w3Res" width="100%" height="1080vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+          <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        </body>
+      </html>`,
+  );
+  // html.pong = pong.toString().split(",");
+  html.research = HtmlService.createHtmlOutput(`document
+      .getElementById("w3Search")
+      .addEventListener("change", function() {
+        var cap = 
+          document
+          .getElementById("w3Search")
+          .value;
+        console.log(cap)
+      })`);
+  html.prefTimeChange = HtmlService.createHtmlOutput(`document
+      .getElementById("w3Search")
+      .addEventListener("change", function() {
+        //console.log(document.getElementById("test").innerHTML)
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  () {
+          // console.log('Input Value:', textInput.value)}, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("breakUrl").value;
+            var url = urlData.toString()
           };
-          return validUrlResult;
+          var prodSearch = document.getElementById("w3Search").value;
+          var linkFollow = document.createElement("a");
+          linkFollow.href = url + "?func=seoCapital" + "&args=" + encodeURIComponent();
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("w3Search").value = ""
+        })()
+      });`);
+  html.dOMContentLoaded = HtmlService.createHtmlOutput(`document
+      .addEventListener("DOMContentLoaded", function() {
+        let timePicker = document.getElementById("breakUrl");
+        M.Timepicker.init(timePicker,
+          {
+            defaultTime: "now" 
+          })
+      });
+      var elems = document.getElementById("breakUrl");
+      var instances = M.FormSelect.init(elems);`);
+  html.recentSearch = HtmlService.createHtmlOutput(`document
+      .addEventListener("DOMContentLoaded", homeW3);
+      function homeW3() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result)
+            })
+            .withFailureHandler((error) => {
+              console.log(error);
+              console.log(document.getElementById("test").innerHTML);
+              reject(error)
+            })
+            .runBoilerplate([func], args)
+          })
+        };
+        const htmlStructure = document.getElementById("divSEOC").innerHTML;
+        const results = document.getElementById("w3Search");
+        const strValue = results.value;
+        results.addEventListener("change",(e) => {
+          var cap = e.target.value;
+          document.getElementById("w3Search").value = "";
+          document.getElementById("divSEOC").innerHTML = "... waiting for " + cap;
+          serverside("portBing", [cap])
+          .then((vid) => {
+            if (vid) {
+              document.getElementById("divSEOC").innerHTML = htmlStructure;
+              document.getElementById("w3Res").src = vid;
+            }
+          })
+          .catch((er) => {
+            console.log(er);
+            document.getElementById("divSEOC").innerHTML = er
+          })
+        })
+      }`);
+  return html.evaluate().getContent();
+};
+
+var seoPastTime = function (searchString, time) {
+  console.log(
+    "boilerplate Help: line 2\nseoPastTime(searchString: " +
+      searchString +
+      ", time: " +
+      time +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
+  console.log(
+    formatTime(functionRegistry.time) +
+      "\n" +
+      arguments.callee.name +
+      "\nsearchString is !" +
+      !searchString +
+      ", = " +
+      searchString +
+      "\ntime is !" +
+      !time +
+      ", = " +
+      time,
+  );
+  let items;
+  if (typeof searchString === "undefined") {
+    items = globalThis.uniqueItemArray();
+  } else {
+    items = [{ Description: searchString }];
+  }
+  // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
+  var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+  var searchString = items[rndItenIndex]["Description"]
+    .split("")
+    .sort((a, b) => {
+      const priorityA = getZuluFreqPriority(a.toLowerCase());
+      const priorityB = getZuluFreqPriority(b.toLowerCase());
+      return priorityA - priorityB;
+    })
+    .join("")
+    .replace(/,/g, ""); // .searchString().myNewArr;
+  var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
+  let fndOrd = [];
+  while (fndOrd.length === 0) {
+    var sorFndOrd = uniqueVid.filter((vidObject) => {
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
+      if (
+        vidObject.length === 11 &&
+        vidObject !== '"' &&
+        vidObject.toLowerCase !== "http" &&
+        vidObject.toLowerCase !== "result" &&
+        vidObject.toLowerCase !== "content" &&
+        vidObject.toLowerCase !== "data" &&
+        vidObject.toLowerCase !== "length" &&
+        vidObject.toLowerCase !== "ajax" &&
+        vidObject.toLowerCase !== "if" &&
+        vidObject.toLowerCase !== "attrib" &&
+        vidObject.toLowerCase !== "get" &&
+        vidObject.toLowerCase !== "null" &&
+        vidObject.toLowerCase !== "saving" &&
+        vidObject.toLowerCase !== "location" &&
+        vidObject.toLowerCase !== "has" &&
+        vidObject.toLowerCase !== "query" &&
+        vidObject.toLowerCase !== "res" &&
+        vidObject.toLowerCase !== "acc" &&
+        vidObject.toLowerCase !== "hybrid" &&
+        vidObject.toLowerCase !== "amp" &&
+        vidObject.indexOf("=") === -1 &&
+        vidObject.indexOf("query") === -1 &&
+        vidObject.indexOf(";") === -1 &&
+        vidObject.indexOf("ajax") === -1 &&
+        vidObject.indexOf("whole") === -1 &&
+        vidObject.indexOf("document.qu") === -1 &&
+        vidObject.indexOf("inner") === -1 &&
+        vidObject.indexOf("strong") === -1 &&
+        vidObject.indexOf("ing") === -1 &&
+        vidObject.indexOf("brid") === -1 &&
+        vidObject.indexOf("ctrl") === -1 &&
+        vidObject.indexOf("location") === -1 &&
+        vidObject.indexOf("wiki") === -1 &&
+        vidObject.indexOf("//") === -1 &&
+        vidObject.indexOf("Html") === -1 &&
+        vidObject.indexOf("data") === -1 &&
+        vidObject.indexOf("undefined") === -1 &&
+        vidObject.indexOf("client") === -1 &&
+        vidObject.indexOf("/") === -1 &&
+        vidObject.indexOf("peri") === -1 &&
+        vidObject.indexOf("ten") === -1 &&
+        vidObject.indexOf("out") === -1 &&
+        vidObject.indexOf("new") === -1 &&
+        vidObject.indexOf("]") === -1 &&
+        vidObject.indexOf("localStorag") === -1 &&
+        vidObject.indexOf("t.loadEvent") === -1 &&
+        vidObject.indexOf("[") === -1 &&
+        vidObject.indexOf("a.severity") === -1 &&
+        vidObject.indexOf("cont") === -1 &&
+        vidObject.indexOf("\\") === -1 &&
+        vidObject.indexOf("JSON.parse(") === -1 &&
+        vidObject.indexOf("_w._sydConv") === -1 &&
+        vidObject.indexOf("o.Prefetchi") === -1 &&
+        vidObject.indexOf('"inversion"') === -1 &&
+        vidObject.indexOf("Math.min(h-") === -1 &&
+        vidObject.indexOf("regexEsc(a)") === -1 &&
+        vidObject.indexOf('"origin-tri') === -1 &&
+        vidObject.indexOf("get") === -1 &&
+        vidObject.indexOf("&&") === -1 &&
+        vidObject.indexOf('""X-UA-Compa"') === -1 &&
+        vidObject.indexOf("r.offsetHei") === -1 &&
+        vidObject.indexOf(",") === -1
+      ) {
+        return vidObject;
+      }
+    });
+    if (sorFndOrd.length > 0) {
+      var i = 0;
+      var l = sorFndOrd.length;
+      for (i, l; i < l; i++) {
+        sorFndOrd.sort((a, b) => {
+          while (a !== b && fndOrd.indexOf(a) === -1) {
+            if (a.localeCompare(b) === -1) {
+              fndOrd.push(a);
+            }
+          }
+          while (a === b && fndOrd.indexOf(a) === -1) {
+            fndOrd.push(a);
+          }
+          while (b !== a && fndOrd.indexOf(b) === -1) {
+            if (a.localeCompare(b) === 1) {
+              fndOrd.push(b);
+            }
+          }
+        });
+      }
+    } else {
+      var domainSearch = isValidUrl(
+        "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
+          encodeURIComponent(searchString),
+      ).url;
+      // var unFilData = mis(domainSearch)
+      // var data = unFilData.app
+      return { playList: domainSearch };
+      searchString =
+        "http://" +
+        items[Math.floor(Math.random() * Math.floor(items.length))][
+          "Description"
+        ]
+          .split(" ")
+          .join("")
+          .replace(/,/g, "") +
+        ".com";
+      uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
+    }
+  }
+  if (fndOrd) {
+    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
+    var rndRes = fndOrd.filter((test) => {
+      var elaspeTime = functionRegistry.time;
+      var timeToExecute = functionRegistry.timeLeftToExecute;
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (
+          test.indexOf("false") === -1 &&
+          test.indexOf("var") === -1 &&
+          test.indexOf("=") === -1 &&
+          test.indexOf(".") === -1 &&
+          test.indexOf("(") === -1 &&
+          test.indexOf(")") === -1 &&
+          test.indexOf("_") === -1 &&
+          test.indexOf(";") === -1 &&
+          test.indexOf('"') === -1 &&
+          test.indexOf("Error") === -1 &&
+          test.indexOf("error") === -1 &&
+          test.indexOf("Codes") === -1 &&
+          test.indexOf("siz23") === -1 &&
+          test.indexOf(":") === -1 &&
+          test.indexOf("{}") === -1 &&
+          test.indexOf("}") === -1 &&
+          test.indexOf("<") === -1 &&
+          test.indexOf(">") === -1 &&
+          test.indexOf("EdgeWorksp") === -1
+        ) {
+          if (i >= 100) {
+            break;
+          }
+          return test[i];
         }
       }
     });
+    var rndSort = [];
+    for (var i = 0, l = rndRes.length; i < l; i++) {
+      rndRes.filter((o) => {
+        rndSort.push(o !== rndRes[i]);
+        if (rndSort.length === rndRes.length) {
+          return;
+        }
+      });
+      if (JSON.stringify(i) >= 0) {
+        break;
+      }
+    }
+    var sorKind = rndSort.toString().split(" ");
+    var revKind = sorKind.reverse();
+    var popKind = revKind.pop();
+    var rndKind = popKind.split(",");
+    return { playList: rndRes.sort((a, b) => a - b) };
   }
-  validUrlResult.matches = allMatches;
-  return validUrlResult;
 };
+
+var seoYoutube = function (searchString, time) {
+  // console.log(
+  //   "boilerplate Help: line 175\nseoYoutube(searchString: " +
+  //     searchString +
+  //     ", time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nsearchString is !" +
+  //     !searchString +
+  //     ", = " +
+  //     searchString +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
+  if (typeof searchString === "undefined") {
+    var items = globalThis.uniqueItemArray();
+    var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+    var searchString =
+      "http://" +
+      items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") +
+      ".com"; // .searchString().myNewArr;
+  }
+  var rndSearch = isValidUrl(searchString).pathname;
+  if (rndSearch) {
+    var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
+    var data = unFilData.getContentText();
+    var idArray = vidFactor(data, time).vidArray;
+  }
+  return { myIdArr: idArray || [] };
+  // var data = mis(rndSearch).app;
+};
+
+var testlt = function () {
+  console.log(
+    "boilerplate Help: line 325\ntestlt(: )\n " + arguments.callee.caller?.name,
+  );
+  console.log(
+    arguments.callee.caller.name +
+      "\n*** Inside testlt() function. It has been called. ***",
+  );
+  // var numVarRnd = randNum;
+  // var arrNum = numVarRnd
+  // var arrDRnd = appSort(arrNum);
+  // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+  var ssearchString = globalThis.searchString().myNewArr;
+  var fParams = gsFParams();
+  var result = fParams.find((rndS) => {
+    return rndS.name === ssearchString;
+  });
+  if (result) {
+    return result;
+  } else {
+    console.log("No function parameters found for:", searchString);
+    return searchString;
+  }
+  // Make sure testlt() returns something that JSON.parse expects,
+  // or it will also cause issues down the line.
+};
+
+var vidFactor = function (data, time) {
+  // console.log(
+  //   "boilerplate Help: line 199\nvidFactor(data: " +
+  //     data.substring(0, 9) +
+  //     "..., time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\ndata is !" +
+  //     !data +
+  //     ", = " +
+  //     data.substring(0, 100) +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
+  if (typeof data !== "object" && typeof data !== "undefined" && data !== null) {
+    data = [data];
+  }
+  var dataArray = [];
+  var idArray = [];
+  Array.isArray(data)? data.map((vidData) => {
+    try {
+      var veqIndex = vidData?.indexOf(`v=`);
+      dataArray = vidData?.slice(veqIndex).split(`v=`);
+    } catch (error) {
+      Logger.log("dataArray.push failed");
+    }
+  }):null;
+  for (var i = 0, l = dataArray.length; i < l; i++) {
+    var idValue = dataArray[i].substring(0, 11);
+    if (idValue) {
+      idArray.push(idValue);
+    }
+  }
+  return { vidArray: idArray };
+};
+
 var vidPlaylist = function (tunPlay) {
   console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
   console.log(
@@ -3101,6 +3092,34 @@ var vidPlaylist = function (tunPlay) {
     videoItemUrl: youtubeUrl,
     playlistArr: playListSorted,
   };
+};
+
+var wwAccess = function (rName, rFunc, rArgs) {
+  console.log(
+    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+  );
+  const Route = {};
+  Route.path = function (route, rFunction) {
+    Route[route] = rFunction;
+  };
+  if (this.hasOwnProperty(rFunc)) {
+    var funcS = this[rFunc]; // Get the actual function
+    Route.path(rName, funcS); // Associate the function with the route
+    const args = rArgs;
+    try {
+      return Route[rName](args);
+    }
+    catch (error) {
+      console.error("Type Error: ", error.toString())
+    }
+  } else {
+    console.error("Invalid function name: " + rFunc);
+    return "Invalid function name";
+  }
+};
+const Route = {};
+Route.path = function (route, callback) {
+  return (Route[route] = callback);
 };
 
 // console.log("seoYoutube: \nvar " + unFilData + " = UrlFetchApp.fetch(" + rndSearch,{muteHttpExceptions:true} + ")");console.log("seoYoutube: \nvar " + idArray + " = vidFactor(" + data, time + ").vidArray");var elaspeTime = new Date() - time;console.log("vidData: \nelaspeTime: " + elaspeTime);console.log("vidFactor: \ndataArray.push(vidData.slice(" + vidData.indexOf(`v=`) + ").toString().split(" + `v=` + "))");var elaspeTime = new Date() - time;console.log("dataArray[0][i]: " + dataArray[0][i] + "\nelaspeTime: " + elaspeTime);console.log("vidFactor: \nidArray.push(" + dataArray[0][i] + ".toString().substring(" + 0,11 + "))")

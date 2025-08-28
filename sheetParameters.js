@@ -1130,7 +1130,7 @@ var seoBites = function (searchString, idArray, time) {
         console.log(
           functionRegistry.time + "\nseoBites: \nw is !" + !w + " !== '': " + w,
         );
-        var hasId = w[0].includes(searchWords[i]);
+        var hasId = w[0].includes(searchWords[i])
         if (w.indexOf(hasId) !== -1) {
           console.log(
             functionRegistry.time +
@@ -1427,13 +1427,13 @@ var seoTwitter = function (folderX, searchString, time) {
   }
   var data = [];
   var foldCounter = 0;
-  var foldData = folderManager(folderX && folderX !== "folderX" ? folderX : "");
+  var foldData = folderManager(folderX && folderX !== "folderX"? folderX:"");
   var minFold = fileFold(foldData[foldCounter]);
-  var rndString =
-    minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
+  var rndString = minFold[Math.floor(Math.random() * (Math.floor(minFold.length)))]
   if (!searchString) {
     var searchString = rndString;
-  } else if (searchString === "searchString") {
+  }
+  else if (searchString === "searchString") {
     searchString = rndString;
   }
   while (data.length === 0) {
