@@ -708,7 +708,7 @@ function handleGetData() {
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-        appL = payLoad.dataData.concat(
+        appL = payLoad?.dataData?.concat(
           "\n\n\n\n" + JSON.stringify(payLoad.data, null, 2),
         );
         feed = payLoad.link;

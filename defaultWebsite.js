@@ -115,7 +115,7 @@ var defaultWebsite = function (e) {
   //  baseUrl = getUrl(ScriptApp);
   // Route.path("default", renderTemplate);
   // Route["default"]("<h1>Hello World!</h1>")
-  switch (e.parameter["webApp"]) {
+  switch (e?.parameter["webApp"]) {
     // case "dlsindex": // <!------------------------------Main Website Index Page-----------------------------!>
     //     webApp = HtmlService.createTemplateFromFile("dlsindex");
     //     webApp.url = getUrl(ScriptApp);
@@ -354,10 +354,7 @@ var defaultWebsite = function (e) {
       //     // console.log(defaultRowsToReturn[0]);
       //     webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({ data: defaultRowsToReturn, error: false })).setMimeType(ContentService.MimeType.JSON).getContent());
       // }
-      webApp = testJSON(
-        e,
-        testData(jsonXpath("https://www.sec.gov/files/company_tickers.json")),
-      );
+      webApp = testJSON();
       // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
       // webApp.gov = jsonINIT("https://status.login.gov/");
       // blogUrl = "https://www.blogger.com/blog/posts/3269360121752133428"

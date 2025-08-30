@@ -269,7 +269,7 @@ var jsonINIT = function (json) {
 
 var jsonXpath = function (jsonXpathDataRange) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +

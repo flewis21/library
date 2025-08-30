@@ -291,9 +291,14 @@ var raise = function (acc, item) {
 
 var lower = function (array, callback, initial) {
   let acc = initial;
-  for (let i = 0; i < array.length; i++) {
-    acc = callback(acc, array[i], i, array);
-    comsole.log(acc);
+  try {
+    for (let i = 0; i < array.length; i++) {
+      acc = callback(acc, array[i], i, array);
+      comsole.log(acc);
+    }
+  }
+  catch (error) {
+    console.error("Type Error: ", error.toString())
   }
   return {
     myCall: acc,

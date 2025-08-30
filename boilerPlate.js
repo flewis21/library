@@ -567,7 +567,7 @@ var testArray = function (content) {
 
 var testData = function (sourceData, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -590,7 +590,7 @@ var testData = function (sourceData, time) {
   var myArray = [];
   try {
     for (var row in sourceData) {
-      var elaspeTime = new Date() - time;
+      var elaspeTime = functionRegistry.time;
       console.log(
         "testData: \nsourceData: " +
           sourceData +

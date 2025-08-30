@@ -3102,26 +3102,29 @@ var vidPlaylist = function (tunPlay) {
 
 var wwAccess = function (rName, rFunc, rArgs) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 3105\nwwAccess(rName: " + rName +", rFunc: " + rFunc +", rArgs: " + rArgs +")\n " + arguments.callee.caller.name,
   );
   const Route = {};
   Route.path = function (route, rFunction) {
-    Route[route] = rFunction;
+    return (Route[route] = rFunction);
   };
-  if (this.hasOwnProperty(rFunc)) {
-    var funcS = this[rFunc]; // Get the actual function
+  if (this.hasOwnProperty(rFunc.name)) {
+    var funcS = this[rFunc.name]; // Get the actual function
     Route.path(rName, funcS); // Associate the function with the route
     const args = rArgs;
     try {
       return Route[rName](args);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Type Error: ", error.toString());
     }
-  } else {
-    console.error("Invalid function name: " + rFunc);
+  } 
+  else {
+    console.error("Invalid function name: " + rFunc.name);
     return "Invalid function name";
   }
 };
+
 const Route = {};
 Route.path = function (route, callback) {
   return (Route[route] = callback);

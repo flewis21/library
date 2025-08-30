@@ -11,13 +11,13 @@ var testJSON = function (e, rows) {
     var rowsToReturn = rows?.filter(function (a) {
       return a[0] == query;
     });
-    return (webApp = HtmlService.createTemplate(
+    return HtmlService.createTemplate(
       ContentService.createTextOutput(
         JSON.stringify({ data: rowsToReturn, error: false }),
       )
         .setMimeType(ContentService.MimeType.JSON)
         .getContent(),
-    ));
+    );
   }
   return {
     myTest: val,

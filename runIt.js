@@ -288,31 +288,31 @@ function randomEmail() {
 
 var runIt = function (e) {
   //urlDataSource("https://www.sec.gov/files/company_tickers.json")
-  if (e.parameter["args"] === "") {
+  if (e?.parameter["args"] === "") {
     return wwAccess("development", proMediaSnip)(e);
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "epa") {
+  } else if (e?.parameter["args"] === "epa") {
     return renderTemplate(wwAccess("epa", epaData)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "edgar") {
+  } else if (e?.parameter["args"] === "edgar") {
     return renderTemplate(wwAccess("edgar", edgarData)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "odd") {
+  } else if (e?.parameter["args"] === "odd") {
     return renderTemplate(wwAccess("odd", breakthrough)(e));
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "gamer") {
+  } else if (e?.parameter["args"] === "gamer") {
     return renderTemplate(wwAccess("gamer", jsGameScripts)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "checkOD") {
+  } else if (e?.parameter["args"] === "checkOD") {
     return renderTemplate(wwAccess("checkOD", checkOnDay)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "usGov") {
+  } else if (e?.parameter["args"] === "usGov") {
     return renderTemplate(wwAccess("usGov", congressLeg)());
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "jFun") {
+  } else if (e?.parameter["args"] === "jFun") {
     return renderTemplate(wwAccess("jFun", jFundamentals)(e));
     //: contentFile("uiAccess");
-  } else if (e.parameter["args"] === "ssTest") {
+  } else if (e?.parameter["args"] === "ssTest") {
     return renderTemplate(wwAccess("ssTest", superTest)(e));
     //: contentFile("uiAccess");
   } else {
@@ -330,7 +330,7 @@ var runIt = function (e) {
     // Route.path("default", HtmlService.createHtmlOutput);
     // Route.path("default", HtmlService.createHtmlOutput);
     // Route.path("default", HtmlService.createHtmlOutput);
-    return wwAccess(e.parameter["default"], defaultWebsite)(e);
+    return wwAccess(e? e.parameter["default"]:"default", defaultWebsite)(e? e:null);
   }
 };
 //{ Route.path("jsonXpath", HtmlService.createHtmlOutput);}
