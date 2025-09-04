@@ -339,7 +339,7 @@ function handleRequest(e) {
   } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
-    return;
+    throw new Error("Error completing your request ", error.stack);
     // return ContentService.createTextOutput("Invalid Request").setMimeType(
     //   ContentService.MimeType.TEXT,
     // );

@@ -52,7 +52,7 @@
     }
     var againCap = "";
     function updateFunc() {
-      serverside("gsFiles").then((drop) => {
+      serverside("gsFParams").then((drop) => {
         var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
         var rndFunc = drop[rndNumDrop];
         localStorage.setItem("gsSearch", rndFunc);
@@ -61,10 +61,14 @@
           "waiting for upDateFunc: " + rndFunc + "...";
         serverside(rndFunc)
           .then((droplet) => {
-            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
-            alert(
-              arguments.callee.name + "\ndroplet.length = " + droplet.length,
-            );
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+            // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\ndroplet.length = " + droplet.length;
+            // alert(
+            //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            // );
             if (typeof droplet === null) {
               return;
             }
@@ -75,19 +79,26 @@
               droplet.length === 112
             ) {
               serverside("seoCapital", droplet).then((myFile) => {
-                alert(
-                  arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")",
-                );
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")";
+                // alert(
+                //   arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")",
+                // );
                 document.getElementById("template").innerHTML =
                   JSON.stringify(myFile);
               });
             } else {
-              alert(
+              document.getElementById("template").innerHTML =
                 arguments.callee.name +
                   "\n" +
                   droplet.length +
-                  " is not the required length",
-              );
+                  " is not the required length";
+              // alert(
+              //   arguments.callee.name +
+              //     "\n" +
+              //     droplet.length +
+              //     " is not the required length",
+              // );
               serverside("getScriptUrl")
                 .then((cChange) => {
                   console.log(
@@ -118,14 +129,21 @@
                   }
                 })
                 .catch((er) => {
-                  alert(
+                  document.getElementById("template").innerHTML =
                     arguments.callee.name +
                       "\n" +
                       rndFunc +
                       " error(" +
                       er +
-                      ")",
-                  );
+                      ")";
+                  // alert(
+                  //   arguments.callee.name +
+                  //     "\n" +
+                  //     rndFunc +
+                  //     " error(" +
+                  //     er +
+                  //     ")",
+                  // );
                   console.log(arguments.callee.name + "\n" + er);
                   document.getElementById("template").innerHTML =
                     JSON.stringify(er);
@@ -133,9 +151,11 @@
             }
           })
           .catch((er) => {
-            alert(
-              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-            );
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+            // alert(
+            //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            // );
             serverside("getScriptUrl")
               .then((cChange) => {
                 console.log(
@@ -166,9 +186,11 @@
                 }
               })
               .catch((er) => {
-                alert(
-                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-                );
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+                // alert(
+                //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                // );
                 console.log(arguments.callee.name + "\n" + er);
                 document.getElementById("template").innerHTML =
                   JSON.stringify(er);
@@ -180,7 +202,7 @@
       .getElementById("userClickedNext")
       .addEventListener("click", nextFunc);
     function nextFunc() {
-      serverside("gsFiles").then((drop) => {
+      serverside("gsFParams").then((drop) => {
         var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
         var rndFunc = drop[rndNumDrop];
         localStorage.setItem("gsSearch", rndFunc);
@@ -189,13 +211,19 @@
           "waiting for nextFunc: " + rndFunc + "...";
         serverside(rndFunc)
           .then((droplet) => {
-            alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
-            alert(
-              arguments.callee.name + "\ndroplet.length = " + droplet.length,
-            );
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+            // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\ndroplet.length = " + droplet.length;
+            // alert(
+            //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+            // );
             if (droplet.length === 99) {
               serverside("seoCapital", droplet).then((myFile) => {
-                alert(rndFunc + "(" + myFile + ")");
+                document.getElementById("template").innerHTML =
+                  rndFunc + "(" + myFile + ")";
+                // alert(rndFunc + "(" + myFile + ")");
                 if (
                   myFile.length === 99 ||
                   myFile.length === 86 ||
@@ -216,12 +244,17 @@
                 }
               });
             } else {
-              alert(
+              document.getElementById("template").innerHTML =
                 arguments.callee.name +
                   "\n" +
                   droplet.length +
-                  " is not the required length",
-              );
+                  " is not the required length",;
+              // alert(
+              //   arguments.callee.name +
+              //     "\n" +
+              //     droplet.length +
+              //     " is not the required length",
+              // );
               serverside("getScriptUrl")
                 .then((cChange) => {
                   console.log(
@@ -252,14 +285,21 @@
                   }
                 })
                 .catch((er) => {
-                  alert(
+                  document.getElementById("template").innerHTML =
                     arguments.callee.name +
                       "\n" +
                       rndFunc +
                       " error(" +
                       er +
-                      ")",
-                  );
+                      ")";
+                  // alert(
+                  //   arguments.callee.name +
+                  //     "\n" +
+                  //     rndFunc +
+                  //     " error(" +
+                  //     er +
+                  //     ")",
+                  // );
                   console.log(arguments.callee.name + "\n" + er);
                   document.getElementById("template").innerHTML =
                     JSON.stringify(er);
@@ -267,9 +307,11 @@
             }
           })
           .catch((er) => {
-            alert(
-              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-            );
+            document.getElementById("template").innerHTML =
+              arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+            // alert(
+            //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+            // );
             serverside("getScriptUrl")
               .then((cChange) => {
                 console.log(
@@ -300,9 +342,11 @@
                 }
               })
               .catch((er) => {
-                alert(
-                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-                );
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+                // alert(
+                //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                // );
                 console.log(arguments.callee.name + "\n" + er);
                 document.getElementById("template").innerHTML =
                   JSON.stringify(er);
@@ -319,8 +363,12 @@
         "waiting for againFunc: " + againCap + "...";
       serverside(againCap)
         .then((droplet) => {
-          alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
-          alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\n" + againCap + "(" + droplet + ")";
+          // alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\ndroplet.length = " + droplet.length;
+          // alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
           if (
             droplet.length === 99 ||
             droplet.length === 101 ||
@@ -328,19 +376,26 @@
             droplet.length === 86
           ) {
             serverside("seoCapital", droplet).then((myFile) => {
-              alert(
-                arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
-              );
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + againCap + "(" + myFile + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
+              // );
               document.getElementById("template").innerHTML =
                 JSON.stringify(myFile);
             });
           } else {
-            alert(
+            document.getElementById("template").innerHTML =
               arguments.callee.name +
                 "\n" +
                 droplet.length +
-                " is not the required length",
-            );
+                " is not the required length";
+            // alert(
+            //   arguments.callee.name +
+            //     "\n" +
+            //     droplet.length +
+            //     " is not the required length",
+            // );
             serverside("getScriptUrl")
               .then((cChange) => {
                 console.log(
@@ -371,14 +426,21 @@
                 }
               })
               .catch((er) => {
-                alert(
+                document.getElementById("template").innerHTML =
                   arguments.callee.name +
                     "\n" +
                     againCap +
                     " error(" +
                     er +
-                    ")",
-                );
+                    ")";
+                // alert(
+                //   arguments.callee.name +
+                //     "\n" +
+                //     againCap +
+                //     " error(" +
+                //     er +
+                //     ")",
+                // );
                 console.log(arguments.callee.name + "\n" + er);
                 document.getElementById("template").innerHTML =
                   JSON.stringify(er);
@@ -386,7 +448,9 @@
           }
         })
         .catch((er) => {
-          alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+          // alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
           serverside("getScriptUrl")
             .then((cChange) => {
               console.log(
@@ -417,9 +481,11 @@
               }
             })
             .catch((er) => {
-              alert(
-                arguments.callee.name + "\n" + againCap + " error(" + er + ")",
-              );
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + againCap + " error(" + er + ")",
+              // );
               console.log(arguments.callee.name + "\n" + er);
               document.getElementById("template").innerHTML =
                 JSON.stringify(er);

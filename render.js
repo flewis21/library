@@ -492,9 +492,27 @@ function eTest() {
 
 var freeSBD = function (func) {
   try {
-    if (typeof globalThis[func] == "function") {
+  console.log("The received parameter ", func)
+  !func? func = "rule":func = func
+    var testArray = misSt(func);
+    if (testArray) {
+      if (testArray.func) {
+        var arrMis = Array.isArray(testArray.func)? testArray.func.split(",")[0]:testArray.func;
+        var arrTest = Array.isArray(testArray.func)? testArray.func.split(",")[1]:testArray.func;
+      }
+      else {
+        var funStopped = Array.isArray(func)? func[0]:func;
+        var arrMis = testArray[funStopped];
+        console.log("misSt returned Error ", arrMis)
+      }
+    }
+    var testTime = arrTest || arrMis
+    var toBeTested = crmCalc(testTime);
+    var untestedArgs = testArray.args
+    if (typeof globalThis[testTime] == "function") {
       // Get the actual function
-      var foobarr = globalThis[func];
+      var foobarr = testArray.res;
+      var urlFunc = isValidUrl(foobarr).hostname;
       return renderTemplate(
         `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
@@ -536,18 +554,21 @@ var freeSBD = function (func) {
                   allowfullscreen
                   ></iframe></div></div></div><script>console.log("script is working");var coDaApp 
   = document.getElementById("coApp");var inDaApp 
-  = document.getElementById("indexBeta");console.log(<?= appL ?>);if (typeof <?= appL ?> !== 'undefined') {console.log(<?= appL.length ?>);if (<?= vUrl(appL) ?>) {coDaApp.innerHTML 
-  = "";inDaApp.src 
-  = "<?= appL ?>"}else {inDaApp.src 
+  = document.getElementById("indexBeta");console.log(<?= appL ?>);if (typeof <?= appL ?> !== 'undefined') {console.log(<?= appL.length ?>);if (!<?= appL ?>) {inDaApp.src 
+  = "<?= vUrl ?>"}
+  else {inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
-            { appL: globalThis[func](), vUrl: isValidUrl },
+            {
+              vUrl: urlFunc, 
+              appL: foobarr,  },
           ),
         },
         foobarr,
       );
     } else {
-      return;
+      console.log(`Problem with content, exiting. globalThis[testTime] == "${typeof globalThis[testTime]}"`,  foobarr)
+      return renderFile("myGNUFreeJS", {}, "freeSDB");
     }
   } catch (error) {
     console.error(error);
