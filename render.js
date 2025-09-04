@@ -492,23 +492,26 @@ function eTest() {
 
 var freeSBD = function (func) {
   try {
-  console.log("The received parameter ", func)
-  !func? func = "rule":func = func
+    console.log("The received parameter ", func);
+    !func ? (func = "rule") : (func = func);
     var testArray = misSt(func);
     if (testArray) {
       if (testArray.func) {
-        var arrMis = Array.isArray(testArray.func)? testArray.func.split(",")[0]:testArray.func;
-        var arrTest = Array.isArray(testArray.func)? testArray.func.split(",")[1]:testArray.func;
-      }
-      else {
-        var funStopped = Array.isArray(func)? func[0]:func;
+        var arrMis = Array.isArray(testArray.func)
+          ? testArray.func.split(",")[0]
+          : testArray.func;
+        var arrTest = Array.isArray(testArray.func)
+          ? testArray.func.split(",")[1]
+          : testArray.func;
+      } else {
+        var funStopped = Array.isArray(func) ? func[0] : func;
         var arrMis = testArray[funStopped];
-        console.log("misSt returned Error ", arrMis)
+        console.log("misSt returned Error ", arrMis);
       }
     }
-    var testTime = arrTest || arrMis
+    var testTime = arrTest || arrMis;
     var toBeTested = crmCalc(testTime);
-    var untestedArgs = testArray.args
+    var untestedArgs = testArray.args;
     if (typeof globalThis[testTime] == "function") {
       // Get the actual function
       var foobarr = testArray.res;
@@ -560,14 +563,18 @@ var freeSBD = function (func) {
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
             {
-              vUrl: urlFunc, 
-              appL: foobarr,  },
+              vUrl: urlFunc,
+              appL: foobarr,
+            },
           ),
         },
         foobarr,
       );
     } else {
-      console.log(`Problem with content, exiting. globalThis[testTime] == "${typeof globalThis[testTime]}"`,  foobarr)
+      console.log(
+        `Problem with content, exiting. globalThis[testTime] == "${typeof globalThis[testTime]}"`,
+        foobarr,
+      );
       return renderFile("myGNUFreeJS", {}, "freeSDB");
     }
   } catch (error) {

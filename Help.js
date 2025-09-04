@@ -3102,7 +3102,14 @@ var vidPlaylist = function (tunPlay) {
 
 var wwAccess = function (rName, rFunc, rArgs) {
   console.log(
-    "boilerplate : line 3105\nwwAccess(rName: " + rName +", rFunc: " + rFunc +", rArgs: " + rArgs +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 3105\nwwAccess(rName: " +
+      rName +
+      ", rFunc: " +
+      rFunc +
+      ", rArgs: " +
+      rArgs +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   const Route = {};
   Route.path = function (route, rFunction) {
@@ -3114,12 +3121,10 @@ var wwAccess = function (rName, rFunc, rArgs) {
     const args = rArgs;
     try {
       return Route[rName](args);
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Type Error: ", error.toString());
     }
-  } 
-  else {
+  } else {
     console.error("Invalid function name: " + rFunc.name);
     return "Invalid function name";
   }

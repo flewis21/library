@@ -296,9 +296,8 @@ var lower = function (array, callback, initial) {
       acc = callback(acc, array[i], i, array);
       comsole.log(acc);
     }
-  }
-  catch (error) {
-    console.error("Type Error: ", error.toString())
+  } catch (error) {
+    console.error("Type Error: ", error.toString());
   }
   return {
     myCall: acc,
