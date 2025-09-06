@@ -220,7 +220,7 @@ var mis = function (text, maxRetries = 3) {
         Logger.log("Error(s) from misSt:", supFunc);
         console.error("Error(s) from misSt:", supFunc);
         var earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
-        var errorUrl = text;
+        var errorUrl = seoPastTime(text);
         var form = formMaker(
           [text].join("").toUpperCase(),
           "misForms",
@@ -294,9 +294,9 @@ var mis = function (text, maxRetries = 3) {
     html.nav = fx;
     html.action = payLoad;
     var supUrl =
-      getScriptUrl().toString() +
+      seoPastTime(getScriptUrl().toString() +
       "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
+      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx));
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -405,7 +405,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       htmlData = "Error fetching URL: " + e.toString();
-      supUrl = text;
+      supUrl = seoPastTime(text);
       // var form = formMaker();
       var form = formMaker(
         [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -544,7 +544,7 @@ var mis = function (text, maxRetries = 3) {
                 followRedirects: true,
                 muteHttpExceptions: true,
               }).getContentText();
-              supUrl = location;
+              supUrl = seoPastTime(location);
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -672,7 +672,7 @@ var mis = function (text, maxRetries = 3) {
               // No redirect or other error
               location = response.getContentText();
               htmlData = location;
-              supUrl = validUrl.hostname;
+              supUrl = seoPastTime(validUrl.hostname);
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
