@@ -293,10 +293,11 @@ var mis = function (text, maxRetries = 3) {
       getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
     html.nav = fx;
     html.action = payLoad;
-    var supUrl =
-      seoPastTime(getScriptUrl().toString() +
-      "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx));
+    var supUrl = seoPastTime(
+      getScriptUrl().toString() +
+        "?func=mis&args=" +
+        (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx),
+    );
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
