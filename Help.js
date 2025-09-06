@@ -293,10 +293,9 @@ var mis = function (text, maxRetries = 3) {
       getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
     html.nav = fx;
     html.action = payLoad;
-    var supUrl =
-      getScriptUrl().toString() +
-      "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
+    var supUrl = getScriptUrl().toString() +
+        "?func=mis&args=" +
+        (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -2732,7 +2731,7 @@ var seoPastTime = function (searchString, time) {
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
   var searchString = items[rndItenIndex]["Description"]
-    .split("")
+    .split(" ")
     .sort((a, b) => {
       const priorityA = getZuluFreqPriority(a.toLowerCase());
       const priorityB = getZuluFreqPriority(b.toLowerCase());
