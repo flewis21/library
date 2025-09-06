@@ -220,7 +220,7 @@ var mis = function (text, maxRetries = 3) {
         Logger.log("Error(s) from misSt:", supFunc);
         console.error("Error(s) from misSt:", supFunc);
         var earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
-        var errorUrl = seoPastTime(text);
+        var errorUrl = text;
         var form = formMaker(
           [text].join("").toUpperCase(),
           "misForms",
@@ -258,7 +258,7 @@ var mis = function (text, maxRetries = 3) {
               .setRequired(true);
           }
           form.setConfirmationMessage("Thanks for your feedback !!");
-          var url = earlyReturn || form.getPublishedUrl();
+          var url = seoPastTime(text) || form.getPublishedUrl();
         }
         console.log("Final app:", supFunc?.res);
         return { index: url, app: earlyReturn, link: errorUrl };
@@ -293,11 +293,9 @@ var mis = function (text, maxRetries = 3) {
       getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
     html.nav = fx;
     html.action = payLoad;
-    var supUrl = seoPastTime(
-      getScriptUrl().toString() +
+    var supUrl = getScriptUrl().toString() +
         "?func=mis&args=" +
-        (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx),
-    );
+        (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -406,7 +404,7 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       htmlData = "Error fetching URL: " + e.toString();
-      supUrl = seoPastTime(text);
+      supUrl = text;
       // var form = formMaker();
       var form = formMaker(
         [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -506,7 +504,7 @@ var mis = function (text, maxRetries = 3) {
         }
         form.setConfirmationMessage("Thanks for your feedback !!");
         var responseObj = {
-          dataStr: htmlData,
+          dataStr: seoPastTime(text),
           url: form.getPublishedUrl(),
         };
       }
@@ -545,7 +543,7 @@ var mis = function (text, maxRetries = 3) {
                 followRedirects: true,
                 muteHttpExceptions: true,
               }).getContentText();
-              supUrl = seoPastTime(location);
+              supUrl = location;
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -665,7 +663,7 @@ var mis = function (text, maxRetries = 3) {
                 }
                 form.setConfirmationMessage("Thanks for your feedback !!");
                 var responseObj = {
-                  dataStr: htmlData,
+                  dataStr: seoPastTime(location),
                   url: form.getPublishedUrl(),
                 };
               }
@@ -673,7 +671,7 @@ var mis = function (text, maxRetries = 3) {
               // No redirect or other error
               location = response.getContentText();
               htmlData = location;
-              supUrl = seoPastTime(validUrl.hostname);
+              supUrl = validUrl.hostname;
               // var form = formMaker();
               var form = formMaker(
                 [JSON.stringify(validUrl)].join("").toUpperCase(),
@@ -793,7 +791,7 @@ var mis = function (text, maxRetries = 3) {
                 }
                 form.setConfirmationMessage("Thanks for your feedback !!");
                 var responseObj = {
-                  dataStr: htmlData,
+                  dataStr: seoPastTime(validUrl.hostname),
                   url: form.getPublishedUrl(),
                 };
               }
