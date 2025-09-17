@@ -987,7 +987,7 @@ var rndWinner = function (infinitum) {
     //   console.log(JSON.stringify(trial[judge])) }}
   }
   console.log("Delete this comment");
-  return trial
+  return trial;
   var form = FormApp.create("Coin Toss").setDescription(
     trial.length + " Tosses \n" + JSON.stringify(trial),
   );
