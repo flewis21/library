@@ -137,11 +137,11 @@ var breakthrough = function (chance, time) {
 }; //:contentFile('uiAccess');
 
 var rndChoice = function (game) {
-  var trial = [];
-  var judge = 0;
-  var coinHead = 0;
-  var coinTail = 0;
-  var infinitum = [
+  let trial = [];
+  let judge = 0;
+  let coinHead = 0;
+  let coinTail = 0;
+  const infinitum = [
     10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 23, 24, 25, 26, 27,
     28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
     47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
@@ -166,15 +166,15 @@ var rndChoice = function (game) {
   // })
   // console.log(typeof [infinitum] + " " + infinitum)
   // }
-  var coin;
-  var penny;
-  var halfpenny;
+  let coin;
+  let penny;
+  let halfpenny;
   // infinitum.map((fin) => {
   coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
   console.log(coin);
   penny = Math.floor(Math.random() * Math.floor(coin));
   console.log(penny);
-  halfpenny = rndWinner(penny + " " + coin);
+  halfpenny = rndWinner([penny, coin]);
   console.log(halfpenny);
   if (halfpenny["heads"] !== coin) {
     trial.push({
@@ -907,17 +907,17 @@ var rndTrial = function (infinitum) {
 
 var rndWinner = function (infinitum) {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
-  var trial = [];
-  var judge = 0;
-  var coinHead = 0;
-  var coinTail = 0;
-  if (!infinitum) {
+  let trial = [];
+  let judge = 0;
+  let coinHead = 0;
+  let coinTail = 0;
+  if (!infinitum || !Array.isArray(infinitum)) {
     // var infinitum = [0,1]
     var coin = [0, 1][Math.floor(Math.random() * Math.floor([0, 1].length))];
     console.log("starting coin " + coin);
     var startingCoin = coin;
-  } else if (Array.isArray(infinitum)) {
-    infinitum = infinitum.split(" ");
+  } else if (infinitum && Array.isArray(infinitum)) {
+    // infinitum = infinitum.split(" ");
     var coin =
       infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
     console.log(typeof [infinitum] + " " + "\nStarting coin " + coin);
@@ -987,7 +987,7 @@ var rndWinner = function (infinitum) {
     //   console.log(JSON.stringify(trial[judge])) }}
   }
   console.log("Delete this comment");
-  // return trial
+  return trial
   var form = FormApp.create("Coin Toss").setDescription(
     trial.length + " Tosses \n" + JSON.stringify(trial),
   );
