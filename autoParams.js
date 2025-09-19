@@ -58,7 +58,7 @@ const functionRegistry = {
     "myGNUFreeJS",
   ],
 
-  getHtmlList: function() {
+  getHtmlList: function () {
     return this.htmlArray;
   },
 
