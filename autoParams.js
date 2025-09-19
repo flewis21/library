@@ -31,7 +31,18 @@ const functionRegistry = {
   },
 
   htmlArray: [
-    "index",
+    "Untitled",
+    "uiAccess",
+    "theWorks",
+    "theRoll",
+    "ssSheets",
+    "ssForms",
+    "slideCard",
+    "Section3.Challenge1",
+    "editor",
+    "edgarFriendly",
+    "cors",
+    "cGWI",
     "proMedia",
     "epaWebsite",
     "callBack",
@@ -47,10 +58,8 @@ const functionRegistry = {
     "myGNUFreeJS",
   ],
 
-  get htmlFile() {
-    return this.htmlArray[
-      Math.floor(Math.random() * Math.floor(this.htmlArray.length))
-    ];
+  getHtmlList: function() {
+    return this.htmlArray;
   },
 
   folderTree: [],

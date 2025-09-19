@@ -55,11 +55,17 @@
         });
       }
       document.addEventListener("DOMContentLoaded", updatePage);
+      let autoList = <?= convertToJS("rndText") ?>
+      // var htmFileList = [
+      //   `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
+      // // ]
+      //   .toString()
+      //   .split(" ");
       var htmFileList = [
-        `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
+        autoList
       ]
         .toString()
-        .split(" ");
+        .split(",");
       var htmNum = function () {
         return Math.floor(Math.random() * Math.floor(htmFileList.length));
       };
@@ -80,7 +86,7 @@
 
           serverside("getScriptUrl")
             .then((cChange) => {
-              console.log(typeof cChange + " with length = " + cChange.length);
+              alert(typeof cChange + " with length = " + cChange.length);
               if (cChange.length === 112) {
                 // console.log(cChange)
                 var linkFollow = document.createElement("a");
@@ -119,7 +125,7 @@
 
           serverside("getScriptUrl")
             .then((cChange) => {
-              console.log(typeof cChange + " with length = " + cChange.length);
+              alert(typeof cChange + " with length = " + cChange.length);
               if (cChange.length === 112) {
                 // console.log(cChange)
                 var linkFollow = document.createElement("a");

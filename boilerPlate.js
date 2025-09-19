@@ -10,30 +10,8 @@ var convertToJS = function (rndText) {
       ", = " +
       !rndText,
   );
-  if (typeof rndText === "undefined") {
-    var rndText = `
-    <? var folderMain = folderManager() ?>
-    <? var fileList = [] ?>
-    <? while (fileList.length === 0) {
-        var rndFolder = Math.floor(Math.random() * (Math.floor(folderMain.length)));
-        folder = folderMain[rndFolder]
-        fileList = matchManager("Forms").forms
-    } ?>
-    <? var eFolder = DriveApp.getFoldersByName("Forms").next() ?>
-    <? var rndFiled = Math.floor(Math.random() * (Math.floor(fileList.length))); ?>
-    <? var file = fileList[rndFiled] ?>
-    <? var folderFile = eFolder.getFilesByName(file) ?>
-    <? var dataTree = [] ?>
-    <?   while (folderFile.hasNext()) {
-      var myFile = folderFile.next()
-      var myFileUrl = myFile.getUrl()
-      var currentFileUrl =  FormApp.openByUrl(myFileUrl).getPublishedUrl();
-      dataTree.push(currentFileUrl)
-
-} ?>
-    <? var rndFiledMain = Math.floor(Math.random() * (Math.floor(dataTree.length))) ?>
-    <? var filedMain = dataTree[rndFiledMain] ?>
-    `;
+  if (typeof rndText === "undefined" || rndText === "rndText") {
+    var rndText = functionRegistry.getHtmlList();
   } else {
     var appList = [];
     for (var key in globalThis) {
@@ -63,7 +41,7 @@ var convertToJS = function (rndText) {
   if (rndText.includes(jsCodeC)) {
     rndText = rndText.replace(/\?\>/g, "");
   }
-  return console.log(JSON.stringify(rndText));
+  return rndText;
 };
 
 var convertToObjects = function (rows, headings, time) {
