@@ -927,14 +927,14 @@ var fileBrowser = function (initialFolder) {
       arguments.callee.caller.name,
   );
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nInitial folder: " +
       initialFolder,
   );
 
-  var selectedFolder = initialFolder;
+  var selectedFolder = initialFolder//? initialFolder:"Sheets";
   var file = undefined; // Will store the selected file name/ID
 
   // Determine the folder to start searching in
@@ -946,7 +946,7 @@ var fileBrowser = function (initialFolder) {
       allFolderNames.push(allFoldersObj[key]);
     }
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ":\nAll folders length: " +
@@ -964,7 +964,7 @@ var fileBrowser = function (initialFolder) {
   // If an initialFolder was provided, it remains selectedFolder
 
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nSelected folder for search: " +
@@ -980,7 +980,7 @@ var fileBrowser = function (initialFolder) {
         arguments.callee.caller.name,
     );
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\ngetFilesFromFolder:\nSearching in: " +
         folderName,
     );
@@ -997,7 +997,7 @@ var fileBrowser = function (initialFolder) {
       filesArray.push(filesObj[key]);
     }
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\ngetFilesFromFolder:\nFiles found: " +
         filesArray.length,
     );
@@ -1018,7 +1018,7 @@ var fileBrowser = function (initialFolder) {
     if (glFiles.length > 0) {
       file = glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\n" +
           arguments.callee.name +
           ":\nRandom file selected: " +
@@ -1027,7 +1027,7 @@ var fileBrowser = function (initialFolder) {
     } else {
       // If no files in the specific folder, broaden the search or pick a different folder
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\n" +
           arguments.callee.name +
           ": No files found in '" +
@@ -1073,7 +1073,7 @@ var fileBrowser = function (initialFolder) {
 
   var dataTree = [];
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nSearching for file: " +
@@ -1098,7 +1098,7 @@ var fileBrowser = function (initialFolder) {
 
   if (dataTree.length === 0) {
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ": File not found in specific folder. Searching entire Drive.",
@@ -1121,7 +1121,7 @@ var fileBrowser = function (initialFolder) {
 
   if (dataTree.length === 0) {
     console.error(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ":\nNo files found matching: " +
@@ -1131,7 +1131,7 @@ var fileBrowser = function (initialFolder) {
   }
 
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nFound files: " +
@@ -1142,7 +1142,7 @@ var fileBrowser = function (initialFolder) {
   var filedMain = dataTree[rndFiledMain];
 
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       ":\nReturning: " +

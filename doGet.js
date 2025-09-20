@@ -726,7 +726,7 @@ function handleGetData() {
   Logger.log("The final value of content. " + JSON.stringify(appL));
   var data = {
     message: {
-      content: iframeSrc,
+      content: payLoad.type === "text"? iframeSrc:feed,
       info: appL,
       link: feed, // Clear iframe on critical error
     },

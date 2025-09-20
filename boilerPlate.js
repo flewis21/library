@@ -11,7 +11,7 @@ var convertToJS = function (rndText) {
       !rndText,
   );
   if (typeof rndText === "undefined" || rndText === "rndText") {
-    var rndText = functionRegistry.getHtmlList();
+    var rndText = functionRegistry.getFolderList();
   } else {
     var appList = [];
     for (var key in globalThis) {

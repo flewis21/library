@@ -1831,17 +1831,20 @@ var misSt = function (func, someArgs) {
                 : result;
             resolvedArgs.push(args["func"]);
           } else if (declaredParamName === "varA") {
-            if (userProvidedValue !== null && userProvidedValue !== undefined) {
+            console.log("Declared parameter " + declaredParamName + " is not the user provided value " + userProvidedValue + ",", declaredParamName !== userProvidedValue)
+            if (userProvidedValue !== null && userProvidedValue !== undefined && userProvidedValue !== declaredParamName) {
               args["varA"] = userProvidedValue;
+              console.log("Error: using ", userProvidedValue)
             } else {
               // Simplified random function call logic
               let randomFuncResult = null;
-              const randomFuncName = searchString; // Use searchString to derive function name if needed
+              const randomFuncName = fParams[Math.floor(Math.random() * fParams.length)] //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
               if (
                 typeof randomFuncName === "string" &&
                 typeof globalThis[randomFuncName] === "function"
               ) {
                 randomFuncResult = globalThis[randomFuncName]();
+                console.log("Error: using ", randomFuncName)
               } else if (
                 typeof randomFuncName === "object" &&
                 randomFuncName !== null &&
@@ -1852,6 +1855,7 @@ var misSt = function (func, someArgs) {
                   this,
                   randomFuncName.parameters || [],
                 );
+                console.log("Error: using, " + randomFuncName.name + " with parameters " + randomFuncName.parameters)
               }
               args["varA"] = randomFuncResult;
             }

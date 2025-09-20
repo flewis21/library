@@ -58,7 +58,7 @@ const functionRegistry = {
     "myGNUFreeJS",
   ],
 
-  getHtmlList: function () {
+  getHtmlList: function() {
     return this.htmlArray;
   },
 
@@ -76,6 +76,7 @@ const functionRegistry = {
     }
   },
   getFolderList: function () {
+    functionRegistry.gTree()
     return this.folderTree;
   },
 
