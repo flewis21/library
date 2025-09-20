@@ -934,7 +934,7 @@ var fileBrowser = function (initialFolder) {
       initialFolder,
   );
 
-  var selectedFolder = initialFolder//? initialFolder:"Sheets";
+  var selectedFolder = initialFolder; //? initialFolder:"Sheets";
   var file = undefined; // Will store the selected file name/ID
 
   // Determine the folder to start searching in

@@ -129,7 +129,7 @@
           if (filedMain) {
             console.log("Error: server returning a", typeof filedMain);
             var fmRes = JSON.stringify(filedMain);
-            console.log("Error: filedMain " + typeof filedMain + "," + fmRes)
+            console.log("Error: filedMain " + typeof filedMain + "," + fmRes);
             displaySc.innerHTML = "<p>" + JSON.parse(fmRes).name + "</p>";
             indexSc.src = JSON.parse(fmRes).url;
             // Hide the loading indicator after filtering is complete;
@@ -165,7 +165,7 @@
         if (filedMain) {
           console.log("Error: server returning a", typeof filedMain);
           var fmRes = JSON.stringify(filedMain);
-          console.log("Error: filedMain " + typeof filedMain + "," + fmRes)
+          console.log("Error: filedMain " + typeof filedMain + "," + fmRes);
           displaySc.innerHTML = "<p>" + JSON.parse(fmRes).name + "</p>";
           indexSc.src = JSON.parse(fmRes).url;
           // Hide the loading indicator after filtering is complete;
