@@ -5,10 +5,13 @@ var dtlsPro = function (e) {
       ? (cokey = e)
       : (cokey = functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
   }
-  var boilerUrl = mis(cokey, time);
-  if (boilerUrl) {
-    return mis(boilerUrl);
+  else {
+    cokey = e;
   }
+  // var boilerUrl = mis([arguments.callee.name,cokey]);
+  // if (typeof boilerUrl === "string") {
+  //   return mis(boilerUrl);
+  // }
   var coHelpText =
     "http://www.bing.com/videos/search?q=" +
     encodeURIComponent(e) +

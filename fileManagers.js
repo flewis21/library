@@ -919,7 +919,7 @@ var driveUrls = function (fileX) {
 //   return filedMain;
 // };
 
-var fileBrowser = function (initialFolder) {
+var fileBrowser = function (initialFolder, drillDown) {
   console.log(
     "boilerplate fileManagers: line 753\nfileBrowser(initialFolder: " +
       initialFolder +
@@ -934,7 +934,7 @@ var fileBrowser = function (initialFolder) {
       initialFolder,
   );
 
-  var selectedFolder = initialFolder; //? initialFolder:"Sheets";
+  var selectedFolder = initialFolder? initialFolder:"Sheets";
   var file = undefined; // Will store the selected file name/ID
 
   // Determine the folder to start searching in
@@ -1016,7 +1016,15 @@ var fileBrowser = function (initialFolder) {
     var glFiles = getFilesFromFolder(currentFolderToSearch);
 
     if (glFiles.length > 0) {
-      file = glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
+      var drillMatch = [];
+      drillDown? glFiles.map((fm) => {
+        let myFileName = fm.toLowerCase();
+        if (myFileName.includes(drillDown.toLowerCase())) {
+          drillMatch.push(fm)
+        }
+        ;
+      }):null;
+      file = drillMatch.length > 0? drillMatch[Math.floor(Math.random() * drillMatch.length)]:glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
       console.log(
         formatTime(functionRegistry.time) +
           "\n" +

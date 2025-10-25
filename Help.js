@@ -1677,7 +1677,9 @@ var misSt = function (func, someArgs) {
             funcUnoMis.indexOf("mis") !== -1 ||
             funcDosMis.indexOf("mis") !== -1 ||
             funcUnoMis.indexOf("misSt") !== -1 ||
-            funcDosMis.indexOf("misSt") !== -1
+            funcDosMis.indexOf("misSt") !== -1 ||
+            rndE.parameter["func"].indexOf("dtlsPro") !== -1 ||
+            rndE.parameter["args"].indexOf("dtlsPro") !== -1
           ) {
             // Prevent infinite recursion
             console.warn(
@@ -1685,6 +1687,10 @@ var misSt = function (func, someArgs) {
             );
             payLoad = "Recursive call prevented.";
           } else if (typeof globalThis[funcUnoMis] === "function") {
+            console.log(
+              "DEBUG, Prevent infinite recursion: boilerplate Help: line 1688\nmisSt\globalThis[funcUnoMis]:",
+              globalThis[funcUnoMis].toString(),
+            );
             payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
           } else {
             console.warn(
@@ -1719,23 +1725,36 @@ var misSt = function (func, someArgs) {
         // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
         declaredParams.forEach((paramName, index) => {
           console.log(
-            "DEBUG: boilerplate Help: line 2327\nmisSt\norderedArgsForCurrentFunc:",
+            "DEBUG: boilerplate Help: line 1722\nmisSt\norderedArgsForCurrentFunc:",
             orderedArgsForCurrentFunc,
           );
           // Try to get a positional argument first from initialContent
           if (
             initialContent[index] !== undefined &&
-            initialContent[index] !== null
+            initialContent[index] !== null &&
+            paramName
           ) {
             orderedArgsForCurrentFunc.push(initialContent[index]);
+            console.log(
+              "DEBUG, Try to get a positional argument first from initialContent: boilerplate Help: line 1731\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
           }
           // Fallback to contentMap if a named argument was found, and not already set positionally
           else if (contentMap.hasOwnProperty(paramName)) {
             orderedArgsForCurrentFunc.push(contentMap[paramName]);
+            console.log(
+              "DEBUG, Fallback to contentMap if a named argument was found, and not already set positionally: boilerplate Help: line 1739\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
           }
           // Otherwise, the parameter is missing for now
           else {
             orderedArgsForCurrentFunc.push(null);
+            console.log(
+              "DEBUG, the parameter is missing for now: boilerplate Help: line 1747\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
           }
         });
 
@@ -1759,328 +1778,342 @@ var misSt = function (func, someArgs) {
 
           // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
           // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-          if (declaredParamName === "e") {
-            args["e"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : objectOfS(
-                    ["parameter"],
-                    [
+          if (userProvidedValue === null && userProvidedValue == undefined) {
+            if (declaredParamName === "e") {
+              args["e"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                    objectOfS(
+                      ["parameter"],
                       [
-                        ["func", result],
-                        ["args", JSON.stringify(initialContent)],
-                        ["action", "getData"],
-                        ["file", "uiAccess"],
+                        [
+                          ["func", result],
+                          ["args", typeof initialContent === "object"? JSON.stringify(initialContent):initialContent],
+                          ["action", "getData"],
+                          ["file", "uiAccess"],
+                        ],
                       ],
-                    ],
-                    functionRegistry.time,
-                  );
-            resolvedArgs.push(JSON.stringify(args["e"]));
-          } else if (declaredParamName === "time") {
-            args["time"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : functionRegistry.time;
-            resolvedArgs.push(args["time"]);
-          } else if (declaredParamName === "data") {
-            if (
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              Array.isArray(userProvidedValue)
-            ) {
-              args["data"] = userProvidedValue;
-            } else {
-              // var rndE = objectOfS(
-              //   ["parameter"],
-              //   [
-              //     [
-              //       ["func", "mis"],
-              //       ["args", [result, ...initialContent]],
-              //     ],
-              //   ],
-              //   functionRegistry.time,
-              // );
-              // var funcUnoMis = rndE.parameter["func"];
-              // var funcDosMis = rndE.parameter["args"];
-              // var payLoad = null; // Initialize payLoad
-
-              // // Ensure globalThis[funcUnoMis] exists before calling
-              // if (funcUnoMis === "misSt") {
-              //   // Prevent infinite recursion
-              //   console.warn(
-              //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
-              //   );
-              //   payLoad = "Recursive call prevented.";
-              // } else if (typeof globalThis[funcUnoMis] === "function") {
-              //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+                      functionRegistry.time,
+                    );
+              resolvedArgs.push(JSON.stringify(args["e"]));
+            } else if (declaredParamName === "time") {
+              args["time"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                functionRegistry.time;
+              resolvedArgs.push(args["time"]);
+            } else if (declaredParamName === "data") {
+              // if (
+              //   userProvidedValue !== null &&
+              //   userProvidedValue !== undefined &&
+              //   Array.isArray(userProvidedValue)
+              // ) {
+              //   args["data"] = userProvidedValue;
               // } else {
-              //   console.warn(
-              //     "Function for 'data' parameter not found:",
-              //     funcUnoMis,
-              //   );
-              //   payLoad = "Function not found for data generation.";
+                // var rndE = objectOfS(
+                //   ["parameter"],
+                //   [
+                //     [
+                //       ["func", "mis"],
+                //       ["args", [result, ...initialContent]],
+                //     ],
+                //   ],
+                //   functionRegistry.time,
+                // );
+                // var funcUnoMis = rndE.parameter["func"];
+                // var funcDosMis = rndE.parameter["args"];
+                // var payLoad = null; // Initialize payLoad
+
+                // // Ensure globalThis[funcUnoMis] exists before calling
+                // if (funcUnoMis === "misSt") {
+                //   // Prevent infinite recursion
+                //   console.warn(
+                //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+                //   );
+                //   payLoad = "Recursive call prevented.";
+                // } else if (typeof globalThis[funcUnoMis] === "function") {
+                //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+                // } else {
+                //   console.warn(
+                //     "Function for 'data' parameter not found:",
+                //     funcUnoMis,
+                //   );
+                //   payLoad = "Function not found for data generation.";
+                // }
+
+                args["data"] = { message: payLoad, timestamp: new Date() };
               // }
+              resolvedArgs.push(args["data"]);
+            } else if (declaredParamName === "func") {
+              args["func"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                result;
+              resolvedArgs.push(args["func"]);
+            } else if (declaredParamName === "varA") {
+              console.log(
+                "Declared parameter " +
+                  declaredParamName +
+                  " is not the user provided value " +
+                  userProvidedValue +
+                  ",",
+                declaredParamName !== userProvidedValue,
+              );
+              // if (
+              //   userProvidedValue !== null &&
+              //   userProvidedValue !== undefined &&
+              //   userProvidedValue !== declaredParamName
+              // ) {
+              //   args["varA"] = userProvidedValue;
+              //   console.log("Error: using ", userProvidedValue);
+              // } else {
+                // Simplified random function call logic
+                let randomFuncResult = null;
+                const randomFuncName =
+                  fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
+                if (
+                  typeof randomFuncName === "string" &&
+                  typeof globalThis[randomFuncName] === "function"
+                ) {
+                  randomFuncResult = globalThis[randomFuncName]();
+                  console.log("Error: using ", randomFuncName);
+                } else if (
+                  typeof randomFuncName === "object" &&
+                  randomFuncName !== null &&
+                  randomFuncName.name &&
+                  typeof globalThis[randomFuncName.name] === "function"
+                ) {
+                  randomFuncResult = globalThis[randomFuncName.name].apply(
+                    this,
+                    randomFuncName.parameters || [],
+                  );
+                  console.log(
+                    "Error: using, " +
+                      randomFuncName.name +
+                      " with parameters " +
+                      randomFuncName.parameters,
+                  );
+                }
+                args["varA"] = randomFuncResult;
+              // }
+              resolvedArgs.push(args["varA"]);
+            } else if (declaredParamName === "epaAUrl") {
+              // if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              //   args["epaAUrl"] = userProvidedValue;
+              // } else {
+                console.log("DEBUG: Generating epaAUrl...");
+                var data = coUtility(product)[0]; // Assuming 'product' is accessible
+                console.log("DEBUG: data from coUtility:", data);
 
-              args["data"] = { message: payLoad, timestamp: new Date() };
-            }
-            resolvedArgs.push(args["data"]);
-          } else if (declaredParamName === "func") {
-            args["func"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : result;
-            resolvedArgs.push(args["func"]);
-          } else if (declaredParamName === "varA") {
-            console.log(
-              "Declared parameter " +
-                declaredParamName +
-                " is not the user provided value " +
-                userProvidedValue +
-                ",",
-              declaredParamName !== userProvidedValue,
-            );
-            if (
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              userProvidedValue !== declaredParamName
-            ) {
-              args["varA"] = userProvidedValue;
-              console.log("Error: using ", userProvidedValue);
-            } else {
-              // Simplified random function call logic
-              let randomFuncResult = null;
-              const randomFuncName =
-                fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
-              if (
-                typeof randomFuncName === "string" &&
-                typeof globalThis[randomFuncName] === "function"
-              ) {
-                randomFuncResult = globalThis[randomFuncName]();
-                console.log("Error: using ", randomFuncName);
-              } else if (
-                typeof randomFuncName === "object" &&
-                randomFuncName !== null &&
-                randomFuncName.name &&
-                typeof globalThis[randomFuncName.name] === "function"
-              ) {
-                randomFuncResult = globalThis[randomFuncName.name].apply(
-                  this,
-                  randomFuncName.parameters || [],
-                );
-                console.log(
-                  "Error: using, " +
-                    randomFuncName.name +
-                    " with parameters " +
-                    randomFuncName.parameters,
-                );
-              }
-              args["varA"] = randomFuncResult;
-            }
-            resolvedArgs.push(args["varA"]);
-          } else if (declaredParamName === "epaAUrl") {
-            if (userProvidedValue !== null && userProvidedValue !== undefined) {
-              args["epaAUrl"] = userProvidedValue;
-            } else {
-              console.log("DEBUG: Generating epaAUrl...");
-              var data = coUtility(product)[0]; // Assuming 'product' is accessible
-              console.log("DEBUG: data from coUtility:", data);
+                let generatedUrl = null;
+                if (data && typeof data.rndTitle !== "undefined") {
+                  var test = productNamePartial(
+                    [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                      Math.floor(
+                        Math.random() *
+                          Math.floor(
+                            [data.rndTitle.replace(/,./g, "")]
+                              .toString()
+                              .split(" ").length,
+                          ),
+                      )
+                    ],
+                  );
+                  console.log("DEBUG: test from productNamePartial:", test);
 
-              let generatedUrl = null;
-              if (data && typeof data.rndTitle !== "undefined") {
-                var test = productNamePartial(
-                  [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor(
-                          [data.rndTitle.replace(/,./g, "")]
-                            .toString()
-                            .split(" ").length,
-                        ),
-                    )
-                  ],
-                );
-                console.log("DEBUG: test from productNamePartial:", test);
+                  if (test && typeof test.eparegno !== "undefined") {
+                    var test2 = productRegNo(test.eparegno);
+                    console.log("DEBUG: test2 from productRegNo:", test2);
 
-                if (test && typeof test.eparegno !== "undefined") {
-                  var test2 = productRegNo(test.eparegno);
-                  console.log("DEBUG: test2 from productRegNo:", test2);
-
-                  if (
-                    test2 &&
-                    test2.hasOwnProperty("active_ingredients") &&
-                    test2.active_ingredients.length > 0
-                  ) {
-                    var uniqueData = [];
-                    test2.active_ingredients.forEach((ing) => {
-                      if (ing.active_ing) {
-                        var pIName = productIngName(ing.active_ing);
-                        if (typeof pIName !== "undefined") {
-                          uniqueData.push(
-                            pIName["items"] || pIName["first"] || pIName,
-                          );
-                        }
-                      }
-                    });
-
-                    if (uniqueData.length > 0) {
-                      // Flatten uniqueData if it's an array of arrays
-                      let flatUniqueData = [];
-                      uniqueData.forEach((arr) => {
-                        if (Array.isArray(arr)) {
-                          flatUniqueData.push(...arr);
-                        } else {
-                          flatUniqueData.push(arr);
+                    if (
+                      test2 &&
+                      test2.hasOwnProperty("active_ingredients") &&
+                      test2.active_ingredients.length > 0
+                    ) {
+                      var uniqueData = [];
+                      test2.active_ingredients.forEach((ing) => {
+                        if (ing.active_ing) {
+                          var pIName = productIngName(ing.active_ing);
+                          if (typeof pIName !== "undefined") {
+                            uniqueData.push(
+                              pIName["items"] || pIName["first"] || pIName,
+                            );
+                          }
                         }
                       });
 
-                      const matches = flatUniqueData.filter(
-                        (ac) =>
-                          ac &&
-                          ac.eparegnumber &&
-                          String(ac.eparegnumber)
-                            .toLowerCase()
-                            .includes(String(test2.eparegno).toLowerCase()),
-                      );
+                      if (uniqueData.length > 0) {
+                        // Flatten uniqueData if it's an array of arrays
+                        let flatUniqueData = [];
+                        uniqueData.forEach((arr) => {
+                          if (Array.isArray(arr)) {
+                            flatUniqueData.push(...arr);
+                          } else {
+                            flatUniqueData.push(arr);
+                          }
+                        });
 
-                      if (matches.length > 0) {
-                        var randomKey = Math.floor(
-                          Math.random() * matches.length,
+                        const matches = flatUniqueData.filter(
+                          (ac) =>
+                            ac &&
+                            ac.eparegnumber &&
+                            String(ac.eparegnumber)
+                              .toLowerCase()
+                              .includes(String(test2.eparegno).toLowerCase()),
                         );
-                        var isDataKey = matches[randomKey];
-                        var randomCasNumber = isDataKey["casnumber"];
 
-                        console.log(
-                          "DEBUG: randomCasNumber generated:",
-                          randomCasNumber,
-                        );
-                        if (randomCasNumber) {
-                          generatedUrl =
-                            "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
-                            randomCasNumber +
-                            "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                        if (matches.length > 0) {
+                          var randomKey = Math.floor(
+                            Math.random() * matches.length,
+                          );
+                          var isDataKey = matches[randomKey];
+                          var randomCasNumber = isDataKey["casnumber"];
+
+                          console.log(
+                            "DEBUG: randomCasNumber generated:",
+                            randomCasNumber,
+                          );
+                          if (randomCasNumber) {
+                            generatedUrl =
+                              "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+                              randomCasNumber +
+                              "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-              args["epaAUrl"] = generatedUrl; // Assign the generated URL (or null if not found)
-              console.log("DEBUG: Final epaAUrl for args:", args["epaAUrl"]);
-            }
-            resolvedArgs.push(args["epaAUrl"]);
-          } else if (
-            declaredParamName === "url" ||
-            declaredParamName === "companyNameUrl"
-          ) {
-            if (
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              isValidUrl(userProvidedValue).hostname
+                args["epaAUrl"] = generatedUrl; // Assign the generated URL (or null if not found)
+                console.log("DEBUG: Final epaAUrl for args:", args["epaAUrl"]);
+              // }
+              resolvedArgs.push(args["epaAUrl"]);
+            } else if (
+              declaredParamName === "url" ||
+              declaredParamName === "companyNameUrl"
             ) {
-              args[declaredParamName] = userProvidedValue;
-            } else {
-              // Assuming functionRegistry.gTree and fileBrowser are accessible
-              var folder = functionRegistry.getFolderList()[numVarRnd];
-              args[declaredParamName] = fileBrowser(folder).url;
-            }
-            resolvedArgs.push(args[declaredParamName]);
-          } else if (declaredParamName === "object") {
-            args["object"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : JSON.stringify({});
-            resolvedArgs.push(args["object"]);
-          } else if (declaredParamName === "file") {
-            var rndPage =
-              htmlArray[Math.floor(Math.random() * htmlArray.length)];
-            args["file"] =
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              typeof userProvidedValue === "string" &&
-              /<[a-z][\s\S]*>/i.test(
-                userProvidedValue || userProvidedValue !== "file",
-              )
-                ? userProvidedValue
-                : rndPage;
-            resolvedArgs.push(args["file"]);
-          } else if (declaredParamName === "fileX") {
-            var folderX = functionRegistry.getFolderList()[numVarRnd()];
-            var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
-            let fileXName = "undefined";
-            if (folderRoot.hasNext) {
-              var fileBulk = folderRoot.next().getFiles();
-              const fileNames = [];
-              if (fileBulk.hasNext()) {
-                while (fileBulk.hasNext()) {
-                  var fileUrl = fileBulk.next();
-                  fileNames.push(fileUrl.getName());
-                }
-                if (fileNames.length > 0) {
-                  fileXName =
-                    fileNames[Math.floor(Math.random() * fileNames.length)];
+              // if (
+              //   userProvidedValue !== null &&
+              //   userProvidedValue !== undefined &&
+              //   isValidUrl(userProvidedValue).hostname
+              // ) {
+              //   args[declaredParamName] = userProvidedValue;
+              // } else {
+                // Assuming functionRegistry.gTree and fileBrowser are accessible
+                var folder = functionRegistry.getFolderList()[numVarRnd];
+                args[declaredParamName] = fileBrowser(folder).url;
+              // }
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (declaredParamName === "object") {
+              args["object"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                JSON.stringify({});
+              resolvedArgs.push(args["object"]);
+            } else if (declaredParamName === "file") {
+              var rndPage =
+                htmlArray[Math.floor(Math.random() * htmlArray.length)];
+              args["file"] =
+                // userProvidedValue !== null &&
+                // userProvidedValue !== undefined &&
+                // typeof userProvidedValue === "string" &&
+                // /<[a-z][\s\S]*>/i.test(
+                //   userProvidedValue || userProvidedValue !== "file",
+                // )
+                //   ? userProvidedValue
+                //   : 
+                rndPage;
+              resolvedArgs.push(args["file"]);
+            } else if (declaredParamName === "fileX") {
+              var folderX = functionRegistry.getFolderList()[numVarRnd()];
+              var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
+              let fileXName = "undefined";
+              if (folderRoot.hasNext) {
+                var fileBulk = folderRoot.next().getFiles();
+                const fileNames = [];
+                if (fileBulk.hasNext()) {
+                  while (fileBulk.hasNext()) {
+                    var fileUrl = fileBulk.next();
+                    fileNames.push(fileUrl.getName());
+                  }
+                  if (fileNames.length > 0) {
+                    fileXName =
+                      fileNames[Math.floor(Math.random() * fileNames.length)];
+                  }
                 }
               }
+              args["fileX"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                fileXName;
+              resolvedArgs.push(args["fileX"]);
+            } else if (
+              declaredParamName === "folderX" ||
+              declaredParamName === "folder"
+            ) {
+              args[declaredParamName] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                allFolders[numVarRnd]; // allFolders should be defined or passed
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              declaredParamName === "numIndex" ||
+              declaredParamName === "infinitum"
+            ) {
+              args[declaredParamName] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                numVarRnd;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (declaredParamName === "itemName") {
+              var rndItemIndex = Math.floor(
+                Math.random() * Math.floor(globalThis.uniqueItemArray().length),
+              );
+              args["itemName"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                globalThis.uniqueItemArray()[rndItemIndex].Description;
+              resolvedArgs.push(args["itemName"]);
+            } else if (
+              ["tunPlay", "searchString", "rndKey", "search"].includes(
+                declaredParamName,
+              )
+            ) {
+              var rndCoIndex = Math.floor(
+                Math.random() * Math.floor(globalThis.uniqueCoArray().length),
+              );
+              var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
+              args[declaredParamName] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                tiParam;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (declaredParamName === "stringArray") {
+              args["stringArray"] =
+                // userProvidedValue !== null && userProvidedValue !== undefined
+                //   ? userProvidedValue
+                //   : 
+                appSort(numVarRnd); // Assuming appSort is accessible
+              resolvedArgs.push(args["stringArray"]);
+            } else if (declaredParamName === "argsObject") {
+              args["argsObject"] =
+                // userProvidedValue !== null &&
+                // userProvidedValue !== undefined &&
+                // Array.isArray(userProvidedValue)
+                //   ? userProvidedValue
+                //   : 
+                JSON.stringify({ message: payLoad, timestamp: new Date() });
+              resolvedArgs.push(args["argsObject"]);
             }
-            args["fileX"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : fileXName;
-            resolvedArgs.push(args["fileX"]);
-          } else if (
-            declaredParamName === "folderX" ||
-            declaredParamName === "folder"
-          ) {
-            args[declaredParamName] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : allFolders[numVarRnd]; // allFolders should be defined or passed
-            resolvedArgs.push(args[declaredParamName]);
-          } else if (
-            declaredParamName === "numIndex" ||
-            declaredParamName === "infinitum"
-          ) {
-            args[declaredParamName] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : numVarRnd;
-            resolvedArgs.push(args[declaredParamName]);
-          } else if (declaredParamName === "itemName") {
-            var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(globalThis.uniqueItemArray().length),
-            );
-            args["itemName"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : globalThis.uniqueItemArray()[rndItemIndex].Description;
-            resolvedArgs.push(args["itemName"]);
-          } else if (
-            ["tunPlay", "searchString", "rndKey", "search"].includes(
-              declaredParamName,
-            )
-          ) {
-            var rndCoIndex = Math.floor(
-              Math.random() * Math.floor(globalThis.uniqueCoArray().length),
-            );
-            var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
-            args[declaredParamName] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : tiParam;
-            resolvedArgs.push(args[declaredParamName]);
-          } else if (declaredParamName === "stringArray") {
-            args["stringArray"] =
-              userProvidedValue !== null && userProvidedValue !== undefined
-                ? userProvidedValue
-                : appSort(numVarRnd); // Assuming appSort is accessible
-            resolvedArgs.push(args["stringArray"]);
-          } else if (declaredParamName === "argsObject") {
-            args["argsObject"] =
-              userProvidedValue !== null &&
-              userProvidedValue !== undefined &&
-              Array.isArray(userProvidedValue)
-                ? userProvidedValue
-                : JSON.stringify({ message: payLoad, timestamp: new Date() });
-            resolvedArgs.push(args["argsObject"]);
           } else {
             // Generic handler for other declared parameters not covered by specific logic
             if (userProvidedValue !== null && userProvidedValue !== undefined) {

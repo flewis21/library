@@ -21,41 +21,40 @@ function dataEntry() {
         }
         return HtmlService.createTemplate(
           contentApp(
-            `
-    <html id='test'>
-      <body>
-        <div class='container'>
-          <h1>Hello</h1>
-            <!--Ideally these elements aren't created until it's confirmed that the client supports video/camera, but for the sake of illustrating the elements involved, they are created with markup (not JavaScript)-->
-              <video id='video' width='640' height='480' autoplay></video>
-              <button id='snap'>Snap Photo</button>
-              <canvas id='canvas' width='640' height='480'></canvas>
-              <label>ID:</label><input type='text' id='id'><br>
-              <label>Search:</label><input type='text' id='search'><br>
-        <div class='row'>
-          <select id='dynSearch'>
-            <option disabled selected>Search</option>
-            <option id='dynList'></option>
-          </select>
-        </div>
-          <label>Date:</label><input type='text' id='date'>
-          <label>Car:</label><input type='text' id='car'><br>
-          <label>Delivery/Pickup:</label><input type='text' id='jobType'><br>
-          <label>Vin/Stock:</label><input type='text' id='vin'><br>
-          <label>Delivery Address:</label><input type='text' id='toAddress'><br>
-          <label>Labor:</label><input type='text' id='lab'><br>
-          <label>Pickup Address:</label><input type='text' id='fromAddress'><br>
-          <label>Gas Money:</label><input type='text' id='gas'><br>
-          <label>Trip Time:</label><input type='text' id='duration'><br>
-          <label>Total:</label><input type='text' id='grandTotal'><br>
-            <button id='btn'>Run It!</button>
-        <script>
-          document.addEventListener('DOMContentLoaded', <?!= runIt ?>);
-        </script>
-        </div>
-          <input type='hidden' value='<?= breakUrl ?>' id='url' />
-      </body>
-    </html>`,
+            `<html id='test'>
+              <body>
+                <div class='container'>
+                  <h1>Hello</h1>
+                  <!--Ideally these elements aren't created until it's confirmed that the client supports video/camera, but for the sake of illustrating the elements involved, they are created with markup (not JavaScript)-->
+                  <video id='video' width='640' height='480' autoplay></video>
+                  <button id='snap'>Snap Photo</button>
+                  <canvas id='canvas' width='640' height='480'></canvas>
+                  <label>ID:</label><input type='text' id='id'><br>
+                  <label>Search:</label><input type='text' id='search'><br>
+                  <div class='row'>
+                    <select id='dynSearch'>
+                      <option disabled selected>Search</option>
+                      <option id='dynList'></option>
+                    </select>
+                  </div>
+                  <label>Date:</label><input type='text' id='date'>
+                  <label>Car:</label><input type='text' id='car'><br>
+                  <label>Delivery/Pickup:</label><input type='text' id='jobType'><br>
+                  <label>Vin/Stock:</label><input type='text' id='vin'><br>
+                  <label>Delivery Address:</label><input type='text' id='toAddress'><br>
+                  <label>Labor:</label><input type='text' id='lab'><br>
+                  <label>Pickup Address:</label><input type='text' id='fromAddress'><br>
+                  <label>Gas Money:</label><input type='text' id='gas'><br>
+                  <label>Trip Time:</label><input type='text' id='duration'><br>
+                  <label>Total:</label><input type='text' id='grandTotal'><br>
+                  <button id='btn'>Run It!</button>
+                </div>
+                <script>
+                  document.addEventListener('DOMContentLoaded', <?!= runIt ?>);
+                </script>
+                <input type='hidden' value='<?= breakUrl ?>' id='url' />
+              </body>
+            </html>`,
             {
               breakUrl: getUrl(ScriptApp),
               list: list.map(function (r) {

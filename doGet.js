@@ -347,19 +347,6 @@ function handleRequest(e) {
 }
 
 function handleGetData() {
-  // var rndFunc = testlt();
-  // var rndE = objectOfS(
-  //   ["parameter"],
-  //   [
-  //     [
-  //       ["func", "mis"],
-  //       ["args", [rndFunc.name, ...rndFunc.parameters]],
-  //     ],
-  //   ],
-  //   Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-  // );
-  // var funcUno = rndE.parameter["func"];
-  // var funcDos = rndE.parameter["args"];
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
   // var pApp = payLoad.app;
@@ -455,7 +442,7 @@ function handleGetData() {
 
   // Logging
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ne is !" +

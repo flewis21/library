@@ -677,3 +677,14 @@ var sheetWebsite = function (e) {
 //     mySites: website,
 //   };
 // }
+
+var wwwDe = function (url) {
+  var feed = UrlFetchApp.fetch(url).getContentText();
+  feed = feed.replace(
+    /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
+    "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
+  );
+  return ContentService.createTextOutput(feed).setMimeType(
+    ContentService.MimeType.RSS,
+  );
+};

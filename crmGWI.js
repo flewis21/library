@@ -951,7 +951,7 @@ var crmGWI = function (fx) {
                 } else if (response && /<[a-z][\s\S]*>/i.test(response.data)) {
                   submitResult = response.data
                   try {
-                    window.location.href = "<?= homePage ?>?func=mis&args=contentFile,slideCard,formData"
+                    window.location.href = "<?= homePage ?>?func=mis&args=contentFile,slideCard," + submitResult
                     console.log("Client-side: Page re-rendered with new content from server.");
                   } 
                   catch (error) {
@@ -1353,13 +1353,13 @@ function acceptQuote(formDataJson) {
 
 // You'll also need to ensure 'runBoilerplate' is defined, likely in your main Code.gs file
 // For example:
-function runBoilerplate(funcName, args) {
-  if (typeof this[funcName] === "function") {
-    return this[funcName].apply(this, args);
-  } else {
-    throw new Error("Function " + funcName + " not found.");
-  }
-}
+// function runBoilerplate(funcName, args) {
+//   if (typeof this[funcName] === "function") {
+//     return this[funcName].apply(this, args);
+//   } else {
+//     throw new Error("Function " + funcName + " not found.");
+//   }
+// }
 
 // for (var val in formData[key]) {
 //     flatArray.push(formData[key][val])}

@@ -2041,6 +2041,21 @@ var ssGetSheet = function (sheetname) {
   }
 };
 
+/**
+ * @param {string} url The URL of the spreadsheet.
+ * @returns The Sheets.
+ */
+var ssGetSheetBSI = function (url) {
+  if (url) {
+    var ss = urlSpreadSheet(url);
+    let ssSheets = []; 
+    var sheets = ss.getSheets();
+    for (const sheet of sheets) {
+      ssSheets.push({"name": sheet.getName(), "ID": sheet.getSheetId()}); }
+    return ssSheets;
+  }
+};
+
 var ssGetSheetBySpreadsheetId = function (id, sheetname) {
   if (id) {
     var ss = idSpreadSheet(id);

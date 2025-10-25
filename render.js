@@ -1148,6 +1148,7 @@ var renderFile = function (file, argsObject, title) {
                     </p>
                     </div>
                     <br />
+                    <div>${tmp.evaluate().getContent()}</div>
                   </td>
                 </tbody>
               </table>
@@ -1358,10 +1359,10 @@ var renderFile = function (file, argsObject, title) {
           },
         },
       );
-      return tmp
+      return HtmlService.createTemplate(html) //tmp
         .evaluate()
         .setTitle(title)
-        .append(html)
+        // .append(html)
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     } else {
@@ -1654,6 +1655,7 @@ var renderTemplate = function (blob, argsObject, title) {
                     <br />
                     </p>
                     </p>
+                    <div>${tmp.evaluate().getContent()}</div>
                     </div>
                     <br />
                   </td>
@@ -1873,10 +1875,10 @@ var renderTemplate = function (blob, argsObject, title) {
       "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,
     );
   }
-  return tmp
+  return HtmlService.createTemplate(html)//tmp
     .evaluate()
     .setTitle(title)
-    .append(html)
+    // .append(html)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 }; // or throw error.

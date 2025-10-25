@@ -2,7 +2,7 @@
 
 var convertToJS = function (rndText) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -10,9 +10,15 @@ var convertToJS = function (rndText) {
       ", = " +
       !rndText,
   );
-  if (typeof rndText === "undefined" || rndText === "rndText") {
+  if (rndText === "groceries") {
+    var groceryList = globalThis.uniqueItemArray().map((dsc) => {
+      return dsc["Description"]
+    })
+    var rndText = groceryList;
+  } else if (rndText === "folders") {
     var rndText = functionRegistry.getFolderList();
-  } else {
+  }
+  else if (typeof rndText !== "undefined" && rndText !== "rndText") {
     var appList = [];
     for (var key in globalThis) {
       if (typeof globalThis[key] == "function") {
@@ -46,7 +52,7 @@ var convertToJS = function (rndText) {
 
 var convertToObjects = function (rows, headings, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nrows is !" +
@@ -167,6 +173,11 @@ var getEventValues = function (title, startTime, endTime, series) {
     return addEventToCalendar(start, end, description, start);
   }
 };
+
+
+var getFolderValues = function() {
+  return functionRegistry.getFolderList()
+}
 
 function objectOfS(keys, values, time) {
   /**
