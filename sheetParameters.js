@@ -2048,10 +2048,11 @@ var ssGetSheet = function (sheetname) {
 var ssGetSheetBSI = function (url) {
   if (url) {
     var ss = urlSpreadSheet(url);
-    let ssSheets = []; 
+    let ssSheets = [];
     var sheets = ss.getSheets();
     for (const sheet of sheets) {
-      ssSheets.push({"name": sheet.getName(), "ID": sheet.getSheetId()}); }
+      ssSheets.push({ name: sheet.getName(), ID: sheet.getSheetId() });
+    }
     return ssSheets;
   }
 };
