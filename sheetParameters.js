@@ -2033,6 +2033,30 @@ function ssDataRange() {
   }
 }
 
+var ssNameIdFind = function (sheetName, id) {
+  // Search for files with the given name
+  const files = DriveApp.getFilesByName(sheetName);
+
+  while (files.hasNext()) {
+    const file = files.next();
+    if (id) {
+
+      // Check if the file ID matches the provided sheet ID
+      if (file.getId() === id) {
+        const spreadsheet = SpreadsheetApp.openById(sheetId);
+        return spreadsheet; // Return the Spreadsheet object
+      }
+      else {
+        const spreadsheet = SpreadsheetApp.openByUrl(file.getUrl());
+        return spreadsheet; // Return the Spreadsheet object
+      }
+    }
+  }
+
+  // If no match is found
+  return null;
+}
+
 var ssGetSheet = function (sheetname) {
   var ss = spreadSheet();
   if (ss) {
@@ -2048,11 +2072,10 @@ var ssGetSheet = function (sheetname) {
 var ssGetSheetBSI = function (url) {
   if (url) {
     var ss = urlSpreadSheet(url);
-    let ssSheets = [];
+    let ssSheets = []; 
     var sheets = ss.getSheets();
     for (const sheet of sheets) {
-      ssSheets.push({ name: sheet.getName(), ID: sheet.getSheetId() });
-    }
+      ssSheets.push({"name": sheet.getName(), "ID": sheet.getSheetId()}); }
     return ssSheets;
   }
 };

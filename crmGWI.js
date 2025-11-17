@@ -686,33 +686,16 @@ var crmGWI = function (fx) {
                 Accept Quote <i class="material-icons right">check_circle</i>
             </button>
             <br><br>
+
+            <button type="button" id="updateQuoteBtn" class="btn waves-effect waves-light" style="background-color: #28a745; margin-top: 10px;" disabled>
+                Update Quote <i class="material-icons right">check_circle</i>
+            </button>
+            <br><br>
       </div>
       <button type="submit">Submit</button>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-      // NEW: Get reference to the form itself to collect all data easily
-      const form = document.getElementById('myForm'); // Assuming your form has id="myForm"
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        var formData = {};
-        for (var i = 0; i < form.elements.length; i++) {
-          var element = form.elements[i];
-          formData[element.name] = element.value;}
-          // Send data to Google Apps Script server-side function
-          serverside("workEd", [JSON.stringify(formData)])
-          .then((cChange) => {
-              if (cChange) {
-                console.log(cChange)
-            var cBlinkFollow = document.createElement("a");
-            cBlinkFollow.href = cChange;
-            cBlinkFollow.id = "cBlinkFOLLOW";
-            cBlinkFollow.target = "_blank";
-            document.body.appendChild(cBlinkFollow);
-          document.getElementById("cBlinkFOLLOW").click();
-          document.getElementById("cBlinkFOLLOW").remove()}})
-          .catch((er) => {
-            alert(er)})});
       function serverside(func, args) {
         return new Promise((resolve, reject) => {
           google.script.run
@@ -720,9 +703,30 @@ var crmGWI = function (fx) {
               resolve(result)})
           .withFailureHandler((error) => {
             alert("Error handling: ")
-              console.log(error)
+              // console.log(error)
               reject(error)})
           .runBoilerplate(func, args)})};
+      // NEW: Get reference to the form itself to collect all data easily
+      const form = document.getElementById('myForm'); // Assuming your form has id="myForm"
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formData = {};
+        for (var i = 0; i < form.elements.length; i++) {
+          formData[element.name] = element.value;}
+      // Send data to Google Apps Script server-side function
+      serverside("workEd", [JSON.stringify(formData)])
+      .then((cChange) => {
+          if (cChange) {
+            // console.log(cChange)
+        var cBlinkFollow = document.createElement("a");
+        cBlinkFollow.href = cChange.data;
+        cBlinkFollow.id = "cBlinkFOLLOW";
+        cBlinkFollow.target = "_blank";
+        document.body.appendChild(cBlinkFollow);
+      document.getElementById("cBlinkFOLLOW").click();
+      document.getElementById("cBlinkFOLLOW").remove()}})
+      .catch((er) => {
+        alert(er)})});
 
       function debounce(func, delay) {
         let timeout;
@@ -758,8 +762,8 @@ var crmGWI = function (fx) {
               fullList = {};
             }
             localSuggestionsCache[columnName] = fullList
-            console.log('Successfully fetched full list for', columnName);
-            console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+            // console.log('Successfully fetched full list for', columnName);
+            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
           })
           .catch(error => {
             console.error("Error fetching address suggestions for " + inputId + ":", error);
@@ -774,7 +778,7 @@ var crmGWI = function (fx) {
           
           // Filter the local list instead of making a server call
           const localList = localSuggestionsCache[columnName] || [];
-          console.log("localSuggestionsCache[columnName] || [] ", localList)
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
           const suggestions = localList.filter(item => 
             String(item).toLowerCase().includes(query.toLowerCase())
           );
@@ -782,7 +786,7 @@ var crmGWI = function (fx) {
           suggestionsDiv.innerHTML = '';
           if (suggestions && suggestions.length > 0) {
             suggestions.forEach(suggestion => {
-              console.log(suggestion)
+              // console.log(suggestion)
               const div = document.createElement('div');
               div.textContent = suggestion;
               div.addEventListener('click', () => {
@@ -839,6 +843,9 @@ var crmGWI = function (fx) {
 
       // NEW: Get reference to the Accept Quote button
       const acceptQuoteBtn = document.getElementById('acceptQuoteBtn');
+
+      // NEW: Get reference to the Update Quote button
+      const updateQuoteBtn = document.getElementById('updateQuoteBtn');
       
       if (calculateCostsBtn && delAddrInput && pickAddrInput && labInput && gasInput && totalInput && delTimeInput && calculationStatusSpan) {
         calculateCostsBtn.addEventListener('click', () => {
@@ -864,6 +871,7 @@ var crmGWI = function (fx) {
 
             calculateCostsBtn.disabled = true; // Disable button during calculation
             acceptQuoteBtn.disabled = true; // NEW: Disable accept button during calculation
+            updateQuoteBtn.disabled = true; // NEW: Disable update button during calculation
             calculationStatusSpan.textContent = 'Calculating...';
 
 
@@ -904,7 +912,8 @@ var crmGWI = function (fx) {
                 delTimeInput.value = totalTravelTimeMinutes; // Populate delivery time with travel duration
                 calculationStatusSpan.textContent = 'Done!';
                 acceptQuoteBtn.disabled = false; // NEW: Enable accept button after successful calculation
-                console.log('Calculation Results:', results);
+                updateQuoteBtn.disabled = false; // NEW: Enable updat quote button after successful calculation
+                // console.log('Calculation Results:', results);
               })
               .catch(error => {
                   console.error('Error during cost calculation:', error);
@@ -926,9 +935,18 @@ var crmGWI = function (fx) {
             var element = myForm.elements[i];
             // Only include elements with a name and a value
             if (element.name && element.value) {
+              var element = form.elements[i];
+              // let value = formData.get[element.name];
+              // console.log("element", value)
+              // if (value) {
+              //   value = value.replace(/"/g, "");
+              // }
+              // formData.set(element.name, value);
+              console.log("element", element);
               formData[element.name] = element.value;
             }
           }
+          console.log("Accepted form", formData)
 
           // Optional: Add a confirmation dialog
           if (!confirm('Are you sure you want to accept this quote and submit?')) {
@@ -937,6 +955,7 @@ var crmGWI = function (fx) {
 
           // Disable buttons during submission
           acceptQuoteBtn.disabled = true;
+          updateQuoteBtn.disabled = true;
           calculateCostsBtn.disabled = true;
           calculationStatusSpan.textContent = 'Submitting Quote...';
 
@@ -952,7 +971,7 @@ var crmGWI = function (fx) {
                   submitResult = response.data
                   try {
                     window.location.href = "<?= homePage ?>?func=mis&args=contentFile,slideCard," + submitResult
-                    console.log("Client-side: Page re-rendered with new content from server.");
+                    // console.log("Client-side: Page re-rendered with new content from server.");
                   } 
                   catch (error) {
                     console.error("Client-side Error during full re-render:", error);
@@ -963,6 +982,7 @@ var crmGWI = function (fx) {
                   // Fallback to empty array if the structure is not as expected
                   submitResult = {};
                 }
+              updateQuoteBtn.disabled = false; // NEW: Enable update button after successful quote submission
               console.log('Quote accepted successfully:', submitResult);
               calculationStatusSpan.textContent = 'Quote Accepted!';
               alert('Quote accepted and submitted successfully!');
@@ -976,7 +996,80 @@ var crmGWI = function (fx) {
               alert('Failed to accept quote: ' + error.message);
             })
             .finally(() => {
-              acceptQuoteBtn.disabled = false; // Re-enable (or keep disabled if form is reset/redirected)
+              // acceptQuoteBtn.disabled = false; // Re-enable (or keep disabled if form is reset/redirected)
+              calculateCostsBtn.disabled = false;
+              setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
+            });
+        });
+
+        // NEW: Event listener for the Update Quote button
+        updateQuoteBtn.addEventListener('click', () => {
+          // 1. Gather all form data
+          const formData = {};
+          for (var i = 0; i < myForm.elements.length; i++) {
+            var element = myForm.elements[i];
+            // Only include elements with a name and a value
+            if (element.name && element.value) {
+              var element = form.elements[i];
+              // let value = formData.get[element.name];
+              // if (value) {
+              //   value = value.replace(/"/g, "");
+              // }
+              // formData.set(element.name, value)
+              console.log("element", element);
+              formData[element.name] = element.value;
+            }
+          }
+          console.log("Updated form", formData)
+
+          // Optional: Add a confirmation dialog
+          if (!confirm('Are you sure you want to accept this quote and submit?')) {
+            return; // User cancelled
+          }
+
+          // Disable buttons during submission
+          acceptQuoteBtn.disabled = true;
+          updateQuoteBtn.disabled = true;
+          calculateCostsBtn.disabled = true;
+          calculationStatusSpan.textContent = 'Submitting Quote...';
+
+          // 2. Send data to a new server-side function
+          serverside("updateQuote", [JSON.stringify(formData)])
+            .then((response) => { 
+                // Rename 'submitResult' to 'response' or 'payload' to avoid confusion
+                // Access the actual array from the 'data' property
+                let submitResult = {};
+                if (response && response.type === "object") {
+                  submitResult = response.data;
+                } else if (response && /<[a-z][\s\S]*>/i.test(response.data)) {
+                  submitResult = response.data
+                  try {
+                    window.location.href = "<?= homePage ?>?func=mis&args=contentFile,slideCard," + submitResult
+                    // console.log("Client-side: Page re-rendered with new content from server.");
+                  } 
+                  catch (error) {
+                    console.error("Client-side Error during full re-render:", error);
+                    alert("Error re-rendering: " + error.message);
+                  }
+                } else {
+                  console.warn("Expected an object with an array in 'data' from updateQuote, received:", response);
+                  // Fallback to empty array if the structure is not as expected
+                  submitResult = {};
+                }
+              console.log('Quote updated successfully:', submitResult);
+              calculationStatusSpan.textContent = 'Quote Updated!';
+              alert('Quote updated and submitted successfully!');
+              // Optional: Redirect or clear form after successful submission
+              // window.top.location.href = getUrl(ScriptApp); // Redirect to homepage or confirmation page
+              // myForm.reset(); // Clear the form
+            })
+            .catch((error) => {
+              console.error('Error updating quote:', error);
+              calculationStatusSpan.textContent = 'Error submitting: ' + error.message;
+              alert('Failed to update quote: ' + error.message);
+            })
+            .finally(() => {
+              updateQuoteBtn.disabled = false; // Re-enable (or keep disabled if form is reset/redirected)
               calculateCostsBtn.disabled = false;
               setTimeout(() => calculationStatusSpan.textContent = '', 5000); // Clear status after 5 seconds
             });
@@ -1217,6 +1310,8 @@ function workEd(ed) {
 //   }
 // }
 
+var acceptSsUrl = "";
+
 /**
  * Server-side function to handle quote acceptance.
  * This function receives the client-side form data after calculation.
@@ -1231,8 +1326,8 @@ function acceptQuote(formDataJson) {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[arguments.callee.name]],
-          ["name"],
+          [[arguments.callee.name,"007","Bugatti"]],
+          ["name","number","car"],
           functionRegistry.time,
         ),
       )[0];
@@ -1257,14 +1352,14 @@ function acceptQuote(formDataJson) {
       },
       timestamp: new Date(),
     };
-    const name = dataName.message.info["delAddr"];
-    const sheetId = dataName.message.info["Vin/STK"];
+    const name = dataName.message.info["name"] || dataName.message.info["id"];
+    const sheetId = dataName.message.info["number"] || dataName.message.info["id"];
     const rawSpreadSheet = spreadSheetCreate(
       name,
       sheetId,
       colArray,
       arrayData,
-      start,
+      functionRegistry.time,
     );
     console.log(
       "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
@@ -1275,11 +1370,6 @@ function acceptQuote(formDataJson) {
     // and `ss.getSheetName()` is the name of the sheet you want to PDF.
     const newSpreadsheetUrl = rawSpreadSheet.myFileX;
     const sheetToPDF = ss.getSheetName() || "Accepted Quotes";
-
-    // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
-    const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
-    console.log("Invoice PDF generated at: " + invoicePdfUrl);
-    // --- END OF NEW CODE ---
 
     // ... (your existing code to append row to the main sheet)
     const ssId = rawSpreadSheet.myFileXId || "YOUR_SPREADSHEET_ID_HERE";
@@ -1304,17 +1394,29 @@ function acceptQuote(formDataJson) {
     // This is a robust way to ensure data goes into correct columns
     headerRow.forEach((header) => {
       const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+      const valueKey = header.replace(/[^a-zA-Z0-9]/g, "")
       if (formData.hasOwnProperty(key)) {
         newRow.push(formData[key]);
-      } else {
+        console.log("pushed formData[key]", formData[key])
+      }
+      else if (formData.hasOwnProperty(valueKey)) {
+        newRow.push(formData[valueKey]);
+        console.log("pushed formData[key]", formData[valueKey])
+      }
+      else {
         // Handle cases where a form field doesn't directly map to a header
         // Or if you want to add static data like a timestamp
         if (header === "Timestamp") {
           newRow.push(new Date());
-        } else if (header === "Status") {
-          newRow.push("Quote Accepted");
-        } else {
+          console.log("pushed new Date()", new Date())
+        } 
+        else if (header === "Status") {
+          newRow.push("Quote Updated");
+          console.log("pushed Quote Updated", "Quote Updated")
+        } 
+        else {
           newRow.push(""); // Empty for unmapped columns
+          console.log("pushed blank space", "")
         }
       }
     });
@@ -1328,8 +1430,19 @@ function acceptQuote(formDataJson) {
     // newRow.push(formData.gas);
     // newRow.push(formData.total);
 
-    sheet.appendRow(newRow);
+    const lastRow = sheet.getLastRow();
+    const lastRowData = sheet.getRange(lastRow, 1, 1, newRow.length).getValues()[0];
+  
+    // Check if the new row matches the last row
+    if (JSON.stringify(newRow) !== JSON.stringify(lastRowData)) {
+      sheet.appendRow(newRow);
+    }
     console.log("Quote data appended to sheet:", sheetName);
+
+    // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
+    // const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
+    // console.log("Invoice PDF generated at: " + invoicePdfUrl);
+    // --- END OF NEW CODE ---
 
     // Now, you can use the `invoicePdfUrl` in your email logic.
     // Example 3: Send an Email Confirmation (modified)
@@ -1343,11 +1456,169 @@ function acceptQuote(formDataJson) {
     // console.log('Email confirmation sent.');
 
     // You can return the PDF URL to the client-side for them to display or download.
-    return renderFile("slideCard", formData, "Success");
+
+    let slideRender = renderFile("slideCard", formData, "Success");
+    return slideRender;
     return invoicePdfUrl;
   } catch (error) {
     console.error("Error in acceptQuote:", error);
     throw new Error("Failed to process quote acceptance: " + error.message);
+  }
+}
+
+/**
+ * Server-side function to handle quote updatance.
+ * This function receives the client-side form data after calculation.
+ * @param {string} formDataJson A JSON string of the form data.
+ * @return {string} A confirmation message or URL.
+ */
+function updateQuote(formDataJson) {
+  let formData;
+  try {
+    // ... (rest of your existing code to parse formData)
+    if (!formDataJson) {
+      // ... (your existing fallback logic)
+      formData = JSON.parse(
+        convertToObjects(
+          [[arguments.callee.name,"007","McClaren"]],
+          ["name","number","car"],
+          functionRegistry.time,
+        ),
+      )[0];
+      console.log("Fake formData for quote updatance:", formData);
+    } else {
+      formData = JSON.parse(formDataJson);
+      console.log("Received formData for quote updatance:", formData);
+    }
+
+    // ... (your existing code to get keys, create the new spreadsheet)
+    // Get form data from the request
+    var arrayData = covArrays(formData);
+    var colArray = [];
+    const keys = Object.keys(formData);
+    keys.forEach(function (key) {
+      console.log(key);
+      colArray.push(JSON.stringify(key));
+    });
+    var dataName = {
+      message: {
+        info: formData,
+      },
+      timestamp: new Date(),
+    };
+    const name = dataName.message.info["name"] || dataName.message.info["id"];
+    const sheetId = dataName.message.info["number"] || dataName.message.info["id"];
+    const rawSpreadSheet = ssNameIdFind(name, sheetId)
+    // spreadSheetCreate(
+    //   name,
+    //   sheetId,
+    //   colArray,
+    //   arrayData,
+    //   functionRegistry,time,
+    // );
+    console.log(
+      "SpreadsheetApp.openByUrl(rawSpreadSheet) ",
+      rawSpreadSheet?.getUrl(),
+    );
+    const ss = SpreadsheetApp.openByUrl(rawSpreadSheet?.getUrl());
+    // Assuming `rawSpreadSheet` is the URL of your new spreadsheet
+    // and `ss.getSheetName()` is the name of the sheet you want to PDF.
+    const newSpreadsheetUrl = rawSpreadSheet?.getUrl();
+    const sheetToPDF = ss.getSheetName() || "Updated Quotes";
+
+    // ... (your existing code to append row to the main sheet)
+    const ssId = ss?.getId() || rawSpreadSheet?.getId() || "YOUR_SPREADSHEET_ID_HERE";
+    const sheetName = ss?.getSheetName() || "Updated Quotes";
+    const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
+
+    // ... (your existing code to append a new row)
+    if (!sheet) {
+      throw new Error(
+        `Sheet "${sheetName}" not found in spreadsheet ID "${ssId}".`,
+      );
+    }
+
+    // Append a new row with the updated quote data
+    // You'll need to map your formData keys to sheet columns
+    const headerRow = sheet
+      .getRange(1, 1, 1, sheet.getLastColumn())
+      .getValues()[0];
+    const newRow = [];
+
+    // Example mapping: populate newRow based on headerRow and formData
+    // This is a robust way to ensure data goes into correct columns
+    headerRow.forEach((header) => {
+      const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
+      const valueKey = header.replace(/[^a-zA-Z0-9]/g, "");
+      if (formData.hasOwnProperty(key)) {
+        newRow.push(formData[key]);
+        console.log("pushed formData[key]", formData[key])
+      }
+      else if (formData.hasOwnProperty(valueKey)) {
+        newRow.push(formData[valueKey]);
+        console.log("pushed formData[key]", formData[valueKey])
+      } 
+      else {
+        // Handle cases where a form field doesn't directly map to a header
+        // Or if you want to add static data like a timestamp
+        if (header === "Timestamp") {
+          newRow.push(new Date());
+          console.log("pushed new Date()", new Date())
+        } 
+        else if (header === "Status") {
+          newRow.push("Quote Updated");
+          console.log("pushed Quote Updated", "Quote Updated")
+        } 
+        else {
+          newRow.push(""); // Empty for unmapped columns
+          console.log("pushed blank space", "")
+        }
+      }
+    });
+
+    // A simpler (less robust against column changes) way if you know exact order:
+    // newRow.push(formData.date);
+    // newRow.push(formData.car);
+    // newRow.push(formData.delPick);
+    // // ... and so on for all your fields
+    // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
+    // newRow.push(formData.gas);
+    // newRow.push(formData.total);
+    
+    const lastRow = sheet.getLastRow();
+    const lastRowData = sheet.getRange(lastRow, 1, 1, newRow.length).getValues()[0];
+  
+    // Check if the new row matches the last row
+    if (JSON.stringify(newRow) !== JSON.stringify(lastRowData)) {
+      sheet.appendRow(newRow);
+    }
+    console.log("Quote data appended to sheet:", sheetName);
+
+    // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
+    // const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
+    // console.log("Invoice PDF generated at: " + invoicePdfUrl);
+    // --- END OF NEW CODE ---
+
+    // Now, you can use the `invoicePdfUrl` in your email logic.
+    // Example 3: Send an Email Confirmation (modified)
+    // MailApp.sendEmail({
+    //   to: "client@example.com", // Get client email from formData or other source
+    //   subject: "Your Quote for " + formData.car + " is Updated!",
+    //   htmlBody: `Dear Client,<br><br>
+    //             Your quote has been updated. You can view your invoice here: <a href="${invoicePdfUrl}">View Invoice</a>`,
+    //   // Note: You can't directly attach a URL, but linking to it is effective.
+    // });
+    // console.log('Email confirmation sent.');
+
+    // You can return the PDF URL to the client-side for them to display or download.
+
+    let slideRender = renderFile("slideCard", formData, "Success");
+    
+    return slideRender;
+    return invoicePdfUrl;
+  } catch (error) {
+    console.error("Error in updateQuote:", error);
+    throw new Error("Failed to process quote updatance: " + error.message);
   }
 }
 

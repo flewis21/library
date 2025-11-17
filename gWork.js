@@ -174,6 +174,30 @@ var covObjects = function (rows, headings, time) {
   }
 };
 
+var itemCalc = function () {
+  var itemSheet = ssGetSheetBySpreadsheetUrl(
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+    "items",
+  );
+  var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+  var arrVals = itemArrays.map((val) => {
+    return {
+      SKU: val[0],
+      Description: val[1],
+      "Pack Size": val[2],
+      "Data Entered": val[3],
+      "Last Modified": val[4],
+    };
+  });
+  var rndArrVals = [];
+  while (rndArrVals.length !== arrVals.length) {
+    rndArrVals.push(
+      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+
 var needUtility = function (rndClient, arrD, time) {
   console.log(
     functionRegistry.time +
@@ -699,28 +723,4 @@ var sheetCalc = function () {
   return rndArrVals;
 };
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")
-
-var itemCalc = function () {
-  var itemSheet = ssGetSheetBySpreadsheetUrl(
-    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-    "items",
-  );
-  var itemArrays = itemSheet.getDataRange().getValues().slice(1);
-  var arrVals = itemArrays.map((val) => {
-    return {
-      SKU: val[0],
-      Description: val[1],
-      "Pack Size": val[2],
-      "Data Entered": val[3],
-      "Last Modified": val[4],
-    };
-  });
-  var rndArrVals = [];
-  while (rndArrVals.length !== arrVals.length) {
-    rndArrVals.push(
-      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
-    );
-  }
-  return rndArrVals;
-};
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")

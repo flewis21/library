@@ -934,7 +934,7 @@ var fileBrowser = function (initialFolder, drillDown) {
       initialFolder,
   );
 
-  var selectedFolder = initialFolder ? initialFolder : "Sheets";
+  var selectedFolder = initialFolder? initialFolder:"Sheets";
   var file = undefined; // Will store the selected file name/ID
 
   // Determine the folder to start searching in
@@ -1017,18 +1017,14 @@ var fileBrowser = function (initialFolder, drillDown) {
 
     if (glFiles.length > 0) {
       var drillMatch = [];
-      drillDown
-        ? glFiles.map((fm) => {
-            let myFileName = fm.toLowerCase();
-            if (myFileName.includes(drillDown.toLowerCase())) {
-              drillMatch.push(fm);
-            }
-          })
-        : null;
-      file =
-        drillMatch.length > 0
-          ? drillMatch[Math.floor(Math.random() * drillMatch.length)]
-          : glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
+      drillDown? glFiles.map((fm) => {
+        let myFileName = fm.toLowerCase();
+        if (myFileName.includes(drillDown.toLowerCase())) {
+          drillMatch.push(fm)
+        }
+        ;
+      }):null;
+      file = drillMatch.length > 0? drillMatch[Math.floor(Math.random() * drillMatch.length)]:glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
       console.log(
         formatTime(functionRegistry.time) +
           "\n" +

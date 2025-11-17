@@ -1359,14 +1359,12 @@ var renderFile = function (file, argsObject, title) {
           },
         },
       );
-      return (
-        HtmlService.createTemplate(html) //tmp
-          .evaluate()
-          .setTitle(title)
-          // .append(html)
-          .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      );
+      return HtmlService.createTemplate(html) //tmp
+        .evaluate()
+        .setTitle(title)
+        // .append(html)
+        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     } else {
       return handleRequest(argsObject);
     }
@@ -1877,14 +1875,12 @@ var renderTemplate = function (blob, argsObject, title) {
       "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,
     );
   }
-  return (
-    HtmlService.createTemplate(html) //tmp
-      .evaluate()
-      .setTitle(title)
-      // .append(html)
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-  );
+  return HtmlService.createTemplate(html)//tmp
+    .evaluate()
+    .setTitle(title)
+    // .append(html)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME);
 }; // or throw error.
 
 // Gets a cache that is common to all users of the script

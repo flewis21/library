@@ -12,12 +12,13 @@ var convertToJS = function (rndText) {
   );
   if (rndText === "groceries") {
     var groceryList = globalThis.uniqueItemArray().map((dsc) => {
-      return dsc["Description"];
-    });
+      return dsc["Description"]
+    })
     var rndText = groceryList;
   } else if (rndText === "folders") {
     var rndText = functionRegistry.getFolderList();
-  } else if (typeof rndText !== "undefined" && rndText !== "rndText") {
+  }
+  else if (typeof rndText !== "undefined" && rndText !== "rndText") {
     var appList = [];
     for (var key in globalThis) {
       if (typeof globalThis[key] == "function") {
@@ -173,9 +174,10 @@ var getEventValues = function (title, startTime, endTime, series) {
   }
 };
 
-var getFolderValues = function () {
-  return functionRegistry.getFolderList();
-};
+
+var getFolderValues = function() {
+  return functionRegistry.getFolderList()
+}
 
 function objectOfS(keys, values, time) {
   /**
