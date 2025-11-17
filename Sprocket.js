@@ -4,8 +4,7 @@ var dtlsPro = function (e) {
     e
       ? (cokey = e)
       : (cokey = functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
-  }
-  else {
+  } else {
     cokey = e;
   }
   // var boilerUrl = mis([arguments.callee.name,cokey]);

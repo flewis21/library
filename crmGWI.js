@@ -1326,8 +1326,8 @@ function acceptQuote(formDataJson) {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[arguments.callee.name,"007","Bugatti"]],
-          ["name","number","car"],
+          [[arguments.callee.name, "007", "Bugatti"]],
+          ["name", "number", "car"],
           functionRegistry.time,
         ),
       )[0];
@@ -1353,7 +1353,8 @@ function acceptQuote(formDataJson) {
       timestamp: new Date(),
     };
     const name = dataName.message.info["name"] || dataName.message.info["id"];
-    const sheetId = dataName.message.info["number"] || dataName.message.info["id"];
+    const sheetId =
+      dataName.message.info["number"] || dataName.message.info["id"];
     const rawSpreadSheet = spreadSheetCreate(
       name,
       sheetId,
@@ -1394,29 +1395,25 @@ function acceptQuote(formDataJson) {
     // This is a robust way to ensure data goes into correct columns
     headerRow.forEach((header) => {
       const key = header.toLowerCase().replace(/[^a-z0-9]/g, ""); // Simple way to derive key from header, e.g., "Job Date" -> "jobdate"
-      const valueKey = header.replace(/[^a-zA-Z0-9]/g, "")
+      const valueKey = header.replace(/[^a-zA-Z0-9]/g, "");
       if (formData.hasOwnProperty(key)) {
         newRow.push(formData[key]);
-        console.log("pushed formData[key]", formData[key])
-      }
-      else if (formData.hasOwnProperty(valueKey)) {
+        console.log("pushed formData[key]", formData[key]);
+      } else if (formData.hasOwnProperty(valueKey)) {
         newRow.push(formData[valueKey]);
-        console.log("pushed formData[key]", formData[valueKey])
-      }
-      else {
+        console.log("pushed formData[key]", formData[valueKey]);
+      } else {
         // Handle cases where a form field doesn't directly map to a header
         // Or if you want to add static data like a timestamp
         if (header === "Timestamp") {
           newRow.push(new Date());
-          console.log("pushed new Date()", new Date())
-        } 
-        else if (header === "Status") {
+          console.log("pushed new Date()", new Date());
+        } else if (header === "Status") {
           newRow.push("Quote Updated");
-          console.log("pushed Quote Updated", "Quote Updated")
-        } 
-        else {
+          console.log("pushed Quote Updated", "Quote Updated");
+        } else {
           newRow.push(""); // Empty for unmapped columns
-          console.log("pushed blank space", "")
+          console.log("pushed blank space", "");
         }
       }
     });
@@ -1431,8 +1428,10 @@ function acceptQuote(formDataJson) {
     // newRow.push(formData.total);
 
     const lastRow = sheet.getLastRow();
-    const lastRowData = sheet.getRange(lastRow, 1, 1, newRow.length).getValues()[0];
-  
+    const lastRowData = sheet
+      .getRange(lastRow, 1, 1, newRow.length)
+      .getValues()[0];
+
     // Check if the new row matches the last row
     if (JSON.stringify(newRow) !== JSON.stringify(lastRowData)) {
       sheet.appendRow(newRow);
@@ -1480,8 +1479,8 @@ function updateQuote(formDataJson) {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[arguments.callee.name,"007","McClaren"]],
-          ["name","number","car"],
+          [[arguments.callee.name, "007", "McClaren"]],
+          ["name", "number", "car"],
           functionRegistry.time,
         ),
       )[0];
@@ -1507,8 +1506,9 @@ function updateQuote(formDataJson) {
       timestamp: new Date(),
     };
     const name = dataName.message.info["name"] || dataName.message.info["id"];
-    const sheetId = dataName.message.info["number"] || dataName.message.info["id"];
-    const rawSpreadSheet = ssNameIdFind(name, sheetId)
+    const sheetId =
+      dataName.message.info["number"] || dataName.message.info["id"];
+    const rawSpreadSheet = ssNameIdFind(name, sheetId);
     // spreadSheetCreate(
     //   name,
     //   sheetId,
@@ -1527,7 +1527,8 @@ function updateQuote(formDataJson) {
     const sheetToPDF = ss.getSheetName() || "Updated Quotes";
 
     // ... (your existing code to append row to the main sheet)
-    const ssId = ss?.getId() || rawSpreadSheet?.getId() || "YOUR_SPREADSHEET_ID_HERE";
+    const ssId =
+      ss?.getId() || rawSpreadSheet?.getId() || "YOUR_SPREADSHEET_ID_HERE";
     const sheetName = ss?.getSheetName() || "Updated Quotes";
     const sheet = SpreadsheetApp.openById(ssId).getSheetByName(sheetName);
 
@@ -1552,26 +1553,22 @@ function updateQuote(formDataJson) {
       const valueKey = header.replace(/[^a-zA-Z0-9]/g, "");
       if (formData.hasOwnProperty(key)) {
         newRow.push(formData[key]);
-        console.log("pushed formData[key]", formData[key])
-      }
-      else if (formData.hasOwnProperty(valueKey)) {
+        console.log("pushed formData[key]", formData[key]);
+      } else if (formData.hasOwnProperty(valueKey)) {
         newRow.push(formData[valueKey]);
-        console.log("pushed formData[key]", formData[valueKey])
-      } 
-      else {
+        console.log("pushed formData[key]", formData[valueKey]);
+      } else {
         // Handle cases where a form field doesn't directly map to a header
         // Or if you want to add static data like a timestamp
         if (header === "Timestamp") {
           newRow.push(new Date());
-          console.log("pushed new Date()", new Date())
-        } 
-        else if (header === "Status") {
+          console.log("pushed new Date()", new Date());
+        } else if (header === "Status") {
           newRow.push("Quote Updated");
-          console.log("pushed Quote Updated", "Quote Updated")
-        } 
-        else {
+          console.log("pushed Quote Updated", "Quote Updated");
+        } else {
           newRow.push(""); // Empty for unmapped columns
-          console.log("pushed blank space", "")
+          console.log("pushed blank space", "");
         }
       }
     });
@@ -1584,10 +1581,12 @@ function updateQuote(formDataJson) {
     // newRow.push(formData.lab); // Ensure these are numbers if you need them as such in sheet
     // newRow.push(formData.gas);
     // newRow.push(formData.total);
-    
+
     const lastRow = sheet.getLastRow();
-    const lastRowData = sheet.getRange(lastRow, 1, 1, newRow.length).getValues()[0];
-  
+    const lastRowData = sheet
+      .getRange(lastRow, 1, 1, newRow.length)
+      .getValues()[0];
+
     // Check if the new row matches the last row
     if (JSON.stringify(newRow) !== JSON.stringify(lastRowData)) {
       sheet.appendRow(newRow);
@@ -1613,7 +1612,7 @@ function updateQuote(formDataJson) {
     // You can return the PDF URL to the client-side for them to display or download.
 
     let slideRender = renderFile("slideCard", formData, "Success");
-    
+
     return slideRender;
     return invoicePdfUrl;
   } catch (error) {

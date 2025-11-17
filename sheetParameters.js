@@ -2040,13 +2040,11 @@ var ssNameIdFind = function (sheetName, id) {
   while (files.hasNext()) {
     const file = files.next();
     if (id) {
-
       // Check if the file ID matches the provided sheet ID
       if (file.getId() === id) {
         const spreadsheet = SpreadsheetApp.openById(sheetId);
         return spreadsheet; // Return the Spreadsheet object
-      }
-      else {
+      } else {
         const spreadsheet = SpreadsheetApp.openByUrl(file.getUrl());
         return spreadsheet; // Return the Spreadsheet object
       }
@@ -2055,7 +2053,7 @@ var ssNameIdFind = function (sheetName, id) {
 
   // If no match is found
   return null;
-}
+};
 
 var ssGetSheet = function (sheetname) {
   var ss = spreadSheet();
@@ -2072,10 +2070,11 @@ var ssGetSheet = function (sheetname) {
 var ssGetSheetBSI = function (url) {
   if (url) {
     var ss = urlSpreadSheet(url);
-    let ssSheets = []; 
+    let ssSheets = [];
     var sheets = ss.getSheets();
     for (const sheet of sheets) {
-      ssSheets.push({"name": sheet.getName(), "ID": sheet.getSheetId()}); }
+      ssSheets.push({ name: sheet.getName(), ID: sheet.getSheetId() });
+    }
     return ssSheets;
   }
 };

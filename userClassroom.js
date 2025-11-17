@@ -62,7 +62,8 @@ function processFormData(formData, templateUrl) {
 }
 
 function sheetGetPlaceholders(templateUrl) {
-  var url = "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit?usp=drivesdk"
+  var url =
+    "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit?usp=drivesdk";
   try {
     var sheet = SpreadsheetApp.openByUrl(templateUrl || url);
     var body = sheet.getDataRange().getValues();
@@ -79,7 +80,9 @@ function sheetGetPlaceholders(templateUrl) {
     return uniquePlaceholders;
   } catch (error) {
     Logger.log("Error getting placeholders:", error);
-    throw new Error("Error getting placeholders. Check the logs.\n" + error.stack);
+    throw new Error(
+      "Error getting placeholders. Check the logs.\n" + error.stack,
+    );
   }
 }
 
@@ -100,6 +103,8 @@ function sheetProcessFormData(formData, templateUrl) {
     return newSheetUrl;
   } catch (error) {
     Logger.log("Error processing form data:", error);
-    throw new Error("Error processing form data. Check the logs.\n" + error.stack);
+    throw new Error(
+      "Error processing form data. Check the logs.\n" + error.stack,
+    );
   }
 }

@@ -11,7 +11,7 @@ var crmEBI = function (fx) {
   // var fx = e;
   var objMaster = {
     miscellaneous: {
-      section: ["EBI Yes", "EBI No","template"],
+      section: ["EBI Yes", "EBI No", "template"],
     },
   };
   var result = contentApp(
@@ -810,15 +810,17 @@ var crmEBI = function (fx) {
                         window.open(edSrc)})
                   </script>
                 </body>
-              </html>`, 
-          {
-            ph: new Date(new Date()).toLocaleDateString(),
-            bh: new Date(new Date()).toLocaleTimeString(),
-            timeDefault:
-              new Date() - new Date(new Date()).toLocaleTimeString(),
-            dateDefault:
-              new Date() - new Date(new Date()).toLocaleDateString(),
-          }, " ");
+              </html>`,
+            {
+              ph: new Date(new Date()).toLocaleDateString(),
+              bh: new Date(new Date()).toLocaleTimeString(),
+              timeDefault:
+                new Date() - new Date(new Date()).toLocaleTimeString(),
+              dateDefault:
+                new Date() - new Date(new Date()).toLocaleDateString(),
+            },
+            " ",
+          );
         } else if (fx === objMaster) {
           return contentApp(``, {}, " ");
         } else {
@@ -1370,9 +1372,11 @@ function postEd(ed) {
 }
 
 function leadBook(rowIndex) {
-  console.log("rowIndex", rowIndex)
+  console.log("rowIndex", rowIndex);
   var rowNum = parseInt(rowIndex);
-  typeof rowNum === "number"? console.log("rowNum", rowNum):console.log("Integer parse error")
+  typeof rowNum === "number"
+    ? console.log("rowNum", rowNum)
+    : console.log("Integer parse error");
   var leadSheet =
     "https://docs.google.com/spreadsheets/d/1Ykxv-zQiAjNix7w9IwzGTWiO2X0nqw7NkV5PsaEx3lI/edit?gid=356453707#gid=356453707";
   var leadName = "Custom2025010921011842";
@@ -1380,7 +1384,9 @@ function leadBook(rowIndex) {
   var liadSsId = ss.getParent().getId();
   var sheetArray = SpreadsheetApp.openById(liadSsId).getUrl();
   var ssData = ss.getDataRange().getValues();
-  rowNum >= 1? console.log("rowNum is a number greater than or equal to 1"):console.log("rowNum is not a number greater than or equal to 1")
+  rowNum >= 1
+    ? console.log("rowNum is a number greater than or equal to 1")
+    : console.log("rowNum is not a number greater than or equal to 1");
   if (rowNum >= 1 && rowNum < ssData.length) {
     var headers = ssData[0].map(function (header) {
       // Normalize headers: remove spaces, convert to camelCase, etc.
@@ -1390,14 +1396,14 @@ function leadBook(rowIndex) {
       //   return letter.toUpperCase();
       // });
     });
-    console.log("headers", headers)
+    console.log("headers", headers);
     var row = ssData[rowNum];
     var rowObject = {};
 
     for (var j = 0; j < headers.length; j++) {
       rowObject[headers[j]] = row[j];
     }
-    console.log("rowObject", rowObject)
+    console.log("rowObject", rowObject);
     return { url: sheetArray, jsonData: rowObject };
   } else {
     return { url: sheetArray, jsonData: null }; // Return null if the row index is out of bounds
