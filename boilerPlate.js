@@ -17,7 +17,7 @@ var convertToJS = function (rndText) {
     var rndText = groceryList;
   } else if (rndText === "folders") {
     var rndText = functionRegistry.getFolderList();
-  } else if (typeof rndText !== "undefined" && rndText !== "rndText") {
+  } else if (typeof rndText !== "undefined" && [rndText].includes("rndText") === -1) {
     var appList = [];
     for (var key in globalThis) {
       if (typeof globalThis[key] == "function") {

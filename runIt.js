@@ -30,7 +30,7 @@ function authLogic(logic) {
 
 function email() {
   var emails = validateFiles();
-  var emailsCount = validateFiles().toString().split(",").length;
+  var emailsCount = emails.toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
