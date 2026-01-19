@@ -1188,15 +1188,22 @@ var fileFold = function (folderX, fileX, time) {
     }
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
     var tree = pyFolder.getFiles();
+    var nameTree = tree.hasNext()
     // console.log(folderX + "\n" + typeof folderX)
     // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
-    while (tree.hasNext()) {
-      fileFree.push(tree.next().getName());
+    while (nameTree) {
+      if (tree.hasNext()) {
+        var myTree = tree.next();
+        if (myTree) {
+          var myName = myTree.getName();
+        }
+      }
+      fileFree.push(myName);
     }
   } else {
-    return JSON.stringify(this);
+    return null;
   }
   // console.log("fileFold: \nDeclaring minFold = [" + tree.next().getName() + "].join('').toLowerCase()");
   // var minFold = [tree.next().getName()].join("").toLowerCase();

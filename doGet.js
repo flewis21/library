@@ -11,28 +11,32 @@ var buildTags = function (posHtml) {
 };
 
 function doGet(e) {
-  Logger.log(">>> [LIBRARY] LIBRARY's doGet() called. e: " + JSON.stringify(e));
-  validGroup();
-  validateFolders();
-  validateFiles();
-  var argsEd = testlt();
-  if (typeof globalThis.mis === "function") {
-    var misArgs;
-    if (typeof argsEd === "string") {
-      misArgs = [argsEd];
-    } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
-      misArgs =
-        argsEd.parameters && argsEd.parameters.length > 0
-          ? [argsEd.name, ...argsEd.parameters]
-          : [argsEd.name];
-    } else {
-      console.log("Unexpected argsEd type: ", argsEd);
-      misArgs = ["Invalid Entry"];
+  Logger.log(">>> [LIBRARY] LIBRARY's doGet() called. e: " + e? JSON.stringify(e):"");
+  // validGroup();
+  // validateFolders();
+  // validateFiles();
+  var noEmptyE = Object?.keys(e).length;
+  console.log("Object?.keys(e).length", noEmptyE);
+  var nonPopulatedE = Object?.values(e).length;
+  console.log("Object?.values(e).length", Object?.values(e));
+  if (!e || noEmptyE < 1 || nonPopulatedE < 1 || e.contentLength === -1) {
+    return JSON.stringify(createRandomFunction())
+    var argsEd = testlt();
+    if (typeof globalThis.mis === "function") {
+      var misArgs;
+      if (typeof argsEd === "string") {
+        misArgs = [argsEd];
+      } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
+        misArgs =
+          argsEd.parameters && argsEd.parameters.length > 0
+            ? [argsEd.name, ...argsEd.parameters]
+            : [argsEd.name];
+      } else {
+        console.log("Unexpected argsEd type: ", argsEd);
+        misArgs = ["Invalid Entry"];
+      }
     }
-  }
-  e && e.parameter && e.parameter["func"]
-    ? e
-    : (e = objectOfS(
+    var e = objectOfS(
         ["parameter"],
         [
           [
@@ -42,9 +46,10 @@ function doGet(e) {
           ],
         ],
         functionRegistry.time,
-      ));
+      )
+  };
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -53,13 +58,24 @@ function doGet(e) {
       JSON.stringify(e),
   );
   var webAppUrl = getScriptUrl();
-  if (typeof e === "object") {
+  if (typeof e === "object" && e.parameter && e.parameter["func"]) {
     var fx = e.parameter["func"];
-  } else {
-    var fx = e.parameter["func"];
+  } 
+  else if (typeof e === "object" && e.parameter && !e.parameter["func"]) {
+    return functionFlex(e);
   }
+  else if (typeof e !== "object") {
+      e = objectOfS(["parameter"],[[
+          ["func", e],
+        ]],
+        functionRegistry.time,
+      )
+      var fx = e.parameter["func"];
+    }
   var titleArray = functionRegistry.getFileList();
-  var content = e.parameter["args"];
+  if (typeof e === "object" && e.parameter && e.parameter["args"]) {
+    var content = e.parameter["args"];
+  }
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     titleArray.push(key);
@@ -75,29 +91,29 @@ function doGet(e) {
   };
   if (fx && typeof globalThis[fx] === "function") {
     var rndStr = globalThis.searchString().myNewArr;
-    return renderTemplate(surveyPlayer(rndStr, rndStr), {}, rndStr);
-  } else if (crmT(fx)) {
+    return functionFlex(e);
+  } else if (fx && typeof globalThis[fx] !== "function") {
     try {
-      var payload = fx(content);
+      var payload = mis([fx, ...content]);
     } catch (error) {
-      return renderTemplate(surveyPlayer(fx, error), {}, content);
+      return functionFlex(e);
     }
     if (payload) {
       if (
-        payload.length === 99 ||
-        payload.length === 94 ||
-        payload.length === 83 ||
-        payload.length === 97 ||
-        payload.length === 101 ||
-        payload.length === 103 ||
-        payload.length === 136 ||
-        payload.length === 132 ||
-        payload.indexOf("&entry") > -1
+        payload.app.length === 99 ||
+        payload.app.length === 94 ||
+        payload.app.length === 83 ||
+        payload.app.length === 97 ||
+        payload.app.length === 101 ||
+        payload.app.length === 103 ||
+        payload.app.length === 136 ||
+        payload.app.length === 132 ||
+        payload.app.indexOf("&entry") > -1
       ) {
-        return renderTemplate(mis(payload), {}, "All departments");
+        return renderTemplate(mis(payload.app), {}, "All departments");
       } else {
         return renderTemplate(
-          `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload}</div></body></html>`,
+          `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload.app}</div></body></html>`,
           {},
           "All departments",
         );
@@ -339,7 +355,7 @@ function handleRequest(e) {
   } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
-    throw new Error("Error completing your request ", error.stack);
+    throw new Error("Error completing your request ");
     // return ContentService.createTextOutput("Invalid Request").setMimeType(
     //   ContentService.MimeType.TEXT,
     // );
@@ -409,20 +425,23 @@ function handleGetData() {
   // Logging
   var rndFunc = testlt();
   if (typeof mis === "function") {
+    var misFunc;
     var misArgs;
     if (typeof rndFunc === "string") {
-      misArgs = [rndFunc];
+      misFunc = rndFunc;
     } else if (
       typeof rndFunc === "object" &&
       rndFunc !== null &&
       rndFunc.name
     ) {
+      misFunc = rndFunc.name;
       misArgs =
         rndFunc.parameters && rndFunc.parameters.length > 0
-          ? [rndFunc.name, ...rndFunc.parameters]
-          : [rndFunc.name];
+          ? [...rndFunc.parameters]
+          : "";
     } else {
       console.log("Unexpected rndFunc type: ", rndFunc);
+      misFunc = "mis"
       misArgs = ["Invalid Entry"];
     }
 
@@ -430,7 +449,7 @@ function handleGetData() {
       ["parameter"],
       [
         [
-          ["func", "mis"],
+          ["func", misFunc],
           ["args", misArgs],
           ["action", "getData"],
         ],
@@ -467,16 +486,32 @@ function handleGetData() {
     if (typeof globalThis[funcUno] === "function") {
       let parsedFuncArgs = [];
       if (funcDos) {
-        try {
-          parsedFuncArgs = JSON.parse(funcDos);
-          if (!Array.isArray(parsedFuncArgs)) {
-            parsedFuncArgs = [parsedFuncArgs];
+        // try {
+          var parType = isPropertyOf(funcDos)
+          if (parType[0] === "object") {
+            parsedFuncArgs = JSON.parse(funcDos);
+            if (!Array.isArray(parsedFuncArgs)) {
+              parsedFuncArgs = [parsedFuncArgs];
+            }
           }
-        } catch (jsonError) {
-          parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+        // } catch (jsonError) 
+        else {
+          if (!Array.isArray(funcDos)) {
+            parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+          }
+          else {
+            parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+          }
         }
       }
-      rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+      try { 
+        rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+        var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      }
+      catch { 
+        rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+        var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      }
     } else {
       console.error(
         `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
@@ -719,6 +754,7 @@ function handleGetData() {
     },
     timestamp: new Date(),
   };
+  var contentData = isValidKeys(data);
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
     ContentService.MimeType.JSON,
   );
@@ -1002,6 +1038,8 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 var userClicked = function () {
+  return contentApp(`<script>
+    
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
@@ -1040,6 +1078,8 @@ var userClicked = function () {
     document.getElementById("linkHOME");
     document.getElementById("username").value = "";
   })();
+
+  </script>`,{})
 }; //Global object closed
 
 //  {cik_str: await currentCik,

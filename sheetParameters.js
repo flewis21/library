@@ -1,7 +1,17 @@
 function activeSsId() {
   var ss = spreadSheet();
-  var id = ss.getId();
-  return id;
+  if (ss !== null) {
+    var id = ss.getId();
+    return id;
+  }
+  else {
+    try {
+      return id
+    }
+     catch (error) {
+      return error.stack
+     }
+  }
 }
 
 var bingSWF = function (searchString, time) {
@@ -22,7 +32,7 @@ var bingSWF = function (searchString, time) {
       "]",
   );
   var data = [UrlFetchApp.fetch(searcher, searcherOptions).getContentText()];
-  console.log(typeof data);
+  console.log("bingSWF: [UrlFetchApp.fetch(" +searcher, searcherOptions + ").getContentText()]\n",typeof data);
   // console.log("bingSWF: \n")
   console.log(
     "bingSWF: \nDeclaring resDATA = data.slice(" +
@@ -123,27 +133,27 @@ var cabDriver = function (e) {
       ContentService.MimeType.RSS,
     );
   })();
-  console.log(xkcdRSS.getContent());
+  console.log("xkcdRSS: \nxkcdRSS.getContent()\n",xkcdRSS.getContent());
   var coolStatus = (function (e) {
     const response = { status: "cool!" };
     return ContentService.createTextOutput(JSON.stringify(response))
       .setMimeType(ContentService.MimeType.JSON)
       .getContent();
   })();
-  console.log(JSON.stringify([coolStatus]));
+  console.log("xkcdRSS: \ncoolStatus\n",JSON.stringify([coolStatus]));
   var data = res.split(" ");
   var dataRandomLength = Math.floor(Math.random() * Math.floor(data.length));
   var headers = data.map((r) => {
     return covArrays([[r][0]])[0];
   })[dataRandomLength];
-  console.log(headers);
+  console.log("xkcdRSS: \nheaders\n",headers);
   var headersRandomLength = Math.floor(
     Math.random() * Math.floor(headers.length),
   );
   var dataBody = data.map((r) => {
     return covArrays([[r][0]])[0];
   });
-  console.log(dataBody);
+  console.log("xkcdRSS: \ndataBody\n",dataBody);
   var dataBodyRandomLength = Math.floor(
     Math.random() * Math.floor(dataBody.length),
   );
@@ -163,7 +173,7 @@ var cabDriver = function (e) {
     const bodyJS = JSON.parse(body);
     ws.appendRow([bodyJS]);
   })();
-  console.log(apiPost);
+  console.log("xkcdRSS: \napiPost\n",apiPost);
   return HtmlService.createTemplate(
     `
     <div id="dev">
@@ -472,7 +482,7 @@ var jsonToSpreadsheet = function (data, time) {
         convertToObjects([[testlt()]], ["name"], functionRegistry.time),
       )[0]);
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -480,16 +490,16 @@ var jsonToSpreadsheet = function (data, time) {
       ", = " +
       data +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   var arrayData = covArrays(data);
   var colArray = [];
   const keys = Object.keys(data);
   keys.forEach(function (key) {
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nkey is !" +
@@ -537,7 +547,7 @@ var jsonXCalc = function (searchString, time) {
     searchString = searchString.parameter["func"];
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -545,13 +555,13 @@ var jsonXCalc = function (searchString, time) {
       ", = " +
       searchString +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   var isProduct = driveManager([searchString].join("").toLowerCase());
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -602,7 +612,7 @@ var jsonXSpreadsheet = function (rndTitle, time) {
     rndTitle = rndTitle.parameter["func"];
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nrndTitle is !" +
@@ -610,9 +620,9 @@ var jsonXSpreadsheet = function (rndTitle, time) {
       ", = " +
       rndTitle +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   var urlTitle = "<?= getScriptUrl() ?>?func=dtlsResearchForm&args=";
   var urlFunction = "<?= getScriptUrl() ?>?func=dtlsBridgeForm&args=";
@@ -702,7 +712,7 @@ function lookupDomain(searchTerm) {
 
 var mapValues = function (data, index) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -865,7 +875,7 @@ var pastSeo = function (namedVar, time) {
           );
         }
         if (timeToExecute <= 0.1 * 60 * 1000) {
-          console.log(timeToExecute.valueOf());
+          console.log("time to execute",timeToExecute.valueOf());
           break;
         }
         return;
@@ -1036,7 +1046,7 @@ var rndString = function (inputArray, time) {
     searchString = searchString.parameter["func"];
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1044,9 +1054,9 @@ var rndString = function (inputArray, time) {
       ", = " +
       !inputArray +
       "\n!" +
-      functionRegistry.time +
+      time +
       ", = " +
-      !functionRegistry.time,
+      !time,
   );
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
@@ -1055,18 +1065,18 @@ var rndString = function (inputArray, time) {
     var inputArray = ["01234567"].join("").split(",");
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\ninputArray: " +
       inputArray +
       "\nTime: " +
-      functionRegistry.time,
+      format(functionRegistry.time),
   );
   console.log(
-    functionRegistry.time + "\nCalling testData with inputArray: " + inputArray,
+    formatTime(functionRegistry.time) + "\nCalling testData with inputArray: " + inputArray,
   );
   var testString = testData(inputArray, time).testArray;
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\nRecieved testString: " +
       testString +
       " from testData with inputArray: " +
@@ -1100,7 +1110,7 @@ var seoBites = function (searchString, idArray, time) {
       time,
   );
   if (typeof time === "undefined") {
-    time = functionRegistry.time;
+    var time = functionRegistry.time;
   }
   const uniqueSeo = [];
   const searchWords = [];
@@ -1114,7 +1124,7 @@ var seoBites = function (searchString, idArray, time) {
   searchUI.map((l) => {
     var elaspeTime = functionRegistry.time;
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nseoBites: \nsearchString: " +
         searchString +
         "\nl: " +
@@ -1128,12 +1138,12 @@ var seoBites = function (searchString, idArray, time) {
     idArray.map((w) => {
       if (w !== "") {
         console.log(
-          functionRegistry.time + "\nseoBites: \nw is !" + !w + " !== '': " + w,
+          formatTime(functionRegistry.time) + "\nseoBites: \nw is !" + !w + " !== '': " + w,
         );
         var hasId = w[0].includes(searchWords[i]);
         if (w.indexOf(hasId) !== -1) {
           console.log(
-            functionRegistry.time +
+            formatTime(functionRegistry.time) +
               "\nseoBites: \nw is !" +
               !w +
               ".indexOf(" +
@@ -1157,7 +1167,7 @@ var seoBites = function (searchString, idArray, time) {
 
 var seoFactor = function (data, time) {
   if (typeof time === "undefined") {
-    time = functionRegistry.time;
+    var time = functionRegistry.time;
   }
   var idArray = [];
   data.map((seoData) => {
@@ -1219,7 +1229,7 @@ var seoPictTime = function (searchString, time) {
     searchString = searchString.parameter["func"];
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -1227,9 +1237,9 @@ var seoPictTime = function (searchString, time) {
       " = " +
       searchString +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       " = " +
-      functionRegistry.time,
+      time,
   );
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
@@ -1238,7 +1248,7 @@ var seoPictTime = function (searchString, time) {
     var searchString = globalThis.searchString().myNewArr;
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\nseoPictTime: \nvar altSearch = seoSheet(" +
       searchString,
     time + ")",
@@ -1254,7 +1264,7 @@ var seoPictTime = function (searchString, time) {
   ) {
     var testSearch = listSearch[rndListKey];
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nseoPictTime: \n[" +
         testSearch +
         "].join().indexOf(" +
@@ -1267,7 +1277,7 @@ var seoPictTime = function (searchString, time) {
     searchString = allInvestors().title;
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\nseoPictTime: \nvar uniqueVid = seoPictures(" +
       searchString,
     time + ")",
@@ -1291,7 +1301,7 @@ var seoPictTime = function (searchString, time) {
   for (i, l; i < l; i++) {
     sorFndOrd.sort((a, b) => {
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\nseoPictTime: \n" +
           a +
           ".toLowerCase() === " +
@@ -1302,7 +1312,7 @@ var seoPictTime = function (searchString, time) {
       );
       if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
         console.log(
-          functionRegistry.time +
+          formatTime(functionRegistry.time) +
             "\nseoPictTime: \nfndOrd.indexOf(" +
             a +
             ") > -1 " +
@@ -1322,7 +1332,7 @@ var seoPictTime = function (searchString, time) {
       var timeToExecute = functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
         console.log(
-          functionRegistry.time +
+          formatTime(functionRegistry.time) +
             "\nseoPictTime: \ntest.indexOf(" +
             "tse4.mm.bing.net" +
             ") > -1 " +
@@ -1370,7 +1380,7 @@ var seoPictTime = function (searchString, time) {
 
 var seoPictures = function (searchString, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1378,9 +1388,9 @@ var seoPictures = function (searchString, time) {
       "= " +
       !searchString +
       "\n!" +
-      functionRegistry.time +
+      time +
       "= " +
-      !functionRegistry.time,
+      !time,
   );
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
@@ -1406,7 +1416,7 @@ var seoPictures = function (searchString, time) {
 
 var seoTwitter = function (folderX, searchString, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1423,7 +1433,7 @@ var seoTwitter = function (folderX, searchString, time) {
       !time,
   );
   if (typeof time === "undefined") {
-    time = functionRegistry.time;
+    var time = functionRegistry.time;
   }
   var data = [];
   var foldCounter = 0;
@@ -1468,7 +1478,7 @@ var seoTwitter = function (folderX, searchString, time) {
 
 var sheetsMaker = function (fileName, folderX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileName is !" +
@@ -1500,7 +1510,7 @@ var sheetsMaker = function (fileName, folderX, time) {
     });
     var newFileName = fileName ? fileName : "base";
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nnewFileName is !" +
@@ -1523,7 +1533,7 @@ var sheetsMaker = function (fileName, folderX, time) {
     // }
     var newFile = SpreadsheetApp.create(newFileName.toString());
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nnewFile is !" +
@@ -1622,7 +1632,7 @@ var sheetSeo = function (namedVar, time) {
 
 var sheetsUrls = function (fileX, folderX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -1638,25 +1648,35 @@ var sheetsUrls = function (fileX, folderX, time) {
       ", = " +
       time,
   );
+  var runRndMat = function() {
+    var rndName = functionRegistry.fileList
+    let nameRnd = rndName[Math.floor(Math.random() * (Math.floor(rndName.length)))]
+    return nameRnd
+  }
   if (typeof fileX === "undefined") {
-    var fileX = testlt().name;
+    var fileX = runRndMat();
   }
   var fileNameList = matchManager(folderX ? folderX : "Sheets", fileX);
   var mineField = [];
   if (fileNameList) {
     while (mineField.length === 0) {
-      fileNameList.sheets.map((repo) => {
-        if (repo.toLowerCase().includes([fileX].toString().toLowerCase())) {
-          var mineFile = DriveApp.getFilesByName(repo).next().getId();
-          if (
-            DriveApp.getFileById(mineFile).getMimeType() ===
-            MimeType.GOOGLE_SHEETS
-          ) {
-            mineField.push(mineFile);
-          }
-        }
-      });
-      fileX = testlt().name;
+      fileNameList
+        .sheets
+          .map((repo) => {
+            if (repo.toLowerCase().includes(fileX.toLowerCase())) {
+              var mineFile = DriveApp.getFilesByName(repo);
+              if (mineFile.hasNext()) {
+                var bogy = mineFile.next().getId()
+                if (
+                  DriveApp.getFileById(bogy).getMimeType() ===
+                  MimeType.GOOGLE_SHEETS
+                ) {
+                  mineField.push(bogy);
+                }
+              }
+            }
+          });
+      fileX = runRndMat();
     }
     return mineField[Math.floor(Math.random() * Math.floor(mineField.length))];
   } else {
@@ -1823,7 +1843,7 @@ function spreadSheet() {
 // };
 var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -1928,9 +1948,9 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
       // ws.getRange(2, 1, [sicSliceArray].length, headers.length).setValues(
       //   sicSliceArray,
       // );
-      ws.getRange(2, 1, 1, headers.length).setValues([sicSliceArray]);
+      ws.getRange(2, 1, 1, headers.length)?.setValues([sicSliceArray]);
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\nCalled function: " +
           arguments.callee.name +
           "\nCaller function: " +
@@ -1979,7 +1999,7 @@ var ssCell = function (column, rowOffSet, colOffSet) {
 
 var ssData = function (playSheet, sheetName, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nplaySheet is !" +
@@ -1991,15 +2011,15 @@ var ssData = function (playSheet, sheetName, time) {
       ", = " +
       sheetName +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   var sheetWS = ssGetSheetBySpreadsheetUrl(playSheet, sheetName);
   if (sheetWS) {
     var sheetD = sliceValues(sheetWS.getDataRange().getValues(), 1);
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nsheetD is !" +
@@ -2188,7 +2208,7 @@ var tutorial = function (text) {
 
 function updateSheet(url, sheetName, data, numCols, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +

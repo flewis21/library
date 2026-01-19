@@ -4,10 +4,10 @@ var dtlsPict = function (snap, time) {
     : (snap = objectOfS(
         ["parameter"],
         [[["func", arguments.callee.name]]],
-        Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+        functionRegistry.timeLeftToExecute,
       ).parameter["func"]);
   console.log(
-    Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+    formatTime(functionRegistry.timeLeftToExecute) +
       "\n" +
       arguments.callee.name +
       "\nsnap is !" +
@@ -20,39 +20,45 @@ var dtlsPict = function (snap, time) {
       time,
   );
   if (typeof time === "undefined") {
-    var time = Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000);
+    var time = functionRegistry.timeLeftToExecute;
   }
   var allTitleData = [];
   var atdCount = 0;
-  var maxIterations = 100; // if (typeof snap === "undefined") {
+  var uiArr = matchManager("pictForms", snap, time);
+  var maxIterations = 2; // if (typeof snap === "undefined") {
   while (allTitleData.length === 0 && atdCount < maxIterations) {
-    var uiArr = matchManager("pictForms", snap, time);
-    for (var key in uiArr) {
-      if (uiArr[key]) {
-        // console.log("dtlsPict: \n" + key.valueOf())
-        if (uiArr[key].length > 0) {
-          if (snap) {
-            [uiArr[key]][0].map((or) => {
-              if (
-                [or]
-                  .toString()
-                  .toLowerCase()
-                  .includes([snap].toString().toLowerCase()) &&
-                [or].indexOf("[") === -1
-              ) {
-                allTitleData.push(or); // console.log("dtlsPict: \n[" + or + "].toString().toLowerCase().includes([" + snap + "].toString().toLowerCase()): " + [or].toString().toLowerCase().includes([snap].toString().toLowerCase()))
-              }
-            });
-          } else {
-            [uiArr[key]][0].map((or) => {
-              if ([or].join("").indexOf("[") === -1) {
-                allTitleData.push(or); // console.log("dtlsPict: \nallTitleData.push(" + or + ")")
-              }
-            });
-          }
-        }
+    // for (var key in uiArr) {
+    //   if (uiArr[key]) {
+    //     // console.log("dtlsPict: \n" + key.valueOf())
+    //     if (uiArr[key].length > 0) {
+    //       if (snap) {
+    //         [uiArr[key]][0].map((or) => {
+    //           if (
+    //             [or]
+    //               .toString()
+    //               .toLowerCase()
+    //               .includes([snap].toString().toLowerCase()) &&
+    //             [or].indexOf("[") === -1
+    //           ) {
+    //             allTitleData.push(or); // console.log("dtlsPict: \n[" + or + "].toString().toLowerCase().includes([" + snap + "].toString().toLowerCase()): " + [or].toString().toLowerCase().includes([snap].toString().toLowerCase()))
+    //           }
+    //         });
+    //       } else {
+    //         [uiArr[key]][0].map((or) => {
+    //           if ([or].join("").indexOf("[") === -1) {
+    //             allTitleData.push(or); // console.log("dtlsPict: \nallTitleData.push(" + or + ")")
+    //           }
+    //         });
+    //       }
+    //     }
+    //   }
+    // }
+    uiArr.forms.map((snapper)=>{
+      let hookLine = authLogic([snapper].includes(snap));
+      if (hookLine) {
+        allTitleData.push(snapper)
       }
-    }
+    })
     atdCount++;
     console.log("dtlsPict: \nkey search progress " + atdCount);
   }
@@ -76,7 +82,10 @@ var dtlsPict = function (snap, time) {
       Math.floor([arrPoint].length) +
       "))",
   );
-  snap = [arrPoint][rndFilePoint];
+  let changeSnap = authLogic([arrPoint][rndFilePoint])
+  if (changeSnap) {
+    snap = [arrPoint][rndFilePoint];
+  }
   console.log("dtlsPict: \n" + snap + " = [arrPoint][" + rndFilePoint + "]");
   var arrData = coSort(time).title;
   console.log("dtlsPict: \nvar arrData = coSort(" + time + ").title");
@@ -98,7 +107,7 @@ var dtlsPict = function (snap, time) {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
-  var time = start;
+  var time = functionRegistry.timeLeftToExecute;
   var cokey = snap || utilNeed;
   if (cokey) {
     console.log("dtlsPict: \nvar boilerUrl = dtlsBridge(" + cokey, time + ")");
@@ -166,7 +175,7 @@ var dtlsPict = function (snap, time) {
         console.log("Receiving from join - " + pieceStr);
         if (pieceStr) {
           var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime; // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+          var timeToExecute = functionRegistry.timeLeftToExecute; // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
           form.addPageBreakItem().setTitle([cokey].join("")); // form.addSectionHeaderItm().setTitle(pieceStr.split('"'))
           form.addDateItem().setHelpText("(DATE)");
           form
@@ -340,7 +349,7 @@ var portPro = function (e) {
         }
         if (piece.indexOf("http") > -1) {
           var elaspeTime = new Date() - time;
-          var timeToExecute = maxTime - elaspeTime;
+          var timeToExecute =  functionRegistry.timeLeftToExecute;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form.addSectionHeaderItem().setTitle(piece);
           if (srImgRes || svImgRes) {
@@ -501,7 +510,7 @@ var stockPro = function (e, time) {
           if (piece) {
             if (piece.indexOf("https://") > -1) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.timeLeftToExecute;
               // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
               form.addPageBreakItem().setTitle([yahooNeed].join(""));
               form.addSectionHeaderItem().setTitle(piece);
@@ -836,7 +845,7 @@ var stockHistory = function (e) {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = maxTime - elaspeTime;
+            var timeToExecute = functionRegistry.timeLeftToExecute;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([cokey].join(""));
             form

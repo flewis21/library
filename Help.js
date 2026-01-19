@@ -45,12 +45,12 @@ var crmT = function (func) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  var appList = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      appList.push(key);
-    }
-  }
+  var appList = functionRegistry.fileList;
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     appList.push(key);
+  //   }
+  // }
   var lowCapApp = appList.map(function (item) {
     return item.toLowerCase();
   });
@@ -58,7 +58,7 @@ var crmT = function (func) {
   if (Array.isArray(func)) {
     lowCapFunc = func.join("").toLowerCase().split(",");
   } else if (typeof func === "string" && func) {
-    lowCapFunc = func.toLowerCase();
+      lowCapFunc = func.toLowerCase();
   }
   console.log(
     functionRegistry.time +
@@ -75,19 +75,20 @@ var crmT = function (func) {
   } else if (typeof lowCapFunc === "string" && lowCapFunc) {
     funFirst = lowCapApp.indexOf(lowCapFunc);
   }
+  console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst)
   return funFirst;
 };
 
 var gsFiles = function () {
   console.log(
-    "boilerplate Help: line 329\ngsFiles(: )\n " + arguments.callee.caller.name,
+    "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
   );
-  var gsFileList = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      gsFileList.push(key);
-    }
-  }
+  var gsFileList = functionRegistry.fileList;
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     gsFileList.push(key);
+  //   }
+  // }
   return gsFileList;
 };
 
@@ -193,14 +194,16 @@ var isValidUrl = function (text) {
 // const pong = table.map((ping)=>{return ping.substring(0)})
 var mis = function (text, maxRetries = 3) {
   console.log(
-    "boilerplate Help: line 920\nmis(text: " +
+    "boilerplate Help: line 196\nmis(text: " +
       text +
       ", maxRetries: " +
       maxRetries +
       ")\n ",
   );
-  var validUrl = isValidUrl(text);
-  if (!validUrl.hostname || text.indexOf(",") > -1) {
+  if (text?.indexOf(",") === -1) {
+    var validUrl = isValidUrl(text);
+  }
+  if (!validUrl?.hostname) {
     var supFunc = misSt(text);
     while (!supFunc.func) {
       supFunc = misSt(testlt().name);
@@ -260,7 +263,7 @@ var mis = function (text, maxRetries = 3) {
           form.setConfirmationMessage("Thanks for your feedback !!");
           var url = seoPastTime(text) || form.getPublishedUrl();
         }
-        console.log("Final app:", supFunc?.res);
+        console.log("Final app:", earlyReturn);
         return { index: url, app: earlyReturn, link: errorUrl };
       }
     }
@@ -664,7 +667,7 @@ var mis = function (text, maxRetries = 3) {
                 }
                 form.setConfirmationMessage("Thanks for your feedback !!");
                 var responseObj = {
-                  dataStr: seoPastTime(location),
+                  dataStr: seoPastTime(isValidUrl(location).hostname),
                   url: form.getPublishedUrl(),
                 };
               }
@@ -1611,6 +1614,7 @@ var misSt = function (func, someArgs) {
   let holdResolvedArgsX;
 
   if (argsX.length > 0) {
+    console.log("Check if there are functions to process", argsX)
     // Check if there are functions to process
     var allErrors = {};
     var fParams = gsFParams(); // Assuming gsFParams is globally accessible
@@ -2092,16 +2096,17 @@ var misSt = function (func, someArgs) {
                 declaredParamName,
               )
             ) {
+              var nameArray = ["tunPlay", "searchString", "rndKey", "search"]
               var rndCoIndex = Math.floor(
                 Math.random() * Math.floor(globalThis.uniqueCoArray().length),
               );
               var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
-              args[declaredParamName] =
+              args[nameArray[nameArray.indexOf(declaredParamName)]] =
                 // userProvidedValue !== null && userProvidedValue !== undefined
                 //   ? userProvidedValue
                 //   :
                 tiParam;
-              resolvedArgs.push(args[declaredParamName]);
+              resolvedArgs.push(args[nameArray[nameArray.indexOf(declaredParamName)]]);
             } else if (declaredParamName === "stringArray") {
               args["stringArray"] =
                 // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2264,12 +2269,13 @@ var misSt = function (func, someArgs) {
 
 var paramVals = function (funcInfo) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2267\nparamVals(funcInfo: " + funcInfo +")\n " + arguments.callee.caller.name,
   );
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
     return rndS.name === funcInfo;
   });
+  let misArgs;
   if (typeof result === "object" && result !== null && result.name) {
     misArgs =
       result.parameters && result.parameters.length > 0
@@ -2281,7 +2287,7 @@ var paramVals = function (funcInfo) {
 
 var resolveParams = function (func, someArgs) {
   console.log(
-    "boilerplate Help: line 451\nresolveParams(func: " +
+    "boilerplate Help: line 2284\nresolveParams(func: " +
       func +
       ", someArgs: " +
       someArgs +
@@ -2632,7 +2638,7 @@ var resolveParams = function (func, someArgs) {
 
 var seoCapital = function (url) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2635\nseoCapital(url: " + url +")\n " + arguments.callee.caller.name,
   );
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
@@ -2786,11 +2792,12 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
-    items = [{ Description: searchString }];
+    items = [{ "Description": searchString }];
   }
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString = items[rndItenIndex]["Description"]
+  var searchString 
+  = items[rndItenIndex]["Description"]
     .split(" ")
     .sort((a, b) => {
       const priorityA = getZuluFreqPriority(a.toLowerCase());
@@ -3084,7 +3091,7 @@ var vidFactor = function (data, time) {
 };
 
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate : line \n(: )\n " + arguments.callee.caller.name);
+  console.log("boilerplate Help : line 3087\n(tunPlay:" + tunPlay + ")\n " + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +
@@ -3161,7 +3168,7 @@ var vidPlaylist = function (tunPlay) {
 
 var wwAccess = function (rName, rFunc, rArgs) {
   console.log(
-    "boilerplate : line 3105\nwwAccess(rName: " +
+    "boilerplate wwAccess : line 3164\nwwAccess(rName: " +
       rName +
       ", rFunc: " +
       rFunc +

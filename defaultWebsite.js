@@ -98,6 +98,460 @@ var appSort = function (numIndex, time) {
   return freqArray;
 };
 
+/**
+ * Creates a new Google script with a random structure and content,
+ * leveraging available ScriptsApp properties and methods from the provided documentation.
+ *
+ * NOTE: Programmatic control over font styles and direct theme color
+ * setting (beyond the initial script creation) is NOT available via the ScriptApp API.
+ * The script will use Google Scripts' default theme or the last manually applied theme.
+ *
+ * @returns {string} The URL of the newly created random Google Script.
+ */
+function createRandomFunction() {
+  // --- Configuration for randomness ---
+  const SCRIPT_TITLES = functionRegistry.fileList;
+  const SCRIPT_DESCRIPTIONS = [
+    "A randomly generated script to gather insights.",
+    "Please fill out this script at your leisure. Content is randomized.",
+    "Exploring the possibilities of programmatic script creation.",
+    "This script was created by an algorithm. Enjoy!",
+    "Your input helps us understand randomness better.",
+    "An automated inquiry for diverse data points.",
+    "Completely random, yet surprisingly functional.",
+  ];
+  const QUESTION_WORDS = [
+    "Name",
+    "Email",
+    "Date",
+    "Preference",
+    "Opinion",
+    "Favorite",
+    "Quantity",
+    "Description",
+    "Rating",
+    "Contact",
+    "Experience",
+    "Level",
+    "Choice",
+    "Details",
+    "Location",
+    "Time",
+    "Duration",
+    "Feedback",
+  ];
+  const CHOICE_WORDS = [
+    "Option A",
+    "Choice B",
+    "Value C",
+    "Item D",
+    "Selection E",
+    "Yes",
+    "No",
+    "Maybe",
+    "Agree",
+    "Disagree",
+    "Red",
+    "Blue",
+    "Green",
+    "Small",
+    "Medium",
+    "Large",
+  ];
+
+  const MIN_SECTIONS = 1;
+  const MAX_SECTIONS = 3;
+  const MIN_QUESTIONS_PER_SECTION = 2;
+  const MAX_QUESTIONS_PER_SECTION = 7;
+
+  // --- Create the script ---
+  const scriptTitle = SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
+  const script = globalThis[scriptTitle] //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
+  Logger.log(`Random script: ${script.name} - ${script.length}`);
+
+  // --- Set Basic script Properties ---
+  const scriptDescription =
+    SCRIPT_DESCRIPTIONS[Math.floor(Math.random() * SCRIPT_DESCRIPTIONS.length)];
+
+  // Randomly decide to collect email or not
+  // script(Math.random() < 0.5);
+
+  // Randomly decide to show progress bar for multi-section scripts
+  // if (Math.random() < 0.7) {
+  //   script.setProgressBar(true); // Using setProgressBar as found in script methods
+  // }
+
+  // --- Add Sections and Questions ---
+  const numSections =
+    Math.floor(Math.random() * (MAX_SECTIONS - MIN_SECTIONS + 1)) +
+    MIN_SECTIONS;
+
+  for (let s = 0; s < numSections; s++) {
+    // if (s > 0) {
+    //   // Add page break for subsequent sections
+    //   script
+    //     .addPageBreakItem()
+    //     .setTitle(
+    //       `Section ${s + 1}: ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} Details`,
+    //     )
+    //     .setHelpText(
+    //       `This is a random section for more ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} related questions.`,
+    //     );
+    // }
+
+    const numQuestions =
+      Math.floor(
+        Math.random() *
+          (MAX_QUESTIONS_PER_SECTION - MIN_QUESTIONS_PER_SECTION + 1),
+      ) + MIN_QUESTIONS_PER_SECTION;
+
+    for (let q = 0; q < numQuestions; q++) {
+      // All EventTypes that have corresponding add...Item() methods and are not UNSUPPORTED
+      const eventTypes = [
+        ScriptApp.EventType.CLOCK,
+        ScriptApp.EventType.ON_CHANGE,
+        ScriptApp.EventType.ON_EDIT,
+        ScriptApp.EventType.ON_EVENT_UPDATED,
+        ScriptApp.EventType.ON_FORM_SUBMIT,
+        ScriptApp.EventType.ON_OPEN,
+      ];
+      const randomType =
+        eventTypes[Math.floor(Math.random() * eventTypes.length)];
+      Logger.log(randomType);
+
+      const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
+      const isRequired = Math.random() < 0.7; // 70% chance of being required
+
+      switch (randomType) {
+        case ScriptApp.EventType.ON_OPEN:
+          const rndText = driveDocBrowser();
+          const userText = rndText[Math.floor(Math.random() * Math.floor(rndText.length))];
+          const textItem = DocumentApp.openByUrl(userText);
+            // .addTextItem()
+            // .setTitle(questionTitle + " (Short Text)");
+          if (isRequired) {
+            if (script.length === 0) {
+              console.info(textItem.getBody().getText().toString());
+              script();
+            }
+            else {
+              misSt(script.name);
+            }
+          }
+          if (Math.random() < 0.4) {
+            // Add random text/number validation
+            const validationType = Math.floor(Math.random() * 5); // More text validations
+            let validationBuilder = ScriptApp.WeekDay // .requireAllScopes(ScriptApp.AuthMode.FULL) //.createTextValidation();
+            switch (validationType) {
+              case 0:
+                validationBuilder.FRIDAY //.requireNumber();
+                break;
+              case 1:
+                validationBuilder.MONDAY //.requireTextContainsPattern("test");
+                break;
+              case 2:
+                validationBuilder.WEDNESDAY //.requireTextIsEmail();
+                break;
+              case 3:
+                validationBuilder.THURSDAY //.requireTextIsUrl();
+                break;
+              case 4:
+                validationBuilder.TUESDAY //.requireTextLengthGreaterThanOrEqualTo(5);
+                break;
+            }
+            textItem.getBody().appendListItem(
+              "Please follow the specific text rule."
+            );
+          }
+          break;
+
+        case ScriptApp.EventType.ON_CHANGE:
+          const userChangeSheetId = sheetsUrls();
+          // const rndParagraphs = driveDocBrowser();
+          // const userParagraph = rndParagraphs[Math.floor(Math.random() * Math.floor(rndParagraphs.length))];
+          // const paragraphItem = ScriptApp.newTrigger(script.name).forSpreadsheet(userChangeSheetId).onOpen().create(); //ScriptApp.newTrigger(script.name).forDocument(DocumentApp.openByUrl(userParagraph).getId()).onOpen().create();
+            // .addParagraphTextItem()
+            // .setTitle(questionTitle + " (Long Text)");
+          const pChoice = DriveApp.getFileById(userChangeSheetId);
+          if (isRequired) {
+            if (script.length === 0) {
+              console.info(pChoice.toString());
+              script();
+            }
+            else {
+              misSt(script.name);
+            }
+          }
+          if (Math.random() < 0.3) {
+            // Add random length validation
+            // **** CORRECTED: Use createParagraphTextValidation() ****
+            pChoice.getAccess(email());
+              // ScriptApp.createParagraphTextValidation()
+              //   .requireTextLengthGreaterThanOrEqualTo(20)
+              //   .withCustomMessage("Please write at least 20 characters.")
+              //   .build(),
+            // );
+          }
+          break;
+
+        case ScriptApp.EventType.ON_EDIT:
+          const userEditSheetId = sheetsUrls();
+          // const editTrigger = ScriptApp.newTrigger(script.name).forSpreadsheet(userEditSheetId).onOpen().create();
+          // const mcItem = editTrigger;
+          // const cbItem = editTrigger;
+          // const listItem = editTrigger;
+            // .addMultipleChoiceItem()
+            // .setTitle(questionTitle + " (Choose One)");
+          const mcChoices = [];
+          const cbChoices = [];
+          const listChoices = [];
+          const cChoice = DriveApp.getFileById(userEditSheetId);
+          const dChoice = SpreadsheetApp.openById(userEditSheetId);
+          const dSheets = dChoice.getSheets();
+          dSheets.map((sheet) =>{
+            if (sheet) {
+              let sheetName = sheet.getName()
+              let endLine = sheet.getLastRow() + 1;
+              sheet.getRange(endLine,1,3).setValues([["Row 1"], ["Row 2"], ["Row 3"]])
+            }
+          });
+          dSheets.map((sheet) =>{
+            if (sheet) {
+              let sheetName = sheet.getName()
+              let endColumn = sheet.getLastColumn() + 1;
+              sheet.getRange(1,endColumn,3).setValues([["Disagree"], ["Neutral"], ["Agree"]])
+            }
+          });
+          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
+            // 2-4 choices
+            mcChoices.push(
+              cChoice.setDescription(
+                CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
+              ),
+            );
+          }
+          for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
+            // 2-5 choices
+            cbChoices.push(
+              CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
+            );
+          }
+          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
+            // 2-4 choices
+            listChoices.push(
+              cChoice.setDescription(
+                CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
+              ),
+            );
+          }
+          cChoice.makeCopy().setDescription(mcChoices);
+          cChoice.makeCopy().setDescription(cbChoices);
+          cChoice.makeCopy().setDescription(listChoices);
+          if (isRequired) script();
+          if (Math.random() < 0.3) {
+            // Add random checkbox validation
+            cChoice.getAccess(email())
+              // ScriptApp.createCheckboxValidation()
+              //   .setHelpText("Select between 1 and 3 options.")
+              //   .requireSelectBetween(1, 3)
+              //   .build(),
+            // );
+          }
+          if (isRequired) {
+            console.info(dChoice.toString());
+            if (script.length === 0) {
+              script();
+            }
+            else {
+              misSt(script.name);
+            }
+          }; // Randomly add 'Other' option
+          // if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
+          break;
+
+        // case ScriptApp.EventType.ON_EVENT_UPDATED:
+        //   const userEMail = email();
+        //   const cbItem = ScriptApp.newTrigger(script.name).forSpreadsheet(userSheetId).onOpen().create();// ScriptApp.newTrigger(script.name).forUserCalendar(userEMail).onEventUpdated()?.create();
+        //     // .addCheckboxItem()
+        //     // .setTitle(questionTitle + " (Select All That Apply)");
+        //   break;
+
+        // case ScriptApp.EventType.ON_FORM_SUBMIT:
+        //   const listItem = ScriptApp.newTrigger(script.name).forForm(FormApp.create(script.name).getId()).onFormSubmit().create()
+        //     // .addListItem()
+        //     // .setTitle(questionTitle + " (Dropdown)");
+        //   break;
+
+        case ScriptApp.EventType.CLOCK:
+          // const clockTrigger = ScriptApp.newTrigger(script.name).timeBased().everyHours(24).create(); 
+          // const dateItem = clockTrigger
+          // const dateTimeItem =  clockTrigger// ScriptApp.newTrigger(script.name).forSpreadsheet(userSheetId).onOpen().create();
+            // .addDateItem()
+            // .setTitle(questionTitle + " (Date)");
+          if (isRequired) {
+            console.info(script.toString());
+            if (script.length === 0) {
+              script();
+            }
+            else {
+              misSt(script.name);
+            }
+          }; //.setRequired(true);
+          // if (isRequired) script();
+          // dateItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
+          // dateTimeItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
+          break;
+
+        // case ScriptApp.ItemType.DATETIME:
+        //   const dateTimeItem = script
+        //     .addDateTimeItem()
+        //     .setTitle(questionTitle + " (Date & Time)");
+        //   break;
+
+        case ScriptApp.EventType.ON_EVENT_UPDATED:
+          const userEMail = email();
+          // try {
+          //   const durationItem = ScriptApp.newTrigger(script.name).forUserCalendar(userEMail).onEventUpdated().create(); 
+          // }
+          // catch (error){
+          //   console.warn("No Bueno!", error.stack)
+          // }
+            // .addDurationItem()
+            // .setTitle(questionTitle + " (Duration)");
+          if (isRequired) {
+            console.info(userEMail.toString());
+            if (script.length === 0) {
+              script();
+            }
+            else {
+              misSt(script.name);
+            }
+          };
+          break;
+
+        // case ScriptApp.ItemType.TIME:
+        //   const timeItem = script
+        //     .addTimeItem()
+        //     .setTitle(questionTitle + " (Time)");
+        //   if (isRequired) timeItem.setRequired(true);
+        //   break;
+
+        // case ScriptApp.ItemType.SCALE:
+        //   const scaleItem = script
+        //     .addScaleItem()
+        //     .setTitle(questionTitle + " (Rating Scale)");
+        //   scaleItem.setLowerBound(1);
+        //   scaleItem.setUpperBound(Math.floor(Math.random() * 5) + 5); // Scale of 1 to 5-9
+        //   if (Math.random() < 0.5) scaleItem.setLabels("Lowest", "Highest");
+        //   if (isRequired) scaleItem.setRequired(true);
+        //   break;
+
+        // case ScriptApp.ItemType.RATING:
+        //   const ratingItem = script
+        //     .addRatingItem()
+        //     .setTitle(questionTitle + " (Icon Rating)");
+        //   ratingItem.setRatingScaleLevel(Math.floor(Math.random() * 5) + 5); // Scale of 5-9
+        //   const ratingIcons = [
+        //     ScriptApp.RatingIconType.STAREnum,
+        //     ScriptApp.RatingIconType.HEARTEnum,
+        //     ScriptApp.RatingIconType.THUMB_UPEnum,
+        //   ];
+        //   ratingItem.setRatingIcon(
+        //     ratingIcons[Math.floor(Math.random() * ratingIcons.length)],
+        //   );
+        //   if (isRequired) ratingItem.setRequired(true);
+        //   break;
+
+        // case ScriptApp.ItemType.GRID:
+        //   break;
+
+        // case ScriptApp.ItemType.CHECKBOX_GRID:
+        //   break;
+
+        case ScriptApp.EventType.ON_FORM_SUBMIT:
+          const userSubmit = FormApp.create(script.name)
+          const sectionHeaderItem = userSubmit
+            .addSectionHeaderItem()
+            .setTitle(questionTitle + " (New Section)");;
+          const checkboxGridItem = userSubmit
+            .addCheckboxGridItem()
+            .setTitle(questionTitle + " (Checkbox Grid)")
+          const gridItem = userSubmit
+            .addGridItem()
+            .setTitle(questionTitle + " (Radio Grid)")
+          const imageItem = userSubmit
+            .addImageItem()
+            .setTitle(questionTitle + " (Image)")
+          const videoItem = userSubmit
+            .addVideoItem()
+            .setTitle(questionTitle + " (Video)")
+          // Use a valid YouTube video ID
+          videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
+          videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
+          const videoAlignments = [
+            FormApp.Alignment.LEFT,
+            FormApp.Alignment.CENTER,
+            FormApp.Alignment.RIGHT,
+          ];
+          videoItem.setAlignment(
+            videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+          );
+          let  imgFile = dtlsPict(script.name);
+          // Use a public image URL or provide a Blob
+          imageItem.setImage(
+            DriveApp.getFilesByName(imgFile).getBlob(),
+          ); // Replace with a real public image ID
+          // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+          // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+          imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+          const alignments = [
+            FormApp.Alignment.LEFT,
+            FormApp.Alignment.CENTER,
+            FormApp.Alignment.RIGHT,
+          ];
+          imageItem.setAlignment(
+            alignments[Math.floor(Math.random() * alignments.length)],
+          );
+          if (isRequired) gridItem.setRequired(true);
+          if (Math.random() < 0.3) {
+            gridItem.setValidation(
+              FormApp.createGridValidation()
+                .requireLimitOneResponsePerColumn()
+                .build(),
+            );
+          }
+          checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
+          checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
+          if (isRequired) checkboxGridItem.setRequired(true);
+          if (Math.random() < 0.3) {
+            checkboxGridItem.setValidation(
+              FormApp.createCheckboxGridValidation()
+                .requireLimitOneResponsePerColumn()
+                .build(),
+            );
+          }
+          if (Math.random() < 0.7) {
+            sectionHeaderItem.setHelpText(
+              "This is a random section header for organization.",
+            );
+          }
+          break;
+
+        // case ScriptApp.ItemType.IMAGE:
+        //   break;
+
+        // case ScriptApp.ItemType.VIDEO:
+        //   break;
+      }
+    }
+  }
+
+  // --- Log and Return Script URL ---
+  const scriptUrl = script()//.getPublishedUrl();
+  Logger.log(`Random script Created: ${scriptUrl}`);
+  return JSON.stringify(scriptUrl);
+}
+
 var defaultWebsite = function (e) {
   // const Route = {};
   // Route.path = function(route, callback) {
@@ -430,6 +884,1158 @@ var funcCalc = function () {
   }
   return rndArrVals;
 };
+
+var functionFlex = function (e){
+  if (e && typeof e !== "object") {
+    e = objectOfS(["parameter"],[[
+        ["func", e],
+      ]],
+      functionRegistry.time,
+    )
+  }
+  // Determine funcTres
+  if (e && e.parameter["file"]) {
+    var funcTres = e?.parameter["file"];
+  }
+
+  // Logging
+  if (e && (e.parameter["func"] || e.parameter["file"])) {
+    Logger.log(">>> [MAIN] MAIN WEB APP CLIENT REQUEST: " + JSON.stringify(e));
+  } else {
+    Logger.log(
+      ">>> [MAIN] MAIN WEB APP No e.parameter[" +
+        e?.parameter["func"] +
+        "] " +
+        JSON.stringify(e),
+    );
+    var argsEd = testlt();
+    if (typeof globalThis["mis"] === "function") {
+      if (typeof argsEd === "string") {
+        e = objectOfS(
+          ["parameter"],
+          [
+            [
+              ["func", argsEd],
+              // ["args", argsEd],
+            ],
+          ],
+          functionRegistry.time,
+        );
+      } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
+        if (argsEd.parameters && argsEd.parameters.length > 0) {
+          e = objectOfS(
+            ["parameter"],
+            [
+              [
+                ["func", argsEd.name],
+                ["args", [...argsEd.parameters]],
+              ],
+            ],
+            functionRegistry.time,
+          );
+        } else {
+          e = objectOfS(
+            ["parameter"],
+            [
+              [
+                ["func", argsEd.name],
+                // ["args", argsEd.name],
+              ],
+            ],
+            functionRegistry.time,
+          );
+        }
+      } else {
+        console.log("Unexpected argsEd type: ", argsEd);
+        e = objectOfS(
+          ["parameter"],
+          [
+            [
+              ["func", "mis"],
+              ["args", "Invalid Entry"],
+            ],
+          ],
+          functionRegistry.time,
+        );
+      }
+      Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
+    }
+  }
+  Logger.log(
+    ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
+      functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      "\ne is !" +
+      !e +
+      ", = " +
+      JSON.stringify(e),
+  );
+
+  // Determine templateName (not directly used in the provided template, but good for context)
+  let templateName = e.parameter["func"];
+  if (e.parameter["func"] === "crmGWI") {
+    templateName = "General Work Invoice";
+  } else if (e.parameter["func"] === "crmEBI") {
+    templateName = "Employee Benefits Inquiry";
+  }
+  var funcUno = e.parameter["func"];
+
+  console.log("e.parameter['args'] before funcDos:", e.parameter["args"]);
+  var funcDos = e.parameter["args"];
+  console.log("e.parameter['args'] after funcDos:", e.parameter["args"]);
+  // console.log("funcDos:", funcDos);
+  var libFunc = funcUno || "renderFile";
+  var foobarr = funcDos || funcTres || ""; // Redundant variable
+
+  var htmlArray = [
+    `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+  ]
+    .toString()
+    .split(" ");
+  var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
+  console.log("rndHtml = " + htmlArray[rndHtmlIndex]);
+  var rndPage = htmlArray[rndHtmlIndex];
+  let htmlDosArg = rndPage; // Default value
+  let htmlTresArg = rndPage; // Default value
+  if (foobarr) {
+    if (Array.isArray(foobarr)) {
+      const firstArg = foobarr[0];
+      if (htmlArray.includes(firstArg)) {
+        var foobarr0Index = htmlArray.findIndex(function (element) {
+          return element === firstArg;
+        });
+        htmlDosArg = htmlArray[foobarr0Index];
+      }
+    } else if (htmlArray.includes(foobarr)) {
+      var foobarrIndex = htmlArray.findIndex(function (element) {
+        return element === foobarr;
+      });
+      htmlDosArg = htmlArray[foobarrIndex];
+    }
+  }
+  if (funcTres) {
+    if (Array.isArray(funcTres)) {
+      const firstArg = funcTres[0];
+      if (htmlArray.includes(firstArg)) {
+        var funcTres0Index = htmlArray.findIndex(function (element) {
+          return element === firstArg;
+        });
+        htmlTresArg = htmlArray[funcTres0Index];
+      }
+    } else if (htmlArray.includes(funcTres)) {
+      var funcTresIndex = htmlArray.findIndex(function (element) {
+        return element === funcTres;
+      });
+      htmlTresArg = htmlArray[funcTresIndex];
+    }
+  }
+  var payLoad = {}; // Initialize payload
+
+  // --- BEGIN Refactored payLoad processing ---
+  let finalAppLContent = "";
+  let iframeSrc =
+    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+  let finalFeedDivContent = "";
+
+  try {
+    let rawFuncResult = null;
+    console.log("typeof libFunc", typeof globalThis[libFunc])
+    if (typeof globalThis[libFunc] === "function") {
+      let parsedFuncArgs = [];
+
+      // Check if foobarr is already an array (from internal re-assignment by objectOfS)
+      if (Array.isArray(foobarr)) {
+        parsedFuncArgs = [foobarr]; // It's already the array we want
+      } 
+      else if (typeof foobarr === "string" && foobarr) {
+        try {
+          parsedFuncArgs = JSON.parse(foobarr);
+          if (!Array.isArray(parsedFuncArgs)) {
+            parsedFuncArgs = [parsedFuncArgs];
+          }
+        } catch (jsonError) {
+          parsedFuncArgs = [foobarr]; // Treat as a single string argument if not valid JSON
+        }
+      } 
+      else {
+        // Handle other cases for foobarr, or it might be null/undefined
+        finalArgsForFunction = [];
+      }
+      if (libFunc === "renderFile") {
+        console.log(
+          "returning ?func=" + libFunc + "&args=" + foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+              ", " +
+              {} +
+              ", " +
+              templateName ||
+            foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+        );
+        return renderFile(
+          foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex],
+          {},
+          "returning ?func=" + libFunc + "&args=" + foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+              ", " +
+              {} +
+              ", " +
+              templateName ||
+            foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+        );
+      } 
+      else {
+        try{
+          var rawFunc = globalThis["misSt"].apply(this, [[libFunc, ...parsedFuncArgs]]);
+          rawFuncResult = rawFunc.res 
+        }
+        catch {
+          rawFuncResult = globalThis[libFunc].apply(this, parsedFuncArgs);
+        }
+      }
+    } 
+    else {
+      console.error(
+        `Error: Function "${libFunc}" not found or not callable in Boilerplate.`,
+      );
+      rawFuncResult = {
+        type: "error",
+        message: `Function "${libFunc}" not found.`,
+      };
+    }
+
+    // Helper function to process any value (rawFuncResult or a nested property like .app)
+    function processContent(content) {
+      if (!content) {
+        return { type: "unknown", data: null };
+      }
+
+      // Regex for a basic HTTP/HTTPS URL validation
+      // This regex is fairly comprehensive for common URLs but can be refined if needed.
+      const urlRegex =
+        /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/[a-zA-Z0-9]+\.[^\s]{2,}|[a-zA-Z0-9]+\.[^\s]{2,})$/i;
+
+      // 1. Handle UrlFetchApp.HTTPResponse
+      if (
+        typeof content.getResponseCode === "function" &&
+        typeof content.getContentText === "function"
+      ) {
+        const contentType = content?.getHeaders()["Content-Type"] || "";
+        const responseText = content?.getContentText();
+
+        if (contentType.includes("application/json")) {
+          try {
+            return { type: "jsonData", data: JSON.parse(responseText) };
+          } catch (e) {
+            return {
+              type: "text",
+              data: `Error parsing JSON from URL fetch: ${responseText}`,
+            };
+          }
+        } else if (contentType.includes("text/html")) {
+          return { type: "html", data: responseText };
+        } else {
+          return { type: "text", data: responseText };
+        }
+      }
+      // 2. Handle Google Apps Script HtmlOutput
+      else if (typeof content.getContent === "function") {
+        return { type: "html", data: content.getContent() };
+      }
+      // 3. Handle String content (URL, JSON, HTML, or plain text)
+      else if (typeof content === "string") {
+        // --- MODIFIED: Use Regex for URL check ---
+        if (urlRegex.test(content)) {
+          return { type: "url", data: content }; // New type "url" for strings
+        }
+        // --- END MODIFIED ---
+
+        try {
+          const parsedJson = JSON.parse(content);
+          return { type: "jsonData", data: parsedJson };
+        } catch (jsonError) {
+          // Not JSON, treat as HTML or plain text
+          if (content.trim().startsWith("<") && content.trim().endsWith(">")) {
+            // More robust HTML check
+            return { type: "html", data: content };
+          } else {
+            return { type: "text", data: content };
+          }
+        }
+      }
+      // 4. Handle Generic Objects
+      else if (typeof content === "object" && content !== null) {
+        // If the object itself contains structured data you want to directly use
+        if (content.html) {
+          // If there's an explicit 'html' property
+          return { type: "html", data: content.html };
+        }
+        if (content.url && urlRegex.test(content.url)) {
+          // Use regex for object.url as well
+          return { type: "url", data: content.url };
+        }
+        // Add other specific object property checks here if needed
+        return { type: "object", data: content }; // Default for other objects
+      }
+      // 5. Default unknown
+      else {
+        return { type: "unknown", data: content };
+      }
+    }
+
+    // Process the main rawFuncResult
+    payLoad = processContent(rawFuncResult);
+
+    // If rawFuncResult was an object and it had an 'app' property,
+    // we should specifically process that 'app' property as well.
+    // This assumes that the 'app' property might override or provide the primary content.
+    if (
+      rawFuncResult &&
+      typeof rawFuncResult === "object" &&
+      rawFuncResult.app
+    ) {
+      console.log("the 'app' property:", rawFuncResult);
+      const appProcessed = processContent(rawFuncResult.app);
+      // Overwrite payLoad if 'app' property yields more specific or desired content
+      // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
+      if (
+        appProcessed.type !== "unknown" ||
+        (appProcessed.data !== null && appProcessed.data !== undefined)
+      ) {
+        payLoad = appProcessed;
+        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+        // represent something distinct from the 'app' content but should still be propagated.
+        if (rawFuncResult.link && !payLoad.link) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        // if (rawFuncResult.index && !payLoad.index) {
+        //   // Only add if payLoad doesn't already have it
+        //   payLoad.index = rawFuncResult.index;
+        // }
+        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.fStr = rawFuncResult.index.funcStr;
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dStr = rawFuncResult.index.dataStr;
+        }
+        if (rawFuncResult.index && rawFuncResult.index.url) {
+          // Only add if payLoad doesn't already have it
+          payLoad.index = rawFuncResult.index.url;
+        }
+      }
+    }
+
+    console.log("payLoad.type === ", payLoad.type);
+    console.log("payLoad.data === ", payLoad.data);
+    if (typeof payLoad.data === "object") {
+      console.log("payLoad.data", JSON.stringify(payLoad.data))
+    }
+
+    // Now, use the structured 'payLoad' to set the final content variables
+    // (This part needs adjustments to handle the new "url" type)
+    if (payLoad.type === "html") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      finalAppLContent = payLoad.data;
+      finalFeedDivContent = `URL provided: <a href="${payLoad.link}" target="_blank">${payLoad.link}</a>`;
+    } else if (payLoad.type === "url") {
+      // --- NEW: Handle "url" type directly ---
+      iframeSrc = payLoad.data; // Assign the URL to iframeSrc
+      finalAppLContent = `URL provided: <a href="${payLoad.index}" target="_blank">${payLoad.index}</a>`;
+      finalFeedDivContent = `URL provided: <a href="${payLoad.link}" target="_blank">${payLoad.link}</a>`;
+    } else if (payLoad.type === "jsonData") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      finalAppLContent = `<pre>${JSON.stringify(payLoad.data, null, 2)}</pre>`;
+      finalFeedDivContent = `URL provided: <a href="${payLoad.link}" target="_blank">${payLoad.link}</a>`;
+    } else if (payLoad.type === "text") {
+      iframeSrc = payLoad.index; // Assign iframeSrc
+      finalAppLContent = payLoad.data;
+      finalFeedDivContent = `URL provided: <a href="${payLoad.link}" target="_blank">${payLoad.link}</a>`;
+    } else if (payLoad.type === "object") {
+      // Here, if payLoad.data is an object, you need to decide how to display it.
+      // It could contain sub-properties you want to render.
+      let notApp = payLoad.data;
+      if (notApp?.html || notApp?.app) {
+        finalAppLContent = notApp?.html || notApp?.app;
+        // If the object itself contains a URL, use it for iframeSrc
+        iframeSrc = notApp?.url || iframeSrc;
+      } else if (notApp?.url) {
+        // If the object explicitly has a 'url' property
+        iframeSrc = notApp?.url;
+        finalAppLContent = `URL provided: <a href="${notApp?.index}" target="_blank">${notApp?.index}</a>`;
+        finalFeedDivContent = `URL provided: <a href="${notApp?.link}" target="_blank">${notApp?.link}</a>`;
+      } else {
+        // Default way to display a generic object: stringify it
+        iframeSrc = notApp?.index; // Assign iframeSrc
+        finalAppLContent = `<pre>${JSON.stringify(notApp?.app, null, 2)}</pre>`;
+        finalFeedDivContent = `URL provided: <a href="${notApp?.link}" target="_blank">${notApp?.link}</a>`;
+      }
+    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
+      finalAppLContent = `<div>Error: ${payLoad.message || payLoad.data || "Unknown error."}</div>`;
+      finalFeedDivContent = `Error: ${payLoad.message || payLoad.data || "Unknown error."}`;
+    }
+  } catch (error) {
+    console.error(`Error during payload processing:`, error);
+    finalAppLContent = `<div>Critical Error: ${error.message}</div>`;
+    finalFeedDivContent = `Critical Error: ${error.message}`;
+    iframeSrc = ""; // Clear iframe on critical error
+  }
+  // --- END Refactored payLoad processing ---
+
+  // var htmlArray = [
+  //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+  // ]
+  //   .toString()
+  //   .split(" ");
+  // var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
+  // console.log("rndHtml = " + htmlArray[rndHtmlIndex]);
+  // var rndPage = htmlArray[rndHtmlIndex];
+  // console.log("index:", index + "\ntres", tres);
+  // Simplify args logic:
+  // var htmlArg;
+  // index !== -1 ? (htmlArg = htmlArray[index]) : (htmlArg = htmlArray[rndHtmlIndex]);
+  // var htmlDosArg = rndPage; // Default value
+  // var htmlTresArg = rndPage; // Default value
+  // if (foobarr) {
+  //   if (Array.isArray(foobarr)) {
+  //     const firstArg = foobarr[0];
+  //     if (htmlArray.includes(firstArg)) {
+  //       var foobarr0Index = htmlArray.findIndex(function (element) {
+  //         return element === firstArg;
+  //       });
+  //       htmlDosArg = htmlArray[foobarr0Index];
+  //     }
+  //   } else if (htmlArray.includes(foobarr)) {
+  //     var foobarrIndex = htmlArray.findIndex(function (element) {
+  //       return element === foobarr;
+  //     });
+  //     htmlDosArg = htmlArray[foobarrIndex];
+  //   }
+  // }
+  // if (funcTres) {
+  //   if (Array.isArray(funcTres)) {
+  //     const firstArg = funcTres[0];
+  //     if (htmlArray.includes(firstArg)) {
+  //       var funcTres0Index = htmlArray.findIndex(function (element) {
+  //         return element === firstArg;
+  //       });
+  //       htmlTresArg = htmlArray[funcTres0Index];
+  //     }
+  //   } else if (htmlArray.includes(funcTres)) {
+  //     var funcTresIndex = htmlArray.findIndex(function (element) {
+  //       return element === funcTres;
+  //     });
+  //     htmlTresArg = htmlArray[funcTresIndex];
+  //   }
+  // }
+  console.log("e {parameter: {func: " + libFunc + "}}");
+  const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+
+  // Final renderTemplate call
+  if (typeof globalThis[libFunc] === "function") {
+    try {
+      if (libFunc === "renderFile") {
+        console.log(
+          "returning ?func=" + libFunc + "&args=" + foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+              ", " +
+              {} +
+              ", " +
+              templateName ||
+            foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+        );
+        return renderFile(
+          foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex],
+          {},
+          "returning ?func=" + libFunc + "&args=" + foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+              ", " +
+              {} +
+              ", " +
+              templateName ||
+            foobarr ||
+            (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+        );
+      }
+      // const result = globalThis[libFunc](foobarr);
+      console.log(
+        "returning renderTemplate contentApp [" +
+          libFunc +
+          "].apply(this, [" +
+          foobarr ||
+          (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+            "]), tupL " +
+            (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
+            ", e " +
+            JSON.stringify(e) +
+            " " +
+            foobarr ||
+          htmlArray[foobarr0Index] ||
+          htmlArray[foobarrIndex],
+      );
+      return renderTemplate(
+        `<!DOCTYPE html>
+          <html lang="en">
+            <head><base target="_top">
+              <meta charset="utf-8">
+              <meta name="Subscribe" content="ATL Budget Studio">
+              <meta name=viewport content="width=device-width, initial-scale=1">
+              <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+              <style>
+                body {
+                  flex-grow: 1;
+                  color:blue;
+                  text-decoration:bold;
+                  flex-flow: row wrap;
+                  grid-column: 1;
+                  grid-row: 1;
+                  text-align: center;
+                  align-content: flex-start;
+                  overflow: auto;
+                }
+              </style>
+            </head>
+            <body id="JavaScriptDoGet">
+              <div id="eObject"><input type="text" id="pageObj" value=""></div>
+              <div><?!= renBlob ?></div>
+            </body>
+          </html>
+          <script>
+            function serverSide(func, args) {
+              return new Promise((resolve, reject) => {
+                google.script.run
+                  .withSuccessHandler((result) => {
+                    resolve(result); // result will be { type: "...", data: "..." }
+                    // You would then process 'result' here to update specific parts of your current page
+                    // For example, update a div with result.data if result.type is "text" or "html"
+                    console.log("Server side call success:", result);
+                  })
+                  .withFailureHandler((error) => {
+                    reject(error);
+                    console.error("Server-side call error:", error);
+                    alert("Error during server call: " + error.message);
+                  })
+                  .runBoilerplate(func, args);
+              });
+            }
+            console.log("line 209");
+            const currentE = JSON.parse(<?= e ?>);
+            console.log("line 210");
+            const homePageUrl = <?= homePage ?>;
+            console.log("line 213");
+            console.log("Client-side: Initial doGet event object:",  currentE);
+            console.log("Client-side: Home Page URL:", homePageUrl);
+            console.log("line 215");
+            console.log(<?= aplot ?>)
+            document.addEventListener("DOMContentLoaded", eRun);
+            function eRun() {
+              console.log("line 218");
+              var objUrl = document.getElementById("pageObj");
+              console.log("line 220");
+              var objDiv = document.getElementById("eObject");
+              console.log("line 222");
+              let initialArgs = currentE.parameter["args"];
+              if (initialArgs !== undefined && initialArgs !== null) {
+                if (typeof initialArgs === 'object') {
+                  console.log("line 234: creating pretty-printed initialArgs object");
+                  objUrl.value = JSON.stringify(initialArgs, null, 0);
+                } else {
+                  console.log("line 237: falling back to initialArgs string");
+                  objUrl.value = initialArgs; // If it's a string directly
+                }
+              } else {
+                console.log("line 241: falling back to empty string");
+                objUrl.value = '[""]'; // Default if args is missing
+              }
+                objUrl.addEventListener("change", function () {
+                  try {
+                    // Parse the user's input as the new 'args' value
+                    // Allow direct strings or JSON arrays/objects
+                    let parsedE;
+                    try {
+                      parsedE = JSON.parse(this.value);
+                    } catch (jsonError) {
+                      // If it's not valid JSON, treat it as a plain string
+                      parsedE = this.value;
+                    }
+
+                    // --- MODIFICATION STARTS HERE ---
+                    // Create a *new*, reduced e object containing only func and args
+                    const updatedClientE = {
+                      parameter: {
+                        func: currentE.parameter.func, // Keep the original func
+                        args: parsedE                 // Use the new parsed args
+                      }
+                    };
+                    // --- MODIFICATION ENDS HERE ---
+                    alert("e.parameter['args'] updated. Sending back to server for re-render.");
+                    console.log("Client-side: Updated e object to send:", updatedClientE);
+                    async function handlePageUpdate() {
+                      try {
+                        // This part is still problematic if newStackContent is meant to be HTML
+                        // and it directly comes from updatedClientApp (which is the textarea value)
+                        // If updatedClientApp contains HTML, it needs to be processed to be displayable.
+                        const newHtmlContent = await serverSide(updatedClientE.parameter["func"], [updatedClientE.parameter["args"]]);
+                        alert(newHtmlContent.type)
+                        let mddr = URL.canParse(newHtmlContent.data);
+                        if (newHtmlContent && newHtmlContent.type === "html" && newHtmlContent.data) {
+                          document.open();
+                          document.write(newHtmlContent.data); // Use the data property
+                          document.close();
+                          console.log("Client-side: Page re-rendered with new content from server.");
+                        }
+                        else if (newHtmlContent && newHtmlContent.type === "object" && newHtmlContent.data) {
+                          if (newHtmlContent.data.app) {
+                            let nApp = newHtmlContent.data.app;
+                            let nddr = URL.canParse(nApp)
+                            if (nddr) {
+                              window.location.href = nApp; // New type "url" for strings
+                              console.log("Error: window.location.href = ", window.location.href)
+                            }
+                            else if (nApp.trim().startsWith("<") && nApp.trim().endsWith(">")) {
+
+                              // More robust HTML check
+                              // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
+
+                              document.open();
+                              document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
+                              document.close();
+
+                            }
+                          }
+                          else {
+                            document.open();
+                            document.write(newHtmlContent.data); // Use the data property
+                            document.close();
+                          }
+                          console.log("Client-side: Page re-rendered with new content from server.");
+                        }  
+                        else if (newHtmlContent && newHtmlContent.type === "text" && newHtmlContent.data) {
+                          if (mddr) {
+                            window.location.href = newHtmlContent.data; // New type "url" for strings
+                            console.log("Error: window.location.href = ", window.location.href)
+                          }
+                          else {
+                            document.open();
+                            document.write(newHtmlContent.data); // Use the data property
+                            document.close();
+                          }
+                          console.log("Client-side: Page re-rendered with new content from server.");
+                        } 
+                        else {
+                          document.open();
+                          document.write(newHtmlContent.data);
+                          document.close();
+                          console.log("Client-side: Page re-rendered with new content from server.");
+                        }
+                      } 
+                      catch (error) {
+                        console.error("Client-side Error during full re-render:", error);
+                        alert("Error re-rendering: " + error.message);
+                      }
+                    }
+                    handlePageUpdate()
+                  } catch (error) {
+                    alert("Error processing input. Please ensure it's valid JSON or a plain string.");
+                    console.error("Input processing error:", error);
+                  }
+                });
+            }
+          </script>`,
+        {
+          renBlob: contentApp(
+            `<!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <base target="_top">
+                <meta charset="utf-8">
+                <meta name="Subscribe" content="JavaScript webapp">
+                <meta name=viewport content="width=device-width, initial-scale=1">
+                <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+                <style>
+                  body 
+                    {
+                      flex-grow: 1;color:blue;text-decoration:bold;
+                      flex-flow: row wrap;
+                      grid-column: 1;grid-row: 1;
+                      text-align: center;
+                      align-content: flex-start;
+                      overflow: auto;
+                    };
+                </style>
+              </head>
+              <body id="JavaScript">
+                <div class="row">
+                  <div id="zeroSize"></div></div>
+                <div class="row">
+                  <div class="responsive-section">
+                    <div class="container">
+                      <label id="labSEOC">
+                        <strong></strong></label>
+                      <div class="row">
+                        <div class="col s12 card-panel amber">
+                          <div class="responsive-section">
+                            <div class="container">
+                              <div class="col s12 receipt red">
+                                <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                                  <thead></thead>
+                                  <tbody>
+                                    <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                                      <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                                        <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                                          <tbody>
+                                            <td>
+                                              <div>
+                                                <textarea id="indexBeta" spellcheck="false" rows="10" cols="50"></textarea></div><br /></td></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                <script>
+                  function clientSide(func, args) {
+                    return new Promise((resolve, reject) => {
+                      google.script.run
+                        .withSuccessHandler((result) => {
+                          resolve(result); // result will be { type: "...", data: "..." }
+                          // You would then process 'result' here to update specific parts of your current page
+                          // For example, update a div with result.data if result.type is "text" or "html"
+                          console.log("Server side call success:", result);
+                        })
+                        .withFailureHandler((error) => {
+                          reject(error);
+                          console.error("Server-side call error:", error);
+                          alert("Error during server call: " + error.message);
+                        })
+                        .runBoilerplate(func, args);
+                    });
+                  }
+                  console.log("line 367: Beginning evaluation");
+                  const homeStackUrl = JSON.stringify(<?= homePage ?>);
+                  const chUrl = document.getElementById("indexBeta");
+
+                  // alert("line 653 Inside renBlob block of serverside Runall doGet");
+
+                  console.log("Client-side: Home Page URL:", homeStackUrl);
+
+                  // console.log("line 657 Inside renBlob block of serverside Runall doGet");
+                  // Parse the input as the new value
+                  // Allow direct strings or JSON arrays/objects
+
+                  let initialArgs
+                  let currentApp
+                  let iframeSrc =
+                    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+                  let finalFeedDivContent = "";
+                  let addr = URL.canParse(<?= appL ?>);
+                  try {
+                    currentApp = JSON.parse(<?= appL ?>);
+                    if (Object.keys(currentApp).length > 0) {
+                      console.log("Processing appL", currentApp);
+                      let appRes = currentApp?.app
+                      if (appRes) {
+                        try {
+                          currentApp = JSON.parse(appRes);
+                          console.log("Processing", appRes)
+
+                          // console.log("Client-side: Initial WebApp:", appRes);
+
+                        }
+                        catch (jsonError) {
+
+                          // console.log("Error try JSON.parse(appRes) = ", typeof appRes)
+
+                          currentApp = appRes;
+                        }
+                      }
+
+                      else {
+                        // try {
+                          // currentApp = JSON.parse(<?= appL ?>);
+
+                          console.log("Error: try currentApp = ", typeof currentApp)
+
+                          // console.log("Client-side: Initial WebApp:", <?= appL ?>);
+                        // }
+                        // catch (jsonError) {
+                          // console.log("Error try JSON.parse(appL) = ", typeof <?= appL ?>)
+                          // currentApp = <?= appL ?>;
+                        // }
+                      }
+                    }
+                    else {
+                      try { 
+                          currentApp = JSON.parse(<?= etop ?>)
+                          console.log("Error try JSON.parse(e) = ", typeof <?= etop ?>)
+                      }
+                      catch (err) { 
+                          currentApp = JSON.stringify(<?= etop ?>)
+                          console.log("Error catch JSON.stringify(e) = ", typeof <?= etop ?>)
+
+                      }
+                        console.log("Processing error: invalid JSON. currentApp = ", currentApp)
+                    }
+
+                  } 
+                  catch (error) {
+                  try { 
+                      currentApp = JSON.parse(<?= appL ?>)
+                      console.log("Error try JSON.parse(appL) = ", typeof <?= appL ?>)
+                  }
+                  catch (err) { 
+                      currentApp = JSON.stringify(<?= appL ?>)
+                      console.log("Error catch JSON.stringify(appL) = ", typeof <?= appL ?>)
+
+                  }
+                    console.log("Processing error: invalid JSON. currentApp = ", currentApp)
+
+                    // If it's not valid JSON, treat it as a plain string
+                    // if (typeof currentApp.app === "object") {
+                    //   currentApp = JSON.stringify(currentApp.app);
+                    //   console.log("Client-side: Initial Object of WebApp:", JSON.stringify(currentApp.app));
+                    // }
+                    // else 
+                    // Here, if payLoad.data is an object, you need to decide how to display it.
+                    // It could contain sub-properties you want to render.
+                    // if (<?= typeof appL ?> === "object") {
+
+                        console.log("Processing object", typeof currentApp)
+
+                        // currentApp = JSON.stringify(<?= appL ?>);
+                        // console.log("Client-side: Initial Object of WebApp:", JSON.stringify(<?= appL ?>))
+
+                        try {
+                            if (currentApp?.data) {
+                              var thisApp = currentApp?.data
+                              console.log("Error: thisApp =", typeof thisApp);
+                              if (thisApp?.html || thisApp?.app || thisApp?.myVar || thisApp?.url) {
+                                currentApp = thisApp?.app || thisApp?.html || thisApp?.myVar || thisApp?.url;
+                                console.log("Error: currentApp = ", typeof currentApp);
+                              }
+                              else {
+                                currentApp = thisApp
+                              }
+                            }
+                            else if (currentApp?.app) {
+                              currentApp = currentApp?.app
+                            }
+                            else if (currentApp?.index) {
+                              currentApp = currentApp?.index
+                            }
+
+                            // else {
+                            //   currentApp = '<pre>' + currentApp + '</pre>';
+                            // }
+
+                        }
+                        catch (error) {
+                          console.error("Error: processing currentApp.data = ", error.toString())
+
+                        // try {
+                        //   if (currentApp.data && currentApp.data.html) {
+                        //     var thisHtml = currentApp.data;
+                        //   }
+                        // }
+                        // catch (error) {
+                        //   console.error("Error", error.toString())
+                        // }
+                        // try {
+                        //   if (currentApp.data && currentApp.data.url) {
+                        //     var thisUrl = currentApp.data
+                        //   }
+                        // }
+                        // catch (error) {
+                        //   console.error("Error", error.toString())
+                        // }
+                        // if (thisApp) {
+                        //   currentApp = thisApp;
+                        // } else if (thisUrl) {
+                        //   // If the object explicitly has a 'url' property
+                        //   iframeSrc = thisUrl;
+                        //   currentApp = currentApp.index;
+                        //   finalFeedDivContent = currentApp.link;
+                        // } else {
+                        //   // Default way to display a generic object: stringify it
+                        //   iframeSrc = currentApp.index; // Assign iframeSrc
+                        //   currentApp = '<pre>' + JSON.stringify(currentApp.data, null, 2) + '</pre>';
+                        //   finalFeedDivContent = currentApp.link;
+                        // }
+                    // }
+                    // else {
+                      // if (currentApp.app) {
+                      //   currentApp = currentApp.app
+                      //   console.log("Client-side: Initial String of WebApp:", currentApp.app);
+                      // }
+                      // else 
+                      // if (<?= appL ?>) {
+                      //   console.log("Processing this", <?= appL ?>)
+                      //   currentApp = <?= appL ?>
+                        // console.log("Client-side: Initial String of WebApp:", <?= appL ?>);
+                      // }
+                        }
+                    // }
+
+                  }
+                  document.addEventListener("DOMContentLoaded", runStack)
+                    function runStack() {
+
+                      // console.log("line 660 Inside _renBlob block of serverside Runall doGet _runStack(" + currentApp + ")");
+
+                      initialArgs = currentApp
+                      if (initialArgs !== undefined && initialArgs !== null) {
+
+                      // if (currentApp !== undefined && currentApp !== null) {
+                        // If trying to parse JSON on appL["app"] succeeds
+
+                        if (typeof initialArgs === 'object') {
+                          let appType = currentApp?.type || "";
+                          if (typeof currentApp?.data === "object") {
+                            var appData = JSON.stringify(currentApp?.data) || "";
+                          }
+                          else {
+                            var appData = currentApp?.data || "";
+                          }
+                          let appLink = currentApp?.link || "";
+                          let appFStr = currentApp?.fStr || "";
+                          let appDStr = currentApp?.dStr || "";
+                          let appIndex = currentApp?.index || "";
+                          let mainRen = appType + (appFStr || appDStr) + appData;
+
+                          // chUrl.value = JSON.stringify(appFStr, null, 2) || JSON.stringify(appDStr, null, 2);
+
+                          if (mainRen !== "undefined" && typeof mainRen !== "undefined" && typeof mainRen !== null && mainRen.length > 0) {
+                            chUrl.value = mainRen;
+                          }
+                          else {
+                            if (typeof currentApp === "object") {
+                              chUrl.value = JSON.stringify(currentApp);
+                            }
+                            else {
+                              chUrl.value = currentApp;
+                            }
+                          }
+                          console.log("Processing initialArgs = ", typeof initialArgs);
+                        } 
+
+                        // --- 3. if json error, handle String content (URL, JSON, HTML, or plain text)
+
+                        else if (typeof initialArgs === 'object' || typeof initialArgs === 'string') {
+                          console.log("Processing object or string", typeof initialArgs);
+
+                          // --- MODIFIED: Use Regex for URL check ---
+                          // Regex for a basic HTTP/HTTPS URL validation
+                          // This regex is fairly comprehensive for common URLs but can be refined if needed.
+                          // "^https?://(?:www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)$"
+                          // const urlRegExString = "^https?://(.+?)."
+                          // const urlRegEx = new RegExp(urlRegExString);
+                          // if (currentApp.app) {
+                          //   let addr = URL.canParse(currentApp.app);
+                          //   console.log(addr);
+                          //   console.log("line 431 inside _runStack _URL.canParse(" + currentApp.app + ")");
+                            // if (addr) {
+                          //     console.log('appL["app"] is a URL, navigating to: ' + addr);
+                          //     window.location.href = addr; // New type "url" for strings
+                          //     return
+                            // }
+                          // }
+                          // else 
+
+                          if (typeof initialArgs === 'string') {
+                            console.log("Initial args = " + initialArgs + ": : string")
+                            console.log("Error: let addr = ", addr)
+
+                            // console.log(addr);
+                            // console.log("line 431 inside _runStack _URL.canParse(" + initialArgs + ")");
+
+                            if (addr) {
+
+                              // console.log('appL is a URL, navigating to: ' + addr);
+
+                              window.location.href = <?= appL ?>; // New type "url" for strings
+
+                              // window.open(JSON.stringify(initialArgs), "_top")
+                              // const confirmation = window.confirm(
+                              //   "Click OK to continue to the destination.",
+                              // );
+                              // if (confirmation) {
+                              //   var linkFollow = document.createElement("a");
+                              //   linkFollow.href = <?= appL ?>;
+                              //   linkFollow.id = "linkFOLLOW";
+                              //   linkFollow.target = "_self";
+                              //   linkFollow.rel = "noopener noreferrer";
+                              //   document.body.appendChild(linkFollow);
+                              //   document.getElementById("linkFOLLOW").click();
+                              //   document.getElementById("linkFOLLOW").remove();
+                              // }
+
+                              console.log("Error: window.location.href = ", window.location.href)
+                              return
+
+                            }
+
+                          }
+
+                          // --- END MODIFIED ---
+
+                          try {
+                            console.log("Processing Json object", typeof initialArgs);
+
+                            // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
+                            // console.log("line 444 _runStack JSON.parse(" + initialArgs + ")");
+
+                            const parsedJson = JSON.parse(initialArgs);
+                            if (parsedJson) {
+                              
+                              // Convert the JavaScript object into a formatted JSON string
+
+                              console.log("initialArgs is a JSON object, navigating to", initialArgs);
+
+                              // const jsonString = JSON.stringify(parsedJson, null, 2); 
+
+                              document.open();
+                              document.write("<pre>" + jsonString + "</pre>"); // Wrap in <pre> for formatting
+                              document.close();
+                              
+                            }
+                          } catch (jsonError) {
+                            console.log("Processing error invalid Json", typeof initialArgs);
+
+                            // Not JSON, treat as HTML or plain text
+
+                            console.log("Processing HTML", typeof initialArgs);
+                            if (initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">")) {
+
+                              // More robust HTML check
+                              // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
+
+                              document.open();
+                              document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
+                              document.close();
+
+                              // const iframe = document.createElement("iframe");
+                              // iframe.id = "eventRes01";
+                              // iframe.title = "Dontime Life Website";
+                              // iframe.allow = "autoplay; encrypted-media";
+                              // iframe.allowFullscreen = true;
+                              // iframe.style.width = "100%";
+                              // iframe.style.height = "100%";
+                              // iframe.style.border = "none";
+                              // iframe.className = "z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large menu-img grey darken-4 z-depth-5";
+                              // document.getElementById("iframeContainer").appendChild(iframe);
+                              // const iframeDoc = iframe.contentWindow.document;
+                              // iframeDoc.open();
+                              // document.open();
+                              // document.write('<div id="iframeContainer">' + iframeDoc.write(initialArgs) + '</div>');
+                              // document.close();
+                              // iframeDoc.close();
+
+                            } 
+                            else {
+                              console.log("Processing this", typeof initialArgs);
+                              let appStr = null;
+                                if (typeof initialArgs === "object") {
+                                  appStr = JSON.stringify(initialArgs);
+                                } else {
+
+                                  // Escape special characters and wrap in quotes for the HTML template
+
+                                  appStr = JSON.stringify(initialArgs); 
+                                }
+
+                              // const fStr = JSON.stringify(currentApp.index? currentApp.index.funcStr:"null");
+                              // const dStr = JSON.stringify(currentApp.index? currentApp.index.dataStr:"null");
+                              // const indStr = fStr? fStr:dStr;
+                              // const combineStr = indStr + " " + appStr
+                              // console.log("typeof initialArgs === ", typeof initialArgs);
+
+                              chUrl.value = JSON.stringify(appStr, null, 2);
+                            }
+                          }
+                        }
+                      } else {
+                        chUrl.value = '[""]'; // Default if args is missing
+                      }
+                        chUrl.addEventListener("change", function() {
+                          try {
+
+                            // Parse the user's input as the new value
+                            // Allow direct strings or JSON arrays/objects
+
+                            let htmlApp
+                            try {
+                              htmlApp = JSON.parse(this.value);
+                            } 
+                            catch (jsonError) {
+
+                              // If it's not valid JSON, treat it as a plain string
+
+                              htmlApp = this.value
+                            }
+
+                            // --- MODIFICATION STARTS HERE ---
+                            // Create a *new*, reduced e object containing only func and args
+
+                            const updatedClientApp = htmlApp
+
+                            // --- MODIFICATION ENDS HERE ---
+
+                            alert("WebApp updated. Sending back to server for re-render.");
+                            console.log("Client-side: Updated WebApp to send:", updatedClientApp);
+                                    async function handleStackUpdate() {
+                                      try {
+                                        const newStackContent = updatedClientApp
+                                        document.open();
+                                        document.write(newStackContent);
+                                        document.close();
+                                        console.log("Client-side: Page re-rendered with new content from server.");
+                                      } 
+                                      catch (error) {
+                                        console.error("Client-side Error during full re-render:", error);
+                                        alert("Error re-rendering: " + error.message);
+                                      }
+                                    }
+                            handleStackUpdate()
+                          } catch (error) {
+                            alert("Error processing input. Please ensure it's valid JSON or a plain string.");
+                            console.error("Input processing error:", error);
+                          }
+                        });
+                    }
+                </script>
+              </body>
+            </html>`,
+            {
+              appL:
+                payLoad.type === "text" ? iframeSrc : JSON.stringify(payLoad),
+              etop: JSON.stringify(e),
+              tupL: htmlArray[funcTres0Index] || htmlArray[funcTresIndex],
+              homePage: getScriptUrl(),
+            },
+          ),
+          aplot: payLoad.type === "text" ? iframeSrc : JSON.stringify(payLoad),
+          e: JSON.stringify(e),
+          homePage: getScriptUrl(),
+        },
+
+        "returning renderTemplate contentApp [" +
+          libFunc +
+          "].apply(this, [" +
+          (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+          "]), tupL " +
+          (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
+          ", e " +
+          JSON.stringify(e) +
+          " " +
+          (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]),
+      );
+    } catch (error) {
+      console.error(`Error executing function "${libFunc}":`, error);
+      throw new Error(
+        "Error executing function: " + error.toString() + "\n" + error.stack,
+      );
+    }
+  }
+}  
 
 var getScriptUrl = function () {
   return ScriptApp.getService().getUrl();

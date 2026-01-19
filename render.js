@@ -202,7 +202,7 @@ var contentApp = function (blob, argsObject) {
     "boilerplate render: line 201\ncontentApp(blob: " +
       blob.substring(0, 9) +
       "..., argsObject: " +
-      JSON.stringify(argsObject) +
+      JSON.stringify(argsObject).substring(0,20) +
       ")\n" +
       arguments.callee.caller.name,
   );
@@ -217,7 +217,7 @@ var contentApp = function (blob, argsObject) {
       "...\nargsObject is !" +
       !argsObject +
       " = " +
-      JSON.stringify(argsObject),
+      JSON.stringify(argsObject).substring(0,20),
   );
   let api;
   try {
@@ -260,7 +260,7 @@ var contentApp = function (blob, argsObject) {
     return tmp
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .getContent();
   } catch (error) {
     console.log("error in contentApp: " + error);
@@ -1148,7 +1148,7 @@ var renderFile = function (file, argsObject, title) {
                     </p>
                     </div>
                     <br />
-                    <div>${tmp.evaluate().getContent()}</div>
+                    <div><?!= renTemp ?></div>
                   </td>
                 </tbody>
               </table>
@@ -1357,14 +1357,15 @@ var renderFile = function (file, argsObject, title) {
               }
             })();
           },
+        renTemp: tmp.evaluate().getContent()
         },
       );
       return (
-        HtmlService.createTemplate(html) //tmp
-          .evaluate()
+        HtmlService.createHtmlOutput(html) //tmp
+          // .evaluate()
           .setTitle(title)
           // .append(html)
-          .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
       );
     } else {
@@ -1381,7 +1382,7 @@ var renderFile = function (file, argsObject, title) {
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
     "boilerplate render: line 201\nrenderTemplate(blob: " +
-      blob.substring(0, 9) +
+      blob && blob.length > 9? blob?.substring(0, 9):"" +
       "..., argsObject: " +
       JSON.stringify(argsObject) +
       ", title: " +
@@ -1401,9 +1402,9 @@ var renderTemplate = function (blob, argsObject, title) {
       return "Error in renderTemplate tmp" + error;
     }
   }
-  var funcCheck = appList();
-  var css = builtStyling();
-  var schedule = dateTime(new Date());
+  // var funcCheck = appList();
+  // var css = builtStyling();
+  // var schedule = dateTime(new Date());
   // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
   try {
     var html = contentApp(
@@ -1657,7 +1658,7 @@ var renderTemplate = function (blob, argsObject, title) {
                     <br />
                     </p>
                     </p>
-                    <div>${tmp.evaluate().getContent()}</div>
+                    <div><?!= renTemp ?></div>
                     </div>
                     <br />
                   </td>
@@ -1869,21 +1870,22 @@ var renderTemplate = function (blob, argsObject, title) {
             }
           })();
         },
+        renTemp: tmp.evaluate().getContent()
       },
     );
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error rendering template:", error, error.stack);
     throw new Error(
       "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,
     );
   }
   return (
-    HtmlService.createTemplate(html) //tmp
-      .evaluate()
+    HtmlService.createHtmlOutput(html) //tmp
       .setTitle(title)
       // .append(html)
+      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
   );
 }; // or throw error.
 

@@ -288,7 +288,7 @@ var stampRowItems = function (e) {
 };
 
 var stampRowRecieve = function (e) {
-  if (e) {
+  if (e && typeof e === "object") {
     var col = e.range.getColumn();
     var row = e.range.getRow();
     var startRow = 2;

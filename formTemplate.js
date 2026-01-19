@@ -222,7 +222,9 @@ function createRandomForm() {
           for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
             // 2-5 choices
             cbChoices.push(
-              CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
+              cbItem.createChoice(
+                CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
+              ),
             );
           }
           cbItem.setChoices(cbChoices);
@@ -1090,12 +1092,19 @@ var dtlsSomeFunction = function (e) {
           form.addPageBreakItem().setTitle([cokey].join(""));
           form
             .addSectionHeaderItem()
-            .setTitle("https://youtube.com/watch?v=" + d);
-          form
-            .addVideoItem()
-            .setAlignment(FormApp.Alignment.CENTER)
-            .setWidth(612)
-            .setVideoUrl("https://youtube.com/watch?v=" + d ? d : "");
+            .setTitle("https://youtube.com/watch?v=" + d[0]);
+            if (d) {
+              try {
+                form
+                  .addVideoItem()
+                  .setAlignment(FormApp.Alignment.CENTER)
+                  .setWidth(612)
+                  .setVideoUrl("https://youtube.com/watch?v=" + d[0])
+              }
+              catch {
+                console.warn("Video could not be enbedded")
+              }
+            }
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000

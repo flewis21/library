@@ -44,8 +44,12 @@ function createNewRecord() {
   const idCell = formWS.getRange("C3");
   idCell.setValue(nextID);
   nextIDCell.setValue(nextID + 1);
-  spreadSheet().toast("New record Created", "id: " + nextID);
-  return authLogic(idCell.getValue() + 1 === nextIDCell.getValue())
+  let ssToast = spreadSheet()
+  if (ssToast !== null) {
+    ssToast.toast("New record Created", "id: " + nextID);
+  }
+  var theVerdict = authLogic(idCell.getValue() + 1 === nextIDCell.getValue())
+  return theVerdict
     ? (function () {
         const searchCell = formWS.getRange("C6");
         fieldRange.map((f) => formWS.getRange(f).clearContent());

@@ -712,6 +712,14 @@ var crmGWI = function (fx) {
         event.preventDefault();
         var formData = {};
         for (var i = 0; i < form.elements.length; i++) {
+          var element = form.elements[i];
+          // let value = formData.get[element.name];
+          // console.log("element", value)
+          // if (value) {
+          //   value = value.replace(/"/g, "");
+          // }
+          // formData.set(element.name, value);
+          console.log("element", element);
           formData[element.name] = element.value;}
       // Send data to Google Apps Script server-side function
       serverside("workEd", [JSON.stringify(formData)])
@@ -1165,11 +1173,12 @@ function workEd(ed) {
   var colArray = [];
   const keys = Object.keys(formData);
   keys.forEach(function (key) {
-    console.log(key);
+    console.log("Object.keys(formData)", key);
     var cleanKey = key.substring(1, key.length - 1);
     colArray.push(JSON.stringify(cleanKey));
   });
   for (var key in formData) {
+    console.log("formData object key", key);
     flatArray.push(formData[key]);
   }
   var sicSliceArray = flatArray.slice(1);
@@ -1177,7 +1186,7 @@ function workEd(ed) {
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
   var sheetName = "General Work Invoice";
   var numCols = colArray.length;
-  return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, start)
+  return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, functionRegistry.time)
     .myFileX;
 }
 

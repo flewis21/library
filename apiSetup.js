@@ -29,10 +29,20 @@ function apiSetupActiveSheet() {
 }
 
 function apiSetup() {
-  var wsId = ssId();
+  var wsId = activeSsId();
   var cprops = PropertiesService.getScriptProperties();
-  var scriptKey = cprops.setProperty("key", wsId);
-  return scriptKey;
+  if (wsId !== "undefined") {
+    var scriptKey = cprops.setProperty("key", wsId);
+    return scriptKey;
+  }
+  else {
+    try {
+      return scriptKey;
+    }
+    catch (error) {
+      return error.stack
+    }
+  }
 }
 
 function apiSetupActive() {

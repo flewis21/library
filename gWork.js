@@ -1,6 +1,6 @@
 var allTime = function (rndKey, arrD, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -8,7 +8,7 @@ var allTime = function (rndKey, arrD, time) {
       ", = " +
       !rndKey +
       "\n!" +
-      arrD +
+      [arrD].toString().substring(0,20) +
       ", = " +
       !arrD +
       "\n!" +
@@ -25,7 +25,7 @@ var allTime = function (rndKey, arrD, time) {
       "allTime: \nvar " + uniqueKey + " = randomSubstance(" + 0,
       4,
       null,
-      arrD,
+      [arrD].toString().substring(0,20),
       time + ").myNewArr",
     );
     var uniCoArr = [uniqueKey].join("").split(" ");
@@ -119,7 +119,7 @@ var allTime = function (rndKey, arrD, time) {
 
 var covArrays = function (object, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nobject is !" +
@@ -144,7 +144,7 @@ var covArrays = function (object, time) {
 
 var covObjects = function (rows, headings, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nrows is !" +
@@ -200,7 +200,7 @@ var itemCalc = function () {
 
 var needUtility = function (rndClient, arrD, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -208,7 +208,7 @@ var needUtility = function (rndClient, arrD, time) {
       ", = " +
       !rndClient +
       "\n!" +
-      arrD +
+      [arrD].toString().substring(0,20) +
       ", = " +
       !arrD +
       "\n!" +
@@ -258,7 +258,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
-            arrD,
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
@@ -267,7 +267,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
-            arrD,
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         }
@@ -282,7 +282,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
-            arrD,
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
@@ -291,7 +291,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
-            arrD,
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         }
@@ -300,7 +300,7 @@ var needUtility = function (rndClient, arrD, time) {
       var coName = allTime(null, arrD, time);
       console.log(
         "needUtility: \nvar " + coName + " = allTime(" + null,
-        arrD,
+        [arrD].toString().substring(0,20),
         time + ")",
       );
     }
@@ -308,7 +308,7 @@ var needUtility = function (rndClient, arrD, time) {
     var coName = allTime(null, arrD, time);
     console.log(
       "needUtility: \nvar " + coName + " = allTime(" + null,
-      arrD,
+      [arrD].toString().substring(0,20),
       time + ")",
     );
   }
@@ -331,7 +331,7 @@ var needUtility = function (rndClient, arrD, time) {
 
 var randomSubstance = function (index, loopLength, importedData, arrD, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nindex is !" +
@@ -349,7 +349,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\narrD is !" +
       !arrD +
       ", = " +
-      arrD +
+      [arrD].toString().substring(0,20) +
       "\ntime is !" +
       !time +
       ", = " +
@@ -407,9 +407,9 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\nImported Data: " +
       importedData +
       "\nArray Data: " +
-      arrD +
+      [arrD].toString().substring(0,20) +
       "\nTime: " +
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
       " )",
   );
   if (newArr) {
@@ -431,7 +431,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
 
 var seoSheet = function (searchString, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -440,14 +440,14 @@ var seoSheet = function (searchString, time) {
       !searchString,
   );
   if (typeof time === "undefined") {
-    time = functionRegistry.time;
+    var time = functionRegistry.time;
   }
   if (typeof searchString === "undefined") {
     var searchString = "sports medicine";
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\nseoSheet: \nvar " +
       uniqueSeo +
       " = seoTwitter(" +
@@ -628,7 +628,7 @@ var seoSheet = function (searchString, time) {
   if (stringSplit) {
     var testString = testData([stringSplit], time).testArray;
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nseoSheet: \nvar " +
         testString +
         " = " +
@@ -637,7 +637,7 @@ var seoSheet = function (searchString, time) {
   } else {
     var testString = testData([searchString], time).testArray;
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nseoSheet: \nvar " +
         testString +
         " = " +
@@ -647,7 +647,7 @@ var seoSheet = function (searchString, time) {
   var lowerCaseS = [];
   if (lowerCaseS.indexOf(testString) === -1) {
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nseoSheet: \nlowerCaseS.indexOf(" +
         testString +
         ") === -1: " +
@@ -666,7 +666,7 @@ var seoSheet = function (searchString, time) {
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[0][i] !== "undefined") {
           console.log(
-            functionRegistry.time +
+            formatTime(functionRegistry.time) +
               "\nseoSheet: \ntypeof " +
               lowerCaseS[0][i] +
               " !== undefined: " +
@@ -675,7 +675,7 @@ var seoSheet = function (searchString, time) {
           var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             console.log(
-              functionRegistry.time +
+              formatTime(functionRegistry.time) +
                 "\nseoSheet: \nlowerCaseResearch.includes(" +
                 lowerCaseSearchString +
                 "): " +

@@ -76,7 +76,7 @@ const functionRegistry = {
     }
   },
   getFolderList: function () {
-    functionRegistry.gTree();
+    // functionRegistry.gTree();
     return this.folderTree;
   },
 
@@ -652,7 +652,7 @@ globalThis.arrDRnd = function () {
 //     return freqArray
 // })();
 globalThis.searchString = function () {
-  console.log(functionRegistry.time + "\n" + arguments.callee.caller.name);
+  console.log(formatTime(functionRegistry.time) + "\nBoilerplate autoParams line 654\nsearchString()\n" + arguments.callee.caller.name);
   var arrDRnd = globalThis.arrDRnd();
   var arrD = globalThis.arrD();
   var newArr = [];

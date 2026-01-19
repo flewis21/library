@@ -1,6 +1,6 @@
 var driveManager = function (strNw, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nstrNw is !" +
@@ -8,9 +8,9 @@ var driveManager = function (strNw, time) {
       ", = " +
       strNw +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
 
   console.log(
@@ -241,7 +241,24 @@ var driveManager = function (strNw, time) {
 // };
 var matchManager = function (folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
-  var arn = [narrow || testlt()].toString().toLowerCase();
+  console.log(
+    formatTime(functionRegistry.time) +
+      "\n" +
+      arguments.callee.name +
+      "\nfolderX is !" +
+      !folderX +
+      ", = " +
+      folderX +
+      "\nnarrow is !" +
+      !narrow +
+      ", = " +
+      narrow +
+      "\ntime is !" +
+      !time +
+      ", = " +
+      time,
+  );
+  var arn = [narrow || testlt().name].toString().toLowerCase();
   var xFolder = [];
   var appTree = [],
     pngTree = [],
@@ -379,7 +396,7 @@ var matchManager = function (folderX, narrow, time) {
 
 var folderManager = function (folderX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfolderX is !" +
@@ -405,7 +422,7 @@ var folderManager = function (folderX, time) {
 
   if (folderX) {
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         ":\nDeclaring match = folderMatch(" +
@@ -434,7 +451,7 @@ var fileTypeManager = function (fileType) {
 };
 var formsUrls = function (fileX, folderX, time) {
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -446,13 +463,13 @@ var formsUrls = function (fileX, folderX, time) {
       ", = " +
       folderX +
       "\ntime is !" +
-      !functionRegistry.time +
+      !time +
       ", = " +
-      functionRegistry.time,
+      time,
   );
   if ([fileX].join("").length > 0) {
     console.log(
-      functionRegistry.time +
+      formatTime(functionRegistry.time) +
         "\nformUrls: \nDeclaring search = [" +
         fileX +
         "].join(" +
@@ -469,7 +486,7 @@ var formsUrls = function (fileX, folderX, time) {
     try {
       var dataTree = [];
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\nformUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
           folderX +
           ").next()",
@@ -500,7 +517,7 @@ var formsUrls = function (fileX, folderX, time) {
       return filed;
     } catch (err) {
       console.log(
-        functionRegistry.time +
+        formatTime(functionRegistry.time) +
           "\n" +
           arguments.callee.name +
           "\nerr is !" +

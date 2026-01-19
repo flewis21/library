@@ -171,11 +171,11 @@ var rndChoice = function (game) {
   let halfpenny;
   // infinitum.map((fin) => {
   coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
-  console.log(coin);
+  // console.log(coin);
   penny = Math.floor(Math.random() * Math.floor(coin));
-  console.log(penny);
+  // console.log(penny);
   halfpenny = rndWinner([penny, coin]);
-  console.log(halfpenny);
+  // console.log(halfpenny);
   if (halfpenny["heads"] !== coin) {
     trial.push({
       tails: Math.floor((penny + coin) / 2),
@@ -198,9 +198,9 @@ var rndChoice = function (game) {
   console.log("coinTail !== coinHead: " + coinTail !== coinHead);
   while (coinTail !== coinHead) {
     coin = infinitum[Math.floor(Math.random() * Math.floor(infinitum.length))];
-    console.log(coin);
+    // console.log(coin);
     penny = Math.floor(Math.random() * Math.floor(coin));
-    console.log(penny);
+    // console.log(penny);
     if (halfpenny["heads"] === coin) {
       trial.push({
         heads: Math.floor((penny + coin) / 2),

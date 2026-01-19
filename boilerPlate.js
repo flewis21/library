@@ -373,11 +373,13 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   );
   if (splitXContent) {
     var json = splitXContent;
-    var pathArray = splitXXpath.split(splitXDelimiter);
-    console.log(pathArray);
-    for (var i = 0; i < pathArray.length; i++) {
-      json = json[pathArray[i]];
-      console.log(json);
+    if (splitXXpath && splitXDelimiter) {
+      var pathArray = splitXXpath.split(splitXDelimiter);
+      console.log(pathArray);
+      for (var i = 0; i < pathArray.length; i++) {
+        json = json[pathArray[i]];
+        console.log(json);
+      }
     }
   }
   if (typeof json === "undefined") {

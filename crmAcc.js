@@ -29,7 +29,16 @@ function finEd(ed) {
       convertToObjects([[testlt()]], ["name"], start),
     )[0];
   } else {
-    var formData = JSON.parse(ed);
+    for (var key in ed) {
+      if (ed[key]) {
+        var formData = JSON.parse(ed);
+      }
+      else {
+        var formData = JSON.parse(
+          convertToObjects([[testlt()]], ["name"], start),
+        )[0];
+      }
+    }
   }
   // Get form data from the request
   var arrayData = covArrays(formData);

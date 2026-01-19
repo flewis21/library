@@ -64,7 +64,7 @@ var dtlsPro = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = functionRegistry.maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -123,7 +123,7 @@ var dtlsPro = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = functionRegistry.maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -227,7 +227,7 @@ var portBing = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - functionRegistry.time;
-              var timeToExecute = functionRegistry.maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -287,7 +287,7 @@ var portBing = function (e) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - functionRegistry.time;
-              var timeToExecute = functionRegistry.maxTime - elaspeTime;
+              var timeToExecute = functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -461,7 +461,7 @@ var dtlsBridge = function (func, time) {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - functionRegistry.time;
-            var timeToExecute = maxTime - elaspeTime;
+            var timeToExecute = functionRegistry.timeLeftToExecute;
             form.addPageBreakItem().setTitle([formName].join(""));
             form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
             if (
@@ -658,7 +658,7 @@ var dtlsMain = function (file) {
 // if ([rndKey].join("").length > 1){ //     var timeKey = [rndKey].join("").split(" ");};return console.log(myTitleArray);var myCikArray = [];while (myCikArray.length < 1) {  if (typeof rndKey === "undefined") {var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];var uniqueCikArray = sheetCalc("A2:A");myCikArray = uniqueCikArray.filter((cik) => {return cik.includes(matches.toLowerCase())});return console.log(myCikArray)
 // if ([rndKey].join("").length > 1){var timeKey = [rndKey].join("").split(" ");}}}
 // if (typeof rndKey === "undefined" ){};return console.log(sheetCalc());return console.log(randomCik)
-// else if (JSON.stringify(ac.toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {matches.push(ac)};return console.log(uniqueNum);[randomKey][0]["title"];[randomKey][0]["ticker"];randomKey[randomKey][0]["cik_str"];while (randomCik < 99999 || randomCik > 999999999) {randomCik = randomKey};return console.log(cikUrl);var randomPlaylist = idArray;for (var i = 0;i<idArray.length;i++) {var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));randomPlaylist.push(idArray[randomVidKey])}return misBing;var func = "proMediaSnip";var timeToExecute = maxTime - elaspeTime;console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime);form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
+// else if (JSON.stringify(ac.toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {matches.push(ac)};return console.log(uniqueNum);[randomKey][0]["title"];[randomKey][0]["ticker"];randomKey[randomKey][0]["cik_str"];while (randomCik < 99999 || randomCik > 999999999) {randomCik = randomKey};return console.log(cikUrl);var randomPlaylist = idArray;for (var i = 0;i<idArray.length;i++) {var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));randomPlaylist.push(idArray[randomVidKey])}return misBing;var func = "proMediaSnip";var timeToExecute = functionRegistry,timeToExecute;console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime);form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
 // if (timeToExecute <= 5 * 60 * 1000 && timeToExecute >= 4.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")}
 //if (timeToExecute <= 4 * 60 * 1000 && timeToExecute >= 3.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")}
 //if (timeToExecute <= 3 * 60 * 1000 && timeToExecute >= 2.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")}

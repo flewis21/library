@@ -68,10 +68,12 @@ function needPastTime(searchString) {
   );
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var searchString = globalThis.searchString().myNewArr;
+      var noSearch = globalThis.searchString().myNewArr;
+      console.log("Nothing to search. Falling back to random string.", noSearch)
+      var searchString = noSearch;
     }
-    const data = UrlFetchApp.fetch(
-      `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`,
+    var searchLink = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    const data = UrlFetchApp.fetch(searchLink,
       { muteHTTPExceptions: true },
     );
     const videoSearch = data.getContentText();
@@ -225,7 +227,7 @@ function needPastTime(searchString) {
       var rndKind = popKind.split(",");
 
       //  console.log(uniqueVid)
-      return { playList: rndRes.sort((a, b) => a - b) };
+      return { playList: rndRes.sort((a, b) => a - b), hardUrl: searchLink };
     }
   }
 }
