@@ -34,13 +34,11 @@ function apiSetup() {
   if (wsId !== "undefined") {
     var scriptKey = cprops.setProperty("key", wsId);
     return scriptKey;
-  }
-  else {
+  } else {
     try {
       return scriptKey;
-    }
-    catch (error) {
-      return error.stack
+    } catch (error) {
+      return error.stack;
     }
   }
 }

@@ -652,7 +652,11 @@ globalThis.arrDRnd = function () {
 //     return freqArray
 // })();
 globalThis.searchString = function () {
-  console.log(formatTime(functionRegistry.time) + "\nBoilerplate autoParams line 654\nsearchString()\n" + arguments.callee.caller.name);
+  console.log(
+    formatTime(functionRegistry.time) +
+      "\nBoilerplate autoParams line 654\nsearchString()\n" +
+      arguments.callee.caller.name,
+  );
   var arrDRnd = globalThis.arrDRnd();
   var arrD = globalThis.arrD();
   var newArr = [];

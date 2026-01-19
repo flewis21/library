@@ -58,7 +58,7 @@ var crmT = function (func) {
   if (Array.isArray(func)) {
     lowCapFunc = func.join("").toLowerCase().split(",");
   } else if (typeof func === "string" && func) {
-      lowCapFunc = func.toLowerCase();
+    lowCapFunc = func.toLowerCase();
   }
   console.log(
     functionRegistry.time +
@@ -75,7 +75,7 @@ var crmT = function (func) {
   } else if (typeof lowCapFunc === "string" && lowCapFunc) {
     funFirst = lowCapApp.indexOf(lowCapFunc);
   }
-  console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst)
+  console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst);
   return funFirst;
 };
 
@@ -1614,7 +1614,7 @@ var misSt = function (func, someArgs) {
   let holdResolvedArgsX;
 
   if (argsX.length > 0) {
-    console.log("Check if there are functions to process", argsX)
+    console.log("Check if there are functions to process", argsX);
     // Check if there are functions to process
     var allErrors = {};
     var fParams = gsFParams(); // Assuming gsFParams is globally accessible
@@ -2096,7 +2096,7 @@ var misSt = function (func, someArgs) {
                 declaredParamName,
               )
             ) {
-              var nameArray = ["tunPlay", "searchString", "rndKey", "search"]
+              var nameArray = ["tunPlay", "searchString", "rndKey", "search"];
               var rndCoIndex = Math.floor(
                 Math.random() * Math.floor(globalThis.uniqueCoArray().length),
               );
@@ -2106,7 +2106,9 @@ var misSt = function (func, someArgs) {
                 //   ? userProvidedValue
                 //   :
                 tiParam;
-              resolvedArgs.push(args[nameArray[nameArray.indexOf(declaredParamName)]]);
+              resolvedArgs.push(
+                args[nameArray[nameArray.indexOf(declaredParamName)]],
+              );
             } else if (declaredParamName === "stringArray") {
               args["stringArray"] =
                 // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2269,7 +2271,10 @@ var misSt = function (func, someArgs) {
 
 var paramVals = function (funcInfo) {
   console.log(
-    "boilerplate Help : line 2267\nparamVals(funcInfo: " + funcInfo +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2267\nparamVals(funcInfo: " +
+      funcInfo +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
@@ -2638,7 +2643,10 @@ var resolveParams = function (func, someArgs) {
 
 var seoCapital = function (url) {
   console.log(
-    "boilerplate Help : line 2635\nseoCapital(url: " + url +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2635\nseoCapital(url: " +
+      url +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
@@ -2792,12 +2800,11 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
-    items = [{ "Description": searchString }];
+    items = [{ Description: searchString }];
   }
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString 
-  = items[rndItenIndex]["Description"]
+  var searchString = items[rndItenIndex]["Description"]
     .split(" ")
     .sort((a, b) => {
       const priorityA = getZuluFreqPriority(a.toLowerCase());
@@ -3091,7 +3098,12 @@ var vidFactor = function (data, time) {
 };
 
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate Help : line 3087\n(tunPlay:" + tunPlay + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate Help : line 3087\n(tunPlay:" +
+      tunPlay +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +

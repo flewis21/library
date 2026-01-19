@@ -1188,7 +1188,7 @@ var fileFold = function (folderX, fileX, time) {
     }
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
     var tree = pyFolder.getFiles();
-    var nameTree = tree.hasNext()
+    var nameTree = tree.hasNext();
     // console.log(folderX + "\n" + typeof folderX)
     // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
