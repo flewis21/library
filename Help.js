@@ -58,7 +58,7 @@ var crmT = function (func) {
   if (Array.isArray(func)) {
     lowCapFunc = func.join("").toLowerCase().split(",");
   } else if (typeof func === "string" && func) {
-      lowCapFunc = func.toLowerCase();
+    lowCapFunc = func.toLowerCase();
   }
   // console.log(
   //   functionRegistry.time +
@@ -206,8 +206,9 @@ var mis = function (text, maxRetries = 3) {
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
     while (!supFunc.func) {
-      var funcSup = functionRegistry.fileList
-      var rndSup = funcSup[Math.floor(Math.random() * (Math.floor(funcSup.length)))]
+      var funcSup = functionRegistry.fileList;
+      var rndSup =
+        funcSup[Math.floor(Math.random() * Math.floor(funcSup.length))];
       supFunc = misSt(rndSup);
     }
     if (supFunc && typeof supFunc === "object") {
@@ -1593,11 +1594,13 @@ var misSt = function (func, someArgs) {
   // var funcDos = decodeURIComponent(someArgs);
   var trueFunc = isTruthy(func);
   var trueSomeArgs = isTruthy(someArgs);
-  var funcUno =  trueFunc? decodeURIComponent(func) : functionRegistry.paramsList;
-  var funcDos = trueSomeArgs? decodeURIComponent(someArgs) : trueSomeArgs;
+  var funcUno = trueFunc
+    ? decodeURIComponent(func)
+    : functionRegistry.paramsList;
+  var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = randNum; // Assuming randNum is globally accessible
 
-  if (funcUno || funcDos) {    
+  if (funcUno || funcDos) {
     var argsX = []; // Holds function names found
     var initialContent = []; // Renamed to clearly indicate initial, raw arguments
 
@@ -1612,44 +1615,38 @@ var misSt = function (func, someArgs) {
     var arrDos = isTruthy(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
-    }
-    else 
-    if (arrUno && !arrDos) {
+    } else if (arrUno && !arrDos) {
       var keys = Object.values(func);
-    }
-    else 
-    if (!arrUno && arrDos) {
+    } else if (!arrUno && arrDos) {
       var keys = [func].concat(someArgs);
-    }
-    else 
-    if (!arrUno && !arrDos) {
+    } else if (!arrUno && !arrDos) {
       var keys = [func];
     }
 
     keys.forEach((pro) => {
-      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro]
+      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
       let keysArrArr = isTruthy(Array.isArray(pro));
-      if (keysArrArr) { 
+      if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
           realItem = isTruthy(subParam);
           if (realItem) {
-            keyProParams = typeof subParam === "object" || Array.isArray(subParam)? crmT(subParam[proIndex]) : crmT(subParam);
+            keyProParams =
+              typeof subParam === "object" || Array.isArray(subParam)
+                ? crmT(subParam[proIndex])
+                : crmT(subParam);
             if (keyProParams >= 0) {
               funcLimit.push(gsFiles()[keyProParams]);
-            } 
-            else {
+            } else {
               // keyProParams = ;
               if (typeof subParam === "object") {
                 paramLimit.push(subParam);
-              }
-              else if (Array.isArray(subParam)) {
-                paramLimit.push(subParam[proIndex])
-              }
-              else {
+              } else if (Array.isArray(subParam)) {
+                paramLimit.push(subParam[proIndex]);
+              } else {
                 paramLimit.push(subParam);
               }
             }
@@ -1657,22 +1654,25 @@ var misSt = function (func, someArgs) {
         });
         if (funcLimit.length > 0) {
           argsX.push(funcLimit);
-        };
+        }
         if (paramLimit.length > 0) {
           content.push(paramLimit);
-        };
-      }
-      else {
+        }
+      } else {
         realItem = isTruthy(pro);
-        if (realItem) { 
+        if (realItem) {
           for (var key in keyPro) {
-            keyProParams = typeof pro === "object" || Array.isArray(pro)? crmT(pro[key]) : crmT(pro);
+            keyProParams =
+              typeof pro === "object" || Array.isArray(pro)
+                ? crmT(pro[key])
+                : crmT(pro);
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
-            } 
-            else {
+            } else {
               // keyProParams = ;
-              content.push(typeof pro === "object" || Array.isArray(pro)? pro[key] : pro);
+              content.push(
+                typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
+              );
             }
           }
         }
@@ -1682,7 +1682,7 @@ var misSt = function (func, someArgs) {
     let holdResolvedArgsX;
 
     if (argsX.length > 0) {
-      console.log("Check if there are functions to process", argsX)
+      console.log("Check if there are functions to process", argsX);
       // Check if there are functions to process
       var allErrors = {};
       var fParams = gsFParams(); // Assuming gsFParams is globally accessible
@@ -1690,7 +1690,9 @@ var misSt = function (func, someArgs) {
 
       argsX.forEach((result) => {
         // 'result' is the function name (e.g., 'renderFile')
-        console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
+        console.log(
+          "--- Inside argsX.forEach loop, BEFORE any other logic ---",
+        );
         console.log('Current "result" (function name):', result);
         console.log(
           'Value of "initialContent" at start of this iteration:',
@@ -1831,7 +1833,10 @@ var misSt = function (func, someArgs) {
           });
 
           console.log(
-            "Ordered arguments for " + result + ": " + orderedArgsForCurrentFunc,
+            "Ordered arguments for " +
+              result +
+              ": " +
+              orderedArgsForCurrentFunc,
           );
 
           // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
@@ -1920,7 +1925,10 @@ var misSt = function (func, someArgs) {
                 //   payLoad = "Function not found for data generation.";
                 // }
 
-                args[declaredParamName] = { message: payLoad, timestamp: new Date() };
+                args[declaredParamName] = {
+                  message: payLoad,
+                  timestamp: new Date(),
+                };
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "func") {
@@ -2065,7 +2073,10 @@ var misSt = function (func, someArgs) {
                   }
                 }
                 args[declaredParamName] = generatedUrl; // Assign the generated URL (or null if not found)
-                console.log("DEBUG: Final epaAUrl for args:", args[declaredParamName]);
+                console.log(
+                  "DEBUG: Final epaAUrl for args:",
+                  args[declaredParamName],
+                );
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
@@ -2151,7 +2162,8 @@ var misSt = function (func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "itemName") {
                 var rndItemIndex = Math.floor(
-                  Math.random() * Math.floor(globalThis.uniqueItemArray().length),
+                  Math.random() *
+                    Math.floor(globalThis.uniqueItemArray().length),
                 );
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2164,7 +2176,7 @@ var misSt = function (func, someArgs) {
                   declaredParamName,
                 )
               ) {
-                var nameArray = ["tunPlay", "searchString", "rndKey", "search"]
+                var nameArray = ["tunPlay", "searchString", "rndKey", "search"];
                 var rndCoIndex = Math.floor(
                   Math.random() * Math.floor(globalThis.uniqueCoArray().length),
                 );
@@ -2174,7 +2186,9 @@ var misSt = function (func, someArgs) {
                   //   ? userProvidedValue
                   //   :
                   tiParam;
-                resolvedArgs.push(args[nameArray[nameArray.indexOf(declaredParamName)]]);
+                resolvedArgs.push(
+                  args[nameArray[nameArray.indexOf(declaredParamName)]],
+                );
               } else if (declaredParamName === "stringArray") {
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2194,7 +2208,10 @@ var misSt = function (func, someArgs) {
               }
             } else {
               // Generic handler for other declared parameters not covered by specific logic
-              if (userProvidedValue !== null && userProvidedValue !== undefined) {
+              if (
+                userProvidedValue !== null &&
+                userProvidedValue !== undefined
+              ) {
                 args[declaredParamName] = userProvidedValue;
               } else {
                 missingParams.push(declaredParamName);
@@ -2233,8 +2250,7 @@ var misSt = function (func, someArgs) {
       if (errorKeys.length > 0) {
         return allErrors;
       }
-    } 
-    else {
+    } else {
       console.log("No functions found to call in argsX.");
     }
     console.log(
@@ -2274,20 +2290,17 @@ var misSt = function (func, someArgs) {
           console.log(
             `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
           );
-        } 
-        catch (e) {
+        } catch (e) {
           console.error(
             `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
           );
           finalResultData = `Error calling function: ${e.toString()}`;
         }
-      } 
-      else {
+      } else {
         console.error("Function not found:", funcToCall);
         finalResultData = `Function not found: ${funcToCall}`;
       }
-    } 
-    else {
+    } else {
       // Multiple functions in argsX
       finalResultData = [];
       argsX.forEach((funcName, index) => {
@@ -2342,7 +2355,10 @@ var misSt = function (func, someArgs) {
 
 var paramVals = function (funcInfo) {
   console.log(
-    "boilerplate Help : line 2267\nparamVals(funcInfo: " + funcInfo +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2267\nparamVals(funcInfo: " +
+      funcInfo +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
@@ -2369,8 +2385,10 @@ var resolveParams = function (func, someArgs) {
   );
   var trueFunc = isTruthy(func);
   var trueSomeArgs = isTruthy(someArgs);
-  var funcUno =  trueFunc? decodeURIComponent(func) : functionRegistry.paramsList;
-  var funcDos = trueSomeArgs? decodeURIComponent(someArgs) : trueSomeArgs;
+  var funcUno = trueFunc
+    ? decodeURIComponent(func)
+    : functionRegistry.paramsList;
+  var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
   // var numVarRnd = randNum(
   //   arguments.callee.caller.name || arguments.callee.name,
   // );
@@ -2381,43 +2399,37 @@ var resolveParams = function (func, someArgs) {
     var arrDos = isTruthy(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
-    }
-    else 
-    if (arrUno && !arrDos) {
+    } else if (arrUno && !arrDos) {
       var keys = Object.values(func);
-    }
-    else 
-    if (!arrUno && arrDos) {
+    } else if (!arrUno && arrDos) {
       var keys = [func].concat(someArgs);
-    }
-    else 
-    if (!arrUno && !arrDos) {
+    } else if (!arrUno && !arrDos) {
       var keys = [func];
     }
     keys.forEach((pro) => {
-      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro]
+      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
       let keysArrArr = isTruthy(Array.isArray(pro));
-      if (keysArrArr) { 
+      if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
           realItem = isTruthy(subParam);
           if (realItem) {
-            keyProParams = typeof subParam === "object" || Array.isArray(subParam)? crmT(subParam[proIndex]) : crmT(subParam);
+            keyProParams =
+              typeof subParam === "object" || Array.isArray(subParam)
+                ? crmT(subParam[proIndex])
+                : crmT(subParam);
             if (keyProParams >= 0) {
               funcLimit.push(gsFiles()[keyProParams]);
-            } 
-            else {
+            } else {
               // keyProParams = ;
               if (typeof subParam === "object") {
                 paramLimit.push(subParam);
-              }
-              else if (Array.isArray(subParam)) {
-                paramLimit.push(subParam[proIndex])
-              }
-              else {
+              } else if (Array.isArray(subParam)) {
+                paramLimit.push(subParam[proIndex]);
+              } else {
                 paramLimit.push(subParam);
               }
             }
@@ -2425,22 +2437,25 @@ var resolveParams = function (func, someArgs) {
         });
         if (funcLimit.length > 0) {
           argsX.push(funcLimit);
-        };
+        }
         if (paramLimit.length > 0) {
           content.push(paramLimit);
-        };
-      }
-      else {
+        }
+      } else {
         realItem = isTruthy(pro);
-        if (realItem) { 
+        if (realItem) {
           for (var key in keyPro) {
-            keyProParams = typeof pro === "object" || Array.isArray(pro)? crmT(pro[key]) : crmT(pro);
+            keyProParams =
+              typeof pro === "object" || Array.isArray(pro)
+                ? crmT(pro[key])
+                : crmT(pro);
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
-            } 
-            else {
+            } else {
               // keyProParams = ;
-              content.push(typeof pro === "object" || Array.isArray(pro)? pro[key] : pro);
+              content.push(
+                typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
+              );
             }
           }
         }
@@ -2449,7 +2464,7 @@ var resolveParams = function (func, someArgs) {
     if (argsX) {
       var allErrors = {};
       var allResolutions = {};
-      var fParams = functionRegistry.paramsList //gsFParams();
+      var fParams = functionRegistry.paramsList; //gsFParams();
       var resCount = 0;
       argsX.forEach((result, argsXIndex) => {
         console.log("argsX result " + resCount + ": " + result);
@@ -2482,93 +2497,93 @@ var resolveParams = function (func, someArgs) {
           }
           var contentMap = {};
           let realItem;
-          declaredParams.forEach((declaredParam, declaredParamIndex) => { // content.forEach((item) => {
+          declaredParams.forEach((declaredParam, declaredParamIndex) => {
+            // content.forEach((item) => {
             let declaredParamArrArr = isTruthy(Array.isArray(declaredParam));
-            if (declaredParamArrArr) { 
-              let paramLimit = 0
-              declaredParam.forEach((subParam, subParamIndex) => { //item.forEach((subItem) => {
-                contentLimit.forEach((item, currentDeclaredIndex) => { // declaredParams.forEach((declaredParam) => {
+            if (declaredParamArrArr) {
+              let paramLimit = 0;
+              declaredParam.forEach((subParam, subParamIndex) => {
+                //item.forEach((subItem) => {
+                contentLimit.forEach((item, currentDeclaredIndex) => {
+                  // declaredParams.forEach((declaredParam) => {
                   realItem = isTruthy(subItem);
                   if (realItem) {
-                    // if (subItem === declaredParam) { 
+                    // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
                     //   contentMap[declaredParam] = subItem;
                     // }
-                      let currentDeclared = contentMap[declaredParam];
-                      let currentSub = subItem;
-                      currentDeclared = currentSub;
-                      paramLimit++
-                      if (contentMap.length === declaredParams.length) {
-                        return
-                      }
+                    let currentDeclared = contentMap[declaredParam];
+                    let currentSub = subItem;
+                    currentDeclared = currentSub;
+                    paramLimit++;
+                    if (contentMap.length === declaredParams.length) {
+                      return;
+                    }
                   }
                 });
               });
-            }
-            else {
+            } else {
               if (Array.isArray(contentLimit)) {
-                contentLimit.forEach((item, contentLimitIndex) => { // declaredParams.forEach((declaredParam) => {
+                contentLimit.forEach((item, contentLimitIndex) => {
+                  // declaredParams.forEach((declaredParam) => {
                   let contentLimitArrArr = isTruthy(Array.isArray(item));
-                    if (contentLimitArrArr) { 
-                      item.forEach((subItem, mapItemIndex) => {
-                        realItem = isTruthy(subItem);
-                        if (realItem) {
-                          // if (subItem === declaredParam) { 
-                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                          //   contentMap[declaredParam] = subItem;
-                          // } 
-                            let paramDKey = declaredParams[mapItemIndex]
-                            if (!contentMap[paramDKey]) {
-                              contentMap[paramDKey] = subItem;
-                            }
-                            if (contentMap[paramDKey] === subItem) {
-                              return
-                            }
-                            // for (var key in declaredParams) {
-                            // }
+                  if (contentLimitArrArr) {
+                    item.forEach((subItem, mapItemIndex) => {
+                      realItem = isTruthy(subItem);
+                      if (realItem) {
+                        // if (subItem === declaredParam) {
+                        // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                        //   contentMap[declaredParam] = subItem;
+                        // }
+                        let paramDKey = declaredParams[mapItemIndex];
+                        if (!contentMap[paramDKey]) {
+                          contentMap[paramDKey] = subItem;
                         }
-                      });
-                    }
-                    else {
-                      realItem = isTruthy(item);
-                        if (realItem) {
-                          // if (subItem === declaredParam) { 
-                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                          //   contentMap[declaredParam] = subItem;
-                          // }
-                            let paramDKey = declaredParams[contentLimitIndex]
-                            if (!contentMap[paramDKey]) {
-                              contentMap[paramDKey] = item;
-                            }
-                            if (contentMap[paramDKey] === item) {
-                              return
-                            } 
-                            // for (var key in declaredParams) {
-                            // }
+                        if (contentMap[paramDKey] === subItem) {
+                          return;
                         }
+                        // for (var key in declaredParams) {
+                        // }
+                      }
+                    });
+                  } else {
+                    realItem = isTruthy(item);
+                    if (realItem) {
+                      // if (subItem === declaredParam) {
+                      // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                      //   contentMap[declaredParam] = subItem;
+                      // }
+                      let paramDKey = declaredParams[contentLimitIndex];
+                      if (!contentMap[paramDKey]) {
+                        contentMap[paramDKey] = item;
+                      }
+                      if (contentMap[paramDKey] === item) {
+                        return;
+                      }
+                      // for (var key in declaredParams) {
+                      // }
                     }
+                  }
                 });
-              }
-              else {
+              } else {
                 let contentArrArr = isTruthy(Array.isArray(contentLimit));
                 if (contentArrArr) {
-                }
-                else {
+                } else {
                   realItem = isTruthy(contentLimit);
                   if (realItem) {
-                    // if (subItem === declaredParam) { 
+                    // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
                     //   contentMap[declaredParam] = subItem;
-                    // } 
-                      for (var key in declaredParams) {
-                        let paramDKey = declaredParams[key]
-                        if (!contentMap[paramDKey]) {
-                          contentMap[paramDKey] = contentLimit;
-                        }
-                        if (contentMap[paramDKey] === contentLimit) {
-                          return
-                        }
+                    // }
+                    for (var key in declaredParams) {
+                      let paramDKey = declaredParams[key];
+                      if (!contentMap[paramDKey]) {
+                        contentMap[paramDKey] = contentLimit;
                       }
+                      if (contentMap[paramDKey] === contentLimit) {
+                        return;
+                      }
+                    }
                   }
                 }
               }
@@ -2577,8 +2592,7 @@ var resolveParams = function (func, someArgs) {
           declaredParams.forEach((paramName) => {
             if (contentMap.hasOwnProperty(paramName)) {
               orderedContent.push(contentMap[paramName]);
-            } 
-            else {
+            } else {
               orderedContent.push(null);
             }
           });
@@ -2659,17 +2673,19 @@ var resolveParams = function (func, someArgs) {
                 result !== null &&
                 result.name
               ) {
-                args[declaredParamName] = globalThis[result.name].apply(result.parameters);
+                args[declaredParamName] = globalThis[result.name].apply(
+                  result.parameters,
+                );
               } else if (result !== null && result && result.name) {
                 args[declaredParamName] = globalThis[result.name]();
               }
               resolvedArgs.push(args[declaredParamName]);
             } else if (
-              paramName === "url" || paramName === "companyNameUrl" || 
-                  (paramName === null &&
-                    (declaredParamName === "url" ||
-                      declaredParamName === "companyNameUrl")
-                )
+              paramName === "url" ||
+              paramName === "companyNameUrl" ||
+              (paramName === null &&
+                (declaredParamName === "url" ||
+                  declaredParamName === "companyNameUrl"))
             ) {
               functionRegistry.gTree;
               var folder = functionRegistry.getFolderList()[numVarRnd];
@@ -2755,7 +2771,8 @@ var resolveParams = function (func, someArgs) {
               var rndItemIndex = Math.floor(
                 Math.random() * Math.floor(uniqueItemArray.length),
               );
-              args[declaredParamName] = uniqueItemArray[rndItemIndex].Description;
+              args[declaredParamName] =
+                uniqueItemArray[rndItemIndex].Description;
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "tunPlay" ||
@@ -2802,8 +2819,7 @@ var resolveParams = function (func, someArgs) {
               if (paramName !== null) {
                 args[declaredParamName] = paramName;
                 resolvedArgs.push(args[declaredParamName]);
-              } 
-              else {
+              } else {
                 missingParams.push(declaredParamName);
               }
             }
@@ -2813,8 +2829,7 @@ var resolveParams = function (func, someArgs) {
             allResolutions[result] = resolvedArgs;
             // console.error(allErrors[result]);
             console.log(allResolutions[result]);
-          } 
-          else {
+          } else {
             allErrors[result] =
               `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
             console.error(allErrors[result]);
@@ -2827,14 +2842,13 @@ var resolveParams = function (func, someArgs) {
         if (resolvedArgs.length > 0) {
           console.log("Resolved parameters Array:", resolvedArgs);
         }
-          resCount++;
+        resCount++;
       });
       var errorKeys = Object.keys(allErrors);
       if (errorKeys.length > 0) {
         return allErrors;
       }
-    } 
-    else {
+    } else {
       console.log("No function parameters found for:", searchString);
     }
     return allResolutions;
@@ -2874,7 +2888,10 @@ var resolveParams = function (func, someArgs) {
 
 var seoCapital = function (url) {
   console.log(
-    "boilerplate Help : line 2635\nseoCapital(url: " + url +")\n " + arguments.callee.caller.name,
+    "boilerplate Help : line 2635\nseoCapital(url: " +
+      url +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
@@ -3028,12 +3045,11 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
-    items = [{ "Description": searchString }];
+    items = [{ Description: searchString }];
   }
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString 
-  = items[rndItenIndex]["Description"]
+  var searchString = items[rndItenIndex]["Description"]
     .split(" ")
     .sort((a, b) => {
       const priorityA = getZuluFreqPriority(a.toLowerCase());
@@ -3327,7 +3343,12 @@ var vidFactor = function (data, time) {
 };
 
 var vidPlaylist = function (tunPlay) {
-  console.log("boilerplate Help : line 3087\n(tunPlay:" + tunPlay + ")\n " + arguments.callee.caller.name);
+  console.log(
+    "boilerplate Help : line 3087\n(tunPlay:" +
+      tunPlay +
+      ")\n " +
+      arguments.callee.caller.name,
+  );
   console.log(
     functionRegistry.time +
       "\n" +

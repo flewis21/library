@@ -3,14 +3,12 @@ function activeSsId() {
   if (ss !== null) {
     var id = ss.getId();
     return id;
-  }
-  else {
+  } else {
     try {
-      return id
+      return id;
+    } catch (error) {
+      return error.stack;
     }
-     catch (error) {
-      return error.stack
-     }
   }
 }
 
@@ -32,7 +30,11 @@ var bingSWF = function (searchString, time) {
       "]",
   );
   var data = [UrlFetchApp.fetch(searcher, searcherOptions).getContentText()];
-  console.log("bingSWF: [UrlFetchApp.fetch(" +searcher, searcherOptions + ").getContentText()]\n",typeof data);
+  console.log(
+    "bingSWF: [UrlFetchApp.fetch(" + searcher,
+    searcherOptions + ").getContentText()]\n",
+    typeof data,
+  );
   // console.log("bingSWF: \n")
   console.log(
     "bingSWF: \nDeclaring resDATA = data.slice(" +
@@ -133,27 +135,27 @@ var cabDriver = function (e) {
       ContentService.MimeType.RSS,
     );
   })();
-  console.log("xkcdRSS: \nxkcdRSS.getContent()\n",xkcdRSS.getContent());
+  console.log("xkcdRSS: \nxkcdRSS.getContent()\n", xkcdRSS.getContent());
   var coolStatus = (function (e) {
     const response = { status: "cool!" };
     return ContentService.createTextOutput(JSON.stringify(response))
       .setMimeType(ContentService.MimeType.JSON)
       .getContent();
   })();
-  console.log("xkcdRSS: \ncoolStatus\n",JSON.stringify([coolStatus]));
+  console.log("xkcdRSS: \ncoolStatus\n", JSON.stringify([coolStatus]));
   var data = res.split(" ");
   var dataRandomLength = Math.floor(Math.random() * Math.floor(data.length));
   var headers = data.map((r) => {
     return covArrays([[r][0]])[0];
   })[dataRandomLength];
-  console.log("xkcdRSS: \nheaders\n",headers);
+  console.log("xkcdRSS: \nheaders\n", headers);
   var headersRandomLength = Math.floor(
     Math.random() * Math.floor(headers.length),
   );
   var dataBody = data.map((r) => {
     return covArrays([[r][0]])[0];
   });
-  console.log("xkcdRSS: \ndataBody\n",dataBody);
+  console.log("xkcdRSS: \ndataBody\n", dataBody);
   var dataBodyRandomLength = Math.floor(
     Math.random() * Math.floor(dataBody.length),
   );
@@ -173,7 +175,7 @@ var cabDriver = function (e) {
     const bodyJS = JSON.parse(body);
     ws.appendRow([bodyJS]);
   })();
-  console.log("xkcdRSS: \napiPost\n",apiPost);
+  console.log("xkcdRSS: \napiPost\n", apiPost);
   return HtmlService.createTemplate(
     `
     <div id="dev">
@@ -875,7 +877,7 @@ var pastSeo = function (namedVar, time) {
           );
         }
         if (timeToExecute <= 0.1 * 60 * 1000) {
-          console.log("time to execute",timeToExecute.valueOf());
+          console.log("time to execute", timeToExecute.valueOf());
           break;
         }
         return;
@@ -1072,7 +1074,9 @@ var rndString = function (inputArray, time) {
       format(functionRegistry.time),
   );
   console.log(
-    formatTime(functionRegistry.time) + "\nCalling testData with inputArray: " + inputArray,
+    formatTime(functionRegistry.time) +
+      "\nCalling testData with inputArray: " +
+      inputArray,
   );
   var testString = testData(inputArray, time).testArray;
   console.log(
@@ -1180,8 +1184,7 @@ var seoFactor = function (data, time) {
       // var spDiv = sliDiv.toString()
       // var arrDiv = spDiv.split("</div>")}
       idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
-    } 
-    catch (error) {
+    } catch (error) {
       return;
     }
   });
@@ -1438,15 +1441,16 @@ var seoTwitter = function (folderX, searchString, time) {
   }
   var data = [];
   var foldCounter = 0;
-  var foldData = folderManager(folderX) // && folderX !== "folderX" ? folderX : randomFolderName);
-  var randomFolderCount = Math.floor(Math.random() * (Math.floor(foldData.length)))
+  var foldData = folderManager(folderX); // && folderX !== "folderX" ? folderX : randomFolderName);
+  var randomFolderCount = Math.floor(
+    Math.random() * Math.floor(foldData.length),
+  );
   var minFold = fileFold(foldData[randomFolderCount]);
   var rndString =
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
     var searchString = rndString;
-  } 
-  else if (searchString === "searchString") {
+  } else if (searchString === "searchString") {
     searchString = rndString;
   }
   while (data.length === 0) {
@@ -1458,8 +1462,7 @@ var seoTwitter = function (folderX, searchString, time) {
     });
     if (foldCounter + 1 >= minFold.length) {
       break;
-    } 
-    else {
+    } else {
       foldCounter++;
     }
   }
@@ -1652,11 +1655,12 @@ var sheetsUrls = function (fileX, folderX, time) {
       ", = " +
       time,
   );
-  var runRndMat = function() {
-    var rndName = functionRegistry.fileList
-    let nameRnd = rndName[Math.floor(Math.random() * (Math.floor(rndName.length)))]
-    return nameRnd
-  }
+  var runRndMat = function () {
+    var rndName = functionRegistry.fileList;
+    let nameRnd =
+      rndName[Math.floor(Math.random() * Math.floor(rndName.length))];
+    return nameRnd;
+  };
   if (typeof fileX === "undefined") {
     var fileX = runRndMat();
     console.log(
@@ -1673,30 +1677,33 @@ var sheetsUrls = function (fileX, folderX, time) {
   var mineField = [];
   if (fileNameList) {
     while (mineField.length === 0) {
-      fileNameList
-        .sheets
-          .map((repo) => {
-            if (repo.toLowerCase().includes(fileX.toLowerCase())) {
-              var mineFile = DriveApp.getFilesByName(repo);
-              if (mineFile.hasNext()) {
-                var bogy = mineFile.next().getId()
-                if (
-                  DriveApp.getFileById(bogy).getMimeType() ===
-                  MimeType.GOOGLE_SHEETS
-                ) {
-                  mineField.push(bogy);
-                }
-              }
+      fileNameList.sheets.map((repo) => {
+        if (repo.toLowerCase().includes(fileX.toLowerCase())) {
+          var mineFile = DriveApp.getFilesByName(repo);
+          if (mineFile.hasNext()) {
+            var bogy = mineFile.next().getId();
+            if (
+              DriveApp.getFileById(bogy).getMimeType() ===
+              MimeType.GOOGLE_SHEETS
+            ) {
+              mineField.push(bogy);
             }
-          });
-      let rndBogy = DriveApp.getFilesByName(fileNameList.sheets[Math.floor(Math.random() * (Math.floor(fileNameList.sheets.length)))]).next().getId()
+          }
+        }
+      });
+      let rndBogy = DriveApp.getFilesByName(
+        fileNameList.sheets[
+          Math.floor(Math.random() * Math.floor(fileNameList.sheets.length))
+        ],
+      )
+        .next()
+        .getId();
       if (mineField.length === 0) {
-        mineField.push(rndBogy)
+        mineField.push(rndBogy);
       }
     }
     return mineField[Math.floor(Math.random() * Math.floor(mineField.length))];
-  } 
-  else {
+  } else {
     var treeRoot = DriveApp.getRootFolder().getFiles();
     while (treeRoot.hasNext()) {
       var trueName = treeRoot.next();
@@ -1708,8 +1715,7 @@ var sheetsUrls = function (fileX, folderX, time) {
           if (mimeName === fileX) {
             var mineFile = truUrl;
             return mineFile;
-          } 
-          else {
+          } else {
             return "File Not Found!";
           }
         }

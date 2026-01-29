@@ -202,7 +202,7 @@ var contentApp = function (blob, argsObject) {
     "boilerplate render: line 201\ncontentApp(blob: " +
       blob.substring(0, 9) +
       "..., argsObject: " +
-      JSON.stringify(argsObject).substring(0,20) +
+      JSON.stringify(argsObject).substring(0, 20) +
       ")\n" +
       arguments.callee.caller.name,
   );
@@ -217,7 +217,7 @@ var contentApp = function (blob, argsObject) {
       "...\nargsObject is !" +
       !argsObject +
       " = " +
-      JSON.stringify(argsObject).substring(0,20),
+      JSON.stringify(argsObject).substring(0, 20),
   );
   let api;
   try {
@@ -257,11 +257,13 @@ var contentApp = function (blob, argsObject) {
     );
   }
   try {
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .getContent();
+    return (
+      tmp
+        .evaluate()
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .getContent()
+    );
   } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
@@ -486,7 +488,9 @@ var defSBD = function (e) {
 
 function eTest() {
   console.log(
-    Math.floor(functionRegistry.timeLeftToExecute - functionRegistry.time / 1000),
+    Math.floor(
+      functionRegistry.timeLeftToExecute - functionRegistry.time / 1000,
+    ),
   );
 }
 
@@ -1357,7 +1361,7 @@ var renderFile = function (file, argsObject, title) {
               }
             })();
           },
-        renTemp: tmp.evaluate().getContent()
+          renTemp: tmp.evaluate().getContent(),
         },
       );
       return (
@@ -1381,14 +1385,16 @@ var renderFile = function (file, argsObject, title) {
 
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
-    "boilerplate render: line 201\nrenderTemplate(blob: " +
-      blob && blob.length > 9? blob?.substring(0, 9):"" +
-      "..., argsObject: " +
-      JSON.stringify(argsObject) +
-      ", title: " +
-      title +
-      ")\n" +
-      arguments.callee.caller.name,
+    "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
+      blob.length > 9
+      ? blob?.substring(0, 9)
+      : "" +
+          "..., argsObject: " +
+          JSON.stringify(argsObject) +
+          ", title: " +
+          title +
+          ")\n" +
+          arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   const tmp = HtmlService.createTemplate(blob);
@@ -1870,11 +1876,10 @@ var renderTemplate = function (blob, argsObject, title) {
             }
           })();
         },
-        renTemp: tmp.evaluate().getContent()
+        renTemp: tmp.evaluate().getContent(),
       },
     );
-  } 
-  catch (error) {
+  } catch (error) {
     console.error("Error rendering template:", error, error.stack);
     throw new Error(
       "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,

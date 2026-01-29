@@ -1173,12 +1173,19 @@ var fbTester = function () {
 
 var fileFold = function (folderX, fileX, time) {
   console.log(
-    "boilerplate fileManagers: line 1027\nfileFold(folderX: " + folderX + ", fileX: " + fileX + ", time: " + formatTime(functionRegistry.timeLeftToExecute) +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 1027\nfileFold(folderX: " +
+      folderX +
+      ", fileX: " +
+      fileX +
+      ", time: " +
+      formatTime(functionRegistry.timeLeftToExecute) +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
   var elapsedTime = functionRegistry.time;
   var fileFree = [];
-  var folderXIsValid = isTruthy(folderX)
+  var folderXIsValid = isTruthy(folderX);
   if (folderXIsValid) {
     if (!folderXIsValid) {
       return;
@@ -1199,12 +1206,11 @@ var fileFold = function (folderX, fileX, time) {
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
     while (tree.hasNext()) {
-      nameTree = tree.next()
+      nameTree = tree.next();
       let myName = nameTree.getName();
       fileFree.push(myName);
     }
-  } 
-  else {
+  } else {
     return;
   }
   // console.log("fileFold: \nDeclaring minFold = [" + tree.next().getName() + "].join('').toLowerCase()");
@@ -1497,21 +1503,20 @@ var folderMatch = function (folderX, stringArray) {
   var folderXIndex = [];
   if (Array.isArray(stringArray)) {
     stringArray.map((folder) => {
-        // var sfi = searchFileStr
-        let xStr = [folder].join("").toLowerCase();
-        let xFold = [folderX].join("").toLowerCase();
-        let xRes = xStr.includes(xFold);
-        if (xRes === true) {
-          let fxi = xStr.indexOf(xFold);
-          if (fxi > -1) {
-            // var properFolder = folder
-            let myObj = convertToObjects([[folder]], [fxi])[0];
-            folderXIndex.push(folder);
-          }
+      // var sfi = searchFileStr
+      let xStr = [folder].join("").toLowerCase();
+      let xFold = [folderX].join("").toLowerCase();
+      let xRes = xStr.includes(xFold);
+      if (xRes === true) {
+        let fxi = xStr.indexOf(xFold);
+        if (fxi > -1) {
+          // var properFolder = folder
+          let myObj = convertToObjects([[folder]], [fxi])[0];
+          folderXIndex.push(folder);
         }
-      })
-  }
-  else {
+      }
+    });
+  } else {
     folderXIndex.push(stringArray);
   }
   // Array.isArray(stringArray)

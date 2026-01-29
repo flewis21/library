@@ -11,7 +11,9 @@ var buildTags = function (posHtml) {
 };
 
 function doGet(e) {
-  Logger.log(">>> [LIBRARY] LIBRARY's doGet() called. e: " + e? JSON.stringify(e):"");
+  Logger.log(
+    ">>> [LIBRARY] LIBRARY's doGet() called. e: " + e ? JSON.stringify(e) : "",
+  );
   // validGroup();
   // validateFolders();
   // validateFiles();
@@ -20,8 +22,12 @@ function doGet(e) {
   var nonPopulatedE = Object?.values(e).length;
   console.log("Object?.values(e).length", Object?.values(e));
   if (!e || noEmptyE < 1 || nonPopulatedE < 1 || e.queryString === "") {
-    var getDoFunction = createRandomFunction()
-    return renderTemplate(`<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div"><textarea id="getArea">${globalThis[Object.keys(getDoFunction)].apply(this, Object.values(getDoFunction))}</textarea></div></body></html>`,{},"Create Random Function")
+    var getDoFunction = createRandomFunction();
+    return renderTemplate(
+      `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div"><textarea id="getArea">${globalThis[Object.keys(getDoFunction)].apply(this, Object.values(getDoFunction))}</textarea></div></body></html>`,
+      {},
+      "Create Random Function",
+    );
     var argsEd = testlt();
     if (typeof globalThis.mis === "function") {
       var misArgs;
@@ -38,17 +44,17 @@ function doGet(e) {
       }
     }
     var e = objectOfS(
-        ["parameter"],
+      ["parameter"],
+      [
         [
-          [
-            ["func", "mis"],
-            ["args", misArgs],
-            ["action", "getData"],
-          ],
+          ["func", "mis"],
+          ["args", misArgs],
+          ["action", "getData"],
         ],
-        functionRegistry.time,
-      )
-  };
+      ],
+      functionRegistry.time,
+    );
+  }
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -61,18 +67,12 @@ function doGet(e) {
   var webAppUrl = getScriptUrl();
   if (typeof e === "object" && e.parameter && e.parameter["func"]) {
     var fx = e.parameter["func"];
-  } 
-  else if (typeof e === "object" && e.parameter && !e.parameter["func"]) {
+  } else if (typeof e === "object" && e.parameter && !e.parameter["func"]) {
     return functionFlex(e);
+  } else if (typeof e !== "object") {
+    e = objectOfS(["parameter"], [[["func", e]]], functionRegistry.time);
+    var fx = e.parameter["func"];
   }
-  else if (typeof e !== "object") {
-      e = objectOfS(["parameter"],[[
-          ["func", e],
-        ]],
-        functionRegistry.time,
-      )
-      var fx = e.parameter["func"];
-    }
   var titleArray = functionRegistry.getFileList();
   if (typeof e === "object" && e.parameter && e.parameter["args"]) {
     var content = e.parameter["args"];
@@ -461,7 +461,7 @@ function handleGetData() {
   // }
 
   // Logging
-  let rndE = createRandomFunction()
+  let rndE = createRandomFunction();
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -471,8 +471,8 @@ function handleGetData() {
       ", = " +
       JSON.stringify(rndE),
   );
-  var funcUno = Object.keys(rndE)//rndE.parameter["func"];
-  var funcDos = Object.values(rndE)//rndE.parameter["args"];
+  var funcUno = Object.keys(rndE); //rndE.parameter["func"];
+  var funcDos = Object.values(rndE); //rndE.parameter["args"];
   const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
   var payLoad = {}; // Initialize payload
 
@@ -488,38 +488,34 @@ function handleGetData() {
       let parsedFuncArgs = [];
       if (funcDos) {
         // try {
-          var parType = isPropertyOf(funcDos)
-          if (parType[0] === "object") {
-            try {
-              parsedFuncArgs = JSON.parse(funcDos);
-              if (!Array.isArray(parsedFuncArgs)) {
-                parsedFuncArgs = [parsedFuncArgs];
-              }
+        var parType = isPropertyOf(funcDos);
+        if (parType[0] === "object") {
+          try {
+            parsedFuncArgs = JSON.parse(funcDos);
+            if (!Array.isArray(parsedFuncArgs)) {
+              parsedFuncArgs = [parsedFuncArgs];
             }
-            catch (error) {
-              console.info(error.stack)
-            }
+          } catch (error) {
+            console.info(error.stack);
           }
-        // } catch (jsonError) 
+        }
+        // } catch (jsonError)
         else {
           if (!Array.isArray(funcDos)) {
             parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-          }
-          else {
+          } else {
             parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
           }
         }
       }
-      try { 
+      try {
         rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
         // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      }
-      catch { 
+      } catch {
         rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
         // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
       }
-    } 
-    else {
+    } else {
       console.error(
         `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
       );
@@ -1045,7 +1041,8 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 var userClicked = function () {
-  return contentApp(`<script>
+  return contentApp(
+    `<script>
     
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
@@ -1086,7 +1083,9 @@ var userClicked = function () {
     document.getElementById("username").value = "";
   })();
 
-  </script>`,{})
+  </script>`,
+    {},
+  );
 }; //Global object closed
 
 //  {cik_str: await currentCik,

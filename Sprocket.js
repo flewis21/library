@@ -167,8 +167,7 @@ var dtlsPro = function (searchDTLS) {
         return formUrl;
       }
     }
-  } 
-  catch (error) {
+  } catch (error) {
     console.log("error in contentApp: " + error);
     return "This alley location does not make sense! " + error;
   }
@@ -339,7 +338,18 @@ var dtlsBridge = function (func, time) {
     ? func
     : (func = objectOfS(
         ["parameter"],
-        [[["func", functionRegistry.fileList[Math.floor(Math.random() * (Math.floor(functionRegistry.fileList)))]]]],
+        [
+          [
+            [
+              "func",
+              functionRegistry.fileList[
+                Math.floor(
+                  Math.random() * Math.floor(functionRegistry.fileList),
+                )
+              ],
+            ],
+          ],
+        ],
         functionRegistry.time,
       ).parameter["func"]);
   console.log(

@@ -53,12 +53,12 @@ var dtlsPict = function (snap, time) {
     //     }
     //   }
     // }
-    uiArr.forms.map((snapper)=>{
+    uiArr.forms.map((snapper) => {
       let hookLine = authLogic([snapper].includes(snap));
       if (hookLine) {
-        allTitleData.push(snapper)
+        allTitleData.push(snapper);
       }
-    })
+    });
     atdCount++;
     console.log("dtlsPict: \nkey search progress " + atdCount);
   }
@@ -82,7 +82,7 @@ var dtlsPict = function (snap, time) {
       Math.floor([arrPoint].length) +
       "))",
   );
-  let changeSnap = authLogic([arrPoint][rndFilePoint])
+  let changeSnap = authLogic([arrPoint][rndFilePoint]);
   if (changeSnap) {
     snap = [arrPoint][rndFilePoint];
   }
@@ -349,7 +349,7 @@ var portPro = function (e) {
         }
         if (piece.indexOf("http") > -1) {
           var elaspeTime = new Date() - time;
-          var timeToExecute =  functionRegistry.timeLeftToExecute;
+          var timeToExecute = functionRegistry.timeLeftToExecute;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form.addSectionHeaderItem().setTitle(piece);
           if (srImgRes || svImgRes) {

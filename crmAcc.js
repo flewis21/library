@@ -33,12 +33,10 @@ function finEd(ed) {
       if (ed[key]) {
         try {
           var formData = JSON.parse(ed);
+        } catch (error) {
+          console.info(error.stack);
         }
-        catch (error) {
-          console.info(error.stack)
-        }
-      }
-      else {
+      } else {
         var formData = JSON.parse(
           convertToObjects([[testlt()]], ["name"], start),
         )[0];

@@ -286,50 +286,42 @@ var matchManager = function (folderX, narrow, time) {
   }
   var folderRoot = DriveApp.getFoldersByName(folderX || xFolder.toString());
   if (folderRoot.hasNext()) {
-    let literate = 0
+    let literate = 0;
     var eFolder = folderRoot.next();
     var eFoldId = eFolder.getId();
     var folderFiles = eFolder.getFiles();
     var filesArray = [];
-    while (folderFiles.hasNext() && 
-      iterationCount < maxiterations) {
+    while (folderFiles.hasNext() && iterationCount < maxiterations) {
       var arrayFile = folderFiles.next();
       var fileMim = arrayFile.getName().toLowerCase();
       var mimeType = arrayFile.getMimeType();
       if (fileMim.includes(arn)) {
         if (mimeType === MimeType.GOOGLE_DOCS) {
           docList.push(arrayFile.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_SLIDES) {
+        } else if (mimeType === MimeType.GOOGLE_SLIDES) {
           slideList.push(arrayFile.getName());
-        } 
-        else if (
+        } else if (
           folderX === "Sheets" &&
           mimeType === MimeType.GOOGLE_SHEETS
         ) {
           sheetList.push(arrayFile.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_FORMS) {
+        } else if (mimeType === MimeType.GOOGLE_FORMS) {
           formList.push(arrayFile.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+        } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
           appTree.push(arrayFile.getName());
-        } 
-        else if (mimeType === MimeType.PNG) {
+        } else if (mimeType === MimeType.PNG) {
           pngTree.push(arrayFile.getName());
-        } 
-        else if (mimeType === MimeType.PDF) {
+        } else if (mimeType === MimeType.PDF) {
           pdfTree.push(arrayFile.getName());
         }
       }
       if (literate < 4) {
-        literate++
+        literate++;
         filesArray.push(folderFiles.next());
-      }
-      else {
-        literate = 0
+      } else {
+        literate = 0;
         filesArray.push(folderFiles.next());
-        break
+        break;
       }
     }
     while (
@@ -347,35 +339,39 @@ var matchManager = function (folderX, narrow, time) {
         var mimeType = file.getMimeType();
         if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
           docList.push(file.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_SLIDES && slideList.length === 0) {
+        } else if (
+          mimeType === MimeType.GOOGLE_SLIDES &&
+          slideList.length === 0
+        ) {
           slideList.push(file.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_SHEETS && sheetList.length === 0) {
+        } else if (
+          mimeType === MimeType.GOOGLE_SHEETS &&
+          sheetList.length === 0
+        ) {
           sheetList.push(file.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_FORMS && formList.length === 0) {
+        } else if (
+          mimeType === MimeType.GOOGLE_FORMS &&
+          formList.length === 0
+        ) {
           formList.push(file.getName());
-        } 
-        else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT && appTree.length === 0) {
+        } else if (
+          mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
+          appTree.length === 0
+        ) {
           appTree.push(file.getName());
-        } 
-        else if (mimeType === MimeType.PNG && pngTree.length === 0) {
+        } else if (mimeType === MimeType.PNG && pngTree.length === 0) {
           pngTree.push(file.getName());
-        } 
-        else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
+        } else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
           pdfTree.push(file.getName());
-        }
-        else {
-          return
+        } else {
+          return;
         }
       });
       if (literate < 4) {
-        literate++
-      }
-      else {
-        literate = 0
-        break
+        literate++;
+      } else {
+        literate = 0;
+        break;
       }
     }
     return {
@@ -388,8 +384,7 @@ var matchManager = function (folderX, narrow, time) {
       pdfs: pdfTree,
       fderX: xFolder,
     };
-  } 
-  else {
+  } else {
     console.warn("Folder " + folderX + " not found");
     return {
       docs: [],
@@ -478,8 +473,7 @@ var folderManager = function (folderX, time) {
     var match = folderMatch(folderX, folderTree);
     if (match.length > 0) {
       return match;
-    }
-    else {
+    } else {
       return folderTree;
     }
   } else {
