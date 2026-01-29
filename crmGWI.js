@@ -1186,13 +1186,8 @@ function workEd(ed) {
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962";
   var sheetName = "General Work Invoice";
   var numCols = colArray.length;
-  return updateSheet(
-    sheetUrl,
-    sheetName,
-    sicSliceArray,
-    numCols,
-    functionRegistry.time,
-  ).myFileX;
+  return updateSheet(sheetUrl, sheetName, sicSliceArray, numCols, functionRegistry.time)
+    .myFileX;
 }
 
 // Assume getUrl and ScriptApp are defined elsewhere or passed in context if this is a templated function

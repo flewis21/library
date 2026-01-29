@@ -1173,37 +1173,39 @@ var fbTester = function () {
 
 var fileFold = function (folderX, fileX, time) {
   console.log(
-    "boilerplate : line 1027\nfileFold()\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 1027\nfileFold(folderX: " + folderX + ", fileX: " + fileX + ", time: " + formatTime(functionRegistry.timeLeftToExecute) +")\n " + arguments.callee.caller.name,
   );
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
-  var elapsedTime = functionRegistry.timeLeftInSeconds;
+  var elapsedTime = functionRegistry.time;
   var fileFree = [];
-  if (
-    typeof folderX !== "undefined" ||
-    folderX !== null ||
-    [folderX].join("").length > 0
-  ) {
-    if (typeof folderX === "undefined") {
+  var folderXIsValid = isTruthy(folderX)
+  if (folderXIsValid) {
+    if (!folderXIsValid) {
       return;
     }
-    var pyFolder = DriveApp.getFoldersByName(folderX).next();
-    var tree = pyFolder.getFiles();
-    var nameTree = tree.hasNext();
+    var pyFolder = DriveApp.getFoldersByName(folderX);
+    var pyroFolder;
+    var tree;
+    while (pyFolder.hasNext()) {
+      pyroFolder = pyFolder.next();
+      tree = pyroFolder.getFiles();
+    }
+    var nameTree;
+    // if (tree.hasNext()) {
+    //   nameTree = tree.next()
+    // }
     // console.log(folderX + "\n" + typeof folderX)
     // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
-    while (nameTree) {
-      if (tree.hasNext()) {
-        var myTree = tree.next();
-        if (myTree) {
-          var myName = myTree.getName();
-        }
-      }
+    while (tree.hasNext()) {
+      nameTree = tree.next()
+      let myName = nameTree.getName();
       fileFree.push(myName);
     }
-  } else {
-    return null;
+  } 
+  else {
+    return;
   }
   // console.log("fileFold: \nDeclaring minFold = [" + tree.next().getName() + "].join('').toLowerCase()");
   // var minFold = [tree.next().getName()].join("").toLowerCase();
@@ -1493,22 +1495,41 @@ var folderMatch = function (folderX, stringArray) {
     var stringArray = folderManager();
   }
   var folderXIndex = [];
-  Array.isArray(stringArray)
-    ? stringArray.map((folder) => {
+  if (Array.isArray(stringArray)) {
+    stringArray.map((folder) => {
         // var sfi = searchFileStr
-        var xStr = [folder].join("").toLowerCase();
-        var xFold = [folderX].join("").toLowerCase();
-        var xRes = xStr.includes(xFold);
+        let xStr = [folder].join("").toLowerCase();
+        let xFold = [folderX].join("").toLowerCase();
+        let xRes = xStr.includes(xFold);
         if (xRes === true) {
-          var fxi = xStr.indexOf(xFold);
+          let fxi = xStr.indexOf(xFold);
           if (fxi > -1) {
             // var properFolder = folder
-            var myObj = convertToObjects([[folder]], [fxi])[0];
+            let myObj = convertToObjects([[folder]], [fxi])[0];
             folderXIndex.push(folder);
           }
         }
       })
-    : folderXIndex.push(stringArray);
+  }
+  else {
+    folderXIndex.push(stringArray);
+  }
+  // Array.isArray(stringArray)
+  //   ? stringArray.map((folder) => {
+  //       // var sfi = searchFileStr
+  //       var xStr = [folder].join("").toLowerCase();
+  //       var xFold = [folderX].join("").toLowerCase();
+  //       var xRes = xStr.includes(xFold);
+  //       if (xRes === true) {
+  //         var fxi = xStr.indexOf(xFold);
+  //         if (fxi > -1) {
+  //           // var properFolder = folder
+  //           var myObj = convertToObjects([[folder]], [fxi])[0];
+  //           folderXIndex.push(folder);
+  //         }
+  //       }
+  //     })
+  //   : folderXIndex.push(stringArray);
   return folderXIndex;
 };
 

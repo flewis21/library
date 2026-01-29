@@ -53,23 +53,23 @@ var convertToJS = function (rndText) {
 };
 
 var convertToObjects = function (rows, headings, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nrows is !" +
-      !rows +
-      ", = " +
-      rows[0] +
-      "\nheadings is !" +
-      !headings +
-      ", = " +
-      headings +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nrows is !" +
+  //     !rows +
+  //     ", = " +
+  //     rows[0] +
+  //     "\nheadings is !" +
+  //     !headings +
+  //     ", = " +
+  //     headings +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   var temp = rows.reduce(
     function (ctx, row) {
       ctx.objects.push(

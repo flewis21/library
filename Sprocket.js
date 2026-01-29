@@ -1,11 +1,11 @@
-var dtlsPro = function (e) {
+var dtlsPro = function (searchDTLS) {
   var cokey;
-  if (typeof e === "undefined") {
-    e
-      ? (cokey = e)
+  if (typeof searchDTLS === "undefined") {
+    searchDTLS
+      ? (cokey = searchDTLS)
       : (cokey = functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
   } else {
-    cokey = e;
+    cokey = searchDTLS;
   }
   // var boilerUrl = mis([arguments.callee.name,cokey]);
   // if (typeof boilerUrl === "string") {
@@ -13,11 +13,11 @@ var dtlsPro = function (e) {
   // }
   var coHelpText =
     "http://www.bing.com/videos/search?q=" +
-    encodeURIComponent(e) +
+    encodeURIComponent(searchDTLS) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var isProduct = matchManager("Forms", [cokey].join("").toLowerCase());
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -167,29 +167,30 @@ var dtlsPro = function (e) {
         return formUrl;
       }
     }
-  } catch (error) {
+  } 
+  catch (error) {
     console.log("error in contentApp: " + error);
     return "This alley location does not make sense! " + error;
   }
   return formUrl;
 };
-var portBing = function (e) {
-  console.log("portBing = function (" + e + ")");
+var portBing = function (searchPort) {
+  console.log("portBing = function (" + searchPort + ")");
   var cokey;
-  if (typeof e === "undefined") {
+  if (typeof searchPort === "undefined") {
     var rndStr = globalThis.uniqueItemArray();
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var searchBing = rndStrObj["Description"];
   }
-  e ? (cokey = e) : (cokey = searchBing);
+  searchPort ? (cokey = searchPort) : (cokey = searchBing);
   var boilerUrl = misSt(cokey).res[0];
   if (boilerUrl !== cokey) {
     return boilerUrl;
   }
   var coHelpText =
     "http://www.bing.com/search?q=" +
-    encodeURIComponent(e) +
+    encodeURIComponent(searchPort) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var seoArray = seoPastTime([cokey].join(""), functionRegistry.time);
   var uti = seoArray.playList;
@@ -338,11 +339,11 @@ var dtlsBridge = function (func, time) {
     ? func
     : (func = objectOfS(
         ["parameter"],
-        [[["func", testlt()]]],
+        [[["func", functionRegistry.fileList[Math.floor(Math.random() * (Math.floor(functionRegistry.fileList)))]]]],
         functionRegistry.time,
       ).parameter["func"]);
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfunc is !" +

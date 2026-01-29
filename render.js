@@ -202,7 +202,7 @@ var contentApp = function (blob, argsObject) {
     "boilerplate render: line 201\ncontentApp(blob: " +
       blob.substring(0, 9) +
       "..., argsObject: " +
-      JSON.stringify(argsObject).substring(0, 20) +
+      JSON.stringify(argsObject).substring(0,20) +
       ")\n" +
       arguments.callee.caller.name,
   );
@@ -217,7 +217,7 @@ var contentApp = function (blob, argsObject) {
       "...\nargsObject is !" +
       !argsObject +
       " = " +
-      JSON.stringify(argsObject).substring(0, 20),
+      JSON.stringify(argsObject).substring(0,20),
   );
   let api;
   try {
@@ -257,13 +257,11 @@ var contentApp = function (blob, argsObject) {
     );
   }
   try {
-    return (
-      tmp
-        .evaluate()
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .getContent()
-    );
+    return tmp
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      .getContent();
   } catch (error) {
     console.log("error in contentApp: " + error);
     throw new Error(
@@ -295,7 +293,7 @@ var contentBlob = function (blob, argsObject) {
   }
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .getContent();
 };
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -320,7 +318,7 @@ var contentTemplate = function (file, argsObject) {
     }
     return tmp
       .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN)
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
       .getContent();
   } catch (error) {
     console.error("Exception: ", error.toString());
@@ -488,7 +486,7 @@ var defSBD = function (e) {
 
 function eTest() {
   console.log(
-    Math.floor(functionRegistry.maxTime - functionRegistry.time / 1000),
+    Math.floor(functionRegistry.timeLeftToExecute - functionRegistry.time / 1000),
   );
 }
 
@@ -635,7 +633,7 @@ var includeApp = function (blob, argsObject) {
   return tmp
     .asTemplate()
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 };
 
 var includeBlob = function (file, argsObject) {
@@ -655,7 +653,7 @@ var includeBlob = function (file, argsObject) {
     } // END IF;Route[file] = argsObject
     return tmp
       .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 };
 
@@ -789,7 +787,7 @@ var includeGSFile = function (file, argsArray) {
   }
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .getContent();
 };
@@ -828,7 +826,7 @@ var includeJs = function (blob, argsObject) {
   // Route[file] = argsObject
   return tmp
     .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 };
 
 var myFunction = function (webApp, argsObject) {
@@ -843,7 +841,7 @@ var myFunction = function (webApp, argsObject) {
     // tmp["list"] = htmlListArray;
   } // END IF
   // Route[file] = argsObject
-  return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.SAMEORIGIN);
+  return tmp.setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 };
 
 globalThis.oneTime = 59.9 * 1000;
@@ -1359,7 +1357,7 @@ var renderFile = function (file, argsObject, title) {
               }
             })();
           },
-          renTemp: tmp.evaluate().getContent(),
+        renTemp: tmp.evaluate().getContent()
         },
       );
       return (
@@ -1383,16 +1381,14 @@ var renderFile = function (file, argsObject, title) {
 
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
-    "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
-      blob.length > 9
-      ? blob?.substring(0, 9)
-      : "" +
-          "..., argsObject: " +
-          JSON.stringify(argsObject) +
-          ", title: " +
-          title +
-          ")\n" +
-          arguments.callee.caller.name,
+    "boilerplate render: line 201\nrenderTemplate(blob: " +
+      blob && blob.length > 9? blob?.substring(0, 9):"" +
+      "..., argsObject: " +
+      JSON.stringify(argsObject) +
+      ", title: " +
+      title +
+      ")\n" +
+      arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   const tmp = HtmlService.createTemplate(blob);
@@ -1458,7 +1454,7 @@ var renderTemplate = function (blob, argsObject, title) {
               all: unset !important;
               display: block !important; /* Or display: flex for rows, display: block for cells */
             }
-                #jsonInput {
+                #jsonInput,#getArea {
                   display: none;
                   width: 100%;
                   height: 8vh; /* Or whatever height you need */
@@ -1514,12 +1510,12 @@ var renderTemplate = function (blob, argsObject, title) {
                   transition: box-shadow 0.2s ease-in-out;
                 };
 
-                #indexBeta,#jsonInput:focus {
+                #indexBeta,#getArea,#jsonInput:focus {
                     box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */
                 }
 
                 /* Optional: Placeholder styling */
-                #indexBeta,#jsonInput::placeholder {
+                #indexBeta,#getArea,#jsonInput::placeholder {
                     color: #616e7f;
                 }
       
@@ -1874,10 +1870,11 @@ var renderTemplate = function (blob, argsObject, title) {
             }
           })();
         },
-        renTemp: tmp.evaluate().getContent(),
+        renTemp: tmp.evaluate().getContent()
       },
     );
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error rendering template:", error, error.stack);
     throw new Error(
       "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,

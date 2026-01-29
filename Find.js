@@ -268,21 +268,69 @@ var matchManager = function (folderX, narrow, time) {
     slideList = [],
     sheetList = [];
   var iterationCount = 0;
-  var maxiterations = 10;
+  var maxiterations = 1;
   if (typeof folderX === "undefined") {
     var allFolders = folderManager();
     allFolders.map((folderX) => {
       xFolder.push(folderX);
     });
+    console.log(
+      formatTime(functionRegistry.time) +
+        "\n" +
+        arguments.callee.name +
+        "\nfolderX is !" +
+        !folderX +
+        ", = " +
+        folderX,
+    );
   }
   var folderRoot = DriveApp.getFoldersByName(folderX || xFolder.toString());
   if (folderRoot.hasNext()) {
+    let literate = 0
     var eFolder = folderRoot.next();
     var eFoldId = eFolder.getId();
     var folderFiles = eFolder.getFiles();
     var filesArray = [];
-    while (folderFiles.hasNext()) {
-      filesArray.push(folderFiles.next());
+    while (folderFiles.hasNext() && 
+      iterationCount < maxiterations) {
+      var arrayFile = folderFiles.next();
+      var fileMim = arrayFile.getName().toLowerCase();
+      var mimeType = arrayFile.getMimeType();
+      if (fileMim.includes(arn)) {
+        if (mimeType === MimeType.GOOGLE_DOCS) {
+          docList.push(arrayFile.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_SLIDES) {
+          slideList.push(arrayFile.getName());
+        } 
+        else if (
+          folderX === "Sheets" &&
+          mimeType === MimeType.GOOGLE_SHEETS
+        ) {
+          sheetList.push(arrayFile.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_FORMS) {
+          formList.push(arrayFile.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+          appTree.push(arrayFile.getName());
+        } 
+        else if (mimeType === MimeType.PNG) {
+          pngTree.push(arrayFile.getName());
+        } 
+        else if (mimeType === MimeType.PDF) {
+          pdfTree.push(arrayFile.getName());
+        }
+      }
+      if (literate < 4) {
+        literate++
+        filesArray.push(folderFiles.next());
+      }
+      else {
+        literate = 0
+        filesArray.push(folderFiles.next());
+        break
+      }
     }
     while (
       appTree.length === 0 &&
@@ -295,45 +343,40 @@ var matchManager = function (folderX, narrow, time) {
       iterationCount < maxiterations
     ) {
       filesArray.forEach(function (file) {
-        var fileMim = file.getName().toLowerCase();
+        // var fileMim = file.getName().toLowerCase();
         var mimeType = file.getMimeType();
-        if (fileMim.includes(arn)) {
-          if (mimeType === MimeType.GOOGLE_DOCS) {
-            docList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
-            slideList.push(file.getName());
-          } else if (
-            folderX === "Sheets" &&
-            mimeType === MimeType.GOOGLE_SHEETS
-          ) {
-            sheetList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_FORMS) {
-            formList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
-            appTree.push(file.getName());
-          } else if (mimeType === MimeType.PNG) {
-            pngTree.push(file.getName());
-          } else if (mimeType === MimeType.PDF) {
-            pdfTree.push(file.getName());
-          }
-        } else {
-          if (mimeType === MimeType.GOOGLE_DOCS) {
-            docList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_SLIDES) {
-            slideList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_SHEETS) {
-            sheetList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_FORMS) {
-            formList.push(file.getName());
-          } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
-            appTree.push(file.getName());
-          } else if (mimeType === MimeType.PNG) {
-            pngTree.push(file.getName());
-          } else if (mimeType === MimeType.PDF) {
-            pdfTree.push(file.getName());
-          }
+        if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
+          docList.push(file.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_SLIDES && slideList.length === 0) {
+          slideList.push(file.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_SHEETS && sheetList.length === 0) {
+          sheetList.push(file.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_FORMS && formList.length === 0) {
+          formList.push(file.getName());
+        } 
+        else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT && appTree.length === 0) {
+          appTree.push(file.getName());
+        } 
+        else if (mimeType === MimeType.PNG && pngTree.length === 0) {
+          pngTree.push(file.getName());
+        } 
+        else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
+          pdfTree.push(file.getName());
+        }
+        else {
+          return
         }
       });
+      if (literate < 4) {
+        literate++
+      }
+      else {
+        literate = 0
+        break
+      }
     }
     return {
       docs: docList,
@@ -345,8 +388,9 @@ var matchManager = function (folderX, narrow, time) {
       pdfs: pdfTree,
       fderX: xFolder,
     };
-  } else {
-    console.warn("Folder " + folderX + "not found");
+  } 
+  else {
+    console.warn("Folder " + folderX + " not found");
     return {
       docs: [],
       slides: [],
@@ -395,42 +439,49 @@ var matchManager = function (folderX, narrow, time) {
 // };
 
 var folderManager = function (folderX, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nfolderX is !" +
-      !folderX +
-      ", = " +
-      folderX +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
-  var folderTree = [];
-  var tree = DriveApp.getFolders(); // Iterator for folders
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nfolderX is !" +
+  //     !folderX +
+  //     ", = " +
+  //     folderX +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
+  functionRegistry.gTree();
+  var folderTree = functionRegistry.folderTree;
+  // var tree = DriveApp.getFolders(); // Iterator for folders
 
-  // Corrected while loop: Call next() only once per iteration
-  while (tree.hasNext()) {
-    var folder = tree.next(); // Get the current folder
-    // Now check if this 'folder' has files before adding its name
-    if (folder.getFiles().hasNext()) {
-      folderTree.push(folder.getName());
-    }
-  }
+  // // Corrected while loop: Call next() only once per iteration
+  // while (tree.hasNext()) {
+  //   var folder = tree.next(); // Get the current folder
+  //   var itsAFolder = folder.getFiles()
+  //   // Now check if this 'folder' has files before adding its name
+  //   if (itsAFolder.hasNext()) {
+  //     folderTree.push(folder.getName());
+  //   }
+  // }
 
   if (folderX) {
-    console.log(
-      formatTime(functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
-        ":\nDeclaring match = folderMatch(" +
-        folderX,
-      "folderTree)",
-    );
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\n" +
+    //     arguments.callee.name +
+    //     ":\nDeclaring match = folderMatch(" +
+    //     folderX,
+    //   "folderTree)",
+    // );
     var match = folderMatch(folderX, folderTree);
-    return match;
+    if (match.length > 0) {
+      return match;
+    }
+    else {
+      return folderTree;
+    }
   } else {
     return folderTree;
   }

@@ -8,7 +8,7 @@ var allTime = function (rndKey, arrD, time) {
       ", = " +
       !rndKey +
       "\n!" +
-      [arrD].toString().substring(0, 20) +
+      [arrD].toString().substring(0,20) +
       ", = " +
       !arrD +
       "\n!" +
@@ -25,7 +25,7 @@ var allTime = function (rndKey, arrD, time) {
       "allTime: \nvar " + uniqueKey + " = randomSubstance(" + 0,
       4,
       null,
-      [arrD].toString().substring(0, 20),
+      [arrD].toString().substring(0,20),
       time + ").myNewArr",
     );
     var uniCoArr = [uniqueKey].join("").split(" ");
@@ -208,7 +208,7 @@ var needUtility = function (rndClient, arrD, time) {
       ", = " +
       !rndClient +
       "\n!" +
-      [arrD].toString().substring(0, 20) +
+      [arrD].toString().substring(0,20) +
       ", = " +
       !arrD +
       "\n!" +
@@ -258,7 +258,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
-            [arrD].toString().substring(0, 20),
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
@@ -267,7 +267,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
-            [arrD].toString().substring(0, 20),
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         }
@@ -282,7 +282,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
-            [arrD].toString().substring(0, 20),
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
@@ -291,7 +291,7 @@ var needUtility = function (rndClient, arrD, time) {
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
-            [arrD].toString().substring(0, 20),
+            [arrD].toString().substring(0,20),
             time + ")",
           );
         }
@@ -300,7 +300,7 @@ var needUtility = function (rndClient, arrD, time) {
       var coName = allTime(null, arrD, time);
       console.log(
         "needUtility: \nvar " + coName + " = allTime(" + null,
-        [arrD].toString().substring(0, 20),
+        [arrD].toString().substring(0,20),
         time + ")",
       );
     }
@@ -308,7 +308,7 @@ var needUtility = function (rndClient, arrD, time) {
     var coName = allTime(null, arrD, time);
     console.log(
       "needUtility: \nvar " + coName + " = allTime(" + null,
-      [arrD].toString().substring(0, 20),
+      [arrD].toString().substring(0,20),
       time + ")",
     );
   }
@@ -349,7 +349,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\narrD is !" +
       !arrD +
       ", = " +
-      [arrD].toString().substring(0, 20) +
+      [arrD].toString().substring(0,20) +
       "\ntime is !" +
       !time +
       ", = " +
@@ -407,7 +407,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
       "\nImported Data: " +
       importedData +
       "\nArray Data: " +
-      [arrD].toString().substring(0, 20) +
+      [arrD].toString().substring(0,20) +
       "\nTime: " +
       formatTime(functionRegistry.time) +
       " )",

@@ -69,14 +69,13 @@ function needPastTime(searchString) {
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
       var noSearch = globalThis.searchString().myNewArr;
-      console.log(
-        "Nothing to search. Falling back to random string.",
-        noSearch,
-      );
+      console.log("Nothing to search. Falling back to random string.", noSearch)
       var searchString = noSearch;
     }
     var searchLink = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    const data = UrlFetchApp.fetch(searchLink, { muteHTTPExceptions: true });
+    const data = UrlFetchApp.fetch(searchLink,
+      { muteHTTPExceptions: true },
+    );
     const videoSearch = data.getContentText();
     // return videoSearch
     const vidsSearched = [];

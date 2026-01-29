@@ -1093,17 +1093,18 @@ var dtlsSomeFunction = function (e) {
           form
             .addSectionHeaderItem()
             .setTitle("https://youtube.com/watch?v=" + d[0]);
-          if (d) {
-            try {
-              form
-                .addVideoItem()
-                .setAlignment(FormApp.Alignment.CENTER)
-                .setWidth(612)
-                .setVideoUrl("https://youtube.com/watch?v=" + d[0]);
-            } catch {
-              console.warn("Video could not be enbedded");
+            if (d) {
+              try {
+                form
+                  .addVideoItem()
+                  .setAlignment(FormApp.Alignment.CENTER)
+                  .setWidth(612)
+                  .setVideoUrl("https://youtube.com/watch?v=" + d[0])
+              }
+              catch {
+                console.warn("Video could not be enbedded")
+              }
             }
-          }
           if (
             timeToExecute <= 6 * 60 * 1000 &&
             timeToExecute >= 5.98 * 60 * 1000

@@ -160,15 +160,15 @@ function createRandomFunction() {
   ];
 
   const MIN_SECTIONS = 1;
-  const MAX_SECTIONS = 3;
-  const MIN_QUESTIONS_PER_SECTION = 2;
-  const MAX_QUESTIONS_PER_SECTION = 7;
+  const MAX_SECTIONS = 1;
+  const MIN_QUESTIONS_PER_SECTION = 1;
+  const MAX_QUESTIONS_PER_SECTION = 1;
 
   // --- Create the script ---
-  const scriptTitle =
-    SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
-  const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
-  Logger.log(`Random script: ${script.name} - ${script.length}`);
+  const scriptTitle = SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
+  const script = globalThis[scriptTitle] //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
+  // const funcXName = script.name;
+  Logger.log(`Random script: ${scriptTitle} - ${script.toString()}`);
 
   // --- Set Basic script Properties ---
   const scriptDescription =
@@ -187,6 +187,10 @@ function createRandomFunction() {
     Math.floor(Math.random() * (MAX_SECTIONS - MIN_SECTIONS + 1)) +
     MIN_SECTIONS;
 
+  let fileIndex //= crmT(scriptTitle)
+  let fileParams //= functionRegistry.paramsList[fileIndex]
+  let scriptUrl //= script()//.getPublishedUrl();
+  let mapArr = {};
   for (let s = 0; s < numSections; s++) {
     // if (s > 0) {
     //   // Add page break for subsequent sections
@@ -209,12 +213,12 @@ function createRandomFunction() {
     for (let q = 0; q < numQuestions; q++) {
       // All EventTypes that have corresponding add...Item() methods and are not UNSUPPORTED
       const eventTypes = [
-        ScriptApp.EventType.CLOCK,
-        ScriptApp.EventType.ON_CHANGE,
-        ScriptApp.EventType.ON_EDIT,
-        ScriptApp.EventType.ON_EVENT_UPDATED,
+        // ScriptApp.EventType.CLOCK,
+        // ScriptApp.EventType.ON_CHANGE,
+        // ScriptApp.EventType.ON_EDIT,
+        // ScriptApp.EventType.ON_EVENT_UPDATED,
         ScriptApp.EventType.ON_FORM_SUBMIT,
-        ScriptApp.EventType.ON_OPEN,
+        // ScriptApp.EventType.ON_OPEN,
       ];
       const randomType =
         eventTypes[Math.floor(Math.random() * eventTypes.length)];
@@ -226,106 +230,120 @@ function createRandomFunction() {
       switch (randomType) {
         case ScriptApp.EventType.ON_OPEN:
           const rndText = driveDocBrowser();
-          const userText =
-            rndText[Math.floor(Math.random() * Math.floor(rndText.length))];
+          const userText = rndText[Math.floor(Math.random() * Math.floor(rndText.length))];
           const textItem = DocumentApp.openByUrl(userText);
-          // .addTextItem()
-          // .setTitle(questionTitle + " (Short Text)");
+            // .addTextItem()
+            // .setTitle(questionTitle + " (Short Text)");
           if (isRequired) {
+            console.info(textItem.getBody().getText().toString());
             if (script.length === 0) {
-              console.info(textItem.getBody().getText().toString());
-              script();
-            } else {
-              misSt(script.name);
+              console.info(script.toString());
+              scriptUrl = resolveParams(isMapped({ a : [] }, [scriptTitle])["a"]);
+            }
+            else {
+              fileIndex = crmT(scriptTitle)
+              fileParams = functionRegistry.paramsList[fileIndex]
+              scriptUrl = resolveParams(isMapped({ a : [...fileParams.parameters] }, [scriptTitle,[...fileParams.parameters]])["a"]);
             }
           }
+          else {
+            mapArr[scriptTitle] = []
+            scriptUrl = isMapped(mapArr, [userText]);
+          };
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL) //.createTextValidation();
+            let validationBuilder = ScriptApp.WeekDay // .requireAllScopes(ScriptApp.AuthMode.FULL) //.createTextValidation();
             switch (validationType) {
               case 0:
-                validationBuilder.FRIDAY; //.requireNumber();
+                validationBuilder.FRIDAY //.requireNumber();
                 break;
               case 1:
-                validationBuilder.MONDAY; //.requireTextContainsPattern("test");
+                validationBuilder.MONDAY //.requireTextContainsPattern("test");
                 break;
               case 2:
-                validationBuilder.WEDNESDAY; //.requireTextIsEmail();
+                validationBuilder.WEDNESDAY //.requireTextIsEmail();
                 break;
               case 3:
-                validationBuilder.THURSDAY; //.requireTextIsUrl();
+                validationBuilder.THURSDAY //.requireTextIsUrl();
                 break;
               case 4:
-                validationBuilder.TUESDAY; //.requireTextLengthGreaterThanOrEqualTo(5);
+                validationBuilder.TUESDAY //.requireTextLengthGreaterThanOrEqualTo(5);
                 break;
             }
-            textItem
-              .getBody()
-              .appendListItem("Please follow the specific text rule.");
+            textItem.getBody().appendListItem(
+              "Please follow the specific text rule."
+            );
           }
           break;
 
         case ScriptApp.EventType.ON_CHANGE:
-          const userChangeSheetId = sheetsUrls();
+          const userChangeSheetId = sheetsUrls(scriptTitle);
           // const rndParagraphs = driveDocBrowser();
           // const userParagraph = rndParagraphs[Math.floor(Math.random() * Math.floor(rndParagraphs.length))];
-          // const paragraphItem = ScriptApp.newTrigger(script.name).forSpreadsheet(userChangeSheetId).onOpen().create(); //ScriptApp.newTrigger(script.name).forDocument(DocumentApp.openByUrl(userParagraph).getId()).onOpen().create();
-          // .addParagraphTextItem()
-          // .setTitle(questionTitle + " (Long Text)");
+          // const paragraphItem = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userChangeSheetId).onOpen().create(); //ScriptApp.newTrigger(scriptTitle).forDocument(DocumentApp.openByUrl(userParagraph).getId()).onOpen().create();
+            // .addParagraphTextItem()
+            // .setTitle(questionTitle + " (Long Text)");
           const pChoice = DriveApp.getFileById(userChangeSheetId);
           if (isRequired) {
+            console.info(pChoice.toString());
             if (script.length === 0) {
-              console.info(pChoice.toString());
-              script();
-            } else {
-              misSt(script.name);
+              console.info(script.toString());
+              scriptUrl = resolveParams(isMapped({ a : [] }, [scriptTitle])["a"]);
+            }
+            else {
+              fileIndex = crmT(scriptTitle)
+              fileParams = functionRegistry.paramsList[fileIndex]
+              scriptUrl = resolveParams(isMapped({ a : [...fileParams.parameters] }, [scriptTitle,[...fileParams.parameters]])["a"]);
             }
           }
+          else {
+            mapArr[scriptTitle] = []
+            scriptUrl = isMapped(mapArr, [pChoice]);
+          };
           if (Math.random() < 0.3) {
             // Add random length validation
             // **** CORRECTED: Use createParagraphTextValidation() ****
             pChoice.getAccess(email());
-            // ScriptApp.createParagraphTextValidation()
-            //   .requireTextLengthGreaterThanOrEqualTo(20)
-            //   .withCustomMessage("Please write at least 20 characters.")
-            //   .build(),
+              // ScriptApp.createParagraphTextValidation()
+              //   .requireTextLengthGreaterThanOrEqualTo(20)
+              //   .withCustomMessage("Please write at least 20 characters.")
+              //   .build(),
             // );
           }
           break;
 
         case ScriptApp.EventType.ON_EDIT:
-          const userEditSheetId = sheetsUrls();
-          // const editTrigger = ScriptApp.newTrigger(script.name).forSpreadsheet(userEditSheetId).onOpen().create();
+          const userEditSheetId = sheetsUrls(scriptTitle);
+          // const editTrigger = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userEditSheetId).onOpen().create();
           // const mcItem = editTrigger;
           // const cbItem = editTrigger;
           // const listItem = editTrigger;
-          // .addMultipleChoiceItem()
-          // .setTitle(questionTitle + " (Choose One)");
+            // .addMultipleChoiceItem()
+            // .setTitle(questionTitle + " (Choose One)");
           const mcChoices = [];
           const cbChoices = [];
           const listChoices = [];
-          const cChoice = DriveApp.getFileById(userEditSheetId);
-          const dChoice = SpreadsheetApp.openById(userEditSheetId);
+          const cChoice = DriveApp.getFileById(userEditSheetId).makeCopy();
+          var cCId = cChoice.getId()
+          const dChoice = SpreadsheetApp.openById(cCId);
           const dSheets = dChoice.getSheets();
-          dSheets.map((sheet) => {
+          dSheets.map((sheet) =>{
             if (sheet) {
-              let sheetName = sheet.getName();
+              let sheetName = sheet.getName()
               let endLine = sheet.getLastRow() + 1;
-              sheet
-                .getRange(endLine, 1, 3)
-                .setValues([["Row 1"], ["Row 2"], ["Row 3"]]);
-            }
-          });
-          dSheets.map((sheet) => {
-            if (sheet) {
-              let sheetName = sheet.getName();
               let endColumn = sheet.getLastColumn() + 1;
-              sheet
-                .getRange(1, endColumn, 3)
-                .setValues([["Disagree"], ["Neutral"], ["Agree"]]);
+              sheet.getRange(endLine,1,3).setValues([["Row 1"], ["Row 2"], ["Row 3"]]);
+              sheet.getRange(1,endColumn,3).setValues([["Disagree"], ["Neutral"], ["Agree"]]);
             }
           });
+          // dSheets.map((sheet) =>{
+          //   if (sheet) {
+          //     let sheetName = sheet.getName()
+          //     let endColumn = sheet.getLastColumn() + 1;
+          //     sheet.getRange(1,endColumn,3).setValues([["Disagree"], ["Neutral"], ["Agree"]])
+          //   }
+          // });
           for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
             // 2-4 choices
             mcChoices.push(
@@ -348,57 +366,73 @@ function createRandomFunction() {
               ),
             );
           }
-          cChoice.makeCopy().setDescription(mcChoices);
-          cChoice.makeCopy().setDescription(cbChoices);
-          cChoice.makeCopy().setDescription(listChoices);
-          if (isRequired) script();
+          // cChoice.makeCopy().setDescription(mcChoices);
+          // cChoice.makeCopy().setDescription(cbChoices);
+          // cChoice.makeCopy().setDescription(listChoices);
+          // if (isRequired) script();
           if (Math.random() < 0.3) {
             // Add random checkbox validation
-            cChoice.getAccess(email());
-            // ScriptApp.createCheckboxValidation()
-            //   .setHelpText("Select between 1 and 3 options.")
-            //   .requireSelectBetween(1, 3)
-            //   .build(),
+            cChoice.getAccess(email())
+              // ScriptApp.createCheckboxValidation()
+              //   .setHelpText("Select between 1 and 3 options.")
+              //   .requireSelectBetween(1, 3)
+              //   .build(),
             // );
           }
           if (isRequired) {
             console.info(dChoice.toString());
             if (script.length === 0) {
-              script();
-            } else {
-              misSt(script.name);
+              console.info(script.toString());
+              scriptUrl = resolveParams(isMapped({ a : [] }, [scriptTitle])["a"]);
             }
-          } // Randomly add 'Other' option
+            else {
+              fileIndex = crmT(scriptTitle)
+              fileParams = functionRegistry.paramsList[fileIndex]
+              scriptUrl = resolveParams(isMapped({ a : [...fileParams.parameters] }, [scriptTitle,[...fileParams.parameters]])["a"]);
+            }
+          }
+          else {
+            mapArr[scriptTitle] = []
+            scriptUrl = isMapped(mapArr, [cChoice]);
+          }; // Randomly add 'Other' option
           // if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
           break;
 
         // case ScriptApp.EventType.ON_EVENT_UPDATED:
         //   const userEMail = email();
-        //   const cbItem = ScriptApp.newTrigger(script.name).forSpreadsheet(userSheetId).onOpen().create();// ScriptApp.newTrigger(script.name).forUserCalendar(userEMail).onEventUpdated()?.create();
+        //   const cbItem = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userSheetId).onOpen().create();// ScriptApp.newTrigger(scriptTitle).forUserCalendar(userEMail).onEventUpdated()?.create();
         //     // .addCheckboxItem()
         //     // .setTitle(questionTitle + " (Select All That Apply)");
         //   break;
 
         // case ScriptApp.EventType.ON_FORM_SUBMIT:
-        //   const listItem = ScriptApp.newTrigger(script.name).forForm(FormApp.create(script.name).getId()).onFormSubmit().create()
+        //   const listItem = ScriptApp.newTrigger(scriptTitle).forForm(FormApp.create(scriptTitle).getId()).onFormSubmit().create()
         //     // .addListItem()
         //     // .setTitle(questionTitle + " (Dropdown)");
         //   break;
 
         case ScriptApp.EventType.CLOCK:
-          // const clockTrigger = ScriptApp.newTrigger(script.name).timeBased().everyHours(24).create();
+          // const clockTrigger = ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create(); 
           // const dateItem = clockTrigger
-          // const dateTimeItem =  clockTrigger// ScriptApp.newTrigger(script.name).forSpreadsheet(userSheetId).onOpen().create();
-          // .addDateItem()
-          // .setTitle(questionTitle + " (Date)");
+          // const dateTimeItem =  clockTrigger// ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userSheetId).onOpen().create();
+            // .addDateItem()
+            // .setTitle(questionTitle + " (Date)");
           if (isRequired) {
-            console.info(script.toString());
+            // console.info(script.toString());
             if (script.length === 0) {
-              script();
-            } else {
-              misSt(script.name);
+              console.info(script.toString());
+              scriptUrl = resolveParams(isMapped({ a : [] }, [scriptTitle])["a"]);
             }
-          } //.setRequired(true);
+            else {
+              fileIndex = crmT(scriptTitle)
+              fileParams = functionRegistry.paramsList[fileIndex]
+              scriptUrl = resolveParams(isMapped({ a : [...fileParams.parameters] }, [scriptTitle,[...fileParams.parameters]])["a"]);
+            }
+          }
+          else {
+            mapArr[scriptTitle] = []
+            scriptUrl = isMapped(mapArr, [new Date()]);
+          }; //.setRequired(true);
           // if (isRequired) script();
           // dateItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
           // dateTimeItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
@@ -413,21 +447,31 @@ function createRandomFunction() {
         case ScriptApp.EventType.ON_EVENT_UPDATED:
           const userEMail = email();
           // try {
-          //   const durationItem = ScriptApp.newTrigger(script.name).forUserCalendar(userEMail).onEventUpdated().create();
+          //   const durationItem = ScriptApp.newTrigger(scriptTitle).forUserCalendar(userEMail).onEventUpdated().create(); 
           // }
           // catch (error){
           //   console.warn("No Bueno!", error.stack)
           // }
-          // .addDurationItem()
-          // .setTitle(questionTitle + " (Duration)");
+            // .addDurationItem()
+            // .setTitle(questionTitle + " (Duration)");
           if (isRequired) {
-            console.info(userEMail.toString());
+            console.info(userEMail);
             if (script.length === 0) {
-              script();
-            } else {
-              misSt(script.name);
+              console.info(script.toString());
+              // var tempObj = 
+              scriptUrl = resolveParams(isMapped({ a : [] }, [scriptTitle])["a"]);
+            }
+            else {
+              fileIndex = crmT(scriptTitle)
+              fileParams = functionRegistry.paramsList[fileIndex]
+              // var tempObj = 
+              scriptUrl = resolveParams(isMapped({ a : [...fileParams.parameters] }, [scriptTitle,[...fileParams.parameters]])["a"]);
             }
           }
+          else {
+            mapArr[scriptTitle] = []
+            scriptUrl = isMapped(mapArr, [userEMail]);
+          };
           break;
 
         // case ScriptApp.ItemType.TIME:
@@ -470,22 +514,22 @@ function createRandomFunction() {
         //   break;
 
         case ScriptApp.EventType.ON_FORM_SUBMIT:
-          const userSubmit = FormApp.create(script.name);
+          const userSubmit = FormApp.create(scriptTitle)
           const sectionHeaderItem = userSubmit
             .addSectionHeaderItem()
-            .setTitle(questionTitle + " (New Section)");
+            .setTitle(questionTitle + " (New Section)");;
           const checkboxGridItem = userSubmit
             .addCheckboxGridItem()
-            .setTitle(questionTitle + " (Checkbox Grid)");
+            .setTitle(questionTitle + " (Checkbox Grid)")
           const gridItem = userSubmit
             .addGridItem()
-            .setTitle(questionTitle + " (Radio Grid)");
+            .setTitle(questionTitle + " (Radio Grid)")
           const imageItem = userSubmit
             .addImageItem()
-            .setTitle(questionTitle + " (Image)");
+            .setTitle(questionTitle + " (Image)")
           const videoItem = userSubmit
             .addVideoItem()
-            .setTitle(questionTitle + " (Video)");
+            .setTitle(questionTitle + " (Video)")
           // Use a valid YouTube video ID
           videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
           videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
@@ -497,9 +541,11 @@ function createRandomFunction() {
           videoItem.setAlignment(
             videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
           );
-          let imgFile = dtlsPict(script.name);
+          let  imgFile = dtlsPict(scriptTitle);
           // Use a public image URL or provide a Blob
-          imageItem.setImage(DriveApp.getFilesByName(imgFile).getBlob()); // Replace with a real public image ID
+          imageItem.setImage(
+            DriveApp.getFilesByName(imgFile).getBlob(),
+          ); // Replace with a real public image ID
           // Or use a placeholder image if you don't want to use DriveApp and have a public URL
           // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
           imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
@@ -534,6 +580,7 @@ function createRandomFunction() {
               "This is a random section header for organization.",
             );
           }
+          scriptUrl = userSubmit.getPublishedUrl()
           break;
 
         // case ScriptApp.ItemType.IMAGE:
@@ -546,9 +593,8 @@ function createRandomFunction() {
   }
 
   // --- Log and Return Script URL ---
-  const scriptUrl = script(); //.getPublishedUrl();
   Logger.log(`Random script Created: ${scriptUrl}`);
-  return JSON.stringify(scriptUrl);
+  return scriptUrl;
 }
 
 var defaultWebsite = function (e) {
@@ -884,9 +930,13 @@ var funcCalc = function () {
   return rndArrVals;
 };
 
-var functionFlex = function (e) {
+var functionFlex = function (e){
   if (e && typeof e !== "object") {
-    e = objectOfS(["parameter"], [[["func", e]]], functionRegistry.time);
+    e = objectOfS(["parameter"],[[
+        ["func", e],
+      ]],
+      functionRegistry.time,
+    )
   }
   // Determine funcTres
   if (e && e.parameter["file"]) {
@@ -1035,14 +1085,15 @@ var functionFlex = function (e) {
 
   try {
     let rawFuncResult = null;
-    console.log("typeof libFunc", typeof globalThis[libFunc]);
+    console.log("typeof libFunc", typeof globalThis[libFunc])
     if (typeof globalThis[libFunc] === "function") {
       let parsedFuncArgs = [];
 
       // Check if foobarr is already an array (from internal re-assignment by objectOfS)
       if (Array.isArray(foobarr)) {
         parsedFuncArgs = [foobarr]; // It's already the array we want
-      } else if (typeof foobarr === "string" && foobarr) {
+      } 
+      else if (typeof foobarr === "string" && foobarr) {
         try {
           parsedFuncArgs = JSON.parse(foobarr);
           if (!Array.isArray(parsedFuncArgs)) {
@@ -1051,7 +1102,8 @@ var functionFlex = function (e) {
         } catch (jsonError) {
           parsedFuncArgs = [foobarr]; // Treat as a single string argument if not valid JSON
         }
-      } else {
+      } 
+      else {
         // Handle other cases for foobarr, or it might be null/undefined
         finalArgsForFunction = [];
       }
@@ -1078,17 +1130,18 @@ var functionFlex = function (e) {
             foobarr ||
             (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
         );
-      } else {
-        try {
-          var rawFunc = globalThis["misSt"].apply(this, [
-            [libFunc, ...parsedFuncArgs],
-          ]);
-          rawFuncResult = rawFunc.res;
-        } catch {
+      } 
+      else {
+        try{
+          var rawFunc = globalThis["misSt"].apply(this, [[libFunc, ...parsedFuncArgs]]);
+          rawFuncResult = rawFunc.res 
+        }
+        catch {
           rawFuncResult = globalThis[libFunc].apply(this, parsedFuncArgs);
         }
       }
-    } else {
+    } 
+    else {
       console.error(
         `Error: Function "${libFunc}" not found or not callable in Boilerplate.`,
       );
@@ -1225,7 +1278,7 @@ var functionFlex = function (e) {
     console.log("payLoad.type === ", payLoad.type);
     console.log("payLoad.data === ", payLoad.data);
     if (typeof payLoad.data === "object") {
-      console.log("payLoad.data", JSON.stringify(payLoad.data));
+      console.log("payLoad.data", JSON.stringify(payLoad.data))
     }
 
     // Now, use the structured 'payLoad' to set the final content variables
@@ -2027,7 +2080,7 @@ var functionFlex = function (e) {
       );
     }
   }
-};
+}  
 
 var getScriptUrl = function () {
   return ScriptApp.getService().getUrl();

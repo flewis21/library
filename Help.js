@@ -39,12 +39,12 @@ var crmCalc = function (func) {
 };
 
 var crmT = function (func) {
-  console.log(
-    "boilerplate Help: line 265\ncrmT(func: " +
-      func +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
+  // console.log(
+  //   "boilerplate Help: line 265\ncrmT(func: " +
+  //     func +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
   var appList = functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
@@ -58,31 +58,31 @@ var crmT = function (func) {
   if (Array.isArray(func)) {
     lowCapFunc = func.join("").toLowerCase().split(",");
   } else if (typeof func === "string" && func) {
-    lowCapFunc = func.toLowerCase();
+      lowCapFunc = func.toLowerCase();
   }
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\nlowCapFunc is !" +
-      !lowCapFunc +
-      ", = " +
-      lowCapFunc,
-  );
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nlowCapFunc is !" +
+  //     !lowCapFunc +
+  //     ", = " +
+  //     lowCapFunc,
+  // );
   var funFirst;
   if (Array.isArray(lowCapFunc)) {
     funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   } else if (typeof lowCapFunc === "string" && lowCapFunc) {
     funFirst = lowCapApp.indexOf(lowCapFunc);
   }
-  console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst);
+  // console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst)
   return funFirst;
 };
 
 var gsFiles = function () {
-  console.log(
-    "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
-  );
+  // console.log(
+  //   "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
+  // );
   var gsFileList = functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
@@ -93,10 +93,10 @@ var gsFiles = function () {
 };
 
 var gsFParams = function () {
-  console.log(
-    "boilerplate Help: line 339\ngsFParams(: )\n " +
-      arguments.callee.caller.name,
-  );
+  // console.log(
+  //   "boilerplate Help: line 339\ngsFParams(: )\n " +
+  //     arguments.callee.caller.name,
+  // );
   var gsParamsList = [];
   var globalScope = this;
   for (var key in globalScope) {
@@ -206,7 +206,9 @@ var mis = function (text, maxRetries = 3) {
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
     while (!supFunc.func) {
-      supFunc = misSt(testlt().name);
+      var funcSup = functionRegistry.fileList
+      var rndSup = funcSup[Math.floor(Math.random() * (Math.floor(funcSup.length)))]
+      supFunc = misSt(rndSup);
     }
     if (supFunc && typeof supFunc === "object") {
       let isError = false;
@@ -1587,595 +1589,661 @@ var misSt = function (func, someArgs) {
       arguments.callee.caller.name,
   );
 
-  var funcUno = decodeURIComponent(func);
-  var funcDos = decodeURIComponent(someArgs);
+  // var funcUno = decodeURIComponent(func);
+  // var funcDos = decodeURIComponent(someArgs);
+  var trueFunc = isTruthy(func);
+  var trueSomeArgs = isTruthy(someArgs);
+  var funcUno =  trueFunc? decodeURIComponent(func) : functionRegistry.paramsList;
+  var funcDos = trueSomeArgs? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = randNum; // Assuming randNum is globally accessible
 
-  var argsX = []; // Holds function names found
-  var initialContent = []; // Renamed to clearly indicate initial, raw arguments
+  if (funcUno || funcDos) {    
+    var argsX = []; // Holds function names found
+    var initialContent = []; // Renamed to clearly indicate initial, raw arguments
 
-  var keys = [
-    funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
-      ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
-      : [funcUno],
-  ]
-    .toString()
-    .split(",");
-
-  keys.forEach((pro) => {
-    var bPro = crmT(pro); // Assuming crmT is globally accessible
-    if (bPro >= 0) {
-      argsX.push(gsFiles()[bPro]); // Assuming gsFiles is globally accessible
-    } else {
-      initialContent.push(pro); // Store raw arguments here
+    // var keys = [
+    //   funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
+    //     ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
+    //     : [funcUno],
+    // ]
+    //   .toString()
+    //   .split(",");
+    var arrUno = Array.isArray(func);
+    var arrDos = isTruthy(someArgs);
+    if (arrUno && arrDos) {
+      var keys = Object.values(func).concat(someArgs);
     }
-  });
+    else 
+    if (arrUno && !arrDos) {
+      var keys = Object.values(func);
+    }
+    else 
+    if (!arrUno && arrDos) {
+      var keys = [func].concat(someArgs);
+    }
+    else 
+    if (!arrUno && !arrDos) {
+      var keys = [func];
+    }
 
-  let holdResolvedArgsX;
-
-  if (argsX.length > 0) {
-    console.log("Check if there are functions to process", argsX);
-    // Check if there are functions to process
-    var allErrors = {};
-    var fParams = gsFParams(); // Assuming gsFParams is globally accessible
-    var resCount = 0;
-
-    argsX.forEach((result) => {
-      // 'result' is the function name (e.g., 'renderFile')
-      console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
-      console.log('Current "result" (function name):', result);
-      console.log(
-        'Value of "initialContent" at start of this iteration:',
-        initialContent,
-      );
-
-      console.log("argsX result " + resCount + ": " + result);
-      var args = {}; // Arguments for the current function call
-      var resolvedArgs = []; // Resolved arguments array for the current function
-      var missingParams = []; // Parameters that couldn't be resolved
-
-      var searchString = fParams.find((fP) => fP.name === result);
-      var declaredParams = []; // Initialize here for wider scope
-
-      if (searchString && searchString.parameters) {
-        declaredParams = searchString.parameters;
-        console.log(
-          "Current initialContent: " +
-            initialContent +
-            "\nDeclared parameters for " +
-            result +
-            ": " +
-            declaredParams,
-        );
-
-        // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
-        // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
-        var orderedArgsForCurrentFunc = [];
-        var contentMap = {}; // Reset contentMap for each function
-
-        // First, populate contentMap with any named matches (if initialContent is not just positional)
-        // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-        var htmlArray = [
-          `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
-        ]
-          .toString()
-          .split(" ");
-        var allFolders = functionRegistry.getFolderList();
-        if (!payLoad) {
-          var rndE = objectOfS(
-            ["parameter"],
-            [
-              [
-                ["func", result],
-                ["args", [...initialContent]],
-              ],
-            ],
-            functionRegistry.time,
-          );
-          var funcUnoMis = rndE.parameter["func"];
-          var funcDosMis = rndE.parameter["args"];
-          var payLoad = null; // Initialize payLoad
-
-          // Ensure globalThis[funcUnoMis] exists before calling
-          if (
-            funcUnoMis.indexOf("mis") !== -1 ||
-            funcDosMis.indexOf("mis") !== -1 ||
-            funcUnoMis.indexOf("misSt") !== -1 ||
-            funcDosMis.indexOf("misSt") !== -1 ||
-            rndE.parameter["func"].indexOf("dtlsPro") !== -1 ||
-            rndE.parameter["args"].indexOf("dtlsPro") !== -1
-          ) {
-            // Prevent infinite recursion
-            console.warn(
-              "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
-            );
-            payLoad = "Recursive call prevented.";
-          } else if (typeof globalThis[funcUnoMis] === "function") {
-            console.log(
-              "DEBUG, Prevent infinite recursion: boilerplate Help: line 1688\nmisSt\globalThis[funcUnoMis]:",
-              globalThis[funcUnoMis].toString(),
-            );
-            payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
-          } else {
-            console.warn(
-              "Function for 'data' parameter not found:",
-              funcUnoMis,
-            );
-            payLoad = "Function not found for data generation.";
+    keys.forEach((pro) => {
+      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro]
+      let keyProParams;
+      let realItem;
+      let keysArrArr = isTruthy(Array.isArray(pro));
+      if (keysArrArr) { 
+        let funcLimit = [];
+        let paramLimit = [];
+        pro.forEach((subParam, proIndex) => {
+          realItem = isTruthy(subParam);
+          if (realItem) {
+            keyProParams = typeof subParam === "object" || Array.isArray(subParam)? crmT(subParam[proIndex]) : crmT(subParam);
+            if (keyProParams >= 0) {
+              funcLimit.push(gsFiles()[keyProParams]);
+            } 
+            else {
+              // keyProParams = ;
+              if (typeof subParam === "object") {
+                paramLimit.push(subParam);
+              }
+              else if (Array.isArray(subParam)) {
+                paramLimit.push(subParam[proIndex])
+              }
+              else {
+                paramLimit.push(subParam);
+              }
+            }
+          }
+        });
+        if (funcLimit.length > 0) {
+          argsX.push(funcLimit);
+        };
+        if (paramLimit.length > 0) {
+          content.push(paramLimit);
+        };
+      }
+      else {
+        realItem = isTruthy(pro);
+        if (realItem) { 
+          for (var key in keyPro) {
+            keyProParams = typeof pro === "object" || Array.isArray(pro)? crmT(pro[key]) : crmT(pro);
+            if (keyProParams >= 0) {
+              argsX.push(gsFiles()[keyProParams]);
+            } 
+            else {
+              // keyProParams = ;
+              content.push(typeof pro === "object" || Array.isArray(pro)? pro[key] : pro);
+            }
           }
         }
+      }
+    });
 
-        initialContent.forEach((item) => {
-          console.log(
-            "DEBUG: boilerplate Help: line 2309\nmisSt\norderedArgsForCurrentFunc:",
-            orderedArgsForCurrentFunc,
-          );
-          declaredParams.forEach((declaredParam) => {
-            // More precise matching for named arguments or specific values
-            if (item === declaredParam) {
-              // Exact match for a declared parameter name
-              contentMap[declaredParam] = item;
-            }
-            // If you also want to match if the item *contains* the declared param, be very careful:
-            // else if (typeof item === 'string' && item.includes(declaredParam)) {
-            //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
-            //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
-            //    contentMap[declaredParam] = item;
-            // }
-          });
-        });
+    let holdResolvedArgsX;
 
-        // Then, build orderedArgsForCurrentFunc based on declaredParams order
-        // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
-        declaredParams.forEach((paramName, index) => {
-          console.log(
-            "DEBUG: boilerplate Help: line 1722\nmisSt\norderedArgsForCurrentFunc:",
-            orderedArgsForCurrentFunc,
-          );
-          // Try to get a positional argument first from initialContent
-          if (
-            initialContent[index] !== undefined &&
-            initialContent[index] !== null &&
-            paramName
-          ) {
-            orderedArgsForCurrentFunc.push(initialContent[index]);
-            console.log(
-              "DEBUG, Try to get a positional argument first from initialContent: boilerplate Help: line 1731\nmisSt\norderedArgsForCurrentFunc:",
-              orderedArgsForCurrentFunc,
-            );
-          }
-          // Fallback to contentMap if a named argument was found, and not already set positionally
-          else if (contentMap.hasOwnProperty(paramName)) {
-            orderedArgsForCurrentFunc.push(contentMap[paramName]);
-            console.log(
-              "DEBUG, Fallback to contentMap if a named argument was found, and not already set positionally: boilerplate Help: line 1739\nmisSt\norderedArgsForCurrentFunc:",
-              orderedArgsForCurrentFunc,
-            );
-          }
-          // Otherwise, the parameter is missing for now
-          else {
-            orderedArgsForCurrentFunc.push(null);
-            console.log(
-              "DEBUG, the parameter is missing for now: boilerplate Help: line 1747\nmisSt\norderedArgsForCurrentFunc:",
-              orderedArgsForCurrentFunc,
-            );
-          }
-        });
+    if (argsX.length > 0) {
+      console.log("Check if there are functions to process", argsX)
+      // Check if there are functions to process
+      var allErrors = {};
+      var fParams = gsFParams(); // Assuming gsFParams is globally accessible
+      var resCount = 0;
 
+      argsX.forEach((result) => {
+        // 'result' is the function name (e.g., 'renderFile')
+        console.log("--- Inside argsX.forEach loop, BEFORE any other logic ---");
+        console.log('Current "result" (function name):', result);
         console.log(
-          "Ordered arguments for " + result + ": " + orderedArgsForCurrentFunc,
+          'Value of "initialContent" at start of this iteration:',
+          initialContent,
         );
 
-        // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
-        // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
-        declaredParams.forEach((declaredParamName, index) => {
+        console.log("argsX result " + resCount + ": " + result);
+        var args = {}; // Arguments for the current function call
+        var resolvedArgs = []; // Resolved arguments array for the current function
+        var missingParams = []; // Parameters that couldn't be resolved
+
+        var searchString = fParams.find((fP) => fP.name === result);
+        var declaredParams = []; // Initialize here for wider scope
+
+        if (searchString && searchString.parameters) {
+          declaredParams = searchString.parameters;
           console.log(
-            "DEBUG: boilerplate Help: line 2347\nmisSt\norderedArgsForCurrentFunc:",
-            orderedArgsForCurrentFunc,
-          );
-          let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
-
-          console.log(
-            'Value of "' + declaredParamName + '" (userProvidedValue):',
-            userProvidedValue,
+            "Current initialContent: " +
+              initialContent +
+              "\nDeclared parameters for " +
+              result +
+              ": " +
+              declaredParams,
           );
 
-          // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
-          // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-          if (userProvidedValue === null && userProvidedValue == undefined) {
-            if (declaredParamName === "e") {
-              args["e"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                objectOfS(
-                  ["parameter"],
-                  [
-                    [
-                      ["func", result],
-                      [
-                        "args",
-                        typeof initialContent === "object"
-                          ? JSON.stringify(initialContent)
-                          : initialContent,
-                      ],
-                      ["action", "getData"],
-                      ["file", "uiAccess"],
-                    ],
-                  ],
-                  functionRegistry.time,
-                );
-              resolvedArgs.push(JSON.stringify(args["e"]));
-            } else if (declaredParamName === "time") {
-              args["time"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                functionRegistry.time;
-              resolvedArgs.push(args["time"]);
-            } else if (declaredParamName === "data") {
-              // if (
-              //   userProvidedValue !== null &&
-              //   userProvidedValue !== undefined &&
-              //   Array.isArray(userProvidedValue)
-              // ) {
-              //   args["data"] = userProvidedValue;
-              // } else {
-              // var rndE = objectOfS(
-              //   ["parameter"],
-              //   [
-              //     [
-              //       ["func", "mis"],
-              //       ["args", [result, ...initialContent]],
-              //     ],
-              //   ],
-              //   functionRegistry.time,
-              // );
-              // var funcUnoMis = rndE.parameter["func"];
-              // var funcDosMis = rndE.parameter["args"];
-              // var payLoad = null; // Initialize payLoad
+          // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
+          // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
+          var orderedArgsForCurrentFunc = [];
+          var contentMap = {}; // Reset contentMap for each function
 
-              // // Ensure globalThis[funcUnoMis] exists before calling
-              // if (funcUnoMis === "misSt") {
-              //   // Prevent infinite recursion
-              //   console.warn(
-              //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
-              //   );
-              //   payLoad = "Recursive call prevented.";
-              // } else if (typeof globalThis[funcUnoMis] === "function") {
-              //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
-              // } else {
-              //   console.warn(
-              //     "Function for 'data' parameter not found:",
-              //     funcUnoMis,
-              //   );
-              //   payLoad = "Function not found for data generation.";
-              // }
+          // First, populate contentMap with any named matches (if initialContent is not just positional)
+          // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
+          var htmlArray = [
+            `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
+          ]
+            .toString()
+            .split(" ");
+          var allFolders = functionRegistry.getFolderList();
+          if (!payLoad) {
+            var rndE = objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", result],
+                  ["args", [...initialContent]],
+                ],
+              ],
+              functionRegistry.time,
+            );
+            var funcUnoMis = rndE.parameter["func"];
+            var funcDosMis = rndE.parameter["args"];
+            var payLoad = null; // Initialize payLoad
 
-              args["data"] = { message: payLoad, timestamp: new Date() };
-              // }
-              resolvedArgs.push(args["data"]);
-            } else if (declaredParamName === "func") {
-              args["func"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                result;
-              resolvedArgs.push(args["func"]);
-            } else if (declaredParamName === "varA") {
-              console.log(
-                "Declared parameter " +
-                  declaredParamName +
-                  " is not the user provided value " +
-                  userProvidedValue +
-                  ",",
-                declaredParamName !== userProvidedValue,
+            // Ensure globalThis[funcUnoMis] exists before calling
+            if (
+              funcUnoMis.indexOf("mis") !== -1 ||
+              funcDosMis.indexOf("mis") !== -1 ||
+              funcUnoMis.indexOf("misSt") !== -1 ||
+              funcDosMis.indexOf("misSt") !== -1 ||
+              rndE.parameter["func"].indexOf("dtlsPro") !== -1 ||
+              rndE.parameter["args"].indexOf("dtlsPro") !== -1
+            ) {
+              // Prevent infinite recursion
+              console.warn(
+                "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
               );
-              // if (
-              //   userProvidedValue !== null &&
-              //   userProvidedValue !== undefined &&
-              //   userProvidedValue !== declaredParamName
-              // ) {
-              //   args["varA"] = userProvidedValue;
-              //   console.log("Error: using ", userProvidedValue);
-              // } else {
-              // Simplified random function call logic
-              let randomFuncResult = null;
-              const randomFuncName =
-                fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
-              if (
-                typeof randomFuncName === "string" &&
-                typeof globalThis[randomFuncName] === "function"
-              ) {
-                randomFuncResult = globalThis[randomFuncName]();
-                console.log("Error: using ", randomFuncName);
-              } else if (
-                typeof randomFuncName === "object" &&
-                randomFuncName !== null &&
-                randomFuncName.name &&
-                typeof globalThis[randomFuncName.name] === "function"
-              ) {
-                randomFuncResult = globalThis[randomFuncName.name].apply(
-                  this,
-                  randomFuncName.parameters || [],
-                );
-                console.log(
-                  "Error: using, " +
-                    randomFuncName.name +
-                    " with parameters " +
-                    randomFuncName.parameters,
-                );
+              payLoad = "Recursive call prevented.";
+            } else if (typeof globalThis[funcUnoMis] === "function") {
+              console.log(
+                "DEBUG, Prevent infinite recursion: boilerplate Help: line 1688\nmisSt\globalThis[funcUnoMis]:",
+                globalThis[funcUnoMis].toString(),
+              );
+              payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+            } else {
+              console.warn(
+                "Function for 'data' parameter not found:",
+                funcUnoMis,
+              );
+              payLoad = "Function not found for data generation.";
+            }
+          }
+
+          initialContent.forEach((item) => {
+            console.log(
+              "DEBUG: boilerplate Help: line 2309\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
+            declaredParams.forEach((declaredParam) => {
+              // More precise matching for named arguments or specific values
+              if (item === declaredParam) {
+                // Exact match for a declared parameter name
+                contentMap[declaredParam] = item;
               }
-              args["varA"] = randomFuncResult;
+              // If you also want to match if the item *contains* the declared param, be very careful:
+              // else if (typeof item === 'string' && item.includes(declaredParam)) {
+              //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
+              //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
+              //    contentMap[declaredParam] = item;
               // }
-              resolvedArgs.push(args["varA"]);
-            } else if (declaredParamName === "epaAUrl") {
-              // if (userProvidedValue !== null && userProvidedValue !== undefined) {
-              //   args["epaAUrl"] = userProvidedValue;
-              // } else {
-              console.log("DEBUG: Generating epaAUrl...");
-              var data = coUtility(product)[0]; // Assuming 'product' is accessible
-              console.log("DEBUG: data from coUtility:", data);
+            });
+          });
 
-              let generatedUrl = null;
-              if (data && typeof data.rndTitle !== "undefined") {
-                var test = productNamePartial(
-                  [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
-                    Math.floor(
-                      Math.random() *
-                        Math.floor(
-                          [data.rndTitle.replace(/,./g, "")]
-                            .toString()
-                            .split(" ").length,
-                        ),
-                    )
-                  ],
+          // Then, build orderedArgsForCurrentFunc based on declaredParams order
+          // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
+          declaredParams.forEach((paramName, index) => {
+            console.log(
+              "DEBUG: boilerplate Help: line 1722\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
+            // Try to get a positional argument first from initialContent
+            if (
+              initialContent[index] !== undefined &&
+              initialContent[index] !== null &&
+              paramName
+            ) {
+              orderedArgsForCurrentFunc.push(initialContent[index]);
+              console.log(
+                "DEBUG, Try to get a positional argument first from initialContent: boilerplate Help: line 1731\nmisSt\norderedArgsForCurrentFunc:",
+                orderedArgsForCurrentFunc,
+              );
+            }
+            // Fallback to contentMap if a named argument was found, and not already set positionally
+            else if (contentMap.hasOwnProperty(paramName)) {
+              orderedArgsForCurrentFunc.push(contentMap[paramName]);
+              console.log(
+                "DEBUG, Fallback to contentMap if a named argument was found, and not already set positionally: boilerplate Help: line 1739\nmisSt\norderedArgsForCurrentFunc:",
+                orderedArgsForCurrentFunc,
+              );
+            }
+            // Otherwise, the parameter is missing for now
+            else {
+              orderedArgsForCurrentFunc.push(null);
+              console.log(
+                "DEBUG, the parameter is missing for now: boilerplate Help: line 1747\nmisSt\norderedArgsForCurrentFunc:",
+                orderedArgsForCurrentFunc,
+              );
+            }
+          });
+
+          console.log(
+            "Ordered arguments for " + result + ": " + orderedArgsForCurrentFunc,
+          );
+
+          // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
+          // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
+          declaredParams.forEach((declaredParamName, index) => {
+            console.log(
+              "DEBUG: boilerplate Help: line 2347\nmisSt\norderedArgsForCurrentFunc:",
+              orderedArgsForCurrentFunc,
+            );
+            let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
+
+            console.log(
+              'Value of "' + declaredParamName + '" (userProvidedValue):',
+              userProvidedValue,
+            );
+
+            // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
+            // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
+            if (userProvidedValue === null && userProvidedValue == undefined) {
+              if (declaredParamName === "e") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result],
+                        [
+                          "args",
+                          typeof initialContent === "object"
+                            ? JSON.stringify(initialContent)
+                            : initialContent,
+                        ],
+                        ["action", "getData"],
+                        ["file", "uiAccess"],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+                resolvedArgs.push(JSON.stringify(args[declaredParamName]));
+              } else if (declaredParamName === "time") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  functionRegistry.time;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "data") {
+                // if (
+                //   userProvidedValue !== null &&
+                //   userProvidedValue !== undefined &&
+                //   Array.isArray(userProvidedValue)
+                // ) {
+                //   args[declaredParamName] = userProvidedValue;
+                // } else {
+                // var rndE = objectOfS(
+                //   ["parameter"],
+                //   [
+                //     [
+                //       ["func", "mis"],
+                //       ["args", [result, ...initialContent]],
+                //     ],
+                //   ],
+                //   functionRegistry.time,
+                // );
+                // var funcUnoMis = rndE.parameter["func"];
+                // var funcDosMis = rndE.parameter["args"];
+                // var payLoad = null; // Initialize payLoad
+
+                // // Ensure globalThis[funcUnoMis] exists before calling
+                // if (funcUnoMis === "misSt") {
+                //   // Prevent infinite recursion
+                //   console.warn(
+                //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+                //   );
+                //   payLoad = "Recursive call prevented.";
+                // } else if (typeof globalThis[funcUnoMis] === "function") {
+                //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+                // } else {
+                //   console.warn(
+                //     "Function for 'data' parameter not found:",
+                //     funcUnoMis,
+                //   );
+                //   payLoad = "Function not found for data generation.";
+                // }
+
+                args[declaredParamName] = { message: payLoad, timestamp: new Date() };
+                // }
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "func") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  result;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "varA") {
+                console.log(
+                  "Declared parameter " +
+                    declaredParamName +
+                    " is not the user provided value " +
+                    userProvidedValue +
+                    ",",
+                  declaredParamName !== userProvidedValue,
                 );
-                console.log("DEBUG: test from productNamePartial:", test);
+                // if (
+                //   userProvidedValue !== null &&
+                //   userProvidedValue !== undefined &&
+                //   userProvidedValue !== declaredParamName
+                // ) {
+                //   args[declaredParamName] = userProvidedValue;
+                //   console.log("Error: using ", userProvidedValue);
+                // } else {
+                // Simplified random function call logic
+                let randomFuncResult = null;
+                const randomFuncName =
+                  fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
+                if (
+                  typeof randomFuncName === "string" &&
+                  typeof globalThis[randomFuncName] === "function"
+                ) {
+                  randomFuncResult = globalThis[randomFuncName]();
+                  console.log("Error: using ", randomFuncName);
+                } else if (
+                  typeof randomFuncName === "object" &&
+                  randomFuncName !== null &&
+                  randomFuncName.name &&
+                  typeof globalThis[randomFuncName.name] === "function"
+                ) {
+                  randomFuncResult = globalThis[randomFuncName.name].apply(
+                    this,
+                    randomFuncName.parameters || [],
+                  );
+                  console.log(
+                    "Error: using, " +
+                      randomFuncName.name +
+                      " with parameters " +
+                      randomFuncName.parameters,
+                  );
+                }
+                args[declaredParamName] = randomFuncResult;
+                // }
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "epaAUrl") {
+                // if (userProvidedValue !== null && userProvidedValue !== undefined) {
+                //   args[declaredParamName] = userProvidedValue;
+                // } else {
+                console.log("DEBUG: Generating epaAUrl...");
+                var data = coUtility(product)[0]; // Assuming 'product' is accessible
+                console.log("DEBUG: data from coUtility:", data);
 
-                if (test && typeof test.eparegno !== "undefined") {
-                  var test2 = productRegNo(test.eparegno);
-                  console.log("DEBUG: test2 from productRegNo:", test2);
+                let generatedUrl = null;
+                if (data && typeof data.rndTitle !== "undefined") {
+                  var test = productNamePartial(
+                    [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                      Math.floor(
+                        Math.random() *
+                          Math.floor(
+                            [data.rndTitle.replace(/,./g, "")]
+                              .toString()
+                              .split(" ").length,
+                          ),
+                      )
+                    ],
+                  );
+                  console.log("DEBUG: test from productNamePartial:", test);
 
-                  if (
-                    test2 &&
-                    test2.hasOwnProperty("active_ingredients") &&
-                    test2.active_ingredients.length > 0
-                  ) {
-                    var uniqueData = [];
-                    test2.active_ingredients.forEach((ing) => {
-                      if (ing.active_ing) {
-                        var pIName = productIngName(ing.active_ing);
-                        if (typeof pIName !== "undefined") {
-                          uniqueData.push(
-                            pIName["items"] || pIName["first"] || pIName,
-                          );
-                        }
-                      }
-                    });
+                  if (test && typeof test.eparegno !== "undefined") {
+                    var test2 = productRegNo(test.eparegno);
+                    console.log("DEBUG: test2 from productRegNo:", test2);
 
-                    if (uniqueData.length > 0) {
-                      // Flatten uniqueData if it's an array of arrays
-                      let flatUniqueData = [];
-                      uniqueData.forEach((arr) => {
-                        if (Array.isArray(arr)) {
-                          flatUniqueData.push(...arr);
-                        } else {
-                          flatUniqueData.push(arr);
+                    if (
+                      test2 &&
+                      test2.hasOwnProperty("active_ingredients") &&
+                      test2.active_ingredients.length > 0
+                    ) {
+                      var uniqueData = [];
+                      test2.active_ingredients.forEach((ing) => {
+                        if (ing.active_ing) {
+                          var pIName = productIngName(ing.active_ing);
+                          if (typeof pIName !== "undefined") {
+                            uniqueData.push(
+                              pIName["items"] || pIName["first"] || pIName,
+                            );
+                          }
                         }
                       });
 
-                      const matches = flatUniqueData.filter(
-                        (ac) =>
-                          ac &&
-                          ac.eparegnumber &&
-                          String(ac.eparegnumber)
-                            .toLowerCase()
-                            .includes(String(test2.eparegno).toLowerCase()),
-                      );
+                      if (uniqueData.length > 0) {
+                        // Flatten uniqueData if it's an array of arrays
+                        let flatUniqueData = [];
+                        uniqueData.forEach((arr) => {
+                          if (Array.isArray(arr)) {
+                            flatUniqueData.push(...arr);
+                          } else {
+                            flatUniqueData.push(arr);
+                          }
+                        });
 
-                      if (matches.length > 0) {
-                        var randomKey = Math.floor(
-                          Math.random() * matches.length,
+                        const matches = flatUniqueData.filter(
+                          (ac) =>
+                            ac &&
+                            ac.eparegnumber &&
+                            String(ac.eparegnumber)
+                              .toLowerCase()
+                              .includes(String(test2.eparegno).toLowerCase()),
                         );
-                        var isDataKey = matches[randomKey];
-                        var randomCasNumber = isDataKey["casnumber"];
 
-                        console.log(
-                          "DEBUG: randomCasNumber generated:",
-                          randomCasNumber,
-                        );
-                        if (randomCasNumber) {
-                          generatedUrl =
-                            "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
-                            randomCasNumber +
-                            "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                        if (matches.length > 0) {
+                          var randomKey = Math.floor(
+                            Math.random() * matches.length,
+                          );
+                          var isDataKey = matches[randomKey];
+                          var randomCasNumber = isDataKey["casnumber"];
+
+                          console.log(
+                            "DEBUG: randomCasNumber generated:",
+                            randomCasNumber,
+                          );
+                          if (randomCasNumber) {
+                            generatedUrl =
+                              "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+                              randomCasNumber +
+                              "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-              args["epaAUrl"] = generatedUrl; // Assign the generated URL (or null if not found)
-              console.log("DEBUG: Final epaAUrl for args:", args["epaAUrl"]);
-              // }
-              resolvedArgs.push(args["epaAUrl"]);
-            } else if (
-              declaredParamName === "url" ||
-              declaredParamName === "companyNameUrl"
-            ) {
-              // if (
-              //   userProvidedValue !== null &&
-              //   userProvidedValue !== undefined &&
-              //   isValidUrl(userProvidedValue).hostname
-              // ) {
-              //   args[declaredParamName] = userProvidedValue;
-              // } else {
-              // Assuming functionRegistry.gTree and fileBrowser are accessible
-              var folder = functionRegistry.getFolderList()[numVarRnd];
-              args[declaredParamName] = fileBrowser(folder).url;
-              // }
-              resolvedArgs.push(args[declaredParamName]);
-            } else if (declaredParamName === "object") {
-              args["object"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                JSON.stringify({});
-              resolvedArgs.push(args["object"]);
-            } else if (declaredParamName === "file") {
-              var rndPage =
-                htmlArray[Math.floor(Math.random() * htmlArray.length)];
-              args["file"] =
-                // userProvidedValue !== null &&
-                // userProvidedValue !== undefined &&
-                // typeof userProvidedValue === "string" &&
-                // /<[a-z][\s\S]*>/i.test(
-                //   userProvidedValue || userProvidedValue !== "file",
-                // )
-                //   ? userProvidedValue
-                //   :
-                rndPage;
-              resolvedArgs.push(args["file"]);
-            } else if (declaredParamName === "fileX") {
-              var folderX = functionRegistry.getFolderList()[numVarRnd()];
-              var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
-              let fileXName = "undefined";
-              if (folderRoot.hasNext) {
-                var fileBulk = folderRoot.next().getFiles();
-                const fileNames = [];
-                if (fileBulk.hasNext()) {
-                  while (fileBulk.hasNext()) {
-                    var fileUrl = fileBulk.next();
-                    fileNames.push(fileUrl.getName());
-                  }
-                  if (fileNames.length > 0) {
-                    fileXName =
-                      fileNames[Math.floor(Math.random() * fileNames.length)];
+                args[declaredParamName] = generatedUrl; // Assign the generated URL (or null if not found)
+                console.log("DEBUG: Final epaAUrl for args:", args[declaredParamName]);
+                // }
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (
+                declaredParamName === "url" ||
+                declaredParamName === "companyNameUrl"
+              ) {
+                // if (
+                //   userProvidedValue !== null &&
+                //   userProvidedValue !== undefined &&
+                //   isValidUrl(userProvidedValue).hostname
+                // ) {
+                //   args[declaredParamName] = userProvidedValue;
+                // } else {
+                // Assuming functionRegistry.gTree and fileBrowser are accessible
+                var folder = functionRegistry.getFolderList()[numVarRnd];
+                args[declaredParamName] = fileBrowser(folder).url;
+                // }
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "object") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  JSON.stringify({});
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "file") {
+                var rndPage =
+                  htmlArray[Math.floor(Math.random() * htmlArray.length)];
+                args[declaredParamName] =
+                  // userProvidedValue !== null &&
+                  // userProvidedValue !== undefined &&
+                  // typeof userProvidedValue === "string" &&
+                  // /<[a-z][\s\S]*>/i.test(
+                  //   userProvidedValue || userProvidedValue !== "file",
+                  // )
+                  //   ? userProvidedValue
+                  //   :
+                  rndPage;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "fileX") {
+                var folderX = functionRegistry.getFolderList()[numVarRnd()];
+                var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
+                let fileXName = "undefined";
+                if (folderRoot.hasNext) {
+                  var fileBulk = folderRoot.next().getFiles();
+                  const fileNames = [];
+                  if (fileBulk.hasNext()) {
+                    while (fileBulk.hasNext()) {
+                      var fileUrl = fileBulk.next();
+                      fileNames.push(fileUrl.getName());
+                    }
+                    if (fileNames.length > 0) {
+                      fileXName =
+                        fileNames[Math.floor(Math.random() * fileNames.length)];
+                    }
                   }
                 }
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  fileXName;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (
+                declaredParamName === "folderX" ||
+                declaredParamName === "folder"
+              ) {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  allFolders[numVarRnd]; // allFolders should be defined or passed
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (
+                declaredParamName === "numIndex" ||
+                declaredParamName === "infinitum"
+              ) {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  numVarRnd;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "itemName") {
+                var rndItemIndex = Math.floor(
+                  Math.random() * Math.floor(globalThis.uniqueItemArray().length),
+                );
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  globalThis.uniqueItemArray()[rndItemIndex].Description;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (
+                ["tunPlay", "searchString", "rndKey", "search"].includes(
+                  declaredParamName,
+                )
+              ) {
+                var nameArray = ["tunPlay", "searchString", "rndKey", "search"]
+                var rndCoIndex = Math.floor(
+                  Math.random() * Math.floor(globalThis.uniqueCoArray().length),
+                );
+                var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
+                args[nameArray[nameArray.indexOf(declaredParamName)]] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  tiParam;
+                resolvedArgs.push(args[nameArray[nameArray.indexOf(declaredParamName)]]);
+              } else if (declaredParamName === "stringArray") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null && userProvidedValue !== undefined
+                  //   ? userProvidedValue
+                  //   :
+                  appSort(numVarRnd); // Assuming appSort is accessible
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (declaredParamName === "argsObject") {
+                args[declaredParamName] =
+                  // userProvidedValue !== null &&
+                  // userProvidedValue !== undefined &&
+                  // Array.isArray(userProvidedValue)
+                  //   ? userProvidedValue
+                  //   :
+                  JSON.stringify({ message: payLoad, timestamp: new Date() });
+                resolvedArgs.push(args[declaredParamName]);
               }
-              args["fileX"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                fileXName;
-              resolvedArgs.push(args["fileX"]);
-            } else if (
-              declaredParamName === "folderX" ||
-              declaredParamName === "folder"
-            ) {
-              args[declaredParamName] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                allFolders[numVarRnd]; // allFolders should be defined or passed
-              resolvedArgs.push(args[declaredParamName]);
-            } else if (
-              declaredParamName === "numIndex" ||
-              declaredParamName === "infinitum"
-            ) {
-              args[declaredParamName] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                numVarRnd;
-              resolvedArgs.push(args[declaredParamName]);
-            } else if (declaredParamName === "itemName") {
-              var rndItemIndex = Math.floor(
-                Math.random() * Math.floor(globalThis.uniqueItemArray().length),
-              );
-              args["itemName"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                globalThis.uniqueItemArray()[rndItemIndex].Description;
-              resolvedArgs.push(args["itemName"]);
-            } else if (
-              ["tunPlay", "searchString", "rndKey", "search"].includes(
-                declaredParamName,
-              )
-            ) {
-              var nameArray = ["tunPlay", "searchString", "rndKey", "search"];
-              var rndCoIndex = Math.floor(
-                Math.random() * Math.floor(globalThis.uniqueCoArray().length),
-              );
-              var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
-              args[nameArray[nameArray.indexOf(declaredParamName)]] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                tiParam;
-              resolvedArgs.push(
-                args[nameArray[nameArray.indexOf(declaredParamName)]],
-              );
-            } else if (declaredParamName === "stringArray") {
-              args["stringArray"] =
-                // userProvidedValue !== null && userProvidedValue !== undefined
-                //   ? userProvidedValue
-                //   :
-                appSort(numVarRnd); // Assuming appSort is accessible
-              resolvedArgs.push(args["stringArray"]);
-            } else if (declaredParamName === "argsObject") {
-              args["argsObject"] =
-                // userProvidedValue !== null &&
-                // userProvidedValue !== undefined &&
-                // Array.isArray(userProvidedValue)
-                //   ? userProvidedValue
-                //   :
-                JSON.stringify({ message: payLoad, timestamp: new Date() });
-              resolvedArgs.push(args["argsObject"]);
-            }
-          } else {
-            // Generic handler for other declared parameters not covered by specific logic
-            if (userProvidedValue !== null && userProvidedValue !== undefined) {
-              args[declaredParamName] = userProvidedValue;
             } else {
-              missingParams.push(declaredParamName);
-              args[declaredParamName] = null; // Assign null, but mark as missing
+              // Generic handler for other declared parameters not covered by specific logic
+              if (userProvidedValue !== null && userProvidedValue !== undefined) {
+                args[declaredParamName] = userProvidedValue;
+              } else {
+                missingParams.push(declaredParamName);
+                args[declaredParamName] = null; // Assign null, but mark as missing
+              }
+              resolvedArgs.push(args[declaredParamName]);
             }
-            resolvedArgs.push(args[declaredParamName]);
+          }); // End of declaredParams.forEach
+
+          if (missingParams.length === 0) {
+            // No need to reassign 'content' here. It should remain the initial input.
+            // The 'args' and 'resolvedArgs' are the output for the current function.
+          } else {
+            allErrors[result] =
+              `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+            console.error(allErrors[result]);
           }
-        }); // End of declaredParams.forEach
-
-        if (missingParams.length === 0) {
-          // No need to reassign 'content' here. It should remain the initial input.
-          // The 'args' and 'resolvedArgs' are the output for the current function.
         } else {
-          allErrors[result] =
-            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
-          console.error(allErrors[result]);
+          console.warn("No declared parameters found for function:", result);
         }
-      } else {
-        console.warn("No declared parameters found for function:", result);
+
+        console.log("Resolved arguments for " + result + ":", args);
+        console.log(
+          "Resolved parameters Array for " + result + ":",
+          resolvedArgs,
+        );
+        resCount++;
+
+        holdResolvedArgsX = resolvedArgs;
+
+        // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
+        // For now, it's scoped to each iteration.
+      }); // End of argsX.forEach
+
+      var errorKeys = Object.keys(allErrors);
+      if (errorKeys.length > 0) {
+        return allErrors;
       }
-
-      console.log("Resolved arguments for " + result + ":", args);
-      console.log(
-        "Resolved parameters Array for " + result + ":",
-        resolvedArgs,
-      );
-      resCount++;
-
-      holdResolvedArgsX = resolvedArgs;
-
-      // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
-      // For now, it's scoped to each iteration.
-    }); // End of argsX.forEach
-
-    var errorKeys = Object.keys(allErrors);
-    if (errorKeys.length > 0) {
-      return allErrors;
+    } 
+    else {
+      console.log("No functions found to call in argsX.");
     }
-  } else {
-    console.log("No functions found to call in argsX.");
+    console.log(
+      "misSt returned :\nfunc = " +
+        argsX +
+        ":\nargs = " +
+        holdResolvedArgsX?.toString().replace(/,/g, " "),
+    );
   }
-  console.log(
-    "misSt returned :\nfunc = " +
-      argsX +
-      ":\nargs = " +
-      holdResolvedArgsX?.toString().replace(/,/g, " "),
-  );
   // --- Final Execution and Return ---
   // The previous structure was applying 'content' to the called functions.
   // Now, 'initialContent' holds the original args, and 'resolvedArgs' (from the loop) holds the processed args per function.
@@ -2206,17 +2274,20 @@ var misSt = function (func, someArgs) {
           console.log(
             `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
           );
-        } catch (e) {
+        } 
+        catch (e) {
           console.error(
             `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
           );
           finalResultData = `Error calling function: ${e.toString()}`;
         }
-      } else {
+      } 
+      else {
         console.error("Function not found:", funcToCall);
         finalResultData = `Function not found: ${funcToCall}`;
       }
-    } else {
+    } 
+    else {
       // Multiple functions in argsX
       finalResultData = [];
       argsX.forEach((funcName, index) => {
@@ -2271,10 +2342,7 @@ var misSt = function (func, someArgs) {
 
 var paramVals = function (funcInfo) {
   console.log(
-    "boilerplate Help : line 2267\nparamVals(funcInfo: " +
-      funcInfo +
-      ")\n " +
-      arguments.callee.caller.name,
+    "boilerplate Help : line 2267\nparamVals(funcInfo: " + funcInfo +")\n " + arguments.callee.caller.name,
   );
   var fParams = gsFParams();
   var result = fParams.find((rndS) => {
@@ -2299,315 +2367,478 @@ var resolveParams = function (func, someArgs) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  var funcUno = decodeURIComponent(func);
-  var funcDos = decodeURIComponent(someArgs);
-  var numVarRnd = randNum(
-    arguments.callee.caller.name || arguments.callee.name,
-  );
-  var argsX = [];
-  var content = [];
-  var keys = [
-    funcDos !== "undefined"
-      ? [funcUno].concat([Object.values(funcDos)])
-      : [funcUno],
-  ]
-    .toString()
-    .split(",");
-  keys.forEach((pro) => {
-    var bPro = crmT(pro);
-    if (bPro >= 0) {
-      argsX.push(gsFiles()[bPro]);
-    } else {
-      content.push(pro);
+  var trueFunc = isTruthy(func);
+  var trueSomeArgs = isTruthy(someArgs);
+  var funcUno =  trueFunc? decodeURIComponent(func) : functionRegistry.paramsList;
+  var funcDos = trueSomeArgs? decodeURIComponent(someArgs) : trueSomeArgs;
+  // var numVarRnd = randNum(
+  //   arguments.callee.caller.name || arguments.callee.name,
+  // );
+  if (funcUno || funcDos) {
+    var argsX = [];
+    var content = [];
+    var arrUno = Array.isArray(func);
+    var arrDos = isTruthy(someArgs);
+    if (arrUno && arrDos) {
+      var keys = Object.values(func).concat(someArgs);
     }
-  });
-  if (argsX) {
-    var allErrors = {};
-    var fParams = gsFParams();
-    var resCount = 0;
-    argsX.forEach((result) => {
-      console.log("argsX result " + resCount + ": " + result);
-      var args = {};
-      var resolvedArgs = [];
-      var missingParams = [];
-      var searchString = fParams.find((rndS) => {
-        return rndS.name === result;
-      });
-      var orderedArgs = [];
-      if (
-        searchString &&
-        searchString !== "undefined" &&
-        searchString !== null &&
-        searchString.parameters
-      ) {
-        var declaredParams = searchString.parameters;
-        console.log(
-          "Current content: " +
-            content +
-            "\nDeclared parameters: " +
-            declaredParams,
-        );
-        var contentMap = {};
-        content.forEach((item) => {
-          declaredParams.forEach((declaredParam) => {
-            if (item !== null) {
-              if (item === declaredParam || item.includes(declaredParam)) {
-                contentMap[declaredParam] = item;
+    else 
+    if (arrUno && !arrDos) {
+      var keys = Object.values(func);
+    }
+    else 
+    if (!arrUno && arrDos) {
+      var keys = [func].concat(someArgs);
+    }
+    else 
+    if (!arrUno && !arrDos) {
+      var keys = [func];
+    }
+    keys.forEach((pro) => {
+      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro]
+      let keyProParams;
+      let realItem;
+      let keysArrArr = isTruthy(Array.isArray(pro));
+      if (keysArrArr) { 
+        let funcLimit = [];
+        let paramLimit = [];
+        pro.forEach((subParam, proIndex) => {
+          realItem = isTruthy(subParam);
+          if (realItem) {
+            keyProParams = typeof subParam === "object" || Array.isArray(subParam)? crmT(subParam[proIndex]) : crmT(subParam);
+            if (keyProParams >= 0) {
+              funcLimit.push(gsFiles()[keyProParams]);
+            } 
+            else {
+              // keyProParams = ;
+              if (typeof subParam === "object") {
+                paramLimit.push(subParam);
+              }
+              else if (Array.isArray(subParam)) {
+                paramLimit.push(subParam[proIndex])
+              }
+              else {
+                paramLimit.push(subParam);
+              }
+            }
+          }
+        });
+        if (funcLimit.length > 0) {
+          argsX.push(funcLimit);
+        };
+        if (paramLimit.length > 0) {
+          content.push(paramLimit);
+        };
+      }
+      else {
+        realItem = isTruthy(pro);
+        if (realItem) { 
+          for (var key in keyPro) {
+            keyProParams = typeof pro === "object" || Array.isArray(pro)? crmT(pro[key]) : crmT(pro);
+            if (keyProParams >= 0) {
+              argsX.push(gsFiles()[keyProParams]);
+            } 
+            else {
+              // keyProParams = ;
+              content.push(typeof pro === "object" || Array.isArray(pro)? pro[key] : pro);
+            }
+          }
+        }
+      }
+    });
+    if (argsX) {
+      var allErrors = {};
+      var allResolutions = {};
+      var fParams = functionRegistry.paramsList //gsFParams();
+      var resCount = 0;
+      argsX.forEach((result, argsXIndex) => {
+        console.log("argsX result " + resCount + ": " + result);
+        // var callerFuncX = argsX[argsX.indexOf(func)]
+        // if (result !== callerFuncX) {
+        //   return
+        // }
+        var args = {};
+        var resolvedArgs = [];
+        var missingParams = [];
+        let contentLimit = content[argsXIndex];
+        var searchResult = fParams.find((rndS) => {
+          return rndS.name === result;
+        });
+        var orderedContent = [];
+        if (
+          searchResult &&
+          searchResult !== "undefined" &&
+          searchResult !== null &&
+          searchResult.parameters
+        ) {
+          var declaredParams = searchResult.parameters;
+          if (contentLimit?.length > 0) {
+            console.log(
+              "Current content: " +
+                contentLimit +
+                "\nDeclared parameters: " +
+                declaredParams,
+            );
+          }
+          var contentMap = {};
+          let realItem;
+          declaredParams.forEach((declaredParam, declaredParamIndex) => { // content.forEach((item) => {
+            let declaredParamArrArr = isTruthy(Array.isArray(declaredParam));
+            if (declaredParamArrArr) { 
+              let paramLimit = 0
+              declaredParam.forEach((subParam, subParamIndex) => { //item.forEach((subItem) => {
+                contentLimit.forEach((item, currentDeclaredIndex) => { // declaredParams.forEach((declaredParam) => {
+                  realItem = isTruthy(subItem);
+                  if (realItem) {
+                    // if (subItem === declaredParam) { 
+                    // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                    //   contentMap[declaredParam] = subItem;
+                    // }
+                      let currentDeclared = contentMap[declaredParam];
+                      let currentSub = subItem;
+                      currentDeclared = currentSub;
+                      paramLimit++
+                      if (contentMap.length === declaredParams.length) {
+                        return
+                      }
+                  }
+                });
+              });
+            }
+            else {
+              if (Array.isArray(contentLimit)) {
+                contentLimit.forEach((item, contentLimitIndex) => { // declaredParams.forEach((declaredParam) => {
+                  let contentLimitArrArr = isTruthy(Array.isArray(item));
+                    if (contentLimitArrArr) { 
+                      item.forEach((subItem, mapItemIndex) => {
+                        realItem = isTruthy(subItem);
+                        if (realItem) {
+                          // if (subItem === declaredParam) { 
+                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                          //   contentMap[declaredParam] = subItem;
+                          // } 
+                            let paramDKey = declaredParams[mapItemIndex]
+                            if (!contentMap[paramDKey]) {
+                              contentMap[paramDKey] = subItem;
+                            }
+                            if (contentMap[paramDKey] === subItem) {
+                              return
+                            }
+                            // for (var key in declaredParams) {
+                            // }
+                        }
+                      });
+                    }
+                    else {
+                      realItem = isTruthy(item);
+                        if (realItem) {
+                          // if (subItem === declaredParam) { 
+                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                          //   contentMap[declaredParam] = subItem;
+                          // }
+                            let paramDKey = declaredParams[contentLimitIndex]
+                            if (!contentMap[paramDKey]) {
+                              contentMap[paramDKey] = item;
+                            }
+                            if (contentMap[paramDKey] === item) {
+                              return
+                            } 
+                            // for (var key in declaredParams) {
+                            // }
+                        }
+                    }
+                });
+              }
+              else {
+                let contentArrArr = isTruthy(Array.isArray(contentLimit));
+                if (contentArrArr) {
+                }
+                else {
+                  realItem = isTruthy(contentLimit);
+                  if (realItem) {
+                    // if (subItem === declaredParam) { 
+                    // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                    //   contentMap[declaredParam] = subItem;
+                    // } 
+                      for (var key in declaredParams) {
+                        let paramDKey = declaredParams[key]
+                        if (!contentMap[paramDKey]) {
+                          contentMap[paramDKey] = contentLimit;
+                        }
+                        if (contentMap[paramDKey] === contentLimit) {
+                          return
+                        }
+                      }
+                  }
+                }
               }
             }
           });
-        });
-        declaredParams.forEach((paramName) => {
-          if (contentMap.hasOwnProperty(paramName)) {
-            orderedArgs.push(contentMap[paramName]);
-          } else {
-            orderedArgs.push(null);
-          }
-        });
-        console.log("Ordered arguments: " + orderedArgs);
-        content = orderedArgs;
-      }
-      if (content) {
-        var htmlArray = [
-          `Untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
-        ]
-          .toString()
-          .split(" ");
-        var allFolders = folderManager();
-        var uniqueCoArray = sheetCalc();
-        var uniqueItemArray = itemCalc();
-        content.forEach((paramName, index) => {
-          var declaredParamName = declaredParams[index];
-          if (
-            paramName === "e" ||
-            (paramName === null && declaredParamName === "e")
-          ) {
-            args["e"] = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", result],
-                  ["args", JSON.stringify(content)],
-                  ["action", "getData"],
-                  ["file", "uiAccess"],
-                ],
-              ],
-              functionRegistry.time,
-            );
-            resolvedArgs.push(args["e"]);
-          } else if (
-            paramName === "time" ||
-            (paramName === null && declaredParamName === "time")
-          ) {
-            args["time"] = functionRegistry.time;
-            resolvedArgs.push(args["time"]);
-          } else if (
-            paramName === "data" ||
-            (paramName === null && declaredParamName === "data")
-          ) {
-            var rndE = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", "mis"],
-                  ["args", [result, ...content]],
-                ],
-              ],
-              functionRegistry.time,
-            );
-            var funcUno = rndE.parameter["func"];
-            var funcDos = rndE.parameter["args"];
-            if (!funcUno === "resolvedParams") {
-              var payLoad = globalThis[funcUno].apply(this, funcDos);
+          declaredParams.forEach((paramName) => {
+            if (contentMap.hasOwnProperty(paramName)) {
+              orderedContent.push(contentMap[paramName]);
+            } 
+            else {
+              orderedContent.push(null);
             }
-            args["data"] = {
-              message: payLoad,
-              timestamp: new Date(),
-            };
-            resolvedArgs.push(args["data"]);
-          } else if (
-            paramName === "func" ||
-            (paramName === null && declaredParamName === "func")
-          ) {
-            args["func"] = result;
-            resolvedArgs.push(args["func"]);
-          } else if (
-            paramName === "varA" ||
-            (paramName === null && declaredParamName === "varA")
-          ) {
-            arrDRnd = appSort(numVarRnd);
-            searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
-            result = fParams.find((rndS) => {
-              return rndS.name === searchString;
-            });
-            if (typeof result === "string") {
-              args["varA"] = globalThis[result]();
-            } else if (
-              typeof result === "object" &&
-              result !== null &&
-              result.name
+          });
+          // if (orderedContent.length > 0) {
+          //   console.log("Ordered arguments: " + orderedContent);
+          // }
+          // content = orderedContent;
+        }
+        if (orderedContent) {
+          orderedContent.forEach((paramName, orderedContentIndex) => {
+            var declaredParamName = declaredParams[orderedContentIndex];
+            if (
+              paramName === "e" ||
+              (paramName === null && declaredParamName === "e")
             ) {
-              args["varA"] = globalThis[result.name].apply(result.parameters);
-            } else if (result !== null && result.name) {
-              args["varA"] = globalThis[result.name]();
-            }
-            resolvedArgs.push(args["varA"]);
-          } else if (
-            paramName === "url" ||
-            paramName ===
-              "companyNameUrl"(
-                paramName === null &&
-                  (declaredParamName === "url" ||
-                    declaredParamName === "companyNameUrl"),
-              )
-          ) {
-            functionRegistry.gTree;
-            var folder = functionRegistry.getFolderList()[numVarRnd];
-            args["url"] = fileBrowser(folder).url;
-            resolvedArgs.push(args["url"]);
-          } else if (
-            paramName === "object" ||
-            (paramName === null && declaredParamName === "object")
-          ) {
-            args["object"] = JSON.stringify({});
-            resolvedArgs.push(args["object"]);
-          } else if (
-            paramName === "file" ||
-            (paramName === null && declaredParamName === "file")
-          ) {
-            var rndPage =
-              htmlArray[
-                Math.floor(Math.random() * Math.floor(htmlArray.length))
-              ];
-            args["file"] = rndPage;
-            resolvedArgs.push(args["file"]);
-          } else if (
-            paramName === "fileX" ||
-            (paramName === null && declaredParamName === "fileX")
-          ) {
-            var folderX = allFolders[numVarRnd];
-            var folderRoot = DriveApp.getFoldersByName(folderX);
-            let fileXName = "undefined";
-            if (folderRoot.hasNext) {
-              var fileBulk = folderRoot.next().getFiles();
-              const fileNames = [];
-              if (fileBulk.hasNext()) {
-                while (fileBulk.hasNext()) {
-                  var fileUrl = fileBulk.next();
-                  fileNames.push(fileUrl.getName());
-                }
-                if (fileNames.length > 0) {
-                  fileXName =
-                    fileNames[Math.floor(Math.random() * fileNames.length)];
+              args[declaredParamName] = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", result],
+                    ["args", JSON.stringify(orderedContent)],
+                    ["action", "getData"],
+                    ["file", "uiAccess"],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "time" ||
+              (paramName === null && declaredParamName === "time")
+            ) {
+              args[declaredParamName] = functionRegistry.time;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "data" ||
+              (paramName === null && declaredParamName === "data")
+            ) {
+              var rndE = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", "mis"],
+                    ["args", [result, ...orderedContent]],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+              var funcUno = rndE.parameter["func"];
+              var funcDos = rndE.parameter["args"];
+              if (!funcUno === "resolvedParams") {
+                var payLoad = globalThis[funcUno].apply(this, funcDos);
+              }
+              args[declaredParamName] = {
+                message: payLoad,
+                timestamp: new Date(),
+              };
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "func" ||
+              (paramName === null && declaredParamName === "func")
+            ) {
+              args[declaredParamName] = result;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "varA" ||
+              (paramName === null && declaredParamName === "varA")
+            ) {
+              arrDRnd = appSort(numVarRnd);
+              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              result = fParams.find((rndS) => {
+                return rndS.name === searchResult;
+              });
+              if (typeof result === "string") {
+                args[declaredParamName] = globalThis[result]();
+              } else if (
+                typeof result === "object" &&
+                result !== null &&
+                result.name
+              ) {
+                args[declaredParamName] = globalThis[result.name].apply(result.parameters);
+              } else if (result !== null && result && result.name) {
+                args[declaredParamName] = globalThis[result.name]();
+              }
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "url" || paramName === "companyNameUrl" || 
+                  (paramName === null &&
+                    (declaredParamName === "url" ||
+                      declaredParamName === "companyNameUrl")
+                )
+            ) {
+              functionRegistry.gTree;
+              var folder = functionRegistry.getFolderList()[numVarRnd];
+              args[declaredParamName] = fileBrowser(folder).url;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "object" ||
+              (paramName === null && declaredParamName === "object")
+            ) {
+              args[declaredParamName] = JSON.stringify({});
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "file" ||
+              (paramName === null && declaredParamName === "file")
+            ) {
+              var htmlArray = [
+                `Untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
+              ]
+                .toString()
+                .split(" ");
+              var rndPage =
+                htmlArray[
+                  Math.floor(Math.random() * Math.floor(htmlArray.length))
+                ];
+              args[declaredParamName] = rndPage;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "fileX" ||
+              (paramName === null && declaredParamName === "fileX")
+            ) {
+              var allFolders = folderManager();
+              var folderX = allFolders[numVarRnd];
+              var folderRoot = DriveApp.getFoldersByName(folderX);
+              let fileXName = "undefined";
+              if (folderRoot.hasNext) {
+                var fileBulk = folderRoot.next().getFiles();
+                const fileNames = [];
+                if (fileBulk.hasNext()) {
+                  while (fileBulk.hasNext()) {
+                    var fileUrl = fileBulk.next();
+                    fileNames.push(fileUrl.getName());
+                  }
+                  if (fileNames.length > 0) {
+                    fileXName =
+                      fileNames[Math.floor(Math.random() * fileNames.length)];
+                  }
                 }
               }
-            }
-            args["fileX"] = fileXName;
-            resolvedArgs.push(args["fileX"]);
-          } else if (
-            paramName === "folderX" ||
-            paramName === "folder" ||
-            (paramName === null && declaredParamName === "folderX") ||
-            declaredParamName === "folder"
-          ) {
-            if (paramName === "folderX") {
-              args["folderX"] = allFolders[numVarRnd];
-              resolvedArgs.push(args["folderX"]);
-            } else if (paramName === "folder") {
-              args["folder"] = allFolders[numVarRnd];
-              resolvedArgs.push(args["folder"]);
-            }
-          } else if (
-            paramName === "numIndex" ||
-            (paramName === null && declaredParamName === "numIndex")
-          ) {
-            args["numIndex"] = numVarRnd;
-            resolvedArgs.push(args["numIndex"]);
-          } else if (
-            paramName === "infinitum" ||
-            (paramName === null && declaredParamName === "infinitum")
-          ) {
-            args["infinitum"] = numVarRnd;
-            resolvedArgs.push(args["infinitum"]);
-          } else if (
-            paramName === "itemName" ||
-            (paramName === null && declaredParamName === "itemName")
-          ) {
-            var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueItemArray.length),
-            );
-            args["itemName"] = uniqueItemArray[rndItemIndex].Description;
-            resolvedArgs.push(args["itemName"]);
-          } else if (
-            paramName === "tunPlay" ||
-            paramName === "searchString" ||
-            paramName === "rndKey" ||
-            paramName === "search" ||
-            (paramName === null && declaredParamName === "tunPlay") ||
-            declaredParamName === "searchString" ||
-            declaredParamName === "search" ||
-            declaredParamName === "rndKey"
-          ) {
-            var rndItemIndex = Math.floor(
-              Math.random() * Math.floor(uniqueCoArray.length),
-            );
-            var tiParam = uniqueCoArray[rndItemIndex]["title"];
-            if (paramName === "tunPlay") {
-              args["tunPlay"] = tiParam;
-              resolvedArgs.push(args["tunPlay"]);
-            } else if (paramName === "searchString") {
-              args["searchString"] = tiParam;
-              resolvedArgs.push(args["searchString"]);
-            } else if (paramName === "rndKey") {
-              args["rndKey"] = tiParam;
-              resolvedArgs.push(args["rndKey"]);
-            } else if (paramName === "search") {
-              args["search"] = tiParam;
-              resolvedArgs.push(args["search"]);
-            }
-          } else if (
-            paramName === "stringArray" ||
-            (paramName === null && declaredParamName === "stringArray")
-          ) {
-            args["stringArray"] = appSort(numVarRnd);
-            resolvedArgs.push(args["stringArray"]);
-          } else if (
-            paramName === "argsObject" ||
-            (paramName === null && declaredParamName === "argsObject")
-          ) {
-            var rawVar = mis("VVar");
-            args["argsObject"] = rawVar.app["myVar"];
-            resolvedArgs.push(args["argsObject"]);
-          } else {
-            if (paramName !== null) {
-              args[paramName] = paramName;
-              resolvedArgs.push(args[paramName]);
+              args[declaredParamName] = fileXName;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "folderX" ||
+              paramName === "folder" ||
+              (paramName === null && declaredParamName === "folderX") ||
+              declaredParamName === "folder"
+            ) {
+              if (paramName === "folderX") {
+                var allFolders = folderManager();
+                args[declaredParamName] = allFolders[numVarRnd];
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (paramName === "folder") {
+                var allFolders = folderManager();
+                args[declaredParamName] = allFolders[numVarRnd];
+                resolvedArgs.push(args[declaredParamName]);
+              }
+            } else if (
+              paramName === "numIndex" ||
+              (paramName === null && declaredParamName === "numIndex")
+            ) {
+              args[declaredParamName] = numVarRnd;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "infinitum" ||
+              (paramName === null && declaredParamName === "infinitum")
+            ) {
+              args[declaredParamName] = numVarRnd;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "itemName" ||
+              (paramName === null && declaredParamName === "itemName")
+            ) {
+              var uniqueItemArray = itemCalc();
+              var rndItemIndex = Math.floor(
+                Math.random() * Math.floor(uniqueItemArray.length),
+              );
+              args[declaredParamName] = uniqueItemArray[rndItemIndex].Description;
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "tunPlay" ||
+              paramName === "searchString" ||
+              paramName === "rndKey" ||
+              paramName === "search" ||
+              (paramName === null && declaredParamName === "tunPlay") ||
+              declaredParamName === "searchString" ||
+              declaredParamName === "search" ||
+              declaredParamName === "rndKey"
+            ) {
+              var uniqueCoArray = sheetCalc();
+              var rndItemIndex = Math.floor(
+                Math.random() * Math.floor(uniqueCoArray.length),
+              );
+              var tiParam = uniqueCoArray[rndItemIndex]["title"];
+              if (paramName === "tunPlay") {
+                args[declaredParamName] = tiParam;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (paramName === "searchString") {
+                args[declaredParamName] = tiParam;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (paramName === "rndKey") {
+                args[declaredParamName] = tiParam;
+                resolvedArgs.push(args[declaredParamName]);
+              } else if (paramName === "search") {
+                args[declaredParamName] = tiParam;
+                resolvedArgs.push(args[declaredParamName]);
+              }
+            } else if (
+              paramName === "stringArray" ||
+              (paramName === null && declaredParamName === "stringArray")
+            ) {
+              args[declaredParamName] = appSort(numVarRnd);
+              resolvedArgs.push(args[declaredParamName]);
+            } else if (
+              paramName === "argsObject" ||
+              (paramName === null && declaredParamName === "argsObject")
+            ) {
+              var rawVar = mis("VVar");
+              args[declaredParamName] = rawVar.app["myVar"];
+              resolvedArgs.push(args[declaredParamName]);
             } else {
-              missingParams.push(declaredParamName);
+              if (paramName !== null) {
+                args[declaredParamName] = paramName;
+                resolvedArgs.push(args[declaredParamName]);
+              } 
+              else {
+                missingParams.push(declaredParamName);
+              }
             }
+          });
+          if (missingParams.length === 0) {
+            // orderedContent = resolvedArgs;
+            allResolutions[result] = resolvedArgs;
+            // console.error(allErrors[result]);
+            console.log(allResolutions[result]);
+          } 
+          else {
+            allErrors[result] =
+              `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+            console.error(allErrors[result]);
+            console.log(allErrors[result]);
           }
-        });
-        if (missingParams.length === 0) {
-          content = resolvedArgs;
-        } else {
-          allErrors[result] =
-            `Error: Missing parameters for ${result}: ${missingParams.join(", ")}`;
-          console.error(allErrors[result]);
-          console.log(allErrors[result]);
         }
+        if (Object.keys(args).length > 0) {
+          console.log("Resolved arguments:", args);
+        }
+        if (resolvedArgs.length > 0) {
+          console.log("Resolved parameters Array:", resolvedArgs);
+        }
+          resCount++;
+      });
+      var errorKeys = Object.keys(allErrors);
+      if (errorKeys.length > 0) {
+        return allErrors;
       }
-      console.log("Resolved arguments:", args);
-      console.log("Resolved parameters Array:", resolvedArgs);
-      resCount++;
-    });
-    var errorKeys = Object.keys(allErrors);
-    if (errorKeys.length > 0) {
-      return allErrors;
+    } 
+    else {
+      console.log("No function parameters found for:", searchString);
     }
-  } else {
-    console.log("No function parameters found for:", searchString);
+    return allResolutions;
   }
-  return content;
 };
 // ? console.log("funcUno = " + typeof funcUno)
 // : console.error("funcUno = " + typeof funcUno);
@@ -2643,10 +2874,7 @@ var resolveParams = function (func, someArgs) {
 
 var seoCapital = function (url) {
   console.log(
-    "boilerplate Help : line 2635\nseoCapital(url: " +
-      url +
-      ")\n " +
-      arguments.callee.caller.name,
+    "boilerplate Help : line 2635\nseoCapital(url: " + url +")\n " + arguments.callee.caller.name,
   );
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>
@@ -2800,11 +3028,12 @@ var seoPastTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
-    items = [{ Description: searchString }];
+    items = [{ "Description": searchString }];
   }
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString = items[rndItenIndex]["Description"]
+  var searchString 
+  = items[rndItenIndex]["Description"]
     .split(" ")
     .sort((a, b) => {
       const priorityA = getZuluFreqPriority(a.toLowerCase());
@@ -3098,12 +3327,7 @@ var vidFactor = function (data, time) {
 };
 
 var vidPlaylist = function (tunPlay) {
-  console.log(
-    "boilerplate Help : line 3087\n(tunPlay:" +
-      tunPlay +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
+  console.log("boilerplate Help : line 3087\n(tunPlay:" + tunPlay + ")\n " + arguments.callee.caller.name);
   console.log(
     functionRegistry.time +
       "\n" +
