@@ -1679,7 +1679,7 @@ var misSt = function (func, someArgs) {
       }
     });
 
-    let holdResolvedArgsX;
+    var holdResolvedArgsX;
 
     if (argsX.length > 0) {
       console.log("Check if there are functions to process", argsX);

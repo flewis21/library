@@ -1116,15 +1116,15 @@ var seoBites = function (searchString, idArray, time) {
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
   }
-  const uniqueSeo = [];
-  const searchWords = [];
+  let uniqueSeo = [];
+  let searchWords = [];
   searchString
     ? searchString
     : (searchString = globalThis.searchString().myNewArr);
   if (typeof searchString === "object") {
     searchString = searchString.parameter["func"];
   }
-  const searchUI = [searchString].join("").split(" ");
+  let searchUI = [searchString].join("").split(" ");
   searchUI.map((l) => {
     var elaspeTime = functionRegistry.time;
     // console.log(
@@ -1161,6 +1161,9 @@ var seoBites = function (searchString, idArray, time) {
         }
       }
     });
+  }
+  if (uniqueSeo.length === 0) {
+    uniqueSeo = idArray;
   }
   return uniqueSeo;
 };
@@ -1232,19 +1235,19 @@ var seoPictTime = function (searchString, time) {
   if (typeof searchString === "object") {
     searchString = searchString.parameter["func"];
   }
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nsearchString is !" +
-      !searchString +
-      " = " +
-      searchString +
-      "\ntime is !" +
-      !time +
-      " = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nsearchString is !" +
+  //     !searchString +
+  //     " = " +
+  //     searchString +
+  //     "\ntime is !" +
+  //     !time +
+  //     " = " +
+  //     time,
+  // );
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
   }
@@ -1260,13 +1263,13 @@ var seoPictTime = function (searchString, time) {
   var altSearch = seoSheet(searchString, time);
   var listSearch = altSearch.keyWords;
   var rndListKey = Math.floor(Math.random() * Math.floor(listSearch.length));
+  var testSearch = listSearch[rndListKey];
   if (
     [searchString]
       .toString()
       .toLowerCase()
-      .includes([listSearch[rndListKey]].toString().toLowerCase())
+      .includes([testSearch].toString().toLowerCase())
   ) {
-    var testSearch = listSearch[rndListKey];
     console.log(
       formatTime(functionRegistry.time) +
         "\nseoPictTime: \n[" +
@@ -1287,47 +1290,49 @@ var seoPictTime = function (searchString, time) {
     time + ")",
   );
   var uniqueVid = seoPictures(searchString, time);
-  var sorFndOrd = uniqueVid.filter((vidObject) => {
+  var sorFndOrd = [];
+  uniqueVid.results.forEach((vidObject) => {
     var elaspeTime = functionRegistry.time;
     var timeToExecute = functionRegistry.timeLeftToExecute;
-    var i = 0;
-    var l = [vidObject].join("").split(" ").length;
-    for (i, l; i < l; i++) {
-      var res = [vidObject].join("").split(" ")[i];
-      if (res.indexOf("https") > -1 && res.indexOf("<!DOCTYPE html>") === -1) {
-        return vidObject;
-      }
+    var res = [vidObject].join("").split(" ");
+    let wHttps = res[0].indexOf("https");
+    let wDoct = res[0].indexOf("<!DOCTYPE");
+    if (res[0].indexOf("https") > -1 && res[0].indexOf("<!DOCTYPE") === -1) {
+       sorFndOrd.push(vidObject);
     }
   });
+  if (sorFndOrd.length === 0) {
+    sorFndOrd = uniqueVid
+  }
   var fndOrd = [];
   var i = 0;
   var l = sorFndOrd.length;
   for (i, l; i < l; i++) {
-    sorFndOrd.sort((a, b) => {
-      console.log(
-        formatTime(functionRegistry.time) +
-          "\nseoPictTime: \n" +
-          a +
-          ".toLowerCase() === " +
-          sorFndOrd[i] +
-          ".toLowerCase() " +
-          a.toLowerCase() ===
-          sorFndOrd[i].toLowerCase(),
-      );
-      if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
-        console.log(
-          formatTime(functionRegistry.time) +
-            "\nseoPictTime: \nfndOrd.indexOf(" +
-            a +
-            ") > -1 " +
-            fndOrd.indexOf(a),
-        );
-        if (fndOrd.indexOf(a) > -1) {
-          return;
-        }
-        fndOrd.push(a);
-      }
-    });
+    // sorFndOrd.sort((a, b) => {
+    //   console.log(
+    //     formatTime(functionRegistry.time) +
+    //       "\nseoPictTime: \n" +
+    //       a +
+    //       ".toLowerCase() === " +
+    //       sorFndOrd[i] +
+    //       ".toLowerCase() " +
+    //       a.toLowerCase() ===
+    //       sorFndOrd[i].toLowerCase(),
+    //   );
+    //   if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
+    //     console.log(
+    //       formatTime(functionRegistry.time) +
+    //         "\nseoPictTime: \nfndOrd.indexOf(" +
+    //         a +
+    //         ") > -1 " +
+    //         fndOrd.indexOf(a),
+    //     );
+    //   }
+    // });
+    if (fndOrd.indexOf(sorFndOrd[i]) > -1) {
+      return;
+    }
+    fndOrd.push(sorFndOrd[i]);
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
@@ -1335,13 +1340,13 @@ var seoPictTime = function (searchString, time) {
       var elaspeTime = functionRegistry.time;
       var timeToExecute = functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
-        console.log(
-          formatTime(functionRegistry.time) +
-            "\nseoPictTime: \ntest.indexOf(" +
-            "tse4.mm.bing.net" +
-            ") > -1 " +
-            test.indexOf("tse4.mm.bing.net"),
-        );
+        // console.log(
+        //   formatTime(functionRegistry.time) +
+        //     "\nseoPictTime: \ntest.indexOf(" +
+        //     "tse4.mm.bing.net" +
+        //     ") > -1 " +
+        //     test.indexOf("tse4.mm.bing.net"),
+        // );
         if (test.indexOf("tse4.mm.bing.net") > -1) {
           if (JSON.stringify(i) >= 3) {
             break;
@@ -1363,7 +1368,8 @@ var seoPictTime = function (searchString, time) {
     var popKind = revKind.pop();
     var rndKind = popKind.split(",");
     return { playList: rndRes.sort((a, b) => a - b) };
-  } else {
+  } 
+  else {
     return { playList: {} };
   }
 };
@@ -1383,19 +1389,19 @@ var seoPictTime = function (searchString, time) {
 // url: formUrl
 
 var seoPictures = function (searchString, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      searchString +
-      "= " +
-      !searchString +
-      "\n!" +
-      time +
-      "= " +
-      !time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     searchString +
+  //     "= " +
+  //     !searchString +
+  //     "\n!" +
+  //     time +
+  //     "= " +
+  //     !time,
+  // );
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
   }
@@ -1410,10 +1416,10 @@ var seoPictures = function (searchString, time) {
       "seoPictures: \nvar uniqueSeo = data.slice(" +
         data.indexOf(" + 'src2=' + "),
     )
-    .toString()
-    .split(" + 'src2=' + " + ")");
+    // .toString()
+    // .split(" + 'src2=' + " + ")");
   var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
-  return uniqueSeo;
+  return {results: uniqueSeo, hardLink: rndSearch};
 };
 // console.log("seoPictures: \n");var i = 0;var l = [data].join("").split(" ").length;for (i,l;i<l;i++) {var res = [data].join("").split(" ")[i]
 // if (res.indexOf("https") > -1) {console.log(res)}};console.log(uniqueSeo.join("").split('"')[6])
@@ -1450,7 +1456,8 @@ var seoTwitter = function (folderX, searchString, time) {
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
     var searchString = rndString;
-  } else if (searchString === "searchString") {
+  } 
+  else if (searchString === "searchString") {
     searchString = rndString;
   }
   while (data.length === 0) {
@@ -1462,7 +1469,8 @@ var seoTwitter = function (folderX, searchString, time) {
     });
     if (foldCounter + 1 >= minFold.length) {
       break;
-    } else {
+    } 
+    else {
       foldCounter++;
     }
   }
@@ -1475,8 +1483,12 @@ var seoTwitter = function (folderX, searchString, time) {
   //     data.push(minFold[key]);
   //   }
   // }
-  var idArray = [seoFactor(data, time).factorData].toString().split("\n");
-  var uniqueSeo = seoBites(searchString, idArray, time);
+  // var idArray = [seoFactor(data || minFold, time).factorData].toString().split("\n");
+  // let seoTruth = isTruthy(idArray);
+  // if (!seoTruth) {
+  //   idArray = minFold
+  // }
+  var uniqueSeo = seoBites(searchString, minFold, time);
   return { twiData: uniqueSeo };
 };
 // var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;var unFilData = UrlFetchApp.fetch(rndSearch,{muteHttpExceptions:true});var data = [unFilData.getContentText()];console.log("seoTwitter: \nDeclaring foldData = folderManager()");console.log(data.length);console.log(data.length);console.log(foldData[foldCounter]);console.log("seoTwitter: \nvar minFold = fileFold(" + foldData[foldCounter], searchString + ")")
@@ -1691,13 +1703,14 @@ var sheetsUrls = function (fileX, folderX, time) {
           }
         }
       });
-      let rndBogy = DriveApp.getFilesByName(
-        fileNameList.sheets[
+      let testFlight = fileNameList.sheets[
           Math.floor(Math.random() * Math.floor(fileNameList.sheets.length))
-        ],
-      )
-        .next()
-        .getId();
+        ];
+      if (testFlight) {
+        var rndBogy = DriveApp.getFilesByName(testFlight)
+          .next()
+          .getId();
+      }
       if (mineField.length === 0) {
         mineField.push(rndBogy);
       }

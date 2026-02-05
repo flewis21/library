@@ -430,15 +430,15 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
 // console.log(randomWord)
 
 var seoSheet = function (searchString, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      searchString +
-      ", = " +
-      !searchString,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     searchString +
+  //     ", = " +
+  //     !searchString,
+  // );
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
   }
@@ -446,14 +446,14 @@ var seoSheet = function (searchString, time) {
     var searchString = "sports medicine";
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\nseoSheet: \nvar " +
-      uniqueSeo +
-      " = seoTwitter(" +
-      searchString,
-    time + ").twiData",
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\nseoSheet: \nvar " +
+  //     uniqueSeo +
+  //     " = seoTwitter(" +
+  //     searchString,
+  //   time + ").twiData",
+  // );
   var fndOrd = uniqueSeo
     .join("")
     .split(" ")
@@ -627,32 +627,32 @@ var seoSheet = function (searchString, time) {
   }
   if (stringSplit) {
     var testString = testData([stringSplit], time).testArray;
-    console.log(
-      formatTime(functionRegistry.time) +
-        "\nseoSheet: \nvar " +
-        testString +
-        " = " +
-        testData([stringSplit], time).testArray,
-    );
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\nseoSheet: \nvar " +
+    //     testString +
+    //     " = " +
+    //     testData([stringSplit], time).testArray,
+    // );
   } else {
     var testString = testData([searchString], time).testArray;
-    console.log(
-      formatTime(functionRegistry.time) +
-        "\nseoSheet: \nvar " +
-        testString +
-        " = " +
-        testData([searchString], time).testArray,
-    );
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\nseoSheet: \nvar " +
+    //     testString +
+    //     " = " +
+    //     testData([searchString], time).testArray,
+    // );
   }
   var lowerCaseS = [];
   if (lowerCaseS.indexOf(testString) === -1) {
-    console.log(
-      formatTime(functionRegistry.time) +
-        "\nseoSheet: \nlowerCaseS.indexOf(" +
-        testString +
-        ") === -1: " +
-        lowerCaseS.indexOf(testString),
-    );
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\nseoSheet: \nlowerCaseS.indexOf(" +
+    //     testString +
+    //     ") === -1: " +
+    //     lowerCaseS.indexOf(testString),
+    // );
     var stringUI = [testString].join("").split(" ");
     stringUI.map((increase) => {
       var elaspeTime = new Date() - time;
@@ -665,30 +665,30 @@ var seoSheet = function (searchString, time) {
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[0][i] !== "undefined") {
-          console.log(
-            formatTime(functionRegistry.time) +
-              "\nseoSheet: \ntypeof " +
-              lowerCaseS[0][i] +
-              " !== undefined: " +
-              typeof lowerCaseS[0][i],
-          );
+          // console.log(
+          //   formatTime(functionRegistry.time) +
+          //     "\nseoSheet: \ntypeof " +
+          //     lowerCaseS[0][i] +
+          //     " !== undefined: " +
+          //     typeof lowerCaseS[0][i],
+          // );
           var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
-            console.log(
-              formatTime(functionRegistry.time) +
-                "\nseoSheet: \nlowerCaseResearch.includes(" +
-                lowerCaseSearchString +
-                "): " +
-                lowerCaseResearch.includes(lowerCaseSearchString),
-            );
+            // console.log(
+            //   formatTime(functionRegistry.time) +
+            //     "\nseoSheet: \nlowerCaseResearch.includes(" +
+            //     lowerCaseSearchString +
+            //     "): " +
+            //     lowerCaseResearch.includes(lowerCaseSearchString),
+            // );
             if (lowerCaseS.indexOf(seo) === -1) {
-              console.log(
-                functionRegistry.time +
-                  "\nseoSheet: \nlowerCaseS.indexOf(" +
-                  seo +
-                  ") === -1: " +
-                  lowerCaseS.indexOf(seo),
-              );
+              // console.log(
+              //   functionRegistry.time +
+              //     "\nseoSheet: \nlowerCaseS.indexOf(" +
+              //     seo +
+              //     ") === -1: " +
+              //     lowerCaseS.indexOf(seo),
+              // );
               var elaspeTime = new Date() - time;
               lowerCaseS.push(seo);
             }

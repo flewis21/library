@@ -558,19 +558,19 @@ var testArray = function (content) {
 };
 
 var testData = function (sourceData, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n is ! " +
-      !sourceData +
-      ", = " +
-      sourceData +
-      "\n is ! " +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n is ! " +
+  //     !sourceData +
+  //     ", = " +
+  //     sourceData +
+  //     "\n is ! " +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof time === "undefined") {
     var time = start;
   }
@@ -589,11 +589,11 @@ var testData = function (sourceData, time) {
           "\nrow: " +
           row +
           "\nelaspeTime: " +
-          elaspeTime,
+          formatTime(elaspeTime),
       );
       myArray.push([]);
       for (var col in sourceData[row]) {
-        var elaspeTime = new Date() - time;
+        // var elaspeTime = functionRegistry.time;
         console.log(
           "testData: \nmyArray - " +
             myArray +
@@ -610,7 +610,7 @@ var testData = function (sourceData, time) {
             "\ncol: " +
             col +
             "\nelaspeTime: " +
-            elaspeTime,
+            formatTime(elaspeTime),
         );
         myArray[row].push(sourceData[row][col]);
         console.log(
@@ -629,14 +629,17 @@ var testData = function (sourceData, time) {
             "]): " +
             [sourceData][row][col] +
             "\nelaspeTime: " +
-            elaspeTime,
+            formatTime(elaspeTime),
         );
       }
     }
     // console.log("testData: \nmyArray: " + spreadSheetCreate("myArraySheet",myArray,["arrayData"],myArray,time))
-  } catch (err) {
-    console.log("testData: \nerr: " + err);
-    return err;
+  } 
+  catch (err) {
+    console.log("testData: \nerr: " + err.stack);
+    return {
+      testArray: err.stack,
+    }
   }
   return {
     testArray: myArray,

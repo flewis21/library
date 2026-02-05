@@ -413,7 +413,7 @@ function edgarData()companyInfo) {console.log(companyInfo);}`);
 //}
 
 var oldSEC = function (rndTitle) {
-  var urlCompany = "<?= getScriptUrl() ?>?func=surveyPlayer&args=";
+  var urlCompany = "<?= getScriptUrl() ?>?func=createRandomFunction&args=";
   var urlTicker = "https://www.nasdaq.com/search?q=";
   var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
   const uniqueCo = sheetCalc();

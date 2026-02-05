@@ -20,7 +20,7 @@ var dtlsPict = function (snap, time) {
       time,
   );
   if (typeof time === "undefined") {
-    var time = functionRegistry.timeLeftToExecute;
+    var time = functionRegistry.time;
   }
   var allTitleData = [];
   var atdCount = 0;
@@ -53,6 +53,7 @@ var dtlsPict = function (snap, time) {
     //     }
     //   }
     // }
+    let goldFish = uiArr.forms.toString().search(snap)
     uiArr.forms.map((snapper) => {
       let hookLine = authLogic([snapper].includes(snap));
       if (hookLine) {

@@ -108,9 +108,9 @@ var appSort = function (numIndex, time) {
  *
  * @returns {string} The URL of the newly created random Google Script.
  */
-function createRandomFunction() {
+function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
-  const SCRIPT_TITLES = functionRegistry.fileList;
+  const SCRIPT_TITLES = Array(searchString) || functionRegistry.fileList;
   const SCRIPT_DESCRIPTIONS = [
     "A randomly generated script to gather insights.",
     "Please fill out this script at your leisure. Content is randomized.",
@@ -169,7 +169,7 @@ function createRandomFunction() {
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   // const funcXName = script.name;
-  Logger.log(`Random script: ${scriptTitle} - ${script.toString()}`);
+  Logger.log(`Random script: ${scriptTitle} - ${script?.toString()}`);
 
   // --- Set Basic script Properties ---
   const scriptDescription =
@@ -188,10 +188,235 @@ function createRandomFunction() {
     Math.floor(Math.random() * (MAX_SECTIONS - MIN_SECTIONS + 1)) +
     MIN_SECTIONS;
 
+  const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
+  const isRequired = Math.random() < 0.7; // 70% chance of being required
+
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
+  const userSubmit = FormApp.create(scriptTitle);
+  const sectionHeaderItem = userSubmit
+    .addSectionHeaderItem()
+    .setTitle(questionTitle + " (New Section)");
+  const checkboxGridItem = userSubmit
+    .addCheckboxGridItem()
+    .setTitle(questionTitle + " (Checkbox Grid)");
+  const gridItem = userSubmit
+    .addGridItem()
+    .setTitle(questionTitle + " (Radio Grid)");
+  const imageItem = userSubmit
+    // .addImageItem()
+    // .setTitle(questionTitle + " (Image)");
+  let vidTubeTime = needPastTime(scriptTitle);
+  let tubeArr = vidTubeTime.playList;
+  var tubeEngine = vidTubeTime.hardUrl;
+  const videoItem = userSubmit
+    .addVideoItem()
+    .setTitle(questionTitle)
+    .setHelpText(tubeEngine);
+  // Use a valid YouTube video ID
+  if (tubeArr) {
+    if (tubeArr.length > 0) {
+      let tubeUrlsArr = [];
+      tubeArr.forEach((vidId) =>{
+        let linkLocation = "https://www.youtube.com/watch?v=" + vidId
+        tubeUrlsArr.push(linkLocation)
+      })
+      let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
+      var tubeVideoUrl = tubeUrlsArr[rndTube];
+      videoItem.setVideoUrl(tubeVideoUrl); 
+    }
+  }
+  else {
+    videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
+  }
+  videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
+  const videoAlignments = [
+    FormApp.Alignment.LEFT,
+    FormApp.Alignment.CENTER,
+    FormApp.Alignment.RIGHT,
+  ];
+  videoItem.setAlignment(
+    videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+  );
+  const imgFile = seoPictTime(scriptTitle, functionRegistry.time).playList;
+  let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
+  if (rndfileImage) {
+    let deepFileDive = DriveApp.getFilesByName(rndfileImage);
+    var nextDFD = deepFileDive.hasNext()
+  }
+  if (nextDFD) { 
+    while (nextDFD) {
+      let dFile = deepFileDive
+      // Use a public image URL or provide a Blob
+      imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
+      // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+      // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+      imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+      const alignments = [
+        FormApp.Alignment.LEFT,
+        FormApp.Alignment.CENTER,
+        FormApp.Alignment.RIGHT,
+      ];
+      imageItem.setAlignment(
+        alignments[Math.floor(Math.random() * alignments.length)],
+      );
+    }
+  }
+  else {
+    const alignments = [
+      FormApp.Alignment.LEFT,
+      FormApp.Alignment.CENTER,
+      FormApp.Alignment.RIGHT,
+    ];
+    let tempSortImg = [];
+    imgFile.forEach((piece, imgFileIndex) => {
+      // while (piece) {
+      var srPiece = piece[piece.indexOf("src2=")];
+      var svPiece = piece[piece.indexOf("xmlns=")];
+      var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
+        .join("")
+        .split('"')[1];
+      if ([svPiece].indexOf("svg") > -1) {
+        var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
+          .join("")
+          .split('"')[1];
+      }
+      if (piece.indexOf("http") > -1) {
+        var elaspeTime = functionRegistry.time;
+        var timeToExecute = functionRegistry.timeLeftToExecute;
+        if (srImgRes || svImgRes) {
+          var imgUrl = srImgRes || svImgRes;
+        }
+        if ([imgUrl].join("").length > 0) {
+          if (tempSortImg.indexOf(imgUrl) !== -1) {
+            return
+          }
+          else {
+            tempSortImg.push(imgUrl)
+          }
+        }
+        // if (
+        //   timeToExecute <= 6 * 60 * 1000 &&
+        //   timeToExecute >= 5.98 * 60 * 1000
+        // ) {
+        //   console.log(
+        //     "that function: " +
+        //       arguments.callee.caller.name +
+        //       "\nthis function: " +
+        //       arguments.callee.name +
+        //       "\nTime limit six minutes",
+        //   );
+        // }
+        // if (timeToExecute <= 0.05 * 60 * 1000) {
+        //   console.log(
+        //     "piece: " +
+        //       piece[0] +
+        //       "\ntimeToExecute: " +
+        //       timeToExecute.valueOf(),
+        //   );
+        //   return;
+        // }
+        // return piece[0];
+      }
+      // return;
+      // }
+    });
+    tempSortImg.forEach((priImg) =>{
+      userSubmit.addPageBreakItem().setTitle([script].join(""));
+      userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
+      try {
+        imageItem
+          .addImageItem()
+          .setTitle(questionTitle + " storyboard")
+          .setImage(UrlFetchApp.fetch(priImg))
+          .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
+          .setAlignment(
+          alignments[Math.floor(Math.random() * alignments.length)],
+        );
+      }
+      catch (error) {
+        console.info(error.stack)
+      }
+    })
+    // Use a public image URL or provide a Blob
+    // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
+    // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+    // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+    // imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+    // const alignments = [
+    //   FormApp.Alignment.LEFT,
+    //   FormApp.Alignment.CENTER,
+    //   FormApp.Alignment.RIGHT,
+    // ];
+    // imageItem.setAlignment(
+    //   alignments[Math.floor(Math.random() * alignments.length)],
+    // );
+  }
+  if (isRequired) gridItem.setRequired(true);
+  if (Math.random() < 0.3) {
+    gridItem.setValidation(
+      FormApp.createGridValidation()
+        .requireLimitOneResponsePerColumn()
+        .build(),
+    );
+  }
+  checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
+  checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
+  if (isRequired) checkboxGridItem.setRequired(true);
+  if (Math.random() < 0.3) {
+    checkboxGridItem.setValidation(
+      FormApp.createCheckboxGridValidation()
+        .requireLimitOneResponsePerColumn()
+        .build(),
+    );
+  }
+  if (Math.random() < 0.7) {
+    sectionHeaderItem.setHelpText(
+      "This is a random section header for organization.",
+    );
+  }
+  if (isRequired) {
+    // console.info(userEMail);
+    if (!script || script?.length === 0) {
+      console.info(script?.toString() || scriptTitle);
+      // var tempObj =
+      if (!script) {
+        mapArr[scriptTitle] = [];
+        scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+      }
+      else {
+        scriptUrl = resolveParams(
+          isMapped({ a: [] }, [scriptTitle])["a"],
+        );
+      }
+    } else {
+      fileIndex = crmT(scriptTitle);
+      fileParams = functionRegistry.paramsList[fileIndex];
+      // var tempObj =
+      scriptUrl = resolveParams(
+        isMapped({ a: [...fileParams.parameters] }, [
+          scriptTitle,
+          [...fileParams.parameters],
+        ])["a"],
+      );
+    }
+  } 
+  else {
+    if (!script || script.length === 0) {
+      mapArr[scriptTitle] = [];
+      scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+    }
+    else {
+      fileIndex = crmT(scriptTitle);
+      fileParams = functionRegistry.paramsList[fileIndex];
+      mapArr[scriptTitle] = [...fileParams.parameters];
+      scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+    }
+  }
+  // scriptUrl = userSubmit.getPublishedUrl();
+  // break;
   for (let s = 0; s < numSections; s++) {
     // if (s > 0) {
     //   // Add page break for subsequent sections
@@ -218,15 +443,13 @@ function createRandomFunction() {
         // ScriptApp.EventType.ON_CHANGE,
         // ScriptApp.EventType.ON_EDIT,
         // ScriptApp.EventType.ON_EVENT_UPDATED,
-        ScriptApp.EventType.ON_FORM_SUBMIT,
-        // ScriptApp.EventType.ON_OPEN,
+        // ScriptApp.EventType.ON_FORM_SUBMIT,
+        ScriptApp.EventType.ON_OPEN,
       ];
-      const randomType =
-        eventTypes[Math.floor(Math.random() * eventTypes.length)];
+      const rndTMult = Math.floor(Math.random() * eventTypes.length)
+      const randomType = 
+        eventTypes[rndTMult];
       Logger.log(randomType);
-
-      const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
-      const isRequired = Math.random() < 0.7; // 70% chance of being required
 
       switch (randomType) {
         case ScriptApp.EventType.ON_OPEN:
@@ -236,51 +459,66 @@ function createRandomFunction() {
           const textItem = DocumentApp.openByUrl(userText);
           // .addTextItem()
           // .setTitle(questionTitle + " (Short Text)");
-          if (isRequired) {
-            console.info(textItem.getBody().getText().toString());
-            if (script.length === 0) {
-              console.info(script.toString());
-              scriptUrl = resolveParams(
-                isMapped({ a: [] }, [scriptTitle])["a"],
-              );
-            } else {
-              fileIndex = crmT(scriptTitle);
-              fileParams = functionRegistry.paramsList[fileIndex];
-              scriptUrl = resolveParams(
-                isMapped({ a: [...fileParams.parameters] }, [
-                  scriptTitle,
-                  [...fileParams.parameters],
-                ])["a"],
-              );
-            }
-          } else {
-            mapArr[scriptTitle] = [];
-            scriptUrl = isMapped(mapArr, [userText]);
-          }
+          // if (isRequired) {
+          //   console.info(textItem.getBody().getText().toString());
+          //   if (script.length === 0) {
+          //     console.info(script?.toString());
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [] }, [scriptTitle])["a"],
+          //     );
+          //   } else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [...fileParams.parameters] }, [
+          //         scriptTitle,
+          //         [...fileParams.parameters],
+          //       ])["a"],
+          //     );
+          //   }
+          // } else {
+          //   mapArr[scriptTitle] = [];
+          //   if (script.length === 0) {
+          //     scriptUrl = isMapped(mapArr, []);
+          //   }
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     mapArr[scriptTitle] = [...fileParams];
+          //     scriptUrl = isMapped(mapArr, [userText]);
+          //   }
+          // }
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL) //.createTextValidation();
+            let validationBuilder = FormApp.createTextValidation()// ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
             switch (validationType) {
               case 0:
-                validationBuilder.FRIDAY; //.requireNumber();
+                validationBuilder.requireNumber()//.FRIDAY; //;
                 break;
               case 1:
-                validationBuilder.MONDAY; //.requireTextContainsPattern("test");
+                validationBuilder.requireTextContainsPattern("test")//.MONDAY; //;
                 break;
               case 2:
-                validationBuilder.WEDNESDAY; //.requireTextIsEmail();
+                validationBuilder.requireTextIsEmail()//.WEDNESDAY; //;
                 break;
               case 3:
-                validationBuilder.THURSDAY; //.requireTextIsUrl();
+                validationBuilder.requireTextIsUrl()//.THURSDAY; //;
                 break;
               case 4:
-                validationBuilder.TUESDAY; //.requireTextLengthGreaterThanOrEqualTo(5);
+                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5)//.TUESDAY; //;
                 break;
             }
-            textItem
-              .getBody()
-              .appendListItem("Please follow the specific text rule.");
+            userSubmit
+            .addTextItem()
+            .setTitle(questionTitle + "\n" +  textItem.getBody())//.textItem
+              // .getBody()
+              // .appendListItem
+              .setValidation(
+                validationBuilder.build()
+                // .withCustomMessage("Please follow the specific text rule.")
+                // .build()
+              ).setHelpText("Please follow the specific text rule.")
           }
           break;
 
@@ -292,36 +530,48 @@ function createRandomFunction() {
           // .addParagraphTextItem()
           // .setTitle(questionTitle + " (Long Text)");
           const pChoice = DriveApp.getFileById(userChangeSheetId);
-          if (isRequired) {
-            console.info(pChoice.toString());
-            if (script.length === 0) {
-              console.info(script.toString());
-              scriptUrl = resolveParams(
-                isMapped({ a: [] }, [scriptTitle])["a"],
-              );
-            } else {
-              fileIndex = crmT(scriptTitle);
-              fileParams = functionRegistry.paramsList[fileIndex];
-              scriptUrl = resolveParams(
-                isMapped({ a: [...fileParams.parameters] }, [
-                  scriptTitle,
-                  [...fileParams.parameters],
-                ])["a"],
-              );
-            }
-          } else {
-            mapArr[scriptTitle] = [];
-            scriptUrl = isMapped(mapArr, [pChoice]);
-          }
+          // if (isRequired) {
+          //   console.info(pChoice.toString());
+          //   if (script.length === 0) {
+          //     console.info(script?.toString());
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [] }, [scriptTitle])["a"],
+          //     );
+          //   } else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [...fileParams.parameters] }, [
+          //         scriptTitle,
+          //         [...fileParams.parameters],
+          //       ])["a"],
+          //     );
+          //   }
+          // } else {
+          //   mapArr[scriptTitle] = [];
+          //   if (script.length === 0) {
+          //     scriptUrl = isMapped(mapArr, []);
+          //   }
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     mapArr[scriptTitle] = [...fileParams];
+          //     scriptUrl = isMapped(mapArr, [pChoice.getMimeType()]);
+          //   }
+          // }
           if (Math.random() < 0.3) {
             // Add random length validation
             // **** CORRECTED: Use createParagraphTextValidation() ****
             pChoice.getAccess(email());
-            // ScriptApp.createParagraphTextValidation()
-            //   .requireTextLengthGreaterThanOrEqualTo(20)
-            //   .withCustomMessage("Please write at least 20 characters.")
-            //   .build(),
-            // );
+            userSubmit
+              .addParagraphTextItem()
+              .setTitle(questionTitle + "\n" + pChoice.getDescription())
+              .setValidation(
+                FormApp.createParagraphTextValidation()
+                  .requireTextLengthGreaterThanOrEqualTo(20)
+                  .withCustomMessage("Please write at least 20 characters.")
+                  .build(),
+              );
           }
           break;
 
@@ -336,7 +586,7 @@ function createRandomFunction() {
           const mcChoices = [];
           const cbChoices = [];
           const listChoices = [];
-          const cChoice = DriveApp.getFileById(userEditSheetId).makeCopy();
+          const cChoice = DriveApp.getFileById(userEditSheetId);
           var cCId = cChoice.getId();
           const dChoice = SpreadsheetApp.openById(cCId);
           const dSheets = dChoice.getSheets();
@@ -395,27 +645,35 @@ function createRandomFunction() {
             //   .build(),
             // );
           }
-          if (isRequired) {
-            console.info(dChoice.toString());
-            if (script.length === 0) {
-              console.info(script.toString());
-              scriptUrl = resolveParams(
-                isMapped({ a: [] }, [scriptTitle])["a"],
-              );
-            } else {
-              fileIndex = crmT(scriptTitle);
-              fileParams = functionRegistry.paramsList[fileIndex];
-              scriptUrl = resolveParams(
-                isMapped({ a: [...fileParams.parameters] }, [
-                  scriptTitle,
-                  [...fileParams.parameters],
-                ])["a"],
-              );
-            }
-          } else {
-            mapArr[scriptTitle] = [];
-            scriptUrl = isMapped(mapArr, [cChoice]);
-          } // Randomly add 'Other' option
+          // if (isRequired) {
+          //   console.info(dChoice.toString());
+          //   if (script.length === 0) {
+          //     console.info(script?.toString());
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [] }, [scriptTitle])["a"],
+          //     );
+          //   } else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [...fileParams.parameters] }, [
+          //         scriptTitle,
+          //         [...fileParams.parameters],
+          //       ])["a"],
+          //     );
+          //   }
+          // } else {
+          //   mapArr[scriptTitle] = [];
+          //   if (script.length === 0) {
+          //     scriptUrl = isMapped(mapArr, []);
+          //   }
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     mapArr[scriptTitle] = [...fileParams];
+          //     scriptUrl = isMapped(mapArr, [cChoice.getMimeType()]);
+          //   }
+          // }; // Randomly add 'Other' option
           // if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
           break;
 
@@ -438,27 +696,35 @@ function createRandomFunction() {
           // const dateTimeItem =  clockTrigger// ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userSheetId).onOpen().create();
           // .addDateItem()
           // .setTitle(questionTitle + " (Date)");
-          if (isRequired) {
-            // console.info(script.toString());
-            if (script.length === 0) {
-              console.info(script.toString());
-              scriptUrl = resolveParams(
-                isMapped({ a: [] }, [scriptTitle])["a"],
-              );
-            } else {
-              fileIndex = crmT(scriptTitle);
-              fileParams = functionRegistry.paramsList[fileIndex];
-              scriptUrl = resolveParams(
-                isMapped({ a: [...fileParams.parameters] }, [
-                  scriptTitle,
-                  [...fileParams.parameters],
-                ])["a"],
-              );
-            }
-          } else {
-            mapArr[scriptTitle] = [];
-            scriptUrl = isMapped(mapArr, [new Date()]);
-          } //.setRequired(true);
+          // if (isRequired) {
+          //   // console.info(script?.toString());
+          //   if (script.length === 0) {
+          //     console.info(script?.toString());
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [] }, [scriptTitle])["a"],
+          //     );
+          //   } else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [...fileParams.parameters] }, [
+          //         scriptTitle,
+          //         [...fileParams.parameters],
+          //       ])["a"],
+          //     );
+          //   }
+          // } else {
+          //   mapArr[scriptTitle] = [];
+          //   if (script.length === 0) {
+          //     scriptUrl = isMapped(mapArr, []);
+          //   }
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     mapArr[scriptTitle] = [...fileParams];
+          //     scriptUrl = isMapped(mapArr, [new Date().getDate().toLocaleString()]);
+          //   }
+          // }; //.setRequired(true);
           // if (isRequired) script();
           // dateItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
           // dateTimeItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
@@ -480,29 +746,39 @@ function createRandomFunction() {
           // }
           // .addDurationItem()
           // .setTitle(questionTitle + " (Duration)");
-          if (isRequired) {
-            console.info(userEMail);
-            if (script.length === 0) {
-              console.info(script.toString());
-              // var tempObj =
-              scriptUrl = resolveParams(
-                isMapped({ a: [] }, [scriptTitle])["a"],
-              );
-            } else {
-              fileIndex = crmT(scriptTitle);
-              fileParams = functionRegistry.paramsList[fileIndex];
-              // var tempObj =
-              scriptUrl = resolveParams(
-                isMapped({ a: [...fileParams.parameters] }, [
-                  scriptTitle,
-                  [...fileParams.parameters],
-                ])["a"],
-              );
-            }
-          } else {
-            mapArr[scriptTitle] = [];
-            scriptUrl = isMapped(mapArr, [userEMail]);
-          }
+          // if (isRequired) {
+          //   console.info(userEMail);
+          //   if (script.length === 0) {
+          //     console.info(script?.toString());
+          //     // var tempObj =
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [] }, [scriptTitle])["a"],
+          //     );
+          //   } 
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     // var tempObj =
+          //     scriptUrl = resolveParams(
+          //       isMapped({ a: [...fileParams.parameters] }, [
+          //         scriptTitle,
+          //         [...fileParams.parameters],
+          //       ])["a"],
+          //     );
+          //   }
+          // } 
+          // else {
+          //   mapArr[scriptTitle] = [];
+          //   if (script.length === 0) {
+          //     scriptUrl = isMapped(mapArr, []);
+          //   }
+          //   else {
+          //     fileIndex = crmT(scriptTitle);
+          //     fileParams = functionRegistry.paramsList[fileIndex];
+          //     mapArr[scriptTitle] = [...fileParams];
+          //     scriptUrl = isMapped(mapArr, [userEMail]);
+          //   }
+          // }
           break;
 
         // case ScriptApp.ItemType.TIME:
@@ -544,73 +820,190 @@ function createRandomFunction() {
         // case ScriptApp.ItemType.CHECKBOX_GRID:
         //   break;
 
-        case ScriptApp.EventType.ON_FORM_SUBMIT:
-          const userSubmit = FormApp.create(scriptTitle);
-          const sectionHeaderItem = userSubmit
-            .addSectionHeaderItem()
-            .setTitle(questionTitle + " (New Section)");
-          const checkboxGridItem = userSubmit
-            .addCheckboxGridItem()
-            .setTitle(questionTitle + " (Checkbox Grid)");
-          const gridItem = userSubmit
-            .addGridItem()
-            .setTitle(questionTitle + " (Radio Grid)");
-          const imageItem = userSubmit
-            .addImageItem()
-            .setTitle(questionTitle + " (Image)");
-          const videoItem = userSubmit
-            .addVideoItem()
-            .setTitle(questionTitle + " (Video)");
-          // Use a valid YouTube video ID
-          videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
-          videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
-          const videoAlignments = [
-            FormApp.Alignment.LEFT,
-            FormApp.Alignment.CENTER,
-            FormApp.Alignment.RIGHT,
-          ];
-          videoItem.setAlignment(
-            videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-          );
-          let imgFile = dtlsPict(scriptTitle);
-          // Use a public image URL or provide a Blob
-          imageItem.setImage(DriveApp.getFilesByName(imgFile).getBlob()); // Replace with a real public image ID
-          // Or use a placeholder image if you don't want to use DriveApp and have a public URL
-          // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
-          imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
-          const alignments = [
-            FormApp.Alignment.LEFT,
-            FormApp.Alignment.CENTER,
-            FormApp.Alignment.RIGHT,
-          ];
-          imageItem.setAlignment(
-            alignments[Math.floor(Math.random() * alignments.length)],
-          );
-          if (isRequired) gridItem.setRequired(true);
-          if (Math.random() < 0.3) {
-            gridItem.setValidation(
-              FormApp.createGridValidation()
-                .requireLimitOneResponsePerColumn()
-                .build(),
-            );
-          }
-          checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
-          checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
-          if (isRequired) checkboxGridItem.setRequired(true);
-          if (Math.random() < 0.3) {
-            checkboxGridItem.setValidation(
-              FormApp.createCheckboxGridValidation()
-                .requireLimitOneResponsePerColumn()
-                .build(),
-            );
-          }
-          if (Math.random() < 0.7) {
-            sectionHeaderItem.setHelpText(
-              "This is a random section header for organization.",
-            );
-          }
-          scriptUrl = userSubmit.getPublishedUrl();
-          break;
+        // case ScriptApp.EventType.ON_FORM_SUBMIT:
+        //   const userSubmit = FormApp.create(scriptTitle);
+        //   const sectionHeaderItem = userSubmit
+        //     .addSectionHeaderItem()
+        //     .setTitle(questionTitle + " (New Section)");
+        //   const checkboxGridItem = userSubmit
+        //     .addCheckboxGridItem()
+        //     .setTitle(questionTitle + " (Checkbox Grid)");
+        //   const gridItem = userSubmit
+        //     .addGridItem()
+        //     .setTitle(questionTitle + " (Radio Grid)");
+        //   const imageItem = userSubmit
+        //     // .addImageItem()
+        //     // .setTitle(questionTitle + " (Image)");
+        //   const videoItem = userSubmit
+        //     .addVideoItem()
+        //     .setTitle(questionTitle + " (Video)");
+        //   // Use a valid YouTube video ID
+        //   videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
+        //   videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
+        //   const videoAlignments = [
+        //     FormApp.Alignment.LEFT,
+        //     FormApp.Alignment.CENTER,
+        //     FormApp.Alignment.RIGHT,
+        //   ];
+        //   videoItem.setAlignment(
+        //     videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+        //   );
+        //   let imgFile = seoPictTime(scriptTitle, functionRegistry.time).playList;
+        //   let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
+        //   if (rndfileImage) {
+        //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
+        //     var nextDFD = deepFileDive.hasNext()
+        //   }
+        //   if (nextDFD) { 
+        //     while (nextDFD) {
+        //       let dFile = deepFileDive
+        //       // Use a public image URL or provide a Blob
+        //       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
+        //       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+        //       // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+        //       imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+        //       const alignments = [
+        //         FormApp.Alignment.LEFT,
+        //         FormApp.Alignment.CENTER,
+        //         FormApp.Alignment.RIGHT,
+        //       ];
+        //       imageItem.setAlignment(
+        //         alignments[Math.floor(Math.random() * alignments.length)],
+        //       );
+        //     }
+        //   }
+        //   else {
+        //     imgFile.map((piece) => {
+        //       // while (piece) {
+        //       var srPiece = piece[piece.indexOf("src2=")];
+        //       var svPiece = piece[piece.indexOf("xmlns=")];
+        //       var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
+        //         .join("")
+        //         .split('"')[1];
+        //       if ([svPiece].indexOf("svg") > -1) {
+        //         var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
+        //           .join("")
+        //           .split('"')[1];
+        //       }
+        //       if (piece.indexOf("http") > -1) {
+        //         var elaspeTime = functionRegistry.time;
+        //         var timeToExecute = functionRegistry.timeLeftToExecute;
+        //         userSubmit.addPageBreakItem().setTitle([questionTitle].join(""));
+        //         userSubmit.addSectionHeaderItem().setTitle(piece);
+        //         if (srImgRes || svImgRes) {
+        //           var imgUrl = srImgRes || svImgRes;
+        //         }
+        //         if ([imgUrl].join("").length > 0) {
+        //           const alignments = [
+        //             FormApp.Alignment.LEFT,
+        //             FormApp.Alignment.CENTER,
+        //             FormApp.Alignment.RIGHT,
+        //           ];
+        //           imageItem
+        //             .addImageItem()
+        //             .setTitle(questionTitle + " storyboard")
+        //             .setImage(UrlFetchApp.fetch(imgUrl))
+        //             .setWidth(Math.floor(Math.random() * 300) + 200) // 200-500px width
+        //             .setAlignment(
+        //             alignments[Math.floor(Math.random() * alignments.length)],
+        //           );
+        //         }
+        //         // if (
+        //         //   timeToExecute <= 6 * 60 * 1000 &&
+        //         //   timeToExecute >= 5.98 * 60 * 1000
+        //         // ) {
+        //         //   console.log(
+        //         //     "that function: " +
+        //         //       arguments.callee.caller.name +
+        //         //       "\nthis function: " +
+        //         //       arguments.callee.name +
+        //         //       "\nTime limit six minutes",
+        //         //   );
+        //         // }
+        //         // if (timeToExecute <= 0.05 * 60 * 1000) {
+        //         //   console.log(
+        //         //     "piece: " +
+        //         //       piece[0] +
+        //         //       "\ntimeToExecute: " +
+        //         //       timeToExecute.valueOf(),
+        //         //   );
+        //         //   return;
+        //         // }
+        //         // return piece[0];
+        //       }
+        //       // return;
+        //       // }
+        //     });
+        //     // Use a public image URL or provide a Blob
+        //     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
+        //     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
+        //     // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
+        //     // imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
+        //     // const alignments = [
+        //     //   FormApp.Alignment.LEFT,
+        //     //   FormApp.Alignment.CENTER,
+        //     //   FormApp.Alignment.RIGHT,
+        //     // ];
+        //     // imageItem.setAlignment(
+        //     //   alignments[Math.floor(Math.random() * alignments.length)],
+        //     // );
+        //   }
+        //   if (isRequired) gridItem.setRequired(true);
+        //   if (Math.random() < 0.3) {
+        //     gridItem.setValidation(
+        //       FormApp.createGridValidation()
+        //         .requireLimitOneResponsePerColumn()
+        //         .build(),
+        //     );
+        //   }
+        //   checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
+        //   checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
+        //   if (isRequired) checkboxGridItem.setRequired(true);
+        //   if (Math.random() < 0.3) {
+        //     checkboxGridItem.setValidation(
+        //       FormApp.createCheckboxGridValidation()
+        //         .requireLimitOneResponsePerColumn()
+        //         .build(),
+        //     );
+        //   }
+        //   if (Math.random() < 0.7) {
+        //     sectionHeaderItem.setHelpText(
+        //       "This is a random section header for organization.",
+        //     );
+        //   }
+        //   if (isRequired) {
+        //     console.info(userEMail);
+        //     if (script.length === 0) {
+        //       console.info(script?.toString());
+        //       // var tempObj =
+        //       scriptUrl = resolveParams(
+        //         isMapped({ a: [] }, [scriptTitle])["a"],
+        //       );
+        //     } else {
+        //       fileIndex = crmT(scriptTitle);
+        //       fileParams = functionRegistry.paramsList[fileIndex];
+        //       // var tempObj =
+        //       scriptUrl = resolveParams(
+        //         isMapped({ a: [...fileParams.parameters] }, [
+        //           scriptTitle,
+        //           [...fileParams.parameters],
+        //         ])["a"],
+        //       );
+        //     }
+        //   } else {
+        //     if (script.length === 0) {
+        //       mapArr[scriptTitle] = [];
+        //       scriptUrl = isMapped(mapArr, []);
+        //     }
+        //     else {
+        //       fileIndex = crmT(scriptTitle);
+        //       fileParams = functionRegistry.paramsList[fileIndex];
+        //       mapArr[scriptTitle] = [...fileParams];
+        //       scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+        //     }
+        //   }
+        //   // scriptUrl = userSubmit.getPublishedUrl();
+        //   break;
 
         // case ScriptApp.ItemType.IMAGE:
         //   break;
@@ -622,7 +1015,7 @@ function createRandomFunction() {
   }
 
   // --- Log and Return Script URL ---
-  Logger.log(`Random script Created: ${scriptUrl}`);
+  Logger.log(`Random script Created: ${JSON.stringify(scriptUrl)}`);
   return scriptUrl;
 }
 
@@ -978,58 +1371,59 @@ var functionFlex = function (e) {
         "] " +
         JSON.stringify(e),
     );
-    var argsEd = testlt();
-    if (typeof globalThis["mis"] === "function") {
-      if (typeof argsEd === "string") {
-        e = objectOfS(
-          ["parameter"],
-          [
-            [
-              ["func", argsEd],
-              // ["args", argsEd],
-            ],
-          ],
-          functionRegistry.time,
-        );
-      } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
-        if (argsEd.parameters && argsEd.parameters.length > 0) {
-          e = objectOfS(
-            ["parameter"],
-            [
-              [
-                ["func", argsEd.name],
-                ["args", [...argsEd.parameters]],
-              ],
-            ],
-            functionRegistry.time,
-          );
-        } else {
-          e = objectOfS(
-            ["parameter"],
-            [
-              [
-                ["func", argsEd.name],
-                // ["args", argsEd.name],
-              ],
-            ],
-            functionRegistry.time,
-          );
-        }
-      } else {
-        console.log("Unexpected argsEd type: ", argsEd);
-        e = objectOfS(
-          ["parameter"],
-          [
-            [
-              ["func", "mis"],
-              ["args", "Invalid Entry"],
-            ],
-          ],
-          functionRegistry.time,
-        );
-      }
-      Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
-    }
+    // var argsEd = testlt();
+    // if (typeof globalThis["mis"] === "function") {
+    //   if (typeof argsEd === "string") {
+    //     e = objectOfS(
+    //       ["parameter"],
+    //       [
+    //         [
+    //           ["func", argsEd],
+    //           // ["args", argsEd],
+    //         ],
+    //       ],
+    //       functionRegistry.time,
+    //     );
+    //   } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
+    //     if (argsEd.parameters && argsEd.parameters.length > 0) {
+    //       e = objectOfS(
+    //         ["parameter"],
+    //         [
+    //           [
+    //             ["func", argsEd.name],
+    //             ["args", [...argsEd.parameters]],
+    //           ],
+    //         ],
+    //         functionRegistry.time,
+    //       );
+    //     } else {
+    //       e = objectOfS(
+    //         ["parameter"],
+    //         [
+    //           [
+    //             ["func", argsEd.name],
+    //             // ["args", argsEd.name],
+    //           ],
+    //         ],
+    //         functionRegistry.time,
+    //       );
+    //     }
+    //   } else {
+    //     console.log("Unexpected argsEd type: ", argsEd);
+    //     e = objectOfS(
+    //       ["parameter"],
+    //       [
+    //         [
+    //           ["func", "mis"],
+    //           ["args", "Invalid Entry"],
+    //         ],
+    //       ],
+    //       functionRegistry.time,
+    //     );
+    //   }
+    //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
+    // }
+    var e = createRandomFunction()
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
