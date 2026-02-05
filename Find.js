@@ -297,108 +297,96 @@ var matchManager = function (folderX, narrow, time) {
       let arrFileName = arrayFile.getName();
       arrFileNames.push(arrFileName);
     }
-    let goldFish = arrFileNames.toString().toLowerCase().includes([narrow].toString().toLowerCase());
+    let goldFish = arrFileNames
+      .toString()
+      .toLowerCase()
+      .includes([narrow].toString().toLowerCase());
     // while (folderFiles.hasNext() && iterationCount < maxiterations) {
     // if (goldFish) {
-      arrFileNames.forEach((arrFileName) =>{
-        // var arrayFile = folderFiles.next();
-        // let arrFileName = arrayFile.getName()
-        var fileMim = arrFileName.toLowerCase();
-        var mimeType = arrayFile.getMimeType();
-        if (fileMim.includes(arn)) {
-          if (mimeType === MimeType.GOOGLE_DOCS) {
-            docList.push(arrayFile.getName());
-          } 
-          else if (mimeType === MimeType.GOOGLE_SLIDES) {
-            slideList.push(arrayFile.getName());
-          } 
-          else if (
-            folderX === "Sheets" &&
-            mimeType === MimeType.GOOGLE_SHEETS
-          ) {
-            sheetList.push(arrayFile.getName());
-          } 
-          else if (mimeType === MimeType.GOOGLE_FORMS) {
-            formList.push(arrayFile.getName());
-          } 
-          else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
-            appTree.push(arrayFile.getName());
-          } 
-          else if (mimeType === MimeType.PNG) {
-            pngTree.push(arrayFile.getName());
-          } 
-          else if (mimeType === MimeType.PDF) {
-            pdfTree.push(arrayFile.getName());
-          }
-        }
-        if (literate < 4) {
-          literate++;
-          filesArray.push(arrayFile);
-        } 
-        else {
-          literate = 0;
-          filesArray.push(arrayFile);
-          // break;
-        }
-      });
-      while (
-        appTree.length === 0 &&
-        pngTree.length === 0 &&
-        pdfTree.length === 0 &&
-        docList.length === 0 &&
-        formList.length === 0 &&
-        slideList.length === 0 &&
-        sheetList.length === 0 &&
-        iterationCount < maxiterations
-      ) {
-        filesArray.forEach(function (file) {
-          // var fileMim = file.getName().toLowerCase();
-          var mimeType = file.getMimeType();
-          if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
-            docList.push(file.getName());
-          } 
-          else if (
-            mimeType === MimeType.GOOGLE_SLIDES &&
-            slideList.length === 0
-          ) {
-            slideList.push(file.getName());
-          } 
-          else if (
-            mimeType === MimeType.GOOGLE_SHEETS &&
-            sheetList.length === 0
-          ) {
-            sheetList.push(file.getName());
-          } 
-          else if (
-            mimeType === MimeType.GOOGLE_FORMS &&
-            formList.length === 0
-          ) {
-            formList.push(file.getName());
-          } 
-          else if (
-            mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
-            appTree.length === 0
-          ) {
-            appTree.push(file.getName());
-          } 
-          else if (mimeType === MimeType.PNG && pngTree.length === 0) {
-            pngTree.push(file.getName());
-          } 
-          else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
-            pdfTree.push(file.getName());
-          } 
-          else {
-            return;
-          }
-        });
-        if (literate < 4) {
-          literate++;
-        } 
-        else {
-          literate = 0;
-          break;
+    arrFileNames.forEach((arrFileName) => {
+      // var arrayFile = folderFiles.next();
+      // let arrFileName = arrayFile.getName()
+      var fileMim = arrFileName.toLowerCase();
+      var mimeType = arrayFile.getMimeType();
+      if (fileMim.includes(arn)) {
+        if (mimeType === MimeType.GOOGLE_DOCS) {
+          docList.push(arrayFile.getName());
+        } else if (mimeType === MimeType.GOOGLE_SLIDES) {
+          slideList.push(arrayFile.getName());
+        } else if (
+          folderX === "Sheets" &&
+          mimeType === MimeType.GOOGLE_SHEETS
+        ) {
+          sheetList.push(arrayFile.getName());
+        } else if (mimeType === MimeType.GOOGLE_FORMS) {
+          formList.push(arrayFile.getName());
+        } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+          appTree.push(arrayFile.getName());
+        } else if (mimeType === MimeType.PNG) {
+          pngTree.push(arrayFile.getName());
+        } else if (mimeType === MimeType.PDF) {
+          pdfTree.push(arrayFile.getName());
         }
       }
+      if (literate < 4) {
+        literate++;
+        filesArray.push(arrayFile);
+      } else {
+        literate = 0;
+        filesArray.push(arrayFile);
+        // break;
+      }
+    });
+    while (
+      appTree.length === 0 &&
+      pngTree.length === 0 &&
+      pdfTree.length === 0 &&
+      docList.length === 0 &&
+      formList.length === 0 &&
+      slideList.length === 0 &&
+      sheetList.length === 0 &&
+      iterationCount < maxiterations
+    ) {
+      filesArray.forEach(function (file) {
+        // var fileMim = file.getName().toLowerCase();
+        var mimeType = file.getMimeType();
+        if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
+          docList.push(file.getName());
+        } else if (
+          mimeType === MimeType.GOOGLE_SLIDES &&
+          slideList.length === 0
+        ) {
+          slideList.push(file.getName());
+        } else if (
+          mimeType === MimeType.GOOGLE_SHEETS &&
+          sheetList.length === 0
+        ) {
+          sheetList.push(file.getName());
+        } else if (
+          mimeType === MimeType.GOOGLE_FORMS &&
+          formList.length === 0
+        ) {
+          formList.push(file.getName());
+        } else if (
+          mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
+          appTree.length === 0
+        ) {
+          appTree.push(file.getName());
+        } else if (mimeType === MimeType.PNG && pngTree.length === 0) {
+          pngTree.push(file.getName());
+        } else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
+          pdfTree.push(file.getName());
+        } else {
+          return;
+        }
+      });
+      if (literate < 4) {
+        literate++;
+      } else {
+        literate = 0;
+        break;
+      }
+    }
     // }
     return {
       docs: docList,
@@ -410,8 +398,7 @@ var matchManager = function (folderX, narrow, time) {
       pdfs: pdfTree,
       fderX: xFolder,
     };
-  } 
-  else {
+  } else {
     console.warn("Folder " + folderX + " not found");
     return {
       docs: [],

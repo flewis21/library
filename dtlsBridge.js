@@ -53,7 +53,7 @@ var dtlsPict = function (snap, time) {
     //     }
     //   }
     // }
-    let goldFish = uiArr.forms.toString().search(snap)
+    let goldFish = uiArr.forms.toString().search(snap);
     uiArr.forms.map((snapper) => {
       let hookLine = authLogic([snapper].includes(snap));
       if (hookLine) {

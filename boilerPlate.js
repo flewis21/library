@@ -634,12 +634,11 @@ var testData = function (sourceData, time) {
       }
     }
     // console.log("testData: \nmyArray: " + spreadSheetCreate("myArraySheet",myArray,["arrayData"],myArray,time))
-  } 
-  catch (err) {
+  } catch (err) {
     console.log("testData: \nerr: " + err.stack);
     return {
       testArray: err.stack,
-    }
+    };
   }
   return {
     testArray: myArray,

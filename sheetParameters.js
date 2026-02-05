@@ -1298,11 +1298,11 @@ var seoPictTime = function (searchString, time) {
     let wHttps = res[0].indexOf("https");
     let wDoct = res[0].indexOf("<!DOCTYPE");
     if (res[0].indexOf("https") > -1 && res[0].indexOf("<!DOCTYPE") === -1) {
-       sorFndOrd.push(vidObject);
+      sorFndOrd.push(vidObject);
     }
   });
   if (sorFndOrd.length === 0) {
-    sorFndOrd = uniqueVid
+    sorFndOrd = uniqueVid;
   }
   var fndOrd = [];
   var i = 0;
@@ -1368,8 +1368,7 @@ var seoPictTime = function (searchString, time) {
     var popKind = revKind.pop();
     var rndKind = popKind.split(",");
     return { playList: rndRes.sort((a, b) => a - b) };
-  } 
-  else {
+  } else {
     return { playList: {} };
   }
 };
@@ -1411,15 +1410,14 @@ var seoPictures = function (searchString, time) {
     { muteHttpExceptions: true } + ")]",
   );
   var data = [UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true })];
-  console
-    .log(
-      "seoPictures: \nvar uniqueSeo = data.slice(" +
-        data.indexOf(" + 'src2=' + "),
-    )
-    // .toString()
-    // .split(" + 'src2=' + " + ")");
+  console.log(
+    "seoPictures: \nvar uniqueSeo = data.slice(" +
+      data.indexOf(" + 'src2=' + "),
+  );
+  // .toString()
+  // .split(" + 'src2=' + " + ")");
   var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
-  return {results: uniqueSeo, hardLink: rndSearch};
+  return { results: uniqueSeo, hardLink: rndSearch };
 };
 // console.log("seoPictures: \n");var i = 0;var l = [data].join("").split(" ").length;for (i,l;i<l;i++) {var res = [data].join("").split(" ")[i]
 // if (res.indexOf("https") > -1) {console.log(res)}};console.log(uniqueSeo.join("").split('"')[6])
@@ -1456,8 +1454,7 @@ var seoTwitter = function (folderX, searchString, time) {
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
     var searchString = rndString;
-  } 
-  else if (searchString === "searchString") {
+  } else if (searchString === "searchString") {
     searchString = rndString;
   }
   while (data.length === 0) {
@@ -1469,8 +1466,7 @@ var seoTwitter = function (folderX, searchString, time) {
     });
     if (foldCounter + 1 >= minFold.length) {
       break;
-    } 
-    else {
+    } else {
       foldCounter++;
     }
   }
@@ -1703,13 +1699,12 @@ var sheetsUrls = function (fileX, folderX, time) {
           }
         }
       });
-      let testFlight = fileNameList.sheets[
+      let testFlight =
+        fileNameList.sheets[
           Math.floor(Math.random() * Math.floor(fileNameList.sheets.length))
         ];
       if (testFlight) {
-        var rndBogy = DriveApp.getFilesByName(testFlight)
-          .next()
-          .getId();
+        var rndBogy = DriveApp.getFilesByName(testFlight).next().getId();
       }
       if (mineField.length === 0) {
         mineField.push(rndBogy);

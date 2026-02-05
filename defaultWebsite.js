@@ -205,9 +205,9 @@ function createRandomFunction(searchString) {
   const gridItem = userSubmit
     .addGridItem()
     .setTitle(questionTitle + " (Radio Grid)");
-  const imageItem = userSubmit
-    // .addImageItem()
-    // .setTitle(questionTitle + " (Image)");
+  const imageItem = userSubmit;
+  // .addImageItem()
+  // .setTitle(questionTitle + " (Image)");
   let vidTubeTime = needPastTime(scriptTitle);
   let tubeArr = vidTubeTime.playList;
   var tubeEngine = vidTubeTime.hardUrl;
@@ -219,16 +219,15 @@ function createRandomFunction(searchString) {
   if (tubeArr) {
     if (tubeArr.length > 0) {
       let tubeUrlsArr = [];
-      tubeArr.forEach((vidId) =>{
-        let linkLocation = "https://www.youtube.com/watch?v=" + vidId
-        tubeUrlsArr.push(linkLocation)
-      })
-      let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
+      tubeArr.forEach((vidId) => {
+        let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
+        tubeUrlsArr.push(linkLocation);
+      });
+      let rndTube = Math.floor(Math.random() * Math.floor(tubeUrlsArr.length));
       var tubeVideoUrl = tubeUrlsArr[rndTube];
-      videoItem.setVideoUrl(tubeVideoUrl); 
+      videoItem.setVideoUrl(tubeVideoUrl);
     }
-  }
-  else {
+  } else {
     videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
   }
   videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
@@ -241,14 +240,15 @@ function createRandomFunction(searchString) {
     videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
   );
   const imgFile = seoPictTime(scriptTitle, functionRegistry.time).playList;
-  let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
+  let rndfileImage =
+    imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
   if (rndfileImage) {
     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
-    var nextDFD = deepFileDive.hasNext()
+    var nextDFD = deepFileDive.hasNext();
   }
-  if (nextDFD) { 
+  if (nextDFD) {
     while (nextDFD) {
-      let dFile = deepFileDive
+      let dFile = deepFileDive;
       // Use a public image URL or provide a Blob
       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -263,8 +263,7 @@ function createRandomFunction(searchString) {
         alignments[Math.floor(Math.random() * alignments.length)],
       );
     }
-  }
-  else {
+  } else {
     const alignments = [
       FormApp.Alignment.LEFT,
       FormApp.Alignment.CENTER,
@@ -291,10 +290,9 @@ function createRandomFunction(searchString) {
         }
         if ([imgUrl].join("").length > 0) {
           if (tempSortImg.indexOf(imgUrl) !== -1) {
-            return
-          }
-          else {
-            tempSortImg.push(imgUrl)
+            return;
+          } else {
+            tempSortImg.push(imgUrl);
           }
         }
         // if (
@@ -323,7 +321,7 @@ function createRandomFunction(searchString) {
       // return;
       // }
     });
-    tempSortImg.forEach((priImg) =>{
+    tempSortImg.forEach((priImg) => {
       userSubmit.addPageBreakItem().setTitle([script].join(""));
       userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
       try {
@@ -333,13 +331,12 @@ function createRandomFunction(searchString) {
           .setImage(UrlFetchApp.fetch(priImg))
           .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
           .setAlignment(
-          alignments[Math.floor(Math.random() * alignments.length)],
-        );
+            alignments[Math.floor(Math.random() * alignments.length)],
+          );
+      } catch (error) {
+        console.info(error.stack);
       }
-      catch (error) {
-        console.info(error.stack)
-      }
-    })
+    });
     // Use a public image URL or provide a Blob
     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -357,9 +354,7 @@ function createRandomFunction(searchString) {
   if (isRequired) gridItem.setRequired(true);
   if (Math.random() < 0.3) {
     gridItem.setValidation(
-      FormApp.createGridValidation()
-        .requireLimitOneResponsePerColumn()
-        .build(),
+      FormApp.createGridValidation().requireLimitOneResponsePerColumn().build(),
     );
   }
   checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
@@ -385,11 +380,8 @@ function createRandomFunction(searchString) {
       if (!script) {
         mapArr[scriptTitle] = [];
         scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
-      }
-      else {
-        scriptUrl = resolveParams(
-          isMapped({ a: [] }, [scriptTitle])["a"],
-        );
+      } else {
+        scriptUrl = resolveParams(isMapped({ a: [] }, [scriptTitle])["a"]);
       }
     } else {
       fileIndex = crmT(scriptTitle);
@@ -402,13 +394,11 @@ function createRandomFunction(searchString) {
         ])["a"],
       );
     }
-  } 
-  else {
+  } else {
     if (!script || script.length === 0) {
       mapArr[scriptTitle] = [];
       scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
-    }
-    else {
+    } else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [...fileParams.parameters];
@@ -446,9 +436,8 @@ function createRandomFunction(searchString) {
         // ScriptApp.EventType.ON_FORM_SUBMIT,
         ScriptApp.EventType.ON_OPEN,
       ];
-      const rndTMult = Math.floor(Math.random() * eventTypes.length)
-      const randomType = 
-        eventTypes[rndTMult];
+      const rndTMult = Math.floor(Math.random() * eventTypes.length);
+      const randomType = eventTypes[rndTMult];
       Logger.log(randomType);
 
       switch (randomType) {
@@ -491,34 +480,35 @@ function createRandomFunction(searchString) {
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = FormApp.createTextValidation()// ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
+            let validationBuilder = FormApp.createTextValidation(); // ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
             switch (validationType) {
               case 0:
-                validationBuilder.requireNumber()//.FRIDAY; //;
+                validationBuilder.requireNumber(); //.FRIDAY; //;
                 break;
               case 1:
-                validationBuilder.requireTextContainsPattern("test")//.MONDAY; //;
+                validationBuilder.requireTextContainsPattern("test"); //.MONDAY; //;
                 break;
               case 2:
-                validationBuilder.requireTextIsEmail()//.WEDNESDAY; //;
+                validationBuilder.requireTextIsEmail(); //.WEDNESDAY; //;
                 break;
               case 3:
-                validationBuilder.requireTextIsUrl()//.THURSDAY; //;
+                validationBuilder.requireTextIsUrl(); //.THURSDAY; //;
                 break;
               case 4:
-                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5)//.TUESDAY; //;
+                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); //.TUESDAY; //;
                 break;
             }
             userSubmit
-            .addTextItem()
-            .setTitle(questionTitle + "\n" +  textItem.getBody())//.textItem
+              .addTextItem()
+              .setTitle(questionTitle + "\n" + textItem.getBody()) //.textItem
               // .getBody()
               // .appendListItem
               .setValidation(
-                validationBuilder.build()
+                validationBuilder.build(),
                 // .withCustomMessage("Please follow the specific text rule.")
                 // .build()
-              ).setHelpText("Please follow the specific text rule.")
+              )
+              .setHelpText("Please follow the specific text rule.");
           }
           break;
 
@@ -754,7 +744,7 @@ function createRandomFunction(searchString) {
           //     scriptUrl = resolveParams(
           //       isMapped({ a: [] }, [scriptTitle])["a"],
           //     );
-          //   } 
+          //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = functionRegistry.paramsList[fileIndex];
@@ -766,7 +756,7 @@ function createRandomFunction(searchString) {
           //       ])["a"],
           //     );
           //   }
-          // } 
+          // }
           // else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
@@ -854,7 +844,7 @@ function createRandomFunction(searchString) {
         //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
         //     var nextDFD = deepFileDive.hasNext()
         //   }
-        //   if (nextDFD) { 
+        //   if (nextDFD) {
         //     while (nextDFD) {
         //       let dFile = deepFileDive
         //       // Use a public image URL or provide a Blob
@@ -1423,7 +1413,7 @@ var functionFlex = function (e) {
     //   }
     //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
     // }
-    var e = createRandomFunction()
+    var e = createRandomFunction();
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
