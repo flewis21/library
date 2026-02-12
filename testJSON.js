@@ -1,4 +1,4 @@
-var testJSON = function (e, rows) {
+function testJSON(e, rows) {
   const myOhj = [
     { first: "Fabian", last: "Lewis" },
     { first: "Fabes", last: "Lewis" },

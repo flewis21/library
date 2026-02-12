@@ -1,4 +1,4 @@
-var finTechWebsite = function () {
+function finTechWebsite() {
   const rowsXpath = testData(
     jsonXpath("https://www.sec.gov/files/company_tickers.json"),
   );

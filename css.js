@@ -1,4 +1,4 @@
-function styleHtml() {
+var styleHtml = function () {
   const startPageUrl = getUrl(ScriptApp) + "?default";
   const content = {};
   content.utf_8 = HtmlService.createHtmlOutput(
@@ -380,7 +380,7 @@ var builtStyling = function (e) {
   return HtmlService.createHtmlOutput(htmlString).asTemplate();
 };
 
-var frameHtml = function (file, argsArray) {
+function frameHtml(file, argsArray) {
   const content = {};
   content.iframePlayer = function fPla() {
     const myObj = {

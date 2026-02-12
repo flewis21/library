@@ -1,4 +1,4 @@
-var csvDataSource = function (url, params) {
+function csvDataSource(url, params) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -143,7 +143,7 @@ var forObjects = function (data, delimiter) {
   // console.log(json[1])
 };
 
-var getSize = function (url, params) {
+function getSize(url, params) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -166,7 +166,7 @@ var getSize = function (url, params) {
   }
 };
 
-var jsonDataX = function (data) {
+function jsonDataX(data) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -212,13 +212,14 @@ async function jsonFormatter() {
   } catch (err) {
     return res.getContentText();
   }
-}
+};
+
 //console.log(obj)
 //console.log(json[obj])
 //console.log(pathArray);
 //console.log(xpath);
 
-var jsonINIT = function (json) {
+function jsonINIT(json) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -245,6 +246,7 @@ var jsonINIT = function (json) {
     console.log(err + " -:- " + url);
   }
 };
+
 //}
 // var res = UrlFetchApp.fetch(url);
 // var content = res.getContentText();
@@ -267,7 +269,7 @@ var jsonINIT = function (json) {
 // return contentApp(res.getContentText());
 // console.log(res.getContentText());
 
-var jsonXpath = function (jsonXpathDataRange) {
+function jsonXpath(jsonXpathDataRange) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -285,6 +287,7 @@ var jsonXpath = function (jsonXpathDataRange) {
   });
   return jsonXpathRowsToReturn;
 };
+
 // var jsonXpathHeadings = jsonXpathDataRange.slice(0,1);
 // var jsonXpathOutputQuery = (covObjects(jsonXpathRowsToReturn, jsonXpathHeadings));
 // var dataXpath = [urlDataSource(url, params, xpath)];
@@ -487,7 +490,7 @@ var udsCache = function (content) {
   }
 };
 
-var urlDataSource = function (url, cokey, time, xpath, maxRetries = 3) {
+function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
   console.log(
     functionRegistry.time +
       "\n" +

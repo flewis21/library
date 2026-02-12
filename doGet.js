@@ -1,4 +1,4 @@
-var buildTags = function (posHtml) {
+function buildTags(posHtml) {
   const Route = {};
 
   Route.path = function (route, callback) {
@@ -23,13 +23,8 @@ function doGet(e) {
   console.log("Object?.values(e).length", Object?.values(e));
   if (!e || noEmptyE < 1 || nonPopulatedE < 1 || e.queryString === "") {
     var getDoFunction = createRandomFunction();
-    var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [
-      Object.values(getDoFunction),
-    ]);
-    console.log(
-      `globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`,
-      finalFS,
-    );
+    var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [Object.values(getDoFunction)]);
+    console.log(`globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`, finalFS)
     return renderTemplate(
       ` <!DOCTYPE html>
           <html>
@@ -40,7 +35,7 @@ function doGet(e) {
               </div>
             </body>
           </html>`,
-      { funcResult: finalFS },
+      { funcResult: finalFS, },
       JSON.stringify(getDoFunction),
     );
     var argsEd = testlt();
@@ -300,7 +295,7 @@ function doGet(e) {
   }
 }
 
-var doGetPost = function (e) {
+function doGetPost(e) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +
@@ -368,9 +363,11 @@ function doGetStop(e) {
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
     return handleGetData();
-  } else if (e && e.parameter && e.parameter.action === "submitForm") {
+  } 
+  else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
-  } else {
+  } 
+  else {
     throw new Error("Error completing your request ");
     // return ContentService.createTextOutput("Invalid Request").setMimeType(
     //   ContentService.MimeType.TEXT,
@@ -378,7 +375,7 @@ function handleRequest(e) {
   }
 }
 
-function handleGetData() {
+function handleGetData(e) {
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
   // var pApp = payLoad.app;
@@ -476,7 +473,7 @@ function handleGetData() {
   // }
 
   // Logging
-  let rndE = createRandomFunction();
+  let rndE = createRandomFunction(e);
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -499,45 +496,85 @@ function handleGetData() {
 
   try {
     let rawFuncResult = null;
-    if (typeof globalThis[funcUno] === "function") {
-      let parsedFuncArgs = [];
-      if (funcDos) {
-        // try {
-        var parType = isPropertyOf(funcDos);
-        if (parType[0] === "object") {
-          try {
-            parsedFuncArgs = JSON.parse(funcDos);
-            if (!Array.isArray(parsedFuncArgs)) {
-              parsedFuncArgs = [parsedFuncArgs];
-            }
-          } catch (error) {
-            console.info(error.stack);
+    let rawUrlResult = isTruthy(isValidUrl(funcDos.toString()).hostname)
+    if (!rawUrlResult) {
+      // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
+        let parsedFuncArgs = [];
+      //   if (funcDos) {
+      //     // try {
+      //     var parType = isPropertyOf(funcDos);
+      //     if (parType[0] === "object") {
+      //       try {
+      //         parsedFuncArgs = JSON.parse(funcDos);
+      //         if (!Array.isArray(parsedFuncArgs)) {
+      //           parsedFuncArgs = [parsedFuncArgs];
+      //         }
+      //       } 
+      //       catch (error) {
+      //         console.info(error.stack);
+      //         if (typeof funcDos === "string") {
+      //           parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+      //         }
+      //         else if (Array.isArray(funcDos)) {
+      //           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+      //         }
+      //       }
+      //     }
+      //     // } catch (jsonError)
+      //     else {
+      //       if (!Array.isArray(funcDos)) {
+      //         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+      //       } 
+      //       else {
+              parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+      //       }
+      //     }
+      //   }
+        try {
+          if ((funcUno && typeof globalThis[funcUno] === "function "&& !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
+            rawFuncResult = mis([funcUno]);
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+          else if ((funcUno && typeof globalThis[funcUno] !== "function" && funcDos)) {
+            rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+          else if (!funcUno && funcDos) {
+            rawFuncResult = mis([parsedFuncArgs]);
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+          else {
+            rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+        } 
+        catch {
+          if ((funcUno && typeof globalThis[funcUno] === "function "&& !funcDos)) {
+            rawFuncResult = globalThis[funcUno]();
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+          else if (!funcUno && funcDos) {
+            rawFuncResult = globalThis[parsedFuncArgs]();
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+          else {
+            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
           }
         }
-        // } catch (jsonError)
-        else {
-          if (!Array.isArray(funcDos)) {
-            parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-          } else {
-            parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-          }
-        }
-      }
-      try {
-        rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      } catch {
-        rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      }
-    } else {
-      console.error(
-        `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
-      );
-      rawFuncResult = {
-        type: "error",
-        message: `Function "${funcUno}" not found.`,
-      };
+      // } 
+      // else {
+      //   console.error(
+      //     `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
+      //   );
+      //   rawFuncResult = {
+      //     type: "error",
+      //     message: `Function "${funcUno}" not found.`,
+      //   };
+      // }
+    }
+    else {
+      rawFuncResult = rndE
     }
 
     // Helper function to process any value (rawFuncResult or a nested property like .app)
@@ -611,8 +648,10 @@ function handleGetData() {
           // Use regex for object.url as well
           return { type: "url", data: content.url };
         }
-        // Add other specific object property checks here if needed
-        return { type: "object", data: content }; // Default for other objects
+        else {
+          // Add other specific object property checks here if needed
+          return { type: "object", data: content }; // Default for other objects
+        }
       }
       // 5. Default unknown
       else {
@@ -645,7 +684,14 @@ function handleGetData() {
         // Choose one of the options from the previous response based on your exact need:
 
         // Option 3: Spread all values (the arrays) of the app object
-        appProcessed = processContent(Object.values(rawFuncResult.app));
+        try {
+          if (typeof rawFuncResult.app === "object") {
+            appProcessed = processContent(Object.values(rawFuncResult.app));
+          }
+        }
+        catch (err) {
+          appProcessed = processContent(rawFuncResult.app);
+        }
 
         /*
         // Option 1: Spread the individual content arrays (most common intent)
@@ -664,7 +710,8 @@ function handleGetData() {
           rawFuncResult.app.title
         ]);
         */
-      } else {
+      } 
+      else if (rawFuncResult.app.length > 0) {
         // Handle cases where rawFuncResult.app is not a suitable object,
         // e.g., it's null, undefined, an array, or a primitive.
         // You might want to log a warning, assign a default value, or throw an error.
@@ -700,7 +747,8 @@ function handleGetData() {
         if (rawFuncResult.index && rawFuncResult.index.funcStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.funcStr;
-        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        } 
+        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.dataStr;
         }
@@ -720,32 +768,38 @@ function handleGetData() {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = `${payLoad.link}`;
-    } else if (payLoad.type === "url") {
+    } 
+    else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.data || payLoad.dataData; // Assign the URL to iframeSrc
       appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
       feed = payLoad.link;
-    } else if (payLoad.type === "jsonData") {
+    } 
+    else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = JSON.stringify(payLoad.data || payLoad.dataData, null, 2);
       feed = payLoad.link;
-    } else if (payLoad.type === "text") {
+    } 
+    else if (payLoad.type === "text") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = payLoad.link;
-    } else if (payLoad.type === "object") {
+    } 
+    else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
         appL = payLoad.data.html || payLoad.data.app || payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-      } else if (payLoad.data.url) {
+      } 
+      else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex;
         appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
         feed = `URL provided: ${payLoad.link}`;
-      } else {
+      } 
+      else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
         appL = payLoad?.dataData?.concat(
@@ -753,7 +807,8 @@ function handleGetData() {
         );
         feed = payLoad.link;
       }
-    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
+    } 
+    else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
     }
   } catch (error) {
@@ -762,8 +817,6 @@ function handleGetData() {
     // iframeSrc = ""; // Clear iframe on critical error
   }
   // --- END Refactored payLoad processing ---
-
-  Logger.log("The final value of content. " + JSON.stringify(appL));
   var data = {
     message: {
       content: payLoad.type === "text" ? iframeSrc : feed,
@@ -772,6 +825,8 @@ function handleGetData() {
     },
     timestamp: new Date(),
   };
+
+  Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // var contentData = isValidKeys(data);
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
     ContentService.MimeType.JSON,
@@ -880,7 +935,7 @@ function doPost(e) {
  * @param {string} message The message to send back.
  * @returns {GoogleAppsScript.Content.TextOutput} A ContentService TextOutput object.
  */
-function createJsonResponse(success, message) {
+var createJsonResponse = function (success, message) {
   return ContentService.createTextOutput(
     JSON.stringify({ success: success, message: message }),
   )
@@ -1055,7 +1110,7 @@ function misBing(e, time) {
   return html.evaluate().getContent();
 } //webApp closed    // })Global object closed
 
-var userClicked = function () {
+function userClicked() {
   return contentApp(
     `<script>
     
@@ -1431,7 +1486,7 @@ var userClicked = function () {
 //   return this[libFunc].apply(this, args);
 // };
 
-function runBoilerplate(func, args, callCount = 0) {
+var runBoilerplate = function (func, args, callCount = 0) {
   // === GUARDRAIL STARTS HERE ===
   const MAX_RECURSION_DEPTH = 10; // Or a more suitable number for your app
   if (callCount >= MAX_RECURSION_DEPTH) {
@@ -1452,12 +1507,16 @@ function runBoilerplate(func, args, callCount = 0) {
             1000,
         ) // Use .getTime() for Date objects
       : "N/A"; // Provide a fallback if maxTime is not defined or not a Date
-
-  console.log(
-    `Time remaining: ${timeRemaining}` +
-      `\nFunction: ${arguments.callee.name}` +
-      `\nfunc: ${func}, args: ${JSON.stringify(args)}`,
-  );
+  try { 
+    console.log(
+      `Time remaining: ${timeRemaining}` +
+        `\nFunction: ${arguments.callee.name}` +
+        `\nfunc: ${func}, args: ${JSON.stringify(args)}`,
+    );
+  }
+  catch (errerr) {
+    console.warn(errerr.stack)
+  }
   try {
     // If 'foo' is still where your functions like 'mis' are, keep this line.
     // However, if your functions like 'mis' are also global (e.g., globalThis.mis),
@@ -1541,7 +1600,7 @@ function runBoilerplate(func, args, callCount = 0) {
  * @param {GoogleAppsScript.Events.AppsScriptHttpRequestEvent} clientEObject The 'e' object sent from the client, with updated parameters.
  * @returns {GoogleAppsScript.HTML.HtmlOutput} The complete new HTML content wrapped in HtmlOutput.
  */
-function reRenderPageWithNewE(clientEObject) {
+var reRenderPageWithNewE = function (clientEObject) {
   Logger.log(
     "Server-side: reRenderPageWithNewE called with clientEObject: " +
       JSON.stringify(clientEObject),

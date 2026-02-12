@@ -1,11 +1,11 @@
-function authLogic(logic) {
+var authLogic = function (logic) {
   if (!logic) {
     let isValid = false;
     return isValid;
   }
   let isValid = true;
   return isValid;
-}
+};
 
 // async function authPromise(promise)
 // {let isValid = false;
@@ -28,12 +28,12 @@ function authLogic(logic) {
 // console.log(isValid)});
 // return isValid;}
 
-function email() {
+var email = function () {
   var emails = validateFiles();
   var emailsCount = emails.toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
-}
+};
 
 function getBreakthrough(e) {
   const list = (e) => {
@@ -142,7 +142,7 @@ function carbon(email) {
   console.log(emailList);
 }
 
-var congressLeg = function (e) {
+function congressLeg(e) {
   // var gamerUrl = (getUrl(ScriptApp) + "?default")()
   var congressInfoAPI = (function (e) {
     var congressAPIEmail = "f.lewis20.specialist19@outlook.com";
@@ -249,6 +249,7 @@ var congressLeg = function (e) {
     console.log(dashboard);
   })();
 };
+
 // return doGet("content", contentFile)("congressLeg"
 // ,{
 // gamerUrl:gamerUrl,
@@ -277,16 +278,16 @@ function pill() {
   });
   return contentApp(pill);
   //:contentFile('uiAccess')
-}
+};
 
-function randomEmail() {
+var randomEmail = function () {
   var emails = validate();
   var emailsCount = validate().toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 }
 
-var runIt = function (e) {
+function runIt(e) {
   //urlDataSource("https://www.sec.gov/files/company_tickers.json")
   if (e?.parameter["args"] === "") {
     return wwAccess("development", proMediaSnip)(e);
@@ -336,6 +337,7 @@ var runIt = function (e) {
     )(e ? e : null);
   }
 };
+
 //{ Route.path("jsonXpath", HtmlService.createHtmlOutput);}
 // {if({ }typeof e.parameter["webApp"] === "undefined")
 // { <!----WebApp Website----!>
@@ -345,7 +347,7 @@ var runIt = function (e) {
 // runIt =
 // return ss
 
-function uiAccess() {
+var uiAccess = function () {
   const isValidEmail = authLogic(validGroup());
   return authLogic(isValidEmail) ? "uiAccess" : "index";
 }

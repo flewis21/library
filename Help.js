@@ -1,4 +1,4 @@
-var crmCalc = function (func) {
+function crmCalc(func) {
   console.log(
     "boilerplate Help: line 232\ncrmCalc(func: " +
       func +
@@ -38,7 +38,7 @@ var crmCalc = function (func) {
   return funFact;
 };
 
-var crmT = function (func) {
+function crmT(func) {
   // console.log(
   //   "boilerplate Help: line 265\ncrmT(func: " +
   //     func +
@@ -79,7 +79,7 @@ var crmT = function (func) {
   return funFirst;
 };
 
-var gsFiles = function () {
+function gsFiles() {
   // console.log(
   //   "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
   // );
@@ -92,7 +92,7 @@ var gsFiles = function () {
   return gsFileList;
 };
 
-var gsFParams = function () {
+function gsFParams() {
   // console.log(
   //   "boilerplate Help: line 339\ngsFParams(: )\n " +
   //     arguments.callee.caller.name,
@@ -122,11 +122,11 @@ var gsFParams = function () {
   return gsParamsList;
 };
 
-var isValidUrl = function (text) {
+function isValidUrl(text) {
   console.log(
     "boilerplate Help: line 2036\nisValidUrl(text: " +
       text +
-      ")\n " +
+      ": " + typeof text + ")\n " +
       arguments.callee.caller.name,
   );
   // var protocol = "";
@@ -142,12 +142,13 @@ var isValidUrl = function (text) {
     /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
   var matches = text.match(urlRegex);
   allMatches = matches ? [...matches] : [];
-  if (matches) {
+  console.log("allMatches = matches ? [...matches] : []", allMatches)
+  if (allMatches) {
     let currentProtocol = "";
     let currentHostname = "";
     let currentPathname = "";
     let currentQuery = "";
-    matches.forEach((url) => {
+    allMatches.forEach((url) => {
       var protocolEnd = url.indexOf("://");
       if (protocolEnd !== -1) {
         currentProtocol = url.substring(0, protocolEnd + 3);
@@ -192,7 +193,8 @@ var isValidUrl = function (text) {
 // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
 // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
 // const pong = table.map((ping)=>{return ping.substring(0)})
-var mis = function (text, maxRetries = 3) {
+
+function mis(text, maxRetries = 3) {
   console.log(
     "boilerplate Help: line 196\nmis(text: " +
       text +
@@ -396,12 +398,12 @@ var mis = function (text, maxRetries = 3) {
       //     followRedirects: false, // Prevent automatic redirects
       //   });
       // } else {
-      //   var response = UrlFetchApp.fetch(text, {
+      //   var response = UrlFetchApp.fetch(validUrl?.hostname, {
       //     followRedirects: false, // Prevent automatic redirects
       //   });
       // }
       response = UrlFetchApp.fetch(
-        supFunc && supFunc.args ? supFunc.args : text,
+        supFunc && supFunc.args ? supFunc.args : validUrl?.hostname,
         {
           followRedirects: false, // Prevent automatic redirects
           muteHttpExceptions: true,
@@ -411,10 +413,10 @@ var mis = function (text, maxRetries = 3) {
       Logger.log("Error fetching URL: ", e.toString());
       console.error("Error fetching URL: ", e.toString());
       htmlData = "Error fetching URL: " + e.toString();
-      supUrl = text;
+      supUrl = validUrl?.hostname;
       // var form = formMaker();
       var form = formMaker(
-        [JSON.stringify(validUrl)].join("").toUpperCase(),
+        [JSON.stringify(text)].join("").toUpperCase(),
         "misForms",
         functionRegistry.time,
       );
@@ -511,7 +513,7 @@ var mis = function (text, maxRetries = 3) {
         }
         form.setConfirmationMessage("Thanks for your feedback !!");
         var responseObj = {
-          dataStr: seoPastTime(text),
+          dataStr: seoPastTime(validUrl?.hostname),
           url: form.getPublishedUrl(),
         };
       }
@@ -528,7 +530,7 @@ var mis = function (text, maxRetries = 3) {
             while (retries < maxRetries) {
               try {
                 response = UrlFetchApp.fetch(
-                  supFunc && supFunc.args ? supFunc.args : text,
+                  supFunc && supFunc.args ? supFunc.args : validUrl?.hostname,
                   {
                     followRedirects: false, // Prevent automatic redirects
                     muteHttpExceptions: true,
@@ -553,7 +555,7 @@ var mis = function (text, maxRetries = 3) {
               supUrl = location;
               // var form = formMaker();
               var form = formMaker(
-                [JSON.stringify(validUrl)].join("").toUpperCase(),
+                [JSON.stringify(text)].join("").toUpperCase(),
                 "misForms",
                 functionRegistry.time,
               );
@@ -681,7 +683,7 @@ var mis = function (text, maxRetries = 3) {
               supUrl = validUrl.hostname;
               // var form = formMaker();
               var form = formMaker(
-                [JSON.stringify(validUrl)].join("").toUpperCase(),
+                [JSON.stringify(text)].join("").toUpperCase(),
                 "misForms",
                 functionRegistry.time,
               );
@@ -1580,7 +1582,7 @@ var mis = function (text, maxRetries = 3) {
 // var uniqueCoArray = sheetCalc;
 // var uniqueItemArray = itemCalc;
 
-var misSt = function (func, someArgs) {
+function misSt(func, someArgs) {
   console.log(
     "boilerplate Help: line 1298\nmisSt(func: " +
       func +
@@ -1656,7 +1658,7 @@ var misSt = function (func, someArgs) {
           argsX.push(funcLimit);
         }
         if (paramLimit.length > 0) {
-          content.push(paramLimit);
+          initialContent.push(paramLimit);
         }
       } else {
         realItem = isTruthy(pro);
@@ -1670,7 +1672,7 @@ var misSt = function (func, someArgs) {
               argsX.push(gsFiles()[keyProParams]);
             } else {
               // keyProParams = ;
-              content.push(
+              initialContent.push(
                 typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
               );
             }
@@ -2271,78 +2273,80 @@ var misSt = function (func, someArgs) {
   // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
 
   var finalResultData = null; // To store the output of the function call(s)
-  if (argsX.length > 0) {
-    if (argsX.length === 1) {
-      var funcToCall = argsX[0];
-      // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
-      // might not be correct if `argsX` has multiple functions.
-      // Best to save the resolved args from inside the loop to a map/array.
-      // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
-      // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
-      const lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
+  if (argsX) {
+    if (argsX.length > 0) {
+      if (argsX.length === 1) {
+        var funcToCall = argsX[0];
+        // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
+        // might not be correct if `argsX` has multiple functions.
+        // Best to save the resolved args from inside the loop to a map/array.
+        // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
+        // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
+        const lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
 
-      if (typeof globalThis[funcToCall] === "function") {
-        try {
-          finalResultData = globalThis[funcToCall].apply(
-            this,
-            lastResolvedArgs,
-          );
-          console.log(
-            `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
-          );
-        } catch (e) {
-          console.error(
-            `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
-          );
-          finalResultData = `Error calling function: ${e.toString()}`;
-        }
-      } else {
-        console.error("Function not found:", funcToCall);
-        finalResultData = `Function not found: ${funcToCall}`;
-      }
-    } else {
-      // Multiple functions in argsX
-      finalResultData = [];
-      argsX.forEach((funcName, index) => {
-        // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
-        // For now, this part assumes `resolvedArgs` would be globally available or stored.
-        // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
-        // For simplicity, let's assume if there are multiple, they all get the initialContent (or the last resolvedArgs).
-        // This is where a Map or Array of objects would be useful: `[{funcName: 'f1', args: ['a','b']}, {funcName: 'f2', args: ['c','d']}]`
-        // For this example, let's assume you intend to pass the *initial* raw arguments to all of them if multiple.
-        // You'll need to decide on the correct arguments to pass for each function in a multi-function scenario.
-
-        if (typeof globalThis[funcName] === "function") {
+        if (typeof globalThis[funcToCall] === "function") {
           try {
-            // Pass initialContent or a specifically resolved arg for THIS funcName
-            var resultForFunc = globalThis[funcName].apply(
+            finalResultData = globalThis[funcToCall].apply(
               this,
-              initialContent,
-            ); // Using initialContent for simplicity for now
-            finalResultData.push({ [funcName]: resultForFunc });
+              lastResolvedArgs,
+            );
+            console.log(
+              `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
+            );
           } catch (e) {
             console.error(
-              `Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`,
+              `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
             );
-            finalResultData.push({
-              [funcName]: `Error calling function: ${e.toString()}`,
-            });
+            finalResultData = `Error calling function: ${e.toString()}`;
           }
         } else {
-          console.error("Function not found:", funcName);
-          finalResultData.push({
-            [funcName]: `Function not found: ${funcName}`,
-          });
+          console.error("Function not found:", funcToCall);
+          finalResultData = `Function not found: ${funcToCall}`;
         }
-      });
-      console.log(
-        `typeof ${typeof finalResultData} finalResultData (array of results)`,
-      );
+      } else {
+        // Multiple functions in argsX
+        finalResultData = [];
+        argsX.forEach((funcName, index) => {
+          // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
+          // For now, this part assumes `resolvedArgs` would be globally available or stored.
+          // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
+          // For simplicity, let's assume if there are multiple, they all get the initialContent (or the last resolvedArgs).
+          // This is where a Map or Array of objects would be useful: `[{funcName: 'f1', args: ['a','b']}, {funcName: 'f2', args: ['c','d']}]`
+          // For this example, let's assume you intend to pass the *initial* raw arguments to all of them if multiple.
+          // You'll need to decide on the correct arguments to pass for each function in a multi-function scenario.
+
+          if (typeof globalThis[funcName] === "function") {
+            try {
+              // Pass initialContent or a specifically resolved arg for THIS funcName
+              var resultForFunc = globalThis[funcName].apply(
+                this,
+                initialContent,
+              ); // Using initialContent for simplicity for now
+              finalResultData.push({ [funcName]: resultForFunc });
+            } catch (e) {
+              console.error(
+                `Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`,
+              );
+              finalResultData.push({
+                [funcName]: `Error calling function: ${e.toString()}`,
+              });
+            }
+          } else {
+            console.error("Function not found:", funcName);
+            finalResultData.push({
+              [funcName]: `Function not found: ${funcName}`,
+            });
+          }
+        });
+        console.log(
+          `typeof ${typeof finalResultData} finalResultData (array of results)`,
+        );
+      }
+    } else {
+      console.log("No function to call: Skipping .apply(" + initialContent + ")");
+      finalResultData = initialContent;
+      console.log(`typeof ${typeof finalResultData} finalResultData`);
     }
-  } else {
-    console.log("No function to call: Skipping .apply(" + initialContent + ")");
-    finalResultData = initialContent;
-    console.log(`typeof ${typeof finalResultData} finalResultData`);
   }
 
   var argsObject = {
@@ -2353,7 +2357,7 @@ var misSt = function (func, someArgs) {
   return argsObject;
 };
 
-var paramVals = function (funcInfo) {
+function paramVals(funcInfo) {
   console.log(
     "boilerplate Help : line 2267\nparamVals(funcInfo: " +
       funcInfo +
@@ -2374,7 +2378,7 @@ var paramVals = function (funcInfo) {
   return misArgs;
 };
 
-var resolveParams = function (func, someArgs) {
+function resolveParams(func, someArgs) {
   console.log(
     "boilerplate Help: line 2284\nresolveParams(func: " +
       func +
@@ -2854,6 +2858,7 @@ var resolveParams = function (func, someArgs) {
     return allResolutions;
   }
 };
+
 // ? console.log("funcUno = " + typeof funcUno)
 // : console.error("funcUno = " + typeof funcUno);
 // ? console.log("funcDos = " + typeof funcDos)
@@ -2886,7 +2891,7 @@ var resolveParams = function (func, someArgs) {
 //   resolvedArgs.push(args["searchString"]);
 // }
 
-var seoCapital = function (url) {
+function seoCapital(url) {
   console.log(
     "boilerplate Help : line 2635\nseoCapital(url: " +
       url +
@@ -3019,7 +3024,7 @@ var seoCapital = function (url) {
   return html.evaluate().getContent();
 };
 
-var seoPastTime = function (searchString, time) {
+function seoPastTime(searchString, time) {
   console.log(
     "boilerplate Help: line 2\nseoPastTime(searchString: " +
       searchString +
@@ -3225,7 +3230,7 @@ var seoPastTime = function (searchString, time) {
   }
 };
 
-var seoYoutube = function (searchString, time) {
+function seoYoutube(searchString, time) {
   // console.log(
   //   "boilerplate Help: line 175\nseoYoutube(searchString: " +
   //     searchString +
@@ -3265,7 +3270,7 @@ var seoYoutube = function (searchString, time) {
   // var data = mis(rndSearch).app;
 };
 
-var testlt = function () {
+function testlt() {
   console.log(
     "boilerplate Help: line 325\ntestlt(: )\n " + arguments.callee.caller?.name,
   );
@@ -3292,7 +3297,7 @@ var testlt = function () {
   // or it will also cause issues down the line.
 };
 
-var vidFactor = function (data, time) {
+function vidFactor(data, time) {
   // console.log(
   //   "boilerplate Help: line 199\nvidFactor(data: " +
   //     data.substring(0, 9) +
@@ -3342,7 +3347,7 @@ var vidFactor = function (data, time) {
   return { vidArray: idArray };
 };
 
-var vidPlaylist = function (tunPlay) {
+function vidPlaylist(tunPlay) {
   console.log(
     "boilerplate Help : line 3087\n(tunPlay:" +
       tunPlay +
@@ -3423,7 +3428,7 @@ var vidPlaylist = function (tunPlay) {
   };
 };
 
-var wwAccess = function (rName, rFunc, rArgs) {
+function wwAccess(rName, rFunc, rArgs) {
   console.log(
     "boilerplate wwAccess : line 3164\nwwAccess(rName: " +
       rName +

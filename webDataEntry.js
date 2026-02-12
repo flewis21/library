@@ -138,7 +138,7 @@ function dataEntry() {
       })();
 }
 
-var chaseFunction = function (xfactor) {
+function chaseFunction(xfactor) {
   // var xfactor = "Car";
   var ssWs = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
@@ -359,6 +359,7 @@ var chaseFunction = function (xfactor) {
 
   return booleFactor;
 };
+
 // var rawData = ssWs.getDataRange().getValues()
 // var i = 0
 // var l = dataHeaders.length

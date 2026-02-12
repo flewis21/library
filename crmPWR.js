@@ -1,4 +1,4 @@
-function myFunction() {
+var myFunction = function () {
   `Alright, let's create a slide presentation outline specifically tailored for a PowerCore seven-minute pitch, using Google Apps Script as a tool to demonstrate your expertise and generate referrals.
 
 Presentation Title: "Streamlining [Client's Industry] Operations with Google Apps Script Automation" (Replace "[Client's Industry]" with your target industry)

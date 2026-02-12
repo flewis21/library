@@ -12,7 +12,7 @@
 // Social Influence: The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.
 // In conclusion: While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
 
-var appSort = function (numIndex, time) {
+function appSort(numIndex, time) {
   // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
   var titleArray = [];
   for (var key in globalThis) {
@@ -110,7 +110,7 @@ var appSort = function (numIndex, time) {
  */
 function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
-  const SCRIPT_TITLES = Array(searchString) || functionRegistry.fileList;
+  const SCRIPT_TITLES = searchString? Array(searchString) : functionRegistry.fileList;
   const SCRIPT_DESCRIPTIONS = [
     "A randomly generated script to gather insights.",
     "Please fill out this script at your leisure. Content is randomized.",
@@ -169,7 +169,7 @@ function createRandomFunction(searchString) {
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   // const funcXName = script.name;
-  Logger.log(`Random script: ${scriptTitle} - ${script?.toString()}`);
+  Logger.log(`Random script: ${scriptTitle} = ${script?.toString()}`);
 
   // --- Set Basic script Properties ---
   const scriptDescription =
@@ -205,50 +205,61 @@ function createRandomFunction(searchString) {
   const gridItem = userSubmit
     .addGridItem()
     .setTitle(questionTitle + " (Radio Grid)");
-  const imageItem = userSubmit;
-  // .addImageItem()
-  // .setTitle(questionTitle + " (Image)");
+  const imageItem = userSubmit
+    // .addImageItem()
+    // .setTitle(questionTitle + " (Image)");
   let vidTubeTime = needPastTime(scriptTitle);
   let tubeArr = vidTubeTime.playList;
   var tubeEngine = vidTubeTime.hardUrl;
   const videoItem = userSubmit
-    .addVideoItem()
-    .setTitle(questionTitle)
-    .setHelpText(tubeEngine);
   // Use a valid YouTube video ID
-  if (tubeArr) {
-    if (tubeArr.length > 0) {
-      let tubeUrlsArr = [];
-      tubeArr.forEach((vidId) => {
-        let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
-        tubeUrlsArr.push(linkLocation);
-      });
-      let rndTube = Math.floor(Math.random() * Math.floor(tubeUrlsArr.length));
-      var tubeVideoUrl = tubeUrlsArr[rndTube];
-      videoItem.setVideoUrl(tubeVideoUrl);
-    }
-  } else {
-    videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
-  }
-  videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
+  // if (tubeArr) {
   const videoAlignments = [
     FormApp.Alignment.LEFT,
     FormApp.Alignment.CENTER,
     FormApp.Alignment.RIGHT,
   ];
-  videoItem.setAlignment(
-    videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-  );
-  const imgFile = seoPictTime(scriptTitle, functionRegistry.time).playList;
-  let rndfileImage =
-    imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
+  if (tubeArr.length > 0) {
+    let tubeUrlsArr = [];
+    tubeArr.forEach((vidId) =>{
+      let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
+      tubeUrlsArr.push(linkLocation);
+      let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
+      var tubeVideoUrl = tubeUrlsArr[rndTube];
+      videoItem
+        .addVideoItem()
+        .setTitle(questionTitle)
+        .setHelpText(encodeURI(tubeEngine))
+        .setVideoUrl(tubeVideoUrl)
+        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
+        .setAlignment(
+          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+        );
+    })
+  }
+  // }
+  else {
+    videoItem
+      .addVideoItem()
+      .setTitle(questionTitle)
+      .setHelpText(encodeURI(tubeEngine))
+      .setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ") // Rick Astley - Never Gonna Give You Up (a classic placeholder)
+      .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
+      .setAlignment(
+        videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+      );
+  }
+  const imgFile = seoPictTime(scriptTitle, functionRegistry.time)?.playList;
+  let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
   if (rndfileImage) {
     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
-    var nextDFD = deepFileDive.hasNext();
+    if (deepFileDive.hasNext()) {
+      var nextDFD = deepFileDive?.hasNext()
+    }
   }
-  if (nextDFD) {
+  if (nextDFD) { 
     while (nextDFD) {
-      let dFile = deepFileDive;
+      let dFile = deepFileDive
       // Use a public image URL or provide a Blob
       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -263,7 +274,8 @@ function createRandomFunction(searchString) {
         alignments[Math.floor(Math.random() * alignments.length)],
       );
     }
-  } else {
+  }
+  else {
     const alignments = [
       FormApp.Alignment.LEFT,
       FormApp.Alignment.CENTER,
@@ -290,9 +302,10 @@ function createRandomFunction(searchString) {
         }
         if ([imgUrl].join("").length > 0) {
           if (tempSortImg.indexOf(imgUrl) !== -1) {
-            return;
-          } else {
-            tempSortImg.push(imgUrl);
+            return
+          }
+          else {
+            tempSortImg.push(imgUrl)
           }
         }
         // if (
@@ -321,22 +334,23 @@ function createRandomFunction(searchString) {
       // return;
       // }
     });
-    tempSortImg.forEach((priImg) => {
-      userSubmit.addPageBreakItem().setTitle([script].join(""));
+    tempSortImg.forEach((priImg) =>{
+      userSubmit.addPageBreakItem().setTitle("Storyboard");
       userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
       try {
         imageItem
           .addImageItem()
-          .setTitle(questionTitle + " storyboard")
+          .setTitle(questionTitle + ": " + [script]?.join(""))
           .setImage(UrlFetchApp.fetch(priImg))
           .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
           .setAlignment(
-            alignments[Math.floor(Math.random() * alignments.length)],
-          );
-      } catch (error) {
-        console.info(error.stack);
+          alignments[Math.floor(Math.random() * alignments.length)],
+        );
       }
-    });
+      catch (error) {
+        console.info(error.stack)
+      }
+    })
     // Use a public image URL or provide a Blob
     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -354,7 +368,9 @@ function createRandomFunction(searchString) {
   if (isRequired) gridItem.setRequired(true);
   if (Math.random() < 0.3) {
     gridItem.setValidation(
-      FormApp.createGridValidation().requireLimitOneResponsePerColumn().build(),
+      FormApp.createGridValidation()
+        .requireLimitOneResponsePerColumn()
+        .build(),
     );
   }
   checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
@@ -379,30 +395,40 @@ function createRandomFunction(searchString) {
       // var tempObj =
       if (!script) {
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
-      } else {
-        scriptUrl = resolveParams(isMapped({ a: [] }, [scriptTitle])["a"]);
+        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
       }
-    } else {
+      else {
+        scriptUrl = resolveParams(
+          isMapped({ a: [] }, [scriptTitle])["a"],
+        );
+      }
+    } 
+    else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
-      // var tempObj =
-      scriptUrl = resolveParams(
-        isMapped({ a: [...fileParams.parameters] }, [
+      let tempObj = isMapped({ a: [...fileParams.parameters] }, [
           scriptTitle,
-          [...fileParams.parameters],
-        ])["a"],
-      );
+          [...fileParams.parameters]
+        ])["a"];
+      scriptUrl = resolveParams(tempObj);
     }
-  } else {
+  } 
+  else {
     if (!script || script.length === 0) {
-      mapArr[scriptTitle] = [];
-      scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
-    } else {
+      if (!script){
+        mapArr[scriptTitle] = [];
+        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
+      }
+      else {
+        mapArr[scriptTitle] = [];
+        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
+      }
+    }
+    else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
-      mapArr[scriptTitle] = [...fileParams.parameters];
-      scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+      mapArr[scriptTitle] = [];
+      scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
     }
   }
   // scriptUrl = userSubmit.getPublishedUrl();
@@ -436,8 +462,9 @@ function createRandomFunction(searchString) {
         // ScriptApp.EventType.ON_FORM_SUBMIT,
         ScriptApp.EventType.ON_OPEN,
       ];
-      const rndTMult = Math.floor(Math.random() * eventTypes.length);
-      const randomType = eventTypes[rndTMult];
+      const rndTMult = Math.floor(Math.random() * eventTypes.length)
+      const randomType = 
+        eventTypes[rndTMult];
       Logger.log(randomType);
 
       switch (randomType) {
@@ -480,35 +507,34 @@ function createRandomFunction(searchString) {
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = FormApp.createTextValidation(); // ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
+            let validationBuilder = FormApp.createTextValidation()// ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
             switch (validationType) {
               case 0:
-                validationBuilder.requireNumber(); //.FRIDAY; //;
+                validationBuilder.requireNumber()//.FRIDAY; //;
                 break;
               case 1:
-                validationBuilder.requireTextContainsPattern("test"); //.MONDAY; //;
+                validationBuilder.requireTextContainsPattern("test")//.MONDAY; //;
                 break;
               case 2:
-                validationBuilder.requireTextIsEmail(); //.WEDNESDAY; //;
+                validationBuilder.requireTextIsEmail()//.WEDNESDAY; //;
                 break;
               case 3:
-                validationBuilder.requireTextIsUrl(); //.THURSDAY; //;
+                validationBuilder.requireTextIsUrl()//.THURSDAY; //;
                 break;
               case 4:
-                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); //.TUESDAY; //;
+                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5)//.TUESDAY; //;
                 break;
             }
             userSubmit
-              .addTextItem()
-              .setTitle(questionTitle + "\n" + textItem.getBody()) //.textItem
+            .addTextItem()
+            .setTitle(questionTitle + "\n" +  textItem.getBody().getText())//.textItem
               // .getBody()
               // .appendListItem
               .setValidation(
-                validationBuilder.build(),
+                validationBuilder.build()
                 // .withCustomMessage("Please follow the specific text rule.")
                 // .build()
-              )
-              .setHelpText("Please follow the specific text rule.");
+              ).setHelpText("Please follow the specific text rule.")
           }
           break;
 
@@ -744,7 +770,7 @@ function createRandomFunction(searchString) {
           //     scriptUrl = resolveParams(
           //       isMapped({ a: [] }, [scriptTitle])["a"],
           //     );
-          //   }
+          //   } 
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = functionRegistry.paramsList[fileIndex];
@@ -756,7 +782,7 @@ function createRandomFunction(searchString) {
           //       ])["a"],
           //     );
           //   }
-          // }
+          // } 
           // else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
@@ -844,7 +870,7 @@ function createRandomFunction(searchString) {
         //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
         //     var nextDFD = deepFileDive.hasNext()
         //   }
-        //   if (nextDFD) {
+        //   if (nextDFD) { 
         //     while (nextDFD) {
         //       let dFile = deepFileDive
         //       // Use a public image URL or provide a Blob
@@ -1009,7 +1035,7 @@ function createRandomFunction(searchString) {
   return scriptUrl;
 }
 
-var defaultWebsite = function (e) {
+function defaultWebsite(e) {
   // const Route = {};
   // Route.path = function(route, callback) {
   //       Route[route] = callback
@@ -1294,7 +1320,7 @@ var defaultWebsite = function (e) {
   }
 };
 
-function formatTime(milliseconds) {
+var formatTime = function (milliseconds) {
   if (milliseconds < 0) {
     return "Time travel detected! (Negative elapsed time)";
   }
@@ -1326,7 +1352,7 @@ function formatTime(milliseconds) {
   return parts.join(", ");
 }
 
-var funcCalc = function () {
+function funcCalc() {
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -1342,7 +1368,7 @@ var funcCalc = function () {
   return rndArrVals;
 };
 
-var functionFlex = function (e) {
+function functionFlex(e) {
   if (e && typeof e !== "object") {
     e = objectOfS(["parameter"], [[["func", e]]], functionRegistry.time);
   }
@@ -1413,7 +1439,7 @@ var functionFlex = function (e) {
     //   }
     //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
     // }
-    var e = createRandomFunction();
+    var e = createRandomFunction()
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
@@ -1427,18 +1453,49 @@ var functionFlex = function (e) {
   );
 
   // Determine templateName (not directly used in the provided template, but good for context)
-  let templateName = e.parameter["func"];
-  if (e.parameter["func"] === "crmGWI") {
+  if (e) {
+    if (e.parameter && (e.parameter["func"])) {
+      var templateName = e.parameter["func"];
+      var funcUno = e.parameter["func"];
+    }
+    else if (typeof e === "object") {
+      var templateName = Object.keys(e)[0];
+      var funcUno = Object.keys(e)[0];
+    }
+    else {
+      var templateName = e
+    }
+  }
+  else {
+      var templateName;
+      var funcUno;
+  }
+  if (templateName === "crmGWI") {
     templateName = "General Work Invoice";
-  } else if (e.parameter["func"] === "crmEBI") {
+  } 
+  else if (templateName === "crmEBI") {
     templateName = "Employee Benefits Inquiry";
   }
-  var funcUno = e.parameter["func"];
 
-  console.log("e.parameter['args'] before funcDos:", e.parameter["args"]);
-  var funcDos = e.parameter["args"];
-  console.log("e.parameter['args'] after funcDos:", e.parameter["args"]);
-  // console.log("funcDos:", funcDos);
+  if (e) {
+    if (e.parameter && (e.parameter["args"])) {
+      console.log("e.parameter['args'] before funcDos:", e.parameter["args"]);
+      var funcDos;
+      console.log("funcDos before e.parameter['args']:", funcDos)
+      funcDos = e.parameter["args"];
+      console.log("funcDos after e.parameter['args']:", funcDos);
+    }
+    else if (typeof e === "object") {
+      console.log("Object.values(e) before funcDos:", Object.values(e));
+      var funcDos;
+      console.log("funcDos before Object.values(e):", funcDos)
+      funcDos = Object.values(e);
+      console.log("funcDos after Object.values(e):", funcDos);
+    }
+    else {
+      return
+    }
+  }
   var libFunc = funcUno || "renderFile";
   var foobarr = funcDos || funcTres || ""; // Redundant variable
 
@@ -2497,7 +2554,7 @@ var getUrl = function (appInterface) {
   return url;
 };
 
-var prepareDataBrain = function (data, ratio = 29) {
+function prepareDataBrain(data, ratio = 29) {
   if (data) {
     return Array.isArray(data)
       ? data.map((row) => {
@@ -2531,17 +2588,17 @@ var prepareDataBrain = function (data, ratio = 29) {
   }
 };
 
-function rule() {
+var rule = function () {
   var today = new Date();
   var todayString = today.toDateString() + " - " + today.toTimeString();
   return todayString;
 }
 
-function scriptQuit() {
+var scriptQuit = function () {
   return;
 }
 
-var sexToNumber = function (sex) {
+function sexToNumber(sex) {
   switch (sex) {
     case "F":
       return 0;
@@ -2552,7 +2609,7 @@ var sexToNumber = function (sex) {
   }
 };
 
-var sheetWebsite = function (e) {
+function sheetWebsite(e) {
   var usr = e;
   if (!usr["parameter"]) {
     var query = [e][0] || Math.floor(Math.random() * Math.floor(e.length));
@@ -2698,6 +2755,7 @@ var sheetWebsite = function (e) {
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
   ).getRawContent();
 };
+
 // case "request": // <!-----------------------------API Endpoint Page------------------------!>
 // console.log(query)
 // let lastrow = sheet.getLastRow();
@@ -2735,7 +2793,7 @@ var sheetWebsite = function (e) {
 //   };
 // }
 
-var wwwDe = function (url) {
+function wwwDe(url) {
   var feed = UrlFetchApp.fetch(url).getContentText();
   feed = feed.replace(
     /(&lt;img.*?alt="(.*?)".*?&gt;)/g,

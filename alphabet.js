@@ -1,179 +1,179 @@
-var AVar = function (varA) {
+var aVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var BVar = function (varA) {
+var bVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var CVar = function (varA) {
+var cVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var DVar = function (varA) {
+var dVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var EVar = function (varA) {
+var eVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var FVar = function (varA) {
+var pVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var GVar = function (varA) {
+var gVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var HVar = function (varA) {
+var hVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var IVar = function (varA) {
+var iVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var JVar = function (varA) {
+var jVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var KVar = function (varA) {
+var kVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var LVar = function (varA) {
+var lVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var MVar = function (varA) {
+var mVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var NVar = function (varA) {
+var nVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var OVar = function (varA) {
+var oVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var PVar = function (varA) {
+var pVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var QVar = function (varA) {
+var qVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var RVar = function (varA) {
+var rVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var SVar = function (varA) {
+var sVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var TVar = function (varA) {
+var tVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var UVar = function (varA) {
+var uVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var VVar = function (varA) {
+var vVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var WVar = function (varA) {
+var wVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var XVar = function (varA) {
+var xVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var YVar = function (varA) {
+var yVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,
   };
 };
 
-var ZVar = function (varA) {
+var zVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,

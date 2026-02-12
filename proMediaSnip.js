@@ -1,4 +1,4 @@
-var proMediaSnip = function (e) {
+function proMediaSnip(e) {
   var today = new Date();
   var rule = today.toDateString() + " - " + today.toTimeString();
   var gaming = jsGameScripts();
@@ -127,7 +127,7 @@ var proMediaSnip = function (e) {
   return wwAccess("test", renderTemplate, html.evaluate().getContent());
 };
 
-var prose = function () {
+function prose() {
   var myApp = {
     appJS: function () {
       var randomSECCo = allInvestors();

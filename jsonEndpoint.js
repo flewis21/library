@@ -1,4 +1,4 @@
-var jsonEndpoint = function (e) {
+function jsonEndpoint(e) {
   return contentApp(
     '<?= "Hello World" ?><div class="clubhouse"><? var schedule = dateTime(); ?><?!= schedule ?></div>',
   );

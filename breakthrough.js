@@ -1,4 +1,4 @@
-var breakthrough = function (chance, time) {
+function breakthrough(chance, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -136,7 +136,7 @@ var breakthrough = function (chance, time) {
   return html.evaluate().getContent();
 }; //:contentFile('uiAccess');
 
-var rndChoice = function (game) {
+function rndChoice(game) {
   let trial = [];
   let judge = 0;
   let coinHead = 0;
@@ -330,7 +330,7 @@ var rndChoice = function (game) {
   return formUrl;
 };
 
-var rndCoin = function () {
+function rndCoin() {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   var trial = [];
   var judge = 0;
@@ -393,7 +393,7 @@ var rndCoin = function () {
   return formUrl;
 };
 
-var rndControl = function (infinitum) {
+function rndControl(infinitum) {
   var trial = [];
   var judge = 0;
   var coinHead = 0;
@@ -674,7 +674,7 @@ var rndControl = function (infinitum) {
   return formUrl;
 };
 
-var rndDice = function () {
+function rndDice() {
   // if ([0,1,2,3,4,5][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   var trial = [];
   var judge = 0;
@@ -846,7 +846,7 @@ var rndDice = function () {
   return formUrl;
 };
 
-var rndTrial = function (infinitum) {
+function rndTrial(infinitum) {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   var trial = [];
   var judge = 0;
@@ -1023,7 +1023,7 @@ var rndTrial = function (infinitum) {
 //   return formUrl;
 // };
 
-var rndWinner = function (infinitum) {
+function rndWinner(infinitum) {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   let trial = [];
   let judge = 0;

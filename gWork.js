@@ -1,4 +1,4 @@
-var allTime = function (rndKey, arrD, time) {
+function allTime(rndKey, arrD, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -115,9 +115,10 @@ var allTime = function (rndKey, arrD, time) {
     }
   }
 };
+
 // console.log("allTime: \nrndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time);Youtube Widget;console.log(typeof seoArray);Math.floor(Math.random());Math.floor(Math.random());console.log(seoArray.playList)
 
-var covArrays = function (object, time) {
+function covArrays(object, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -138,11 +139,12 @@ var covArrays = function (object, time) {
   }
   return dataArray;
 };
+
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nobj: " +  obj + "\nelaspeTime: " + elaspeTime)
 // console.log(JSON.stringify(dataArray[obj]))
 // console.log(dataArray)
 
-var covObjects = function (rows, headings, time) {
+function covObjects(rows, headings, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -174,7 +176,7 @@ var covObjects = function (rows, headings, time) {
   }
 };
 
-var itemCalc = function () {
+function itemCalc() {
   var itemSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "items",
@@ -198,7 +200,7 @@ var itemCalc = function () {
   return rndArrVals;
 };
 
-var needUtility = function (rndClient, arrD, time) {
+function needUtility(rndClient, arrD, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -329,7 +331,7 @@ var needUtility = function (rndClient, arrD, time) {
   return uniqueCo;
 };
 
-var randomSubstance = function (index, loopLength, importedData, arrD, time) {
+function randomSubstance(index, loopLength, importedData, arrD, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -421,6 +423,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
     console.log();
   }
 };
+
 // console.log(sortNewArr)
 // var thisNewArr = sortNewArr.map((w) => {
 // return w[0].toString()}
@@ -429,7 +432,7 @@ var randomSubstance = function (index, loopLength, importedData, arrD, time) {
 // console.log(thisNewArr)
 // console.log(randomWord)
 
-var seoSheet = function (searchString, time) {
+function seoSheet(searchString, time) {
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -443,7 +446,7 @@ var seoSheet = function (searchString, time) {
     var time = functionRegistry.time;
   }
   if (typeof searchString === "undefined") {
-    var searchString = "sports medicine";
+    var searchString = globalThis.searchString().myNewArr;
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
   // console.log(
@@ -612,9 +615,9 @@ var seoSheet = function (searchString, time) {
           test.indexOf("disableSpriteLogo") === -1 &&
           test.indexOf("MWHEEEAP0025010") === -1
         ) {
-          if (JSON.stringify(i) >= 3) {
-            break;
-          }
+          // if (JSON.stringify(i) >= 3) {
+          //   break;
+          // }
           return test[i];
         }
       }
@@ -622,19 +625,22 @@ var seoSheet = function (searchString, time) {
     var resData = rndRes.slice(0);
     var reSearch = resData.toString().replace(/,/g, " ").split(" ");
   }
-  if (typeof searchString !== "object") {
-    var stringSplit = [searchString].join("").split(",");
+  if (!Array.isArray(searchString)) {
+    var stringSplit = [searchString].join("").split(" ");
   }
   if (stringSplit) {
-    var testString = testData([stringSplit], time).testArray;
-    // console.log(
-    //   formatTime(functionRegistry.time) +
-    //     "\nseoSheet: \nvar " +
-    //     testString +
-    //     " = " +
-    //     testData([stringSplit], time).testArray,
-    // );
-  } else {
+    if (stringSplit.length > 0) {
+      var testString = testData([stringSplit], time).testArray;
+      // console.log(
+      //   formatTime(functionRegistry.time) +
+      //     "\nseoSheet: \nvar " +
+      //     testString +
+      //     " = " +
+      //     testData([stringSplit], time).testArray,
+      // );
+    }
+  } 
+  else {
     var testString = testData([searchString], time).testArray;
     // console.log(
     //   formatTime(functionRegistry.time) +
@@ -653,7 +659,7 @@ var seoSheet = function (searchString, time) {
     //     ") === -1: " +
     //     lowerCaseS.indexOf(testString),
     // );
-    var stringUI = [testString].join("").split(" ");
+    var stringUI = [testString].join("").split(",");
     stringUI.map((increase) => {
       var elaspeTime = new Date() - time;
       lowerCaseS.push(increase);
@@ -664,7 +670,7 @@ var seoSheet = function (searchString, time) {
       var elaspeTime = new Date() - time;
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
-        if (typeof lowerCaseS[0][i] !== "undefined") {
+        if (typeof lowerCaseS[i][lowerCaseS[i].length -1] !== "undefined") {
           // console.log(
           //   formatTime(functionRegistry.time) +
           //     "\nseoSheet: \ntypeof " +
@@ -672,7 +678,7 @@ var seoSheet = function (searchString, time) {
           //     " !== undefined: " +
           //     typeof lowerCaseS[0][i],
           // );
-          var lowerCaseSearchString = lowerCaseS[0][i].toLowerCase();
+          var lowerCaseSearchString = lowerCaseS[i][lowerCaseS[i].length -1].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             // console.log(
             //   formatTime(functionRegistry.time) +
@@ -689,7 +695,7 @@ var seoSheet = function (searchString, time) {
               //     ") === -1: " +
               //     lowerCaseS.indexOf(seo),
               // );
-              var elaspeTime = new Date() - time;
+              var elaspeTime = functionRegistry.time;
               lowerCaseS.push(seo);
             }
           }
@@ -699,13 +705,14 @@ var seoSheet = function (searchString, time) {
   }
   return { keyWords: lowerCaseS };
 };
+
 // console.log("test: " + test + "\nelaspeTime: " + elaspeTime);console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime);console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime);var headers = ["keywords"];var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)));var randomSheetname = searchString || rndRes[sheetRndKey];var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)));var randomFormname = searchString || rndRes[formRndKey];var form = formMaker(randomFormname);fileManager(randomFormname, "Forms");var ss = sheetsMaker(randomFormname);fileManager(randomFormname, "Sheets")
 // if (typeof form === "object") {var headForms = [];lowerCaseS.map((b) => {
 // if (globalThis[b]) {console.log(globalThis[b].toString());console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])));headForms.push(b);return;form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(globalThis[b].toString())}
 // else {console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])));headForms.push(b);return;form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(b)}});form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());var formUrl = form.getPublishedUrl()}
 // else {var formUrl = form};url: formUrl,
 
-var sheetCalc = function () {
+function sheetCalc() {
   var secSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "sec",
@@ -722,5 +729,6 @@ var sheetCalc = function () {
   }
   return rndArrVals;
 };
+
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")

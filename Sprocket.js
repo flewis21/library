@@ -1,4 +1,4 @@
-var dtlsPro = function (searchDTLS) {
+function dtlsPro(searchDTLS) {
   var cokey;
   if (typeof searchDTLS === "undefined") {
     searchDTLS
@@ -173,7 +173,8 @@ var dtlsPro = function (searchDTLS) {
   }
   return formUrl;
 };
-var portBing = function (searchPort) {
+
+function portBing(searchPort) {
   console.log("portBing = function (" + searchPort + ")");
   var cokey;
   if (typeof searchPort === "undefined") {
@@ -333,7 +334,8 @@ var portBing = function (searchPort) {
   }
   return formUrl;
 };
-var dtlsBridge = function (func, time) {
+
+function dtlsBridge(func, time) {
   func
     ? func
     : (func = objectOfS(
@@ -506,20 +508,21 @@ var dtlsBridge = function (func, time) {
     return formUrl;
   }
 };
-var allInvestors = function (rndKey, time) {
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\nrndKey is !" +
-      !rndKey +
-      ", = " +
-      rndKey +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+
+function allInvestors(rndKey, time) {
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nrndKey is !" +
+  //     !rndKey +
+  //     ", = " +
+  //     rndKey +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof time === "undefined") {
     time = start;
   }
@@ -591,7 +594,8 @@ var allInvestors = function (rndKey, time) {
     edgarUrl: secUrl,
   };
 };
-var coUtility = function (rndClient) {
+
+function coUtility(rndClient) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -632,7 +636,8 @@ var coUtility = function (rndClient) {
   }
   return uniqueCo;
 };
-var dtlsMain = function (file) {
+
+function dtlsMain(file) {
   console.log(
     functionRegistry.time +
       "\n" +

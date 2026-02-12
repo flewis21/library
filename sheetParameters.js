@@ -1,4 +1,4 @@
-function activeSsId() {
+var activeSsId = function () {
   var ss = spreadSheet();
   if (ss !== null) {
     var id = ss.getId();
@@ -12,7 +12,7 @@ function activeSsId() {
   }
 }
 
-var bingSWF = function (searchString, time) {
+function bingSWF(searchString, time) {
   //
   if (typeof searchString === "undefined") {
     var searchString = "oa";
@@ -98,7 +98,7 @@ var bingSWF = function (searchString, time) {
   };
 };
 
-var bingNeed = function (searchString, time) {
+function bingNeed(searchString, time) {
   if (typeof searchString !== "undefined") {
     // const videoSearch = [urlDataSource(`https://www.bing.com/search?q=filetype%3A(ppt swf pptx pdf)+AND+*+${encodeURIComponent(searchString)}&PC=U316&top=50&skip=0&FORM=CHROMN`, null, {muteHttpExceptions:true})];
     const search = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -113,7 +113,7 @@ var bingNeed = function (searchString, time) {
   }
 };
 
-var cabDriver = function (e) {
+function cabDriver(e) {
   var res = e || testlt();
   var agendaCal = (function (request) {
     var events = CalendarApp.getEvents(
@@ -186,7 +186,7 @@ var cabDriver = function (e) {
   ).getRawContent();
 };
 
-var classifiedCapital = function (searchString, time) {
+function classifiedCapital(searchString, time) {
   const searchStr = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   const videoSearch = [
     urlDataSource(searchStr, { muteHttpExceptions: true }, time),
@@ -203,7 +203,7 @@ var classifiedCapital = function (searchString, time) {
   };
 };
 
-var classifiedSheet = function (searchString, time) {
+function classifiedSheet(searchString, time) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var headers = ["keywords"];
   var data = [urlDataSource(rndSearch, { muteHttpExceptions: true }, time)];
@@ -477,7 +477,7 @@ var insertSheetSS = function (url, sheetName) {
   // );
 };
 
-var jsonToSpreadsheet = function (data, time) {
+function jsonToSpreadsheet(data, time) {
   data
     ? data
     : (data = JSON.parse(
@@ -522,6 +522,7 @@ var jsonToSpreadsheet = function (data, time) {
   ).myFileX;
   return playSheet;
 };
+
 // Get form data from the request
 
 // for (var key in formData) {
@@ -537,7 +538,7 @@ var jsonToSpreadsheet = function (data, time) {
 // var postPub = FormApp.openById(postSheet.getId()).getPublishedUrl()
 // return console.log(postPub)
 
-var jsonXCalc = function (searchString, time) {
+function jsonXCalc(searchString, time) {
   searchString
     ? searchString
     : (searchString = objectOfS(
@@ -598,11 +599,12 @@ var jsonXCalc = function (searchString, time) {
   }
   return rndArrVals;
 };
+
 // var playL = ssData(playSheet, searchString)
 // return console.log(rndTitleVested)
 // return [Math.random() * (uniqueNum)].join("").split(".")
 
-var jsonXSpreadsheet = function (rndTitle, time) {
+function jsonXSpreadsheet(rndTitle, time) {
   rndTitle
     ? rndTitle
     : (rndTitle = objectOfS(
@@ -671,6 +673,7 @@ var jsonXSpreadsheet = function (rndTitle, time) {
   };
   return html.evaluate().getContent();
 };
+
 // const titleKings = needCapital(rndTitle)
 // const titleMatches = [matches.toString().substring(titleKings)];
 // console.log(Utilities.jsonStringify([titleMatches]))
@@ -710,9 +713,9 @@ function lookupDomain(searchTerm) {
     }
   }
   return results;
-}
+};
 
-var mapValues = function (data, index) {
+function mapValues(data, index) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -734,7 +737,7 @@ var mapValues = function (data, index) {
   }
 };
 
-var needBing = function (searchString, time) {
+function needBing(searchString, time) {
   // var searchString = "Just married"
   if (typeof searchString !== "undefined") {
     const search = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - Search - Bing+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -776,7 +779,7 @@ var needBing = function (searchString, time) {
   }
 };
 
-var needPong = function (searchString) {
+function needPong(searchString) {
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString ? searchString : "")}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   var data = urlDataSource(rndSearch, searchString);
   var txt = seoBites(searchString, seoFactor(data).split(","));
@@ -786,7 +789,7 @@ var needPong = function (searchString) {
   };
 };
 
-var pastSeo = function (namedVar, time) {
+function pastSeo(namedVar, time) {
   var seoPlaylist = seoPastTime([namedVar].join(""), time).playList;
   var form = formMaker([namedVar].join("").toUpperCase(), time);
   if (typeof form === "object") {
@@ -889,7 +892,7 @@ var pastSeo = function (namedVar, time) {
   return seoPlaylist[rndParam];
 };
 
-var pictBing = function (searchString, time) {
+function pictBing(searchString, time) {
   // var searchString =  "Drones"
   if (typeof searchString !== "undefined") {
     const rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -951,7 +954,7 @@ var pictBing = function (searchString, time) {
   }
 };
 
-var pictFactor = function (data, time) {
+function pictFactor(data, time) {
   var idArray = [];
   data.map((seoData) => {
     // var elaspeTime = new Date() - time
@@ -1036,7 +1039,7 @@ function renameSheetSafely(ss, newSheetName) {
   }
 }
 
-var rndString = function (inputArray, time) {
+function rndString(inputArray, time) {
   inputArray
     ? inputArray
     : (inputArray = objectOfS(
@@ -1090,6 +1093,7 @@ var rndString = function (inputArray, time) {
     resStr: testString,
   };
 };
+
 // var strArray = testString.join("").split("")
 // console.log("Calling randomSubstance with testString: " + testString)
 // var str = randomSubstance(0,2,testString, null, time).myNewArr
@@ -1122,7 +1126,12 @@ var seoBites = function (searchString, idArray, time) {
     ? searchString
     : (searchString = globalThis.searchString().myNewArr);
   if (typeof searchString === "object") {
-    searchString = searchString.parameter["func"];
+    if (searchString.parameter && searchString.parameter["func"]) {
+      searchString = searchString.parameter["func"];
+    }
+    else {
+      searchString = Object.values(searchString);
+    }
   }
   let searchUI = [searchString].join("").split(" ");
   searchUI.map((l) => {
@@ -1167,6 +1176,7 @@ var seoBites = function (searchString, idArray, time) {
   }
   return uniqueSeo;
 };
+
 // var elaspeTime = new Date() - time
 // console.log("w: \nelaspeTime: " + elaspeTime)
 // var elaspeTime = new Date() - time
@@ -1224,16 +1234,21 @@ var seoIndex = function (searchWord) {
   //   var story = pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))]
 };
 
-var seoPictTime = function (searchString, time) {
-  searchString
-    ? searchString
+function seoPictTime(searchString, time) {
+  searchString ? 
+      searchString
     : (searchString = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
         functionRegistry.time,
       ));
   if (typeof searchString === "object") {
-    searchString = searchString.parameter["func"];
+    if (searchString.parameter && searchString.parameter["func"]) {
+      searchString = searchString.parameter["func"];
+    }
+    else {
+      searchString = Object.values(searchString);
+    }
   }
   // console.log(
   //   formatTime(functionRegistry.time) +
@@ -1254,41 +1269,43 @@ var seoPictTime = function (searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
   }
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\nseoPictTime: \nvar altSearch = seoSheet(" +
-      searchString,
-    time + ")",
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\nseoPictTime: \nvar altSearch = seoSheet(" +
+  //     searchString,
+  //   time + ")",
+  // );
   var altSearch = seoSheet(searchString, time);
   var listSearch = altSearch.keyWords;
   var rndListKey = Math.floor(Math.random() * Math.floor(listSearch.length));
   var testSearch = listSearch[rndListKey];
-  if (
-    [searchString]
-      .toString()
-      .toLowerCase()
-      .includes([testSearch].toString().toLowerCase())
-  ) {
-    console.log(
-      formatTime(functionRegistry.time) +
-        "\nseoPictTime: \n[" +
-        testSearch +
-        "].join().indexOf(" +
-        searchString +
-        ") === " +
-        [testSearch].join("").indexOf(searchString),
-    );
+  // if (
+  //   [searchString]
+  //     .toString()
+  //     .toLowerCase()
+  //     .includes([testSearch].toString().toLowerCase())
+  // ) {
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\nseoPictTime: \n[" +
+    //     testSearch +
+    //     "].join().indexOf(" +
+    //     searchString +
+    //     ") === " +
+    //     [testSearch].join("").indexOf(searchString),
+    // );
+  // }
+  if ((searchString && typeof searchString === "string") && (testSearch && typeof testSearch === "string") && (listSearch && typeof listSearch === "string")) {
+    if (!searchString.toLowerCase().includes([testSearch].join("").toLowerCase()) && !searchString.toLowerCase().includes(listSearch[0].toLowerCase())) {
+      searchString = allInvestors().title;
+    }
   }
-  if ([testSearch].join("").indexOf(searchString) === -1) {
-    searchString = allInvestors().title;
-  }
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\nseoPictTime: \nvar uniqueVid = seoPictures(" +
-      searchString,
-    time + ")",
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\nseoPictTime: \nvar uniqueVid = seoPictures(" +
+  //     searchString,
+  //   time + ")",
+  // );
   var uniqueVid = seoPictures(searchString, time);
   var sorFndOrd = [];
   uniqueVid.results.forEach((vidObject) => {
@@ -1298,11 +1315,13 @@ var seoPictTime = function (searchString, time) {
     let wHttps = res[0].indexOf("https");
     let wDoct = res[0].indexOf("<!DOCTYPE");
     if (res[0].indexOf("https") > -1 && res[0].indexOf("<!DOCTYPE") === -1) {
-      sorFndOrd.push(vidObject);
+      if (sorFndOrd.indexOf(vidObject) === -1) {
+         sorFndOrd.push(vidObject);
+      }
     }
   });
   if (sorFndOrd.length === 0) {
-    sorFndOrd = uniqueVid;
+    sorFndOrd = uniqueVid
   }
   var fndOrd = [];
   var i = 0;
@@ -1329,10 +1348,12 @@ var seoPictTime = function (searchString, time) {
     //     );
     //   }
     // });
-    if (fndOrd.indexOf(sorFndOrd[i]) > -1) {
-      return;
+    if (!fndOrd.indexOf(sorFndOrd) > -1) {
+      fndOrd.push(sorFndOrd);
     }
-    fndOrd.push(sorFndOrd[i]);
+    // else {
+    //   fndOrd.push(sorFndOrd);
+    // }
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
@@ -1348,9 +1369,9 @@ var seoPictTime = function (searchString, time) {
         //     test.indexOf("tse4.mm.bing.net"),
         // );
         if (test.indexOf("tse4.mm.bing.net") > -1) {
-          if (JSON.stringify(i) >= 3) {
-            break;
-          }
+          // if (JSON.stringify(i) >= 3) {
+          //   break;
+          // }
           var imgUrl = [test].join("").split('"')[1];
           return imgUrl;
         }
@@ -1368,10 +1389,12 @@ var seoPictTime = function (searchString, time) {
     var popKind = revKind.pop();
     var rndKind = popKind.split(",");
     return { playList: rndRes.sort((a, b) => a - b) };
-  } else {
+  } 
+  else {
     return { playList: {} };
   }
 };
+
 // console.log("seoPictTime: \n")
 // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
 // console.log(a)
@@ -1387,7 +1410,7 @@ var seoPictTime = function (searchString, time) {
 // var formUrl = form.getPublishedUrl()
 // url: formUrl
 
-var seoPictures = function (searchString, time) {
+function seoPictures(searchString, time) {
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -1405,20 +1428,22 @@ var seoPictures = function (searchString, time) {
     var searchString = globalThis.searchString().myNewArr;
   }
   var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  console.log(
-    "seoPictures: \nvar data = [urlFetchApp.fetch(" + rndSearch,
-    { muteHttpExceptions: true } + ")]",
-  );
+  // console.log(
+  //   "seoPictures: \nvar data = [urlFetchApp.fetch(" + rndSearch,
+  //   { muteHttpExceptions: true } + ")]",
+  // );
   var data = [UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true })];
-  console.log(
-    "seoPictures: \nvar uniqueSeo = data.slice(" +
-      data.indexOf(" + 'src2=' + "),
-  );
-  // .toString()
-  // .split(" + 'src2=' + " + ")");
+  // console
+  //   .log(
+  //     "seoPictures: \nvar uniqueSeo = data.slice(" +
+  //       data.indexOf(" + 'src2=' + "),
+  //   )
+    // .toString()
+    // .split(" + 'src2=' + " + ")");
   var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
-  return { results: uniqueSeo, hardLink: rndSearch };
+  return {results: uniqueSeo, hardLink: rndSearch};
 };
+
 // console.log("seoPictures: \n");var i = 0;var l = [data].join("").split(" ").length;for (i,l;i<l;i++) {var res = [data].join("").split(" ")[i]
 // if (res.indexOf("https") > -1) {console.log(res)}};console.log(uniqueSeo.join("").split('"')[6])
 
@@ -1443,7 +1468,6 @@ var seoTwitter = function (folderX, searchString, time) {
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
   }
-  var data = [];
   var foldCounter = 0;
   var foldData = folderManager(folderX); // && folderX !== "folderX" ? folderX : randomFolderName);
   var randomFolderCount = Math.floor(
@@ -1454,9 +1478,13 @@ var seoTwitter = function (folderX, searchString, time) {
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
     var searchString = rndString;
-  } else if (searchString === "searchString") {
+  } 
+  else if (searchString === "searchString") {
     searchString = rndString;
   }
+  var uniqueSeo = seoBites(searchString, minFold, time);
+  return { twiData: uniqueSeo };
+  var data = [];
   while (data.length === 0) {
     data = minFold.filter((p) => {
       if (p === searchString) {
@@ -1466,7 +1494,8 @@ var seoTwitter = function (folderX, searchString, time) {
     });
     if (foldCounter + 1 >= minFold.length) {
       break;
-    } else {
+    } 
+    else {
       foldCounter++;
     }
   }
@@ -1484,14 +1513,12 @@ var seoTwitter = function (folderX, searchString, time) {
   // if (!seoTruth) {
   //   idArray = minFold
   // }
-  var uniqueSeo = seoBites(searchString, minFold, time);
-  return { twiData: uniqueSeo };
 };
 // var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;var unFilData = UrlFetchApp.fetch(rndSearch,{muteHttpExceptions:true});var data = [unFilData.getContentText()];console.log("seoTwitter: \nDeclaring foldData = folderManager()");console.log(data.length);console.log(data.length);console.log(foldData[foldCounter]);console.log("seoTwitter: \nvar minFold = fileFold(" + foldData[foldCounter], searchString + ")")
 // console.log("seoTwitter: \n data = " + minFold.map((p) => {console.log("fileFold: \nif ([" + p + "].join(" + "" + ").toLowerCase().includes([" + searchString +"].join(" + "" + ").toLowerCase())) = " + "\n" + [p].join("").toLowerCase().includes([searchString].join("").toLowerCase()) + " return " + p);
 // if ([p].join("").toLowerCase().includes([searchString].join("").toLowerCase()));return p}));console.log(data);console.log("seoTwitter: \nvar " + idArray + " = " + [seoFactor(data, time).factorData].toString().split("\n"));console.log("seoTwitter: \nvar " + uniqueSeo + " = seoBites(" + searchString,idArray, time + ")")
 
-var sheetsMaker = function (fileName, folderX, time) {
+function sheetsMaker(fileName, folderX, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1624,7 +1651,7 @@ var sheetsMaker = function (fileName, folderX, time) {
 //   }
 // };
 
-var sheetSeo = function (namedVar, time) {
+function sheetSeo(namedVar, time) {
   var pageArray = [];
   var seoArray = seoSheet(namedVar, time).keyWords;
   seoArray.map((tv) => {
@@ -1645,7 +1672,7 @@ var sheetSeo = function (namedVar, time) {
   return { sheetObj: pageArray };
 };
 
-var sheetsUrls = function (fileX, folderX, time) {
+function sheetsUrls(fileX, folderX, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -1699,12 +1726,13 @@ var sheetsUrls = function (fileX, folderX, time) {
           }
         }
       });
-      let testFlight =
-        fileNameList.sheets[
+      let testFlight = fileNameList.sheets[
           Math.floor(Math.random() * Math.floor(fileNameList.sheets.length))
         ];
       if (testFlight) {
-        var rndBogy = DriveApp.getFilesByName(testFlight).next().getId();
+        var rndBogy = DriveApp.getFilesByName(testFlight)
+          .next()
+          .getId();
       }
       if (mineField.length === 0) {
         mineField.push(rndBogy);
@@ -1732,7 +1760,7 @@ var sheetsUrls = function (fileX, folderX, time) {
   }
 };
 
-var skyNeed = function (namedVar, time) {
+function skyNeed(namedVar, time) {
   var wanVar = wanUtil(namedVar, time).verInfo;
   var rndVar = randomSubstance(
     0,
@@ -1744,11 +1772,11 @@ var skyNeed = function (namedVar, time) {
   return rndSeo;
 };
 
-function spreadSheet() {
+var spreadSheet = function () {
   var ssApp = SpreadsheetApp;
   var ss = ssApp.getActiveSpreadsheet();
   return ss;
-}
+};
 
 // var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
 // console.log(
@@ -1878,7 +1906,8 @@ function spreadSheet() {
 //   // and will either have their assigned values or remain undefined.
 //   return { myFileX: ssNewFile, myFileXId: ssId };
 // };
-var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
+
+function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -2010,18 +2039,19 @@ var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
 
   return { myFileX: ssNewFile, myFileXId: ssId };
 };
+
 // data.map((o)=>{var sheetCol =[o].join("").split(",");var sheetArr = sheetCol.map((arr)=>{return arr});dataArray.push(sheetArr[0])});console.log("called function: " + arguments.callee.name + "\nfile name: " + fileX);console.log("called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs);SpreadsheetApp.openByUrl(ss);console.log("called function: " + arguments.callee.name + "\nSheet name: " + ss.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nName of this sheet is " + sheet.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nSheet name changed to " + ws.getName());console.log("called function: " + arguments.callee.name + "\nName of active sheet" + ss.getActiveSheet().getName());var dataCol = dataArray;var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();var newFile = formsUrls(fileX,"Sheets", rowHeaders, data, start);
 // else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);ws = ss.getActiveSheet();return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues()}
 // else {console.log(typeof nSs);
 // if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(nSs);ws = ss.getActiveSheet();return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues();}
 
-function ssActiveRange() {
+var ssActiveRange = function () {
   var sheet = ssSheet();
   if (sheet) {
     var data = sheet.getActiveRange();
     return data;
   }
-}
+};
 
 var ssCell = function (column, rowOffSet, colOffSet) {
   var sheet = ssSheet();
@@ -2034,7 +2064,7 @@ var ssCell = function (column, rowOffSet, colOffSet) {
   }
 };
 
-var ssData = function (playSheet, sheetName, time) {
+function ssData(playSheet, sheetName, time) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -2068,7 +2098,7 @@ var ssData = function (playSheet, sheetName, time) {
   }
 };
 
-var ssDatabase = function (file, sheet, col, headers, data) {
+function ssDatabase(file, sheet, col, headers, data) {
   var result = contentApp("<?!= myProject ?> ", {
     createProject: function myProject() {
       var ws = spreadSheetCreate(file, sheet);
@@ -2079,18 +2109,19 @@ var ssDatabase = function (file, sheet, col, headers, data) {
   });
   return result;
 };
+
 // for (let i = 0; i < dataArray.length; i++) {
 //   ws.appendRow(dataArray[i])}
 
-function ssDataRange() {
+var ssDataRange = function () {
   var sheet = ssSheet();
   if (sheet) {
     var data = sheet.getDataRange().getValues();
     return data;
   }
-}
+};
 
-var ssNameIdFind = function (sheetName, id) {
+function ssNameIdFind(sheetName, id) {
   // Search for files with the given name
   const files = DriveApp.getFilesByName(sheetName);
 
@@ -2124,7 +2155,7 @@ var ssGetSheet = function (sheetname) {
  * @param {string} url The URL of the spreadsheet.
  * @returns The Sheets.
  */
-var ssGetSheetBSI = function (url) {
+function ssGetSheetBSI(url) {
   if (url) {
     var ss = urlSpreadSheet(url);
     let ssSheets = [];
@@ -2136,7 +2167,7 @@ var ssGetSheetBSI = function (url) {
   }
 };
 
-var ssGetSheetBySpreadsheetId = function (id, sheetname) {
+function ssGetSheetBySpreadsheetId(id, sheetname) {
   if (id) {
     var ss = idSpreadSheet(id);
     var sheet = ss.getSheetByName(sheetname);
@@ -2149,7 +2180,7 @@ var ssGetSheetBySpreadsheetId = function (id, sheetname) {
  * @param {string} sheetname The name of the sheet to get.
  * @returns {SpreadsheetApp.Spreadsheet|SpreadsheetApp.Sheet} The Spreadsheet or Sheet object.
  */
-var ssGetSheetBySpreadsheetUrl = function (url, sheetname) {
+function ssGetSheetBySpreadsheetUrl(url, sheetname) {
   if (url) {
     var ss = urlSpreadSheet(url);
     if (sheetname) {
@@ -2161,7 +2192,7 @@ var ssGetSheetBySpreadsheetUrl = function (url, sheetname) {
   }
 };
 
-var ssSetName = function (randomSheet, sheetname) {
+function ssSetName(randomSheet, sheetname) {
   if (randomSheet) {
     var sheetName = idSpreadSheet(randomSheet.getId())
       .getSheetByName("sheet1")
@@ -2171,13 +2202,13 @@ var ssSetName = function (randomSheet, sheetname) {
   }
 };
 
-function ssSetSheet() {
+var ssSetSheet = function () {
   var ss = spreadSheet();
   if (ss) {
     var sheet = ss.setActiveSheet();
     return sheet;
   }
-}
+};
 
 var ssSetSheetBySpreadsheetId = function (id) {
   if (id) {
@@ -2195,21 +2226,21 @@ var ssSetSheetBySpreadsheetUrl = function (url) {
   }
 };
 
-function ssSheet() {
+var ssSheet = function () {
   var ss = spreadSheet();
   if (ss) {
     var sheet = ss.getActiveSheet();
     return sheet;
   }
-}
+};
 
-function ssSheetName() {
+var ssSheetName = function () {
   var sheet = ssSheet();
   if (sheet) {
     var sheetName = sheet.getSheetName();
     return sheetName;
   }
-}
+};
 
 function submitDomain(formData) {
   // var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -2225,9 +2256,9 @@ function submitDomain(formData) {
     "Available",
   ]); // Add other fields
   return "Domain listing submitted successfully!";
-}
+};
 
-var taxiService = function () {
+function taxiService() {
   const server = http.createServer(requestListener);
   server.listen(port, host, () => {
     console.log(
@@ -2236,7 +2267,7 @@ var taxiService = function () {
   });
 };
 
-var tutorial = function (text) {
+function tutorial(text) {
   var html = contentApp(`
     <body id="screen"></body>
     <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
@@ -2244,22 +2275,23 @@ var tutorial = function (text) {
 };
 
 function updateSheet(url, sheetName, data, numCols, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      data +
-      ", = " +
-      !data,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     data +
+  //     ", = " +
+  //     !data,
+  // );
   var sheet = ssGetSheetBySpreadsheetUrl(url, sheetName);
   sheet.appendRow(data);
   var sheetArray = SpreadsheetApp.openByUrl(url).getUrl();
   return {
     myFileX: sheetArray,
   };
-}
+};
+
 // Replace with your Google Sheet ID and range
 // var spreadsheetId = 'YOUR_SHEET_ID';
 // var range = 'Sheet1!A1:E';
@@ -2284,13 +2316,13 @@ function updateSheet(url, sheetName, data, numCols, time) {
 // Display a success message (optional)
 // Browser.msgBox("Data submitted to Google Sheet successfully!");
 
-var urlSpreadSheet = function (url) {
+function urlSpreadSheet(url) {
   var ssApp = SpreadsheetApp;
   var ss = ssApp.openByUrl(url);
   return ss;
 };
 
-var wanUtil = function (namedVar, time) {
+function wanUtil(namedVar, time) {
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
   }
@@ -2313,7 +2345,7 @@ var wanUtil = function (namedVar, time) {
   });
 };
 
-var wsSIPOC = function (fileX, col) {
+function wsSIPOC(fileX, col) {
   var result = contentApp("", {
     createSheet: (function () {
       var spreadSheet = driveSheetsFilter(fileX);
@@ -2326,7 +2358,7 @@ var wsSIPOC = function (fileX, col) {
   return result;
 };
 
-var xkcdRSS = function () {
+function xkcdRSS() {
   var feed = UrlFetchApp.fetch("http://xkcd.com/rss.xml").getContentText();
   feed = feed.replace(
     /(&lt;img.*?alt="(.*?)".*?&gt;)/g,

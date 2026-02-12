@@ -1,4 +1,4 @@
-var formMaker = function (fileName, folderX, time) {
+function formMaker(fileName, folderX, time) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -32,7 +32,7 @@ var formMaker = function (fileName, folderX, time) {
   }
 };
 
-var formsUrlsGlobal = function (fileX, time) {
+function formsUrlsGlobal(fileX, time) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -88,7 +88,7 @@ var formsUrlsGlobal = function (fileX, time) {
   }
 };
 
-var searchUrlsGlobal = function (fileX) {
+function searchUrlsGlobal(fileX) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -114,7 +114,7 @@ var searchUrlsGlobal = function (fileX) {
   }
 };
 
-var searchUrlsRoot = function (fileX) {
+function searchUrlsRoot(fileX) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -135,7 +135,7 @@ var searchUrlsRoot = function (fileX) {
   }
 };
 
-var searchUrlsTree = function (fileX) {
+function searchUrlsTree(fileX) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -168,7 +168,7 @@ var searchUrlsTree = function (fileX) {
   return matchManager(fileX);
 };
 
-var searchUrlsRandom = function () {
+function searchUrlsRandom() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
 
   var fileTree = [];
@@ -195,7 +195,7 @@ var searchUrlsRandom = function () {
   return filed;
 };
 
-var searchTreeRoot = function (fileX) {
+function searchTreeRoot(fileX) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -214,7 +214,7 @@ var searchTreeRoot = function (fileX) {
   }
 };
 
-var searchDataTree = function (fileX) {
+function searchDataTree(fileX) {
   console.log(
     functionRegistry.time +
       "\n" +

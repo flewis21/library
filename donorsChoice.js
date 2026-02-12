@@ -1,4 +1,4 @@
-var donorsChoice = function () {
+function donorsChoice() {
   const rowsDefault = testData(
     jsonXpath("https://www.sec.gov/files/company_tickers.json"),
   );

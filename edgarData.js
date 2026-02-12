@@ -1,4 +1,4 @@
-var coSort = function (time) {
+function coSort(time) {
   // console.log("coSort: \nvar data = [" + urlDataSource("https://www.sec.gov/files/company_tickers.json") + "]")
   // var data = [urlDataSource("https://www.sec.gov/files/company_tickers.json")]
   // console.log("coSort: \nvar dataObjects = convertToObjects(" + data, 'dataObject',time + ")")
@@ -113,7 +113,7 @@ var coSort = function (time) {
   };
 };
 
-var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
+function coSortCIKS(cikArray, cikArrData, i, cikl) {
   var cikFreqArray = [];
 
   for (i, cikl; i < cikl; i++) {
@@ -158,7 +158,7 @@ var coSortCIKS = function (cikArray, cikArrData, i, cikl) {
   return cikFreqArray;
 };
 
-var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
+function coSortTickers(tickerArray, tickerArrData, i, ticl) {
   var tickerFreqArray = [];
 
   for (i, ticl; i < ticl; i++) {
@@ -173,7 +173,7 @@ var coSortTickers = function (tickerArray, tickerArrData, i, ticl) {
   return tickerFreqArray;
 };
 
-var coSortTitles = function (titleArray, titleArrData, i, titl) {
+function coSortTitles(titleArray, titleArrData, i, titl) {
   var titleFreqArray = [];
   for (i, titl; i < titl; i++) {
     titleArray.sort((a, b) => {
@@ -187,7 +187,7 @@ var coSortTitles = function (titleArray, titleArrData, i, titl) {
   return titleFreqArray;
 };
 
-var edgarData = function (text) {
+function edgarData(text) {
   // SEC Edgar Filings Widget
   let h = {};
   var tmp = [];
@@ -265,93 +265,125 @@ var edgarData = function (text) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
   ).getContent();
   html.dOMContentLoaded = HtmlService.createHtmlOutput(
-    `
-    <script>
+    `<script>
       const elements = {};
-      document.addEventListener("DOMContentLoaded", 
-function() 
-  {var elems = document.querySelectorAll("select");
-  var instances = M.FormSelect.init(elems);});
-  </script>`,
+      document
+        .addEventListener("DOMContentLoaded", function() {
+          var elems = document.querySelectorAll("select");
+          var instances = M.FormSelect.init(elems);
+        });
+    </script>`,
   ).getContent();
   html.loadData = HtmlService.createHtmlOutput(
-    `
-    <script>
-      document.addEventListener("DOMContentLoaded", loadData);
-function loadData() {tabulatorLoad();}
+    `<script>
+      document
+        .addEventListener("DOMContentLoaded", loadData);
+      function loadData() {
+        tabulatorLoad();
+      }
     </script>`,
   ).getContent();
   html.tabulatorLoad = HtmlService.createHtmlOutput(
-    `
-function tabulatorLoad() 
-  {elements.alerts = document.getElementById("alerts");
-  elements.search = document.getElementById("search");
-  elements.search.addEventListener("input", searchData);
-  const tabledata = ${JSON.stringify(text)};
-  const table = 
-    new Tabulator("#data-table", 
-                 {height:205,
-                 data:tabledata,
-                 layout:"fitColumns",
-                 responsiveLayout:"hide",
-                 pagination:"local",
-                 paginationSize:5,
-                 columns:
-                  [{title:"Central Index Key", 
-                    field:"cik_str", 
-                    editor:"list", 
-                    editorParams:{valuesLookup:"active", 
-                                  valuesLookupField:"id"}},
-                    {title:"Ticker Symbol", 
-                    field:"ticker", 
-                    editor:"list", 
-                    editorParams:{valuesLookup:"active", 
-                                  valuesLookupField:"ticker"}},
-                    {title:"Company or Fund name", 
-                    field:"title", 
-                    editor:"list", 
-                    editorParams:{valuesLookup:"active", 
-                                  valuesLookupField:"title"}},
-                    {title:"Task Progress", 
-                    field:"progress", 
-                    hozAlign:"left", 
-                    formatter:"progress", 
-                    editor:"input"},
-                    {title:"Complete", 
-                    field:"Complete", 
-                    width:90,  
-                    hozAlign:"center", 
-                    formatter:"tickCross", 
-                    sorter:"boolean", 
-                    editor:"input"},],});`,
+    `function tabulatorLoad() {
+      elements.alerts = document.getElementById("alerts");
+      elements.search = document.getElementById("search");
+      elements.search.addEventListener("input", searchData);
+      const tabledata = ${JSON.stringify(text)};
+      const table 
+        = new 
+            Tabulator(
+              "#data-table", 
+                      {
+                        height:205,
+                        data:tabledata,
+                        layout:"fitColumns",
+                        responsiveLayout:"hide",
+                        pagination:"local",
+                        paginationSize:5,
+                        columns:
+                          [
+                            {
+                              title:"Central Index Key", 
+                              field:"cik_str", 
+                              editor:"list", 
+                              editorParams:
+                                {
+                                  valuesLookup:"active", 
+                                  valuesLookupField:"id"
+                                }
+                            },
+                            {
+                              title:"Ticker Symbol", 
+                              field:"ticker", 
+                              editor:"list", 
+                              editorParams:
+                                {
+                                  valuesLookup:"active", 
+                                  valuesLookupField:"ticker"
+                                }
+                            },
+                            {
+                              title:"Company or Fund name", 
+                              field:"title", 
+                              editor:"list", 
+                              editorParams:
+                                {
+                                  valuesLookup:"active", 
+                                  valuesLookupField:"title"
+                                }
+                            },
+                            {
+                              title:"Task Progress", 
+                              field:"progress", 
+                              hozAlign:"left", 
+                              formatter:"progress", 
+                              editor:"input"
+                            },
+                            {
+                              title:"Complete", 
+                              field:"Complete", 
+                              width:90,  
+                              hozAlign:"center", 
+                              formatter:"tickCross", 
+                              sorter:"boolean", 
+                              editor:"input"
+                            },
+                          ],
+                      }
+            );`,
   ).getContent();
   html.rowClicked = HtmlService.createHtmlOutput(
-    `
-    //table.on("rowClick", 
-function(e, row){//alert("Row " + row.getData().id + " Clicked!!!!");//});`,
+    `//table.on("rowClick", function(e, row) {
+      //alert("Row " + row.getData().id + " Clicked!!!!");
+    //});`,
   ).getContent();
   html.cellEdited = HtmlService.createHtmlOutput(
-    `
-    table.on("cellEdited", 
-function(cell){//cell - cell component
-              const field = cell._cell.column.field;
-              const id = cell._cell.row.data.id;
-              const val = cell._cell.value})`,
+    `table.on("cellEdited", function(cell) {
+      //cell - cell component
+        const field = cell._cell.column.field;
+        const id = cell._cell.row.data.id;
+        const val = cell._cell.value
+    })`,
   ).getContent();
   html.searchData = HtmlService.createHtmlOutput(
-    `
-function searchData(e) 
-  {table.setFilter("title","like", e.target.value);
-  google.script.run
-    .withSuccessHandler(egdarData)
-    .companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])}`,
+    `function searchData(e) {
+      table.setFilter("title","like", e.target.value);
+      google.script.run
+        .withSuccessHandler(egdarData)
+        .companyName("https://www.sec.gov/files/company_tickers.json", "", 1, 1, [["cik_str"],["ticker"],["title"]])
+    }`,
   ).getContent();
-  html.companyInfo = HtmlService.createHtmlOutput(`
-function edgarData()companyInfo) {console.log(companyInfo);}`);
+  html.companyInfo = HtmlService.createHtmlOutput(
+    `function edgarData(companyInfo) {
+      console.log(companyInfo);
+    }`
+  );
   html.startPageUrl = startPageUrl;
 
   return html.evaluate().getContent(); //:contentFile('uiAccess');
-}; // edgarArray.push([result])
+}; 
+
+// edgarArray.push([result])
 // for (let k of Object.keys())
 // queO.push([testObject([forArray(splitNoX(o, 1))],[forArray(splitNoX(o, 0))])])
 // if (o.hasOwnProperty(k))
@@ -412,7 +444,7 @@ function edgarData()companyInfo) {console.log(companyInfo);}`);
 // ("\n <div  id=\"table-body\"></div>\n  <script>\n  const mydata = \"".concat(JSON.stringify(testData("data")), "\" \n \n  const tbody = document.getElementById(\"table-body\")\n   const htmlBody = mydata.forEach(function(r) {\n   console.log(r)\n   console.log(mydata)\n   const link = document.createElement(\"a\");\n  link.textContent = ".concat("\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"", ";\n   tbody.innerHtml(link);\n  })\n   </script>\n  ")), { textContent: "\\ value=r[1] target=\"_blank\" href=\"https://www.sec.gov/edgar/browse/?CIK=\"r[0][0]\"&owner=exclude\"" });
 //}
 
-var oldSEC = function (rndTitle) {
+function oldSEC(rndTitle) {
   var urlCompany = "<?= getScriptUrl() ?>?func=createRandomFunction&args=";
   var urlTicker = "https://www.nasdaq.com/search?q=";
   var urlCik = "https://www.sec.gov/edgar/browse/?CIK=";
@@ -501,7 +533,7 @@ var oldSEC = function (rndTitle) {
   return html.evaluate().getContent();
 };
 
-var opt = function (searchString) {
+function opt(searchString) {
   if (typeof searchString === "undefined") {
     var searchString = "company user";
   }
@@ -581,59 +613,60 @@ var opt = function (searchString) {
   var result = JSON.stringify(coTable);
   return HtmlService.createTemplate(
     contentApp(
-      `
-    <html id="opt">
-      <head>
-        <base target="_top">
-        <meta charset="utf-8">
-        <meta name="seoCapital" content="Boilerplate SEO Capital">
-        <meta name=viewport content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-          <style>
+      `<html id="opt">
+        <head>
+          <base target="_top">
+          <meta charset="utf-8">
+          <meta name="seoCapital" content="Boilerplate SEO Capital">
+          <meta name=viewport content="width=device-width, initial-scale=1">
+          <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+            <style>
 
-              body {
+                body {
 
-                flex-grow: 1;
-                color:blue;
-                text-decoration:bold;
-                flex-flow: row wrap;
-                grid-column: 1;
-                grid-row: 1;
-                text-align: center;
-                align-content: flex-start;
-                overflow: auto;
-              }
-          </style>
-      </head>
-      <body>
+                  flex-grow: 1;
+                  color:blue;
+                  text-decoration:bold;
+                  flex-flow: row wrap;
+                  grid-column: 1;
+                  grid-row: 1;
+                  text-align: center;
+                  align-content: flex-start;
+                  overflow: auto;
+                }
+            </style>
+        </head>
+        <body>
 
-    <div class="row">
-    <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
-    <div class="container">
-    <div class="col s12 receipt red">
-   <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-    <thead>
-      <tr>
-        <th>SEC book reference</th>
-        <th>Stock Market book reference</th>
-        <th>Company Name</th>
-      </tr>
-    </thead>
-    <tbody id="test">
-    </tbody>
-   </table>   
-    </div></div></div></div>
-   <div class="truncate">
-   </div>
-   <script>
-    document.addEventListener("DOMContentLoaded", 
-function(){document.getElementById("test").innerHTML = <?!= tableContents ?>})
-  </script>
-  
-      <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
-      </body>
-    </html>
-        `,
+          <div class="row">
+          <div class="col s10 card-panel amber push-s1 push-m1 push-l1">
+          <div class="container">
+          <div class="col s12 receipt red">
+          <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+            <thead>
+              <tr>
+                <th>SEC book reference</th>
+                <th>Stock Market book reference</th>
+                <th>Company Name</th>
+              </tr>
+            </thead>
+            <tbody id="test">
+            </tbody>
+          </table>   
+          </div></div></div></div>
+          <div class="truncate">
+          </div>
+          <script>
+            document
+              .addEventListener("DOMContentLoaded", function() {
+                document
+                  .getElementById("test").innerHTML = <?!= tableContents ?>
+              })
+          </script>
+        
+          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="breakUrl" />
+        </body>
+      </html>`,
       {
         tableContents: result,
       },
@@ -648,7 +681,7 @@ var randomTickerXpath = function (rnum) {
   return rnumber;
 };
 
-var randomUtility = function (e, arrD, time) {
+function randomUtility(e, arrD, time) {
   // var utilStr
   // = skyNeed(namedVar, time);var utilSubst
   // = randomSubstance(0,4,namedVar,time)
@@ -767,7 +800,7 @@ function videoSEC() {
   return html.evaluate().getContent();
 } //webApp closed
 
-var yahooSort = function (ticker, time) {
+function yahooSort(ticker, time) {
   // var ticker = "AAPL"
   var data = [
     urlDataSource(

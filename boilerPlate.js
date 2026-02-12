@@ -1,6 +1,6 @@
 // Compiled using dontime 1.0.0 (TypeScript 4.7.4)
 
-var convertToJS = function (rndText) {
+function convertToJS(rndText) {
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +
@@ -93,6 +93,7 @@ var convertToObjects = function (rows, headings, time) {
   ).objects;
   return JSON.stringify(temp);
 };
+
 // console.log("convertToObjects: \nDeclaring temp = rows.reduce()")
 // console.log("convertToObjects: \nrows.reduce(function (" + JSON.stringify(ctx), row + ")")
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nforEach: " +  row[index] + "\nelaspeTime: " + elaspeTime)
@@ -105,6 +106,7 @@ var convertToObjects = function (rows, headings, time) {
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------
+
 var covertArr = function (objects, row, index) {
   console.log(
     functionRegistry.time +
@@ -180,7 +182,7 @@ var getFolderValues = function () {
   return functionRegistry.getFolderList();
 };
 
-function objectOfS(keys, values, time) {
+var objectOfS = function (keys, values, time) {
   /**
    * Creates an object of objects from key-value pairs.
    *
@@ -396,7 +398,7 @@ var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   }
 };
 
-var substanceVegas = function (
+function substanceVegas(
   index,
   loopLength,
   importedData,
@@ -521,7 +523,7 @@ var substanceVegas = function (
   console.log();
 };
 
-var testArray = function (content) {
+function testArray(content) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -557,7 +559,7 @@ var testArray = function (content) {
   }
 };
 
-var testData = function (sourceData, time) {
+function testData(sourceData, time) {
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -572,7 +574,7 @@ var testData = function (sourceData, time) {
   //     time,
   // );
   if (typeof time === "undefined") {
-    var time = start;
+    var time = functionRegistry.time;
   }
   if (typeof sourceData === "undefined") {
     var sourceData = ["0", "1", "2", "3", "4", "5", "6", "7"]
@@ -583,70 +585,72 @@ var testData = function (sourceData, time) {
   try {
     for (var row in sourceData) {
       var elaspeTime = functionRegistry.time;
-      console.log(
-        "testData: \nsourceData: " +
-          sourceData +
-          "\nrow: " +
-          row +
-          "\nelaspeTime: " +
-          formatTime(elaspeTime),
-      );
+      // console.log(
+      //   "testData: \nsourceData: " +
+      //     sourceData +
+      //     "\nrow: " +
+      //     row +
+      //     "\nelaspeTime: " +
+      //     formatTime(elaspeTime),
+      // );
       myArray.push([]);
       for (var col in sourceData[row]) {
         // var elaspeTime = functionRegistry.time;
-        console.log(
-          "testData: \nmyArray - " +
-            myArray +
-            "[row - " +
-            row +
-            "]: " +
-            myArray[row] +
-            "\nsourceData - " +
-            sourceData +
-            "[row - " +
-            row +
-            "]: " +
-            [sourceData][row] +
-            "\ncol: " +
-            col +
-            "\nelaspeTime: " +
-            formatTime(elaspeTime),
-        );
+        // console.log(
+        //   "testData: \nmyArray - " +
+        //     myArray +
+        //     "[row - " +
+        //     row +
+        //     "]: " +
+        //     myArray[row] +
+        //     "\nsourceData - " +
+        //     sourceData +
+        //     "[row - " +
+        //     row +
+        //     "]: " +
+        //     [sourceData][row] +
+        //     "\ncol: " +
+        //     col +
+        //     "\nelaspeTime: " +
+        //     formatTime(elaspeTime),
+        // );
         myArray[row].push(sourceData[row][col]);
-        console.log(
-          "testData: \nmyArray - " +
-            myArray +
-            "[row - " +
-            row +
-            "]: " +
-            myArray[row] +
-            "\nmyArray[row].push(sourceData - " +
-            sourceData +
-            "[row - " +
-            row +
-            "][col - " +
-            col +
-            "]): " +
-            [sourceData][row][col] +
-            "\nelaspeTime: " +
-            formatTime(elaspeTime),
-        );
+        // console.log(
+        //   "testData: \nmyArray - " +
+        //     myArray +
+        //     "[row - " +
+        //     row +
+        //     "]: " +
+        //     myArray[row] +
+        //     "\nmyArray[row].push(sourceData - " +
+        //     sourceData +
+        //     "[row - " +
+        //     row +
+        //     "][col - " +
+        //     col +
+        //     "]): " +
+        //     [sourceData][row][col] +
+        //     "\nelaspeTime: " +
+        //     formatTime(elaspeTime),
+        // );
       }
     }
     // console.log("testData: \nmyArray: " + spreadSheetCreate("myArraySheet",myArray,["arrayData"],myArray,time))
-  } catch (err) {
-    console.log("testData: \nerr: " + err.stack);
+  } 
+  catch (err) {
+    // console.log("testData: \nerr: " + err.stack);
     return {
       testArray: err.stack,
-    };
+    }
   }
   return {
     testArray: myArray,
   };
 };
+
 // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 
-var trial = function () {
+function trial() {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   var trial = [];
   var judge = 0;
@@ -692,7 +696,7 @@ var trial = function () {
   return trial;
 };
 
-var testObject = function (dataArray, fVarHeaders) {
+function testObject(dataArray, fVarHeaders) {
   console.log(
     functionRegistry.time +
       "\n" +

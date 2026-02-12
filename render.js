@@ -1,4 +1,4 @@
-var appList = function () {
+function appList() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   return HtmlService.createTemplate(
     `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
@@ -164,6 +164,7 @@ var appList = function () {
     .evaluate()
     .getContent();
 };
+
 // <div class="row">
 //   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
 //     <div class="container">
@@ -298,6 +299,7 @@ var contentBlob = function (blob, argsObject) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
     .getContent();
 };
+
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
 // if (argsObject) {
@@ -326,6 +328,7 @@ var contentTemplate = function (file, argsObject) {
     console.error("Exception: ", error.toString());
   }
 };
+
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
 // if (argsObject) {
@@ -394,6 +397,7 @@ var contentFile = function (file, argsObject) {
     );
   }
 };
+
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
 // if (argsObject) {
@@ -405,7 +409,7 @@ var contentFile = function (file, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var defSBD = function (e) {
+function defSBD(e) {
   var args = [
     `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
   ]
@@ -486,7 +490,7 @@ var defSBD = function (e) {
   }
 };
 
-function eTest() {
+var eTest = function () {
   console.log(
     Math.floor(
       functionRegistry.timeLeftToExecute - functionRegistry.time / 1000,
@@ -494,7 +498,7 @@ function eTest() {
   );
 }
 
-var freeSBD = function (func) {
+function freeSBD(func) {
   try {
     console.log("The received parameter ", func);
     !func ? (func = "rule") : (func = func);
@@ -1909,7 +1913,7 @@ globalThis.threeTime = 3 * 59.9 * 1000;
 
 globalThis.twoTime = 2 * 59.9 * 1000;
 
-var wildSBD = function (e) {
+function wildSBD(e) {
   var args = e.parameter["args"];
   try {
     if (

@@ -1,4 +1,4 @@
-var addDates = function (title, startTime, endTime, series) {
+function addDates(title, startTime, endTime, series) {
   if (!series) {
     console.log("You did not specify series");
     addEventToCalendar(title, startTime, endTime);
@@ -167,7 +167,7 @@ async function agendaDates() {
   return tempTitle;
 }
 
-function calCalendar() {
+var calCalendar = function () {
   var eCalId = CalendarApp.getDefaultCalendar();
   return eCalId;
 }
@@ -190,7 +190,8 @@ function dateAgenda() {
   return uniqueData;
   console.log(sheetJSONSheet.getName());
   console.log(uniqueData);
-}
+};
+
 // var ws = idSpreadSheet("1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=1223141535");
 // console.log(uniqueData)
 // var headings = data[0].map(function (val) {
@@ -200,7 +201,7 @@ function dateAgenda() {
 // var noHeaders = data.slice(1);
 // var outputData = (covObjects(noHeaders, headings));
 
-var dateFunction = function (series) {
+function dateFunction(series) {
   var days = mapValues(sliceValues(ssDataRange(), 1), series);
   var uniqueDays = [];
   days.forEach(function (d) {
@@ -211,7 +212,7 @@ var dateFunction = function (series) {
   return uniqueDays;
 };
 
-var dateModel = function (days) {
+function dateModel(days) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -232,7 +233,7 @@ var dateModel = function (days) {
   return uniqueDays;
 };
 
-var flatten = function (input) {
+function flatten(input) {
   console.log(input);
   var stocks = [];
   if (!Array.isArray(input)) {
@@ -246,7 +247,7 @@ var flatten = function (input) {
   };
 };
 
-var getCalendarBusyDays = function (dates) {
+function getCalendarBusyDays(dates) {
   var ws = ssSheet();
   var disabledDays = ws.getRange(dates).getValues();
   var days = disabledDays.map(function (e) {
@@ -279,7 +280,7 @@ var getDates = function (series) {
   }
 };
 
-var raise = function (acc, item) {
+function raise(acc, item) {
   console.log(acc, item);
   if (Array.isArray(item)) {
     return item.reduce(raise, acc);
@@ -289,7 +290,7 @@ var raise = function (acc, item) {
   };
 };
 
-var lower = function (array, callback, initial) {
+function lower(array, callback, initial) {
   let acc = initial;
   try {
     for (let i = 0; i < array.length; i++) {
@@ -304,7 +305,7 @@ var lower = function (array, callback, initial) {
   };
 };
 
-var randomDay = function (disabledDays) {
+function randomDay(disabledDays) {
   disabledDays = dateAgenda();
   var populateDates = disabledDays.map(function (day) {
     return disabledDays.indexOf(day.valueOf()) > -1;

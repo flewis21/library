@@ -404,7 +404,7 @@ function createRandomForm() {
   return formUrl;
 }
 
-var dtls = function (callFunc, time) {
+function dtls(callFunc, time) {
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {
@@ -550,7 +550,7 @@ var dtls = function (callFunc, time) {
   }
 };
 
-var dtlsCalculator = function (e) {
+function dtlsCalculator(e) {
   var username = e;
   const data = needUtility(
     randomSubstance(0, 2, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
@@ -655,7 +655,7 @@ var dtlsCalculator = function (e) {
   return html.evaluate().getContent();
 }; //:contentFile('uiAccess');
 
-var dtlsEnvironment = function (e, time) {
+function dtlsEnvironment(e, time) {
   var dtlsUrl =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=videoPage&args=";
   var arrayMath = allInvestors(e, time);
@@ -914,7 +914,7 @@ var dtlsEnvironment = function (e, time) {
   //   </div></div></div></div>`).evaluate().getContent()
 };
 
-var dtlsInvestor = function (coKey, time) {
+function dtlsInvestor(coKey, time) {
   var coData = coUtility(coKey)[0];
   if (coData) {
     var coDataName = coData.rndTitle;
@@ -1012,7 +1012,7 @@ var dtlsInvestor = function (coKey, time) {
   }
 };
 
-var dtlsResearchForm = function (topic) {
+function dtlsResearchForm(topic) {
   var cokey;
   topic
     ? (cokey = topic)
@@ -1052,7 +1052,7 @@ var dtlsResearchForm = function (topic) {
   }
 };
 
-var dtlsSomeFunction = function (e) {
+function dtlsSomeFunction(e) {
   var time = functionRegistry.time;
   var importedData = globalThis.arrD();
   var funcStr = randomSubstance(0, 4, importedData).myNewArr;
@@ -1153,7 +1153,7 @@ var dtlsSomeFunction = function (e) {
   return { playList: covIdArray, content: formUrl };
 };
 
-var dtlsStore = function (itemName, time) {
+function dtlsStore(itemName, time) {
   // if (typeof itemName === "undefined") {
   //   var itemName = "water"
   // }
@@ -1220,8 +1220,7 @@ var dtlsStore = function (itemName, time) {
   inventoryUrl = getUrl(ScriptApp);
   financeUrl = getUrl(ScriptApp);
   var itemContent = contentApp(
-    `
-      <div class="row">
+    `<div class="row">
         <div class="col s10 card-panel l12 m12 push-s1">
           <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
             <div class="col s12 l12 m12">
@@ -1261,14 +1260,17 @@ var dtlsStore = function (itemName, time) {
             </div>
           </div>
         </div>
-      </div>
-`,
-    { item: itemName || "SHOPPING LIST", fileUrl: formUrl, allTime: time },
+      </div>`,
+    { 
+      item: itemName || "SHOPPING LIST", 
+      fileUrl: formUrl, 
+      allTime: time 
+    },
   );
   return itemContent;
 };
 
-var dtlsTv = function () {
+function dtlsTv() {
   var randomSECCo = needUtility(randomSubstance(null, 0, 7))[0];
   var myVid = randomSECCo.rndTitle;
   var infoLink = seoSheet(myVid).keyWords;
@@ -1283,7 +1285,7 @@ var dtlsTv = function () {
   dtlsVegas(story);
 };
 
-var dtlsVegas = function (rndId) {
+function dtlsVegas(rndId) {
   if (typeof rndId === "undefined") {
     var rndId = "Converse Chuck Taylor All Star Low Top";
   }
@@ -1345,7 +1347,7 @@ var dtlsVegas = function (rndId) {
   return html.getRawContent();
 };
 
-var filetypeBing = function (e) {
+function filetypeBing(e) {
   var time = start;
   // var namedVar = "pred"
   var arrData = coSort(time).ticker;
@@ -1441,7 +1443,7 @@ var filetypeBing = function (e) {
   return [cokey].join("");
 };
 
-var generalWorkInvoice = function (clientName, time) {
+function generalWorkInvoice(clientName, time) {
   // var clientName = "iforce maxx"
   if (clientName) {
     var boilerUrl = dtlsBridge(clientName, time);
@@ -1639,7 +1641,7 @@ var overFlow = function () {
 `;
 };
 
-var geneFrame = function (reference) {
+function geneFrame(reference) {
   if (typeof reference === "undefined") {
     var reference = functionRegistry.htmlFile;
   }
@@ -1713,7 +1715,7 @@ var geneFrame = function (reference) {
   );
 };
 
-var mainMan = function (mainFile) {
+function mainMan(mainFile) {
   if (mainFile) {
     // var mainFile = "wild"
     var stringSplit = mainFile.split(" ");
@@ -1764,7 +1766,7 @@ var mainMan = function (mainFile) {
   }
 };
 
-var somMainFunc = async function (e) {
+async function somMainFunc(e) {
   var elapsedTime = new Date() - start;
   var timeToExecute = functionRegistry.maxTime - elapsedTime;
   while (timeToExecute > 0.3 * 60 * 1000) {

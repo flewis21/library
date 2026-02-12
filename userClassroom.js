@@ -1,13 +1,13 @@
-function userClass() {
+var userClass = function () {
   var cCalId = Classroom.Courses.list().courses;
   for (var iC = 0; iC < cCalId.length; iC++) {
     var cJSON = cCalId[iC];
     console.log(cJSON["id"]);
     console.log(cJSON["room"]);
   }
-}
+};
 
-function getDocUrl(docId) {
+var getDocUrl = function (docId) {
   Logger.log("Trying to open document with ID:", docId); // Log the ID
   try {
     var doc = DocumentApp.openById(docId);
@@ -17,7 +17,7 @@ function getDocUrl(docId) {
     Logger.log("Error opening document:", error);
     throw new Error("Error opening document. Check the logs."); // Throw the error for the client to catch
   }
-}
+};
 
 function getPlaceholders(templateUrl) {
   try {
@@ -40,7 +40,7 @@ function getPlaceholders(templateUrl) {
   }
 }
 
-function processFormData(formData, templateUrl) {
+var processFormData = function (formData, templateUrl) {
   try {
     var doc = DocumentApp.openByUrl(templateUrl);
 
@@ -59,7 +59,7 @@ function processFormData(formData, templateUrl) {
     Logger.log("Error processing form data:", error);
     throw new Error("Error processing form data. Check the logs.");
   }
-}
+};
 
 function sheetGetPlaceholders(templateUrl) {
   var url =
@@ -84,9 +84,9 @@ function sheetGetPlaceholders(templateUrl) {
       "Error getting placeholders. Check the logs.\n" + error.stack,
     );
   }
-}
+};
 
-function sheetProcessFormData(formData, templateUrl) {
+var sheetProcessFormData = function (formData, templateUrl) {
   try {
     var sheet = SpreadsheetApp.openByUrl(templateUrl);
 
@@ -107,4 +107,4 @@ function sheetProcessFormData(formData, templateUrl) {
       "Error processing form data. Check the logs.\n" + error.stack,
     );
   }
-}
+};

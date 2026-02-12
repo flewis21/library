@@ -1,12 +1,13 @@
-var companyName = function (companyNameUrl) {
-  const companyNameSecData = epaA(AVar(companyNameUrl));
+function companyName(companyNameUrl) {
+  const companyNameSecData = epaA(aVar(companyNameUrl));
   const companyArray = testData(companyNameSecData);
   return companyArray;
 };
+
 // console.log(companyNameSecData)
 // console.log(myObject)
 
-var epaData = function (e) {
+function epaData(e) {
   var urlProduct =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";
   var urlIngredient =
@@ -257,7 +258,7 @@ var epaData = function (e) {
 // (contentApp("\n <head>\n  \n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n  <script>\n document.addEventListener(\"DOMContentLoaded\", function() {\n  let timePicker = document.getElementById(\"prefTime\");\n M.Timepicker.init(timePicker, { defaultTime: \"now\" })\n })\n \n  document.getElementById(\"btn\").addEventListener(\"click\", function() {\n  google.script.run.runItLog();\n  })\n </script>\n \n </body>\n ", { runIt: contentApp("\n <button id=\"btn\">Run It!</button>"), timePicker: contentApp("\n  <div class=\"agenda container col s1\">\n  <input class=\"timepicker\" id=\"prefTime\" type=\"text\" />\n  </div>\n "), ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }));
 //(e, contentApp("\n <head>\n  \n </head>\n \n  \n <body>\n <?!= ref1 ?>\n <?!= timePicker ?>\n  \n  <?!= runIt ?>\n  \n \n </body>\n ", { ref1: contentApp("\n <a href=<?!= ref1 ?> class=\"nav__link\" data-link><?!= title1 ?></a>", { ref1: "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", title1: "EPA Pesticides" }) }))
 
-var epaA = function (epaAUrl) {
+function epaA(epaAUrl) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -383,22 +384,22 @@ var epaA = function (epaAUrl) {
   return epaA;
 };
 
-var epaB = function (epaBurl, epaC, uniA, epaBdelimiter) {
+function epaB(epaBurl, epaC, uniA, epaBdelimiter) {
   const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
   return epaB;
 };
 
-var epaC = function (epaCurl, epaD, uniA, epaCdelimiter) {
+function epaC(epaCurl, epaD, uniA, epaCdelimiter) {
   const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
   return epaC;
 };
 
-var epaD = function (epaDurl, epaDXpath, epaDdelimiter) {
+function epaD(epaDurl, epaDXpath, epaDdelimiter) {
   const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
   return epaD;
 };
 
-var epaIng = function (e) {
+function epaIng(e) {
   var urlProduct =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=epaData&args=";
   var urlIngredient =
@@ -578,7 +579,7 @@ var epaIng = function (e) {
   return html.evaluate().getContent();
 };
 
-var newEPAData = function (rawData) {
+function newEPAData(rawData) {
   const uniqueCoArray = covArrays(rawData["items"]);
   const randomCoKey = Math.floor(
     Math.random() * Math.floor(uniqueCoArray.length),
@@ -593,7 +594,7 @@ var newEPAData = function (rawData) {
   // const ss = spreadSheetCreate("EPAData", "pesticides", [data].slice(0), [data].slice(1))
 };
 
-var oldEPA = function (rndTitle) {
+function oldEPA(rndTitle) {
   var wAppUrl = getScriptUrl();
   var urlPlayer = wAppUrl + "?func=misBing&args=";
   var urlProduct = wAppUrl + "?func=misBing&args=";
@@ -740,7 +741,7 @@ var oldEPA = function (rndTitle) {
   }
 };
 
-var productTime = function (product) {
+function productTime(product) {
   var test = productNamePartial("zee");
   var test2 = productRegNo(test["eparegno"]);
   var test3 = productFullName(test["productname"]);
@@ -768,7 +769,7 @@ var productTime = function (product) {
   console.log(dataSheetName.split("(").shift());
 };
 
-var productRegNo = function (eparegno) {
+function productRegNo(eparegno) {
   const res = urlDataSource(
     "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno,
   );
@@ -787,7 +788,7 @@ var productRegNo = function (eparegno) {
   }
 };
 
-var productDistNum = function (distno) {
+function productDistNum(distno) {
   const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
@@ -797,7 +798,7 @@ var productDistNum = function (distno) {
   return newEPAData(rawData);
 };
 
-var productFullName = function (productName) {
+function productFullName(productName) {
   const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
@@ -807,7 +808,7 @@ var productFullName = function (productName) {
   return newEPAData(rawData);
 };
 
-var productDist = function (
+function productDist(
   epaAUrl,
   epaDUrl,
   epaDXpath,
@@ -832,16 +833,16 @@ var productDist = function (
   return productDistEpaData;
 };
 
-var productName = function (epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
+function productName(epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
   const productNameEpaData = epaD(
-    AVar(epaDaVar),
-    BVar(epaDbVar),
-    CVar(epaDcVar),
-  )[DVar(dVar)][EVar(eVar)][FVar(fVar)];
+    aVar(epaDaVar),
+    bVar(epaDbVar),
+    cVar(epaDcVar),
+  )[dVar(dVar)][eVar(eVar)][fVar(fVar)];
   return productNameEpaData;
 };
 
-var productNamePartial = function (productName) {
+function productNamePartial(productName) {
   let appL = "";
   let iframeSrc =
     "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
@@ -913,7 +914,7 @@ var productNamePartial = function (productName) {
   return data;
 };
 
-var productNamePartialV2 = function (productName) {
+function productNamePartialV2(productName) {
   const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
@@ -923,7 +924,7 @@ var productNamePartialV2 = function (productName) {
   return newEPAData(rawData);
 };
 
-var productNumPartial = function (productNum) {
+function productNumPartial(productNum) {
   const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
@@ -933,7 +934,7 @@ var productNumPartial = function (productNum) {
   return newEPAData(rawData);
 };
 
-var productNumPartialV2 = function (productNum) {
+function productNumPartialV2(productNum) {
   const rawData = JSON.parse(
     urlDataSource(
       "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
@@ -943,7 +944,7 @@ var productNumPartialV2 = function (productNum) {
   return newEPAData(rawData);
 };
 
-var productIngName = function (ingredient) {
+function productIngName(ingredient) {
   var res = urlDataSource(
     "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
       ingredient,
@@ -963,7 +964,7 @@ var productIngName = function (ingredient) {
   }
 };
 
-var productChemCode = function (code) {
+function productChemCode(code) {
   const res = urlDataSource(
     "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
       encodeURIComponent(code),
@@ -983,7 +984,7 @@ var productChemCode = function (code) {
   }
 };
 
-var productAbstractNum = function (abstract) {
+function productAbstractNum(abstract) {
   const res = urlDataSource(
     "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
       encodeURIComponent(abstract),

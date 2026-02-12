@@ -1,4 +1,4 @@
-var crmEBI = function (fx) {
+function crmEBI(fx) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1291,7 +1291,7 @@ var crmEBI = function (fx) {
   return result;
 };
 
-function postEd(ed) {
+var postEd = function (ed) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +
@@ -1371,7 +1371,7 @@ function postEd(ed) {
   }
 }
 
-function leadBook(rowIndex) {
+var leadBook = function (rowIndex) {
   console.log("rowIndex", rowIndex);
   var rowNum = parseInt(rowIndex);
   typeof rowNum === "number"

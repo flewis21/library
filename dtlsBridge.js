@@ -1,4 +1,4 @@
-var dtlsPict = function (snap, time) {
+function dtlsPict(snap, time) {
   snap
     ? snap
     : (snap = objectOfS(
@@ -53,7 +53,7 @@ var dtlsPict = function (snap, time) {
     //     }
     //   }
     // }
-    let goldFish = uiArr.forms.toString().search(snap);
+    let goldFish = uiArr.forms.toString().search(snap)
     uiArr.forms.map((snapper) => {
       let hookLine = authLogic([snapper].includes(snap));
       if (hookLine) {
@@ -308,7 +308,7 @@ var dtlsPict = function (snap, time) {
   var rndUti = uti[randNum(uti)];
 };
 
-var portPro = function (e) {
+function portPro(e) {
   if (e) {
     var boilerUrl = dtlsBridge(e, time);
     if (boilerUrl) {
@@ -395,6 +395,7 @@ var portPro = function (e) {
   }
   var rndUti = uti[randNum(uti)];
 };
+
 // var e = "qvar"
 // var namedVar = "pred"
 // var utiStr = skyNeed(cokey, time)
@@ -407,7 +408,7 @@ var portPro = function (e) {
 // if (timeToExecute <= 2 * 60 * 1000 && timeToExecute >= 1.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit two minutes")}
 // if (timeToExecute <= 1 * 60 * 1000 && timeToExecute >= .98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit one minute")}
 
-var stockPro = function (e, time) {
+function stockPro(e, time) {
   if (typeof e === "undefined") {
     var allTitleData = [];
     var atdCount = 0;
@@ -627,7 +628,7 @@ var stockPro = function (e, time) {
   return html.evaluate().append(survey).getContent();
 };
 
-var stockHistory = function (e) {
+function stockHistory(e) {
   var eDrive = folderManager();
   var driveArr = [];
   var allTitleData = [];

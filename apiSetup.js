@@ -1,4 +1,4 @@
-function apiRedeplaoy() {
+var apiRedeplaoy = function () {
   var funcInfo = gsFiles()[crmT(arguments.callee.name)];
   var result = functionRegistry.getParamsList().find((rndS) => {
     return rndS.name === funcInfo;
@@ -14,21 +14,21 @@ function apiRedeplaoy() {
   return scriptKey;
 }
 
-function apiSetupSheet() {
+var apiSetupSheet = function () {
   var cprops = PropertiesService.getScriptProperties();
   var keyC = cprops.getProperty("key");
   var doc = SpreadsheetApp.openById(keyC);
   return doc;
 }
 
-function apiSetupActiveSheet() {
+var apiSetupActiveSheet = function () {
   var cprops = PropertiesService.getScriptProperties();
   var activeC = cprops.getProperty("sheetkey");
   var doc = SpreadsheetApp.openById(activeC);
   return doc;
 }
 
-function apiSetup() {
+var apiSetup = function () {
   var wsId = activeSsId();
   var cprops = PropertiesService.getScriptProperties();
   if (wsId !== "undefined") {
@@ -43,7 +43,7 @@ function apiSetup() {
   }
 }
 
-function apiSetupActive() {
+var apiSetupActive = function () {
   var ssId = ssSheet()?.getSheetId();
   var cprops = PropertiesService.getScriptProperties();
   var scriptKey = cprops.setProperty("sheetkey", ssId);

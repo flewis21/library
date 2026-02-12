@@ -16,7 +16,7 @@ const fieldRange = [
  * @param {object} orderData The data for the quote.
  * @return {string} The URL of the generated PDF file.
  */
-function createInvoicePDF(orderData) {
+var createInvoicePDF = function (orderData) {
   const templateDocId = "YOUR_INVOICE_TEMPLATE_DOC_ID_HERE"; // ⚠️ Replace with your Google Doc ID
   const outputFolderId = "YOUR_PDF_OUTPUT_FOLDER_ID_HERE"; // ⚠️ Replace with your Google Drive folder ID
 
@@ -51,7 +51,7 @@ function createInvoicePDF(orderData) {
 // ⚠️ Note: You will need to create a Google Doc with placeholders like {{date}}, {{car}}, etc.,
 // and a folder in Google Drive to store the PDFs.
 
-function createNewRecord() {
+var createNewRecord = function () {
   const settingsWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Invoice Settings",
@@ -152,7 +152,7 @@ function pdfTimesheet() {
  * @param {string} sheetname The name of the specific sheet to save as a PDF.
  * @return {string} The URL of the created PDF file.
  */
-function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
+var saveAsPDFToFolder = function (spreadsheetUrl, sheetname) {
   try {
     spreadsheetUrl
       ? (spreadsheetUrl = spreadsheetUrl)
@@ -213,7 +213,7 @@ function saveAsPDFToFolder(spreadsheetUrl, sheetname) {
   }
 }
 
-function saveRecord() {
+var saveRecord = function () {
   const settingsWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Invoice Settings",
@@ -268,7 +268,7 @@ function saveRecord() {
   // })()
 }
 
-function searchRecords() {
+var searchRecords = function () {
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Invoice Form",
@@ -288,7 +288,7 @@ function searchRecords() {
   fieldRange.forEach((f, i) => formWS.getRange(f).setValue(recordsFound[0][i]));
 }
 
-function userClicked() {
+var userClicked = function () {
   const formWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Invoice Form",
@@ -304,7 +304,7 @@ function userClicked() {
       })();
 }
 
-function userSearch(findMe) {
+var userSearch = function (findMe) {
   const dataWS = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "General Work Invoice",

@@ -1,4 +1,4 @@
-var storeFunction = function (xfactor) {
+function storeFunction(xfactor) {
   var ssWs = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Receive",
@@ -55,6 +55,7 @@ var storeFunction = function (xfactor) {
 
   return booleFactor;
 };
+
 //   if ([xfactor].join("").toLowerCase() === "sku") {
 
 //   var booleFactor = []

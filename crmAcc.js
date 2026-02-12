@@ -1,4 +1,4 @@
-var crmAcc = function (fx) {
+function crmAcc(fx) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -16,7 +16,7 @@ var crmAcc = function (fx) {
   };
 };
 
-function finEd(ed) {
+var finEd = function (ed) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +

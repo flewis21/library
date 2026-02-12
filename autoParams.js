@@ -3,7 +3,7 @@ const functionRegistry = {
   paramsList: [],
   initialize: function () {
     for (const key in globalThis) {
-      if (typeof globalThis[key] === "function") {
+      if (typeof globalThis[key] == "function") {
         this.fileList.push(key);
         try {
           const funcString = globalThis[key].toString();
@@ -70,8 +70,10 @@ const functionRegistry = {
     while (tree.hasNext()) {
       var folder = tree.next(); // Get the current folder
       // Now check if this 'folder' has files before adding its name
-      if (folder.getFiles().hasNext()) {
-        this.folderTree.push(folder.getName());
+      if (folder) {
+        if (folder.getFiles().hasNext()) {
+          this.folderTree.push(folder.getName());
+        }
       }
     }
   },
@@ -490,12 +492,12 @@ globalThis.uniqueItemArray = function () {
   return rndArrVals;
 };
 globalThis.arrD = function () {
-  var titleArray = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      titleArray.push(key);
-    }
-  }
+  var titleArray = functionRegistry.fileList;
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     titleArray.push(key);
+  //   }
+  // }
 
   var arrData = [
     "e",
@@ -571,12 +573,12 @@ globalThis.arrD = function () {
 //     return freqArray
 // })();
 globalThis.arrDRnd = function () {
-  var titleArray = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      titleArray.push(key);
-    }
-  }
+  var titleArray = functionRegistry.fileList;
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     titleArray.push(key);
+  //   }
+  // }
 
   var arrData = [
     "e",
@@ -664,7 +666,7 @@ globalThis.searchString = function () {
   var l = 6 || 1;
   // console.log(arrDRnd.sort((a, b) => a - b))
   // console.log(arrData.sort((a, b) => a - b))
-  if (arrDRnd) {
+  if (arrDRnd && typeof arrD === "undefined") {
     for (i, l; i < l; i++) {
       var elaspeTime = new Date() - functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof arrDRnd: " +  typeof arrDRnd + "\nelaspeTime: " + elaspeTime)
@@ -673,7 +675,7 @@ globalThis.searchString = function () {
           Math.floor(Math.random() * arrDRnd.length)
         ];
         newArr.push(myImportData);
-        var elaspeTime = new Date() - functionRegistry.time;
+        var elaspeTime = functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       } else if (
         typeof arrDRnd !== "undefined" &&
@@ -683,34 +685,34 @@ globalThis.searchString = function () {
           Math.floor(Math.random() * [arrDRnd].length)
         ];
         newArr.push(myImportData);
-        var elaspeTime = new Date() - functionRegistry.time;
+        var elaspeTime = functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       }
     }
   } else if (typeof arrD !== "undefined") {
     for (i, l; i < l; i++) {
-      var myArrData = sarrD.sort((a, b) => a - b)[
+      var myArrData = arrD.sort((a, b) => a - b)[
         Math.floor(Math.random() * arrD.length)
       ];
       newArr.push(myArrData);
-      var elaspeTime = new Date() - functionRegistry.time;
+      var elaspeTime = functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
   console.log("boilerplate autoParams: line 455");
-  console.log(
-    "randomSubstance: \n( \0: " +
-      0 +
-      "\nLoop Length: " +
-      6 +
-      "\nImported Data: " +
-      arrDRnd +
-      "\nArray Data: " +
-      arrD +
-      "\nTime: " +
-      functionRegistry.time +
-      " )",
-  );
+  // console.log(
+  //   "randomSubstance: \n( \0: " +
+  //     0 +
+  //     "\nLoop Length: " +
+  //     6 +
+  //     "\nImported Data: " +
+  //     arrDRnd +
+  //     "\nArray Data: " +
+  //     arrD +
+  //     "\nTime: " +
+  //     functionRegistry.time +
+  //     " )",
+  // );
   if (newArr) {
     var sortNewArr = newArr.sort((a, b) => a - b)[
       Math.floor(Math.random() * newArr.length)

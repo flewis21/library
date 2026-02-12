@@ -1,10 +1,10 @@
-function isTypeScript(typePassedIn) {
+var isTypeScript = function (typePassedIn) {
   var mapTypes = {};
   for (var key in typePassedIn) {
     mapTypes[key] = typePassedIn[key];
   }
   return mapTypes;
-}
+};
 
 function isValidKeys(v) {
   var isExcludeValue = isOmit(v, "1");
@@ -17,17 +17,17 @@ function isValidKeys(v) {
       return isValueOfTypePassedIn;
     }
   }
-}
+};
 
-function isMapped(t, v) {
+var isMapped = function (t, v) {
   var mapKeys = {};
   for (var key in t) {
     mapKeys[key] = v || typeof t[key];
   }
   return mapKeys;
-}
+};
 
-function isTruthy(t) {
+var isTruthy = function (t) {
   if (
     typeof t === null ||
     t === null ||
@@ -42,9 +42,9 @@ function isTruthy(t) {
   } else {
     return true;
   }
-}
+};
 
-function isValidDoubleObject(t) {
+var isValidDoubleObject = function (t) {
   // var validKeys = isMapped(t);
   var validList = Object.values(t);
   if (validList.length === 2) {
@@ -57,27 +57,27 @@ function isValidDoubleObject(t) {
     }
   }
   return validList;
-}
+};
 
-function isKeyOf(t) {
+var isKeyOf = function (t) {
   var keyList = {}; //Object.keys(t);
   for (var key in t) {
     keyList[key] = key;
   }
   return keyList;
-}
+};
 
-function isPropertyOf(t) {
+var isPropertyOf = function (t) {
   var propertyList = isMapped(t);
   return propertyList;
-}
+};
 
-function isOmit(t, k) {
+var isOmit = function (t, k) {
   var valuesList = isPick(t, k);
   return valuesList;
-}
+};
 
-function isExclude(t, k) {
+var isExclude = function (t, k) {
   var keyList = Object.keys(t);
   var excludeList = [];
   Array.isArray(keyList)
@@ -92,9 +92,9 @@ function isExclude(t, k) {
         }
       });
   return excludeList;
-}
+};
 
-function isPick(t, k) {
+var isPick = function (t, k) {
   var excludeList = isExclude(t, k);
   var valuesList = {};
   for (var key in t) {
@@ -103,9 +103,9 @@ function isPick(t, k) {
     }
   }
   return valuesList;
-}
+};
 
-function geneicType() {
+var geneicType = function () {
   var exampleObjectType = {
     a: "string",
     b: 123,
@@ -113,9 +113,10 @@ function geneicType() {
   };
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c")
-  // isExcludeValue = isOmit(isExcludeValue, "2")
-  // isExcludeValue = isOmit(isExcludeValue, "3")
+  var functionObjectType = misSt("formUrls");
+  // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
+  // isExcludeValue = isOmit(isExcludeValue, "2");
+  // isExcludeValue = isOmit(isExcludeValue, "3");
   var teeValid1 = isMapped({ 0: null }, [
     "isValidUrl",
     "http://www.google.com",
@@ -125,4 +126,4 @@ function geneicType() {
   // var kee = isMapped(tee)
   var noB = isValidKeys(forTruth);
   return noB;
-}
+};

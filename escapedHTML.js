@@ -1,4 +1,4 @@
-var escapedHTML = function (e) {
+function escapedHTML(e) {
   var webApp;
 
   var username = e || [1, 2, 3, 4, 5, 6, 7, 8, 9];

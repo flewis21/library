@@ -466,7 +466,7 @@
 //   return result;
 // };
 
-var crmGWI = function (fx) {
+function crmGWI(fx) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1150,7 +1150,7 @@ var crmGWI = function (fx) {
   return result;
 };
 
-function workEd(ed) {
+var workEd = function (ed) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -1160,7 +1160,7 @@ function workEd(ed) {
       ", = " +
       !ed,
   );
-  if (!ed) {
+  if (!ed || typeof ed !== "object") {
     var formData = JSON.parse(
       convertToObjects([[arguments.callee.name]], ["name"], start),
     )[0];
@@ -1332,15 +1332,15 @@ var acceptSsUrl = "";
  * @param {string} formDataJson A JSON string of the form data.
  * @return {string} A confirmation message or URL.
  */
-function acceptQuote(formDataJson) {
+var acceptQuote = function (formDataJson) {
   let formData;
   try {
     // ... (rest of your existing code to parse formData)
-    if (!formDataJson) {
+    if (!formDataJson || typeof formDataJson !== "object") {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[arguments.callee.name, "007", "Bugatti"]],
+          [[formatDataJson || arguments.callee.name, "007", "Bugatti"]],
           ["name", "number", "car"],
           functionRegistry.time,
         ),
@@ -1485,7 +1485,7 @@ function acceptQuote(formDataJson) {
  * @param {string} formDataJson A JSON string of the form data.
  * @return {string} A confirmation message or URL.
  */
-function updateQuote(formDataJson) {
+var updateQuote = function (formDataJson) {
   let formData;
   try {
     // ... (rest of your existing code to parse formData)

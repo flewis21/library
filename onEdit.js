@@ -78,7 +78,7 @@ function calculateTravelCosts(deliveryAddress, pickupAddress) {
   }
 }
 
-var delAddress = function () {
+function delAddress() {
   var ws = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "General Work Invoice",

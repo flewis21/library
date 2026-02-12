@@ -1,4 +1,4 @@
-var navBar = function (
+function navBar(
   ref1,
   title1,
   ref2,

@@ -1,4 +1,4 @@
-var checkDay = function () {
+function checkDay() {
   var testList = urlDataSource(
     `https://www.bing.com/search?q=site%3Ayoutube.com&PC=U316&FORM=CHROMN`,
   );

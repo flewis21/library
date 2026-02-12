@@ -1,4 +1,4 @@
-var devWebsite = function (e) {
+function devWebsite(e) {
   var webApp;
   var webTest;
   console.log(JSON.stringify(e));
