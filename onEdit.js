@@ -102,7 +102,7 @@ function delAddress() {
     startPoint: startAddress,
     endPoint: endAddress,
   };
-};
+}
 
 var endPoint = function (end, return_type) {
   var rndEnd = delAddress().endPoint;

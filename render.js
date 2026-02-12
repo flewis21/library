@@ -163,7 +163,7 @@ function appList() {
   )
     .evaluate()
     .getContent();
-};
+}
 
 // <div class="row">
 //   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
@@ -488,7 +488,7 @@ function defSBD(e) {
       "File not found and global function does not exist: " + foobarr,
     );
   }
-};
+}
 
 var eTest = function () {
   console.log(
@@ -496,7 +496,7 @@ var eTest = function () {
       functionRegistry.timeLeftToExecute - functionRegistry.time / 1000,
     ),
   );
-}
+};
 
 function freeSBD(func) {
   try {
@@ -592,7 +592,7 @@ function freeSBD(func) {
       "Could not create template from file or function: " + foobarr,
     );
   }
-};
+}
 
 globalThis.fiveTime = 5 * 59.9 * 1000;
 
@@ -1999,4 +1999,4 @@ function wildSBD(e) {
       "Could not create template from file or function: " + foobarr,
     );
   }
-};
+}

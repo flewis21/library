@@ -66,8 +66,7 @@ function surveyPlayer(searchString, joinString) {
   if (dataTree) {
     var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
     var filed = dataTree[rndFiled];
-  } 
-  else {
+  } else {
     var filed = currentFileUrl;
   }
 
@@ -76,11 +75,11 @@ function surveyPlayer(searchString, joinString) {
     var arrDRnd = globalThis.arrDRnd();
     var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
     var joinString = [searchString].join("");
-  };
+  }
 
   if (searchString && !joinString) {
     var joinString = [searchString].join("");
-  };
+  }
 
   var uti = dtlsSomeFunction(searchString).playList;
   const html = HtmlService.createTemplate(
@@ -537,7 +536,7 @@ function surveyPlayer(searchString, joinString) {
         </body>
       </html>`,
   );
-  
+
   if (uti) {
     var idArray = uti.map((piece) => {
       try {
@@ -550,8 +549,7 @@ function surveyPlayer(searchString, joinString) {
         return "Error in surveyPlayer " + error;
       }
     });
-  } 
-  else {
+  } else {
     try {
       uti.map((piece) => {
         return piece;
@@ -569,7 +567,7 @@ function surveyPlayer(searchString, joinString) {
     return noList[Math.floor(Math.random() * Math.floor(noList.length))];
   })();
   return html.evaluate().getContent();
-};
+}
 
 // const randomPlaylist = [];
 //   for (var i=0,l=idArray.length;i<l;i++)

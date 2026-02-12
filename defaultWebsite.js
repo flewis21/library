@@ -96,7 +96,7 @@ function appSort(numIndex, time) {
   }
   // console.log(freqArray)
   return freqArray;
-};
+}
 
 /**
  * Creates a new Google script with a random structure and content,
@@ -110,7 +110,9 @@ function appSort(numIndex, time) {
  */
 function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
-  const SCRIPT_TITLES = searchString? Array(searchString) : functionRegistry.fileList;
+  const SCRIPT_TITLES = searchString
+    ? Array(searchString)
+    : functionRegistry.fileList;
   const SCRIPT_DESCRIPTIONS = [
     "A randomly generated script to gather insights.",
     "Please fill out this script at your leisure. Content is randomized.",
@@ -205,13 +207,13 @@ function createRandomFunction(searchString) {
   const gridItem = userSubmit
     .addGridItem()
     .setTitle(questionTitle + " (Radio Grid)");
-  const imageItem = userSubmit
-    // .addImageItem()
-    // .setTitle(questionTitle + " (Image)");
+  const imageItem = userSubmit;
+  // .addImageItem()
+  // .setTitle(questionTitle + " (Image)");
   let vidTubeTime = needPastTime(scriptTitle);
   let tubeArr = vidTubeTime.playList;
   var tubeEngine = vidTubeTime.hardUrl;
-  const videoItem = userSubmit
+  const videoItem = userSubmit;
   // Use a valid YouTube video ID
   // if (tubeArr) {
   const videoAlignments = [
@@ -221,10 +223,10 @@ function createRandomFunction(searchString) {
   ];
   if (tubeArr.length > 0) {
     let tubeUrlsArr = [];
-    tubeArr.forEach((vidId) =>{
+    tubeArr.forEach((vidId) => {
       let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
       tubeUrlsArr.push(linkLocation);
-      let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
+      let rndTube = Math.floor(Math.random() * Math.floor(tubeUrlsArr.length));
       var tubeVideoUrl = tubeUrlsArr[rndTube];
       videoItem
         .addVideoItem()
@@ -235,7 +237,7 @@ function createRandomFunction(searchString) {
         .setAlignment(
           videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
         );
-    })
+    });
   }
   // }
   else {
@@ -250,16 +252,17 @@ function createRandomFunction(searchString) {
       );
   }
   const imgFile = seoPictTime(scriptTitle, functionRegistry.time)?.playList;
-  let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
+  let rndfileImage =
+    imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
   if (rndfileImage) {
     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
     if (deepFileDive.hasNext()) {
-      var nextDFD = deepFileDive?.hasNext()
+      var nextDFD = deepFileDive?.hasNext();
     }
   }
-  if (nextDFD) { 
+  if (nextDFD) {
     while (nextDFD) {
-      let dFile = deepFileDive
+      let dFile = deepFileDive;
       // Use a public image URL or provide a Blob
       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -274,8 +277,7 @@ function createRandomFunction(searchString) {
         alignments[Math.floor(Math.random() * alignments.length)],
       );
     }
-  }
-  else {
+  } else {
     const alignments = [
       FormApp.Alignment.LEFT,
       FormApp.Alignment.CENTER,
@@ -302,10 +304,9 @@ function createRandomFunction(searchString) {
         }
         if ([imgUrl].join("").length > 0) {
           if (tempSortImg.indexOf(imgUrl) !== -1) {
-            return
-          }
-          else {
-            tempSortImg.push(imgUrl)
+            return;
+          } else {
+            tempSortImg.push(imgUrl);
           }
         }
         // if (
@@ -334,7 +335,7 @@ function createRandomFunction(searchString) {
       // return;
       // }
     });
-    tempSortImg.forEach((priImg) =>{
+    tempSortImg.forEach((priImg) => {
       userSubmit.addPageBreakItem().setTitle("Storyboard");
       userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
       try {
@@ -344,13 +345,12 @@ function createRandomFunction(searchString) {
           .setImage(UrlFetchApp.fetch(priImg))
           .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
           .setAlignment(
-          alignments[Math.floor(Math.random() * alignments.length)],
-        );
+            alignments[Math.floor(Math.random() * alignments.length)],
+          );
+      } catch (error) {
+        console.info(error.stack);
       }
-      catch (error) {
-        console.info(error.stack)
-      }
-    })
+    });
     // Use a public image URL or provide a Blob
     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -368,9 +368,7 @@ function createRandomFunction(searchString) {
   if (isRequired) gridItem.setRequired(true);
   if (Math.random() < 0.3) {
     gridItem.setValidation(
-      FormApp.createGridValidation()
-        .requireLimitOneResponsePerColumn()
-        .build(),
+      FormApp.createGridValidation().requireLimitOneResponsePerColumn().build(),
     );
   }
   checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
@@ -395,36 +393,35 @@ function createRandomFunction(searchString) {
       // var tempObj =
       if (!script) {
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
+        scriptUrl = isMapped(mapArr, [
+          driveManager(scriptTitle, functionRegistry.time),
+        ]); //userSubmit.getPublishedUrl()]);
+      } else {
+        scriptUrl = resolveParams(isMapped({ a: [] }, [scriptTitle])["a"]);
       }
-      else {
-        scriptUrl = resolveParams(
-          isMapped({ a: [] }, [scriptTitle])["a"],
-        );
-      }
-    } 
-    else {
+    } else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
       let tempObj = isMapped({ a: [...fileParams.parameters] }, [
-          scriptTitle,
-          [...fileParams.parameters]
-        ])["a"];
+        scriptTitle,
+        [...fileParams.parameters],
+      ])["a"];
       scriptUrl = resolveParams(tempObj);
     }
-  } 
-  else {
+  } else {
     if (!script || script.length === 0) {
-      if (!script){
+      if (!script) {
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
-      }
-      else {
+        scriptUrl = isMapped(mapArr, [
+          driveManager(scriptTitle, functionRegistry.time),
+        ]); //userSubmit.getPublishedUrl()]);
+      } else {
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [driveManager(scriptTitle, functionRegistry.time)]);//userSubmit.getPublishedUrl()]);
+        scriptUrl = isMapped(mapArr, [
+          driveManager(scriptTitle, functionRegistry.time),
+        ]); //userSubmit.getPublishedUrl()]);
       }
-    }
-    else {
+    } else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [];
@@ -462,9 +459,8 @@ function createRandomFunction(searchString) {
         // ScriptApp.EventType.ON_FORM_SUBMIT,
         ScriptApp.EventType.ON_OPEN,
       ];
-      const rndTMult = Math.floor(Math.random() * eventTypes.length)
-      const randomType = 
-        eventTypes[rndTMult];
+      const rndTMult = Math.floor(Math.random() * eventTypes.length);
+      const randomType = eventTypes[rndTMult];
       Logger.log(randomType);
 
       switch (randomType) {
@@ -507,34 +503,35 @@ function createRandomFunction(searchString) {
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = FormApp.createTextValidation()// ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
+            let validationBuilder = FormApp.createTextValidation(); // ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
             switch (validationType) {
               case 0:
-                validationBuilder.requireNumber()//.FRIDAY; //;
+                validationBuilder.requireNumber(); //.FRIDAY; //;
                 break;
               case 1:
-                validationBuilder.requireTextContainsPattern("test")//.MONDAY; //;
+                validationBuilder.requireTextContainsPattern("test"); //.MONDAY; //;
                 break;
               case 2:
-                validationBuilder.requireTextIsEmail()//.WEDNESDAY; //;
+                validationBuilder.requireTextIsEmail(); //.WEDNESDAY; //;
                 break;
               case 3:
-                validationBuilder.requireTextIsUrl()//.THURSDAY; //;
+                validationBuilder.requireTextIsUrl(); //.THURSDAY; //;
                 break;
               case 4:
-                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5)//.TUESDAY; //;
+                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); //.TUESDAY; //;
                 break;
             }
             userSubmit
-            .addTextItem()
-            .setTitle(questionTitle + "\n" +  textItem.getBody().getText())//.textItem
+              .addTextItem()
+              .setTitle(questionTitle + "\n" + textItem.getBody().getText()) //.textItem
               // .getBody()
               // .appendListItem
               .setValidation(
-                validationBuilder.build()
+                validationBuilder.build(),
                 // .withCustomMessage("Please follow the specific text rule.")
                 // .build()
-              ).setHelpText("Please follow the specific text rule.")
+              )
+              .setHelpText("Please follow the specific text rule.");
           }
           break;
 
@@ -770,7 +767,7 @@ function createRandomFunction(searchString) {
           //     scriptUrl = resolveParams(
           //       isMapped({ a: [] }, [scriptTitle])["a"],
           //     );
-          //   } 
+          //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = functionRegistry.paramsList[fileIndex];
@@ -782,7 +779,7 @@ function createRandomFunction(searchString) {
           //       ])["a"],
           //     );
           //   }
-          // } 
+          // }
           // else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
@@ -870,7 +867,7 @@ function createRandomFunction(searchString) {
         //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
         //     var nextDFD = deepFileDive.hasNext()
         //   }
-        //   if (nextDFD) { 
+        //   if (nextDFD) {
         //     while (nextDFD) {
         //       let dFile = deepFileDive
         //       // Use a public image URL or provide a Blob
@@ -1318,7 +1315,7 @@ function defaultWebsite(e) {
       }); //:contentFile('uiAccess');
     // return render("\n                    <?!= include(\"index\"); ?>\n                    <div class=\"navbar\">\n                    <nav class=\"nav\">\n                    <a href=\"".concat(financeUrl, "\" class=\"nav__link\" data-link>Finance</a>\n                    <a href=\"".concat(inventoryUrl, "\"  class=\"nav__link\"  data-link>Inventory</a>\n                    </nav>\n                    </div>\n                    <h2 class=\"search-overlay__section-title\">General Information</h2>\n                    <div class=\"container row s1 valign-wrapper video-container black darken-4\">\n                      <div id=\"player1\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player2\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player3\"></div>\n                    </div>\n                    <div class=\"clubhouse\">".concat(webApp.content, "</div>\n                              "))));
   }
-};
+}
 
 var formatTime = function (milliseconds) {
   if (milliseconds < 0) {
@@ -1350,7 +1347,7 @@ var formatTime = function (milliseconds) {
   }
 
   return parts.join(", ");
-}
+};
 
 function funcCalc() {
   var appList = [];
@@ -1366,7 +1363,7 @@ function funcCalc() {
     );
   }
   return rndArrVals;
-};
+}
 
 function functionFlex(e) {
   if (e && typeof e !== "object") {
@@ -1439,7 +1436,7 @@ function functionFlex(e) {
     //   }
     //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
     // }
-    var e = createRandomFunction()
+    var e = createRandomFunction();
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
@@ -1454,46 +1451,40 @@ function functionFlex(e) {
 
   // Determine templateName (not directly used in the provided template, but good for context)
   if (e) {
-    if (e.parameter && (e.parameter["func"])) {
+    if (e.parameter && e.parameter["func"]) {
       var templateName = e.parameter["func"];
       var funcUno = e.parameter["func"];
-    }
-    else if (typeof e === "object") {
+    } else if (typeof e === "object") {
       var templateName = Object.keys(e)[0];
       var funcUno = Object.keys(e)[0];
+    } else {
+      var templateName = e;
     }
-    else {
-      var templateName = e
-    }
-  }
-  else {
-      var templateName;
-      var funcUno;
+  } else {
+    var templateName;
+    var funcUno;
   }
   if (templateName === "crmGWI") {
     templateName = "General Work Invoice";
-  } 
-  else if (templateName === "crmEBI") {
+  } else if (templateName === "crmEBI") {
     templateName = "Employee Benefits Inquiry";
   }
 
   if (e) {
-    if (e.parameter && (e.parameter["args"])) {
+    if (e.parameter && e.parameter["args"]) {
       console.log("e.parameter['args'] before funcDos:", e.parameter["args"]);
       var funcDos;
-      console.log("funcDos before e.parameter['args']:", funcDos)
+      console.log("funcDos before e.parameter['args']:", funcDos);
       funcDos = e.parameter["args"];
       console.log("funcDos after e.parameter['args']:", funcDos);
-    }
-    else if (typeof e === "object") {
+    } else if (typeof e === "object") {
       console.log("Object.values(e) before funcDos:", Object.values(e));
       var funcDos;
-      console.log("funcDos before Object.values(e):", funcDos)
+      console.log("funcDos before Object.values(e):", funcDos);
       funcDos = Object.values(e);
       console.log("funcDos after Object.values(e):", funcDos);
-    }
-    else {
-      return
+    } else {
+      return;
     }
   }
   var libFunc = funcUno || "renderFile";
@@ -2543,7 +2534,7 @@ function functionFlex(e) {
       );
     }
   }
-};
+}
 
 var getScriptUrl = function () {
   return ScriptApp.getService().getUrl();
@@ -2586,17 +2577,17 @@ function prepareDataBrain(data, ratio = 29) {
         })
       : data;
   }
-};
+}
 
 var rule = function () {
   var today = new Date();
   var todayString = today.toDateString() + " - " + today.toTimeString();
   return todayString;
-}
+};
 
 var scriptQuit = function () {
   return;
-}
+};
 
 function sexToNumber(sex) {
   switch (sex) {
@@ -2607,7 +2598,7 @@ function sexToNumber(sex) {
     default:
       return 0.5;
   }
-};
+}
 
 function sheetWebsite(e) {
   var usr = e;
@@ -2754,7 +2745,7 @@ function sheetWebsite(e) {
       {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
   ).getRawContent();
-};
+}
 
 // case "request": // <!-----------------------------API Endpoint Page------------------------!>
 // console.log(query)
@@ -2802,4 +2793,4 @@ function wwwDe(url) {
   return ContentService.createTextOutput(feed).setMimeType(
     ContentService.MimeType.RSS,
   );
-};
+}

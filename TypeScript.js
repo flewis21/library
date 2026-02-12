@@ -17,7 +17,7 @@ function isValidKeys(v) {
       return isValueOfTypePassedIn;
     }
   }
-};
+}
 
 var isMapped = function (t, v) {
   var mapKeys = {};

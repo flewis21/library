@@ -358,7 +358,7 @@ function chaseFunction(xfactor) {
   });
 
   return booleFactor;
-};
+}
 
 // var rawData = ssWs.getDataRange().getValues()
 // var i = 0

@@ -3,30 +3,25 @@ var iFC = function () {
 };
 
 function iframeC() {
-  var content = 
-    HtmlService
-      .createTemplate(
-        `<!DOCTYPE html>
+  var content = HtmlService.createTemplate(
+    `<!DOCTYPE html>
           <html>
             <head></head>
             <body>
               <div id="bodyHang">body hang</div>
             </body>
           </html>
-  `);
-  content.alert = 
-    HtmlService
-      .createHtmlOutput(
-        `<script>
+  `,
+  );
+  content.alert = HtmlService.createHtmlOutput(
+    `<script>
           alert("server side")
         </script>
   `,
   ).getContent();
   return content.evaluate().getContent();
-  content.serverSide = 
-    HtmlService
-      .createHtmlOutput(
-        `<script>
+  content.serverSide = HtmlService.createHtmlOutput(
+    `<script>
           function serverSide(func, args) {
             return new Promise((resolve, reject) => {
               google.script.run
@@ -62,7 +57,7 @@ function iframeC() {
         </script>
   `,
   ).getContent();
-};
+}
 
 function needPastTime(searchString) {
   // console.log(
@@ -239,7 +234,7 @@ function needPastTime(searchString) {
       return { playList: rndRes.sort((a, b) => a - b), hardUrl: searchLink };
     }
   }
-};
+}
 
 function pastTime(url) {
   const uniqueVid = needPastTime(
@@ -257,7 +252,7 @@ function pastTime(url) {
   // const randomTitle = randomCo["youtubeID"];
   // const randomTicker = randomCo["ticker"];
   // const randomCIK = randomCo["cik_str"];
-};
+}
 
 var seoKeyword = function () {
   needPastTime(`lawyer mugs`);
@@ -279,7 +274,7 @@ function videoPage(search) {
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
   return content.getRawContent();
-};
+}
 
 function videoPlayer(searchString) {
   //var url = seoSheet(encodeURIComponent(searchString)).url;
@@ -325,10 +320,8 @@ function videoPlayer(searchString) {
     .toString()
     .replace(/,/g, "");
   const result = JSON.stringify(videoTable);
-  const html = 
-    HtmlService
-      .createTemplate(
-        `<!DOCTYPE html>
+  const html = HtmlService.createTemplate(
+    `<!DOCTYPE html>
             <html id="test">
               <head>
                 <base target="_parent">
@@ -607,13 +600,14 @@ function videoPlayer(searchString) {
                   })
                 </script>
               </body>
-            </html>`);
+            </html>`,
+  );
   html.vidTubeId = JSON.stringify(randomVideo);
   html.researchId = randomVideo;
   html.searchTtile = searchString;
   html.myPlayList = [playListVar].sort((a, b) => a - b);
   return html.evaluate().getContent();
-};
+}
 
 // console.log(JSON.stringify(randomPlaylist[0][randomVidKey]))
 // const rdmIdArray = Utilities.jsonStringify([randomPlaylist])

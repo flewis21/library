@@ -679,7 +679,7 @@ function jFund(fx) {
     },
   );
   return result;
-};
+}
 
 // Server-side (Code.gs)
 // Helper function for fetching data (using Promises for async handling)
@@ -827,4 +827,4 @@ function superTest(e) {
     },
   );
   return html;
-};
+}
