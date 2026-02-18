@@ -188,4 +188,4 @@ function devWebsite(e) {
       }); //:contentFile('uiAccess');
       console.log(jsData);
   }
-}
+};

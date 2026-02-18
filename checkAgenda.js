@@ -59,4 +59,4 @@ function checkDay() {
     popUpOpen: openTheForm,
   }); //:contentFile("uiAccess")
   console.log(html);
-}
+};

@@ -22,4 +22,4 @@ function testJSON(e, rows) {
   return {
     myTest: val,
   };
-}
+};

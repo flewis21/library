@@ -10,7 +10,7 @@ var activeSsId = function () {
       return error.stack;
     }
   }
-};
+}
 
 function bingSWF(searchString, time) {
   //
@@ -96,7 +96,7 @@ function bingSWF(searchString, time) {
     myPong: pong.toString().split(","),
     myPlay: table,
   };
-}
+};
 
 function bingNeed(searchString, time) {
   if (typeof searchString !== "undefined") {
@@ -111,7 +111,7 @@ function bingNeed(searchString, time) {
       myPong: pong.toString().split(","),
     };
   }
-}
+};
 
 function cabDriver(e) {
   var res = e || testlt();
@@ -184,7 +184,7 @@ function cabDriver(e) {
       document.getElementById("dev").textContent = ${JSON.stringify(agendaCal.getContent())}
     </script>`,
   ).getRawContent();
-}
+};
 
 function classifiedCapital(searchString, time) {
   const searchStr = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -201,7 +201,7 @@ function classifiedCapital(searchString, time) {
   return {
     myPong: pong.toString().split(","),
   };
-}
+};
 
 function classifiedSheet(searchString, time) {
   var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -445,7 +445,7 @@ function classifiedSheet(searchString, time) {
       `,
   ).getContent();
   return html.evaluate().getContent();
-}
+};
 
 var createSheetHeader = function (headers) {
   if (headers) {
@@ -521,7 +521,7 @@ function jsonToSpreadsheet(data, time) {
     functionRegistry.time,
   ).myFileX;
   return playSheet;
-}
+};
 
 // Get form data from the request
 
@@ -598,7 +598,7 @@ function jsonXCalc(searchString, time) {
     );
   }
   return rndArrVals;
-}
+};
 
 // var playL = ssData(playSheet, searchString)
 // return console.log(rndTitleVested)
@@ -672,7 +672,7 @@ function jsonXSpreadsheet(rndTitle, time) {
     })();
   };
   return html.evaluate().getContent();
-}
+};
 
 // const titleKings = needCapital(rndTitle)
 // const titleMatches = [matches.toString().substring(titleKings)];
@@ -713,7 +713,7 @@ function lookupDomain(searchTerm) {
     }
   }
   return results;
-}
+};
 
 function mapValues(data, index) {
   console.log(
@@ -735,7 +735,7 @@ function mapValues(data, index) {
     });
     return data;
   }
-}
+};
 
 function needBing(searchString, time) {
   // var searchString = "Just married"
@@ -777,7 +777,7 @@ function needBing(searchString, time) {
       myPlay: playBill,
     };
   }
-}
+};
 
 function needPong(searchString) {
   var rndSearch = `http://www.bing.com/search?q=${encodeURIComponent(searchString ? searchString : "")}%20intitle%3A%20-%20YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -787,7 +787,7 @@ function needPong(searchString) {
   return {
     myTxt: JSON.stringify(txt),
   };
-}
+};
 
 function pastSeo(namedVar, time) {
   var seoPlaylist = seoPastTime([namedVar].join(""), time).playList;
@@ -890,7 +890,7 @@ function pastSeo(namedVar, time) {
   }
   var rndParam = randNum(seoPlaylist);
   return seoPlaylist[rndParam];
-}
+};
 
 function pictBing(searchString, time) {
   // var searchString =  "Drones"
@@ -952,7 +952,7 @@ function pictBing(searchString, time) {
       playList: rndRes.sort((a, b) => a - b),
     };
   }
-}
+};
 
 function pictFactor(data, time) {
   var idArray = [];
@@ -966,7 +966,7 @@ function pictFactor(data, time) {
   return {
     myIdArr: [idArray].toString().replace(/,/g, ""),
   };
-}
+};
 
 var proTest = function () {
   var headers = ["Medications", "Dosage"];
@@ -1092,7 +1092,7 @@ function rndString(inputArray, time) {
   return {
     resStr: testString,
   };
-}
+};
 
 // var strArray = testString.join("").split("")
 // console.log("Calling randomSubstance with testString: " + testString)
@@ -1128,7 +1128,8 @@ var seoBites = function (searchString, idArray, time) {
   if (typeof searchString === "object") {
     if (searchString.parameter && searchString.parameter["func"]) {
       searchString = searchString.parameter["func"];
-    } else {
+    }
+    else {
       searchString = Object.values(searchString);
     }
   }
@@ -1234,8 +1235,26 @@ var seoIndex = function (searchWord) {
 };
 
 function seoPictTime(searchString, time) {
-  searchString
-    ? searchString
+  functionRegistry.imgTree();
+  var imgSheetVals = functionRegistry.getImageList();
+  var imgData = [];
+  var imgVals = Object.values(imgSheetVals);
+  imgVals.forEach((img) =>{
+    var inValsKeys = Object.keys(img);
+    var inVVals = Object.values(img);
+    inVVals.forEach((inV) =>{
+      // console.log("I'm holding the value of vidVals", inV)
+      let truInv = isTruthy(inV);
+      if (truInv) {
+        imgData.push(inV)
+      }
+      else {
+        return
+      }
+    })
+  });
+  searchString ? 
+      searchString
     : (searchString = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
@@ -1244,7 +1263,8 @@ function seoPictTime(searchString, time) {
   if (typeof searchString === "object") {
     if (searchString.parameter && searchString.parameter["func"]) {
       searchString = searchString.parameter["func"];
-    } else {
+    }
+    else {
       searchString = Object.values(searchString);
     }
   }
@@ -1283,30 +1303,18 @@ function seoPictTime(searchString, time) {
   //     .toLowerCase()
   //     .includes([testSearch].toString().toLowerCase())
   // ) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\nseoPictTime: \n[" +
-  //     testSearch +
-  //     "].join().indexOf(" +
-  //     searchString +
-  //     ") === " +
-  //     [testSearch].join("").indexOf(searchString),
-  // );
+    // console.log(
+    //   formatTime(functionRegistry.time) +
+    //     "\nseoPictTime: \n[" +
+    //     testSearch +
+    //     "].join().indexOf(" +
+    //     searchString +
+    //     ") === " +
+    //     [testSearch].join("").indexOf(searchString),
+    // );
   // }
-  if (
-    searchString &&
-    typeof searchString === "string" &&
-    testSearch &&
-    typeof testSearch === "string" &&
-    listSearch &&
-    typeof listSearch === "string"
-  ) {
-    if (
-      !searchString
-        .toLowerCase()
-        .includes([testSearch].join("").toLowerCase()) &&
-      !searchString.toLowerCase().includes(listSearch[0].toLowerCase())
-    ) {
+  if ((searchString && typeof searchString === "string") && (testSearch && typeof testSearch === "string") && (listSearch && typeof listSearch === "string")) {
+    if (!searchString.toLowerCase().includes([testSearch].join("").toLowerCase()) && !searchString.toLowerCase().includes(listSearch[0].toLowerCase())) {
       searchString = allInvestors().title;
     }
   }
@@ -1326,12 +1334,12 @@ function seoPictTime(searchString, time) {
     let wDoct = res[0].indexOf("<!DOCTYPE");
     if (res[0].indexOf("https") > -1 && res[0].indexOf("<!DOCTYPE") === -1) {
       if (sorFndOrd.indexOf(vidObject) === -1) {
-        sorFndOrd.push(vidObject);
+         sorFndOrd.push(vidObject);
       }
     }
   });
   if (sorFndOrd.length === 0) {
-    sorFndOrd = uniqueVid;
+    sorFndOrd = uniqueVid
   }
   var fndOrd = [];
   var i = 0;
@@ -1367,7 +1375,8 @@ function seoPictTime(searchString, time) {
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
-    var rndRes = fndOrd.filter((test) => {
+    var rndRes = [];
+    fndOrd.forEach((test) => {
       var elaspeTime = functionRegistry.time;
       var timeToExecute = functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
@@ -1383,26 +1392,82 @@ function seoPictTime(searchString, time) {
           //   break;
           // }
           var imgUrl = [test].join("").split('"')[1];
-          return imgUrl;
+          // rndRes.push(imgUrl);
+          if (test && rndRes.indexOf(test) === -1) {
+            if (imgData.indexOf(test) !== -1) {
+              return
+            }
+            else {
+              updateQuote(
+                JSON.stringify({
+                  name: "imageSheet",
+                  number: 001,
+                  imageid: test,
+                  imagedescription: searchString,
+                })
+              );
+            }
+            rndRes.push(imgUrl);
+          }
         }
       }
     });
-    var rndSort = [];
-    for (var i = 0, l = rndRes.length; i < l; i++) {
-      var sorRes = rndRes.filter((o) => {
-        return o !== rndRes[i];
+    if (rndRes.length > 0) {
+      functionRegistry.imgTree();
+      imgSheetVals = functionRegistry.getImageList();
+      imgData = [];
+      // var vidKeys = Object.keys(vidSheetVals);
+      imgVals = Object.values(imgSheetVals);
+      imgVals.forEach((img) =>{
+        let inValsKeys = Object.keys(img);
+        let inVVals = Object.values(img);
+        inVVals.forEach((inV) =>{
+          // console.log("I'm holding the value of vidVals", inV)
+          let truInv = isTruthy(inV);
+          if (truInv) {
+            imgData.push(inV)
+          }
+          else {
+            return
+          }
+        })
       });
-      rndSort.push(sorRes);
+      var rndSort = [];
+      for (var i = 0, l = rndRes.length; i < l; i++) {
+        var sorRes = rndRes.filter((o) => {
+          return o !== rndRes[i];
+        });
+        rndSort.push(sorRes);
+      }
+      var sorKind = rndSort.toString().split(" ");
+      var revKind = sorKind.reverse();
+      var popKind = revKind.pop();
+      var rndKind = popKind.split(",");
     }
-    var sorKind = rndSort.toString().split(" ");
-    var revKind = sorKind.reverse();
-    var popKind = revKind.pop();
-    var rndKind = popKind.split(",");
-    return { playList: rndRes.sort((a, b) => a - b) };
-  } else {
+    var imgPlay = [];
+    var imgKeys = Object.keys(imgSheetVals);
+    imgKeys.forEach((img) =>{
+      let imgObj = vidSheetVals[img];
+      let imageId = vidObj["Image"]
+      let matchKeys = Object.keys(imgObj);
+      matchKeys.forEach((match) =>{
+        let imgMatch = imgObj[match];
+          let truMatch = isTruthy(imgMatch);
+          if (truMatch) {
+            let searchMatch = imgMatch.indexOf(searchString) > -1;
+            let matchSearch = searchString.indexOf(imgMatch) > -1;
+            if (searchMatch || matchSearch) {
+              imgPlay.push(imageId)
+            }
+          }
+      })
+    })
+    return { playList: imgPlay, hardLink: uniqueVid.hardLink };
+  } 
+  else {
     return { playList: {} };
   }
-}
+};
 
 // console.log("seoPictTime: \n")
 // console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
@@ -1436,7 +1501,7 @@ function seoPictures(searchString, time) {
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
   }
-  var rndSearch = `https://www.bing.com/images/search?q=${encodeURIComponent(searchString)}%20intitle%3A - +AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  var rndSearch = `https://www.bing.com/images/search?q=(${encodeURIComponent(searchString)})%20intitle%3A - +AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
   // console.log(
   //   "seoPictures: \nvar data = [urlFetchApp.fetch(" + rndSearch,
   //   { muteHttpExceptions: true } + ")]",
@@ -1447,11 +1512,11 @@ function seoPictures(searchString, time) {
   //     "seoPictures: \nvar uniqueSeo = data.slice(" +
   //       data.indexOf(" + 'src2=' + "),
   //   )
-  // .toString()
-  // .split(" + 'src2=' + " + ")");
+    // .toString()
+    // .split(" + 'src2=' + " + ")");
   var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
-  return { results: uniqueSeo, hardLink: rndSearch };
-}
+  return {results: uniqueSeo, hardLink: rndSearch};
+};
 
 // console.log("seoPictures: \n");var i = 0;var l = [data].join("").split(" ").length;for (i,l;i<l;i++) {var res = [data].join("").split(" ")[i]
 // if (res.indexOf("https") > -1) {console.log(res)}};console.log(uniqueSeo.join("").split('"')[6])
@@ -1487,7 +1552,8 @@ var seoTwitter = function (folderX, searchString, time) {
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
     var searchString = rndString;
-  } else if (searchString === "searchString") {
+  } 
+  else if (searchString === "searchString") {
     searchString = rndString;
   }
   var uniqueSeo = seoBites(searchString, minFold, time);
@@ -1502,7 +1568,8 @@ var seoTwitter = function (folderX, searchString, time) {
     });
     if (foldCounter + 1 >= minFold.length) {
       break;
-    } else {
+    } 
+    else {
       foldCounter++;
     }
   }
@@ -1593,7 +1660,7 @@ function sheetsMaker(fileName, folderX, time) {
     sheetsFileManager(newFile.getId(), folderX, start);
     return newFile;
   }
-}
+};
 
 // var sheetsMaker = function (fileName, folderX, time) {
 //   console.log(
@@ -1677,7 +1744,7 @@ function sheetSeo(namedVar, time) {
     pageArray.push(newSeo);
   });
   return { sheetObj: pageArray };
-}
+};
 
 function sheetsUrls(fileX, folderX, time) {
   console.log(
@@ -1733,12 +1800,13 @@ function sheetsUrls(fileX, folderX, time) {
           }
         }
       });
-      let testFlight =
-        fileNameList.sheets[
+      let testFlight = fileNameList.sheets[
           Math.floor(Math.random() * Math.floor(fileNameList.sheets.length))
         ];
       if (testFlight) {
-        var rndBogy = DriveApp.getFilesByName(testFlight).next().getId();
+        var rndBogy = DriveApp.getFilesByName(testFlight)
+          .next()
+          .getId();
       }
       if (mineField.length === 0) {
         mineField.push(rndBogy);
@@ -1764,7 +1832,7 @@ function sheetsUrls(fileX, folderX, time) {
       }
     }
   }
-}
+};
 
 function skyNeed(namedVar, time) {
   var wanVar = wanUtil(namedVar, time).verInfo;
@@ -1776,7 +1844,7 @@ function skyNeed(namedVar, time) {
   );
   var rndSeo = needUtility(rndVar, time)[0].rndTitle;
   return rndSeo;
-}
+};
 
 var spreadSheet = function () {
   var ssApp = SpreadsheetApp;
@@ -2044,7 +2112,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
   console.log("Final return values: ", { myFileX: ssNewFile, myFileXId: ssId });
 
   return { myFileX: ssNewFile, myFileXId: ssId };
-}
+};
 
 // data.map((o)=>{var sheetCol =[o].join("").split(",");var sheetArr = sheetCol.map((arr)=>{return arr});dataArray.push(sheetArr[0])});console.log("called function: " + arguments.callee.name + "\nfile name: " + fileX);console.log("called function: " + arguments.callee.name + "\nGoogle Drive Url: " + nSs);SpreadsheetApp.openByUrl(ss);console.log("called function: " + arguments.callee.name + "\nSheet name: " + ss.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nName of this sheet is " + sheet.getName());console.log("called function: " + arguments.callee.name + "\ncaller function: " + arguments.callee.caller.name + "\nSheet name changed to " + ws.getName());console.log("called function: " + arguments.callee.name + "\nName of active sheet" + ss.getActiveSheet().getName());var dataCol = dataArray;var wsRange = ws.getRange(2, 1, dataArray.length, col).getValues();var newFile = formsUrls(fileX,"Sheets", rowHeaders, data, start);
 // else if (typeof nSs !== "undefined"){var ss = ssApp.openByUrl(url);ws = ss.getActiveSheet();return ws.getRange(1, 1, ws.getLastRow(), ws.getLastColumn()).getValues()}
@@ -2102,7 +2170,7 @@ function ssData(playSheet, sheetName, time) {
     );
     return JSON.stringify(sheetD);
   }
-}
+};
 
 function ssDatabase(file, sheet, col, headers, data) {
   var result = contentApp("<?!= myProject ?> ", {
@@ -2114,7 +2182,7 @@ function ssDatabase(file, sheet, col, headers, data) {
     },
   });
   return result;
-}
+};
 
 // for (let i = 0; i < dataArray.length; i++) {
 //   ws.appendRow(dataArray[i])}
@@ -2147,7 +2215,7 @@ function ssNameIdFind(sheetName, id) {
 
   // If no match is found
   return null;
-}
+};
 
 var ssGetSheet = function (sheetname) {
   var ss = spreadSheet();
@@ -2171,7 +2239,7 @@ function ssGetSheetBSI(url) {
     }
     return ssSheets;
   }
-}
+};
 
 function ssGetSheetBySpreadsheetId(id, sheetname) {
   if (id) {
@@ -2179,7 +2247,7 @@ function ssGetSheetBySpreadsheetId(id, sheetname) {
     var sheet = ss.getSheetByName(sheetname);
     return sheet;
   }
-}
+};
 
 /**
  * @param {string} url The URL of the spreadsheet.
@@ -2196,7 +2264,7 @@ function ssGetSheetBySpreadsheetUrl(url, sheetname) {
       return ss;
     }
   }
-}
+};
 
 function ssSetName(randomSheet, sheetname) {
   if (randomSheet) {
@@ -2206,7 +2274,7 @@ function ssSetName(randomSheet, sheetname) {
     var sheet = idSpreadSheet(randomSheet.getId()).getSheetByName(sheetName);
     return sheet;
   }
-}
+};
 
 var ssSetSheet = function () {
   var ss = spreadSheet();
@@ -2262,7 +2330,7 @@ function submitDomain(formData) {
     "Available",
   ]); // Add other fields
   return "Domain listing submitted successfully!";
-}
+};
 
 function taxiService() {
   const server = http.createServer(requestListener);
@@ -2271,14 +2339,14 @@ function taxiService() {
       `"that function: " + arguments.callee.caller.name + "\nthis function: " + ${arguments.callee.name} + "\nServer is running on http://${host}:${port}`,
     );
   });
-}
+};
 
 function tutorial(text) {
   var html = contentApp(`
     <body id="screen"></body>
     <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
   return html;
-}
+};
 
 function updateSheet(url, sheetName, data, numCols, time) {
   // console.log(
@@ -2296,7 +2364,7 @@ function updateSheet(url, sheetName, data, numCols, time) {
   return {
     myFileX: sheetArray,
   };
-}
+};
 
 // Replace with your Google Sheet ID and range
 // var spreadsheetId = 'YOUR_SHEET_ID';
@@ -2324,9 +2392,14 @@ function updateSheet(url, sheetName, data, numCols, time) {
 
 function urlSpreadSheet(url) {
   var ssApp = SpreadsheetApp;
-  var ss = ssApp.openByUrl(url);
-  return ss;
-}
+  try {
+    var ss = ssApp.openByUrl(url);
+    return ss;
+  }
+  catch (err) {
+    Logger.log("Error returning spreadsheet: " + err.stack)
+  }
+};
 
 function wanUtil(namedVar, time) {
   if (typeof time === "undefined") {
@@ -2349,7 +2422,7 @@ function wanUtil(namedVar, time) {
   return JSON.stringify({
     verInfo: wanVar,
   });
-}
+};
 
 function wsSIPOC(fileX, col) {
   var result = contentApp("", {
@@ -2362,7 +2435,7 @@ function wsSIPOC(fileX, col) {
     })(),
   });
   return result;
-}
+};
 
 function xkcdRSS() {
   var feed = UrlFetchApp.fetch("http://xkcd.com/rss.xml").getContentText();
@@ -2373,4 +2446,4 @@ function xkcdRSS() {
   return ContentService.createTextOutput(feed).setMimeType(
     ContentService.MimeType.RSS,
   );
-}
+};

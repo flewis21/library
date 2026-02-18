@@ -102,7 +102,7 @@ function delAddress() {
     startPoint: startAddress,
     endPoint: endAddress,
   };
-}
+};
 
 var endPoint = function (end, return_type) {
   var rndEnd = delAddress().endPoint;
@@ -239,7 +239,7 @@ var searchEdit = function (e) {
 
 var openR = function (row, stampRow) {
   var ws = ssSheet();
-  var range = ws.getRange(row, stampRow).setValue(new Date());
+  var range = ws.getRange(row, stampRow).setValue(rule());
   return range;
 };
 

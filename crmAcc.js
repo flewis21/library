@@ -14,7 +14,7 @@ function crmAcc(fx) {
       section: [],
     },
   };
-}
+};
 
 var finEd = function (ed) {
   console.log(
@@ -107,4 +107,4 @@ var finEd = function (ed) {
   // return ContentService.createTextOutput("Error sending data to AWS: " + error);
   // return ContentService.createTextOutput("Error sending data: " + error);
   // }
-};
+}

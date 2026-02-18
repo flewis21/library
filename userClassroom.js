@@ -84,7 +84,7 @@ function sheetGetPlaceholders(templateUrl) {
       "Error getting placeholders. Check the logs.\n" + error.stack,
     );
   }
-}
+};
 
 var sheetProcessFormData = function (formData, templateUrl) {
   try {

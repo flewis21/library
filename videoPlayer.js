@@ -3,25 +3,30 @@ var iFC = function () {
 };
 
 function iframeC() {
-  var content = HtmlService.createTemplate(
-    `<!DOCTYPE html>
+  var content = 
+    HtmlService
+      .createTemplate(
+        `<!DOCTYPE html>
           <html>
             <head></head>
             <body>
               <div id="bodyHang">body hang</div>
             </body>
           </html>
-  `,
-  );
-  content.alert = HtmlService.createHtmlOutput(
-    `<script>
+  `);
+  content.alert = 
+    HtmlService
+      .createHtmlOutput(
+        `<script>
           alert("server side")
         </script>
   `,
   ).getContent();
   return content.evaluate().getContent();
-  content.serverSide = HtmlService.createHtmlOutput(
-    `<script>
+  content.serverSide = 
+    HtmlService
+      .createHtmlOutput(
+        `<script>
           function serverSide(func, args) {
             return new Promise((resolve, reject) => {
               google.script.run
@@ -57,7 +62,7 @@ function iframeC() {
         </script>
   `,
   ).getContent();
-}
+};
 
 function needPastTime(searchString) {
   // console.log(
@@ -69,6 +74,24 @@ function needPastTime(searchString) {
   //     ", = " +
   //     !searchString,
   // );
+  functionRegistry.vidTree();
+  var vidSheetVals = functionRegistry.getVideoList();
+  var vidData = [];
+  var vidVals = Object.values(vidSheetVals);
+  vidVals.forEach((val) =>{
+    var inValsKeys = Object.keys(val);
+    var inVVals = Object.values(val);
+    inVVals.forEach((inV) =>{
+      // console.log("I'm holding the value of vidVals", inV)
+      let truInv = isTruthy(inV);
+      if (truInv) {
+        vidData.push(inV)
+      }
+      else {
+        return
+      }
+    })
+  });
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
       var noSearch = globalThis.searchString().myNewArr;
@@ -78,7 +101,7 @@ function needPastTime(searchString) {
       // );
       var searchString = noSearch;
     }
-    var searchLink = `http://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - YouTube+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A - YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const data = UrlFetchApp.fetch(searchLink, { muteHTTPExceptions: true });
     const videoSearch = data.getContentText();
     // return videoSearch
@@ -182,11 +205,14 @@ function needPastTime(searchString) {
     var randomKey = 0;
     var rndRes = [];
     while (rndRes.length === 0) {
-      randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
-      rndRes = fndOrd.filter((test) => {
+      // console.log("I'm looping while results are at", rndRes.length);
+      randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random()); 
+      fndOrd.forEach((test) => {
+      // console.log("I'm looping for each index", fndOrd.indexOf(test));
         var elaspeTime = functionRegistry.time;
         var timeToExecute = functionRegistry.timeLeftToExecute;
         for (var i = 0, l = randomKey; i < l; i++) {
+          // console.log("I'm counting loops until I reach", l)
           if (
             test.indexOf("false") === -1 &&
             test.indexOf("var") === -1 &&
@@ -210,31 +236,85 @@ function needPastTime(searchString) {
             test.indexOf("EdgeWorksp") === -1 &&
             test.indexOf("new XMLHttp") === -1
           ) {
-            if (JSON.stringify(i) >= 3) {
-              break;
+            // if (JSON.stringify(i) >= 3) {
+            //   break;
+            // }
+            if (test && rndRes.indexOf(test) === -1) {
+              if (vidData.indexOf(test) !== -1) {
+                return
+              }
+              else {
+                updateQuote(
+                  JSON.stringify({
+                    name: "videoSheet",
+                    number: 001,
+                    videoid: test,
+                    videodescription: searchString,
+                  })
+                );
+              }
+              rndRes.push(test);
             }
-            return test[i];
           }
         }
         // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       });
-      var rndSort = [];
-      for (var i = 0, l = rndRes.length; i < l; i++) {
-        var sorRes = rndRes.filter((o) => {
-          return o !== rndRes[i];
+      if (rndRes.length > 0) {
+        functionRegistry.vidTree();
+        vidSheetVals = functionRegistry.getVideoList();
+        vidData = [];
+        // var vidKeys = Object.keys(vidSheetVals);
+        vidVals = Object.values(vidSheetVals);
+        vidVals.forEach((val) =>{
+          let inValsKeys = Object.keys(val);
+          let inVVals = Object.values(val);
+          inVVals.forEach((inV) =>{
+            // console.log("I'm holding the value of vidVals", inV)
+            let truInv = isTruthy(inV);
+            if (truInv) {
+              vidData.push(inV)
+            }
+            else {
+              return
+            }
+          })
         });
-        rndSort.push(sorRes);
+        var rndSort = [];
+        for (var i = 0, l = rndRes.length; i < l; i++) {
+          let sorRes = rndRes.filter((o) => {
+            return o !== rndRes[i];
+          });
+          rndSort.push(sorRes);
+        };
+        var sorKind = rndSort.toString().split(" ");
+        var revKind = sorKind.reverse();
+        var popKind = revKind.pop();
+        var rndKind = popKind.split(",");
       }
-      var sorKind = rndSort.toString().split(" ");
-      var revKind = sorKind.reverse();
-      var popKind = revKind.pop();
-      var rndKind = popKind.split(",");
 
       //  console.log(uniqueVid)
-      return { playList: rndRes.sort((a, b) => a - b), hardUrl: searchLink };
+      var playVid = [];
+      var vidKeys = Object.keys(vidSheetVals);
+      vidKeys.forEach((key) =>{
+        let vidObj = vidSheetVals[key];
+        let videoId = vidObj["Video"]
+        let matchKeys = Object.keys(vidObj);
+        matchKeys.forEach((match) =>{
+          let vidMatch = vidObj[match];
+            let truMatch = isTruthy(vidMatch);
+            if (truMatch) {
+              let searchMatch = vidMatch.indexOf(searchString) > -1;
+              let matchSearch = searchString.indexOf(vidMatch) > -1;
+              if (searchMatch || matchSearch) {
+                playVid.push(videoId)
+              }
+            }
+        })
+      })
+      return { playList: playVid, hardUrl: searchLink };
     }
   }
-}
+};
 
 function pastTime(url) {
   const uniqueVid = needPastTime(
@@ -252,7 +332,7 @@ function pastTime(url) {
   // const randomTitle = randomCo["youtubeID"];
   // const randomTicker = randomCo["ticker"];
   // const randomCIK = randomCo["cik_str"];
-}
+};
 
 var seoKeyword = function () {
   needPastTime(`lawyer mugs`);
@@ -274,7 +354,7 @@ function videoPage(search) {
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
   return content.getRawContent();
-}
+};
 
 function videoPlayer(searchString) {
   //var url = seoSheet(encodeURIComponent(searchString)).url;
@@ -320,8 +400,10 @@ function videoPlayer(searchString) {
     .toString()
     .replace(/,/g, "");
   const result = JSON.stringify(videoTable);
-  const html = HtmlService.createTemplate(
-    `<!DOCTYPE html>
+  const html = 
+    HtmlService
+      .createTemplate(
+        `<!DOCTYPE html>
             <html id="test">
               <head>
                 <base target="_parent">
@@ -600,14 +682,13 @@ function videoPlayer(searchString) {
                   })
                 </script>
               </body>
-            </html>`,
-  );
+            </html>`);
   html.vidTubeId = JSON.stringify(randomVideo);
   html.researchId = randomVideo;
   html.searchTtile = searchString;
   html.myPlayList = [playListVar].sort((a, b) => a - b);
   return html.evaluate().getContent();
-}
+};
 
 // console.log(JSON.stringify(randomPlaylist[0][randomVidKey]))
 // const rdmIdArray = Utilities.jsonStringify([randomPlaylist])

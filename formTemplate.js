@@ -548,7 +548,7 @@ function dtls(callFunc, time) {
   } else {
     return dtlsMain(formName);
   }
-}
+};
 
 function dtlsCalculator(e) {
   var username = e;
@@ -653,7 +653,7 @@ function dtlsCalculator(e) {
       ></iframe>
     </div></div></div></div></div>`);
   return html.evaluate().getContent();
-} //:contentFile('uiAccess');
+}; //:contentFile('uiAccess');
 
 function dtlsEnvironment(e, time) {
   var dtlsUrl =
@@ -912,7 +912,7 @@ function dtlsEnvironment(e, time) {
   //     allowfullscreen
   //     ></iframe>
   //   </div></div></div></div>`).evaluate().getContent()
-}
+};
 
 function dtlsInvestor(coKey, time) {
   var coData = coUtility(coKey)[0];
@@ -1010,7 +1010,7 @@ function dtlsInvestor(coKey, time) {
   } else {
     return dtlsEnviroment(coData.rndTitle);
   }
-}
+};
 
 function dtlsResearchForm(topic) {
   var cokey;
@@ -1050,7 +1050,7 @@ function dtlsResearchForm(topic) {
     form.setCollectEmail(true);
     return formUrl;
   }
-}
+};
 
 function dtlsSomeFunction(e) {
   var time = functionRegistry.time;
@@ -1151,7 +1151,7 @@ function dtlsSomeFunction(e) {
     }
   }
   return { playList: covIdArray, content: formUrl };
-}
+};
 
 function dtlsStore(itemName, time) {
   // if (typeof itemName === "undefined") {
@@ -1261,14 +1261,14 @@ function dtlsStore(itemName, time) {
           </div>
         </div>
       </div>`,
-    {
-      item: itemName || "SHOPPING LIST",
-      fileUrl: formUrl,
-      allTime: time,
+    { 
+      item: itemName || "SHOPPING LIST", 
+      fileUrl: formUrl, 
+      allTime: time 
     },
   );
   return itemContent;
-}
+};
 
 function dtlsTv() {
   var randomSECCo = needUtility(randomSubstance(null, 0, 7))[0];
@@ -1283,7 +1283,7 @@ function dtlsTv() {
   var story =
     pageArray[Math.floor(Math.random() * Math.floor(pageArray.length))];
   dtlsVegas(story);
-}
+};
 
 function dtlsVegas(rndId) {
   if (typeof rndId === "undefined") {
@@ -1345,7 +1345,7 @@ function dtlsVegas(rndId) {
   );
   // html.result = ndtUtil.rndTitle
   return html.getRawContent();
-}
+};
 
 function filetypeBing(e) {
   var time = start;
@@ -1441,7 +1441,7 @@ function filetypeBing(e) {
   }
   var rndUti = uti[randNum(uti)];
   return [cokey].join("");
-}
+};
 
 function generalWorkInvoice(clientName, time) {
   // var clientName = "iforce maxx"
@@ -1611,7 +1611,7 @@ function generalWorkInvoice(clientName, time) {
       .evaluate()
       .getContent();
   }
-}
+};
 
 var overFlow = function () {
   `    <?  var liveForm = FormApp.openById(form.getId()) ?>
@@ -1713,7 +1713,7 @@ function geneFrame(reference) {
       },
     ),
   );
-}
+};
 
 function mainMan(mainFile) {
   if (mainFile) {
@@ -1764,7 +1764,7 @@ function mainMan(mainFile) {
       .evaluate()
       .getContent();
   }
-}
+};
 
 async function somMainFunc(e) {
   var elapsedTime = new Date() - start;
@@ -1794,4 +1794,4 @@ async function somMainFunc(e) {
       console.log("maximum execution time exceeded");
     }
   }
-}
+};

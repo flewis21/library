@@ -70,4 +70,4 @@ function navBar(
   // )
   // ,"")});
   return renderTemplate(navBar.evaluate().getContent()); //:contentFile('uiAccess');
-}
+};

@@ -129,4 +129,4 @@ function navBar(
   // )
   // ,"")});
   return contentApp(navBar); //:contentFile('uiAccess');
-}
+};

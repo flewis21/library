@@ -1,6 +1,34 @@
 const functionRegistry = {
   fileList: [],
   paramsList: [],
+  htmlArray: [
+    "Untitled",
+    "uiAccess",
+    "theWorks",
+    "theRoll",
+    "ssSheets",
+    "ssForms",
+    "slideCard",
+    "Section3.Challenge1",
+    "editor",
+    "edgarFriendly",
+    "cors",
+    "cGWI",
+    "proMedia",
+    "epaWebsite",
+    "callBack",
+    "oddChances",
+    "jsGame",
+    "checkOnDay",
+    "userinterfaceAccess",
+    "styling",
+    "popUpOpen",
+    "congressLeg",
+    "congressMembers",
+    "jFundamentals",
+    "gnuFree",
+    "myGNUFreeJS",
+  ],
   initialize: function () {
     for (const key in globalThis) {
       if (typeof globalThis[key] == "function") {
@@ -29,41 +57,68 @@ const functionRegistry = {
   getParamsList: function () {
     return this.paramsList;
   },
-
-  htmlArray: [
-    "Untitled",
-    "uiAccess",
-    "theWorks",
-    "theRoll",
-    "ssSheets",
-    "ssForms",
-    "slideCard",
-    "Section3.Challenge1",
-    "editor",
-    "edgarFriendly",
-    "cors",
-    "cGWI",
-    "proMedia",
-    "epaWebsite",
-    "callBack",
-    "oddChances",
-    "jsGame",
-    "checkOnDay",
-    "uiAccess",
-    "popUpOpen",
-    "congressLeg",
-    "congressMembers",
-    "jFundamentals",
-    "gnuFree",
-    "myGNUFreeJS",
-  ],
-
   getHtmlList: function () {
     return this.htmlArray;
   },
 
-  folderTree: [],
+  arrVidVals: [],
+  vidTree: function() {
+    var itemSheet = (function () {
+      var ss = (function () {
+        var ssApp = SpreadsheetApp;
+        var ss = ssApp.openByUrl(
+          "https://docs.google.com/spreadsheets/d/1TIzKrqGoZIxpmEt2SH_6IS9E-Yby8JdhD_byZhTjqbo/edit?gid=0#gid=0",
+        );
+        return ss;
+      })();
+      var sheet = ss.getSheetByName("001");
+      return sheet;
+    })();
+    var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+    this.arrVidVals = itemArrays.map((val) => {
+      return {
+        Video: val[0],
+        Description: val[1],
+        "Data Entered": val[3],
+        "Last Modified": val[4],
+      };
+    });
+  },
+  getVideoList: function () {
+    // functionRegistry.gTree();
+    return this.arrVidVals;
+  },
 
+  arrImgVals: [],
+  imgTree: function() {
+    var itemSheet = (function () {
+      var ss = (function () {
+        var ssApp = SpreadsheetApp;
+        var ss = ssApp.openByUrl(
+          "https://docs.google.com/spreadsheets/d/1V9McFbDwZ4JOuRDGGm3uk-yUX03k4TdyTbWNwHm5M7k/edit?gid=0#gid=0",
+        );
+        return ss;
+      })();
+      var sheet = ss.getSheetByName("001");
+      return sheet;
+    })();
+    var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+    this.arrImgVals = itemArrays.map((val) => {
+      return {
+        Image: val[0],
+        Description: val[1],
+        "Data Entered": val[3],
+        "Last Modified": val[4],
+      };
+    });
+  },
+  getImageList: function () {
+    // functionRegistry.gTree();
+    return this.arrImgVals;
+  },
+
+
+  folderTree: [],
   gTree: function () {
     var tree = DriveApp.getFolders(); // Iterator for folders
     // Corrected while loop: Call next() only once per iteration
@@ -71,7 +126,8 @@ const functionRegistry = {
       var folder = tree.next(); // Get the current folder
       // Now check if this 'folder' has files before adding its name
       if (folder) {
-        if (folder.getFiles().hasNext()) {
+        let fofi = isTruthy(folder.getFiles()?.hasNext())
+        if (fofi) {
           this.folderTree.push(folder.getName());
         }
       }
@@ -483,6 +539,28 @@ globalThis.uniqueItemArray = function () {
       "Last Modified": val[4],
     };
   });
+  var rndArrVals = [];
+  while (rndArrVals.length !== arrVals.length) {
+    rndArrVals.push(
+      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+globalThis.uniqueVideoItemArray = function () {
+  functionRegistry.vidTree()
+  var arrVals = functionRegistry.getVideoList()
+  var rndArrVals = [];
+  while (rndArrVals.length !== arrVals.length) {
+    rndArrVals.push(
+      arrVals[Math.floor(Math.random() * Math.floor(arrVals.length)).valueOf()],
+    );
+  }
+  return rndArrVals;
+};
+globalThis.uniqueImageItemArray = function () {
+  functionRegistry.imgTree()
+  var arrVals = functionRegistry.getImageList()
   var rndArrVals = [];
   while (rndArrVals.length !== arrVals.length) {
     rndArrVals.push(

@@ -46,7 +46,7 @@ var createInvoicePDF = function (orderData) {
   // Log and return the PDF file URL
   console.log("Invoice PDF created: " + file.getUrl());
   return file.getUrl();
-};
+}
 
 // ⚠️ Note: You will need to create a Google Doc with placeholders like {{date}}, {{car}}, etc.,
 // and a folder in Google Drive to store the PDFs.
@@ -100,7 +100,7 @@ var createNewRecord = function () {
     : (function () {
         return;
       })();
-};
+}
 
 function pdfTimesheet() {
   saveAsPDFToFolder(
@@ -211,7 +211,7 @@ var saveAsPDFToFolder = function (spreadsheetUrl, sheetname) {
     Logger.log("Error in saveAsPDFToFolder: " + error.toString());
     throw error; // Re-throw to be handled by the caller
   }
-};
+}
 
 var saveRecord = function () {
   const settingsWS = ssGetSheetBySpreadsheetUrl(
@@ -266,7 +266,7 @@ var saveRecord = function () {
   // spreadSheet().toast("New record Created", "id: " + nextID);
   // })()
   // })()
-};
+}
 
 var searchRecords = function () {
   const formWS = ssGetSheetBySpreadsheetUrl(
@@ -286,7 +286,7 @@ var searchRecords = function () {
     ? idCell.setValue(recordsFound[0][10])
     : "";
   fieldRange.forEach((f, i) => formWS.getRange(f).setValue(recordsFound[0][i]));
-};
+}
 
 var userClicked = function () {
   const formWS = ssGetSheetBySpreadsheetUrl(
@@ -302,7 +302,7 @@ var userClicked = function () {
     : (function () {
         return;
       })();
-};
+}
 
 var userSearch = function (findMe) {
   const dataWS = ssGetSheetBySpreadsheetUrl(
@@ -350,4 +350,4 @@ var userSearch = function (findMe) {
                   })();
             })();
       })();
-};
+}
