@@ -1148,7 +1148,7 @@ function crmGWI(fx) {
     },
   );
   return result;
-};
+}
 
 var workEd = function (ed) {
   console.log(
@@ -1193,7 +1193,7 @@ var workEd = function (ed) {
     numCols,
     functionRegistry.time,
   ).myFileX;
-}
+};
 
 // Assume getUrl and ScriptApp are defined elsewhere or passed in context if this is a templated function
 
@@ -1477,7 +1477,7 @@ var acceptQuote = function (formDataJson) {
     console.error("Error in acceptQuote:", error);
     throw new Error("Failed to process quote acceptance: " + error.message);
   }
-}
+};
 
 /**
  * Server-side function to handle quote updatance.
@@ -1633,7 +1633,7 @@ var updateQuote = function (formDataJson) {
     console.error("Error in updateQuote:", error);
     throw new Error("Failed to process quote updatance: " + error.message);
   }
-}
+};
 
 // You'll also need to ensure 'runBoilerplate' is defined, likely in your main Code.gs file
 // For example:

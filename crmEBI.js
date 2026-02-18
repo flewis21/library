@@ -1289,7 +1289,7 @@ function crmEBI(fx) {
     },
   );
   return result;
-};
+}
 
 var postEd = function (ed) {
   console.log(
@@ -1369,7 +1369,7 @@ var postEd = function (ed) {
     // return ContentService.createTextOutput("Error sending data to AWS: " + error);
     return ContentService.createTextOutput("Error sending data: " + error);
   }
-}
+};
 
 var leadBook = function (rowIndex) {
   console.log("rowIndex", rowIndex);
@@ -1408,4 +1408,4 @@ var leadBook = function (rowIndex) {
   } else {
     return { url: sheetArray, jsonData: null }; // Return null if the row index is out of bounds
   }
-}
+};

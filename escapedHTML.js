@@ -471,4 +471,4 @@ function escapedHTML(e) {
         ); //:contentFile('uiAccess');
     }
   }
-};
+}

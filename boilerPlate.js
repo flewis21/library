@@ -50,7 +50,7 @@ function convertToJS(rndText) {
     rndText = rndText.replace(/\?\>/g, "");
   }
   return rndText;
-};
+}
 
 var convertToObjects = function (rows, headings, time) {
   // console.log(
@@ -234,7 +234,7 @@ var objectOfS = function (keys, values, time) {
     );
     return acc;
   }, {});
-}
+};
 
 var randNum = function (namedVar) {
   console.log(
@@ -521,7 +521,7 @@ function substanceVegas(
     .join("");
   return { substWord: randomWord, substHost: randomHost };
   console.log();
-};
+}
 
 function testArray(content) {
   console.log(
@@ -557,7 +557,7 @@ function testArray(content) {
     return pathArray;
     // console.log(tempArr)
   }
-};
+}
 
 function testData(sourceData, time) {
   // console.log(
@@ -636,17 +636,16 @@ function testData(sourceData, time) {
       }
     }
     // console.log("testData: \nmyArray: " + spreadSheetCreate("myArraySheet",myArray,["arrayData"],myArray,time))
-  } 
-  catch (err) {
+  } catch (err) {
     // console.log("testData: \nerr: " + err.stack);
     return {
       testArray: err.stack,
-    }
+    };
   }
   return {
     testArray: myArray,
   };
-};
+}
 
 // console.log(" myArray ROW -:_ " + row + " sourceData ROW -:_ " + row + " sourceData COL -:_ " + col + " myArray -:_ " + myArray)
 
@@ -694,7 +693,7 @@ function trial() {
     }
   }
   return trial;
-};
+}
 
 function testObject(dataArray, fVarHeaders) {
   console.log(
@@ -709,4 +708,4 @@ function testObject(dataArray, fVarHeaders) {
   myRows = testData(dataArray);
   myObject = covObjects(myRows, FVar(fVarHeaders));
   return myObject;
-};
+}

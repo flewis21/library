@@ -134,7 +134,7 @@ function breakthrough(chance, time) {
     })();
   };
   return html.evaluate().getContent();
-}; //:contentFile('uiAccess');
+} //:contentFile('uiAccess');
 
 function rndChoice(game) {
   let trial = [];
@@ -328,7 +328,7 @@ function rndChoice(game) {
       );
   }
   return formUrl;
-};
+}
 
 function rndCoin() {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
@@ -391,7 +391,7 @@ function rndCoin() {
     }
   });
   return formUrl;
-};
+}
 
 function rndControl(infinitum) {
   var trial = [];
@@ -672,7 +672,7 @@ function rndControl(infinitum) {
     tailEnd++;
   });
   return formUrl;
-};
+}
 
 function rndDice() {
   // if ([0,1,2,3,4,5][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
@@ -844,7 +844,7 @@ function rndDice() {
     }
   });
   return formUrl;
-};
+}
 
 function rndTrial(infinitum) {
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
@@ -970,7 +970,7 @@ function rndTrial(infinitum) {
     }
   });
   return formUrl;
-};
+}
 
 // var rndTrial = function (infinitum) {
 //   var trial = [];
@@ -1211,4 +1211,4 @@ function rndWinner(infinitum) {
       );
   }
   return formUrl;
-};
+}

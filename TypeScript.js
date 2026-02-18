@@ -17,7 +17,7 @@ function isValidKeys(v) {
       return isValueOfTypePassedIn;
     }
   }
-};
+}
 
 var isMapped = function (t, v) {
   var mapKeys = {};
@@ -113,11 +113,15 @@ var geneicType = function () {
   };
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  let randonWord = ["sort of decent"].join("").split("").sort((a, b) => {
-    const priorityA = getZuluFreqPriority(a);
-    const priorityB = getZuluFreqPriority(b);
-    return priorityA - priorityB;
-  }).join("");
+  let randonWord = ["sort of decent"]
+    .join("")
+    .split("")
+    .sort((a, b) => {
+      const priorityA = getZuluFreqPriority(a);
+      const priorityB = getZuluFreqPriority(b);
+      return priorityA - priorityB;
+    })
+    .join("");
   var functionObjectType = driveManager(randonWord);
   // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
   // isExcludeValue = isOmit(isExcludeValue, "2");

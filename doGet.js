@@ -8,7 +8,7 @@ function buildTags(posHtml) {
   return authLogic(validGroup())
     ? Route["tagBar"](posHtml())
     : contentFile("uiAccess");
-};
+}
 
 function doGet(e) {
   Logger.log(
@@ -23,8 +23,13 @@ function doGet(e) {
   console.log("Object?.values(e).length", Object?.values(e));
   if (!e || noEmptyE < 1 || nonPopulatedE < 1 || e.queryString === "") {
     var getDoFunction = createRandomFunction();
-    var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [Object.values(getDoFunction)]);
-    console.log(`globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`, finalFS)
+    var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [
+      Object.values(getDoFunction),
+    ]);
+    console.log(
+      `globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`,
+      finalFS,
+    );
     return renderTemplate(
       ` <!DOCTYPE html>
           <html>
@@ -35,7 +40,7 @@ function doGet(e) {
               </div>
             </body>
           </html>`,
-      { funcResult: finalFS, },
+      { funcResult: finalFS },
       JSON.stringify(getDoFunction),
     );
     var argsEd = testlt();
@@ -354,7 +359,7 @@ function doGetPost(e) {
   } else {
     return handleRequest(e);
   }
-};
+}
 
 function doGetStop(e) {
   return handleRequest(e);
@@ -363,11 +368,9 @@ function doGetStop(e) {
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
     return handleGetData();
-  } 
-  else if (e && e.parameter && e.parameter.action === "submitForm") {
+  } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
-  } 
-  else {
+  } else {
     throw new Error("Error completing your request ");
     // return ContentService.createTextOutput("Invalid Request").setMimeType(
     //   ContentService.MimeType.TEXT,
@@ -496,10 +499,10 @@ function handleGetData(e) {
 
   try {
     let rawFuncResult = null;
-    let rawUrlResult = isTruthy(isValidUrl(funcDos.toString()).hostname)
+    let rawUrlResult = isTruthy(isValidUrl(funcDos.toString()).hostname);
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
-        let parsedFuncArgs = [];
+      let parsedFuncArgs = [];
       //   if (funcDos) {
       //     // try {
       //     var parType = isPropertyOf(funcDos);
@@ -509,7 +512,7 @@ function handleGetData(e) {
       //         if (!Array.isArray(parsedFuncArgs)) {
       //           parsedFuncArgs = [parsedFuncArgs];
       //         }
-      //       } 
+      //       }
       //       catch (error) {
       //         console.info(error.stack);
       //         if (typeof funcDos === "string") {
@@ -524,45 +527,46 @@ function handleGetData(e) {
       //     else {
       //       if (!Array.isArray(funcDos)) {
       //         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-      //       } 
+      //       }
       //       else {
-              parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+      parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
       //       }
       //     }
       //   }
-        try {
-          if ((funcUno && typeof globalThis[funcUno] === "function "&& !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
-            rawFuncResult = mis([funcUno]);
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-          else if ((funcUno && typeof globalThis[funcUno] !== "function" && funcDos)) {
-            rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-          else if (!funcUno && funcDos) {
-            rawFuncResult = mis([parsedFuncArgs]);
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-          else {
-            rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-        } 
-        catch {
-          if ((funcUno && typeof globalThis[funcUno] === "function "&& !funcDos)) {
-            rawFuncResult = globalThis[funcUno]();
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-          else if (!funcUno && funcDos) {
-            rawFuncResult = globalThis[parsedFuncArgs]();
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
-          else {
-            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          }
+      try {
+        if (
+          (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
+          (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
+        ) {
+          rawFuncResult = mis([funcUno]);
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else if (
+          funcUno &&
+          typeof globalThis[funcUno] !== "function" &&
+          funcDos
+        ) {
+          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else if (!funcUno && funcDos) {
+          rawFuncResult = mis([parsedFuncArgs]);
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else {
+          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         }
-      // } 
+      } catch {
+        if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
+          rawFuncResult = globalThis[funcUno]();
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else if (!funcUno && funcDos) {
+          rawFuncResult = globalThis[parsedFuncArgs]();
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else {
+          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        }
+      }
+      // }
       // else {
       //   console.error(
       //     `Error: Function "${funcUno}" not found or not callable in "${globalThis}".`,
@@ -572,9 +576,8 @@ function handleGetData(e) {
       //     message: `Function "${funcUno}" not found.`,
       //   };
       // }
-    }
-    else {
-      rawFuncResult = rndE
+    } else {
+      rawFuncResult = rndE;
     }
 
     // Helper function to process any value (rawFuncResult or a nested property like .app)
@@ -647,8 +650,7 @@ function handleGetData(e) {
         if (content.url && urlRegex.test(content.url)) {
           // Use regex for object.url as well
           return { type: "url", data: content.url };
-        }
-        else {
+        } else {
           // Add other specific object property checks here if needed
           return { type: "object", data: content }; // Default for other objects
         }
@@ -665,18 +667,19 @@ function handleGetData(e) {
     // If rawFuncResult was an object and it had an 'app' property,
     // we should specifically process that 'app' property as well.
     // This assumes that the 'app' property might override or provide the primary content.
-    if (
-      payLoad.type === "object" &&
-      (payLoad.data.app || payLoad.data.index)
-    ) {
-      console.log("the 'app' property:", (payLoad.data.app || payLoad.data.index));
+    if (payLoad.type === "object" && (payLoad.data.app || payLoad.data.index)) {
+      console.log(
+        "the 'app' property:",
+        payLoad.data.app || payLoad.data.index,
+      );
       // rawFuncResult.app;
       let appProcessed;
 
       // Check if rawFuncResult.app exists and is an object
       if (
         (payLoad.data.app || payLoad.data.index) &&
-        (typeof payLoad.data.app === "object" || typeof payLoad.data.index  === "object") &&
+        (typeof payLoad.data.app === "object" ||
+          typeof payLoad.data.index === "object") &&
         (!Array.isArray(payLoad.data.app) || !Array.isArray(payLoad.data.index))
       ) {
         // If it's a non-array object, you can safely attempt to spread its values
@@ -688,31 +691,30 @@ function handleGetData(e) {
             appProcessed = processContent(payLoad.data.app);
             if (appProcessed.type === "object") {
               var processCount = Object.keys(appProcessed.data);
-              processCount.forEach((beat) =>{
+              processCount.forEach((beat) => {
                 appProcessed[beat] = processContent(appProcessed.data[beat]);
-              })
+              });
             }
-              // while (appProcessed.type === "object") {
-              //   appProcessed = processContent(appProcessed.data[]);
-              // }
+            // while (appProcessed.type === "object") {
+            //   appProcessed = processContent(appProcessed.data[]);
+            // }
 
-          if (payLoad.data.index && typeof payLoad.data.index === "object") {
-            appProcessed["index"] = processContent(payLoad.data.index);
-            if (appProcessed.index.type === "object") {
-              var processCount = Object.keys(appProcessed.index.data);
-              processCount.forEach((beat) =>{
-                appProcessed.index[beat] = processContent(appProcessed.index.data[beat]);
-              })
+            if (payLoad.data.index && typeof payLoad.data.index === "object") {
+              appProcessed["index"] = processContent(payLoad.data.index);
+              if (appProcessed.index.type === "object") {
+                var processCount = Object.keys(appProcessed.index.data);
+                processCount.forEach((beat) => {
+                  appProcessed.index[beat] = processContent(
+                    appProcessed.index.data[beat],
+                  );
+                });
+              }
             }
-          }
-        }
-          else if (typeof payLoad.data.index === "object") {
+          } else if (typeof payLoad.data.index === "object") {
             appProcessed = processContent(payLoad.data.index);
           }
-        }
-        catch (err) {
+        } catch (err) {
           console.log(err.stack); //appProcessed = processContent(payLoad.data);
-          
         }
 
         /*
@@ -732,8 +734,10 @@ function handleGetData(e) {
           rawFuncResult.app.title
         ]);
         */
-      } 
-      else if (Array.isArray(payLoad.data.app) && payLoad.data.app.length > 0) {
+      } else if (
+        Array.isArray(payLoad.data.app) &&
+        payLoad.data.app.length > 0
+      ) {
         // Handle cases where rawFuncResult.app is not a suitable object,
         // e.g., it's null, undefined, an array, or a primitive.
         // You might want to log a warning, assign a default value, or throw an error.
@@ -747,9 +751,8 @@ function handleGetData(e) {
 
         // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
         appProcessed = processContent(payLoad.data.app);
-      }
-      else {
-        appProcessed = processContent()
+      } else {
+        appProcessed = processContent();
       }
       // Overwrite payLoad if 'app' property yields more specific or desired content
       // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
@@ -775,8 +778,7 @@ function handleGetData(e) {
         if (rawFuncResult.index && rawFuncResult.index.funcStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.funcStr;
-        } 
-        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
           // Only add if payLoad doesn't already have it
           payLoad.dataData = rawFuncResult.index.dataStr;
         }
@@ -786,34 +788,33 @@ function handleGetData(e) {
           payLoad.data = rawFuncResult.index.url;
         }
       }
-    }
-    else if (payLoad.type === "object" ||
-        (payLoad.data !== null && payLoad.data !== undefined)
-      ) {
-        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
-        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
-        // represent something distinct from the 'app' content but should still be propagated.
-        if (rawFuncResult.link && !payLoad.link) {
-          // Only add if payLoad doesn't already have it
-          payLoad.link = rawFuncResult.link;
-        }
-        // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
-        //   // Only add if payLoad doesn't already have it
-        //   payLoad.index = rawFuncResult.index;
-        // }
-        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
-          // Only add if payLoad doesn't already have it
-          payLoad.dataData = rawFuncResult.index.funcStr;
-        } 
-        else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
-          // Only add if payLoad doesn't already have it
-          payLoad.dataData = rawFuncResult.index.dataStr;
-        }
-        if (rawFuncResult.index && rawFuncResult.index.url) {
-          // Only add if payLoad doesn't already have it
-          payLoad.dataIndex = payLoad.data;
-          payLoad.data = rawFuncResult.index.url;
-        }
+    } else if (
+      payLoad.type === "object" ||
+      (payLoad.data !== null && payLoad.data !== undefined)
+    ) {
+      // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+      // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+      // represent something distinct from the 'app' content but should still be propagated.
+      if (rawFuncResult.link && !payLoad.link) {
+        // Only add if payLoad doesn't already have it
+        payLoad.link = rawFuncResult.link;
+      }
+      // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+      //   // Only add if payLoad doesn't already have it
+      //   payLoad.index = rawFuncResult.index;
+      // }
+      if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataData = rawFuncResult.index.funcStr;
+      } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataData = rawFuncResult.index.dataStr;
+      }
+      if (rawFuncResult.index && rawFuncResult.index.url) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataIndex = payLoad.data;
+        payLoad.data = rawFuncResult.index.url;
+      }
     }
 
     console.log("payLoad.type === ", payLoad.type);
@@ -825,38 +826,32 @@ function handleGetData(e) {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = `${payLoad.link}`;
-    } 
-    else if (payLoad.type === "url") {
+    } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.data || payLoad.dataIndex; // Assign the URL to iframeSrc
       appL = payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
       feed = payLoad.link;
-    } 
-    else if (payLoad.type === "jsonData") {
+    } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = JSON.stringify(payLoad.data || payLoad.dataData, null, 2);
       feed = payLoad.link;
-    } 
-    else if (payLoad.type === "text") {
+    } else if (payLoad.type === "text") {
       iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = payLoad.link;
-    } 
-    else if (payLoad.type === "object") {
+    } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
         appL = payLoad.data.html || payLoad.data.app || payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-      } 
-      else if (payLoad.data.url) {
+      } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex;
         appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
         feed = `URL provided: ${payLoad.link}`;
-      } 
-      else {
+      } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
         appL = payLoad?.dataData?.concat(
@@ -864,8 +859,7 @@ function handleGetData(e) {
         );
         feed = payLoad.link;
       }
-    } 
-    else if (payLoad.type === "unknown" || payLoad.type === "error") {
+    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
     }
   } catch (error) {
@@ -998,7 +992,7 @@ var createJsonResponse = function (success, message) {
   )
     .setMimeType(ContentService.MimeType.JSON)
     .getContent();
-}
+};
 
 function misBing(e, time) {
   console.log(
@@ -1213,7 +1207,7 @@ function userClicked() {
   </script>`,
     {},
   );
-}; //Global object closed
+} //Global object closed
 
 //  {cik_str: await currentCik,
 //                             ticker: await currentTicker,
@@ -1564,15 +1558,14 @@ var runBoilerplate = function (func, args, callCount = 0) {
             1000,
         ) // Use .getTime() for Date objects
       : "N/A"; // Provide a fallback if maxTime is not defined or not a Date
-  try { 
+  try {
     console.log(
       `Time remaining: ${timeRemaining}` +
         `\nFunction: ${arguments.callee.name}` +
         `\nfunc: ${func}, args: ${JSON.stringify(args)}`,
     );
-  }
-  catch (errerr) {
-    console.warn(errerr.stack)
+  } catch (errerr) {
+    console.warn(errerr.stack);
   }
   try {
     // If 'foo' is still where your functions like 'mis' are, keep this line.
@@ -1649,7 +1642,7 @@ var runBoilerplate = function (func, args, callCount = 0) {
     Logger.log("Error in " + func + ": " + error.message);
     throw new Error(`Server error in ${func}: ${error.message}`);
   }
-}
+};
 
 /**
  * Server-side function to receive a new 'e' object from the client
@@ -1665,7 +1658,7 @@ var reRenderPageWithNewE = function (clientEObject) {
   // Call the original doGet function, passing the clientEObject as if it were a new request.
   // doGet should return an HtmlOutput object.
   return doGet(clientEObject); // <-- Ensure doGet returns HtmlOutput, not just a string
-}
+};
 
 var runAll = function (func, args) {
   try {

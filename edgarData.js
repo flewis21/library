@@ -111,7 +111,7 @@ function coSort(time) {
     ticker: tickerFreqArray,
     title: titleFreqArray,
   };
-};
+}
 
 function coSortCIKS(cikArray, cikArrData, i, cikl) {
   var cikFreqArray = [];
@@ -156,7 +156,7 @@ function coSortCIKS(cikArray, cikArrData, i, cikl) {
   //  }
 
   return cikFreqArray;
-};
+}
 
 function coSortTickers(tickerArray, tickerArrData, i, ticl) {
   var tickerFreqArray = [];
@@ -171,7 +171,7 @@ function coSortTickers(tickerArray, tickerArrData, i, ticl) {
   }
 
   return tickerFreqArray;
-};
+}
 
 function coSortTitles(titleArray, titleArrData, i, titl) {
   var titleFreqArray = [];
@@ -185,7 +185,7 @@ function coSortTitles(titleArray, titleArrData, i, titl) {
   }
 
   return titleFreqArray;
-};
+}
 
 function edgarData(text) {
   // SEC Edgar Filings Widget
@@ -376,12 +376,12 @@ function edgarData(text) {
   html.companyInfo = HtmlService.createHtmlOutput(
     `function edgarData(companyInfo) {
       console.log(companyInfo);
-    }`
+    }`,
   );
   html.startPageUrl = startPageUrl;
 
   return html.evaluate().getContent(); //:contentFile('uiAccess');
-}; 
+}
 
 // edgarArray.push([result])
 // for (let k of Object.keys())
@@ -531,7 +531,7 @@ function oldSEC(rndTitle) {
     })();
   }; //Global object closed
   return html.evaluate().getContent();
-};
+}
 
 function opt(searchString) {
   if (typeof searchString === "undefined") {
@@ -674,7 +674,7 @@ function opt(searchString) {
   )
     .evaluate()
     .getContent();
-};
+}
 
 var randomTickerXpath = function (rnum) {
   const rnumber = rnum;
@@ -704,7 +704,7 @@ function randomUtility(e, arrD, time) {
   } else {
     return;
   }
-};
+}
 
 function videoSEC() {
   const ws = ssGetSheetBySpreadsheetUrl(
@@ -884,4 +884,4 @@ function yahooSort(ticker, time) {
     });
   }
   return freqArray;
-};
+}

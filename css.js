@@ -300,7 +300,7 @@ var styleHtml = function () {
   ).getContent();
   content.startPageUrl = startPageUrl;
   return content;
-} //:contentFile('uiAccess');
+}; //:contentFile('uiAccess');
 
 var builtStyling = function (e) {
   var content = styleHtml();
@@ -454,4 +454,4 @@ function frameHtml(file, argsArray) {
     return myObj;
   };
   return content;
-};
+}

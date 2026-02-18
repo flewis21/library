@@ -62,7 +62,7 @@ const functionRegistry = {
   },
 
   arrVidVals: [],
-  vidTree: function() {
+  vidTree: function () {
     var itemSheet = (function () {
       var ss = (function () {
         var ssApp = SpreadsheetApp;
@@ -90,7 +90,7 @@ const functionRegistry = {
   },
 
   arrImgVals: [],
-  imgTree: function() {
+  imgTree: function () {
     var itemSheet = (function () {
       var ss = (function () {
         var ssApp = SpreadsheetApp;
@@ -117,7 +117,6 @@ const functionRegistry = {
     return this.arrImgVals;
   },
 
-
   folderTree: [],
   gTree: function () {
     var tree = DriveApp.getFolders(); // Iterator for folders
@@ -126,7 +125,7 @@ const functionRegistry = {
       var folder = tree.next(); // Get the current folder
       // Now check if this 'folder' has files before adding its name
       if (folder) {
-        let fofi = isTruthy(folder.getFiles()?.hasNext())
+        let fofi = isTruthy(folder.getFiles()?.hasNext());
         if (fofi) {
           this.folderTree.push(folder.getName());
         }
@@ -548,8 +547,8 @@ globalThis.uniqueItemArray = function () {
   return rndArrVals;
 };
 globalThis.uniqueVideoItemArray = function () {
-  functionRegistry.vidTree()
-  var arrVals = functionRegistry.getVideoList()
+  functionRegistry.vidTree();
+  var arrVals = functionRegistry.getVideoList();
   var rndArrVals = [];
   while (rndArrVals.length !== arrVals.length) {
     rndArrVals.push(
@@ -559,8 +558,8 @@ globalThis.uniqueVideoItemArray = function () {
   return rndArrVals;
 };
 globalThis.uniqueImageItemArray = function () {
-  functionRegistry.imgTree()
-  var arrVals = functionRegistry.getImageList()
+  functionRegistry.imgTree();
+  var arrVals = functionRegistry.getImageList();
   var rndArrVals = [];
   while (rndArrVals.length !== arrVals.length) {
     rndArrVals.push(

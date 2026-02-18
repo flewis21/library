@@ -15,7 +15,7 @@ function addDates(title, startTime, endTime, series) {
   //     const daysCalendarRange = addDays();
   //   return daysCalendarRange;
   // }
-};
+}
 
 function addDays() {
   var startDate = new Date();
@@ -170,7 +170,7 @@ async function agendaDates() {
 var calCalendar = function () {
   var eCalId = CalendarApp.getDefaultCalendar();
   return eCalId;
-}
+};
 
 var calRecurrence = function (series) {
   var recurrence = CalendarApp.newRecurrence().addDailyRule().until(series);
@@ -190,7 +190,7 @@ function dateAgenda() {
   return uniqueData;
   console.log(sheetJSONSheet.getName());
   console.log(uniqueData);
-};
+}
 
 // var ws = idSpreadSheet("1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=1223141535");
 // console.log(uniqueData)
@@ -210,7 +210,7 @@ function dateFunction(series) {
     }
   });
   return uniqueDays;
-};
+}
 
 function dateModel(days) {
   console.log(
@@ -231,7 +231,7 @@ function dateModel(days) {
     });
   }
   return uniqueDays;
-};
+}
 
 function flatten(input) {
   console.log(input);
@@ -245,7 +245,7 @@ function flatten(input) {
   return {
     myStock: stocks,
   };
-};
+}
 
 function getCalendarBusyDays(dates) {
   var ws = ssSheet();
@@ -260,7 +260,7 @@ function getCalendarBusyDays(dates) {
     }
   });
   return uniqueDays;
-};
+}
 
 var getDates = function (series) {
   // if (!series) {
@@ -288,7 +288,7 @@ function raise(acc, item) {
   return {
     myItem: [...acc, item],
   };
-};
+}
 
 function lower(array, callback, initial) {
   let acc = initial;
@@ -303,7 +303,7 @@ function lower(array, callback, initial) {
   return {
     myCall: acc,
   };
-};
+}
 
 function randomDay(disabledDays) {
   disabledDays = dateAgenda();
@@ -314,7 +314,7 @@ function randomDay(disabledDays) {
   console.log(new Date().valueOf());
   return populateDates;
   console.log(disabledDays);
-};
+}
 
 var sheetDates = function (colIndex) {
   var eventsDataRange = sliceValues(ssDataRange(), 1);

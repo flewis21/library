@@ -53,7 +53,7 @@ function dtlsPict(snap, time) {
     //     }
     //   }
     // }
-    let goldFish = uiArr.forms.toString().search(snap)
+    let goldFish = uiArr.forms.toString().search(snap);
     uiArr.forms.map((snapper) => {
       let hookLine = authLogic([snapper].includes(snap));
       if (hookLine) {
@@ -306,7 +306,7 @@ function dtlsPict(snap, time) {
     return formUrl;
   }
   var rndUti = uti[randNum(uti)];
-};
+}
 
 function portPro(e) {
   if (e) {
@@ -394,7 +394,7 @@ function portPro(e) {
     return formUrl;
   }
   var rndUti = uti[randNum(uti)];
-};
+}
 
 // var e = "qvar"
 // var namedVar = "pred"
@@ -626,7 +626,7 @@ function stockPro(e, time) {
   console.log(eval(html));
   return formUrl;
   return html.evaluate().append(survey).getContent();
-};
+}
 
 function stockHistory(e) {
   var eDrive = folderManager();
@@ -919,4 +919,4 @@ function stockHistory(e) {
     }
   }
   // var rndUti = uti[randNum(uti)]
-};
+}

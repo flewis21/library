@@ -2,7 +2,7 @@ function companyName(companyNameUrl) {
   const companyNameSecData = epaA(aVar(companyNameUrl));
   const companyArray = testData(companyNameSecData);
   return companyArray;
-};
+}
 
 // console.log(companyNameSecData)
 // console.log(myObject)
@@ -219,7 +219,7 @@ function epaData(e) {
   }
   html.brand = altNames;
   return html.evaluate().getContent();
-};
+}
 
 // console.log(JSON.stringify(e))
 //:contentFile('uiAccess');
@@ -382,22 +382,22 @@ function epaA(epaAUrl) {
   const urlSrc = urlDataSource(epaAUrl);
   const epaA = splitNoX(urlSrc["data"]);
   return epaA;
-};
+}
 
 function epaB(epaBurl, epaC, uniA, epaBdelimiter) {
   const epaB = splitX(urlDataSource(epaBurl + epaC), uniA, epaBdelimiter);
   return epaB;
-};
+}
 
 function epaC(epaCurl, epaD, uniA, epaCdelimiter) {
   const epaC = splitX(urlDataSource(epaCurl + epaD), uniA, epaCdelimiter);
   return epaC;
-};
+}
 
 function epaD(epaDurl, epaDXpath, epaDdelimiter) {
   const epaD = splitX(urlDataSource(epaDurl), epaDXpath, epaDdelimiter);
   return epaD;
-};
+}
 
 function epaIng(e) {
   var urlProduct =
@@ -577,7 +577,7 @@ function epaIng(e) {
   html.startPageUrl = startPageUrl;
   html.myVideo = res["items"][randNum]["ingredientname"] || product;
   return html.evaluate().getContent();
-};
+}
 
 function newEPAData(rawData) {
   const uniqueCoArray = covArrays(rawData["items"]);
@@ -592,7 +592,7 @@ function newEPAData(rawData) {
   //   rawData[1]["items"].map((i)=>{data.push([i])});
   // var uAdata = data.map((dp)=>{return covArrays(dp)});
   // const ss = spreadSheetCreate("EPAData", "pesticides", [data].slice(0), [data].slice(1))
-};
+}
 
 function oldEPA(rndTitle) {
   var wAppUrl = getScriptUrl();
@@ -739,7 +739,7 @@ function oldEPA(rndTitle) {
       return;
     }
   }
-};
+}
 
 function productTime(product) {
   var test = productNamePartial("zee");
@@ -767,7 +767,7 @@ function productTime(product) {
     " " +
     new Date().toTimeString();
   console.log(dataSheetName.split("(").shift());
-};
+}
 
 function productRegNo(eparegno) {
   const res = urlDataSource(
@@ -786,7 +786,7 @@ function productRegNo(eparegno) {
       return res;
     }
   }
-};
+}
 
 function productDistNum(distno) {
   const rawData = JSON.parse(
@@ -796,7 +796,7 @@ function productDistNum(distno) {
     ),
   );
   return newEPAData(rawData);
-};
+}
 
 function productFullName(productName) {
   const rawData = JSON.parse(
@@ -806,7 +806,7 @@ function productFullName(productName) {
     ),
   );
   return newEPAData(rawData);
-};
+}
 
 function productDist(
   epaAUrl,
@@ -831,7 +831,7 @@ function productDist(
   // [IVar(iVar)]
   // [JVar(jVar)]
   return productDistEpaData;
-};
+}
 
 function productName(epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
   const productNameEpaData = epaD(
@@ -840,7 +840,7 @@ function productName(epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
     cVar(epaDcVar),
   )[dVar(dVar)][eVar(eVar)][fVar(fVar)];
   return productNameEpaData;
-};
+}
 
 function productNamePartial(productName) {
   let appL = "";
@@ -912,7 +912,7 @@ function productNamePartial(productName) {
     timestamp: new Date(),
   };
   return data;
-};
+}
 
 function productNamePartialV2(productName) {
   const rawData = JSON.parse(
@@ -922,7 +922,7 @@ function productNamePartialV2(productName) {
     ),
   );
   return newEPAData(rawData);
-};
+}
 
 function productNumPartial(productNum) {
   const rawData = JSON.parse(
@@ -932,7 +932,7 @@ function productNumPartial(productNum) {
     ),
   );
   return newEPAData(rawData);
-};
+}
 
 function productNumPartialV2(productNum) {
   const rawData = JSON.parse(
@@ -942,7 +942,7 @@ function productNumPartialV2(productNum) {
     ),
   );
   return newEPAData(rawData);
-};
+}
 
 function productIngName(ingredient) {
   var res = urlDataSource(
@@ -962,7 +962,7 @@ function productIngName(ingredient) {
       return res;
     }
   }
-};
+}
 
 function productChemCode(code) {
   const res = urlDataSource(
@@ -982,7 +982,7 @@ function productChemCode(code) {
       return res;
     }
   }
-};
+}
 
 function productAbstractNum(abstract) {
   const res = urlDataSource(
@@ -1002,4 +1002,4 @@ function productAbstractNum(abstract) {
       return res;
     }
   }
-};
+}
