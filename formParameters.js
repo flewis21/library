@@ -30,7 +30,7 @@ function formMaker(fileName, folderX, time) {
     }
     return newFile;
   }
-};
+}
 
 function formsUrlsGlobal(fileX, time) {
   console.log(
@@ -86,7 +86,7 @@ function formsUrlsGlobal(fileX, time) {
       }
     }
   }
-};
+}
 
 function searchUrlsGlobal(fileX) {
   console.log(
@@ -112,7 +112,7 @@ function searchUrlsGlobal(fileX) {
       return treeFile;
     }
   }
-};
+}
 
 function searchUrlsRoot(fileX) {
   console.log(
@@ -133,7 +133,7 @@ function searchUrlsRoot(fileX) {
       return;
     }
   }
-};
+}
 
 function searchUrlsTree(fileX) {
   console.log(
@@ -166,7 +166,7 @@ function searchUrlsTree(fileX) {
     }
   });
   return matchManager(fileX);
-};
+}
 
 function searchUrlsRandom() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
@@ -193,7 +193,7 @@ function searchUrlsRandom() {
   var rndFiled = Math.floor(Math.random() * Math.floor(fileData.length));
   var filed = fileData[rndFiled];
   return filed;
-};
+}
 
 function searchTreeRoot(fileX) {
   console.log(
@@ -212,7 +212,7 @@ function searchTreeRoot(fileX) {
       return trueName.getUrl();
     } else if (!trueName.getName().includes(fileX)) return trueName.getUrl();
   }
-};
+}
 
 function searchDataTree(fileX) {
   console.log(
@@ -239,4 +239,4 @@ function searchDataTree(fileX) {
         return trueNumName.getUrl();
     }
   }
-};
+}

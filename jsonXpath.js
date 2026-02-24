@@ -39,7 +39,7 @@ function csvDataSource(url, params) {
     };
     //JSON
   }
-};
+}
 
 var dataRowIndex = function (data, row, index) {
   console.log(
@@ -164,7 +164,7 @@ function getSize(url, params) {
   } else {
     return {};
   }
-};
+}
 
 function jsonDataX(data) {
   console.log(
@@ -181,7 +181,7 @@ function jsonDataX(data) {
   const noHeaders = sliceValues(arrayN, 0);
   const returnData = rowsToReturn(noHeaders);
   return returnData;
-};
+}
 
 async function jsonFormatter() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
@@ -212,7 +212,7 @@ async function jsonFormatter() {
   } catch (err) {
     return res.getContentText();
   }
-};
+}
 
 //console.log(obj)
 //console.log(json[obj])
@@ -245,7 +245,7 @@ function jsonINIT(json) {
   } catch (err) {
     console.log(err + " -:- " + url);
   }
-};
+}
 
 //}
 // var res = UrlFetchApp.fetch(url);
@@ -286,7 +286,7 @@ function jsonXpath(jsonXpathDataRange) {
     return a[0];
   });
   return jsonXpathRowsToReturn;
-};
+}
 
 // var jsonXpathHeadings = jsonXpathDataRange.slice(0,1);
 // var jsonXpathOutputQuery = (covObjects(jsonXpathRowsToReturn, jsonXpathHeadings));
@@ -653,4 +653,4 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
   // {console.log(typeof content)
   // console.log(res.getContentText());
   // }
-};
+}

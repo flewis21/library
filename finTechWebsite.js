@@ -31,4 +31,4 @@ function finTechWebsite() {
       ),
     ),
   ); //:contentFile('uiAccess');
-};
+}

@@ -57,4 +57,4 @@ function ssFormsSnip(test) {
   htmlObject.filedMain = dataTree[rndFiledMain];
   htmlObject.media = mis(dataTree[rndFiledMain]);
   return htmlObject.evaluate().asTemplate;
-};
+}

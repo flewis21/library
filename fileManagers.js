@@ -75,7 +75,7 @@ function driveManagerFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveForms() {
   console.log(
@@ -106,7 +106,7 @@ function driveForms() {
   var filedMain = dataTree[rndFiledMain];
   console.log(filedMain);
   return filedMain;
-};
+}
 
 function driveFormsFilter(filterFiles) {
   console.log(
@@ -177,7 +177,7 @@ function driveFormsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveSheets() {
   console.log(
@@ -210,7 +210,7 @@ function driveSheets() {
   var filedMain = FormApp.openByUrl(dataTree[rndFiledMain]).getPublishedUrl();
   console.log(filedMain);
   return filedMain;
-};
+}
 
 function driveSheetsFilter(filterFiles) {
   console.log(
@@ -288,11 +288,10 @@ function driveSheetsFilter(filterFiles) {
   try {
     var filedMain = FormApp.openByUrl(dataTree[rndFiledMain]).getPublishedUrl();
     return filedMain;
+  } catch (err) {
+    Logger.log("Error trying to return a form: " + err.stack);
   }
-  catch (err) {
-     Logger.log("Error trying to return a form: " +  err.stack)
-  }
-};
+}
 
 function driveWebForms() {
   console.log(
@@ -319,7 +318,7 @@ function driveWebForms() {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveWebFormsFilter(filterFiles) {
   console.log(
@@ -394,7 +393,7 @@ function driveWebFormsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveVideoForms() {
   console.log(
@@ -422,7 +421,7 @@ function driveVideoForms() {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveVideoFormsFilter(filterFiles) {
   console.log(
@@ -494,7 +493,7 @@ function driveVideoFormsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveDocBrowser() {
   console.log(
@@ -510,7 +509,7 @@ function driveDocBrowser() {
     docsList.push(file.getUrl());
   }
   return docsList;
-};
+}
 
 function driveDocForms() {
   console.log(
@@ -537,7 +536,7 @@ function driveDocForms() {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveDocFormsFilter(filterFiles) {
   console.log(
@@ -608,7 +607,7 @@ function driveDocFormsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function drivePictForms() {
   console.log(
@@ -635,7 +634,7 @@ function drivePictForms() {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function drivePictFormsFilter(filterFiles) {
   console.log(
@@ -707,11 +706,14 @@ function drivePictFormsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   var filedMain = dataTree[rndFiledMain];
   return filedMain;
-};
+}
 
 function driveUrls(fileX) {
   console.log(
-    "boilerplate : line 714\ndriveUrls(fileX: " + fileX +")\n " + arguments.callee.caller.name,
+    "boilerplate : line 714\ndriveUrls(fileX: " +
+      fileX +
+      ")\n " +
+      arguments.callee.caller.name,
   );
   console.log(
     functionRegistry.time +
@@ -730,11 +732,11 @@ function driveUrls(fileX) {
     //     return file.next().getUrl();
     //   }
     // }
-    return file
+    return file;
   } else {
     return null;
   }
-};
+}
 
 // var fileBrowser = function (folder) {
 //   console.log(
@@ -1168,7 +1170,7 @@ function fileBrowser(initialFolder, drillDown) {
       JSON.stringify(filedMain),
   );
   return filedMain;
-};
+}
 
 var fbTester = function () {
   console.log(
@@ -1227,7 +1229,7 @@ function fileFold(folderX, fileX, time) {
   // }
   // break
   return fileFree;
-};
+}
 
 function fileManager(fileX, folder, time, content, mimeType) {
   console.log(
@@ -1302,7 +1304,7 @@ function fileManager(fileX, folder, time, content, mimeType) {
     // DriveApp.getFolderById(folderId).createFile(fileX,content,mimeType)
     return;
   }
-};
+}
 
 function fileMatch(fileX, stringArray) {
   console.log(
@@ -1343,7 +1345,7 @@ function fileMatch(fileX, stringArray) {
   } else {
     return;
   }
-};
+}
 
 function fileMatchManager(folderX, fileX, time) {
   console.log(
@@ -1426,7 +1428,7 @@ function fileMatchManager(folderX, fileX, time) {
   } else {
     return fileTree;
   }
-};
+}
 
 // tree = DriveApp.getFiles();
 // tree = pyFolder.getFiles()}
@@ -1476,7 +1478,7 @@ function folderIdGlobal(folderX, time) {
       return id;
     }
   }
-};
+}
 
 // console.log("Declaring tree with DriveApp.getFolders()")
 // console.log("Receiving from DriveApp - " + tree)
@@ -1545,7 +1547,7 @@ function folderMatch(folderX, stringArray) {
   //     })
   //   : folderXIndex.push(stringArray);
   return folderXIndex;
-};
+}
 
 function furtFolder(folder) {
   console.log(
@@ -1604,7 +1606,7 @@ function furtFolder(folder) {
       glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
   }
   return folder;
-};
+}
 // if (glFolders.indexOf(folder) === -1) {folder}
 
 function rndUrls() {
@@ -1646,7 +1648,7 @@ function rndUrls() {
     Math.floor(Math.random() * Math.floor(truArray.length))
   ];
   return stringedRoot;
-};
+}
 
 function shareDrive() {
   console.log(
@@ -1672,7 +1674,7 @@ function shareDrive() {
     : (function () {
         console.log("Drive has no files");
       })();
-};
+}
 
 function sheetsFileManager(fileX, folder, time) {
   console.log(
@@ -1724,7 +1726,7 @@ function sheetsFileManager(fileX, folder, time) {
   } else {
     return;
   }
-};
+}
 
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFile: " + myFile.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
 // if (myFile.getName() === fileX) {

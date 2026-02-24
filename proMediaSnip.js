@@ -125,7 +125,7 @@ function proMediaSnip(e) {
     `.menu-item:hover>.menu-img {transform: scale(1.03);}`,
   ).getContent();
   return wwAccess("test", renderTemplate, html.evaluate().getContent());
-};
+}
 
 function prose() {
   var myApp = {
@@ -171,7 +171,7 @@ function prose() {
         color:white  !important;
         text-decoration:none  !important;}</style></head><body class="blue" id="template"><h2>Result</h2><nav class="amber darken-4"><?= result ?></nav><input type="hidden" value="startPageUrl" id="breakUrl" /></body></html>`;
   return htmlOutput;
-};
+}
 
 // var author
 // = validGroup("f.");var myFileE

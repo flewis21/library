@@ -54,7 +54,7 @@ function storeFunction(xfactor) {
   });
 
   return booleFactor;
-};
+}
 
 //   if ([xfactor].join("").toLowerCase() === "sku") {
 
