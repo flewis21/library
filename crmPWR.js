@@ -62,4 +62,4 @@ Focus on Benefits: Emphasize the "so what?" factor for your target clients.
 Referral Focused: Every slide should be designed to push the audience towards making referrals.
 Know your audience: Powercore members are business people, so speak to business problems and solutions.
 By following this structure, you can create a compelling presentation that showcases your expertise, generates referrals, and helps you grow your business.`;
-};
+}

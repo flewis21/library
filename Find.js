@@ -28,9 +28,9 @@ function driveManager(strNw, time) {
   // NOTE: The testlt() call here is still explicit in your code.
   // This means testlt() will be called regardless of strNw's truthiness
   // due to its direct placement before the mainStr assignment.
-  var manString = !strNw ? testlt() : strNw;
+  var manString = !strNw? testlt():strNw;
   console.log("driveManager: manString (from testlt()):", manString);
-  var testStrNw = !strNw ? manString.name : manString;
+  var testStrNw = !strNw? manString.name:manString;
   console.log("driveManager: testStrNw:", testStrNw);
   var mainStr = strNw || testStrNw;
   console.log("driveManager: mainStr (strNw || testStrNw):", mainStr);
@@ -130,7 +130,7 @@ function driveManager(strNw, time) {
       let filedSide = createRandomFunction(mainStr);
       let funcKeys = Object.keys(filedSide);
       let funcUrl;
-      funcKeys.forEach((key) => {
+      funcKeys.forEach((key) =>{
         let funcObj = filedSide[key];
         funcUrl = funcObj[0];
         // dataTree.push(funcUrl)
@@ -138,7 +138,7 @@ function driveManager(strNw, time) {
       return funcUrl;
     }
   }
-}
+};
 
 // var driveManager = function (strNw, time) {
 //   console.log(
@@ -251,14 +251,16 @@ function driveManager(strNw, time) {
 // };
 
 var fileTypeManager = function (fileType) {
-  if (fileType === MimeType.GOOGLE_DOCS) {
+  if (fileType === "GOOGLE_DOCS") {
     return DocumentApp;
-  } else if (fileType === MimeType.GOOGLE_SLIDES) {
+  } else if (fileType === "GOOGLE_SLIDES") {
     return SlidesApp;
-  } else if (fileType === MimeType.GOOGLE_SHEETS) {
+  } else if (fileType === "GOOGLE_SHEETS") {
     return SpreadsheetApp;
-  } else if (fileType === MimeType.GOOGLE_FORMS) {
+  } else if (fileType === "GOOGLE_FORMS") {
     return FormApp;
+  } else if (fileType === "application/pdf") {
+    return DriveApp;
   } else {
     console.warn("Unsupported file type: " + fileType);
   }
@@ -310,7 +312,7 @@ function folderManager(folderX, time) {
   } else {
     return folderTree;
   }
-}
+};
 
 function formsUrls(fileX, folderX, time) {
   console.log(
@@ -391,7 +393,7 @@ function formsUrls(fileX, folderX, time) {
       return "Error loading files " + err;
     }
   }
-}
+};
 
 function matchManager(folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
@@ -412,7 +414,7 @@ function matchManager(folderX, narrow, time) {
   //     ", = " +
   //     time,
   // );
-  var arn = [narrow || testlt().name].toString().toLowerCase();
+  var arn = [narrow || globalThis.searchString().myNewArr].toString().toLowerCase();
   var xFolder = [];
   var appTree = [],
     pngTree = [],
@@ -423,11 +425,16 @@ function matchManager(folderX, narrow, time) {
     sheetList = [];
   var iterationCount = 0;
   var maxiterations = 1;
-  if (typeof folderX === "undefined") {
+  if (typeof folderX === "undefined" || folderX === null) {
     var allFolders = folderManager();
-    allFolders.map((folderX) => {
-      xFolder.push(folderX);
-    });
+    // allFolders.map((xfolderX) => {
+    //   xFolder.push(xfolderX);
+    // });
+    var xFolder = allFolders.sort((a,b) =>{
+      let sA = getZuluPriority(a);
+      let sB = getZuluFreqPriority(b);
+      return a - b;
+    })[Math.floor(Math.random() * (Math.floor(allFolders.length)))]
     // console.log(
     //   formatTime(functionRegistry.time) +
     //     "\n" +
@@ -451,96 +458,108 @@ function matchManager(folderX, narrow, time) {
       let arrFileName = arrayFile.getName();
       arrFileNames.push(arrFileName);
     }
-    let goldFish = arrFileNames
-      .toString()
-      .toLowerCase()
-      .includes([narrow].toString().toLowerCase());
+    let goldFish = arrFileNames.toString().toLowerCase().includes([narrow].toString().toLowerCase());
     // while (folderFiles.hasNext() && iterationCount < maxiterations) {
     // if (goldFish) {
-    arrFileNames.forEach((arrFileName) => {
-      // var arrayFile = folderFiles.next();
-      // let arrFileName = arrayFile.getName()
-      var fileMim = arrFileName.toLowerCase();
-      var mimeType = arrayFile.getMimeType();
-      if (fileMim.includes(arn)) {
-        if (mimeType === MimeType.GOOGLE_DOCS) {
-          docList.push(arrayFile.getName());
-        } else if (mimeType === MimeType.GOOGLE_SLIDES) {
-          slideList.push(arrayFile.getName());
-        } else if (
-          folderX === "Sheets" &&
-          mimeType === MimeType.GOOGLE_SHEETS
-        ) {
-          sheetList.push(arrayFile.getName());
-        } else if (mimeType === MimeType.GOOGLE_FORMS) {
-          formList.push(arrayFile.getName());
-        } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
-          appTree.push(arrayFile.getName());
-        } else if (mimeType === MimeType.PNG) {
-          pngTree.push(arrayFile.getName());
-        } else if (mimeType === MimeType.PDF) {
-          pdfTree.push(arrayFile.getName());
+      arrFileNames.forEach((arrFileName) =>{
+        // var arrayFile = folderFiles.next();
+        // let arrFileName = arrayFile.getName()
+        var fileMim = arrFileName.toLowerCase();
+        var mimeType = arrayFile.getMimeType();
+        if (fileMim.includes(arn)) {
+          if (mimeType === MimeType.GOOGLE_DOCS) {
+            docList.push(arrayFile.getName());
+          } 
+          else if (mimeType === MimeType.GOOGLE_SLIDES) {
+            slideList.push(arrayFile.getName());
+          } 
+          else if (
+            folderX === "Sheets" &&
+            mimeType === MimeType.GOOGLE_SHEETS
+          ) {
+            sheetList.push(arrayFile.getName());
+          } 
+          else if (mimeType === MimeType.GOOGLE_FORMS) {
+            formList.push(arrayFile.getName());
+          } 
+          else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
+            appTree.push(arrayFile.getName());
+          } 
+          else if (mimeType === MimeType.PNG) {
+            pngTree.push(arrayFile.getName());
+          } 
+          else if (mimeType === MimeType.PDF) {
+            pdfTree.push(arrayFile.getName());
+          }
         }
-      }
-      if (literate < 4) {
-        literate++;
-        filesArray.push(arrayFile);
-      } else {
-        literate = 0;
-        filesArray.push(arrayFile);
-        // break;
-      }
-    });
-    while (
-      appTree.length === 0 &&
-      pngTree.length === 0 &&
-      pdfTree.length === 0 &&
-      docList.length === 0 &&
-      formList.length === 0 &&
-      slideList.length === 0 &&
-      sheetList.length === 0 &&
-      iterationCount < maxiterations
-    ) {
-      filesArray.forEach(function (file) {
-        // var fileMim = file.getName().toLowerCase();
-        var mimeType = file.getMimeType();
-        if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
-          docList.push(file.getName());
-        } else if (
-          mimeType === MimeType.GOOGLE_SLIDES &&
-          slideList.length === 0
-        ) {
-          slideList.push(file.getName());
-        } else if (
-          mimeType === MimeType.GOOGLE_SHEETS &&
-          sheetList.length === 0
-        ) {
-          sheetList.push(file.getName());
-        } else if (
-          mimeType === MimeType.GOOGLE_FORMS &&
-          formList.length === 0
-        ) {
-          formList.push(file.getName());
-        } else if (
-          mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
-          appTree.length === 0
-        ) {
-          appTree.push(file.getName());
-        } else if (mimeType === MimeType.PNG && pngTree.length === 0) {
-          pngTree.push(file.getName());
-        } else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
-          pdfTree.push(file.getName());
-        } else {
-          return;
+        if (literate < 4) {
+          literate++;
+          filesArray.push(arrayFile);
+        } 
+        else {
+          literate = 0;
+          filesArray.push(arrayFile);
+          // break;
         }
       });
-      if (literate < 4) {
-        literate++;
-      } else {
-        literate = 0;
-        break;
+      while (
+        appTree.length === 0 &&
+        pngTree.length === 0 &&
+        pdfTree.length === 0 &&
+        docList.length === 0 &&
+        formList.length === 0 &&
+        slideList.length === 0 &&
+        sheetList.length === 0 &&
+        iterationCount < maxiterations
+      ) {
+        filesArray.forEach(function (file) {
+          // var fileMim = file.getName().toLowerCase();
+          var mimeType = file.getMimeType();
+          if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
+            docList.push(file.getName());
+          } 
+          else if (
+            mimeType === MimeType.GOOGLE_SLIDES &&
+            slideList.length === 0
+          ) {
+            slideList.push(file.getName());
+          } 
+          else if (
+            mimeType === MimeType.GOOGLE_SHEETS &&
+            sheetList.length === 0
+          ) {
+            sheetList.push(file.getName());
+          } 
+          else if (
+            mimeType === MimeType.GOOGLE_FORMS &&
+            formList.length === 0
+          ) {
+            formList.push(file.getName());
+          } 
+          else if (
+            mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
+            appTree.length === 0
+          ) {
+            appTree.push(file.getName());
+          } 
+          else if (mimeType === MimeType.PNG && pngTree.length === 0) {
+            pngTree.push(file.getName());
+          } 
+          else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
+            pdfTree.push(file.getName());
+          } 
+          else {
+            return;
+          }
+        });
+        if (literate < 4) {
+          literate++;
+        } 
+        else {
+          literate = 0;
+          break;
+        }
       }
-    }
     // }
     return {
       docs: docList,
@@ -552,7 +571,8 @@ function matchManager(folderX, narrow, time) {
       pdfs: pdfTree,
       fderX: xFolder,
     };
-  } else {
+  } 
+  else {
     console.warn("Folder " + folderX + " not found");
     return {
       docs: [],
@@ -565,7 +585,7 @@ function matchManager(folderX, narrow, time) {
       fderX: [],
     };
   }
-}
+};
 
 // var folderManager = function (folderX, time) {
 //   console.log(

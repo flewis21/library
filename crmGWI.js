@@ -1148,7 +1148,7 @@ function crmGWI(fx) {
     },
   );
   return result;
-}
+};
 
 var workEd = function (ed) {
   console.log(
@@ -1193,7 +1193,7 @@ var workEd = function (ed) {
     numCols,
     functionRegistry.time,
   ).myFileX;
-};
+}
 
 // Assume getUrl and ScriptApp are defined elsewhere or passed in context if this is a templated function
 
@@ -1477,7 +1477,7 @@ var acceptQuote = function (formDataJson) {
     console.error("Error in acceptQuote:", error);
     throw new Error("Failed to process quote acceptance: " + error.message);
   }
-};
+}
 
 /**
  * Server-side function to handle quote updatance.
@@ -1498,10 +1498,10 @@ var updateQuote = function (formDataJson) {
           functionRegistry.time,
         ),
       )[0];
-      console.log("Fake formData for quote updatance:", formData);
+      // console.log("Fake formData for quote updatance:", formData);
     } else {
       formData = JSON.parse(formDataJson);
-      console.log("Received formData for quote updatance:", formData);
+      // console.log("Received formData for quote updatance:", formData);
     }
 
     // ... (your existing code to get keys, create the new spreadsheet)
@@ -1510,7 +1510,7 @@ var updateQuote = function (formDataJson) {
     var colArray = [];
     const keys = Object.keys(formData);
     keys.forEach(function (key) {
-      console.log(key);
+      // console.log(key);
       colArray.push(JSON.stringify(key));
     });
     var dataName = {
@@ -1530,10 +1530,10 @@ var updateQuote = function (formDataJson) {
     //   arrayData,
     //   functionRegistry,time,
     // );
-    console.log(
-      "SpreadsheetApp.openByUrl(rawSpreadSheet) ",
-      rawSpreadSheet?.getUrl(),
-    );
+    // console.log(
+    //   "SpreadsheetApp.openByUrl(rawSpreadSheet) ",
+    //   rawSpreadSheet?.getUrl(),
+    // );
     const ss = SpreadsheetApp.openByUrl(rawSpreadSheet?.getUrl());
     // Assuming `rawSpreadSheet` is the URL of your new spreadsheet
     // and `ss.getSheetName()` is the name of the sheet you want to PDF.
@@ -1567,22 +1567,22 @@ var updateQuote = function (formDataJson) {
       const valueKey = header.replace(/[^a-zA-Z0-9]/g, "");
       if (formData.hasOwnProperty(key)) {
         newRow.push(formData[key]);
-        console.log("pushed formData[key]", formData[key]);
+        // console.log("pushed formData[key]", formData[key]);
       } else if (formData.hasOwnProperty(valueKey)) {
         newRow.push(formData[valueKey]);
-        console.log("pushed formData[key]", formData[valueKey]);
+        // console.log("pushed formData[key]", formData[valueKey]);
       } else {
         // Handle cases where a form field doesn't directly map to a header
         // Or if you want to add static data like a timestamp
         if (header === "Timestamp") {
           newRow.push(new Date());
-          console.log("pushed new Date()", new Date());
+          // console.log("pushed new Date()", new Date());
         } else if (header === "Status") {
           newRow.push("Quote Updated");
-          console.log("pushed Quote Updated", "Quote Updated");
+          // console.log("pushed Quote Updated", "Quote Updated");
         } else {
           newRow.push(""); // Empty for unmapped columns
-          console.log("pushed blank space", "");
+          // console.log("pushed blank space", "");
         }
       }
     });
@@ -1605,7 +1605,7 @@ var updateQuote = function (formDataJson) {
     if (JSON.stringify(newRow) !== JSON.stringify(lastRowData)) {
       sheet.appendRow(newRow);
     }
-    console.log("Quote data appended to sheet:", sheetName);
+    // console.log("Quote data appended to sheet:", sheetName);
 
     // --- START OF NEW CODE TO GENERATE PDF INVOICE ---
     // const invoicePdfUrl = saveAsPDFToFolder(newSpreadsheetUrl, sheetToPDF);
@@ -1633,7 +1633,7 @@ var updateQuote = function (formDataJson) {
     console.error("Error in updateQuote:", error);
     throw new Error("Failed to process quote updatance: " + error.message);
   }
-};
+}
 
 // You'll also need to ensure 'runBoilerplate' is defined, likely in your main Code.gs file
 // For example:

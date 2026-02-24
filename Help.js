@@ -36,7 +36,7 @@ function crmCalc(func) {
     funFact = lowCapApp.indexOf(lowCapFunc);
   }
   return funFact;
-}
+};
 
 function crmT(func) {
   // console.log(
@@ -77,7 +77,7 @@ function crmT(func) {
   }
   // console.log("crmT returned: Is " + lowCapFunc + " a function?", funFirst)
   return funFirst;
-}
+};
 
 function gsFiles() {
   // console.log(
@@ -90,7 +90,7 @@ function gsFiles() {
   //   }
   // }
   return gsFileList;
-}
+};
 
 function gsFParams() {
   // console.log(
@@ -120,15 +120,13 @@ function gsFParams() {
     }
   }
   return gsParamsList;
-}
+};
 
 function isValidUrl(text) {
   console.log(
     "boilerplate Help: line 2036\nisValidUrl(text: " +
       text +
-      ": " +
-      typeof text +
-      ")\n " +
+      ": " + typeof text + ")\n " +
       arguments.callee.caller.name,
   );
   // var protocol = "";
@@ -144,7 +142,7 @@ function isValidUrl(text) {
     /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
   var matches = text.match(urlRegex);
   allMatches = matches ? [...matches] : [];
-  console.log("allMatches = matches ? [...matches] : []", allMatches);
+  console.log("allMatches = matches ? [...matches] : []", allMatches)
   if (allMatches) {
     let currentProtocol = "";
     let currentHostname = "";
@@ -190,7 +188,7 @@ function isValidUrl(text) {
   }
   validUrlResult.matches = allMatches;
   return validUrlResult;
-}
+};
 
 // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
 // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
@@ -817,7 +815,7 @@ function mis(text, maxRetries = 3) {
     console.log("Final app:", htmlData);
     return { index: responseObj, app: htmlData, link: supUrl };
   }
-}
+};
 
 // var misSt = function (func, someArgs) {
 //   console.log(
@@ -1628,40 +1626,99 @@ function misSt(func, someArgs) {
     }
 
     keys.forEach((pro) => {
-      let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
+      // let proFact = isTruthy(pro)
+      let keysArrArr;
+      if (typeof pro !== "string" && pro !== null) {
+        let proValue = Object.keys(pro);
+        keysArrArr =  proValue.length > 0;
+      }
+      else {
+        keysArrArr =  false;
+      }
+      let keyPro = keysArrArr ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = isTruthy(Array.isArray(pro));
-      if (keysArrArr) {
+      if (keyPro) {
         let funcLimit = [];
         let paramLimit = [];
-        pro.forEach((subParam, proIndex) => {
-          realItem = isTruthy(subParam);
+        keyPro.forEach((subParam, proIndex) => {
+          let subArrArr;
+          if (typeof subParam !== "string" && subParam !== null) {
+            let subValue = Object.keys(subParam);
+            subArrArr = subValue.length > 0;
+          }
+          else {
+            subArrArr = false;
+          }
+          if (subArrArr && subParam.length >= 1) {
+            subParam.forEach((subA, subAIndex) =>{
+              let rtParamB = subA[subAIndex];
+              keyProParams = 
+                typeof subA === "object" || Array.isArray(subA)
+                  ? crmT(rtParamB)
+                  : crmT(subA);
+              if (keyProParams >= 0) {
+                argsX.push(gsFiles()[keyProParams]);
+              } 
+              else {
+                // keyProParams = ;
+                if (typeof subA === "object" && !Array.isArray(subA)) {
+                  let theSP = subA;
+                  initialContent.push(subA);
+                } else if (Array.isArray(subA)) {
+                  let theSP = subA;
+                  initialContent.push(rtParamB);
+                } else {
+                  let theSP = subA;
+                  initialContent.push(subA);
+                }
+              }
+
+            })
+            // keyProParams = crmT(rtParamA);
+          }
+          else {
+            // keyProParams = crmT(subParam);
+            realItem = isTruthy(subParam);
+          }
+          // let realItem;
+          // if (typeof subParam !== "string" && subParam !== null) {
+          //   let subValue = Object.keys(subParam);
+          //   realItem = subValue.length > 0;
+          // }
+          // else {
+          //   realItem = false;
+          // }
           if (realItem) {
+            var rtParamA = subParam[proIndex];
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
-                ? crmT(subParam[proIndex])
+                ? crmT(rtParamA)
                 : crmT(subParam);
             if (keyProParams >= 0) {
-              funcLimit.push(gsFiles()[keyProParams]);
-            } else {
+              argsX.push(gsFiles()[keyProParams]);
+            } 
+            else {
               // keyProParams = ;
-              if (typeof subParam === "object") {
-                paramLimit.push(subParam);
+              if (typeof subParam === "object" && !Array.isArray(subParam)) {
+                let theSP = subParam;
+                initialContent.push(subParam);
               } else if (Array.isArray(subParam)) {
-                paramLimit.push(subParam[proIndex]);
+                let theSP = subParam;
+                initialContent.push(rtParamA);
               } else {
-                paramLimit.push(subParam);
+                let theSP = subParam;
+                initialContent.push(subParam);
               }
             }
           }
         });
-        if (funcLimit.length > 0) {
-          argsX.push(funcLimit);
-        }
-        if (paramLimit.length > 0) {
-          initialContent.push(paramLimit);
-        }
+        // if (funcLimit.length > 0) {
+        //   argsX.push(funcLimit);
+        // }
+        // if (paramLimit.length > 0) {
+        //   initialContent.push(paramLimit);
+        // }
       } else {
         realItem = isTruthy(pro);
         if (realItem) {
@@ -1690,6 +1747,7 @@ function misSt(func, someArgs) {
       // Check if there are functions to process
       var allErrors = {};
       var fParams = functionRegistry.paramsList; // Assuming gsFParams is globally accessible
+      console.log("global functions list length:",Object.keys(fParams).length)
       var resCount = 0;
 
       argsX.forEach((result) => {
@@ -1708,7 +1766,16 @@ function misSt(func, someArgs) {
         var resolvedArgs = []; // Resolved arguments array for the current function
         var missingParams = []; // Parameters that couldn't be resolved
 
-        var searchString = fParams.find((fP) => fP.name === result);
+        var searchString = fParams
+          .find((fP) => {
+            let dP = fP.name;
+            let noDP = dP === result
+            if (noDP) {
+              dP = fP
+              return fP.name === result
+            }
+          });
+        console.log(JSON.stringify(searchString));
         var declaredParams = []; // Initialize here for wider scope
 
         if (searchString && searchString.parameters) {
@@ -1734,7 +1801,7 @@ function misSt(func, someArgs) {
           ]
             .toString()
             .split(" ");
-          var allFolders = functionRegistry.getFolderList();
+          var allFolders;
           if (!payLoad) {
             var rndE = objectOfS(
               ["parameter"],
@@ -1752,12 +1819,8 @@ function misSt(func, someArgs) {
 
             // Ensure globalThis[funcUnoMis] exists before calling
             if (
-              funcUnoMis.indexOf("mis") !== -1 ||
-              funcDosMis.indexOf("mis") !== -1 ||
-              funcUnoMis.indexOf("misSt") !== -1 ||
-              funcDosMis.indexOf("misSt") !== -1 ||
-              rndE.parameter["func"].indexOf("dtlsPro") !== -1 ||
-              rndE.parameter["args"].indexOf("dtlsPro") !== -1
+              funcUnoMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1 ||
+              funcDosMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1
             ) {
               // Prevent infinite recursion
               console.warn(
@@ -1859,7 +1922,7 @@ function misSt(func, someArgs) {
 
             // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
             // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-            if (userProvidedValue === null && userProvidedValue == undefined) {
+            if (userProvidedValue === null && userProvidedValue === undefined) {
               if (declaredParamName === "e") {
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2152,6 +2215,7 @@ function misSt(func, someArgs) {
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
                   //   :
+                  allFolders = functionRegistry.getFolderList();
                   allFolders[numVarRnd]; // allFolders should be defined or passed
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
@@ -2345,9 +2409,7 @@ function misSt(func, someArgs) {
         );
       }
     } else {
-      console.log(
-        "No function to call: Skipping .apply(" + initialContent + ")",
-      );
+      console.log("No function to call: Skipping .apply(" + initialContent + ")");
       finalResultData = initialContent;
       console.log(`typeof ${typeof finalResultData} finalResultData`);
     }
@@ -2359,7 +2421,7 @@ function misSt(func, someArgs) {
     res: finalResultData, // The actual result of the function call(s)
   };
   return argsObject;
-}
+};
 
 function paramVals(funcInfo) {
   console.log(
@@ -2380,7 +2442,7 @@ function paramVals(funcInfo) {
         : [result.name];
   }
   return misArgs;
-}
+};
 
 function resolveParams(func, someArgs) {
   console.log(
@@ -2861,7 +2923,7 @@ function resolveParams(func, someArgs) {
     }
     return allResolutions;
   }
-}
+};
 
 // ? console.log("funcUno = " + typeof funcUno)
 // : console.error("funcUno = " + typeof funcUno);
@@ -3026,7 +3088,7 @@ function seoCapital(url) {
         })
       }`);
   return html.evaluate().getContent();
-}
+};
 
 function seoPastTime(searchString, time) {
   console.log(
@@ -3232,7 +3294,7 @@ function seoPastTime(searchString, time) {
     var rndKind = popKind.split(",");
     return { playList: rndRes.sort((a, b) => a - b) };
   }
-}
+};
 
 function seoYoutube(searchString, time) {
   // console.log(
@@ -3272,7 +3334,7 @@ function seoYoutube(searchString, time) {
   }
   return { myIdArr: idArray || [] };
   // var data = mis(rndSearch).app;
-}
+};
 
 function testlt() {
   console.log(
@@ -3299,7 +3361,7 @@ function testlt() {
   }
   // Make sure testlt() returns something that JSON.parse expects,
   // or it will also cause issues down the line.
-}
+};
 
 function vidFactor(data, time) {
   // console.log(
@@ -3349,32 +3411,32 @@ function vidFactor(data, time) {
     }
   }
   return { vidArray: idArray };
-}
+};
 
 function vidPlaylist(tunPlay) {
-  console.log(
-    "boilerplate Help : line 3087\n(tunPlay:" +
-      tunPlay +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\ntunPlay !" +
-      !tunPlay +
-      ", = " +
-      tunPlay,
-  );
+  // console.log(
+  //   "boilerplate Help : line 3087\n(tunPlay:" +
+  //     tunPlay +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\ntunPlay !" +
+  //     !tunPlay +
+  //     ", = " +
+  //     tunPlay,
+  // );
   var randomPlaylist = [];
   if (!tunPlay) {
     functionRegistry.vidTree();
     var vidSheetVals = functionRegistry.getVideoList();
     var vidKeys = Object.keys(vidSheetVals);
-    vidKeys.forEach((key) => {
+    vidKeys.forEach((key) =>{
       let vidObj = vidSheetVals[key];
-      let videoId = vidObj["Video"];
+      let videoId = vidObj["Video"]
       // let matchKeys = Object.keys(vidObj);
       // matchKeys.forEach((match) =>{
       //   let vidMatch = vidObj[match];
@@ -3383,22 +3445,25 @@ function vidPlaylist(tunPlay) {
       //       let searchMatch = vidMatch.indexOf(searchString) > -1;
       //       let matchSearch = searchString.indexOf(vidMatch) > -1;
       //       if (searchMatch || matchSearch) {
-      randomPlaylist.push(videoId);
+    randomPlaylist.push(videoId)
       //       }
       //     }
       // });
     });
-  } else {
-    let listObj = needPastTime(tunPlay).playList;
+  }
+  else {
+    let nptVideo = needPastTime(tunPlay);
+    var nptUrl = nptVideo.hardUrl;
+    let listObj = nptVideo.playList
     listObj.forEach((itemList) => {
-      if (itemList) {
-        // if (!listObj) {
-        //   var listObj = [];
-        // }
-        randomPlaylist.push(itemList);
-      }
-      // return listObj;
-    });
+        if (itemList) {
+          // if (!listObj) {
+          //   var listObj = [];
+          // }
+      randomPlaylist.push(itemList);
+        }
+        // return listObj;
+      })
   }
   // var testGen = testlt();
   // var listGen = objectOfS(
@@ -3428,28 +3493,25 @@ function vidPlaylist(tunPlay) {
   //     }))
   //   : (randomPlaylist = noList);
   // return console.log(randomPlaylist)
-  console.log(arguments.callee.name + ": \nRecieved: " + randomPlaylist);
+  // console.log(arguments.callee.name + ": \nRecieved: " + randomPlaylist);
   var randomVidKey = Math.floor(
     Math.random() * Math.floor(randomPlaylist.length),
   );
   var playListSorted = randomPlaylist.sort((a, b) => a - b);
-  console.log(
-    "vidPlaylist: \nDeclaring videoObject = covObjects(" +
-      playListSorted +
-      ",[youtubeID])",
-  );
+  // console.log(
+  //   "vidPlaylist: \nDeclaring videoObject = covObjects(" +
+  //     playListSorted +
+  //     ",[youtubeID])",
+  // );
   var videoObject = covObjects(playListSorted, ["youtubeID"]);
-  console.log(
-    "vidPlaylist: \nRecieved" +
-      JSON.stringify(videoObject) +
-      " from  declared variable videoObject = covObjects(" +
-      playListSorted +
-      ",[youtubeID])",
-  );
-  if (
-    videoObject.length > 0 &&
-    typeof videoObject[randomVidKey]["youtubeID"] !== "undefined"
-  ) {
+  // console.log(
+  //   "vidPlaylist: \nRecieved" +
+  //     JSON.stringify(videoObject) +
+  //     " from  declared variable videoObject = covObjects(" +
+  //     playListSorted +
+  //     ",[youtubeID])",
+  // );
+  if (videoObject.length > 0 && typeof videoObject[randomVidKey]["youtubeID"] !== "undefined") {
     var uniqueVidKey = [videoObject].entries().next().value;
     var randomVid = uniqueVidKey[1][randomVidKey];
     var rVideo = randomVid["youtubeID"];
@@ -3465,8 +3527,9 @@ function vidPlaylist(tunPlay) {
     videoItem: randomVideo,
     videoItemUrl: youtubeUrl,
     playlistArr: playListSorted,
+    hardUrl: nptUrl,
   };
-}
+};
 
 function wwAccess(rName, rFunc, rArgs) {
   console.log(
@@ -3496,7 +3559,7 @@ function wwAccess(rName, rFunc, rArgs) {
     console.error("Invalid function name: " + rFunc.name);
     return "Invalid function name";
   }
-}
+};
 
 const Route = {};
 Route.path = function (route, callback) {

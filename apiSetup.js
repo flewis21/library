@@ -12,21 +12,21 @@ var apiRedeplaoy = function () {
   var scriptKey = PropertiesService.getScriptProperties().getProperties();
   console.log(scriptKey);
   return scriptKey;
-};
+}
 
 var apiSetupSheet = function () {
   var cprops = PropertiesService.getScriptProperties();
   var keyC = cprops.getProperty("key");
   var doc = SpreadsheetApp.openById(keyC);
   return doc;
-};
+}
 
 var apiSetupActiveSheet = function () {
   var cprops = PropertiesService.getScriptProperties();
   var activeC = cprops.getProperty("sheetkey");
   var doc = SpreadsheetApp.openById(activeC);
   return doc;
-};
+}
 
 var apiSetup = function () {
   var wsId = activeSsId();
@@ -41,14 +41,14 @@ var apiSetup = function () {
       return error.stack;
     }
   }
-};
+}
 
 var apiSetupActive = function () {
   var ssId = ssSheet()?.getSheetId();
   var cprops = PropertiesService.getScriptProperties();
   var scriptKey = cprops.setProperty("sheetkey", ssId);
   return scriptKey;
-};
+}
 
 //     // list district data into a select box
 //   var districtList = form.addListItem();

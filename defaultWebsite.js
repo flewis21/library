@@ -96,7 +96,7 @@ function appSort(numIndex, time) {
   }
   // console.log(freqArray)
   return freqArray;
-}
+};
 
 /**
  * Creates a new Google script with a random structure and content,
@@ -110,9 +110,7 @@ function appSort(numIndex, time) {
  */
 function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
-  const SCRIPT_TITLES = searchString
-    ? Array(searchString)
-    : functionRegistry.fileList;
+  const SCRIPT_TITLES = searchString? Array(searchString) : functionRegistry.fileList;
   const SCRIPT_DESCRIPTIONS = [
     "A randomly generated script to gather insights.",
     "Please fill out this script at your leisure. Content is randomized.",
@@ -171,7 +169,8 @@ function createRandomFunction(searchString) {
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   // const funcXName = script.name;
-  Logger.log(`Random script: ${scriptTitle} = ${script?.toString()}`);
+  Logger.log(`Random script: ${script?.toString()}`);
+  Logger.log(`Script name: ${scriptTitle}`);
 
   // --- Set Basic script Properties ---
   const scriptDescription =
@@ -197,12 +196,10 @@ function createRandomFunction(searchString) {
   let fileParams; //= functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
-  let vidTubeTime = needPastTime(scriptTitle);
-  let tubeArr = vidTubeTime.playList;
+  let vidTubeTime = vidPlaylist(scriptTitle);
+  let tubeArr = vidTubeTime.playlistArr;
   var tubeEngine = vidTubeTime.hardUrl;
-  const userSubmit = FormApp.create(scriptTitle).setDescription(
-    encodeURI(tubeEngine),
-  );
+  const userSubmit = FormApp.create(scriptTitle).setDescription(rule()).setConfirmationMessage(encodeURI(tubeEngine));
   const sectionHeaderItem = userSubmit
     .addSectionHeaderItem()
     .setTitle(questionTitle + " (New Section)");
@@ -212,10 +209,10 @@ function createRandomFunction(searchString) {
   const gridItem = userSubmit
     .addGridItem()
     .setTitle(questionTitle + " (Radio Grid)");
-  const imageItem = userSubmit;
-  // .addImageItem()
-  // .setTitle(questionTitle + " (Image)");
-  const videoItem = userSubmit;
+  const imageItem = userSubmit
+    // .addImageItem()
+    // .setTitle(questionTitle + " (Image)");
+  const videoItem = userSubmit
   // Use a valid YouTube video ID
   // if (tubeArr) {
   const videoAlignments = [
@@ -225,7 +222,7 @@ function createRandomFunction(searchString) {
   ];
   if (tubeArr.length > 0) {
     let tubeUrlsArr = [];
-    tubeArr.forEach((vidId) => {
+    tubeArr.forEach((vidId) =>{
       let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
       // tubeUrlsArr.push(linkLocation);
       // let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
@@ -243,31 +240,33 @@ function createRandomFunction(searchString) {
   }
   // }
   else {
-    let vidRnd = vidPlaylist(scriptTitle).videoItemUrl;
-    videoItem
-      .addVideoItem()
-      .setTitle(questionTitle)
-      // .setHelpText(encodeURI(tubeEngine))
-      .setVideoUrl(vidRnd)
-      // Aretha Franklin, Marvis Staples - Oh Happy Day (Official Music Video)
-      // Rick Astley - Never Gonna Give You Up dQw4w9WgXcQ (a classic placeholder)
-      .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
-      .setAlignment(
-        videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-      );
+    let tubeArr = vidPlaylist(scriptTitle).playlistArr;
+    tubeArr.forEach((vidId) =>{
+      let linkLocation = "https://www.youtube.com/watch?v=" + vidId
+      videoItem
+        .addVideoItem()
+        .setTitle(questionTitle)
+        // .setHelpText(encodeURI(tubeEngine))
+        .setVideoUrl(linkLocation) 
+        // Aretha Franklin, Marvis Staples - Oh Happy Day (Official Music Video)
+        // Rick Astley - Never Gonna Give You Up dQw4w9WgXcQ (a classic placeholder)
+        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
+        .setAlignment(
+          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+        );
+    });
   }
   const imgFile = seoPictTime(scriptTitle, functionRegistry.time)?.playList;
-  let rndfileImage =
-    imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
+  let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
   if (rndfileImage) {
     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
     if (deepFileDive.hasNext()) {
-      var nextDFD = deepFileDive?.hasNext();
+      var nextDFD = deepFileDive?.hasNext()
     }
   }
-  if (nextDFD) {
+  if (nextDFD) { 
     while (nextDFD) {
-      let dFile = deepFileDive;
+      let dFile = deepFileDive
       // Use a public image URL or provide a Blob
       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -282,7 +281,8 @@ function createRandomFunction(searchString) {
         alignments[Math.floor(Math.random() * alignments.length)],
       );
     }
-  } else {
+  }
+  else {
     const alignments = [
       FormApp.Alignment.LEFT,
       FormApp.Alignment.CENTER,
@@ -309,9 +309,10 @@ function createRandomFunction(searchString) {
         }
         if ([imgUrl].join("").length > 0) {
           if (tempSortImg.indexOf(imgUrl) !== -1) {
-            return;
-          } else {
-            tempSortImg.push(imgUrl);
+            return
+          }
+          else {
+            tempSortImg.push(imgUrl)
           }
         }
         // if (
@@ -340,7 +341,7 @@ function createRandomFunction(searchString) {
       // return;
       // }
     });
-    tempSortImg.forEach((priImg) => {
+    tempSortImg.forEach((priImg) =>{
       userSubmit.addPageBreakItem().setTitle("Storyboard");
       userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
       try {
@@ -350,12 +351,13 @@ function createRandomFunction(searchString) {
           .setImage(UrlFetchApp.fetch(priImg))
           .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
           .setAlignment(
-            alignments[Math.floor(Math.random() * alignments.length)],
-          );
-      } catch (error) {
-        console.info(error.stack);
+          alignments[Math.floor(Math.random() * alignments.length)],
+        );
       }
-    });
+      catch (error) {
+        console.info(error.stack)
+      }
+    })
     // Use a public image URL or provide a Blob
     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
@@ -370,77 +372,17 @@ function createRandomFunction(searchString) {
     //   alignments[Math.floor(Math.random() * alignments.length)],
     // );
   }
-  gridItem.setRows([
-    "aBlackR",
-    "aBlackRO-O-O",
-    "aBlackPawn",
-    "aWhitePawn",
-    "aWhiteRO-O-O",
-    "aWhiteR",
-    "bBlackN",
-    "bBlackPawn",
-    "bWhitePawn",
-    "bWhiteN",
-    "cBlackB",
-    "cBlackPawn",
-    "cWhitePawn",
-    "cWhiteB",
-    "dBlackQ",
-    "dBlackPawn",
-    "dWhitePawn",
-    "dWhiteQ",
-    "eBlackK",
-    "eBlackKO-O-O",
-    "eBlackKO-O",
-    "eBlackPawn",
-    "eWhitePawn",
-    "eWhiteKO-O",
-    "eWhiteKO-O-O",
-    "eWhiteK",
-    "fBlackB",
-    "fBlackPawn",
-    "fWhitePawn",
-    "fWhiteB",
-    "gBlackN",
-    "gBlackPawn",
-    "gWhitePawn",
-    "gWhiteN",
-    "hBlackR",
-    "hBlackRO-O",
-    "hBlackPawn",
-    "hWhitePawn",
-    "hWhiteRO-O",
-    "hWhiteR",
-  ]);
-  gridItem.setColumns([
-    "a",
-    1,
-    "b",
-    2,
-    "c",
-    3,
-    "d",
-    4,
-    "e",
-    5,
-    "f",
-    6,
-    "g",
-    7,
-    "h",
-    8,
-    "x",
-    "+",
-    "#",
-    "=",
-  ]);
+  gridItem.setRows(["aBlackR","aBlackRO-O-O","aBlackPawn","aWhitePawn","aWhiteRO-O-O","aWhiteR","bBlackN","bBlackPawn","bWhitePawn","bWhiteN","cBlackB","cBlackPawn","cWhitePawn","cWhiteB","dBlackQ","dBlackPawn","dWhitePawn","dWhiteQ","eBlackK","eBlackKO-O-O","eBlackKO-O","eBlackPawn","eWhitePawn","eWhiteKO-O","eWhiteKO-O-O","eWhiteK","fBlackB","fBlackPawn","fWhitePawn","fWhiteB","gBlackN","gBlackPawn","gWhitePawn","gWhiteN","hBlackR","hBlackRO-O","hBlackPawn","hWhitePawn","hWhiteRO-O","hWhiteR"]);
+  gridItem.setColumns(["a8","a7","a6","a5","a4","a3","a2","a1","b8","b7","b6","b5","b4","b3","b2","b1","c8","c7","c6","c5","c4","c3","c2","c1","d8","d7","d6","d5","d4","d3","d2","d1","e8","e7","e6","e5","e4","e3","e2","e1","f8","f7","f6","f5","f4","f3","f2","f1","g8","g7","g6","g5","g4","g3","g2","g1","h8","h7","h6","h5","h4","h3","h2","h1","x","+","#","="]);
   if (isRequired) gridItem.setRequired(true);
   if (Math.random() < 0.3) {
     gridItem.setValidation(
-      FormApp.createGridValidation().requireLimitOneResponsePerColumn().build(),
+      FormApp.createGridValidation()
+        .requireLimitOneResponsePerColumn()
+        .build(),
     );
   }
-  checkboxGridItem.setRows(["8", "7", "6", "5", "4", "3", "2", "1"]);
+  checkboxGridItem.setRows(["8", "7", "6","5","4","3","2","1"]);
   checkboxGridItem.setColumns(["a", "b", "c", "d", "e", "f", "g", "h"]);
   if (isRequired) checkboxGridItem.setRequired(true);
   if (Math.random() < 0.3) {
@@ -462,35 +404,43 @@ function createRandomFunction(searchString) {
       // var tempObj =
       if (!script) {
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [
-          driveManager(scriptTitle, functionRegistry.time),
-        ]); //userSubmit.getPublishedUrl()]);
-      } else {
-        scriptUrl = resolveParams(isMapped({ a: [] }, [scriptTitle])["a"]);
+        // let funcX = driveManager(scriptTitle, functionRegistry.time);
+        let tempObj = isMapped(mapArr, ["driveManager", [scriptTitle,functionRegistry.time]])[scriptTitle];//userSubmit.getPublishedUrl()]);
+        scriptUrl = resolveParams(tempObj);
       }
-    } else {
+      else {
+        mapArr[scriptTitle] = [];
+        let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
+        scriptUrl = resolveParams(tempObj);
+      }
+    } 
+    else {
+      mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
-      let tempObj = isMapped({ a: [...fileParams.parameters] }, [
-        scriptTitle,
-        [...fileParams.parameters],
-      ])["a"];
+      let tempObj = isMapped(mapArr, [
+          scriptTitle,
+          [...fileParams.parameters]
+        ])[scriptTitle];
       scriptUrl = resolveParams(tempObj);
     }
-  } else {
+  } 
+  else {
     if (!script || script.length === 0) {
-      if (!script) {
+      if (!script){
         mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [
-          driveManager(scriptTitle, functionRegistry.time),
-        ]); //userSubmit.getPublishedUrl()]);
-      } else {
-        mapArr[scriptTitle] = [];
-        scriptUrl = isMapped(mapArr, [
-          driveManager(scriptTitle, functionRegistry.time),
-        ]); //userSubmit.getPublishedUrl()]);
+        // let funcX = driveManager(scriptTitle, functionRegistry.time);
+        let tempObj = isMapped(mapArr, ["driveManager", [scriptTitle,functionRegistry.time]])[scriptTitle];//userSubmit.getPublishedUrl()]);
+        scriptUrl = resolveParams(tempObj);
       }
-    } else {
+      else {
+        mapArr[scriptTitle] = [];
+        // let funcX = driveManager(scriptTitle, functionRegistry.time);
+        let tempObj = isMapped(mapArr, ["driveManager", [scriptTitle,functionRegistry.time]])[scriptTitle];//userSubmit.getPublishedUrl()]);
+        scriptUrl = resolveParams(tempObj);
+      }
+    }
+    else {
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [];
@@ -528,8 +478,9 @@ function createRandomFunction(searchString) {
         // ScriptApp.EventType.ON_FORM_SUBMIT,
         ScriptApp.EventType.ON_OPEN,
       ];
-      const rndTMult = Math.floor(Math.random() * eventTypes.length);
-      const randomType = eventTypes[rndTMult];
+      const rndTMult = Math.floor(Math.random() * eventTypes.length)
+      const randomType = 
+        eventTypes[rndTMult];
       Logger.log(randomType);
 
       switch (randomType) {
@@ -572,35 +523,34 @@ function createRandomFunction(searchString) {
           if (Math.random() < 0.4) {
             // Add random text/number validation
             const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = FormApp.createTextValidation(); // ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
+            let validationBuilder = FormApp.createTextValidation()// ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
             switch (validationType) {
               case 0:
-                validationBuilder.requireNumber(); //.FRIDAY; //;
+                validationBuilder.requireNumber()//.FRIDAY; //;
                 break;
               case 1:
-                validationBuilder.requireTextContainsPattern("test"); //.MONDAY; //;
+                validationBuilder.requireTextContainsPattern("test")//.MONDAY; //;
                 break;
               case 2:
-                validationBuilder.requireTextIsEmail(); //.WEDNESDAY; //;
+                validationBuilder.requireTextIsEmail()//.WEDNESDAY; //;
                 break;
               case 3:
-                validationBuilder.requireTextIsUrl(); //.THURSDAY; //;
+                validationBuilder.requireTextIsUrl()//.THURSDAY; //;
                 break;
               case 4:
-                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); //.TUESDAY; //;
+                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5)//.TUESDAY; //;
                 break;
             }
             userSubmit
-              .addTextItem()
-              .setTitle(questionTitle + "\n" + textItem.getBody().getText()) //.textItem
+            .addTextItem()
+            .setTitle(questionTitle + "\n" +  textItem.getBody().getText())//.textItem
               // .getBody()
               // .appendListItem
               .setValidation(
-                validationBuilder.build(),
+                validationBuilder.build()
                 // .withCustomMessage("Please follow the specific text rule.")
                 // .build()
-              )
-              .setHelpText("Please follow the specific text rule.");
+              ).setHelpText("Please follow the specific text rule.")
           }
           break;
 
@@ -836,7 +786,7 @@ function createRandomFunction(searchString) {
           //     scriptUrl = resolveParams(
           //       isMapped({ a: [] }, [scriptTitle])["a"],
           //     );
-          //   }
+          //   } 
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = functionRegistry.paramsList[fileIndex];
@@ -848,7 +798,7 @@ function createRandomFunction(searchString) {
           //       ])["a"],
           //     );
           //   }
-          // }
+          // } 
           // else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
@@ -936,7 +886,7 @@ function createRandomFunction(searchString) {
         //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
         //     var nextDFD = deepFileDive.hasNext()
         //   }
-        //   if (nextDFD) {
+        //   if (nextDFD) { 
         //     while (nextDFD) {
         //       let dFile = deepFileDive
         //       // Use a public image URL or provide a Blob
@@ -1384,7 +1334,7 @@ function defaultWebsite(e) {
       }); //:contentFile('uiAccess');
     // return render("\n                    <?!= include(\"index\"); ?>\n                    <div class=\"navbar\">\n                    <nav class=\"nav\">\n                    <a href=\"".concat(financeUrl, "\" class=\"nav__link\" data-link>Finance</a>\n                    <a href=\"".concat(inventoryUrl, "\"  class=\"nav__link\"  data-link>Inventory</a>\n                    </nav>\n                    </div>\n                    <h2 class=\"search-overlay__section-title\">General Information</h2>\n                    <div class=\"container row s1 valign-wrapper video-container black darken-4\">\n                      <div id=\"player1\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player2\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player3\"></div>\n                    </div>\n                    <div class=\"clubhouse\">".concat(webApp.content, "</div>\n                              "))));
   }
-}
+};
 
 var formatTime = function (milliseconds) {
   if (milliseconds < 0) {
@@ -1416,7 +1366,7 @@ var formatTime = function (milliseconds) {
   }
 
   return parts.join(", ");
-};
+}
 
 function funcCalc() {
   var appList = [];
@@ -1432,7 +1382,7 @@ function funcCalc() {
     );
   }
   return rndArrVals;
-}
+};
 
 function functionFlex(e) {
   if (e && typeof e !== "object") {
@@ -1505,7 +1455,7 @@ function functionFlex(e) {
     //   }
     //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
     // }
-    var e = createRandomFunction();
+    var e = createRandomFunction()
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
@@ -1520,40 +1470,46 @@ function functionFlex(e) {
 
   // Determine templateName (not directly used in the provided template, but good for context)
   if (e) {
-    if (e.parameter && e.parameter["func"]) {
+    if (e.parameter && (e.parameter["func"])) {
       var templateName = e.parameter["func"];
       var funcUno = e.parameter["func"];
-    } else if (typeof e === "object") {
+    }
+    else if (typeof e === "object") {
       var templateName = Object.keys(e)[0];
       var funcUno = Object.keys(e)[0];
-    } else {
-      var templateName = e;
     }
-  } else {
-    var templateName;
-    var funcUno;
+    else {
+      var templateName = e
+    }
+  }
+  else {
+      var templateName;
+      var funcUno;
   }
   if (templateName === "crmGWI") {
     templateName = "General Work Invoice";
-  } else if (templateName === "crmEBI") {
+  } 
+  else if (templateName === "crmEBI") {
     templateName = "Employee Benefits Inquiry";
   }
 
   if (e) {
-    if (e.parameter && e.parameter["args"]) {
+    if (e.parameter && (e.parameter["args"])) {
       console.log("e.parameter['args'] before funcDos:", e.parameter["args"]);
       var funcDos;
-      console.log("funcDos before e.parameter['args']:", funcDos);
+      console.log("funcDos before e.parameter['args']:", funcDos)
       funcDos = e.parameter["args"];
       console.log("funcDos after e.parameter['args']:", funcDos);
-    } else if (typeof e === "object") {
+    }
+    else if (typeof e === "object") {
       console.log("Object.values(e) before funcDos:", Object.values(e));
       var funcDos;
-      console.log("funcDos before Object.values(e):", funcDos);
+      console.log("funcDos before Object.values(e):", funcDos)
       funcDos = Object.values(e);
       console.log("funcDos after Object.values(e):", funcDos);
-    } else {
-      return;
+    }
+    else {
+      return
     }
   }
   var libFunc = funcUno || "renderFile";
@@ -1999,7 +1955,15 @@ function functionFlex(e) {
             console.log("Client-side: Initial doGet event object:",  currentE);
             console.log("Client-side: Home Page URL:", homePageUrl);
             console.log("line 215");
-            console.log(<?= aplot ?>)
+            console.log(<?= aplot ?>);
+            // --- MODIFIED: Use Regex for URL check ---
+            // Regex for a basic HTTP/HTTPS URL validation
+            // This regex is fairly comprehensive for common URLs but can be refined if needed.
+            // "^https?://(?:www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)$"
+            // const urlRegExString = "^https?://(.+?)."
+            const urlRegExString = "^https?://(?:www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)$"
+            const urlRegEx = new RegExp(urlRegExString);
+
             document.addEventListener("DOMContentLoaded", eRun);
             function eRun() {
               console.log("line 218");
@@ -2050,7 +2014,9 @@ function functionFlex(e) {
                         // If updatedClientApp contains HTML, it needs to be processed to be displayable.
                         const newHtmlContent = await serverSide(updatedClientE.parameter["func"], [updatedClientE.parameter["args"]]);
                         alert(newHtmlContent.type)
-                        let mddr = URL.canParse(newHtmlContent.data);
+                        if (urlRegEx.test(newHtmlContent.data)) {
+                          let mddr = new URL(newHtmlContent.data);
+                        }
                         if (newHtmlContent && newHtmlContent.type === "html" && newHtmlContent.data) {
                           document.open();
                           document.write(newHtmlContent.data); // Use the data property
@@ -2060,7 +2026,9 @@ function functionFlex(e) {
                         else if (newHtmlContent && newHtmlContent.type === "object" && newHtmlContent.data) {
                           if (newHtmlContent.data.app) {
                             let nApp = newHtmlContent.data.app;
-                            let nddr = URL.canParse(nApp)
+                            if (urlRegEx.test(nApp)) {
+                              let nddr = new URL(nApp)
+                            }
                             if (nddr) {
                               window.location.href = nApp; // New type "url" for strings
                               console.log("Error: window.location.href = ", window.location.href)
@@ -2192,10 +2160,19 @@ function functionFlex(e) {
 
                   let initialArgs
                   let currentApp
+                  // --- MODIFIED: Use Regex for URL check ---
+                  // Regex for a basic HTTP/HTTPS URL validation
+                  // This regex is fairly comprehensive for common URLs but can be refined if needed.
+                  // "^https?://(?:www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)$"
+                  // const urlRegExString = "^https?://(.+?)."
+                  const urlRenExString = "^https?://(?:www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}(?:[-a-zA-Z0-9()@:%_+.~#?&//=]*)$"
+                  const urlRenEx = new RegExp(urlRenExString);
                   let iframeSrc =
                     "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
                   let finalFeedDivContent = "";
-                  let addr = URL.canParse(<?= appL ?>);
+                  if (urlRenEx.test(<?= appL ?>)) {
+                    let addr = new URL(<?= appL ?>);
+                  }
                   try {
                     currentApp = JSON.parse(<?= appL ?>);
                     if (Object.keys(currentApp).length > 0) {
@@ -2397,9 +2374,11 @@ function functionFlex(e) {
                           // const urlRegExString = "^https?://(.+?)."
                           // const urlRegEx = new RegExp(urlRegExString);
                           // if (currentApp.app) {
-                          //   let addr = URL.canParse(currentApp.app);
+                            // if (urlRenEx.test(currentApp.app)){
+                              //   let addr = new URL(currentApp.app);
+                            // }
                           //   console.log(addr);
-                          //   console.log("line 431 inside _runStack _URL.canParse(" + currentApp.app + ")");
+                          //   console.log("line 431 inside _runStack _new URL(" + currentApp.app + ")");
                             // if (addr) {
                           //     console.log('appL["app"] is a URL, navigating to: ' + addr);
                           //     window.location.href = addr; // New type "url" for strings
@@ -2413,7 +2392,7 @@ function functionFlex(e) {
                             console.log("Error: let addr = ", addr)
 
                             // console.log(addr);
-                            // console.log("line 431 inside _runStack _URL.canParse(" + initialArgs + ")");
+                            // console.log("line 431 inside _runStack _new URL(" + initialArgs + ")");
 
                             if (addr) {
 
@@ -2603,7 +2582,7 @@ function functionFlex(e) {
       );
     }
   }
-}
+};
 
 var getScriptUrl = function () {
   return ScriptApp.getService().getUrl();
@@ -2646,17 +2625,17 @@ function prepareDataBrain(data, ratio = 29) {
         })
       : data;
   }
-}
+};
 
 var rule = function () {
   var today = new Date();
   var todayString = today.toDateString() + " - " + today.toTimeString();
   return todayString;
-};
+}
 
 var scriptQuit = function () {
   return;
-};
+}
 
 function sexToNumber(sex) {
   switch (sex) {
@@ -2667,7 +2646,7 @@ function sexToNumber(sex) {
     default:
       return 0.5;
   }
-}
+};
 
 function sheetWebsite(e) {
   var usr = e;
@@ -2814,7 +2793,7 @@ function sheetWebsite(e) {
       {document.getElementById("sheetWebsite").innerHTML = ${result};})</script>
     <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />`,
   ).getRawContent();
-}
+};
 
 // case "request": // <!-----------------------------API Endpoint Page------------------------!>
 // console.log(query)
@@ -2862,4 +2841,4 @@ function wwwDe(url) {
   return ContentService.createTextOutput(feed).setMimeType(
     ContentService.MimeType.RSS,
   );
-}
+};

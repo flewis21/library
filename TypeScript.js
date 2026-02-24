@@ -17,7 +17,7 @@ function isValidKeys(v) {
       return isValueOfTypePassedIn;
     }
   }
-}
+};
 
 var isMapped = function (t, v) {
   var mapKeys = {};
@@ -36,6 +36,7 @@ var isTruthy = function (t) {
     typeof t === false ||
     t === false ||
     t === 0 ||
+    t.length === 0 ||
     t === ""
   ) {
     return false;
@@ -113,16 +114,23 @@ var geneicType = function () {
   };
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  let randonWord = ["sort of decent"]
+  let randonWord = [globalThis.searchString().myNewArr]
     .join("")
-    .split("")
-    .sort((a, b) => {
-      const priorityA = getZuluFreqPriority(a);
-      const priorityB = getZuluFreqPriority(b);
-      return priorityA - priorityB;
-    })
-    .join("");
-  var functionObjectType = driveManager(randonWord);
+      .split("")
+        .sort((a,b) => {
+          let priorityA = 0;
+          let priorityB = 0;
+          if (Math.random() < 0.5) {
+            priorityA = getZuluFreqPriority(a);
+          }
+          if (Math.random() < 0.5) {
+            priorityB = freqPriority.get(b);
+          }
+          return priorityA - priorityB
+        }).join("");
+  let crfRes = createRandomFunction()
+  var functionObjectType = handleGetData()
+  //misSt([Object.keys(crfRes),Object.values(crfRes)]);
   // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
   // isExcludeValue = isOmit(isExcludeValue, "2");
   // isExcludeValue = isOmit(isExcludeValue, "3");

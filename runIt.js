@@ -248,7 +248,7 @@ function congressLeg(e) {
     return member;
     console.log(dashboard);
   })();
-}
+};
 
 // return doGet("content", contentFile)("congressLeg"
 // ,{
@@ -278,14 +278,14 @@ function pill() {
   });
   return contentApp(pill);
   //:contentFile('uiAccess')
-}
+};
 
 var randomEmail = function () {
   var emails = validate();
   var emailsCount = validate().toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
-};
+}
 
 function runIt(e) {
   //urlDataSource("https://www.sec.gov/files/company_tickers.json")
@@ -336,7 +336,7 @@ function runIt(e) {
       defaultWebsite,
     )(e ? e : null);
   }
-}
+};
 
 //{ Route.path("jsonXpath", HtmlService.createHtmlOutput);}
 // {if({ }typeof e.parameter["webApp"] === "undefined")
@@ -350,7 +350,7 @@ function runIt(e) {
 var uiAccess = function () {
   const isValidEmail = authLogic(validGroup());
   return authLogic(isValidEmail) ? "uiAccess" : "index";
-};
+}
 // const authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
 // const authStatus = authInfo.getAuthorizationStatus();
 // const activeUser = Session.getActiveUser().getEmail();

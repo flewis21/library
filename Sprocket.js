@@ -172,7 +172,7 @@ function dtlsPro(searchDTLS) {
     return "This alley location does not make sense! " + error;
   }
   return formUrl;
-}
+};
 
 function portBing(searchPort) {
   console.log("portBing = function (" + searchPort + ")");
@@ -333,7 +333,7 @@ function portBing(searchPort) {
     return "This alley location does not make sense! ";
   }
   return formUrl;
-}
+};
 
 function dtlsBridge(func, time) {
   func
@@ -507,7 +507,7 @@ function dtlsBridge(func, time) {
     var formUrl = form.getPublishedUrl();
     return formUrl;
   }
-}
+};
 
 function allInvestors(rndKey, time) {
   // console.log(
@@ -593,7 +593,7 @@ function allInvestors(rndKey, time) {
     title: tunPlay,
     edgarUrl: secUrl,
   };
-}
+};
 
 function coUtility(rndClient) {
   console.log(
@@ -635,7 +635,7 @@ function coUtility(rndClient) {
     });
   }
   return uniqueCo;
-}
+};
 
 function dtlsMain(file) {
   console.log(
@@ -667,7 +667,7 @@ function dtlsMain(file) {
   } else {
     return "File Does Not Exist!";
   }
-}
+};
 
 // ;return HtmlService.createTemplate(`<html id="test"><head><base target="_top"><meta charset="utf-8"><meta name="description" content="Example meta description."><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"></head><body><div class="row"><div class="col s10 l10 m10 card-panel push-s1 push-l1 push-m1"><div class="container row valign-wrapper"><?!= rule() ?></div><div class="video-container grey" style="clear: both"><div class="col s10 l10 m10 receipt black darken-1"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src=${formUrl} width="100%" height="100%" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen></iframe></div></div></div></div></body></html>`).evaluate().getContent();Youtube Widget;var rndArrayNum =  Math.floor(Math.random() * (Math.floor(matches.length)));[rndArrayNum][0]["title"];console.log(myCoArray + " :\n" + myCoArray[rndCoA])
 //   if (typeof rndKey === "undefined") {};var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];

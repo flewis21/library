@@ -114,54 +114,54 @@ function allTime(rndKey, arrD, time) {
       };
     }
   }
-}
+};
 
 // console.log("allTime: \nrndKey: " + rndKey + "\narrD: " + arrD + "\nTime: " + time);Youtube Widget;console.log(typeof seoArray);Math.floor(Math.random());Math.floor(Math.random());console.log(seoArray.playList)
 
 function covArrays(object, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nobject is !" +
-      !object +
-      ", = " +
-      JSON.stringify(object[0]) +
-      "...\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nobject is !" +
+  //     !object +
+  //     ", = " +
+  //     JSON.stringify(object[0]) +
+  //     "...\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   const dataArray = [];
   for (var obj in object) {
     var elaspeTime = new Date() - functionRegistry.time;
     dataArray.push([object[obj]]);
   }
   return dataArray;
-}
+};
 
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nobj: " +  obj + "\nelaspeTime: " + elaspeTime)
 // console.log(JSON.stringify(dataArray[obj]))
 // console.log(dataArray)
 
 function covObjects(rows, headings, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nrows is !" +
-      !rows +
-      " = " +
-      rows +
-      "\nheadings is !" +
-      !headings +
-      " = " +
-      headings +
-      "\ntime is !" +
-      !time +
-      " = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nrows is !" +
+  //     !rows +
+  //     " = " +
+  //     rows +
+  //     "\nheadings is !" +
+  //     !headings +
+  //     " = " +
+  //     headings +
+  //     "\ntime is !" +
+  //     !time +
+  //     " = " +
+  //     time,
+  // );
   if (rows && Array.isArray(rows)) {
     var temp = rows.map(function (row) {
       var myObj = {};
@@ -174,7 +174,7 @@ function covObjects(rows, headings, time) {
     });
     return temp;
   }
-}
+};
 
 function itemCalc() {
   var itemSheet = ssGetSheetBySpreadsheetUrl(
@@ -198,7 +198,7 @@ function itemCalc() {
     );
   }
   return rndArrVals;
-}
+};
 
 function needUtility(rndClient, arrD, time) {
   console.log(
@@ -329,7 +329,7 @@ function needUtility(rndClient, arrD, time) {
     });
   }
   return uniqueCo;
-}
+};
 
 function randomSubstance(index, loopLength, importedData, arrD, time) {
   console.log(
@@ -422,7 +422,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
     return { myNewArr: sortNewArr };
     console.log();
   }
-}
+};
 
 // console.log(sortNewArr)
 // var thisNewArr = sortNewArr.map((w) => {
@@ -639,7 +639,8 @@ function seoSheet(searchString, time) {
       //     testData([stringSplit], time).testArray,
       // );
     }
-  } else {
+  } 
+  else {
     var testString = testData([searchString], time).testArray;
     // console.log(
     //   formatTime(functionRegistry.time) +
@@ -669,7 +670,7 @@ function seoSheet(searchString, time) {
       var elaspeTime = new Date() - time;
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
-        if (typeof lowerCaseS[i][lowerCaseS[i].length - 1] !== "undefined") {
+        if (typeof lowerCaseS[i][lowerCaseS[i].length -1] !== "undefined") {
           // console.log(
           //   formatTime(functionRegistry.time) +
           //     "\nseoSheet: \ntypeof " +
@@ -677,8 +678,7 @@ function seoSheet(searchString, time) {
           //     " !== undefined: " +
           //     typeof lowerCaseS[0][i],
           // );
-          var lowerCaseSearchString =
-            lowerCaseS[i][lowerCaseS[i].length - 1].toLowerCase();
+          var lowerCaseSearchString = lowerCaseS[i][lowerCaseS[i].length -1].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             // console.log(
             //   formatTime(functionRegistry.time) +
@@ -704,7 +704,7 @@ function seoSheet(searchString, time) {
     });
   }
   return { keyWords: lowerCaseS };
-}
+};
 
 // console.log("test: " + test + "\nelaspeTime: " + elaspeTime);console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime);console.log("seo: " + seo + "\nelaspeTime: " + elaspeTime);var headers = ["keywords"];var sheetRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)));var randomSheetname = searchString || rndRes[sheetRndKey];var formRndKey = Math.floor(Math.random() * (Math.floor(rndRes.length)));var randomFormname = searchString || rndRes[formRndKey];var form = formMaker(randomFormname);fileManager(randomFormname, "Forms");var ss = sheetsMaker(randomFormname);fileManager(randomFormname, "Sheets")
 // if (typeof form === "object") {var headForms = [];lowerCaseS.map((b) => {
@@ -728,7 +728,7 @@ function sheetCalc() {
     );
   }
   return rndArrVals;
-}
+};
 
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")
 // return console.log(rndTitleVested);return [Math.random() * (uniqueNum)].join("").split(".")

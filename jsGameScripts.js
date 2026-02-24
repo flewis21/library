@@ -1,6 +1,8 @@
 function jsGameScripts() {
   var gamerUrl = getScriptUrl();
-  var html = HtmlService.createTemplate(`<html id="jsGameScripts">
+  var html = 
+    HtmlService
+      .createTemplate(`<html id="jsGameScripts">
                           <head>
                             <base target="_top"></base>
                             <meta charset="utf-8">
@@ -50,7 +52,9 @@ function jsGameScripts() {
                             </script>  
                           </body>
                         </html>`);
-  html.gamemanager = HtmlService.createHtmlOutput(
+  html.gamemanager = 
+    HtmlService
+      .createHtmlOutput(
     `let GameManager = 
       {
         setGameStart: function(classType) {
@@ -82,8 +86,10 @@ function jsGameScripts() {
         }
       }`,
   ).getContent();
-  html.gamer = HtmlService.createHtmlOutput(
-    `let gamer;
+  html.gamer = 
+    HtmlService
+      .createHtmlOutput(
+        `let gamer;
         var Gamer = function(classType, health, mana, strength, agility, speed) {
           this.classType = classType;
           this.health = health;
@@ -93,8 +99,10 @@ function jsGameScripts() {
           this.speed = speed;
         }`,
   ).getContent();
-  html.enemy = HtmlService.createHtmlOutput(
-    `let enemy;
+  html.enemy = 
+    HtmlService
+      .createHtmlOutput(
+        `let enemy;
         var Enemy = function(enemyType, health, mana, strength, agility, speed) {
           this.classType = enemyType;
           this.health = health;
