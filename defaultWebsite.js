@@ -513,12 +513,12 @@ function createRandomFunction(searchString) {
       console.info(script?.toString() || scriptTitle);
       // var tempObj =
       if (!script) {
-        mapArr[scriptTitle] = [];
+        mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
-        ])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
         mapArr[scriptTitle] = [];
@@ -537,20 +537,20 @@ function createRandomFunction(searchString) {
   } else {
     if (!script || script.length === 0) {
       if (!script) {
-        mapArr[scriptTitle] = [];
+        mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
-        ])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
-        mapArr[scriptTitle] = [];
+        mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
-        ])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {

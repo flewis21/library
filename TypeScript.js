@@ -129,6 +129,12 @@ var geneicType = function () {
       return priorityA - priorityB;
     })
     .join("");
+  // let fileIndex = crmT(randonWord);
+  // let fileParams = functionRegistry.paramsList[fileIndex];
+  // exampleObjectType[randonWord] = [];
+  // let bex = isOmit(exampleObjectType, "b");
+  // bex = isOmit(bex, "c");
+  // let scriptUrl = isMapped(bex, [...fileParams?.parameters]);
   let crfRes = createRandomFunction();
   var functionObjectType = handleGetData();
   //misSt([Object.keys(crfRes),Object.values(crfRes)]);

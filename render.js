@@ -890,7 +890,7 @@ var renderFile = function (file, argsObject, title) {
       var schedule = dateTime(new Date());
       var html = contentApp(
         `
-      <!DOCTYPE html>
+      <!doctype html>
       <html lang="en">
         <head>
           <?!= builtStyling().evaluate().getContent() ?>
