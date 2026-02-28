@@ -767,7 +767,9 @@ globalThis.searchString = function () {
           let pA = freqPriority.get(a);
           let pB = freqPriority.get(b);
           return pA - pB;
-        })[Math.floor(Math.random() * [arrDRnd].length)];
+        })[
+          Math.floor(Math.random() * [arrDRnd].length)
+        ];
         newArr.push(myImportData);
         var elaspeTime = functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
@@ -779,7 +781,9 @@ globalThis.searchString = function () {
         let pA = freqPriority.get(a);
         let pB = freqPriority.get(b);
         return pA - pB;
-      })[Math.floor(Math.random() * arrD.length)];
+      })[
+        Math.floor(Math.random() * arrD.length)
+      ];
       newArr.push(myArrData);
       var elaspeTime = functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
@@ -804,7 +808,9 @@ globalThis.searchString = function () {
       let pA = freqPriority.get(a);
       let pB = freqPriority.get(b);
       return pA - pB;
-    })[Math.floor(Math.random() * newArr.length)];
+    })[
+      Math.floor(Math.random() * newArr.length)
+    ];
     // return console.log({myNewArr: sortNewArr});
     return { myNewArr: sortNewArr };
     console.log();

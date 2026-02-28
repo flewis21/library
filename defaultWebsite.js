@@ -171,6 +171,9 @@ function createRandomFunction(searchString) {
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   // const funcXName = script.name;
+  // try {
+  //   let functionCheck = driveManager(script || scriptTitle, functionRegistry.time);
+  // }
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
 
@@ -545,12 +548,11 @@ function createRandomFunction(searchString) {
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
-        mapArr["driveManager"] = [];
+        mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, [
-          "driveManager",
-          [scriptTitle, functionRegistry.time],
-        ])["driveManager"]; //userSubmit.getPublishedUrl()]);
+        let tempObj = isMapped(mapArr, 
+          [scriptTitle],
+        )[scriptTitle]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {
