@@ -550,9 +550,7 @@ function createRandomFunction(searchString) {
       } else {
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, 
-          [scriptTitle],
-        )[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {
