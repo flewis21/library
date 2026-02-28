@@ -741,8 +741,8 @@ globalThis.searchString = function () {
       "\nBoilerplate autoParams line 654\nsearchString()\n" +
       arguments.callee.caller.name,
   );
-  var arrDRnd = globalThis.arrDRnd();
-  var arrD = globalThis.arrD();
+  var arrDRnd = functionRegistry.getFileList;
+  var arrD = functionRegistry.getFileList;
   var newArr = [];
   var i = 0 || 0;
   var l = 6 || 1;
@@ -763,7 +763,11 @@ globalThis.searchString = function () {
         typeof arrDRnd !== "undefined" &&
         typeof arrDRnd === "string"
       ) {
-        var myImportData = [arrDRnd].sort((a, b) => a - b)[
+        var myImportData = [arrDRnd].sort((a, b) => {
+          let pA = freqPriority.get(a);
+          let pB = freqPriority.get(b);
+          return pA - pB;
+        })[
           Math.floor(Math.random() * [arrDRnd].length)
         ];
         newArr.push(myImportData);
@@ -773,7 +777,11 @@ globalThis.searchString = function () {
     }
   } else if (typeof arrD !== "undefined") {
     for (i, l; i < l; i++) {
-      var myArrData = arrD.sort((a, b) => a - b)[
+      var myArrData = arrD.sort((a, b) => {
+        let pA = freqPriority.get(a);
+        let pB = freqPriority.get(b);
+        return pA - pB;
+      })[
         Math.floor(Math.random() * arrD.length)
       ];
       newArr.push(myArrData);
@@ -796,7 +804,11 @@ globalThis.searchString = function () {
   //     " )",
   // );
   if (newArr) {
-    var sortNewArr = newArr.sort((a, b) => a - b)[
+    var sortNewArr = newArr.sort((a, b) => {
+      let pA = freqPriority.get(a);
+      let pB = freqPriority.get(b);
+      return pA - pB;
+    })[
       Math.floor(Math.random() * newArr.length)
     ];
     // return console.log({myNewArr: sortNewArr});
