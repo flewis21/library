@@ -14,11 +14,10 @@ function postToDiscord(currentMessage) {
   let supUrl;
   let retries = 0;
   let delay = 1000;
-  response = UrlFetchApp.fetch(url, 
-        {
-          followRedirects: false, // Prevent automatic redirects
-          muteHttpExceptions: true,
-        },);
+  response = UrlFetchApp.fetch(url, {
+    followRedirects: false, // Prevent automatic redirects
+    muteHttpExceptions: true,
+  });
   try {
     if (response) {
       var res = response.getResponseCode();
@@ -91,8 +90,11 @@ function postToDiscord(currentMessage) {
               form
                 .addParagraphTextItem()
                 .setTitle("Industry/Market Corrections")
-                .setRequired(randChoice() < .1);
-              form.addParagraphTextItem().setTitle("News").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addParagraphTextItem()
+                .setTitle("News")
+                .setRequired(randChoice() < 0.1);
               form
                 .addParagraphTextItem()
                 .setTitle("Economic/Business Cycles")
@@ -115,12 +117,15 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Annualized Net Income")
-                .setRequired(randChoice() < .1);
-              form.addTextItem().setTitle("Total Equity").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addTextItem()
+                .setTitle("Total Equity")
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Retained Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form
                   .addTextItem()
@@ -139,8 +144,11 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Long-term Investments")
-                .setRequired(randChoice() < .1);
-              form.addTextItem().setTitle("Net PP&E").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addTextItem()
+                .setTitle("Net PP&E")
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form
                   .addTextItem()
@@ -150,15 +158,15 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Long-term Interest-bearing Debts")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Current Year Total Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Base Year Total Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form.addTextItem().setTitle("Your Name").setRequired(true);
               }
@@ -219,12 +227,15 @@ function postToDiscord(currentMessage) {
               form
                 .addParagraphTextItem()
                 .setTitle("Industry/Market Corrections")
-                .setRequired(randChoice() < .1);
-              form.addParagraphTextItem().setTitle("News").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addParagraphTextItem()
+                .setTitle("News")
+                .setRequired(randChoice() < 0.1);
               form
                 .addParagraphTextItem()
                 .setTitle("Economic/Business Cycles")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form.addTextItem().setTitle("Stock Price").setRequired(true);
               }
@@ -243,12 +254,15 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Annualized Net Income")
-                .setRequired(randChoice() < .1);
-              form.addTextItem().setTitle("Total Equity").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addTextItem()
+                .setTitle("Total Equity")
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Retained Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form
                   .addTextItem()
@@ -267,8 +281,11 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Long-term Investments")
-                .setRequired(randChoice() < .1);
-              form.addTextItem().setTitle("Net PP&E").setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
+              form
+                .addTextItem()
+                .setTitle("Net PP&E")
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form
                   .addTextItem()
@@ -278,15 +295,15 @@ function postToDiscord(currentMessage) {
               form
                 .addTextItem()
                 .setTitle("Long-term Interest-bearing Debts")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Current Year Total Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               form
                 .addTextItem()
                 .setTitle("Base Year Total Earnings")
-                .setRequired(randChoice() < .1);
+                .setRequired(randChoice() < 0.1);
               if (Math.random() < 0.7) {
                 form.addTextItem().setTitle("Your Name").setRequired(true);
               }
