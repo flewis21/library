@@ -195,7 +195,7 @@ function createRandomFunction(searchString) {
     MIN_SECTIONS;
 
   const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
-  const isRequired = Math.random() < 0.7; // 70% chance of being required
+  const isRequired = randChoice(); //Math.random() < 0.7; // 70% chance of being required
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
@@ -511,11 +511,14 @@ function createRandomFunction(searchString) {
     );
   }
   if (isRequired) {
+    console.log("isRequired", isRequired);
     // console.info(userEMail);
-    if (!script || script?.length === 0) {
+    if (!script || (script && script?.length === 0)) {
+      console.log("!script || (script && script?.length === 0)");
       console.info(script?.toString() || scriptTitle);
       // var tempObj =
       if (!script) {
+        console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
@@ -524,11 +527,13 @@ function createRandomFunction(searchString) {
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
+        console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
         scriptUrl = resolveParams(tempObj);
       }
     } else {
+      console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
@@ -538,8 +543,11 @@ function createRandomFunction(searchString) {
       scriptUrl = resolveParams(tempObj);
     }
   } else {
+    console.log("isRequired", isRequired);
     if (!script || script.length === 0) {
+      console.log("!script || (script && script?.length === 0)");
       if (!script) {
+        console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
@@ -548,12 +556,16 @@ function createRandomFunction(searchString) {
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
+        console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        let tempObj = isMapped(mapArr, 
+          [scriptTitle],
+        )[scriptTitle]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {
+      console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [];

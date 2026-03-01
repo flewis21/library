@@ -129,7 +129,7 @@ var geneicType = function () {
       return priorityA - priorityB;
     })
     .join("");
-  // let fileIndex = crmT(randonWord);
+  let fileIndex = postToDiscord(randonWord);
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");

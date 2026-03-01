@@ -914,13 +914,17 @@ var renderFile = function (file, argsObject, title) {
               width: 100% !important;
             }
 
-            th, td {
-              flex: 1 !important; /* Make cells equally distribute space within the flex row */
-              padding: 0 !important; /* Remove default padding */
-              margin: 0 !important; /* Remove default margin */
-              border: none !important; /* Remove any default borders */
+            body, div, th, td {
+              flex: 0px 0px 60px 60px !important; /* Make cells equally distribute space within the flex row */
+              padding: 5px !important; /* Remove default padding */
+              margin: 0.5px 0.5px 0.5px 0.5px !important; /* Remove default margin */
+              border: 5px !important; /* Remove any default borders */
               vertical-align: top !important; /* Reset vertical alignment */
               text-align: left !important; /* Reset text alignment */
+              justify-content: space-around !important;
+              align-items: center !important;
+              border-radius: 0.5px !important;
+              width: 100% !important;
             }
 
             /* If you have specific classes on your table, you can target them with higher specificity if needed */
@@ -931,8 +935,8 @@ var renderFile = function (file, argsObject, title) {
             }
 
             /* And for its cells, rows, etc. */
-            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table tr,
-            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table td {
+            .receipt table.striped.centered.highlight.responsive-table.red.z-depth-5 table tr,
+            .receipt table.striped.centered.highlight.responsive-table.blue.z-depth-5 table td {
               all: unset !important;
               display: block !important; /* Or display: flex for rows, display: block for cells */
             }
@@ -1070,12 +1074,14 @@ var renderFile = function (file, argsObject, title) {
                 }
                 AND
                 th, td {
-                  flex: 1 !important;
+                  flex: 0 0 60px !important;
                   padding: 0 !important;
-                  margin: 0 !important;
-                  border: none !important;
+                  margin: 0px 15px 5px 15px !important;
+                  border: solid 0.5px !important;
                   vertical-align: top !important;
                   text-align: left !important;
+                  justify-content: space-around;
+                  align-items: center;
                 }
 
                 While the "color" fix above should work, these extremely aggressive table resets
@@ -1095,7 +1101,7 @@ var renderFile = function (file, argsObject, title) {
       <div class="row">
       <div class="col s12 m12 l12 card-panel amber">
       <div class="responsive-section">
-      <div class="container" style="clear: both">
+      <div class="btn-large" style="clear: both">
       <div class="col s12 receipt red">
       <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
         <thead>
@@ -1165,6 +1171,7 @@ var renderFile = function (file, argsObject, title) {
         </tbody>
       </table>
       </div></div></div></div></div>
+      <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
       <script>
       document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
       document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
@@ -1679,6 +1686,7 @@ var renderTemplate = function (blob, argsObject, title) {
         </tbody>
       </table>
       </div></div></div></div></div>
+      <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         <script>
           function serverside(func, args) {
           return new Promise((resolve, reject) => {

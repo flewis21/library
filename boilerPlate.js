@@ -236,6 +236,11 @@ var objectOfS = function (keys, values, time) {
   }, {});
 };
 
+var randChoice = function*() {
+  const isRequired = Math.random() < 0.7; // 70% chance of being required
+  return isRequired
+}
+
 var randNum = function (namedVar) {
   console.log(
     functionRegistry.time +
