@@ -1406,7 +1406,7 @@ function fileMatchManager(folderX, fileX, time) {
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
   }
   var tree = pyFolder.getFiles();
-  let l
+  let l;
   // let treeIt = tree.hasNext()
   if (fileX) {
     var matchFile = [fileX].join("").toLowerCase();
@@ -1416,29 +1416,28 @@ function fileMatchManager(folderX, fileX, time) {
         fileTree.push(tree.next().getName());
       }
     }
-  } 
-  else {
+  } else {
     // var matchFile = [fileX].join("").toLowerCase();
     while (tree.hasNext()) {
       // var testFile = [tree.next().getName()].join("").toLowerCase();
       // if (testFile.includes(matchFile)) {
-      l = 1
-      for (var i=0;i<l;i++) {
+      l = 1;
+      for (var i = 0; i < l; i++) {
         fileTree.push(tree.next().getName());
-      } 
-        // else {
-        //   l=0
-        //   return
-        // }
+      }
+      // else {
+      //   l=0
+      //   return
+      // }
       // }
     }
   }
   if (fileTree.length === 0) {
     while (tree.hasNext()) {
-      l = 1
-      for (var i=0;i<l;i++) {
+      l = 1;
+      for (var i = 0; i < l; i++) {
         fileTree.push(tree.next().getName());
-      } 
+      }
     }
   }
   if (fileX) {

@@ -1,5 +1,5 @@
 function postToDiscord(currentMessage) {
-  let discord = fileBrowser("Sheets", "discord")
+  let discord = fileBrowser("Sheets", "discord");
   var url = discord.name;
   var message = {
     content: currentMessage,
@@ -10,7 +10,7 @@ function postToDiscord(currentMessage) {
     followRedirects: false, // Prevent automatic redirects
     muteHttpExceptions: true,
   };
-  getUrlResponse(url,options)
+  getUrlResponse(url, options);
 }
 
 function postFromSpreadsheet(column, rowOff, colOff, discord) {

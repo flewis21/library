@@ -1072,7 +1072,7 @@ function createFormFunction(searchString) {
   // --- Log and Return Script URL ---
   Logger.log(`Random script Created: ${JSON.stringify(scriptUrl)}`);
   return scriptUrl;
-};
+}
 
 /**
  * Creates a new Google Form with a random structure and content,

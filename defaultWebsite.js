@@ -188,7 +188,7 @@ function createRandomFunction(searchString) {
   // --- Log and Return Script URL ---
   Logger.log(`Random script Created: ${JSON.stringify(scriptUrl)}`);
   return scriptUrl;
-};
+}
 
 function defaultWebsite(e) {
   // const Route = {};
@@ -1783,7 +1783,7 @@ var getUrlResponse = function (url, options) {
   }
   console.log("Final app:", htmlData);
   return { index: responseObj, app: htmlData, link: supUrl };
-}
+};
 
 function prepareDataBrain(data, ratio = 29) {
   if (data) {
