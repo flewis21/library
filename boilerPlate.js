@@ -711,6 +711,6 @@ function testObject(dataArray, fVarHeaders) {
       dataArray,
   );
   myRows = testData(dataArray);
-  myObject = covObjects(myRows, FVar(fVarHeaders));
+  myObject = covObjects(myRows, fVar(fVarHeaders));
   return myObject;
 }

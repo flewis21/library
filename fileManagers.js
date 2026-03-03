@@ -1370,9 +1370,9 @@ function fileMatchManager(folderX, fileX, time) {
   var elapsedTime;
   var fileTree = [];
   if (
-    typeof folderX !== "undefined" ||
+    typeof folderX === "undefined" ||
     folderX === null ||
-    [folderX].join("").length > 0
+    [folderX].join("").length === 0
   ) {
     console.log(
       formatTime(functionRegistry.time) +
@@ -1400,12 +1400,14 @@ function fileMatchManager(folderX, fileX, time) {
         folderX ===
         null,
     );
+    var folderX = furtFolder();
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
   } else {
-    var folderX = furtFolder();
     var pyFolder = DriveApp.getFoldersByName(folderX).next();
   }
   var tree = pyFolder.getFiles();
+  let l
+  // let treeIt = tree.hasNext()
   if (fileX) {
     var matchFile = [fileX].join("").toLowerCase();
     while (tree.hasNext()) {
@@ -1414,10 +1416,29 @@ function fileMatchManager(folderX, fileX, time) {
         fileTree.push(tree.next().getName());
       }
     }
+  } 
+  else {
+    // var matchFile = [fileX].join("").toLowerCase();
+    while (tree.hasNext()) {
+      // var testFile = [tree.next().getName()].join("").toLowerCase();
+      // if (testFile.includes(matchFile)) {
+      l = 1
+      for (var i=0;i<l;i++) {
+        fileTree.push(tree.next().getName());
+      } 
+        // else {
+        //   l=0
+        //   return
+        // }
+      // }
+    }
   }
   if (fileTree.length === 0) {
     while (tree.hasNext()) {
-      fileTree.push(tree.next().getName());
+      l = 1
+      for (var i=0;i<l;i++) {
+        fileTree.push(tree.next().getName());
+      } 
     }
   }
   if (fileX) {

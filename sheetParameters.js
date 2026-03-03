@@ -716,19 +716,19 @@ function lookupDomain(searchTerm) {
 }
 
 function mapValues(data, index) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\ndata is !" +
-      !data +
-      ", = " +
-      data[0] +
-      "...\nindex is !" +
-      !index +
-      ", = " +
-      index,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\ndata is !" +
+  //     !data +
+  //     ", = " +
+  //     data[0] +
+  //     "...\nindex is !" +
+  //     !index +
+  //     ", = " +
+  //     index,
+  // );
   if (data) {
     data = data.map(function (e) {
       return e[index].valueOf();
@@ -1074,7 +1074,7 @@ function rndString(inputArray, time) {
       "\ninputArray: " +
       inputArray +
       "\nTime: " +
-      format(functionRegistry.time),
+      formatTime(functionRegistry.time),
   );
   console.log(
     formatTime(functionRegistry.time) +

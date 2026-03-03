@@ -99,417 +99,32 @@ function appSort(numIndex, time) {
 }
 
 /**
- * Creates a new Google script with a random structure and content,
+ * Creates a new Function with a random structure and content,
  * leveraging available ScriptsApp properties and methods from the provided documentation.
  *
  * NOTE: Programmatic control over font styles and direct theme color
  * setting (beyond the initial script creation) is NOT available via the ScriptApp API.
  * The script will use Google Scripts' default theme or the last manually applied theme.
  *
- * @returns {string} The URL of the newly created random Google Script.
+ * @returns {object} The newly created random Google Script.
  */
 function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
     : functionRegistry.fileList;
-  const SCRIPT_DESCRIPTIONS = [
-    "A randomly generated script to gather insights.",
-    "Please fill out this script at your leisure. Content is randomized.",
-    "Exploring the possibilities of programmatic script creation.",
-    "This script was created by an algorithm. Enjoy!",
-    "Your input helps us understand randomness better.",
-    "An automated inquiry for diverse data points.",
-    "Completely random, yet surprisingly functional.",
-  ];
-  const QUESTION_WORDS = [
-    "Name",
-    "Email",
-    "Date",
-    "Preference",
-    "Opinion",
-    "Favorite",
-    "Quantity",
-    "Description",
-    "Rating",
-    "Contact",
-    "Experience",
-    "Level",
-    "Choice",
-    "Details",
-    "Location",
-    "Time",
-    "Duration",
-    "Feedback",
-  ];
-  const CHOICE_WORDS = [
-    "Option A",
-    "Choice B",
-    "Value C",
-    "Item D",
-    "Selection E",
-    "Yes",
-    "No",
-    "Maybe",
-    "Agree",
-    "Disagree",
-    "Red",
-    "Blue",
-    "Green",
-    "Small",
-    "Medium",
-    "Large",
-  ];
-
-  const MIN_SECTIONS = 1;
-  const MAX_SECTIONS = 1;
-  const MIN_QUESTIONS_PER_SECTION = 1;
-  const MAX_QUESTIONS_PER_SECTION = 1;
-
   // --- Create the script ---
   const scriptTitle =
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
-  // const funcXName = script.name;
-  // try {
-  //   let functionCheck = driveManager(script || scriptTitle, functionRegistry.time);
-  // }
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
-
-  // --- Set Basic script Properties ---
-  const scriptDescription =
-    SCRIPT_DESCRIPTIONS[Math.floor(Math.random() * SCRIPT_DESCRIPTIONS.length)];
-
-  // Randomly decide to collect email or not
-  // script(Math.random() < 0.5);
-
-  // Randomly decide to show progress bar for multi-section scripts
-  // if (Math.random() < 0.7) {
-  //   script.setProgressBar(true); // Using setProgressBar as found in script methods
-  // }
-
-  // --- Add Sections and Questions ---
-  const numSections =
-    Math.floor(Math.random() * (MAX_SECTIONS - MIN_SECTIONS + 1)) +
-    MIN_SECTIONS;
-
-  const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
   const isRequired = randChoice(); //Math.random() < 0.7; // 70% chance of being required
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
-  let vidTubeTime = vidPlaylist(scriptTitle);
-  let tubeArr = vidTubeTime.playlistArr;
-  var tubeEngine = vidTubeTime.hardUrl;
-  const userSubmit = FormApp.create(scriptTitle)
-    .setDescription(rule())
-    .setConfirmationMessage(encodeURI(tubeEngine));
-  const sectionHeaderItem = userSubmit
-    .addSectionHeaderItem()
-    .setTitle(questionTitle + " (New Section)");
-  const checkboxGridItem = userSubmit
-    .addCheckboxGridItem()
-    .setTitle(questionTitle + " (Black)");
-  const gridItem = userSubmit
-    .addGridItem()
-    .setTitle(questionTitle + " (Radio Grid)");
-  const imageItem = userSubmit;
-  // .addImageItem()
-  // .setTitle(questionTitle + " (Image)");
-  const videoItem = userSubmit;
-  // Use a valid YouTube video ID
-  // if (tubeArr) {
-  const videoAlignments = [
-    FormApp.Alignment.LEFT,
-    FormApp.Alignment.CENTER,
-    FormApp.Alignment.RIGHT,
-  ];
-  if (tubeArr.length > 0) {
-    let tubeUrlsArr = [];
-    tubeArr.forEach((vidId) => {
-      let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
-      // tubeUrlsArr.push(linkLocation);
-      // let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
-      // var tubeVideoUrl = tubeUrlsArr[rndTube];
-      videoItem
-        .addVideoItem()
-        .setTitle(questionTitle)
-        // .setHelpText(encodeURI(tubeEngine))
-        .setVideoUrl(linkLocation)
-        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
-        .setAlignment(
-          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-        );
-    });
-  }
-  // }
-  else {
-    let tubeArr = vidPlaylist(scriptTitle).playlistArr;
-    tubeArr.forEach((vidId) => {
-      let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
-      videoItem
-        .addVideoItem()
-        .setTitle(questionTitle)
-        // .setHelpText(encodeURI(tubeEngine))
-        .setVideoUrl(linkLocation)
-        // Aretha Franklin, Marvis Staples - Oh Happy Day (Official Music Video)
-        // Rick Astley - Never Gonna Give You Up dQw4w9WgXcQ (a classic placeholder)
-        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
-        .setAlignment(
-          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-        );
-    });
-  }
-  const imgFile = seoPictTime(scriptTitle, functionRegistry.time)?.playList;
-  let rndfileImage =
-    imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
-  if (rndfileImage) {
-    let deepFileDive = DriveApp.getFilesByName(rndfileImage);
-    if (deepFileDive.hasNext()) {
-      var nextDFD = deepFileDive?.hasNext();
-    }
-  }
-  if (nextDFD) {
-    while (nextDFD) {
-      let dFile = deepFileDive;
-      // Use a public image URL or provide a Blob
-      imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
-      // Or use a placeholder image if you don't want to use DriveApp and have a public URL
-      // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
-      imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
-      const alignments = [
-        FormApp.Alignment.LEFT,
-        FormApp.Alignment.CENTER,
-        FormApp.Alignment.RIGHT,
-      ];
-      imageItem.setAlignment(
-        alignments[Math.floor(Math.random() * alignments.length)],
-      );
-    }
-  } else {
-    const alignments = [
-      FormApp.Alignment.LEFT,
-      FormApp.Alignment.CENTER,
-      FormApp.Alignment.RIGHT,
-    ];
-    let tempSortImg = [];
-    imgFile.forEach((piece, imgFileIndex) => {
-      // while (piece) {
-      var srPiece = piece[piece.indexOf("src2=")];
-      var svPiece = piece[piece.indexOf("xmlns=")];
-      var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
-        .join("")
-        .split('"')[1];
-      if ([svPiece].indexOf("svg") > -1) {
-        var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
-          .join("")
-          .split('"')[1];
-      }
-      if (piece.indexOf("http") > -1) {
-        var elaspeTime = functionRegistry.time;
-        var timeToExecute = functionRegistry.timeLeftToExecute;
-        if (srImgRes || svImgRes) {
-          var imgUrl = srImgRes || svImgRes;
-        }
-        if ([imgUrl].join("").length > 0) {
-          if (tempSortImg.indexOf(imgUrl) !== -1) {
-            return;
-          } else {
-            tempSortImg.push(imgUrl);
-          }
-        }
-        // if (
-        //   timeToExecute <= 6 * 60 * 1000 &&
-        //   timeToExecute >= 5.98 * 60 * 1000
-        // ) {
-        //   console.log(
-        //     "that function: " +
-        //       arguments.callee.caller.name +
-        //       "\nthis function: " +
-        //       arguments.callee.name +
-        //       "\nTime limit six minutes",
-        //   );
-        // }
-        // if (timeToExecute <= 0.05 * 60 * 1000) {
-        //   console.log(
-        //     "piece: " +
-        //       piece[0] +
-        //       "\ntimeToExecute: " +
-        //       timeToExecute.valueOf(),
-        //   );
-        //   return;
-        // }
-        // return piece[0];
-      }
-      // return;
-      // }
-    });
-    tempSortImg.forEach((priImg) => {
-      userSubmit.addPageBreakItem().setTitle("Storyboard");
-      userSubmit.addSectionHeaderItem().setTitle("timestamp: " + new Date());
-      try {
-        imageItem
-          .addImageItem()
-          .setTitle(questionTitle + ": " + [script]?.join(""))
-          .setImage(UrlFetchApp.fetch(priImg))
-          .setWidth(Math.floor(Math.random() * 800) + 200) // 200-500px width
-          .setAlignment(
-            alignments[Math.floor(Math.random() * alignments.length)],
-          );
-      } catch (error) {
-        console.info(error.stack);
-      }
-    });
-    // Use a public image URL or provide a Blob
-    // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
-    // Or use a placeholder image if you don't want to use DriveApp and have a public URL
-    // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
-    // imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
-    // const alignments = [
-    //   FormApp.Alignment.LEFT,
-    //   FormApp.Alignment.CENTER,
-    //   FormApp.Alignment.RIGHT,
-    // ];
-    // imageItem.setAlignment(
-    //   alignments[Math.floor(Math.random() * alignments.length)],
-    // );
-  }
-  gridItem.setRows([
-    "aBlackR",
-    "aBlackRO-O-O",
-    "aBlackPawn",
-    "aWhitePawn",
-    "aWhiteRO-O-O",
-    "aWhiteR",
-    "bBlackN",
-    "bBlackPawn",
-    "bWhitePawn",
-    "bWhiteN",
-    "cBlackB",
-    "cBlackPawn",
-    "cWhitePawn",
-    "cWhiteB",
-    "dBlackQ",
-    "dBlackPawn",
-    "dWhitePawn",
-    "dWhiteQ",
-    "eBlackK",
-    "eBlackKO-O-O",
-    "eBlackKO-O",
-    "eBlackPawn",
-    "eWhitePawn",
-    "eWhiteKO-O",
-    "eWhiteKO-O-O",
-    "eWhiteK",
-    "fBlackB",
-    "fBlackPawn",
-    "fWhitePawn",
-    "fWhiteB",
-    "gBlackN",
-    "gBlackPawn",
-    "gWhitePawn",
-    "gWhiteN",
-    "hBlackR",
-    "hBlackRO-O",
-    "hBlackPawn",
-    "hWhitePawn",
-    "hWhiteRO-O",
-    "hWhiteR",
-  ]);
-  gridItem.setColumns([
-    "a8",
-    "a7",
-    "a6",
-    "a5",
-    "a4",
-    "a3",
-    "a2",
-    "a1",
-    "b8",
-    "b7",
-    "b6",
-    "b5",
-    "b4",
-    "b3",
-    "b2",
-    "b1",
-    "c8",
-    "c7",
-    "c6",
-    "c5",
-    "c4",
-    "c3",
-    "c2",
-    "c1",
-    "d8",
-    "d7",
-    "d6",
-    "d5",
-    "d4",
-    "d3",
-    "d2",
-    "d1",
-    "e8",
-    "e7",
-    "e6",
-    "e5",
-    "e4",
-    "e3",
-    "e2",
-    "e1",
-    "f8",
-    "f7",
-    "f6",
-    "f5",
-    "f4",
-    "f3",
-    "f2",
-    "f1",
-    "g8",
-    "g7",
-    "g6",
-    "g5",
-    "g4",
-    "g3",
-    "g2",
-    "g1",
-    "h8",
-    "h7",
-    "h6",
-    "h5",
-    "h4",
-    "h3",
-    "h2",
-    "h1",
-    "x",
-    "+",
-    "#",
-    "=",
-  ]);
-  if (isRequired) gridItem.setRequired(true);
-  if (Math.random() < 0.3) {
-    gridItem.setValidation(
-      FormApp.createGridValidation().requireLimitOneResponsePerColumn().build(),
-    );
-  }
-  checkboxGridItem.setRows(["8", "7", "6", "5", "4", "3", "2", "1"]);
-  checkboxGridItem.setColumns(["a", "b", "c", "d", "e", "f", "g", "h"]);
-  if (isRequired) checkboxGridItem.setRequired(true);
-  if (Math.random() < 0.3) {
-    checkboxGridItem.setValidation(
-      FormApp.createCheckboxGridValidation()
-        .requireLimitOneResponsePerColumn()
-        .build(),
-    );
-  }
-  if (Math.random() < 0.7) {
-    sectionHeaderItem.setHelpText(
-      "This is a random section header for organization.",
-    );
-  }
   if (isRequired) {
     console.log("isRequired", isRequired);
     // console.info(userEMail);
@@ -533,7 +148,7 @@ function createRandomFunction(searchString) {
         scriptUrl = resolveParams(tempObj);
       }
     } else {
-      console.info("script\n", script?.toString() || scriptTitle);
+      // console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       fileParams = functionRegistry.paramsList[fileIndex];
@@ -570,609 +185,10 @@ function createRandomFunction(searchString) {
       scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
     }
   }
-  // scriptUrl = userSubmit.getPublishedUrl();
-  // break;
-  for (let s = 0; s < numSections; s++) {
-    // if (s > 0) {
-    //   // Add page break for subsequent sections
-    //   script
-    //     .addPageBreakItem()
-    //     .setTitle(
-    //       `Section ${s + 1}: ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} Details`,
-    //     )
-    //     .setHelpText(
-    //       `This is a random section for more ${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} related questions.`,
-    //     );
-    // }
-
-    const numQuestions =
-      Math.floor(
-        Math.random() *
-          (MAX_QUESTIONS_PER_SECTION - MIN_QUESTIONS_PER_SECTION + 1),
-      ) + MIN_QUESTIONS_PER_SECTION;
-
-    for (let q = 0; q < numQuestions; q++) {
-      // All EventTypes that have corresponding add...Item() methods and are not UNSUPPORTED
-      const eventTypes = [
-        // ScriptApp.EventType.CLOCK,
-        // ScriptApp.EventType.ON_CHANGE,
-        // ScriptApp.EventType.ON_EDIT,
-        // ScriptApp.EventType.ON_EVENT_UPDATED,
-        // ScriptApp.EventType.ON_FORM_SUBMIT,
-        ScriptApp.EventType.ON_OPEN,
-      ];
-      const rndTMult = Math.floor(Math.random() * eventTypes.length);
-      const randomType = eventTypes[rndTMult];
-      Logger.log(randomType);
-
-      switch (randomType) {
-        case ScriptApp.EventType.ON_OPEN:
-          const rndText = driveDocBrowser();
-          const userText =
-            rndText[Math.floor(Math.random() * Math.floor(rndText.length))];
-          const textItem = DocumentApp.openByUrl(userText);
-          // .addTextItem()
-          // .setTitle(questionTitle + " (Short Text)");
-          // if (isRequired) {
-          //   console.info(textItem.getBody().getText().toString());
-          //   if (script.length === 0) {
-          //     console.info(script?.toString());
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [] }, [scriptTitle])["a"],
-          //     );
-          //   } else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [...fileParams.parameters] }, [
-          //         scriptTitle,
-          //         [...fileParams.parameters],
-          //       ])["a"],
-          //     );
-          //   }
-          // } else {
-          //   mapArr[scriptTitle] = [];
-          //   if (script.length === 0) {
-          //     scriptUrl = isMapped(mapArr, []);
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = isMapped(mapArr, [userText]);
-          //   }
-          // }
-          if (Math.random() < 0.4) {
-            // Add random text/number validation
-            const validationType = Math.floor(Math.random() * 5); // More text validations
-            let validationBuilder = FormApp.createTextValidation(); // ScriptApp.WeekDay; // .requireAllScopes(ScriptApp.AuthMode.FULL);
-            switch (validationType) {
-              case 0:
-                validationBuilder.requireNumber(); //.FRIDAY; //;
-                break;
-              case 1:
-                validationBuilder.requireTextContainsPattern("test"); //.MONDAY; //;
-                break;
-              case 2:
-                validationBuilder.requireTextIsEmail(); //.WEDNESDAY; //;
-                break;
-              case 3:
-                validationBuilder.requireTextIsUrl(); //.THURSDAY; //;
-                break;
-              case 4:
-                validationBuilder.requireTextLengthGreaterThanOrEqualTo(5); //.TUESDAY; //;
-                break;
-            }
-            userSubmit
-              .addTextItem()
-              .setTitle(questionTitle + "\n" + textItem.getBody().getText()) //.textItem
-              // .getBody()
-              // .appendListItem
-              .setValidation(
-                validationBuilder.build(),
-                // .withCustomMessage("Please follow the specific text rule.")
-                // .build()
-              )
-              .setHelpText("Please follow the specific text rule.");
-          }
-          break;
-
-        case ScriptApp.EventType.ON_CHANGE:
-          const userChangeSheetId = sheetsUrls(scriptTitle);
-          // const rndParagraphs = driveDocBrowser();
-          // const userParagraph = rndParagraphs[Math.floor(Math.random() * Math.floor(rndParagraphs.length))];
-          // const paragraphItem = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userChangeSheetId).onOpen().create(); //ScriptApp.newTrigger(scriptTitle).forDocument(DocumentApp.openByUrl(userParagraph).getId()).onOpen().create();
-          // .addParagraphTextItem()
-          // .setTitle(questionTitle + " (Long Text)");
-          const pChoice = DriveApp.getFileById(userChangeSheetId);
-          // if (isRequired) {
-          //   console.info(pChoice.toString());
-          //   if (script.length === 0) {
-          //     console.info(script?.toString());
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [] }, [scriptTitle])["a"],
-          //     );
-          //   } else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [...fileParams.parameters] }, [
-          //         scriptTitle,
-          //         [...fileParams.parameters],
-          //       ])["a"],
-          //     );
-          //   }
-          // } else {
-          //   mapArr[scriptTitle] = [];
-          //   if (script.length === 0) {
-          //     scriptUrl = isMapped(mapArr, []);
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = isMapped(mapArr, [pChoice.getMimeType()]);
-          //   }
-          // }
-          if (Math.random() < 0.3) {
-            // Add random length validation
-            // **** CORRECTED: Use createParagraphTextValidation() ****
-            pChoice.getAccess(email());
-            userSubmit
-              .addParagraphTextItem()
-              .setTitle(questionTitle + "\n" + pChoice.getDescription())
-              .setValidation(
-                FormApp.createParagraphTextValidation()
-                  .requireTextLengthGreaterThanOrEqualTo(20)
-                  .withCustomMessage("Please write at least 20 characters.")
-                  .build(),
-              );
-          }
-          break;
-
-        case ScriptApp.EventType.ON_EDIT:
-          const userEditSheetId = sheetsUrls(scriptTitle);
-          // const editTrigger = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userEditSheetId).onOpen().create();
-          // const mcItem = editTrigger;
-          // const cbItem = editTrigger;
-          // const listItem = editTrigger;
-          // .addMultipleChoiceItem()
-          // .setTitle(questionTitle + " (Choose One)");
-          const mcChoices = [];
-          const cbChoices = [];
-          const listChoices = [];
-          const cChoice = DriveApp.getFileById(userEditSheetId);
-          var cCId = cChoice.getId();
-          const dChoice = SpreadsheetApp.openById(cCId);
-          const dSheets = dChoice.getSheets();
-          dSheets.map((sheet) => {
-            if (sheet) {
-              let sheetName = sheet.getName();
-              let endLine = sheet.getLastRow() + 1;
-              let endColumn = sheet.getLastColumn() + 1;
-              sheet
-                .getRange(endLine, 1, 3)
-                .setValues([["Row 1"], ["Row 2"], ["Row 3"]]);
-              sheet
-                .getRange(1, endColumn, 3)
-                .setValues([["Disagree"], ["Neutral"], ["Agree"]]);
-            }
-          });
-          // dSheets.map((sheet) =>{
-          //   if (sheet) {
-          //     let sheetName = sheet.getName()
-          //     let endColumn = sheet.getLastColumn() + 1;
-          //     sheet.getRange(1,endColumn,3).setValues([["Disagree"], ["Neutral"], ["Agree"]])
-          //   }
-          // });
-          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
-            // 2-4 choices
-            mcChoices.push(
-              cChoice.setDescription(
-                CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
-              ),
-            );
-          }
-          for (let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
-            // 2-5 choices
-            cbChoices.push(
-              CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
-            );
-          }
-          for (let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
-            // 2-4 choices
-            listChoices.push(
-              cChoice.setDescription(
-                CHOICE_WORDS[Math.floor(Math.random() * CHOICE_WORDS.length)],
-              ),
-            );
-          }
-          // cChoice.makeCopy().setDescription(mcChoices);
-          // cChoice.makeCopy().setDescription(cbChoices);
-          // cChoice.makeCopy().setDescription(listChoices);
-          // if (isRequired) script();
-          if (Math.random() < 0.3) {
-            // Add random checkbox validation
-            cChoice.getAccess(email());
-            // ScriptApp.createCheckboxValidation()
-            //   .setHelpText("Select between 1 and 3 options.")
-            //   .requireSelectBetween(1, 3)
-            //   .build(),
-            // );
-          }
-          // if (isRequired) {
-          //   console.info(dChoice.toString());
-          //   if (script.length === 0) {
-          //     console.info(script?.toString());
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [] }, [scriptTitle])["a"],
-          //     );
-          //   } else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [...fileParams.parameters] }, [
-          //         scriptTitle,
-          //         [...fileParams.parameters],
-          //       ])["a"],
-          //     );
-          //   }
-          // } else {
-          //   mapArr[scriptTitle] = [];
-          //   if (script.length === 0) {
-          //     scriptUrl = isMapped(mapArr, []);
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = isMapped(mapArr, [cChoice.getMimeType()]);
-          //   }
-          // }; // Randomly add 'Other' option
-          // if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
-          break;
-
-        // case ScriptApp.EventType.ON_EVENT_UPDATED:
-        //   const userEMail = email();
-        //   const cbItem = ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userSheetId).onOpen().create();// ScriptApp.newTrigger(scriptTitle).forUserCalendar(userEMail).onEventUpdated()?.create();
-        //     // .addCheckboxItem()
-        //     // .setTitle(questionTitle + " (Select All That Apply)");
-        //   break;
-
-        // case ScriptApp.EventType.ON_FORM_SUBMIT:
-        //   const listItem = ScriptApp.newTrigger(scriptTitle).forForm(FormApp.create(scriptTitle).getId()).onFormSubmit().create()
-        //     // .addListItem()
-        //     // .setTitle(questionTitle + " (Dropdown)");
-        //   break;
-
-        case ScriptApp.EventType.CLOCK:
-          // const clockTrigger = ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
-          // const dateItem = clockTrigger
-          // const dateTimeItem =  clockTrigger// ScriptApp.newTrigger(scriptTitle).forSpreadsheet(userSheetId).onOpen().create();
-          // .addDateItem()
-          // .setTitle(questionTitle + " (Date)");
-          // if (isRequired) {
-          //   // console.info(script?.toString());
-          //   if (script.length === 0) {
-          //     console.info(script?.toString());
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [] }, [scriptTitle])["a"],
-          //     );
-          //   } else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [...fileParams.parameters] }, [
-          //         scriptTitle,
-          //         [...fileParams.parameters],
-          //       ])["a"],
-          //     );
-          //   }
-          // } else {
-          //   mapArr[scriptTitle] = [];
-          //   if (script.length === 0) {
-          //     scriptUrl = isMapped(mapArr, []);
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = isMapped(mapArr, [new Date().getDate().toLocaleString()]);
-          //   }
-          // }; //.setRequired(true);
-          // if (isRequired) script();
-          // dateItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
-          // dateTimeItem.setIncludesYear(Math.random() < 0.5); // Randomly include year
-          break;
-
-        // case ScriptApp.ItemType.DATETIME:
-        //   const dateTimeItem = script
-        //     .addDateTimeItem()
-        //     .setTitle(questionTitle + " (Date & Time)");
-        //   break;
-
-        case ScriptApp.EventType.ON_EVENT_UPDATED:
-          const userEMail = email();
-          // try {
-          //   const durationItem = ScriptApp.newTrigger(scriptTitle).forUserCalendar(userEMail).onEventUpdated().create();
-          // }
-          // catch (error){
-          //   console.warn("No Bueno!", error.stack)
-          // }
-          // .addDurationItem()
-          // .setTitle(questionTitle + " (Duration)");
-          // if (isRequired) {
-          //   console.info(userEMail);
-          //   if (script.length === 0) {
-          //     console.info(script?.toString());
-          //     // var tempObj =
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [] }, [scriptTitle])["a"],
-          //     );
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     // var tempObj =
-          //     scriptUrl = resolveParams(
-          //       isMapped({ a: [...fileParams.parameters] }, [
-          //         scriptTitle,
-          //         [...fileParams.parameters],
-          //       ])["a"],
-          //     );
-          //   }
-          // }
-          // else {
-          //   mapArr[scriptTitle] = [];
-          //   if (script.length === 0) {
-          //     scriptUrl = isMapped(mapArr, []);
-          //   }
-          //   else {
-          //     fileIndex = crmT(scriptTitle);
-          //     fileParams = functionRegistry.paramsList[fileIndex];
-          //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = isMapped(mapArr, [userEMail]);
-          //   }
-          // }
-          break;
-
-        // case ScriptApp.ItemType.TIME:
-        //   const timeItem = script
-        //     .addTimeItem()
-        //     .setTitle(questionTitle + " (Time)");
-        //   if (isRequired) timeItem.setRequired(true);
-        //   break;
-
-        // case ScriptApp.ItemType.SCALE:
-        //   const scaleItem = script
-        //     .addScaleItem()
-        //     .setTitle(questionTitle + " (Rating Scale)");
-        //   scaleItem.setLowerBound(1);
-        //   scaleItem.setUpperBound(Math.floor(Math.random() * 5) + 5); // Scale of 1 to 5-9
-        //   if (Math.random() < 0.5) scaleItem.setLabels("Lowest", "Highest");
-        //   if (isRequired) scaleItem.setRequired(true);
-        //   break;
-
-        // case ScriptApp.ItemType.RATING:
-        //   const ratingItem = script
-        //     .addRatingItem()
-        //     .setTitle(questionTitle + " (Icon Rating)");
-        //   ratingItem.setRatingScaleLevel(Math.floor(Math.random() * 5) + 5); // Scale of 5-9
-        //   const ratingIcons = [
-        //     ScriptApp.RatingIconType.STAREnum,
-        //     ScriptApp.RatingIconType.HEARTEnum,
-        //     ScriptApp.RatingIconType.THUMB_UPEnum,
-        //   ];
-        //   ratingItem.setRatingIcon(
-        //     ratingIcons[Math.floor(Math.random() * ratingIcons.length)],
-        //   );
-        //   if (isRequired) ratingItem.setRequired(true);
-        //   break;
-
-        // case ScriptApp.ItemType.GRID:
-        //   break;
-
-        // case ScriptApp.ItemType.CHECKBOX_GRID:
-        //   break;
-
-        // case ScriptApp.EventType.ON_FORM_SUBMIT:
-        //   const userSubmit = FormApp.create(scriptTitle);
-        //   const sectionHeaderItem = userSubmit
-        //     .addSectionHeaderItem()
-        //     .setTitle(questionTitle + " (New Section)");
-        //   const checkboxGridItem = userSubmit
-        //     .addCheckboxGridItem()
-        //     .setTitle(questionTitle + " (Checkbox Grid)");
-        //   const gridItem = userSubmit
-        //     .addGridItem()
-        //     .setTitle(questionTitle + " (Radio Grid)");
-        //   const imageItem = userSubmit
-        //     // .addImageItem()
-        //     // .setTitle(questionTitle + " (Image)");
-        //   const videoItem = userSubmit
-        //     .addVideoItem()
-        //     .setTitle(questionTitle + " (Video)");
-        //   // Use a valid YouTube video ID
-        //   videoItem.setVideoUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"); // Rick Astley - Never Gonna Give You Up (a classic placeholder)
-        //   videoItem.setWidth(Math.floor(Math.random() * 300) + 400); // 400-700px width
-        //   const videoAlignments = [
-        //     FormApp.Alignment.LEFT,
-        //     FormApp.Alignment.CENTER,
-        //     FormApp.Alignment.RIGHT,
-        //   ];
-        //   videoItem.setAlignment(
-        //     videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-        //   );
-        //   let imgFile = seoPictTime(scriptTitle, functionRegistry.time).playList;
-        //   let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
-        //   if (rndfileImage) {
-        //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
-        //     var nextDFD = deepFileDive.hasNext()
-        //   }
-        //   if (nextDFD) {
-        //     while (nextDFD) {
-        //       let dFile = deepFileDive
-        //       // Use a public image URL or provide a Blob
-        //       imageItem.setImage(dFile.getBlob()); // Replace with a real public image ID
-        //       // Or use a placeholder image if you don't want to use DriveApp and have a public URL
-        //       // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
-        //       imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
-        //       const alignments = [
-        //         FormApp.Alignment.LEFT,
-        //         FormApp.Alignment.CENTER,
-        //         FormApp.Alignment.RIGHT,
-        //       ];
-        //       imageItem.setAlignment(
-        //         alignments[Math.floor(Math.random() * alignments.length)],
-        //       );
-        //     }
-        //   }
-        //   else {
-        //     imgFile.map((piece) => {
-        //       // while (piece) {
-        //       var srPiece = piece[piece.indexOf("src2=")];
-        //       var svPiece = piece[piece.indexOf("xmlns=")];
-        //       var srImgRes = [piece.slice(srPiece).toString().split("src2=")]
-        //         .join("")
-        //         .split('"')[1];
-        //       if ([svPiece].indexOf("svg") > -1) {
-        //         var svImgRes = [piece.slice(svPiece).toString().split("xmlns=")]
-        //           .join("")
-        //           .split('"')[1];
-        //       }
-        //       if (piece.indexOf("http") > -1) {
-        //         var elaspeTime = functionRegistry.time;
-        //         var timeToExecute = functionRegistry.timeLeftToExecute;
-        //         userSubmit.addPageBreakItem().setTitle([questionTitle].join(""));
-        //         userSubmit.addSectionHeaderItem().setTitle(piece);
-        //         if (srImgRes || svImgRes) {
-        //           var imgUrl = srImgRes || svImgRes;
-        //         }
-        //         if ([imgUrl].join("").length > 0) {
-        //           const alignments = [
-        //             FormApp.Alignment.LEFT,
-        //             FormApp.Alignment.CENTER,
-        //             FormApp.Alignment.RIGHT,
-        //           ];
-        //           imageItem
-        //             .addImageItem()
-        //             .setTitle(questionTitle + " storyboard")
-        //             .setImage(UrlFetchApp.fetch(imgUrl))
-        //             .setWidth(Math.floor(Math.random() * 300) + 200) // 200-500px width
-        //             .setAlignment(
-        //             alignments[Math.floor(Math.random() * alignments.length)],
-        //           );
-        //         }
-        //         // if (
-        //         //   timeToExecute <= 6 * 60 * 1000 &&
-        //         //   timeToExecute >= 5.98 * 60 * 1000
-        //         // ) {
-        //         //   console.log(
-        //         //     "that function: " +
-        //         //       arguments.callee.caller.name +
-        //         //       "\nthis function: " +
-        //         //       arguments.callee.name +
-        //         //       "\nTime limit six minutes",
-        //         //   );
-        //         // }
-        //         // if (timeToExecute <= 0.05 * 60 * 1000) {
-        //         //   console.log(
-        //         //     "piece: " +
-        //         //       piece[0] +
-        //         //       "\ntimeToExecute: " +
-        //         //       timeToExecute.valueOf(),
-        //         //   );
-        //         //   return;
-        //         // }
-        //         // return piece[0];
-        //       }
-        //       // return;
-        //       // }
-        //     });
-        //     // Use a public image URL or provide a Blob
-        //     // imageItem.setImage(UrlFetchApp.fetch(rndfileImage)); // Replace with a real public image ID
-        //     // Or use a placeholder image if you don't want to use DriveApp and have a public URL
-        //     // imageItem.setUrl('https://via.placeholder.com/150'); // This method doesn't exist, must be Blob
-        //     // imageItem.setWidth(Math.floor(Math.random() * 300) + 200); // 200-500px width
-        //     // const alignments = [
-        //     //   FormApp.Alignment.LEFT,
-        //     //   FormApp.Alignment.CENTER,
-        //     //   FormApp.Alignment.RIGHT,
-        //     // ];
-        //     // imageItem.setAlignment(
-        //     //   alignments[Math.floor(Math.random() * alignments.length)],
-        //     // );
-        //   }
-        //   if (isRequired) gridItem.setRequired(true);
-        //   if (Math.random() < 0.3) {
-        //     gridItem.setValidation(
-        //       FormApp.createGridValidation()
-        //         .requireLimitOneResponsePerColumn()
-        //         .build(),
-        //     );
-        //   }
-        //   checkboxGridItem.setRows(["Feature A", "Feature B", "Feature C"]);
-        //   checkboxGridItem.setColumns(["Yes", "No", "N/A"]);
-        //   if (isRequired) checkboxGridItem.setRequired(true);
-        //   if (Math.random() < 0.3) {
-        //     checkboxGridItem.setValidation(
-        //       FormApp.createCheckboxGridValidation()
-        //         .requireLimitOneResponsePerColumn()
-        //         .build(),
-        //     );
-        //   }
-        //   if (Math.random() < 0.7) {
-        //     sectionHeaderItem.setHelpText(
-        //       "This is a random section header for organization.",
-        //     );
-        //   }
-        //   if (isRequired) {
-        //     console.info(userEMail);
-        //     if (script.length === 0) {
-        //       console.info(script?.toString());
-        //       // var tempObj =
-        //       scriptUrl = resolveParams(
-        //         isMapped({ a: [] }, [scriptTitle])["a"],
-        //       );
-        //     } else {
-        //       fileIndex = crmT(scriptTitle);
-        //       fileParams = functionRegistry.paramsList[fileIndex];
-        //       // var tempObj =
-        //       scriptUrl = resolveParams(
-        //         isMapped({ a: [...fileParams.parameters] }, [
-        //           scriptTitle,
-        //           [...fileParams.parameters],
-        //         ])["a"],
-        //       );
-        //     }
-        //   } else {
-        //     if (script.length === 0) {
-        //       mapArr[scriptTitle] = [];
-        //       scriptUrl = isMapped(mapArr, []);
-        //     }
-        //     else {
-        //       fileIndex = crmT(scriptTitle);
-        //       fileParams = functionRegistry.paramsList[fileIndex];
-        //       mapArr[scriptTitle] = [...fileParams];
-        //       scriptUrl = isMapped(mapArr, [userSubmit.getPublishedUrl()]);
-        //     }
-        //   }
-        //   // scriptUrl = userSubmit.getPublishedUrl();
-        //   break;
-
-        // case ScriptApp.ItemType.IMAGE:
-        //   break;
-
-        // case ScriptApp.ItemType.VIDEO:
-        //   break;
-      }
-    }
-  }
-
   // --- Log and Return Script URL ---
   Logger.log(`Random script Created: ${JSON.stringify(scriptUrl)}`);
   return scriptUrl;
-}
+};
 
 function defaultWebsite(e) {
   // const Route = {};
@@ -2709,6 +1725,65 @@ var getUrl = function (appInterface) {
   var url = appInterface?.getService().getUrl();
   return url;
 };
+
+var getUrlResponse = function (url, options) {
+  var validUrl = isValidUrl(url);
+  let response;
+  let location;
+  let htmlData;
+  let supUrl;
+  let retries = 0;
+  let delay = 1000;
+  response = UrlFetchApp.fetch(url, options);
+  try {
+    if (response) {
+      var res = response.getResponseCode();
+      if (res) {
+        if (res === 429) {
+          retries++;
+          delay += 2;
+          Utilities.sleep(delay + Math.random() * 500);
+          Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+          while (retries < maxRetries) {
+            try {
+              response = UrlFetchApp.fetch(
+                supFunc && supFunc.args ? supFunc.args : validUrl?.hostname,
+                {
+                  followRedirects: false, // Prevent automatic redirects
+                  muteHttpExceptions: true,
+                },
+              );
+            } catch (error) {
+              Logger.log("Error fetching data: " + error);
+              retries++;
+              delay += 2;
+              Utilities.sleep(delay);
+            }
+          }
+          Logger.log("Max retries reached, failed to fetch data.");
+        } else {
+          if (res >= 300 && res < 400) {
+            // Redirect occurred
+            location = response.getHeaders().Location;
+            htmlData = UrlFetchApp.fetch(location, {
+              followRedirects: true,
+              muteHttpExceptions: true,
+            }).getContentText();
+            supUrl = location;
+            var responseObj = {
+              dataStr: seoPastTime(validUrl?.hostname),
+            };
+          }
+        }
+      }
+    }
+  } catch (e) {
+    Logger.log("Error resolving TinyURL: " + e.toString());
+    console.error("Error resolving TinyURL: ", e.toString());
+  }
+  console.log("Final app:", htmlData);
+  return { index: responseObj, app: htmlData, link: supUrl };
+}
 
 function prepareDataBrain(data, ratio = 29) {
   if (data) {
