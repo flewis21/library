@@ -2427,7 +2427,8 @@ function wanUtil(namedVar, time) {
 }
 
 function wsSIPOC(fileX, col) {
-  var result = contentApp(`
+  var result = contentApp(
+    `
     <div id="ss"><?!= createSheet() ?></div>
     <script>
       function serverS(func, args) {
@@ -2448,30 +2449,30 @@ function wsSIPOC(fileX, col) {
         // document.getElementById("ss").innerHTML = JSON.stringify(SRes)
       }
     </script>
-  `, {
-    createSheet: function () {
-      if (typeof fileX === "undefined") {
-        var userEditSheetId = driveManager(fileBrowser().name);
-        // var cChoice = DriveApp.getFileById(userEditSheetId);
-        // fileX = cChoice.getName();
-        // var ss = SpreadsheetApp.openById(cCId);
-      }
-      else {
-        var userEditSheetId = driveManager(fileBrowser(null,fileX,).name);
-        // var cChoice = DriveApp.getFileById(userEditSheetId);
-      }
-      // var spreadSheet = driveSheetsFilter(fileX);
-      // var ss = SpreadsheetApp.open(cChoice)//(spreadSheet);
-      // var sheets = ss.getSheets();
-      // var ws = sheets[0].activate();
-      // var ws = SpreadsheetApp.setActiveSheet(spreadSheet).activate()
-      // return ws.getRange(2, 1, ws.getLastRow() - 1, col).getDisplayValue();
-      return userEditSheetId
-      
+  `,
+    {
+      createSheet: function () {
+        if (typeof fileX === "undefined") {
+          var userEditSheetId = driveManager(fileBrowser().name);
+          // var cChoice = DriveApp.getFileById(userEditSheetId);
+          // fileX = cChoice.getName();
+          // var ss = SpreadsheetApp.openById(cCId);
+        } else {
+          var userEditSheetId = driveManager(fileBrowser(null, fileX).name);
+          // var cChoice = DriveApp.getFileById(userEditSheetId);
+        }
+        // var spreadSheet = driveSheetsFilter(fileX);
+        // var ss = SpreadsheetApp.open(cChoice)//(spreadSheet);
+        // var sheets = ss.getSheets();
+        // var ws = sheets[0].activate();
+        // var ws = SpreadsheetApp.setActiveSheet(spreadSheet).activate()
+        // return ws.getRange(2, 1, ws.getLastRow() - 1, col).getDisplayValue();
+        return userEditSheetId;
+      },
+      myFileX: fileX,
+      myCol: col,
     },
-    myFileX: fileX,
-    myCol: col,
-  });
+  );
   return result;
 }
 
