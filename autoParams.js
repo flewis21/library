@@ -20,7 +20,7 @@ const functionRegistry = {
     "oddChances",
     "jsGame",
     "checkOnDay",
-    "userinterfaceAccess",
+    "userInterfaceAccess",
     "styling",
     "popUpOpen",
     "congressLeg",

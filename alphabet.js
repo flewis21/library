@@ -33,7 +33,7 @@ var eVar = function (varA) {
   };
 };
 
-var pVar = function (varA) {
+var fVar = function (varA) {
   aVar = varA;
   return {
     myVar: aVar,

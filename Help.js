@@ -2733,7 +2733,7 @@ function resolveParams(func, someArgs) {
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
-              if (typeof result === "string") {
+              if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
               } else if (
                 typeof result === "object" &&

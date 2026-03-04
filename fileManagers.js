@@ -286,7 +286,7 @@ function driveSheetsFilter(filterFiles) {
   var rndFiledMain = Math.floor(Math.random() * Math.floor(dataTree.length));
   // var filedMain = dataTree[rndFiledMain]
   try {
-    var filedMain = FormApp.openByUrl(dataTree[rndFiledMain]).getPublishedUrl();
+    var filedMain = SpreadsheetApp.openByUrl(dataTree[rndFiledMain]).getUrl();
     return filedMain;
   } catch (err) {
     Logger.log("Error trying to return a form: " + err.stack);

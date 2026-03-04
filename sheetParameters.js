@@ -459,7 +459,7 @@ var createSheetHeader = function (headers) {
 
 var idSpreadSheet = function (id) {
   var ssApp = SpreadsheetApp;
-  if (id) {
+  if (id && id !== "id") {
     var ss = ssApp?.openById(id);
     return ss;
   }
@@ -2176,7 +2176,7 @@ function ssData(playSheet, sheetName, time) {
 }
 
 function ssDatabase(file, sheet, col, headers, data) {
-  var result = contentApp("<?!= myProject ?> ", {
+  var result = contentApp("<?!= `createProject()` ?> ", {
     createProject: function myProject() {
       var ws = spreadSheetCreate(file, sheet);
       ws.appendRow(headers);
@@ -2362,7 +2362,7 @@ function updateSheet(url, sheetName, data, numCols, time) {
   //     !data,
   // );
   var sheet = ssGetSheetBySpreadsheetUrl(url, sheetName);
-  sheet.appendRow(data);
+  sheet?.appendRow(data);
   var sheetArray = SpreadsheetApp.openByUrl(url).getUrl();
   return {
     myFileX: sheetArray,
@@ -2427,14 +2427,50 @@ function wanUtil(namedVar, time) {
 }
 
 function wsSIPOC(fileX, col) {
-  var result = contentApp("", {
-    createSheet: (function () {
-      var spreadSheet = driveSheetsFilter(fileX);
-      var ss = SpreadsheetApp.open(spreadSheet);
-      var sheets = ss.getSheets();
-      var ws = sheets[0].activate();
-      return ws.getRange(2, 1, ws.getLastRow() - 1, col).getDisplayValue();
-    })(),
+  var result = contentApp(`
+    <div id="ss"><?!= createSheet() ?></div>
+    <script>
+      function serverS(func, args) {
+        return new Promise ((resolve, reject) => {
+          google.script.run
+            .withSuccessHandler(result => 
+              { resolve(result)})
+            .withFailureHandler(error => 
+              { reject(error)})
+            .runBoilerpate(func, args)
+        });
+      }
+      var currentX = <?= myFileX ?>;
+      var currentC = <?= myCol ?>
+      var SRes = serverS("wsSIPOC", [currentX, col])
+      document.addEventListener)("DOMContentLoaded", siRest);
+      function siRest() {
+        // document.getElementById("ss").innerHTML = JSON.stringify(SRes)
+      }
+    </script>
+  `, {
+    createSheet: function () {
+      if (typeof fileX === "undefined") {
+        var userEditSheetId = driveManager(fileBrowser().name);
+        // var cChoice = DriveApp.getFileById(userEditSheetId);
+        // fileX = cChoice.getName();
+        // var ss = SpreadsheetApp.openById(cCId);
+      }
+      else {
+        var userEditSheetId = driveManager(fileBrowser(null,fileX,).name);
+        // var cChoice = DriveApp.getFileById(userEditSheetId);
+      }
+      // var spreadSheet = driveSheetsFilter(fileX);
+      // var ss = SpreadsheetApp.open(cChoice)//(spreadSheet);
+      // var sheets = ss.getSheets();
+      // var ws = sheets[0].activate();
+      // var ws = SpreadsheetApp.setActiveSheet(spreadSheet).activate()
+      // return ws.getRange(2, 1, ws.getLastRow() - 1, col).getDisplayValue();
+      return userEditSheetId
+      
+    },
+    myFileX: fileX,
+    myCol: col,
   });
   return result;
 }

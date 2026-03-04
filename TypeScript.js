@@ -129,6 +129,8 @@ var geneicType = function () {
       return priorityA - priorityB;
     })
     .join("");
+  let tyFile = wsSIPOC("bank")
+  console.log(tyFile)
   let fileIndex = postToDiscord(randonWord);
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
