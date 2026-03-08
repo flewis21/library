@@ -37,8 +37,7 @@ function convertToJS(rndText) {
   var jsCodeE = "<?=";
   var jsCodeX = "<?!=";
   var jsCodeC = "?>";
-  if (
-    [rndText].includes("rndText") === -1 && [rndText].includes(jsCodeS)) {
+  if ([rndText].includes("rndText") === -1 && [rndText].includes(jsCodeS)) {
     rndText = rndText.replace(/\<\?/g, "");
   }
   if ([rndText].includes("rndText") === -1 && [rndText].includes(jsCodeE)) {

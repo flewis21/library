@@ -576,8 +576,8 @@ function opt(searchString) {
     dataArray.push(record);
   }
   const matches = [];
-  const alTheCo = 
-    arrData?.sort((a, b) => a - b)
+  const alTheCo = arrData
+    ?.sort((a, b) => a - b)
     .filter((ac) => {
       var logAC = ac[0]; //["title"]
       if (

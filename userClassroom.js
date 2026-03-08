@@ -1,11 +1,11 @@
-function  userClass() {
+function userClass() {
   var cCalId = Classroom.Courses.list().courses;
   for (var iC = 0; iC < cCalId.length; iC++) {
     var cJSON = cCalId[iC];
     console.log(cJSON["id"]);
     console.log(cJSON["room"]);
   }
-};
+}
 
 var getDocUrl = function (docId) {
   Logger.log("Trying to open document with ID:", docId); // Log the ID
@@ -38,7 +38,7 @@ var getPlaceholders = function (templateUrl) {
     Logger.log("Error getting placeholders:", error);
     throw new Error("Error getting placeholders. Check the logs.");
   }
-}
+};
 
 var processFormData = function (formData, templateUrl) {
   try {
@@ -84,7 +84,7 @@ var sheetGetPlaceholders = function (templateUrl) {
       "Error getting placeholders. Check the logs.\n" + error.stack,
     );
   }
-}
+};
 
 var sheetProcessFormData = function (formData, templateUrl) {
   try {

@@ -587,10 +587,10 @@ function newEPAData(rawData) {
   const uniqueCoKey = [rawData].entries().next().value;
   var reference = uniqueCoKey[1]["first"]?.["$ref"] || randomCoKey;
   if (uniqueCoArray.length === 0) {
-    return rawData
-  }
-  else {
-    var randomCo = uniqueCoKey[1]["items"][randomCoKey] || uniqueCoKey[1]["items"];
+    return rawData;
+  } else {
+    var randomCo =
+      uniqueCoKey[1]["items"][randomCoKey] || uniqueCoKey[1]["items"];
     return randomCo;
   }
   // var data = []
@@ -752,7 +752,7 @@ function productTime(product) {
     while (!test) {
       test = productNamePartial(product);
       if (test) {
-        break
+        break;
       }
     }
   }
@@ -790,39 +790,41 @@ function productRegNo(eparegno) {
     [eparegno],
     [
       [
-        reqChoice()? 
-          ["items",
-            [
-              {"active_ingredients":
-                [
-                  {
-                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(eparegno)].join(" "))]["SKU"],
-                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
-                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
-                  },
-                ]
-              },
-            ],
-          ]:
-          ["items", 
-            []
-          ],
-        ["first",
+        reqChoice()
+          ? [
+              "items",
+              [
+                {
+                  active_ingredients: [
+                    {
+                      active_ing:
+                        globalThis.uniqueItemArray()[
+                          randNum([JSON.stringify(eparegno)].join(" "))
+                        ]["SKU"],
+                      pc_code: randNum([JSON.stringify(trial())].join(" ")),
+                      cas_number: randNum([JSON.stringify(trial())].join(" ")),
+                    },
+                  ],
+                },
+              ],
+            ]
+          : ["items", []],
+        [
+          "first",
           {
-              $ref:"https://ordspub.epa.gov/ords/pesticides/f?p=" + eparegno
-          }
+            $ref: "https://ordspub.epa.gov/ords/pesticides/f?p=" + eparegno,
+          },
         ],
-      ]
-    ]
+      ],
+    ],
   );
   const res = [resItem[eparegno]];
   console.log("[0]", res[0]);
-   if (res[0]) {
+  if (res[0]) {
     if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
       console.error("Error retrieving reg no" + err.stack);
       return res;
-    }
-    else {
+    } else {
       try {
         if (Object.keys(res[0]["items"])?.length === 0) {
           return res[0]["first"][Object.keys(res[0]["first"])[0]];
@@ -830,8 +832,7 @@ function productRegNo(eparegno) {
           try {
             const rawData = JSON.parse(res[0]);
             return newEPAData(rawData);
-          }
-          catch (erR) {
+          } catch (erR) {
             Logger.log("Correction, ", erR.stack);
             return newEPAData(res[0]);
           }
@@ -839,7 +840,8 @@ function productRegNo(eparegno) {
       } catch (err) {
         console.error("Error retrieving reg no" + err.stack);
         return res[0];
-      }1
+      }
+      1;
     }
   }
 }
@@ -853,9 +855,8 @@ function productDistNum(distno) {
       ),
     );
     return newEPAData(rawData);
-  }
-  catch (noJSON) {
-    console.log("No JSON data", noJSON.stack)
+  } catch (noJSON) {
+    console.log("No JSON data", noJSON.stack);
   }
 }
 
@@ -868,29 +869,33 @@ function productFullName(productName) {
     //   ),
     // );
     const res = objectOfS(
+      [productName],
       [
-        productName
-      ],
         [
           [
-            ["items",
-              reqChoice()? 
-                globalThis.uniqueItemArray()[randNum([JSON.stringify(productName)].join(" "))]:[]
-            ],
-            ["first",
-              {
-                $ref:"https://ordspub.epa.gov/ords/pesticides/pplstxt/" + encodeURIComponent(productName)
-              },
-            ]
-          ]
-        ]
-  );
+            "items",
+            reqChoice()
+              ? globalThis.uniqueItemArray()[
+                  randNum([JSON.stringify(productName)].join(" "))
+                ]
+              : [],
+          ],
+          [
+            "first",
+            {
+              $ref:
+                "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
+                encodeURIComponent(productName),
+            },
+          ],
+        ],
+      ],
+    );
     const rawData = res[productName];
     console.log("[0]", rawData[0]);
     return newEPAData(rawData);
-  }
-  catch (noJSON) {
-    console.log("No JSON data", noJSON.stack)
+  } catch (noJSON) {
+    console.log("No JSON data", noJSON.stack);
   }
 }
 
@@ -937,38 +942,52 @@ function productNamePartial(sSProduct) {
   // const url = "https://search.epa.gov/epasearch/?querytext=" + sSProduct;
   const res = objectOfS(
     [sSProduct],
+    [
       [
         [
-          ["items", 
-            reqChoice()?
-              [
+          "items",
+          reqChoice()
+            ? [
                 {
-                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
-                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                  eparegno: randNum([JSON.stringify(trial())].join(" ")),
+                  productname:
+                    globalThis.uniqueCoArray()[
+                      randNum([JSON.stringify(sSProduct)].join(" "))
+                    ]["ticker"],
                 },
                 {
-                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
-                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                  eparegno: randNum([JSON.stringify(trial())].join(" ")),
+                  productname:
+                    globalThis.uniqueCoArray()[
+                      randNum([JSON.stringify(sSProduct)].join(" "))
+                    ]["ticker"],
                 },
                 {
-                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
-                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                  eparegno: randNum([JSON.stringify(trial())].join(" ")),
+                  productname:
+                    globalThis.uniqueCoArray()[
+                      randNum([JSON.stringify(sSProduct)].join(" "))
+                    ]["ticker"],
                 },
                 {
-                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
-                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                  eparegno: randNum([JSON.stringify(trial())].join(" ")),
+                  productname:
+                    globalThis.uniqueCoArray()[
+                      randNum([JSON.stringify(sSProduct)].join(" "))
+                    ]["ticker"],
                 },
               ]
-              :[],
-          ],
-          ["first",
-            {
-              $ref:"https://search.epa.gov/epasearch/?querytext=" + sSProduct,
-            }
-          ],
-        ]
+            : [],
+        ],
+        [
+          "first",
+          {
+            $ref: "https://search.epa.gov/epasearch/?querytext=" + sSProduct,
+          },
+        ],
       ],
-  )[sSProduct] //mis(url);
+    ],
+  )[sSProduct]; //mis(url);
   // if (res.type === "html") {
   //   iframeSrc = res.index; // Assign iframeSrc
   //   appL = res.data;
@@ -1015,9 +1034,8 @@ function productNamePartial(sSProduct) {
         try {
           let rawData = JSON.parse(res);
           return newEPAData(rawData);
-        }
-        catch (erR) {
-          Logger.log("Corrections needed: ", erR.stack)
+        } catch (erR) {
+          Logger.log("Corrections needed: ", erR.stack);
           return newEPAData(res);
         }
       }
@@ -1048,9 +1066,8 @@ function productNamePartialV2(productName) {
       ),
     );
     return newEPAData(rawData);
-  }
-  catch (noJSON) {
-    console.log("No JSON data", noJSON.stack)
+  } catch (noJSON) {
+    console.log("No JSON data", noJSON.stack);
   }
 }
 
@@ -1063,9 +1080,8 @@ function productNumPartial(productNum) {
       ),
     );
     return newEPAData(rawData);
-  }
-  catch (noJSON) {
-    console.log("No JSON data", noJSON.stack)
+  } catch (noJSON) {
+    console.log("No JSON data", noJSON.stack);
   }
 }
 
@@ -1078,9 +1094,8 @@ function productNumPartialV2(productNum) {
       ),
     );
     return newEPAData(rawData);
-  }
-  catch (noJSON) {
-    console.log("No JSON data", noJSON.stack)
+  } catch (noJSON) {
+    console.log("No JSON data", noJSON.stack);
   }
 }
 
@@ -1093,30 +1108,35 @@ function productIngName(ingredient) {
     [ingredient],
     [
       [
-        reqChoice()? 
-          ["items",
-            [
-              {"active_ingredients":
-                [
-                  {
-                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
-                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
-                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
-                  },
-                ]
-              },
-            ],
-          ]:
-          ["items", 
-            []
-          ],
-        ["first",
+        reqChoice()
+          ? [
+              "items",
+              [
+                {
+                  active_ingredients: [
+                    {
+                      active_ing:
+                        globalThis.uniqueItemArray()[
+                          randNum([JSON.stringify(trial())].join(" "))
+                        ]["SKU"],
+                      pc_code: randNum([JSON.stringify(trial())].join(" ")),
+                      cas_number: randNum([JSON.stringify(trial())].join(" ")),
+                    },
+                  ],
+                },
+              ],
+            ]
+          : ["items", []],
+        [
+          "first",
           {
-              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" + ingredient
-          }
+            $ref:
+              "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
+              ingredient,
+          },
         ],
-      ]
-    ]
+      ],
+    ],
   );
   const res = [resItem[ingredient]];
   console.log("[0]", res[0]);
@@ -1133,12 +1153,11 @@ function productIngName(ingredient) {
   //     return res;
   //   }
   // }
-   if (res[0]) {
+  if (res[0]) {
     if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
       console.error("Error retrieving ingredient" + err.stack);
       return res;
-    }
-    else {
+    } else {
       try {
         if (Object.keys(res[0]["items"])?.length === 0) {
           return res[0]["first"][Object.keys(res[0]["first"])[0]];
@@ -1146,8 +1165,7 @@ function productIngName(ingredient) {
           try {
             const rawData = JSON.parse(res[0]);
             return newEPAData(rawData);
-          }
-          catch (erR) {
+          } catch (erR) {
             Logger.log("Correction, ", erR.stack);
             return newEPAData(res[0]);
           }
@@ -1155,7 +1173,8 @@ function productIngName(ingredient) {
       } catch (err) {
         console.error("Error retrieving ingredient" + err.stack);
         return res[0];
-      }1
+      }
+      1;
     }
   }
 }
@@ -1169,30 +1188,35 @@ function productChemCode(code) {
     [code],
     [
       [
-        reqChoice()? 
-          ["items",
-            [
-              {"active_ingredients":
-                [
-                  {
-                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
-                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
-                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
-                  },
-                ]
-              },
-            ],
-          ]:
-          ["items", 
-            []
-          ],
-        ["first",
+        reqChoice()
+          ? [
+              "items",
+              [
+                {
+                  active_ingredients: [
+                    {
+                      active_ing:
+                        globalThis.uniqueItemArray()[
+                          randNum([JSON.stringify(trial())].join(" "))
+                        ]["SKU"],
+                      pc_code: randNum([JSON.stringify(trial())].join(" ")),
+                      cas_number: randNum([JSON.stringify(trial())].join(" ")),
+                    },
+                  ],
+                },
+              ],
+            ]
+          : ["items", []],
+        [
+          "first",
           {
-              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" + encodeURIComponent(code)
-          }
+            $ref:
+              "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
+              encodeURIComponent(code),
+          },
         ],
-      ]
-    ]
+      ],
+    ],
   );
   const res = [resItem[code]];
   console.log("[0]", res[0]);
@@ -1209,12 +1233,11 @@ function productChemCode(code) {
   //     return res;
   //   }
   // }
-   if (res[0]) {
+  if (res[0]) {
     if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
       console.error("Error retrieving code" + err.stack);
       return res;
-    }
-    else {
+    } else {
       try {
         if (Object.keys(res[0]["items"])?.length === 0) {
           return res[0]["first"][Object.keys(res[0]["first"])[0]];
@@ -1222,8 +1245,7 @@ function productChemCode(code) {
           try {
             const rawData = JSON.parse(res[0]);
             return newEPAData(rawData);
-          }
-          catch (erR) {
+          } catch (erR) {
             Logger.log("Correction, ", erR.stack);
             return newEPAData(res[0]);
           }
@@ -1231,7 +1253,8 @@ function productChemCode(code) {
       } catch (err) {
         console.error("Error retrieving code" + err.stack);
         return res[0];
-      }1
+      }
+      1;
     }
   }
 }
@@ -1245,30 +1268,35 @@ function productAbstractNum(abstract) {
     [abstract],
     [
       [
-        reqChoice()? 
-          ["items",
-            [
-              {"active_ingredients":
-                [
-                  {
-                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
-                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
-                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
-                  },
-                ]
-              },
-            ],
-          ]:
-          ["items", 
-            []
-          ],
-        ["first",
+        reqChoice()
+          ? [
+              "items",
+              [
+                {
+                  active_ingredients: [
+                    {
+                      active_ing:
+                        globalThis.uniqueItemArray()[
+                          randNum([JSON.stringify(trial())].join(" "))
+                        ]["SKU"],
+                      pc_code: randNum([JSON.stringify(trial())].join(" ")),
+                      cas_number: randNum([JSON.stringify(trial())].join(" ")),
+                    },
+                  ],
+                },
+              ],
+            ]
+          : ["items", []],
+        [
+          "first",
           {
-              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" + encodeURIComponent(abstract)
-          }
+            $ref:
+              "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
+              encodeURIComponent(abstract),
+          },
         ],
-      ]
-    ]
+      ],
+    ],
   );
   const res = [resItem[abstract]];
   console.log("[0]", res[0]);
@@ -1285,12 +1313,11 @@ function productAbstractNum(abstract) {
   //     return res;
   //   }
   // }
-   if (res[0]) {
+  if (res[0]) {
     if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
       console.error("Error retrieving abstract" + err.stack);
       return res;
-    }
-    else {
+    } else {
       try {
         if (Object.keys(res[0]["items"])?.length === 0) {
           return res[0]["first"][Object.keys(res[0]["first"])[0]];
@@ -1298,8 +1325,7 @@ function productAbstractNum(abstract) {
           try {
             const rawData = JSON.parse(res[0]);
             return newEPAData(rawData);
-          }
-          catch (erR) {
+          } catch (erR) {
             Logger.log("Correction, ", erR.stack);
             return newEPAData(res[0]);
           }
@@ -1307,7 +1333,8 @@ function productAbstractNum(abstract) {
       } catch (err) {
         console.error("Error retrieving abstract" + err.stack);
         return res[0];
-      }1
+      }
+      1;
     }
   }
 }

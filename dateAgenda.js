@@ -1,20 +1,20 @@
 // function addDates(title, startTime, endTime, series) {
-  // if (!series) {
-  //   console.log("You did not specify series");
-  //   addEventToCalendar(title, startTime, endTime);
-  // } else if (series) {
-  //   console.log("You specified series of ".concat(series));
-  //   addEventSeriesToCalendar(title, startTime, endTime, series);
-  // }
-  // let busyDays = addDays()
-  // switch (busyDays.length.toString()) {
-  //   case  "0":
-  //     const daysDateRange = dateFunction(series)
-  //   return daysDateRange;
-  //   default:
-  //     const daysCalendarRange = addDays();
-  //   return daysCalendarRange;
-  // }
+// if (!series) {
+//   console.log("You did not specify series");
+//   addEventToCalendar(title, startTime, endTime);
+// } else if (series) {
+//   console.log("You specified series of ".concat(series));
+//   addEventSeriesToCalendar(title, startTime, endTime, series);
+// }
+// let busyDays = addDays()
+// switch (busyDays.length.toString()) {
+//   case  "0":
+//     const daysDateRange = dateFunction(series)
+//   return daysDateRange;
+//   default:
+//     const daysCalendarRange = addDays();
+//   return daysCalendarRange;
+// }
 // }
 
 function addDays() {
