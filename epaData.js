@@ -1,5 +1,5 @@
 function companyName(companyNameUrl) {
-  const companyNameSecData = epaA(aVar(companyNameUrl));
+  const companyNameSecData = epaA(companyNameUrl);
   const companyArray = testData(companyNameSecData);
   return companyArray;
 }
@@ -586,8 +586,13 @@ function newEPAData(rawData) {
   ); // Math.floor(Math.random());
   const uniqueCoKey = [rawData].entries().next().value;
   var reference = uniqueCoKey[1]["first"]?.["$ref"] || randomCoKey;
-  const randomCo = uniqueCoKey[1]["items"][randomCoKey];
-  return randomCo;
+  if (uniqueCoArray.length === 0) {
+    return rawData
+  }
+  else {
+    var randomCo = uniqueCoKey[1]["items"][randomCoKey] || uniqueCoKey[1]["items"];
+    return randomCo;
+  }
   // var data = []
   //   rawData[1]["items"].map((i)=>{data.push([i])});
   // var uAdata = data.map((dp)=>{return covArrays(dp)});
@@ -742,7 +747,15 @@ function oldEPA(rndTitle) {
 }
 
 function productTime(product) {
-  var test = productNamePartial("zee");
+  var test = productNamePartial(product);
+  if (!test) {
+    while (!test) {
+      test = productNamePartial(product);
+      if (test) {
+        break
+      }
+    }
+  }
   var test2 = productRegNo(test["eparegno"]);
   var test3 = productFullName(test["productname"]);
   var test4 = productIngName(test2["active_ingredients"][0]["active_ing"]);
@@ -770,42 +783,115 @@ function productTime(product) {
 }
 
 function productRegNo(eparegno) {
-  const res = urlDataSource(
-    "https://ordspub.epa.gov/ords/pesticides/ppls/" + eparegno,
+  // const res = urlDataSource(
+  //   "https://ordspub.epa.gov/ords/pesticides/f?p=" + eparegno,
+  // );
+  const resItem = objectOfS(
+    [eparegno],
+    [
+      [
+        reqChoice()? 
+          ["items",
+            [
+              {"active_ingredients":
+                [
+                  {
+                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(eparegno)].join(" "))]["SKU"],
+                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
+                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
+                  },
+                ]
+              },
+            ],
+          ]:
+          ["items", 
+            []
+          ],
+        ["first",
+          {
+              $ref:"https://ordspub.epa.gov/ords/pesticides/f?p=" + eparegno
+          }
+        ],
+      ]
+    ]
   );
-  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
-    try {
-      if (res[0]["items"].length === 0) {
-        return res[0]["first"][0];
-      } else {
-        const rawData = JSON.parse(res);
-        return newEPAData(rawData);
-      }
-    } catch (err) {
-      console.error("Error retrieving reg no" + err);
+  const res = [resItem[eparegno]];
+  console.log("[0]", res[0]);
+   if (res[0]) {
+    if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
+      console.error("Error retrieving reg no" + err.stack);
       return res;
+    }
+    else {
+      try {
+        if (Object.keys(res[0]["items"])?.length === 0) {
+          return res[0]["first"][Object.keys(res[0]["first"])[0]];
+        } else {
+          try {
+            const rawData = JSON.parse(res[0]);
+            return newEPAData(rawData);
+          }
+          catch (erR) {
+            Logger.log("Correction, ", erR.stack);
+            return newEPAData(res[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Error retrieving reg no" + err.stack);
+        return res[0];
+      }1
     }
   }
 }
 
 function productDistNum(distno) {
-  const rawData = JSON.parse(
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
-        encodeURIComponent(distno),
-    ),
-  );
-  return newEPAData(rawData);
+  try {
+    const rawData = JSON.parse(
+      urlDataSource(
+        "https://ordspub.epa.gov/ords/pesticides/pplsdist/" +
+          encodeURIComponent(distno),
+      ),
+    );
+    return newEPAData(rawData);
+  }
+  catch (noJSON) {
+    console.log("No JSON data", noJSON.stack)
+  }
 }
 
 function productFullName(productName) {
-  const rawData = JSON.parse(
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
-        encodeURIComponent(productName),
-    ),
+  try {
+    // const rawData = JSON.parse(
+    //   urlDataSource(
+    //     "https://ordspub.epa.gov/ords/pesticides/pplstxt/" +
+    //       encodeURIComponent(productName),
+    //   ),
+    // );
+    const res = objectOfS(
+      [
+        productName
+      ],
+        [
+          [
+            ["items",
+              reqChoice()? 
+                globalThis.uniqueItemArray()[randNum([JSON.stringify(productName)].join(" "))]:[]
+            ],
+            ["first",
+              {
+                $ref:"https://ordspub.epa.gov/ords/pesticides/pplstxt/" + encodeURIComponent(productName)
+              },
+            ]
+          ]
+        ]
   );
-  return newEPAData(rawData);
+    const rawData = res[productName];
+    console.log("[0]", rawData[0]);
+    return newEPAData(rawData);
+  }
+  catch (noJSON) {
+    console.log("No JSON data", noJSON.stack)
+  }
 }
 
 function productDist(
@@ -842,56 +928,278 @@ function productName(epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
   return productNameEpaData;
 }
 
-function productNamePartial(productName) {
-  let appL = "";
-  let iframeSrc =
-    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
-  let feed = "";
+function productNamePartial(sSProduct) {
+  // let appL = "";
+  // let iframeSrc =
+  //   "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+  // let feed = "";
 
-  const url = "https://search.epa.gov/epasearch/?querytext=" + productName;
-  const res = mis(url);
-  if (res.type === "html") {
-    iframeSrc = res.index; // Assign iframeSrc
-    appL = res.data;
-    feed = res.link || url;
-  } else if (res.type === "url") {
-    // --- NEW: Handle "url" type directly ---
-    iframeSrc = res.data; // Assign the URL to iframeSrc
-    appL = res.index || url;
-    finalFeedDivContent = res.link || url;
-  } else if (res.type === "jsonData") {
-    iframeSrc = res.index || url; // Assign iframeSrc
-    appL = `${JSON.stringify(res.data, null, 2)}`;
-    feed = res.link || url;
-  } else if (res.type === "text") {
-    iframeSrc = res.index || url; // Assign iframeSrc
-    appL = res.data;
-    feed = res.link || url;
-  } else if (res.type === "object") {
-    // Here, if payLoad.data is an object, you need to decide how to display it.
-    // It could contain sub-properties you want to render.
-    if (res.data.html || res.data.app) {
-      appL = res.data.html || res.data.app;
-      // If the object itself contains a URL, use it for iframeSrc
-      iframeSrc = res.data.url || iframeSrc;
-    } else if (payLoad.data.url) {
-      // If the object explicitly has a 'url' property
-      iframeSrc = res.data.url || url;
-      appL = res.index || url;
-      feed = res.link || url;
-    } else {
-      // Default way to display a generic object: stringify it
-      iframeSrc = res.index || url; // Assign iframeSrc
-      appL = `${res}`;
-      feed = res.link || url;
+  // const url = "https://search.epa.gov/epasearch/?querytext=" + sSProduct;
+  const res = objectOfS(
+    [sSProduct],
+      [
+        [
+          ["items", 
+            reqChoice()?
+              [
+                {
+                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
+                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                },
+                {
+                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
+                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                },
+                {
+                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
+                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                },
+                {
+                  "eparegno": randNum([JSON.stringify(trial())].join(" ")),
+                  "productname": globalThis.uniqueCoArray()[randNum([JSON.stringify(sSProduct)].join(" "))]["ticker"],
+                },
+              ]
+              :[],
+          ],
+          ["first",
+            {
+              $ref:"https://search.epa.gov/epasearch/?querytext=" + sSProduct,
+            }
+          ],
+        ]
+      ],
+  )[sSProduct] //mis(url);
+  // if (res.type === "html") {
+  //   iframeSrc = res.index; // Assign iframeSrc
+  //   appL = res.data;
+  //   feed = res.link || url;
+  // } else if (res.type === "url") {
+  //   // --- NEW: Handle "url" type directly ---
+  //   iframeSrc = res.data; // Assign the URL to iframeSrc
+  //   appL = res.index || url;
+  //   finalFeedDivContent = res.link || url;
+  // } else if (res.type === "jsonData") {
+  //   iframeSrc = res.index || url; // Assign iframeSrc
+  //   appL = `${JSON.stringify(res.data, null, 2)}`;
+  //   feed = res.link || url;
+  // } else if (res.type === "text") {
+  //   iframeSrc = res.index || url; // Assign iframeSrc
+  //   appL = res.data;
+  //   feed = res.link || url;
+  // } else if (res.type === "object") {
+  //   // Here, if payLoad.data is an object, you need to decide how to display it.
+  //   // It could contain sub-properties you want to render.
+  //   if (res.data.html || res.data.app) {
+  //     appL = res.data.html || res.data.app;
+  //     // If the object itself contains a URL, use it for iframeSrc
+  //     iframeSrc = res.data.url || iframeSrc;
+  //   } else if (payLoad.data.url) {
+  //     // If the object explicitly has a 'url' property
+  //     iframeSrc = res.data.url || url;
+  //     appL = res.index || url;
+  //     feed = res.link || url;
+  //   } else {
+  //     // Default way to display a generic object: stringify it
+  //     iframeSrc = res.index || url; // Assign iframeSrc
+  //     appL = `${res}`;
+  //     feed = res.link || url;
+  //   }
+  // } else if (res.type === "unknown" || res.type === "error") {
+  //   feed = `Error: ${res.message || res.data || "Unknown error."}`;
+  // }
+  if (res && typeof res === "object") {
+    try {
+      if (res["items"] && Object.keys(res["items"][0])?.length === 0) {
+        return res["first"][0];
+      } else {
+        try {
+          let rawData = JSON.parse(res);
+          return newEPAData(rawData);
+        }
+        catch (erR) {
+          Logger.log("Corrections needed: ", erR.stack)
+          return newEPAData(res);
+        }
+      }
+    } catch (err) {
+      console.error("Error retrieving reg no" + err);
+      return res;
     }
-  } else if (res.type === "unknown" || res.type === "error") {
-    feed = `Error: ${res.message || res.data || "Unknown error."}`;
   }
-  // if (res && typeof res === "object") {
+
+  // Logger.log("The final value of content. " + JSON.stringify(appL));
+  // var data = {
+  //   message: {
+  //     content: appL,
+  //     info: feed,
+  //     link: iframeSrc, // Clear iframe on critical error
+  //   },
+  //   timestamp: new Date(),
+  // };
+  // return data;
+}
+
+function productNamePartialV2(productName) {
+  try {
+    const rawData = JSON.parse(
+      urlDataSource(
+        "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
+          encodeURIComponent(productName),
+      ),
+    );
+    return newEPAData(rawData);
+  }
+  catch (noJSON) {
+    console.log("No JSON data", noJSON.stack)
+  }
+}
+
+function productNumPartial(productNum) {
+  try {
+    const rawData = JSON.parse(
+      urlDataSource(
+        "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
+          encodeURIComponent(productNum),
+      ),
+    );
+    return newEPAData(rawData);
+  }
+  catch (noJSON) {
+    console.log("No JSON data", noJSON.stack)
+  }
+}
+
+function productNumPartialV2(productNum) {
+  try {
+    const rawData = JSON.parse(
+      urlDataSource(
+        "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
+          encodeURIComponent(productNum),
+      ),
+    );
+    return newEPAData(rawData);
+  }
+  catch (noJSON) {
+    console.log("No JSON data", noJSON.stack)
+  }
+}
+
+function productIngName(ingredient) {
+  // var res = urlDataSource(
+  //   "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
+  //     ingredient,
+  // );
+  const resItem = objectOfS(
+    [ingredient],
+    [
+      [
+        reqChoice()? 
+          ["items",
+            [
+              {"active_ingredients":
+                [
+                  {
+                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
+                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
+                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
+                  },
+                ]
+              },
+            ],
+          ]:
+          ["items", 
+            []
+          ],
+        ["first",
+          {
+              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" + ingredient
+          }
+        ],
+      ]
+    ]
+  );
+  const res = [resItem[ingredient]];
+  console.log("[0]", res[0]);
+  // if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
   //   try {
-  //     if (res["items"] && res["items"].length !== 0) {
-  //       return res["first"][0];
+  //     if (res[0]["items"].length === 0) {
+  //       return res[0]["first"][0];
+  //     } else {
+  //       const rawData = JSON.parse(res);
+  //       return rawData;
+  //     }
+  //   } catch (err) {
+  //     console.error("Error retrieving reg no" + err);
+  //     return res;
+  //   }
+  // }
+   if (res[0]) {
+    if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
+      console.error("Error retrieving ingredient" + err.stack);
+      return res;
+    }
+    else {
+      try {
+        if (Object.keys(res[0]["items"])?.length === 0) {
+          return res[0]["first"][Object.keys(res[0]["first"])[0]];
+        } else {
+          try {
+            const rawData = JSON.parse(res[0]);
+            return newEPAData(rawData);
+          }
+          catch (erR) {
+            Logger.log("Correction, ", erR.stack);
+            return newEPAData(res[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Error retrieving ingredient" + err.stack);
+        return res[0];
+      }1
+    }
+  }
+}
+
+function productChemCode(code) {
+  // const res = urlDataSource(
+  //   "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
+  //     encodeURIComponent(code),
+  // );
+  const resItem = objectOfS(
+    [code],
+    [
+      [
+        reqChoice()? 
+          ["items",
+            [
+              {"active_ingredients":
+                [
+                  {
+                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
+                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
+                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
+                  },
+                ]
+              },
+            ],
+          ]:
+          ["items", 
+            []
+          ],
+        ["first",
+          {
+              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" + encodeURIComponent(code)
+          }
+        ],
+      ]
+    ]
+  );
+  const res = [resItem[code]];
+  console.log("[0]", res[0]);
+  // if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
+  //   try {
+  //     if (res[0]["items"].length === 0) {
+  //       return res[0]["first"][0];
   //     } else {
   //       const rawData = JSON.parse(res);
   //       return newEPAData(rawData);
@@ -901,105 +1209,105 @@ function productNamePartial(productName) {
   //     return res;
   //   }
   // }
-
-  Logger.log("The final value of content. " + JSON.stringify(appL));
-  var data = {
-    message: {
-      content: appL,
-      info: feed,
-      link: iframeSrc, // Clear iframe on critical error
-    },
-    timestamp: new Date(),
-  };
-  return data;
-}
-
-function productNamePartialV2(productName) {
-  const rawData = JSON.parse(
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" +
-        encodeURIComponent(productName),
-    ),
-  );
-  return newEPAData(rawData);
-}
-
-function productNumPartial(productNum) {
-  const rawData = JSON.parse(
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/ProductSearch/partialprodsearch/regnum/" +
-        encodeURIComponent(productNum),
-    ),
-  );
-  return newEPAData(rawData);
-}
-
-function productNumPartialV2(productNum) {
-  const rawData = JSON.parse(
-    urlDataSource(
-      "https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/regnum/" +
-        encodeURIComponent(productNum),
-    ),
-  );
-  return newEPAData(rawData);
-}
-
-function productIngName(ingredient) {
-  var res = urlDataSource(
-    "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" +
-      ingredient,
-  );
-  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
-    try {
-      if (res[0]["items"].length === 0) {
-        return res[0]["first"][0];
-      } else {
-        const rawData = JSON.parse(res);
-        return rawData;
-      }
-    } catch (err) {
-      console.error("Error retrieving reg no" + err);
+   if (res[0]) {
+    if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
+      console.error("Error retrieving code" + err.stack);
       return res;
     }
-  }
-}
-
-function productChemCode(code) {
-  const res = urlDataSource(
-    "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
-      encodeURIComponent(code),
-  );
-  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
-    try {
-      if (res[0]["items"].length === 0) {
-        return res[0]["first"][0];
-      } else {
-        const rawData = JSON.parse(res);
-        return newEPAData(rawData);
-      }
-    } catch (err) {
-      console.error("Error retrieving reg no" + err);
-      return res;
+    else {
+      try {
+        if (Object.keys(res[0]["items"])?.length === 0) {
+          return res[0]["first"][Object.keys(res[0]["first"])[0]];
+        } else {
+          try {
+            const rawData = JSON.parse(res[0]);
+            return newEPAData(rawData);
+          }
+          catch (erR) {
+            Logger.log("Correction, ", erR.stack);
+            return newEPAData(res[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Error retrieving code" + err.stack);
+        return res[0];
+      }1
     }
   }
 }
 
 function productAbstractNum(abstract) {
-  const res = urlDataSource(
-    "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
-      encodeURIComponent(abstract),
+  // const res = urlDataSource(
+  //   "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
+  //     encodeURIComponent(abstract),
+  // );
+  const resItem = objectOfS(
+    [abstract],
+    [
+      [
+        reqChoice()? 
+          ["items",
+            [
+              {"active_ingredients":
+                [
+                  {
+                  "active_ing":globalThis.uniqueItemArray()[randNum([JSON.stringify(trial())].join(" "))]["SKU"],
+                  "pc_code":randNum([JSON.stringify(trial())].join(" ")),
+                  "cas_number":randNum([JSON.stringify(trial())].join(" ")),
+                  },
+                ]
+              },
+            ],
+          ]:
+          ["items", 
+            []
+          ],
+        ["first",
+          {
+              $ref:"https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" + encodeURIComponent(abstract)
+          }
+        ],
+      ]
+    ]
   );
-  if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
-    try {
-      if (res[0]["items"].length === 0) {
-        return res[0]["first"][0];
-      } else {
-        const rawData = JSON.parse(res);
-        return newEPAData(rawData);
-      }
-    } catch (err) {
-      console.error("Error retrieving reg no" + err);
+  const res = [resItem[abstract]];
+  console.log("[0]", res[0]);
+  // if (res[0] && res[0].indexOf("DOCTYPE") === -1) {
+  //   try {
+  //     if (res[0]["items"].length === 0) {
+  //       return res[0]["first"][0];
+  //     } else {
+  //       const rawData = JSON.parse(res);
+  //       return newEPAData(rawData);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error retrieving reg no" + err);
+  //     return res;
+  //   }
+  // }
+   if (res[0]) {
+    if (Array.isArray(res[0]) && res[0].indexOf("DOCTYPE") !== -1) {
+      console.error("Error retrieving abstract" + err.stack);
       return res;
+    }
+    else {
+      try {
+        if (Object.keys(res[0]["items"])?.length === 0) {
+          return res[0]["first"][Object.keys(res[0]["first"])[0]];
+        } else {
+          try {
+            const rawData = JSON.parse(res[0]);
+            return newEPAData(rawData);
+          }
+          catch (erR) {
+            Logger.log("Correction, ", erR.stack);
+            return newEPAData(res[0]);
+          }
+        }
+      } catch (err) {
+        console.error("Error retrieving abstract" + err.stack);
+        return res[0];
+      }1
     }
   }
 }

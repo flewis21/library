@@ -1,4 +1,4 @@
-var userClass = function () {
+function  userClass() {
   var cCalId = Classroom.Courses.list().courses;
   for (var iC = 0; iC < cCalId.length; iC++) {
     var cJSON = cCalId[iC];
@@ -19,7 +19,7 @@ var getDocUrl = function (docId) {
   }
 };
 
-function getPlaceholders(templateUrl) {
+var getPlaceholders = function (templateUrl) {
   try {
     var doc = DocumentApp.openByUrl(templateUrl);
     var body = doc.getBody();
@@ -61,7 +61,7 @@ var processFormData = function (formData, templateUrl) {
   }
 };
 
-function sheetGetPlaceholders(templateUrl) {
+var sheetGetPlaceholders = function (templateUrl) {
   var url =
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit?usp=drivesdk";
   try {

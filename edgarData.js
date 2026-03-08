@@ -117,7 +117,7 @@ function coSortCIKS(cikArray, cikArrData, i, cikl) {
   var cikFreqArray = [];
 
   for (i, cikl; i < cikl; i++) {
-    cikArray.sort((a, b) => {
+    cikArray?.sort((a, b) => {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
       // console.log(a.toString()[0])
       if (a.toString()[0] === cikArrData[i].toString()) {
@@ -162,7 +162,7 @@ function coSortTickers(tickerArray, tickerArrData, i, ticl) {
   var tickerFreqArray = [];
 
   for (i, ticl; i < ticl; i++) {
-    tickerArray.sort((a, b) => {
+    tickerArray?.sort((a, b) => {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
       if (a[0].toLowerCase() === tickerArrData[i]) {
         tickerFreqArray.push(a);
@@ -176,7 +176,7 @@ function coSortTickers(tickerArray, tickerArrData, i, ticl) {
 function coSortTitles(titleArray, titleArrData, i, titl) {
   var titleFreqArray = [];
   for (i, titl; i < titl; i++) {
-    titleArray.sort((a, b) => {
+    titleArray?.sort((a, b) => {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
       if (a[0].toLowerCase() === titleArrData[i]) {
         titleFreqArray.push(a);
@@ -576,8 +576,8 @@ function opt(searchString) {
     dataArray.push(record);
   }
   const matches = [];
-  const alTheCo = arrData
-    .sort((a, b) => a - b)
+  const alTheCo = 
+    arrData?.sort((a, b) => a - b)
     .filter((ac) => {
       var logAC = ac[0]; //["title"]
       if (
@@ -875,7 +875,7 @@ function yahooSort(ticker, time) {
   var i = 0;
   var l = arrData.length;
   for (i, l; i < l; i++) {
-    var sorArray = titleArray.sort((a, b) => {
+    var sorArray = titleArray?.sort((a, b) => {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
       if (a[0].toLowerCase() === arrData[i]) {
         freqArray.push(a);

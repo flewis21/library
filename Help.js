@@ -2021,6 +2021,7 @@ function misSt(func, someArgs) {
                 let randomFuncResult = null;
                 const randomFuncName =
                   fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
+                console.log("resolved varA pre-result", randomFuncName);
                 if (
                   typeof randomFuncName === "string" &&
                   typeof globalThis[randomFuncName] === "function"
@@ -2733,6 +2734,7 @@ function resolveParams(func, someArgs) {
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
+              console.log("resolved varA pre-result", result);
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
               } else if (

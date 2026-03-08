@@ -37,16 +37,17 @@ function convertToJS(rndText) {
   var jsCodeE = "<?=";
   var jsCodeX = "<?!=";
   var jsCodeC = "?>";
-  if (rndText.includes(jsCodeS)) {
+  if (
+    [rndText].includes("rndText") === -1 && [rndText].includes(jsCodeS)) {
     rndText = rndText.replace(/\<\?/g, "");
   }
-  if (rndText.includes(jsCodeE)) {
+  if ([rndText].includes("rndText") === -1 && [rndText].includes(jsCodeE)) {
     rndText = rndText.replace(/\<\?=/g, "");
   }
-  if (rndText.includes(jsCodeX)) {
+  if ([rndText].includes("rndText") === -1 && [rndText].includes(jsCodeX)) {
     rndText = rndText.replace(/\<\?\!\=/g, "");
   }
-  if (rndText.includes(jsCodeC)) {
+  if ([rndText].includes("rndText") === -1 && [rndText].includes(jsCodeC)) {
     rndText = rndText.replace(/\?\>/g, "");
   }
   return rndText;
@@ -236,7 +237,7 @@ var objectOfS = function (keys, values, time) {
   }, {});
 };
 
-var randChoice = function* () {
+var reqChoice = function () {
   const isRequired = Math.random() < 0.7; // 70% chance of being required
   return isRequired;
 };

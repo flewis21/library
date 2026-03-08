@@ -110,7 +110,7 @@ function escapedHTML(e) {
           [["a"], ["b"], ["c"], ["d"], ["e"], ["f"], ["g"], ["h"], ["i"]],
         );
 
-        if (typeof ss === "string") {
+        if (typeof ss === "string" && isValidUrl(ss).hostname) {
           var ssAppName = SpreadsheetApp.openByUrl(ss)
             .getActiveSheet()
             .getSheetName();

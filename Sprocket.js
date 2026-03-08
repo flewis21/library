@@ -39,7 +39,10 @@ function dtlsPro(searchDTLS) {
     var coDataName = coData.rndTitle;
     var coDataPy = driveManager([coDataName].join("").toLowerCase());
     if (typeof coDataPy === "string" && coDataPy !== "undefined") {
-      var coDataUrl = FormApp.openByUrl(coDataPy).getPublishedUrl();
+      let nFUrlHost = isValidUrl(coDataPy).hostname
+      if (nFUrlHost) {
+        var coDataUrl = FormApp.openByUrl(coDataPy).getPublishedUrl();
+      }
       if (coDataUrl) {
         return coDataUrl;
       }

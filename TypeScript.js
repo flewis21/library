@@ -114,7 +114,7 @@ var geneicType = function () {
   };
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  let randonWord = ["Create Invite"]
+  let randonWord = [allInvestors(globalThis.uniqueCoArray()[randNum([JSON.stringify(trial())].join(" "))]["title"]).title]
     .join("")
     .split("")
     .sort((a, b) => {
@@ -129,9 +129,9 @@ var geneicType = function () {
       return priorityA - priorityB;
     })
     .join("");
-  let tyFile = wsSIPOC("bank");
-  console.log(tyFile);
-  let fileIndex = postToDiscord(randonWord);
+  // let tyFile = wsSIPOC(randonWord);
+  // console.log(tyFile);
+  let fileIndex = productTime(randonWord);
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");

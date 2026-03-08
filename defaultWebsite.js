@@ -119,7 +119,7 @@ function createRandomFunction(searchString) {
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
-  const isRequired = randChoice(); //Math.random() < 0.7; // 70% chance of being required
+  const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]

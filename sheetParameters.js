@@ -143,7 +143,7 @@ function cabDriver(e) {
       .getContent();
   })();
   console.log("xkcdRSS: \ncoolStatus\n", JSON.stringify([coolStatus]));
-  var data = res.split(" ");
+  var data = res?.split(" ");
   var dataRandomLength = Math.floor(Math.random() * Math.floor(data.length));
   var headers = data.map((r) => {
     return covArrays([[r][0]])[0];
@@ -573,7 +573,7 @@ function jsonXCalc(searchString, time) {
       typeof isProduct,
   );
   if (typeof isProduct === "string") {
-    var playSheet = SpreadsheetApp.openByUrl(isProduct).getUrl();
+    var playSheet = SpreadsheetApp.openByUrl(isProduct)?.getUrl();
     return playSheet;
   } else {
     var contentData = dtlsSomeFunction(searchString, time).playList;
@@ -1186,7 +1186,7 @@ var seoFactor = function (data, time) {
     var time = functionRegistry.time;
   }
   var idArray = [];
-  data.map((seoData) => {
+  data?.map((seoData) => {
     // var elaspeTime = new Date() - time
     // console.log("seoData: \nelaspeTime: " + elaspeTime)
     try {
@@ -1845,7 +1845,7 @@ function skyNeed(namedVar, time) {
     [wanVar].sort((a, b) => a - b),
     functionRegistry.time,
   );
-  var rndSeo = needUtility(rndVar, time)[0].rndTitle;
+  var rndSeo = needUtility(rndVar, time)[0]?.rndTitle;
   return rndSeo;
 }
 
@@ -2204,7 +2204,7 @@ function ssNameIdFind(sheetName, id) {
 
   while (files.hasNext()) {
     const file = files.next();
-    if (id) {
+    if (id && id !== "id") {
       // Check if the file ID matches the provided sheet ID
       if (file.getId() === id) {
         const spreadsheet = SpreadsheetApp.openById(sheetId);
@@ -2222,7 +2222,7 @@ function ssNameIdFind(sheetName, id) {
 
 var ssGetSheet = function (sheetname) {
   var ss = spreadSheet();
-  if (ss) {
+  if (ss && ss !== null) {
     var sheet = ss.getSheetByName(sheetname);
     return sheet;
   }
@@ -2245,7 +2245,7 @@ function ssGetSheetBSI(url) {
 }
 
 function ssGetSheetBySpreadsheetId(id, sheetname) {
-  if (id) {
+  if (id && id !== "id") {
     var ss = idSpreadSheet(id);
     var sheet = ss.getSheetByName(sheetname);
     return sheet;
@@ -2260,7 +2260,7 @@ function ssGetSheetBySpreadsheetId(id, sheetname) {
 function ssGetSheetBySpreadsheetUrl(url, sheetname) {
   if (url) {
     var ss = urlSpreadSheet(url);
-    if (sheetname) {
+    if (sheetname && ss && ss !== null) {
       var sheet = ss.getSheetByName(sheetname);
       return sheet;
     } else {
@@ -2281,14 +2281,14 @@ function ssSetName(randomSheet, sheetname) {
 
 var ssSetSheet = function () {
   var ss = spreadSheet();
-  if (ss) {
+  if (ss && ss !== null) {
     var sheet = ss.setActiveSheet();
     return sheet;
   }
 };
 
 var ssSetSheetBySpreadsheetId = function (id) {
-  if (id) {
+  if (id && id !== "id") {
     var ss = idSpreadSheet(id);
     var sheet = ss.setActiveSheet();
     return sheet;
@@ -2305,7 +2305,7 @@ var ssSetSheetBySpreadsheetUrl = function (url) {
 
 var ssSheet = function () {
   var ss = spreadSheet();
-  if (ss) {
+  if (ss && ss !== null) {
     var sheet = ss.getActiveSheet();
     return sheet;
   }
@@ -2417,7 +2417,7 @@ function wanUtil(namedVar, time) {
     "Recieved strVar: " + strVar + " from testData with namedVar: " + namedVar,
   );
   console.log("Calling needUtility with strVar: " + strVar);
-  var wanVar = needUtility(null, strVar, time)[0].rndTitle;
+  var wanVar = needUtility(null, strVar, time)[0]?.rndTitle;
   console.log(
     "Recieved wanVar: " + wanVar + " from needUtility with strVar: " + strVar,
   );

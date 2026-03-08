@@ -1,11 +1,11 @@
-function addDates(title, startTime, endTime, series) {
-  if (!series) {
-    console.log("You did not specify series");
-    addEventToCalendar(title, startTime, endTime);
-  } else if (series) {
-    console.log("You specified series of ".concat(series));
-    addEventSeriesToCalendar(title, startTime, endTime, series);
-  }
+// function addDates(title, startTime, endTime, series) {
+  // if (!series) {
+  //   console.log("You did not specify series");
+  //   addEventToCalendar(title, startTime, endTime);
+  // } else if (series) {
+  //   console.log("You specified series of ".concat(series));
+  //   addEventSeriesToCalendar(title, startTime, endTime, series);
+  // }
   // let busyDays = addDays()
   // switch (busyDays.length.toString()) {
   //   case  "0":
@@ -15,18 +15,18 @@ function addDates(title, startTime, endTime, series) {
   //     const daysCalendarRange = addDays();
   //   return daysCalendarRange;
   // }
-}
+// }
 
 function addDays() {
   var startDate = new Date();
   var endDate = new Date(new Date().setYear(startDate.getFullYear() + 1));
   var calendar = CalendarApp.getDefaultCalendar();
-  var events = calendar.getEvents(startDate, endDate);
-  var days = events.map(function (e) {
+  var events = calendar?.getEvents(startDate, endDate);
+  var days = events?.map(function (e) {
     return e.getStartTime().valueOf();
   });
   var uniqueDays = [];
-  days.forEach(function (d) {
+  days?.forEach(function (d) {
     if (uniqueDays.indexOf(d) === -1) {
       uniqueDays.push(d);
     }
@@ -39,7 +39,7 @@ function busyDates() {
   var calendars = CalendarApp.getAllCalendars();
   var myCalendar;
   while (!myCalendar) {
-    calendars.map((calendar) => {
+    calendars?.map((calendar) => {
       authLogic(calendar.isMyPrimaryCalendar())
         ? (function () {
             myCalendar = calendar.getId();
@@ -53,9 +53,9 @@ function busyDates() {
   var startDate = new Date();
   var endDate = new Date(new Date().setYear(startDate.getFullYear() + 1));
   var busyCalendar = CalendarApp.getCalendarsByName(myCalendar)[0];
-  var events = busyCalendar.getEvents(startDate, endDate);
+  var events = busyCalendar?.getEvents(startDate, endDate);
   var daysBusy = [];
-  events.map((event) => {
+  events?.map((event) => {
     daysBusy.push(event.getStartTime().setHours(0, 0, 0, 0));
   });
   var uniqueBusy = [];
@@ -89,7 +89,7 @@ async function agendaDates() {
   var data = aData.slice(1, lr);
   var calendars = CalendarApp.getAllCalendars();
   var myCalendar;
-  calendars.map((calendar) => {
+  calendars?.map((calendar) => {
     authLogic(calendar.isMyPrimaryCalendar())
       ? (function () {
           myCalendar = calendar.getId();
@@ -116,25 +116,25 @@ async function agendaDates() {
     // <br>Best Regards.
     // <br><a href=""></a></p>
     // </div>`;
-    var tempTitle = [title].map((i) => {
+    var tempTitle = [title]?.map((i) => {
       var myObj = {};
-      [title].forEach((d, index) => {
+      [title]?.forEach((d, index) => {
         myObj[d] = i[index];
       });
       console.log(myObj);
       return myObj;
     });
-    var tempStartTime = [startTime].map((i) => {
+    var tempStartTime = [startTime]?.map((i) => {
       var myObj = {};
-      [startTime].forEach((d, index) => {
+      [startTime]?.forEach((d, index) => {
         myObj[d] = i[index];
       });
       console.log(myObj);
       return myObj;
     });
-    var tempEndTime = [endTime].map((i) => {
+    var tempEndTime = [endTime]?.map((i) => {
       var myObj = {};
-      [endTime].forEach((d, index) => {
+      [endTime]?.forEach((d, index) => {
         myObj[d] = i[index];
       });
       console.log(myObj);
@@ -204,7 +204,7 @@ function dateAgenda() {
 function dateFunction(series) {
   var days = mapValues(sliceValues(ssDataRange(), 1), series);
   var uniqueDays = [];
-  days.forEach(function (d) {
+  days?.forEach(function (d) {
     if (uniqueDays.indexOf(d) === -1) {
       uniqueDays.push(d);
     }
@@ -224,7 +224,7 @@ function dateModel(days) {
   );
   var uniqueDays = [];
   if (days) {
-    days.forEach(function (d) {
+    days?.forEach(function (d) {
       if (uniqueDays.indexOf(d) === -1) {
         uniqueDays.push(d);
       }
@@ -249,12 +249,12 @@ function flatten(input) {
 
 function getCalendarBusyDays(dates) {
   var ws = ssSheet();
-  var disabledDays = ws.getRange(dates).getValues();
-  var days = disabledDays.map(function (e) {
+  var disabledDays = ws?.getRange(dates).getValues();
+  var days = disabledDays?.map(function (e) {
     return e[0].valueOf();
   });
   var uniqueDays = [];
-  days.forEach(function (d) {
+  days?.forEach(function (d) {
     if (uniqueDays.indexOf(d) === -1) {
       uniqueDays.push(d);
     }
@@ -307,7 +307,7 @@ function lower(array, callback, initial) {
 
 function randomDay(disabledDays) {
   disabledDays = dateAgenda();
-  var populateDates = disabledDays.map(function (day) {
+  var populateDates = disabledDays?.map(function (day) {
     return disabledDays.indexOf(day.valueOf()) > -1;
   });
   // }

@@ -331,10 +331,7 @@ function runIt(e) {
     // Route.path("default", HtmlService.createHtmlOutput);
     // Route.path("default", HtmlService.createHtmlOutput);
     // Route.path("default", HtmlService.createHtmlOutput);
-    return wwAccess(
-      e ? e.parameter["default"] : "default",
-      defaultWebsite,
-    )(e ? e : null);
+    return wwAccess("default", defaultWebsite)();
   }
 }
 

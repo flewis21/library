@@ -102,7 +102,7 @@ function createFormFunction(searchString) {
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
   let vidTubeTime = vidPlaylist(scriptTitle);
-  let tubeArr = vidTubeTime.playlistArr;
+  let tubeArr = vidTubeTime?.playlistArr;
   var tubeEngine = vidTubeTime.hardUrl;
   const userSubmit = FormApp.create(scriptTitle)
     .setDescription(rule())
@@ -1632,17 +1632,17 @@ function dtlsCalculator(e) {
     randomSubstance(0, 2, ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]),
   )[0];
   const rndNumData = Math.floor(
-    Math.random() * Math.floor(data.playlistArr.length),
+    Math.random() * Math.floor(data?.playlistArr.length),
   );
   if (!username) {
-    var percent = data.rndTitle;
+    var percent = data?.rndTitle;
   } else {
     var percent = username;
   }
   if (typeof username === "undefined") {
-    var form = formMaker(data.rndTitle);
+    var form = formMaker(data?.rndTitle);
     form
-      .setTitle(data.rndTitle)
+      .setTitle(data?.rndTitle)
       .setConfirmationMessage("Thanks for your feedback !!");
   } else {
     var form = formMaker(username);
@@ -1681,9 +1681,9 @@ function dtlsCalculator(e) {
   const today = new Date();
   const rule = today.toDateString() + " - " + today.toTimeString();
   form.addSectionHeaderItem().setTitle(rule);
-  var videIdUrl = data.playlistArr[rndNumData];
+  var videIdUrl = data?.playlistArr[rndNumData];
   var globalYoutubeUrl = "https://www.youtube.com/watch?v=";
-  if (typeof data.videoItem !== "undefined") {
+  if (typeof data?.videoItem !== "undefined") {
     form
       .addVideoItem()
       .setAlignment(FormApp.Alignment.CENTER)
@@ -1696,9 +1696,9 @@ function dtlsCalculator(e) {
       var rndFormArray = needUtility(r[0])[0];
       var videoVegas = substanceVegas(null, 0, 11);
       var rndFormVideo =
-        rndFormArray.playlistArr[
+        rndFormArray?.playlistArr[
           Math.floor(
-            Math.random() * Math.floor(rndFormArray.playlistArr.length),
+            Math.random() * Math.floor(rndFormArray?.playlistArr.length),
           )
         ];
       return `${form
@@ -2240,7 +2240,7 @@ function dtlsStore(itemName, time) {
     }
   }
   var isProduct = formsUrls(
-    [itemName].join("").toLowerCase(),
+    [itemName]?.join("").toLowerCase(),
     "inventoryForms",
   );
   console.log(typeof isProduct);
@@ -2250,7 +2250,7 @@ function dtlsStore(itemName, time) {
   }
   var time = start;
   var form = formMaker(
-    [itemName].join("").toUpperCase(),
+    [itemName]?.join("").toUpperCase(),
     "inventoryForms",
     time,
   );
@@ -2348,8 +2348,8 @@ function dtlsStore(itemName, time) {
 
 function dtlsTv() {
   var randomSECCo = needUtility(randomSubstance(null, 0, 7))[0];
-  var myVid = randomSECCo.rndTitle;
-  var infoLink = seoSheet(myVid).keyWords;
+  var myVid = randomSECCo?.rndTitle;
+  var infoLink = seoSheet(myVid)?.keyWords;
   var pageArray = [];
   infoLink.map((tv) => {
     var plaListNum = Math.floor(Math.random() * Math.floor(tv.length));
@@ -2366,7 +2366,7 @@ function dtlsVegas(rndId) {
     var rndId = "Converse Chuck Taylor All Star Low Top";
   }
   console.log("dtlsVegas:\ncalling seoSheet(" + rndId + ").keyWords");
-  var rndTKey = seoSheet(rndId).keyWords;
+  var rndTKey = seoSheet(rndId)?.keyWords;
   return console.log(convertToJS(rndTKey));
   var keyNum = Math.floor(Math.random() * Math.floor(rndTKey.length));
   var ndT = rndTKey[keyNum].replace(/"'/g, "");
@@ -2374,7 +2374,7 @@ function dtlsVegas(rndId) {
   var util = ndT[ndTNum];
   var ndtUtil = needUtility(util)[0];
   return console.log(ndtUtil);
-  var ndTArray = ndtUtil.playlistArr;
+  var ndTArray = ndtUtil?.playlistArr;
   var form = formMaker([rndId].join("").toUpperCase(), "Forms");
   if (typeof form === "string") {
     var formUrl = FormApp.openByUrl(form).getPublishedUrl();
@@ -2390,7 +2390,7 @@ function dtlsVegas(rndId) {
     form.addPageBreakItem().setTitle(rndVid);
     var formUrl = form.getPublishedUrl();
   }
-  var result = JSON.stringify(ndtUtil.rndTitle);
+  var result = JSON.stringify(ndtUtil?.rndTitle);
   var html = HtmlService.createTemplate(
     `<html>
       <body>

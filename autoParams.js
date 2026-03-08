@@ -1171,7 +1171,7 @@ function myGVFunction(
 }
 
 function main() {
-  functionRegistry.initialize();
+  // functionRegistry.initialize();
 
   // Example call where missing parameters will be populated from your globals
   const args = resolveFunctionArgs("myGVFunction", {});
