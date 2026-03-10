@@ -2704,7 +2704,10 @@ function resolveParams(func, someArgs) {
                   [
                     [
                       ["func", result.name],
-                      ["args", JSON.stringify(orderedContent) || result.parameters],
+                      [
+                        "args",
+                        JSON.stringify(orderedContent) || result.parameters,
+                      ],
                       ["action", "getData"],
                       ["file", "uiAccess"],
                     ],
@@ -2744,11 +2747,7 @@ function resolveParams(func, someArgs) {
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
                   ["parameter"],
-                  [
-                    [
-                      ["func", result],
-                    ],
-                  ],
+                  [[["func", result]]],
                   functionRegistry.time,
                 );
                 var funcUno = rndE.parameter["func"];
@@ -2769,7 +2768,7 @@ function resolveParams(func, someArgs) {
                   [
                     [
                       ["func", result.name],
-                      ["args", [...orderedContent || result.parameters]],
+                      ["args", [...(orderedContent || result.parameters)]],
                     ],
                   ],
                   functionRegistry.time,
@@ -2784,23 +2783,19 @@ function resolveParams(func, someArgs) {
                   timestamp: new Date(),
                 };
               } else if (result !== null && result && result.name) {
-                  var rndE = objectOfS(
-                    ["parameter"],
-                    [
-                      [
-                        ["func", result.name],
-                      ],
-                    ],
-                    functionRegistry.time,
-                  );
-                  var funcUno = rndE.parameter["func"];
-                  if (funcUno !== "resolvedParams") {
-                    var payLoad = globalThis[funcUno]()//.apply(this, funcDos);
-                  }
-                  args[declaredParamName] = {
-                    message: payLoad,
-                    timestamp: new Date(),
-                  };
+                var rndE = objectOfS(
+                  ["parameter"],
+                  [[["func", result.name]]],
+                  functionRegistry.time,
+                );
+                var funcUno = rndE.parameter["func"];
+                if (funcUno !== "resolvedParams") {
+                  var payLoad = globalThis[funcUno](); //.apply(this, funcDos);
+                }
+                args[declaredParamName] = {
+                  message: payLoad,
+                  timestamp: new Date(),
+                };
               }
               resolvedArgs.push(args[declaredParamName]);
             } else if (
@@ -2858,7 +2853,8 @@ function resolveParams(func, someArgs) {
             ) {
               functionRegistry.gTree;
               var folder = functionRegistry.getFolderList()[numVarRnd];
-              args[declaredParamName] = fileBrowser(folder).url || driveManager();
+              args[declaredParamName] =
+                fileBrowser(folder).url || driveManager();
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "object" ||

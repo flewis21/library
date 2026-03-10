@@ -20,10 +20,9 @@ var apiSetupSheet = function () {
   try {
     var doc = SpreadsheetApp.openById(keyC);
     return doc;
-  }
-  catch (erR) {
+  } catch (erR) {
     console.log("Corrections Needed: ", erR.stack);
-    return
+    return;
   }
 };
 

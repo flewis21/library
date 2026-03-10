@@ -562,7 +562,9 @@ function jsonXCalc(searchString, time) {
       ", = " +
       time,
   );
-  var isProduct = DriveApp.getFileById(sheetsUrls([searchString].join("").toLowerCase())).getUrl();
+  var isProduct = DriveApp.getFileById(
+    sheetsUrls([searchString].join("").toLowerCase()),
+  ).getUrl();
   console.log(
     formatTime(functionRegistry.time) +
       "\n" +

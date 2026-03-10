@@ -118,7 +118,7 @@ var geneicType = function () {
   // let tyFile = wsSIPOC(randonWord);
   // console.log(tyFile);
   // let arrDRnd = appSort(randNum(randomWord));
-  let searchResult = randomSubstance(0, 1, ["kVar","kiloPoint"]).myNewArr;
+  let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
   let result = functionRegistry.paramsList.find((rndS) => {
     return rndS.name === searchResult;
   });

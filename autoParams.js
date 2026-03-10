@@ -158,9 +158,9 @@ const functionRegistry = {
     var itemArrays = itemSheet.getDataRange().getValues().slice(1);
     this.arrDomainVals = itemArrays.map((val) => {
       return {
-        "Domain": val[0],
-        "Price": val[1],
-        "Email": val[2],
+        Domain: val[0],
+        Price: val[1],
+        Email: val[2],
       };
     });
   },

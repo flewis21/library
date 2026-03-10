@@ -1368,7 +1368,7 @@ function createRandomForm() {
           const scaleItem = form
             .addScaleItem()
             .setTitle(questionTitle + " (Rating Scale)");
-          scaleItem.setBounds(1,Math.floor(Math.random() * 5) + 5)  // Scale of 1 to 5-9
+          scaleItem.setBounds(1, Math.floor(Math.random() * 5) + 5); // Scale of 1 to 5-9
           if (Math.random() < 0.5) scaleItem.setLabels("Lowest", "Highest");
           if (isRequired) scaleItem.setRequired(true);
           break;

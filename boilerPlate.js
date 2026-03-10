@@ -120,9 +120,8 @@ var covertArr = function (objects, row, index) {
       arguments.callee.caller.name,
   );
   if (typeof objects === "string") {
-    return
-  }
-  else {
+    return;
+  } else {
     var data = [];
     for (var key in objects) {
       // console.log(key)
@@ -185,7 +184,7 @@ var getEventValues = function (title, startTime, endTime, series) {
   }
 };
 
-var getDomainValues = function() {
+var getDomainValues = function () {
   functionRegistry.domainTree();
   var domainSheetVals = functionRegistry.getDomainList();
   var domainData = [];
@@ -195,8 +194,8 @@ var getDomainValues = function() {
     let domainTLD = domainObj["domain"];
     domainData.push(domainTLD);
   });
-  return domainData
-}
+  return domainData;
+};
 
 var getFolderValues = function () {
   return functionRegistry.getFolderList();

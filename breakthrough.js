@@ -1213,10 +1213,10 @@ function rndWinner(infinitum) {
   return formUrl;
 }
 
-var rndWord = function() {
+var rndWord = function () {
   let ciar = trial();
   let meri = randNum([JSON.stringify(ciar)].join(" "));
-  let allFiles = globalThis.uniqueCoArray()[meri]["title"]
+  let allFiles = globalThis.uniqueCoArray()[meri]["title"];
   let randonWord = [allInvestors(allFiles).title]
     .join("")
     .split("")
@@ -1232,5 +1232,5 @@ var rndWord = function() {
       return priorityA - priorityB;
     })
     .join("");
-  return randonWord
-}
+  return randonWord;
+};

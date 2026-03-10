@@ -804,7 +804,9 @@ function productRegNo(eparegno) {
                             randNum([JSON.stringify(eparegno)].join(" "))
                           ]["SKU"],
                         pc_code: randNum([JSON.stringify(trial())].join(" ")),
-                        cas_number: randNum([JSON.stringify(trial())].join(" ")),
+                        cas_number: randNum(
+                          [JSON.stringify(trial())].join(" "),
+                        ),
                       },
                     ],
                   },
@@ -820,8 +822,7 @@ function productRegNo(eparegno) {
         ],
       ],
     );
-  }
-  catch (erR) {
+  } catch (erR) {
     console.log("Error resolving reg no. ", erR.stack);
   }
   const res = [resItem[eparegno]];
@@ -937,11 +938,7 @@ function productName(epaDaVar, epaDbVar, epaDcVar, dVar, eVar, fVar) {
   let done = dVar(dVar);
   let eone = eVar(eVar);
   let fone = fVar(fVar);
-  const productNameEpaData = epaD(
-    aone,
-    bone,
-    cone,
-  )[done][eone][fone];
+  const productNameEpaData = epaD(aone, bone, cone)[done][eone][fone];
   return productNameEpaData;
 }
 
@@ -994,7 +991,8 @@ function productNamePartial(sSProduct) {
         [
           "first",
           {
-            $ref: "https://search.epa.gov/epasearch/?querytext=" + sSProduct + "#",
+            $ref:
+              "https://search.epa.gov/epasearch/?querytext=" + sSProduct + "#",
           },
         ],
       ],

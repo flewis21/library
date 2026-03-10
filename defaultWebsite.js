@@ -213,9 +213,8 @@ function defaultWebsite(e) {
   // Route.path("default", renderTemplate);
   // Route["default"]("<h1>Hello World!</h1>")
   if (Object.keys(e.parameter).indexOf("webApp") === -1) {
-    return
-  }
-  else {
+    return;
+  } else {
     switch (e?.parameter["webApp"]) {
       // case "dlsindex": // <!------------------------------Main Website Index Page-----------------------------!>
       //     webApp = HtmlService.createTemplateFromFile("dlsindex");
@@ -1793,18 +1792,16 @@ var getUrlResponse = function (url, options) {
         Logger.log("Error resolving TinyURL: " + e.toString());
         console.error("Error resolving TinyURL: ", e.toString());
       }
-    }
-    catch (l) {
+    } catch (l) {
       Logger.log("Error response received: " + l.stack);
       console.log("Error response received,", l.stack);
       var domainData = getDomainValues();
       if (domainData.indexOf(validUrl.hostname) !== -1) {
-        return
-      }
-      else {
+        return;
+      } else {
         var formData = {};
         let ciar = trial();
-        let mera = randomEmail()
+        let mera = randomEmail();
         let meri = randNum([JSON.stringify(ciar)].join(" "));
         formData["domain"] = validUrl.hostname;
         formData["price"] = meri;
@@ -1814,11 +1811,10 @@ var getUrlResponse = function (url, options) {
     }
     console.log("Final app:", htmlData);
     return { index: responseObj, app: htmlData, link: supUrl };
-  }
-  else {
+  } else {
     Logger.log("Invalid input, " + [url, options]);
     console.log("Invalid input, ", [url, options]);
-    return null
+    return null;
   }
 };
 
@@ -2071,16 +2067,14 @@ function wwwDe(url) {
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );
-    }
-    else if (typeof response["app"] === "undefined") {
+    } else if (typeof response["app"] === "undefined") {
       var feed = response;
       //UrlFetchApp.fetch(url).getContentText();
       feed = isMapped(feed)["app"].replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );
-    }
-    else {
+    } else {
       var feed = response["app"];
       //UrlFetchApp.fetch(url).getContentText();
       feed = feed.replace(
@@ -2089,12 +2083,10 @@ function wwwDe(url) {
       );
     }
     //resolveParams("wwwDe")["wwwDe"][0]
-  }
-  else {
-    let options = 
-      {
-        muteHttpExceptions: true
-      }
+  } else {
+    let options = {
+      muteHttpExceptions: true,
+    };
     var feed = getUrlResponse(url, options);
     //UrlFetchApp.fetch(url).getContentText();
     feed = feed.replace(
@@ -2107,13 +2099,12 @@ function wwwDe(url) {
   );
 }
 
-var wwwUrl = function() {
+var wwwUrl = function () {
   let thMat = Math.random();
   let thRef = thMat < 0.7;
-  let options = 
-    {
-      muteHttpExceptions: true
-    }
+  let options = {
+    muteHttpExceptions: true,
+  };
   let count = 0;
   let feed = {};
   while (feed === null || !feed["app"]) {
@@ -2121,29 +2112,29 @@ var wwwUrl = function() {
     let uFP2 = uFP1.replace(/\)/g, "");
     // let uFP2 = uFP1.replace(/\//g, "");
     let priori = uFP2.replace(/\//g, "");
-    ;
-    //.toString().; 
-    let domainName = priori.toLowerCase().split(" ").join(",").replace(/,/g, "");
+    //.toString().;
+    let domainName = priori
+      .toLowerCase()
+      .split(" ")
+      .join(",")
+      .replace(/,/g, "");
     if (thRef && !thMat < 0.5 && !thMat > 0.55) {
       let netTLD = "https://www." + domainName + ".net";
-      feed = getUrlResponse(netTLD,options);
-    }
-    else if (!thRef && !thMat <0.75 && !thMat > 0.755) {
+      feed = getUrlResponse(netTLD, options);
+    } else if (!thRef && !thMat < 0.75 && !thMat > 0.755) {
       let orgTLD = "https://www." + domainName + ".org";
-      feed = getUrlResponse(orgTLD,options);
-    }
-    else if (thRef && !thMat < 0.25 && !thMat > 0.255) {
-      let comTLD =  "https://www." + domainName + ".com";
-      feed = getUrlResponse(comTLD,options);
-    }
-    else {
+      feed = getUrlResponse(orgTLD, options);
+    } else if (thRef && !thMat < 0.25 && !thMat > 0.255) {
+      let comTLD = "https://www." + domainName + ".com";
+      feed = getUrlResponse(comTLD, options);
+    } else {
       let infoTLD = "https://www." + domainName + ".info";
-      feed = getUrlResponse(infoTLD,options);
+      feed = getUrlResponse(infoTLD, options);
     }
     if ((feed !== null && typeof feed["app"] !== "undefined") || count == 3) {
-      break
+      break;
     }
-    count++
+    count++;
   }
-  return feed
-}
+  return feed;
+};
