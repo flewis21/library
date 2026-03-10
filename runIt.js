@@ -28,80 +28,6 @@ var authLogic = function (logic) {
 // console.log(isValid)});
 // return isValid;}
 
-var email = function () {
-  var emails = validateFiles();
-  var emailsCount = emails.toString().split(",").length;
-  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
-  return randomEmail;
-};
-
-function getBreakthrough(e) {
-  const list = (e) => {
-    return {
-      list: function (e) {
-        //const URL = new URL(window.location.href);
-        // const getParam = URL.searchParams.get("uname");
-        // var username = URL.searchParams.get("uname") || 1;
-        var username = e.parameter["uname"] || 1;
-        percent = username;
-        var list = [];
-        for (var i = 0; 0 < percent; i++) {
-          var result =
-            JSON.stringify(i) * percent -
-            Math.floor(JSON.stringify(i) * percent);
-          if (result === 0) {
-            list.push([
-              JSON.stringify(i) * percent +
-                " " +
-                "out of" +
-                " " +
-                JSON.stringify(i) +
-                " " +
-                "odds!",
-            ]);
-            if (JSON.stringify(i) >= 100) {
-              break;
-            }
-          }
-        }
-        list
-          .map(function (r) {
-            return "<li>" + r[0] + "</li>";
-          })
-          .join("");
-        return list;
-      },
-      topScript: function () {
-        console.log(document.getElementById("test").innerHTML);
-        // Init a timeout variable to be used below
-        let timeout = null;
-        (() => {
-          // Clear the timeout if it has already been set.
-          // This will prevent the previous task from executing
-          // if it has been less than <MILLISECONDS>
-          // clearTimeout(timeout);
-          // Make a new timeout set to go off in 1000ms (1 second)
-          // timeout = setTimeout
-          // (function  ()
-          // {console.log('Input Value:', textInput.value);}, 5000)();
-          if (typeof url === "undefined") {
-            var urlData = document.getElementById("url").value;
-            var url = urlData.toString();
-          }
-          var uname = document.getElementById("username").value;
-          var linkFollow = document.createElement("a");
-          linkFollow.href = url + "?default=ssDCUO&uname=" + uname;
-          linkFollow.id = "linkFOLLOW";
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-        })();
-      },
-    };
-  };
-  list().list(e);
-  list().topScript();
-}
-
 function carbon(email) {
   // Grant or Deny access
   const emailList = (() => {
@@ -256,6 +182,80 @@ function congressLeg(e) {
 // congressData: congressInfoAPI(),
 // civicData: civicInfoAPI()//"".concat(contentApp("\n  document.addEventListener('DOMContentLoaded', function() {\n   let getCivic = document.querySelector(\".civic\");\n   getCivic.textContent = <?!= data ?>;\n   })\n   ", {data: civicInfoAPI()}), "")});
 
+var email = function () {
+  var emails = validateFiles();
+  var emailsCount = emails.toString().split(",").length;
+  var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
+  return randomEmail;
+};
+
+function getBreakthrough(e) {
+  const list = (e) => {
+    return {
+      list: function (e) {
+        //const URL = new URL(window.location.href);
+        // const getParam = URL.searchParams.get("uname");
+        // var username = URL.searchParams.get("uname") || 1;
+        var username = e.parameter["uname"] || 1;
+        percent = username;
+        var list = [];
+        for (var i = 0; 0 < percent; i++) {
+          var result =
+            JSON.stringify(i) * percent -
+            Math.floor(JSON.stringify(i) * percent);
+          if (result === 0) {
+            list.push([
+              JSON.stringify(i) * percent +
+                " " +
+                "out of" +
+                " " +
+                JSON.stringify(i) +
+                " " +
+                "odds!",
+            ]);
+            if (JSON.stringify(i) >= 100) {
+              break;
+            }
+          }
+        }
+        list
+          .map(function (r) {
+            return "<li>" + r[0] + "</li>";
+          })
+          .join("");
+        return list;
+      },
+      topScript: function () {
+        console.log(document.getElementById("test").innerHTML);
+        // Init a timeout variable to be used below
+        let timeout = null;
+        (() => {
+          // Clear the timeout if it has already been set.
+          // This will prevent the previous task from executing
+          // if it has been less than <MILLISECONDS>
+          // clearTimeout(timeout);
+          // Make a new timeout set to go off in 1000ms (1 second)
+          // timeout = setTimeout
+          // (function  ()
+          // {console.log('Input Value:', textInput.value);}, 5000)();
+          if (typeof url === "undefined") {
+            var urlData = document.getElementById("url").value;
+            var url = urlData.toString();
+          }
+          var uname = document.getElementById("username").value;
+          var linkFollow = document.createElement("a");
+          linkFollow.href = url + "?default=ssDCUO&uname=" + uname;
+          linkFollow.id = "linkFOLLOW";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+        })();
+      },
+    };
+  };
+  list().list(e);
+  list().topScript();
+}
+
 function pill() {
   const Route = {};
   Route.path = function (route, callback) {
@@ -281,8 +281,8 @@ function pill() {
 }
 
 var randomEmail = function () {
-  var emails = validate();
-  var emailsCount = validate().toString().split(",").length;
+  var emails = validateFiles();
+  var emailsCount = emails.toString().split(",").length;
   var randomEmail = emails[Math.floor(Math.random() * emailsCount)];
   return randomEmail;
 };

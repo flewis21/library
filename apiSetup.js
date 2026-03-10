@@ -17,8 +17,14 @@ var apiRedeplaoy = function () {
 var apiSetupSheet = function () {
   var cprops = PropertiesService.getScriptProperties();
   var keyC = cprops.getProperty("key");
-  var doc = SpreadsheetApp.openById(keyC);
-  return doc;
+  try {
+    var doc = SpreadsheetApp.openById(keyC);
+    return doc;
+  }
+  catch (erR) {
+    console.log("Corrections Needed: ", erR.stack);
+    return
+  }
 };
 
 var apiSetupActiveSheet = function () {

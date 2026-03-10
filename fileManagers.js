@@ -1263,11 +1263,11 @@ function fileManager(fileX, folder, time, content, mimeType) {
     var folderId = folderIdGlobal(folder, time);
     // console.log("Declaring folderIdName calling DriveApp.getFileById(" + folderId + ").getName() to get the folder name")
     // var folderIdName = DriveApp.getFolderById(folderId).getName()
-    console.log(
-      "Declaring file calling DriveApp.getRootFolder().getFilesByName(" +
-        DriveApp.getFileById(fileX).getName() +
-        ") to search the root folder for the file",
-    );
+    // console.log(
+    //   "Declaring file calling DriveApp.getRootFolder().getFilesByName(" +
+    //     DriveApp.getFileById(fileX).getName() +
+    //     ") to search the root folder for the file",
+    // );
     var file = DriveApp.getRootFolder().getFilesByName(
       DriveApp.getFileById(fileX).getName(),
     );

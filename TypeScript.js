@@ -114,30 +114,15 @@ var geneicType = function () {
   };
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  let randonWord = [
-    allInvestors(
-      globalThis.uniqueCoArray()[randNum([JSON.stringify(trial())].join(" "))][
-        "title"
-      ],
-    ).title,
-  ]
-    .join("")
-    .split("")
-    .sort((a, b) => {
-      let priorityA = 0;
-      let priorityB = 0;
-      if (Math.random() < 0.5) {
-        priorityA = getZuluFreqPriority(a);
-      }
-      if (Math.random() < 0.5) {
-        priorityB = freqPriority.get(b);
-      }
-      return priorityA - priorityB;
-    })
-    .join("");
+  // let randomWord = rndWord();
   // let tyFile = wsSIPOC(randonWord);
   // console.log(tyFile);
-  let fileIndex = productTime(randonWord);
+  // let arrDRnd = appSort(randNum(randomWord));
+  let searchResult = randomSubstance(0, 1, ["kVar","kiloPoint"]).myNewArr;
+  let result = functionRegistry.paramsList.find((rndS) => {
+    return rndS.name === searchResult;
+  });
+  let fileIndex = productTime(randomWord);
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");

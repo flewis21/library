@@ -95,7 +95,7 @@ function createFormFunction(searchString) {
     MIN_SECTIONS;
 
   const questionTitle = `${QUESTION_WORDS[Math.floor(Math.random() * QUESTION_WORDS.length)]} ${Math.random() < 0.5 ? "?" : ""}`;
-  const isRequired = randChoice(); //Math.random() < 0.7; // 70% chance of being required
+  const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
@@ -1368,8 +1368,7 @@ function createRandomForm() {
           const scaleItem = form
             .addScaleItem()
             .setTitle(questionTitle + " (Rating Scale)");
-          scaleItem.setLowerBound(1);
-          scaleItem.setUpperBound(Math.floor(Math.random() * 5) + 5); // Scale of 1 to 5-9
+          scaleItem.setBounds(1,Math.floor(Math.random() * 5) + 5)  // Scale of 1 to 5-9
           if (Math.random() < 0.5) scaleItem.setLabels("Lowest", "Highest");
           if (isRequired) scaleItem.setRequired(true);
           break;
@@ -2347,7 +2346,7 @@ function dtlsStore(itemName, time) {
 }
 
 function dtlsTv() {
-  var randomSECCo = needUtility(randomSubstance(null, 0, 7))[0];
+  var randomSECCo = needUtility(randomSubstance(null, 0, null))[0];
   var myVid = randomSECCo?.rndTitle;
   var infoLink = seoSheet(myVid)?.keyWords;
   var pageArray = [];

@@ -323,7 +323,7 @@ function portPro(e) {
   }
   var time = start;
   var arrData = coSort(time).title;
-  var utilNeed = randomUtility(e, arrData).title;
+  var utilNeed = randomUtility(e, arrData)?.title;
   var cokey = e || utilNeed;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "webForms");
   console.log(typeof isProduct);

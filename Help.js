@@ -2676,18 +2676,54 @@ function resolveParams(func, someArgs) {
               paramName === "e" ||
               (paramName === null && declaredParamName === "e")
             ) {
-              args[declaredParamName] = objectOfS(
-                ["parameter"],
-                [
+              arrDRnd = appSort(numVarRnd);
+              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              result = fParams.find((rndS) => {
+                return rndS.name === searchResult;
+              });
+              console.log("resolved e.parameter pre-result", result);
+              if (typeof result === "string" && result !== "undefined") {
+                args[declaredParamName] = objectOfS(
+                  ["parameter"],
                   [
-                    ["func", result],
-                    ["args", JSON.stringify(orderedContent)],
-                    ["action", "getData"],
-                    ["file", "uiAccess"],
+                    [
+                      ["func", result],
+                      ["action", "getData"],
+                      ["file", "uiAccess"],
+                    ],
                   ],
-                ],
-                functionRegistry.time,
-              );
+                  functionRegistry.time,
+                );
+              } else if (
+                typeof result === "object" &&
+                result !== null &&
+                result.name
+              ) {
+                args[declaredParamName] = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", result.name],
+                      ["args", JSON.stringify(orderedContent) || result.parameters],
+                      ["action", "getData"],
+                      ["file", "uiAccess"],
+                    ],
+                  ],
+                  functionRegistry.time,
+                );
+              } else if (result !== null && result && result.name) {
+                args[declaredParamName] = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", result.name],
+                      ["action", "getData"],
+                      ["file", "uiAccess"],
+                    ],
+                  ],
+                  functionRegistry.time,
+                );
+              }
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "time" ||
@@ -2699,31 +2735,95 @@ function resolveParams(func, someArgs) {
               paramName === "data" ||
               (paramName === null && declaredParamName === "data")
             ) {
-              var rndE = objectOfS(
-                ["parameter"],
-                [
+              arrDRnd = appSort(numVarRnd);
+              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              result = fParams.find((rndS) => {
+                return rndS.name === searchResult;
+              });
+              console.log("resolved data pre-result", result);
+              if (typeof result === "string" && result !== "undefined") {
+                var rndE = objectOfS(
+                  ["parameter"],
                   [
-                    ["func", "mis"],
-                    ["args", [result, ...orderedContent]],
+                    [
+                      ["func", result],
+                    ],
                   ],
-                ],
-                functionRegistry.time,
-              );
-              var funcUno = rndE.parameter["func"];
-              var funcDos = rndE.parameter["args"];
-              if (!funcUno === "resolvedParams") {
-                var payLoad = globalThis[funcUno].apply(this, funcDos);
+                  functionRegistry.time,
+                );
+                var funcUno = rndE.parameter["func"];
+                if (funcUno !== "resolvedParams") {
+                  var payLoad = globalThis[funcUno]();
+                }
+                args[declaredParamName] = {
+                  message: payLoad,
+                  timestamp: new Date(),
+                };
+              } else if (
+                typeof result === "object" &&
+                result !== null &&
+                result.name
+              ) {
+                var rndE = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", result.name],
+                      ["args", [...orderedContent || result.parameters]],
+                    ],
+                  ],
+                  functionRegistry.time,
+                );
+                var funcUno = rndE.parameter["func"];
+                var funcDos = rndE.parameter["args"];
+                if (funcUno !== "resolvedParams") {
+                  var payLoad = globalThis[funcUno].apply(this, funcDos);
+                }
+                args[declaredParamName] = {
+                  message: payLoad,
+                  timestamp: new Date(),
+                };
+              } else if (result !== null && result && result.name) {
+                  var rndE = objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result.name],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+                  var funcUno = rndE.parameter["func"];
+                  if (funcUno !== "resolvedParams") {
+                    var payLoad = globalThis[funcUno]()//.apply(this, funcDos);
+                  }
+                  args[declaredParamName] = {
+                    message: payLoad,
+                    timestamp: new Date(),
+                  };
               }
-              args[declaredParamName] = {
-                message: payLoad,
-                timestamp: new Date(),
-              };
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "func" ||
               (paramName === null && declaredParamName === "func")
             ) {
-              args[declaredParamName] = result;
+              arrDRnd = appSort(numVarRnd);
+              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              result = fParams.find((rndS) => {
+                return rndS.name === searchResult;
+              });
+              console.log("resolved func pre-result", result);
+              if (typeof result === "string" && result !== "undefined") {
+                args[declaredParamName] = result;
+              } else if (
+                typeof result === "object" &&
+                result !== null &&
+                result.name
+              ) {
+                args[declaredParamName] = result.name;
+              } else if (result !== null && result && result.name) {
+                args[declaredParamName] = result.name;
+              }
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "varA" ||
@@ -2758,7 +2858,7 @@ function resolveParams(func, someArgs) {
             ) {
               functionRegistry.gTree;
               var folder = functionRegistry.getFolderList()[numVarRnd];
-              args[declaredParamName] = fileBrowser(folder).url;
+              args[declaredParamName] = fileBrowser(folder).url || driveManager();
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "object" ||

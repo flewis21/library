@@ -142,6 +142,33 @@ const functionRegistry = {
     return this.folderTree;
   },
 
+  arrDomainVals: [],
+  domainTree: function () {
+    var itemSheet = (function () {
+      var ss = (function () {
+        var ssApp = SpreadsheetApp;
+        var ss = ssApp.openByUrl(
+          "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+        );
+        return ss;
+      })();
+      var sheet = ss.getSheetByName("DomainListings");
+      return sheet;
+    })();
+    var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+    this.arrDomainVals = itemArrays.map((val) => {
+      return {
+        "Domain": val[0],
+        "Price": val[1],
+        "Email": val[2],
+      };
+    });
+  },
+  getDomainList: function () {
+    // functionRegistry.gTree();
+    return this.arrDomainVals;
+  },
+
   maxTime: 6 * 60 * 1000, // This is a simple numerical value
   _startTime: null, // Private variable to store the timestamp when the process begins
 

@@ -115,24 +115,31 @@ var covertArr = function (objects, row, index) {
       "\n!" +
       objects +
       ", = " +
-      !objects,
+      !objects +
+      "\n" +
+      arguments.callee.caller.name,
   );
-  var data = [];
-  for (var key in objects) {
-    // console.log(key)
-    data.push([]);
-    for (var val in objects[key]) {
-      // console.log(objects[key])
-      data[key].push(objects[key][val]);
-      for (var i = 0; i < data.length; i++) {
-        // console.log(data[i])
+  if (typeof objects === "string") {
+    return
+  }
+  else {
+    var data = [];
+    for (var key in objects) {
+      // console.log(key)
+      data.push([]);
+      for (var val in objects[key]) {
+        // console.log(objects[key])
+        data[key].push(objects[key][val]);
+        for (var i = 0; i < data.length; i++) {
+          // console.log(data[i])
+        }
       }
     }
+    // console.log(data)
+    var temp = mapValues(sliceValues(data, row), index);
+    // console.log(temp)
+    return temp;
   }
-  // console.log(data)
-  var temp = mapValues(sliceValues(data, row), index);
-  // console.log(temp)
-  return temp;
 }; //, cVar)
 
 // The parameters (number[]) don't match the method signature for HtmlService.createTemplate.
@@ -177,6 +184,19 @@ var getEventValues = function (title, startTime, endTime, series) {
     return addEventToCalendar(start, end, description, start);
   }
 };
+
+var getDomainValues = function() {
+  functionRegistry.domainTree();
+  var domainSheetVals = functionRegistry.getDomainList();
+  var domainData = [];
+  var inValsKeys = Object.keys(domainSheetVals);
+  inValsKeys.forEach((key) => {
+    let domainObj = domainSheetVals[key];
+    let domainTLD = domainObj["domain"];
+    domainData.push(domainTLD);
+  });
+  return domainData
+}
 
 var getFolderValues = function () {
   return functionRegistry.getFolderList();
@@ -326,15 +346,15 @@ var splitArrRange = function (test) {
 //     {rows[row].push(values[row][col]);}
 
 var splitNoX = function (json, pushIndex) {
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\n is ! " +
-      !content +
-      ", = " +
-      content,
-  );
+  // console.log(
+  //   functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n is ! " +
+  //     !content +
+  //     ", = " +
+  //     content,
+  // );
   // var json = content;
   // console.log(json);
   var pathArray = [];

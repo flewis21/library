@@ -429,7 +429,7 @@ function defSBD(e) {
   try {
     if (!globalThis.hasOwnProperty(e.parameter["func"])) {
       // Get the actual function
-      var foobarr = globalThis.renderFile;
+      var foobarr = globalThis["renderFile"];
       return renderTemplate(
         `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           body {
@@ -1922,8 +1922,8 @@ globalThis.threeTime = 3 * 59.9 * 1000;
 globalThis.twoTime = 2 * 59.9 * 1000;
 
 function wildSBD(e) {
-  var args = e.parameter["args"];
   try {
+    var args = e.parameter["args"];
     if (
       globalThis.hasOwnProperty(e.parameter["func"]) &&
       typeof globalThis[e.parameter["func"]] === "function"
@@ -2002,7 +2002,7 @@ function wildSBD(e) {
     }
   } catch (error) {
     console.error(error);
-    Logger.log("Error creating template from function: " + error);
+    Logger.log("Error creating template from function: " + error.stack);
     throw new Error(
       "Could not create template from file or function: " + foobarr,
     );

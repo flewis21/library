@@ -72,8 +72,8 @@ function surveyPlayer(searchString, joinString) {
 
   if (!searchString && !joinString) {
     var numVarRnd = randNum(arguments.callee.name);
-    var arrDRnd = globalThis.arrDRnd();
-    var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+    var arrD = globalThis.arrDRnd();
+    var searchString = randomSubstance(0, 6, arrD).myNewArr;
     var joinString = [searchString].join("");
   }
 

@@ -5,19 +5,19 @@
   "dependencies": {
     "enabledAdvancedServices": [
       {
-        "userSymbol": "Classroom",
-        "serviceId": "classroom",
-        "version": "v1"
+        "userSymbol": "Calendar",
+        "version": "v3",
+        "serviceId": "calendar"
       },
       {
-        "userSymbol": "Calendar",
-        "serviceId": "calendar",
-        "version": "v3"
+        "userSymbol": "Classroom",
+        "version": "v1",
+        "serviceId": "classroom"
       },
       {
         "userSymbol": "Drive",
-        "serviceId": "drive",
-        "version": "v2"
+        "version": "v3",
+        "serviceId": "drive"
       }
     ],
     "libraries": [

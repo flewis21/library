@@ -1212,3 +1212,25 @@ function rndWinner(infinitum) {
   }
   return formUrl;
 }
+
+var rndWord = function() {
+  let ciar = trial();
+  let meri = randNum([JSON.stringify(ciar)].join(" "));
+  let allFiles = globalThis.uniqueCoArray()[meri]["title"]
+  let randonWord = [allInvestors(allFiles).title]
+    .join("")
+    .split("")
+    .sort((a, b) => {
+      let priorityA = 0;
+      let priorityB = 0;
+      if (Math.random() < 0.5) {
+        priorityA = getZuluFreqPriority(a);
+      }
+      if (Math.random() < 0.5) {
+        priorityB = freqPriority.get(b);
+      }
+      return priorityA - priorityB;
+    })
+    .join("");
+  return randonWord
+}

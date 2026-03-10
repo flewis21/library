@@ -193,7 +193,7 @@ function portBing(searchPort) {
   }
   var coHelpText =
     "http://www.bing.com/search?q=" +
-    encodeURIComponent(searchPort) +
+    encodeURIComponent(cokey) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var seoArray = seoPastTime([cokey].join(""), functionRegistry.time);
   var uti = seoArray.playList;
@@ -202,7 +202,10 @@ function portBing(searchPort) {
     var coDataName = coData.rndTitle;
     var coDataPy = driveManager([coDataName].join("").toLowerCase());
     if (typeof coDataPy === "string" && coDataPy !== "undefined") {
-      var coDataUrl = FormApp.openByUrl(coDataPy).getPublishedUrl();
+      let urVali = isValidUrl(coDataPy);
+      if (urVali.hostname) {
+        var coDataUrl = FormApp.openByUrl(coDataPy).getPublishedUrl();
+      }
       if (coDataUrl) {
         return coDataUrl;
       }
