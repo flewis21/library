@@ -751,8 +751,8 @@ function needBing(searchString, time) {
     var playBill = [bill].join("").split(" ");
     const table = [];
     data.map((point) => {
-      var resSERP = point?.indexOf("SERP");
-      var serpSplit = point.slice(resSERP).toString().split("SERP");
+      var resSERP = [point]?.indexOf("SERP");
+      var serpSplit = [point].slice(resSERP).toString().split("SERP");
       table.push(serpSplit);
       // var resSrc2 = point.indexOf("src2=")
       // var srcSplit = point.slice(resSrc2).toString().split("src2=")
@@ -1188,20 +1188,25 @@ var seoFactor = function (data, time) {
     var time = functionRegistry.time;
   }
   var idArray = [];
-  data?.map((seoData) => {
-    // var elaspeTime = new Date() - time
-    // console.log("seoData: \nelaspeTime: " + elaspeTime)
-    try {
-      var strDiv = seoData.split("<div>");
-      // for (var i=0,l=seoData.length; i<l; i++) {
-      // var sliDiv = seoData.slice(strDiv)
-      // var spDiv = sliDiv.toString()
-      // var arrDiv = spDiv.split("</div>")}
-      idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
-    } catch (error) {
-      return;
-    }
-  });
+  if (!Array.isArray(data)) {
+    idArray.push(data)
+  }
+  else {
+    data?.map((seoData) => {
+      // var elaspeTime = new Date() - time
+      // console.log("seoData: \nelaspeTime: " + elaspeTime)
+      try {
+        var strDiv = seoData.split("<div>");
+        // for (var i=0,l=seoData.length; i<l; i++) {
+        // var sliDiv = seoData.slice(strDiv)
+        // var spDiv = sliDiv.toString()
+        // var arrDiv = spDiv.split("</div>")}
+        idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
+      } catch (error) {
+        return;
+      }
+    });
+  }
   var factorArray = [idArray].toString().replace(/,/g, "");
   // console.log("seoFactor: \nvar " + factorArray + " = " + [idArray].toString().replace(/,/g, ''))
   return {
