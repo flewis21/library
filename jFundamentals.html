@@ -54,18 +54,20 @@
             .runBoilerplate([func], [args]);
         });
       }
-      document.addEventListener("DOMContentLoaded", updatePage);
-      let autoList = <?= convertToJS("rndText") ?>
+      document.addEventListener("DOMContentLoaded", autoList);
+      function autoList() {
+        var htmFileList = [];
+      serverside("convertToJS",["rndText"])
+      .then((li) =>{
+        li.forEach((it) =>{
+          htmFileList.push(it);
+        })
       // var htmFileList = [
-      //   `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
-      // // ]
+      //   li
       //   .toString()
-      //   .split(" ");
-      var htmFileList = [
-        autoList
-      ]
-        .toString()
-        .split(",");
+      //   .split(",");
+      // ];
+        });
       var htmNum = function () {
         return Math.floor(Math.random() * Math.floor(htmFileList.length));
       };
@@ -152,6 +154,14 @@
         console.log(er);
         document.getElementById("drip").innerHTML = er;
       }
+      }
+      // let  = 
+      // var htmFileList = [
+      //   `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
+      // // ]
+      //   .toString()
+      //   .split(" ");
+        // 
     </script>
   </body>
 </html>

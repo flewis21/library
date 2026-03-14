@@ -1168,10 +1168,24 @@ var renderFile = function (file, argsObject, title) {
               </table>
             </td>
           </tr>
+          <tr>
+            <td style="vertical-align: top;text-align: left">
+              <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
+                <tbody>
+                  <td>
+                    <div class="row">
+                      <p>
+                        <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                      </p>
+                    </div>
+                  </td>
+                </tbody>
+              </table>
+            </td>
+          </tr>
         </tbody>
       </table>
       </div></div></div></div></div>
-      <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
       <script>
       document.querySelector("div").setAttribute("style", "color: blue; clear: both; text-align: center;");
       document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");

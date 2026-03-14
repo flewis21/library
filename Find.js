@@ -127,7 +127,7 @@ function driveManager(strNw, time) {
       console.warn(
         "driveManager: No matching files found after DriveApp search. Returning null.",
       );
-      let filedSide = createRandomFunction(mainStr);
+      let filedSide = createFormFunction(mainStr);
       let funcKeys = Object.keys(filedSide);
       let funcUrl;
       funcKeys.forEach((key) => {

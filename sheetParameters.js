@@ -1189,9 +1189,8 @@ var seoFactor = function (data, time) {
   }
   var idArray = [];
   if (!Array.isArray(data)) {
-    idArray.push(data)
-  }
-  else {
+    idArray.push(data);
+  } else {
     data?.map((seoData) => {
       // var elaspeTime = new Date() - time
       // console.log("seoData: \nelaspeTime: " + elaspeTime)

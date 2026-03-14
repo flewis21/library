@@ -689,27 +689,57 @@ function rndDice() {
   var dice = multq - multp;
   if (dice === 0) {
     trial["snakeEyes"] = snakeEyes++;
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     snakeEyes++;
   } else if (dice === 1) {
-    trial["deuces"] = deuces++
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    trial["deuces"] = deuces++;
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     deuces++;
   } else if (dice === 2) {
-    trial["tres"] = tres++
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    trial["tres"] = tres++;
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     tres++;
   } else if (dice === 3) {
-    trial["fours"] = fours++
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    trial["fours"] = fours++;
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     fours++;
   } else if (dice === 4) {
-    trial["fives"] = fives++
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    trial["fives"] = fives++;
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     fives++;
   } else {
-    trial["sixes"] = sixes++
-    trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+    trial["sixes"] = sixes++;
+    ((trial["judge"] = trial["sixes"]),
+      trial["fives"],
+      trial["fours"],
+      trial["tres"],
+      trial["deuces"],
+      trial["snakeEyes"]);
     sixes++;
   }
 
@@ -730,35 +760,65 @@ function rndDice() {
     snakeEyes !== tres ||
     snakeEyes !== fours ||
     snakeEyes !== fives ||
-    snakeEyes !== sixes 
-  ) {;
-    judge++
+    snakeEyes !== sixes
+  ) {
+    judge++;
     multq = Math.floor(Math.random() * 6);
     multp = [0, 1, 2, 3, 4, 5][Math.floor(Math.random() * multq)];
     dice = multq - multp;
     if (dice === 0) {
       trial["snakeEyes"] = snakeEyes++;
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       snakeEyes++;
     } else if (dice === 1) {
-      trial["deuces"] = deuces++
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      trial["deuces"] = deuces++;
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       deuces++;
     } else if (dice === 2) {
-      trial["tres"] = tres++
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      trial["tres"] = tres++;
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       tres++;
     } else if (dice === 3) {
-      trial["fours"] = fours++
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      trial["fours"] = fours++;
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       fours++;
     } else if (dice === 4) {
-      trial["fives"] = fives++
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      trial["fives"] = fives++;
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       fives++;
     } else {
-      trial["sixes"] = sixes++
-      trial["judge"] = trial["sixes"],trial["fives"],trial["fours"],trial["tres"],trial["deuces"],trial["snakeEyes"]
+      trial["sixes"] = sixes++;
+      ((trial["judge"] = trial["sixes"]),
+        trial["fives"],
+        trial["fours"],
+        trial["tres"],
+        trial["deuces"],
+        trial["snakeEyes"]);
       sixes++;
     }
 
@@ -780,12 +840,12 @@ function rndDice() {
     // var trial = [].concat(snakeEye.length + " " + deuce.length + " " + tre.length + " " + four.length + " " + five.length + " " + six.length)
     // snakeEye.length
     if (
-        trial["snakeEyes"] &&
-        trial["deuces"] &&
-        trial["tres"] &&
-        trial["fours"] &&
-        trial["fives"] &&
-        trial["sixes"]
+      trial["snakeEyes"] &&
+      trial["deuces"] &&
+      trial["tres"] &&
+      trial["fours"] &&
+      trial["fives"] &&
+      trial["sixes"]
     ) {
       break;
     } else {
@@ -798,12 +858,12 @@ function rndDice() {
     trial.length + " Rolls",
   );
   var formUrl = form.getPublishedUrl();
-    for (var key in trial) {
-      form
-        .addSectionHeaderItem()
-        .setTitle(randomSubstance(0, 1, [trial[key]]).myNewArr)
-        .setHelpText(key);
-    }
+  for (var key in trial) {
+    form
+      .addSectionHeaderItem()
+      .setTitle(randomSubstance(0, 1, [trial[key]]).myNewArr)
+      .setHelpText(key);
+  }
   return formUrl;
 }
 

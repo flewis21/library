@@ -21,12 +21,15 @@ function convertToJS(rndText) {
     typeof rndText !== "undefined" &&
     [rndText].includes("rndText") === -1
   ) {
-    var appList = [];
-    for (var key in globalThis) {
-      if (typeof globalThis[key] == "function") {
-        appList.push(key);
-      }
-    }
+    rndText = functionRegistry.getHtmlList()
+  }
+  else {
+    var appList = functionRegistry.fileList;
+    // for (var key in globalThis) {
+    //   if (typeof globalThis[key] == "function") {
+    //     appList.push(key);
+    //   }
+    // }
     if (
       [appList].join().toLowerCase().includes([rndText].join("").toLowerCase())
     ) {
