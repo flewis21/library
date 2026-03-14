@@ -57,111 +57,112 @@
       document.addEventListener("DOMContentLoaded", autoList);
       function autoList() {
         var htmFileList = [];
-      serverside("convertToJS",["rndText"])
-      .then((li) =>{
-        li.forEach((it) =>{
-          htmFileList.push(it);
-        })
-      // var htmFileList = [
-      //   li
-      //   .toString()
-      //   .split(",");
-      // ];
+        serverside("convertToJS", ["rndText"]).then((li) => {
+          li.forEach((it) => {
+            htmFileList.push(it);
+          });
+          // var htmFileList = [
+          //   li
+          //   .toString()
+          //   .split(",");
+          // ];
         });
-      var htmNum = function () {
-        return Math.floor(Math.random() * Math.floor(htmFileList.length));
-      };
-      var rndPage = htmFileList[htmNum()];
-      console.log(rndPage + "...");
-      function updatePage() {
-        localStorage.setItem("htmSearch", rndPage);
-        document.getElementById("drip").innerHTML =
-          "waiting for " + rndPage + "...";
-        google.script.run
-          .withSuccessHandler(done)
-          .withFailureHandler(error)
-          .runBoilerplate("renderFile", [rndPage]);
-        function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
-          // alert(droplet.length + " is not the required length")
+        var htmNum = function () {
+          return Math.floor(Math.random() * Math.floor(htmFileList.length));
+        };
+        var rndPage = htmFileList[htmNum()];
+        console.log(rndPage + "...");
+        function updatePage() {
+          localStorage.setItem("htmSearch", rndPage);
+          document.getElementById("drip").innerHTML =
+            "waiting for " + rndPage + "...";
+          google.script.run
+            .withSuccessHandler(done)
+            .withFailureHandler(error)
+            .runBoilerplate("renderFile", [rndPage]);
+          function done(drop) {
+            alert(rndPage + "(" + drop + ")");
+            alert("droplet.length = " + drop.length);
+            // alert(droplet.length + " is not the required length")
 
-          serverside("getScriptUrl")
-            .then((cChange) => {
-              alert(typeof cChange + " with length = " + cChange.length);
-              if (cChange.length === 112) {
-                // console.log(cChange)
-                var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=renderFile&args=" + rndPage;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_child";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              } else {
-                var docWnd = document.getElementById("drip");
-                docWnd.innerHTML = drop;
-              }
-            })
-            .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
-              console.log(er);
-              document.getElementById("drip").innerHTML = er;
-            });
+            serverside("getScriptUrl")
+              .then((cChange) => {
+                alert(typeof cChange + " with length = " + cChange.length);
+                if (cChange.length === 112) {
+                  // console.log(cChange)
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href =
+                    cChange + "?func=renderFile&args=" + rndPage;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_child";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                } else {
+                  var docWnd = document.getElementById("drip");
+                  docWnd.innerHTML = drop;
+                }
+              })
+              .catch((er) => {
+                alert(rndPage + " error(" + er + ")");
+                console.log(er);
+                document.getElementById("drip").innerHTML = er;
+              });
+          }
+        }
+        function navAway() {
+          var newPage = htmFileList[htmNum()];
+          rndPage = newPage;
+          localStorage.setItem("htmSearch", rndPage);
+          document.getElementById("drip").innerHTML =
+            "waiting for " + newPage + "...";
+          google.script.run
+            .withSuccessHandler(done)
+            .withFailureHandler(error)
+            .runBoilerplate("renderFile", [newPage]);
+          function done(drop) {
+            alert(rndPage + "(" + drop + ")");
+            alert("droplet.length = " + drop.length);
+            // alert(droplet.length + " is not the required length")
+
+            serverside("getScriptUrl")
+              .then((cChange) => {
+                alert(typeof cChange + " with length = " + cChange.length);
+                if (cChange.length === 112) {
+                  // console.log(cChange)
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href =
+                    cChange + "?func=renderFile&args=" + rndPage;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_child";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                } else {
+                  var docWnd = document.getElementById("drip");
+                  docWnd.innerHTML = drop;
+                }
+              })
+              .catch((er) => {
+                alert(rndPage + " error(" + er + ")");
+                console.log(er);
+                document.getElementById("drip").innerHTML = er;
+              });
+          }
+        }
+        function error(er) {
+          alert(rndPage + " error(" + er + ")");
+          console.log(er);
+          document.getElementById("drip").innerHTML = er;
         }
       }
-      function navAway() {
-        var newPage = htmFileList[htmNum()];
-        rndPage = newPage;
-        localStorage.setItem("htmSearch", rndPage);
-        document.getElementById("drip").innerHTML =
-          "waiting for " + newPage + "...";
-        google.script.run
-          .withSuccessHandler(done)
-          .withFailureHandler(error)
-          .runBoilerplate("renderFile", [newPage]);
-        function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
-          // alert(droplet.length + " is not the required length")
-
-          serverside("getScriptUrl")
-            .then((cChange) => {
-              alert(typeof cChange + " with length = " + cChange.length);
-              if (cChange.length === 112) {
-                // console.log(cChange)
-                var linkFollow = document.createElement("a");
-                linkFollow.href = cChange + "?func=renderFile&args=" + rndPage;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_child";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              } else {
-                var docWnd = document.getElementById("drip");
-                docWnd.innerHTML = drop;
-              }
-            })
-            .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
-              console.log(er);
-              document.getElementById("drip").innerHTML = er;
-            });
-        }
-      }
-      function error(er) {
-        alert(rndPage + " error(" + er + ")");
-        console.log(er);
-        document.getElementById("drip").innerHTML = er;
-      }
-      }
-      // let  = 
+      // let  =
       // var htmFileList = [
       //   `index proMedia callBack oddChances checkOnDay Section3.Challenge1`,
       // // ]
       //   .toString()
       //   .split(" ");
-        // 
+      //
     </script>
   </body>
 </html>

@@ -21,9 +21,8 @@ function convertToJS(rndText) {
     typeof rndText !== "undefined" &&
     [rndText].includes("rndText") === -1
   ) {
-    rndText = functionRegistry.getHtmlList()
-  }
-  else {
+    rndText = functionRegistry.getHtmlList();
+  } else {
     var appList = functionRegistry.fileList;
     // for (var key in globalThis) {
     //   if (typeof globalThis[key] == "function") {
