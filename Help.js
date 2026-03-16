@@ -305,7 +305,9 @@ function mis(text, maxRetries = 3) {
     html.action = payLoad;
     var supUrl =
       getScriptUrl().toString() +
-      "?func=" + fx + "&args=" +
+      "?func=" +
+      fx +
+      "&args=" +
       (payLoad ? encodeURIComponent(payLoad) : "");
     // var form = formMaker();
     let formattedPayload = "";

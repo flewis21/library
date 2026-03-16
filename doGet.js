@@ -684,15 +684,13 @@ function handleGetData(e) {
     // we should specifically process that 'app' property as well.
     // This assumes that the 'app' property might override or provide the primary content.
     if (payLoad.type === "object" && payLoad.data.app) {
-      console.log(
-        "the 'app' property:",
-        payLoad.data.app,
-      );
+      console.log("the 'app' property:", payLoad.data.app);
       // rawFuncResult.app;
       let appProcessed;
 
       // Check if rawFuncResult.app exists and is an object
-      if (payLoad.data.app &&
+      if (
+        payLoad.data.app &&
         typeof payLoad.data.app === "object" &&
         !Array.isArray(payLoad.data.app)
       ) {
@@ -763,8 +761,7 @@ function handleGetData(e) {
 
         // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
         appProcessed = processContent(payLoad.data.app);
-      } 
-      else {
+      } else {
         appProcessed = processContent(payLoad.data.app);
       }
       // Overwrite payLoad if 'app' property yields more specific or desired content
@@ -801,20 +798,16 @@ function handleGetData(e) {
           payLoad.data = rawFuncResult.index.url;
         }
       }
-    } 
-    else if (payLoad.type === "object" && payLoad.data.index) {
-      console.log(
-        "the 'index' property:",
-        payLoad.data.index,
-      );
+    } else if (payLoad.type === "object" && payLoad.data.index) {
+      console.log("the 'index' property:", payLoad.data.index);
       // rawFuncResult.app;
       let appProcessed;
 
       // Check if rawFuncResult.app exists and is an object
       if (
-        (payLoad.data.index) &&
-        (typeof payLoad.data.index === "object") &&
-        (!Array.isArray(payLoad.data.index))
+        payLoad.data.index &&
+        typeof payLoad.data.index === "object" &&
+        !Array.isArray(payLoad.data.index)
       ) {
         // If it's a non-array object, you can safely attempt to spread its values
         // Choose one of the options from the previous response based on your exact need:
@@ -862,8 +855,7 @@ function handleGetData(e) {
 
         // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
         appProcessed = processContent(payLoad.data.index);
-      }
-      else {
+      } else {
         appProcessed = processContent(payLoad.data.index);
       }
       // Overwrite payLoad if 'app' property yields more specific or desired content
@@ -900,10 +892,10 @@ function handleGetData(e) {
           payLoad.data = rawFuncResult.index.url;
         }
       }
-    }
-    else if (
+    } else if (
       payLoad.type === "object" &&
-      (payLoad.data !== null && payLoad.data !== undefined)
+      payLoad.data !== null &&
+      payLoad.data !== undefined
     ) {
       // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
       // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
@@ -963,7 +955,11 @@ function handleGetData(e) {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
-        appL = payLoad.data.html || payLoad.data.app ||  payLoad.data || payLoad.dataData;
+        appL =
+          payLoad.data.html ||
+          payLoad.data.app ||
+          payLoad.data ||
+          payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
       } else if (payLoad.data.url) {
