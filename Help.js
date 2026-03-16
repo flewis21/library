@@ -305,8 +305,8 @@ function mis(text, maxRetries = 3) {
     html.action = payLoad;
     var supUrl =
       getScriptUrl().toString() +
-      "?func=mis&args=" +
-      (payLoad ? fx + "," + encodeURIComponent(payLoad) : fx);
+      "?func=" + fx + "&args=" +
+      (payLoad ? encodeURIComponent(payLoad) : "");
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {

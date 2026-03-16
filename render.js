@@ -1112,7 +1112,7 @@ var renderFile = function (file, argsObject, title) {
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody>
                   <td>
-                    <div class="row"><p>
+                    <div class="row">
                     <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
 
                     <i>Legal Title:</i>
@@ -1126,7 +1126,7 @@ var renderFile = function (file, argsObject, title) {
                     <i>Bearing the Burdens of Ownership:</i>
                     <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
                     </div>
-                    <div class="row"><p>
+                    <div class="row">
                     <p> Is the conveyance of power and authority an objective, measurable quantity?</p><br />
 
 
@@ -1158,7 +1158,6 @@ var renderFile = function (file, argsObject, title) {
                     <p style="text-align: left">
                           In conclusion: While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
                     <br />
-                    </p>
                     </p>
                     </div>
                     <br />
@@ -1655,7 +1654,7 @@ var renderTemplate = function (blob, argsObject, title) {
               <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
                 <tbody>
                   <td>
-                    <div><p>
+                    <div>
                     <p> Is the conveyance of power and authority an objective, measurable quantity?</p><br />
 
 
@@ -1687,7 +1686,6 @@ var renderTemplate = function (blob, argsObject, title) {
                     <p style="text-align: left">
                           In conclusion: While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
                     <br />
-                    </p>
                     </p>
                     <div><?!= renTemp ?></div>
                     </div>

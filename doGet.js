@@ -683,20 +683,18 @@ function handleGetData(e) {
     // If rawFuncResult was an object and it had an 'app' property,
     // we should specifically process that 'app' property as well.
     // This assumes that the 'app' property might override or provide the primary content.
-    if (payLoad.type === "object" && (payLoad.data.app || payLoad.data.index)) {
+    if (payLoad.type === "object" && payLoad.data.app) {
       console.log(
         "the 'app' property:",
-        payLoad.data.app || payLoad.data.index,
+        payLoad.data.app,
       );
       // rawFuncResult.app;
       let appProcessed;
 
       // Check if rawFuncResult.app exists and is an object
-      if (
-        (payLoad.data.app || payLoad.data.index) &&
-        (typeof payLoad.data.app === "object" ||
-          typeof payLoad.data.index === "object") &&
-        (!Array.isArray(payLoad.data.app) || !Array.isArray(payLoad.data.index))
+      if (payLoad.data.app &&
+        typeof payLoad.data.app === "object" &&
+        !Array.isArray(payLoad.data.app)
       ) {
         // If it's a non-array object, you can safely attempt to spread its values
         // Choose one of the options from the previous response based on your exact need:
@@ -726,8 +724,6 @@ function handleGetData(e) {
                 });
               }
             }
-          } else if (typeof payLoad.data.index === "object") {
-            appProcessed = processContent(payLoad.data.index);
           }
         } catch (err) {
           console.log(err.stack); //appProcessed = processContent(payLoad.data);
@@ -767,14 +763,15 @@ function handleGetData(e) {
 
         // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
         appProcessed = processContent(payLoad.data.app);
-      } else {
-        appProcessed = processContent();
+      } 
+      else {
+        appProcessed = processContent(payLoad.data.app);
       }
       // Overwrite payLoad if 'app' property yields more specific or desired content
       // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
       if (
         appProcessed.type !== "unknown" ||
-        (appProcessed.data !== null && appProcessed.data !== undefined)
+        (appProcessed.data !== null && typeof appProcessed.data !== "undefined")
       ) {
         // while (typeof appProcessed === "object") {
         //   appProcessed = appProcessed.data;
@@ -804,8 +801,108 @@ function handleGetData(e) {
           payLoad.data = rawFuncResult.index.url;
         }
       }
-    } else if (
-      payLoad.type === "object" ||
+    } 
+    else if (payLoad.type === "object" && payLoad.data.index) {
+      console.log(
+        "the 'index' property:",
+        payLoad.data.index,
+      );
+      // rawFuncResult.app;
+      let appProcessed;
+
+      // Check if rawFuncResult.app exists and is an object
+      if (
+        (payLoad.data.index) &&
+        (typeof payLoad.data.index === "object") &&
+        (!Array.isArray(payLoad.data.index))
+      ) {
+        // If it's a non-array object, you can safely attempt to spread its values
+        // Choose one of the options from the previous response based on your exact need:
+
+        // Option 3: Spread all values (the arrays) of the app object
+        try {
+          if (typeof payLoad.data.index === "object") {
+            appProcessed = processContent(payLoad.data.index);
+          }
+        } catch (err) {
+          console.log(err.stack); //appProcessed = processContent(payLoad.data);
+        }
+
+        /*
+        // Option 1: Spread the individual content arrays (most common intent)
+        appProcessed = processContent([
+          rawFuncResult.index,
+          ...(rawFuncResult.app.cik || []), // Use || [] to handle cases where cik might be missing
+          ...(rawFuncResult.app.ticker || []),
+          ...(rawFuncResult.app.title || [])
+        ]);
+
+        // Option 2: Spread the arrays themselves as elements
+        appProcessed = processContent([
+          rawFuncResult.index,
+          rawFuncResult.app.cik,
+          rawFuncResult.app.ticker,
+          rawFuncResult.app.title
+        ]);
+        */
+      } else if (
+        Array.isArray(payLoad.data.index) &&
+        payLoad.data.index.length > 0
+      ) {
+        // Handle cases where rawFuncResult.app is not a suitable object,
+        // e.g., it's null, undefined, an array, or a primitive.
+        // You might want to log a warning, assign a default value, or throw an error.
+        console.warn(
+          "payLoad.data.app is not a valid object for spreading. Value:",
+          payLoad.data.index,
+        );
+
+        // Example: Just include rawFuncResult.index or a placeholder
+        // appProcessed = processContent([rawFuncResult.index]);
+
+        // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
+        appProcessed = processContent(payLoad.data.index);
+      }
+      else {
+        appProcessed = processContent(payLoad.data.index);
+      }
+      // Overwrite payLoad if 'app' property yields more specific or desired content
+      // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
+      if (
+        appProcessed.type !== "unknown" ||
+        (appProcessed.data !== null && typeof appProcessed.data !== "undefined")
+      ) {
+        // while (typeof appProcessed === "object") {
+        //   appProcessed = appProcessed.data;
+        // }
+        payLoad = appProcessed;
+        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+        // represent something distinct from the 'app' content but should still be propagated.
+        if (rawFuncResult.link && !payLoad.link) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+        //   // Only add if payLoad doesn't already have it
+        //   payLoad.index = rawFuncResult.index;
+        // }
+        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.funcStr;
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.dataStr;
+        }
+        if (rawFuncResult.index && rawFuncResult.index.url) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataIndex = payLoad.data;
+          payLoad.data = rawFuncResult.index.url;
+        }
+      }
+    }
+    else if (
+      payLoad.type === "object" &&
       (payLoad.data !== null && payLoad.data !== undefined)
     ) {
       // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
@@ -835,45 +932,50 @@ function handleGetData(e) {
 
     console.log("payLoad.type === ", payLoad.type);
     console.log("payLoad.data === ", payLoad.data);
+    if (payLoad.data && typeof payLoad.data === "object") {
+      console.log("payLoad.data", JSON.stringify(payLoad.data));
+      console.log("payLoad.data keys", Object.keys(payLoad.data));
+      console.log("payLoad.data values", Object.values(payLoad.data));
+    }
 
     // Now, use the structured 'payLoad' to set the final content variables
     // (This part needs adjustments to handle the new "url" type)
     if (payLoad.type === "html") {
-      iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-      appL = payLoad.data || payLoad.dataData;
+      iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
+      appL = payLoad.dataIndex || payLoad.dataData;
       feed = `${payLoad.link}`;
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
-      iframeSrc = payLoad.data || payLoad.dataIndex; // Assign the URL to iframeSrc
-      appL = payLoad.dataIndex || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
+      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
+      appL = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
       feed = payLoad.link;
     } else if (payLoad.type === "jsonData") {
-      iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
-      appL = JSON.stringify(payLoad.data || payLoad.dataData, null, 2);
+      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
+      appL = JSON.stringify(payLoad, null, 2);
       feed = payLoad.link;
     }
     //iframeSrc in tenary
     else if (payLoad.type === "text") {
-      iframeSrc = payLoad.data || payLoad.dataIndex; // Assign iframeSrc
-      appL = payLoad.dataIndex || payLoad.dataData;
+      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
+      appL = payLoad.data || payLoad.dataData;
       feed = payLoad.link;
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
-        appL = payLoad.data.html || payLoad.data.app || payLoad.dataData;
+        appL = payLoad.data.html || payLoad.data.app ||  payLoad.data || payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
-        iframeSrc = payLoad.data.url || payLoad.dataIndex;
-        appL = `URL provided: ${payLoad.index || payLoad.dataIndex}`;
+        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+        appL = `URL provided: ${payLoad.data || payLoad.dataIndex || iframeSrc}`;
         feed = `URL provided: ${payLoad.link}`;
       } else {
         // Default way to display a generic object: stringify it
-        iframeSrc = payLoad.index || payLoad.dataIndex; // Assign iframeSrc
+        iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
         appL = payLoad?.dataData?.concat(
-          "\n\n\n\n" + JSON.stringify(payLoad.data, null, 2),
+          "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
         );
         feed = payLoad.link;
       }

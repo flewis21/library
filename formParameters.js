@@ -1,4 +1,4 @@
-function formMaker(fileName, folderX, time) {
+var formMaker = function(fileName, folderX, time) {
   console.log(
     functionRegistry.time +
       "\n" +
@@ -17,7 +17,8 @@ function formMaker(fileName, folderX, time) {
     console.log(
       "formMaker: \nDeclaring newFile = FormApp.create(" + fileName + ")",
     );
-    var newFile = FormApp.create(fileName);
+    var newFile = FormApp.create(fileName)
+    .setDescription(rule());
     console.log(
       "formMaker: \nfileManager(" + newFile.getId(),
       folderX,

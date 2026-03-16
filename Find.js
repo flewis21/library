@@ -101,6 +101,7 @@ function driveManager(strNw, time) {
       while (files.hasNext()) {
         var file = files.next();
         let fiTitle = file.getName();
+        // file.setSharing()
         var fileUrl = file.getUrl();
         dataTree.push(fileUrl);
         // console.log("driveManager: Found and added file URL:", fileUrl);
