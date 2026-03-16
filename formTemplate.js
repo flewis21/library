@@ -2098,11 +2098,9 @@ function dtlsSomeFunction(e) {
     var idArray = seoArray.playList;
     if (typeof idArray === "string") {
       var covIdArray = covArrays([idArray]);
-    }
-    else if (Object.keys(idArray).length > 0) {
+    } else if (Object.keys(idArray).length > 0) {
       var covIdArray = covArrays(idArray);
-    }
-    else if (Array.isArray(idArray)) {
+    } else if (Array.isArray(idArray)) {
       var covIdArray = covArrays(idArray);
     }
   }

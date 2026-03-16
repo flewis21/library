@@ -1169,7 +1169,7 @@ var renderFile = function (file, argsObject, title) {
             */
         {
         }
-      `)
+      `);
       var html = contentApp(
         `
     <!doctype html>

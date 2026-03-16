@@ -3418,19 +3418,21 @@ function seoYoutube(searchString, time) {
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
     var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-    var searchString = items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "");
+    var searchString = items[rndItenIndex]["Description"]
+      .split(" ")
+      .join("")
+      .replace(/,/g, "");
   }
-  var rndSearch ="http://" + searchString + ".com"; // .searchString().myNewArr;
+  var rndSearch = "http://" + searchString + ".com"; // .searchString().myNewArr;
   // = isValidUrl(searchString).pathname;
   try {
-    let options = { muteHttpExceptions: true }
-    var unFilData = getUrlResponse(rndSearch,options).app//UrlFetchApp.fetch(rndSearch, );
+    let options = { muteHttpExceptions: true };
+    var unFilData = getUrlResponse(rndSearch, options).app; //UrlFetchApp.fetch(rndSearch, );
     var data = unFilData.getContentText();
     var idArray = vidFactor(data, time).vidArray;
     return { myIdArr: idArray || [] };
-  }
-  catch (erR) {
-    Logger.log("Result " + null)
+  } catch (erR) {
+    Logger.log("Result " + null);
   }
   // var data = mis(rndSearch).app;
 }
