@@ -2075,16 +2075,16 @@ function dtlsSomeFunction(e) {
   var time = functionRegistry.time;
   var importedData = globalThis.arrD();
   var funcStr = randomSubstance(0, 4, importedData).myNewArr;
-  var uniqueKey = [funcStr];
-  var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
-  var rndCoObjects =
-    uniqueCoObjects[
-      Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
-    ];
-  var uniqueCoArray = covArrays(rndCoObjects);
-  var rndCoArray =
-    uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
-  var cokey = e || rndCoArray;
+  // var uniqueKey = [funcStr];
+  // var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
+  // var rndCoObjects =
+  //   uniqueCoObjects[
+  //     Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
+  //   ];
+  // var uniqueCoArray = covArrays(rndCoObjects);
+  // var rndCoArray =
+  //   uniqueCoArray[Math.floor(Math.random() * Math.floor(uniqueCoArray.length))];
+  var cokey = e || funcStr;
   var isProduct = formsUrls([cokey].join("").toLowerCase(), "videoForms");
   console.log(typeof isProduct);
   if (typeof isProduct === "string") {
@@ -2093,10 +2093,18 @@ function dtlsSomeFunction(e) {
   }
 
   //Youtube Widget
-  var seoArray = seoPastTime([cokey].join(""), time);
+  var seoArray = needPastTime([cokey].join(""));
   if (seoArray) {
     var idArray = seoArray.playList;
-    var covIdArray = covArrays(idArray);
+    if (typeof idArray === "string") {
+      var covIdArray = covArrays([idArray]);
+    }
+    else if (Object.keys(idArray).length > 0) {
+      var covIdArray = covArrays(idArray);
+    }
+    else if (Array.isArray(idArray)) {
+      var covIdArray = covArrays(idArray);
+    }
   }
   // console.log(covIdArray[0][0].map((e)=>{return e[0]}))
   var form = formMaker([cokey].join("").toUpperCase(), "videoForms", time);

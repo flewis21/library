@@ -3226,10 +3226,10 @@ function seoPastTime(searchString, time) {
     })
     .join("")
     .replace(/,/g, ""); // .searchString().myNewArr;
-  var uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
+  var uniqueVid = seoYoutube(searchString, functionRegistry.time)?.myIdArr;
   let fndOrd = [];
   while (fndOrd.length === 0) {
-    var sorFndOrd = uniqueVid.filter((vidObject) => {
+    var sorFndOrd = uniqueVid?.filter((vidObject) => {
       var elaspeTime = functionRegistry.time;
       var timeToExecute = functionRegistry.timeLeftToExecute;
       if (
@@ -3299,7 +3299,7 @@ function seoPastTime(searchString, time) {
         return vidObject;
       }
     });
-    if (sorFndOrd.length > 0) {
+    if (sorFndOrd && Array.isArray(sorFndOrd) && sorFndOrd.length > 0) {
       var i = 0;
       var l = sorFndOrd.length;
       for (i, l; i < l; i++) {
@@ -3418,18 +3418,20 @@ function seoYoutube(searchString, time) {
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
     var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-    var searchString =
-      "http://" +
-      items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "") +
-      ".com"; // .searchString().myNewArr;
+    var searchString = items[rndItenIndex]["Description"].split(" ").join("").replace(/,/g, "");
   }
-  var rndSearch = isValidUrl(searchString).pathname;
-  if (rndSearch) {
-    var unFilData = UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true });
+  var rndSearch ="http://" + searchString + ".com"; // .searchString().myNewArr;
+  // = isValidUrl(searchString).pathname;
+  try {
+    let options = { muteHttpExceptions: true }
+    var unFilData = getUrlResponse(rndSearch,options).app//UrlFetchApp.fetch(rndSearch, );
     var data = unFilData.getContentText();
     var idArray = vidFactor(data, time).vidArray;
+    return { myIdArr: idArray || [] };
   }
-  return { myIdArr: idArray || [] };
+  catch (erR) {
+    Logger.log("Result " + null)
+  }
   // var data = mis(rndSearch).app;
 }
 
