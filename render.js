@@ -888,296 +888,13 @@ var renderFile = function (file, argsObject, title) {
       // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
       var funcCheck = appList();
       var schedule = dateTime(new Date());
-      const styleCss = HtmlService.createHtmlOutput(`
-        @Charset UTF8;
-
-        article, aside, footer, header, nav, main, section {
-          display: block;
-        }
-
-        html, body, h1, h2, h3, ul, li, a, p, article, aside, footer, header, nav, main, section {
-          padding: 0;
-          margin: 0;
-        }
-
-        .banner {
-          background-color: #11233b;
-          color: white;
-          padding: 10px 20px;
-        }
-
-        body {
-          width: 960px;
-          margin-left: auto;
-          margin-right: auto;
-          background-color: #f0f0f0;
-          font-family: Helvetica, Arial, sans-serif;
-          font-size: 15px; 
-        }
-
-        nav {
-          background-color: #20416c;
-          padding: 5px;
-          margin-top: 1px;
-        }
-
-        li a {
-          color: white;
-        }
-
-        li {
-          display: inline;
-          margin-left: 15px;
-          margin-right: 15px;
-          font-size: 20px;
-          font-variant: small-caps;
-          font-weight: bold;
-        }
-
-        section {
-          background-color: #bbbbbb;
-          margin-top: 10px;
-          padding: 5px;
-        }
-
-        article {
-          background-color: white;
-          margin-top: 5px;
-          padding: 10px 15px;
-          color: black;
-        }
-
-        main {
-          width: 570px;
-          float: left;
-          margin-bottom: 10px;
-        }
-
-        aside {
-          background-color: #bbbbbb;
-          padding: 20px;
-          margin-top: 10px;
-        }
-
-        .socials {
-          float: right;
-          width: 400px;
-        }
-
-        footer {
-          clear: both;
-          background-color: #20416c;
-          color: white;
-          padding: 5px 20px;
-        }
-
-        /* Remove all default table styling and override inline styles */
-        table, thead, tbody, tr, th, td {
-          all: unset !important; /* This is a powerful reset, removing all inherited and default styles */
-          display: block !important; /* Treat all table elements as block-level to remove table-specific layout */
-        }
-
-        /* You might want to re-add some basic block-level display for structure */
-        table {
-          width: 100% !important; /* Example: set table width */
-          border-collapse: separate !important; /* Override default collapse if present */
-          border-spacing: 0 !important; /* Remove spacing between cells */
-        }
-
-        tr {
-          display: flex !important; /* Use flexbox for rows for more control */
-          width: 100% !important;
-        }
-
-        body, div, th, td {
-          flex: 0px 0px 60px 60px !important; /* Make cells equally distribute space within the flex row */
-          padding: 5px !important; /* Remove default padding */
-          margin: 0.5px 0.5px 0.5px 0.5px !important; /* Remove default margin */
-          border: 5px !important; /* Remove any default borders */
-          vertical-align: top !important; /* Reset vertical alignment */
-          text-align: left !important; /* Reset text alignment */
-          justify-content: space-around !important;
-          align-items: center !important;
-          border-radius: 0.5px !important;
-          width: 100% !important;
-        }
-
-        /* If you have specific classes on your table, you can target them with higher specificity if needed */
-        /* For example, to target the inner table specifically */
-        .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {
-          all: unset !important;
-          display: block !important;
-        }
-
-        /* And for its cells, rows, etc. */
-        .receipt table.striped.centered.highlight.responsive-table.red.z-depth-5 table tr,
-        .receipt table.striped.centered.highlight.responsive-table.blue.z-depth-5 table td {
-          all: unset !important;
-          display: block !important; /* Or display: flex for rows, display: block for cells */
-        }
-            #jsonInput {
-              display: none;
-              width: 100%;
-              height: 8vh; /* Or whatever height you need */
-              margin:10px auto;
-              padding: 0px;
-              box-sizing: border-box; /* Include padding in width/height */
-              border:1px solid #ccc;
-              font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
-              font-size: 14px;
-              line-height: 1.5; /* Good for readability */
-              white-space:pre-wrap;
-              text-align:left;
-              background-color: #282c34; /* Dark background common for code editors */
-              color: #abb2bf; /* Light text color for contrast */
-              resize: vertical; /* Allow vertical resizing, or 'none' to disable */
-              overflow: auto; /* Enable scrolling if content exceeds height */
-
-
-              /* Focus state */
-              outline: none; /* Remove default blue outline on focus */
-              box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
-              transition: box-shadow 0.2s ease-in-out;
-            }
-            /* Style for the new textarea */
-            #indexBeta,#player1,#player2 {
-              /* Basic layout and appearance */
-              width: 100%;
-              height: 80vh; /* Or whatever height you need */
-              font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
-              font-size: 14px;
-              line-height: 1.5; /* Good for readability */
-              margin:10px auto;
-              white-space:pre-wrap;
-              text-align:left;
-              padding: 0px;
-              box-sizing: border-box; /* Include padding in width/height */
-              border: 1px solid #333;
-              background-color: #282c34; /* Dark background common for code editors */
-              color: #abb2bf; /* Light text color for contrast */
-              resize: vertical; /* Allow vertical resizing, or 'none' to disable */
-              overflow: auto; /* Enable scrolling if content exceeds height */
-
-              /* Hide default textarea scrollbar (optional, but common for custom scrollbars) */
-              /* If you hide this, you'd need to implement custom scrollbars with JavaScript */
-              /* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices */
-              /* &::-webkit-scrollbar { display: none; } */
-              /* & { -ms-overflow-style: none; scrollbar-width: none; } */
-
-
-              /* Focus state */
-              outline: none; /* Remove default blue outline on focus */
-              box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
-              transition: box-shadow 0.2s ease-in-out;
-            };
-
-            #indexBeta,#jsonInput,#player1,#player2:focus {
-                box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */
-            }
-
-            /* Optional: Placeholder styling */
-            #indexBeta,#jsonInput,#player1,#player2:placeholder {
-                color: #616e7f;
-            }
-  
-            /* This is the most likely culprit based on your computed styles */
-            /* Make the date numbers a dark color */
-            .datepicker-day-button {
-              color: #424242 !important; /* A dark gray. Using !important ensures it overrides Materialize defaults and your other styles. */
-            }
-
-            /* Consider other states for the datepicker buttons if needed */
-            /* Example: If today's date also disappears */
-            .datepicker-table td.is-today .datepicker-day-button {
-                color: #ff9800 !important; /* Example: orange for today's date */
-            }
-            /* Example: If selected dates' numbers disappear (often they should be white on a colored background) */
-            .datepicker-table td.is-selected .datepicker-day-button {
-                color: white !important; /* Keep white if the selected background is dark */
-            }
-
-
-            /* --- SPECIFIC OVERRIDES FOR MATERIALIZE DATEPICKER --- */
-
-            .datepicker-container table {
-              /* Re-establish standard table display */
-              display: table !important;
-              width: 100% !important; /* Ensure it takes full width of its container */
-              border-collapse: collapse !important; /* Standard table styling */
-            }
-
-            .datepicker-container thead {
-              display: table-header-group !important;
-            }
-
-            .datepicker-container tbody {
-              display: table-row-group !important;
-            }
-
-            .datepicker-container tr {
-              display: table-row !important;
-            }
-
-            .datepicker-container th,
-            .datepicker-container td {
-              /* Re-establish table cell display */
-              display: table-cell !important;
-              /* Undo flex and reset padding/margin/border that your global rules removed */
-              flex: none !important; /* Crucial to undo flex: 1 */
-              padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */
-              margin: 0 !important;
-              border: none !important;
-              vertical-align: middle !important; /* Standard for cells */
-              text-align: center !important; /* Days of week and numbers are typically centered */
-            }
-
-            /* Also ensure the color fix is here with high specificity */
-            .datepicker-container .datepicker-day-button {
-              color: #424242 !important;
-            }
-
-            /* You may need to inspect Materialize's default CSS to fine-tune padding, line-height, etc.,
-              as "all: unset" also removes these. This is why Strategy 1 is preferred. */
-              
-
-            /*
-            IMPORTANT NOTE ON YOUR GLOBAL TABLE RESETS:
-            You have:
-            table, thead, tbody, tr, th, td {
-              all: unset !important;
-              display: block !important;
-            }
-            AND
-            th, td {
-              flex: 0 0 60px !important;
-              padding: 0 !important;
-              margin: 0px 15px 5px 15px !important;
-              border: solid 0.5px !important;
-              vertical-align: top !important;
-              text-align: left !important;
-              justify-content: space-around;
-              align-items: center;
-            }
-
-            While the "color" fix above should work, these extremely aggressive table resets
-            could cause other layout issues with the Materialize datepicker (which uses a table).
-            If you encounter further layout problems (e.g., misalignment of days, weird spacing),
-            you might need to make these table resets less global or more specific to *only* the tables
-            you intend to radically change (like your .receipt table),
-            and *not* apply them to the datepicker's internal table.
-            For now, apply the color fix first, as it's the direct solution to the numbers being invisible.
-            */
-        {
-        }
-      `);
       var html = contentApp(
         `
     <!doctype html>
       <html lang="en">
         <head>
-          <?!= builtStyling().evaluate().getContent() ?>
           <style>
-            ${styleCss.getContent()}
+            ${footer.getContent() + receipt_footer.getContent() + receipt_company_info_receipt_footer.getContent() + socials.getContent() + aside.getContent() + desktopContainer.getContent() + main.getContent() + mobileSection.getContent() + article.getContent() + receipt.getContent() + responsiveSection.getContent() + website.getContent() + banner_page_header.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent()}
             <!--[if lt IE 9]>
             <script>
               document.createElement("article");
@@ -1190,6 +907,7 @@ var renderFile = function (file, argsObject, title) {
             </script>
             <![endif]-->
           </style>
+          ${materializeCss.getContent()}
         </head>
         <body id="renderFile">
           <header class="banner">
@@ -1197,24 +915,29 @@ var renderFile = function (file, argsObject, title) {
             <p>Recent Applications</p>
           </header>
           <main>
+            <nav>
+              <div class="nav-left">
+                <img src="${logo.getContent()}">
+              </div>
+              <div class="nav-middle"></div>
+              <div class="nav-right">
+                <img src="${seaIcn.getContent()}">
+              </div>
+            </nav>
             <div class="row">
-            <div class="col s12 m12 l12 card-panel amber">
-            <div class="responsive-section">
-            <div class="btn-large">
             <div class="col s12 receipt red">
-            <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-              <thead></thead>
-              <tbody>
-                <tr>
-                  <td style="vertical-align: top;text-align: left">
-                    <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-                      <tbody>
+            <div class="responsive-section">
+            <div class="btn-large container">
+                    <table class="striped centered highlight grey" style="width:100%">
+                      <tr>
                         <td>
                           <div class="row">
                             <section>
                               <header>
                                 <h2>Owe</h2>
-                                <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                                <aside>
+                                  <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                                </aside>
                               </header>
                               <article>
                                 <header>
@@ -1259,51 +982,47 @@ var renderFile = function (file, argsObject, title) {
                                   No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
                                 </i>
                               </aside>
-                              <div class="row">
-                                <article>
-                                  <header>
-                                    <h3>Subjectivity in Definition:</h3>
-                                  </header>
-                                  <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                                </article>
-                                <article>
-                                  <header>
-                                    <h3>Qualitative Aspects:</h3>
-                                  </header>
-                                  <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                                </article>
-                                <article>
-                                  <header>
-                                    <h3>Contextual Dependence:</h3>
-                                  </header>
-                                  <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                                </article>
-                              </div>
+                              <article>
+                                <header>
+                                  <h3>Subjectivity in Definition:</h3>
+                                </header>
+                                <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                              </article>
+                              <article>
+                                <header>
+                                  <h3>Qualitative Aspects:</h3>
+                                </header>
+                                <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                              </article>
+                              <article>
+                                <header>
+                                  <h3>Contextual Dependence:</h3>
+                                </header>
+                                <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                              </article>
                               <aside>
                                 <i>
                                   However, there are some aspects that can be measured or assessed to some degree:
                                 </i>
                               </aside>
-                              <div class="row">
-                                <article>
-                                  <header>
-                                    <h3>Visible Demonstrations:</h3>
-                                  </header>
-                                  <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                                </article>
-                                <article>
-                                  <header>
-                                    <h3>Compliance and Obedience:</h3>
-                                  </header>
-                                  <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                                </article>
-                                <article>
-                                  <header>
-                                    <h3>Social Influence:</h3>
-                                  </header>
-                                  <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                                </article>
-                              </div>
+                              <article>
+                                <header>
+                                  <h3>Visible Demonstrations:</h3>
+                                </header>
+                                <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                              </article>
+                              <article>
+                                <header>
+                                  <h3>Compliance and Obedience:</h3>
+                                </header>
+                                <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                              </article>
+                              <article>
+                                <header>
+                                  <h3>Social Influence:</h3>
+                                </header>
+                                <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                              </article>
                               <aside>
                                 <h3>In conclusion:</h3>
                                 <p style="text-align: left">
@@ -1313,32 +1032,27 @@ var renderFile = function (file, argsObject, title) {
                             </section>
                           </div>
                         </td>
-                      </tbody>
+                      </tr>
                     </table>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="vertical-align: top;text-align: left">
-                    <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-                      <tbody>
-                        <td>
-                        </td>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div></div></div></div></div>
+            </div></div></div></div>
           </main>
           <aside class="socials">
-            <div><?!= renTemp ?></div>
+            <article>
+              <div>
+                <?!= renTemp ?>
+              </div>
+            </article>
             <div class="row">
-              <p>
-                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-              </p>
+              <article>
+                <footer class="receipt-footer">
+                  <p>
+                    <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  </p>
+                </footer>
+              </article>
             </div>
           </aside>
+          ${materializeJs.getContent()}
           <script>
             document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
             document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");

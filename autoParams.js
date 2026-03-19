@@ -1197,7 +1197,7 @@ function myGVFunction(
   );
 }
 
-function main() {
+function gMain() {
   // functionRegistry.initialize();
 
   // Example call where missing parameters will be populated from your globals
