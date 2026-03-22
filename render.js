@@ -894,7 +894,7 @@ var renderFile = function (file, argsObject, title) {
       <html lang="en">
         <head>
           <style>
-            ${footer.getContent() + receipt_footer.getContent() + receipt_company_info_receipt_footer.getContent() + socials.getContent() + aside.getContent() + desktopContainer.getContent() + main.getContent() + mobileSection.getContent() + article.getContent() + receipt.getContent() + responsiveSection.getContent() + website.getContent() + banner_page_header.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent()}
+            <?!= styleHtml.renderFile.getContent() ?>
             <!--[if lt IE 9]>
             <script>
               document.createElement("article");
@@ -907,152 +907,139 @@ var renderFile = function (file, argsObject, title) {
             </script>
             <![endif]-->
           </style>
-          ${materializeCss.getContent()}
+          <?!= materializeCss.getContent() ?>
         </head>
-        <body id="renderFile">
-          <header class="banner">
+        <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
+          <header class="banner responsive-section card-panel">
             <h1>Blog</h1>
             <p>Recent Applications</p>
           </header>
-          <main>
-            <nav>
-              <div class="nav-left">
-                <img src="${logo.getContent()}">
+          <nav class="flex-div responsive-section card-panel">
+            <div class="nav-left flex-div responsive-section">
+              <img src="<?!= logo.getContent() ?>" class="logo" />
+            </div>
+            <div class="nav-middle flex-div responsive-section">
+              <div class="search-box flex-div responsive-section">
+                <input type="text" placeholder="Search">
               </div>
-              <div class="nav-middle"></div>
-              <div class="nav-right">
-                <img src="${seaIcn.getContent()}">
-              </div>
-            </nav>
-            <div class="row">
-            <div class="col s12 receipt red">
-            <div class="responsive-section">
-            <div class="btn-large container">
-                    <table class="striped centered highlight grey" style="width:100%">
-                      <tr>
-                        <td>
-                          <div class="row">
-                            <section>
-                              <header>
-                                <h2>Owe</h2>
-                                <aside>
-                                  <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                                </aside>
-                              </header>
-                              <article>
-                                <header>
-                                  <h3>Legal Title:</h3>
-                                </header>
-                                <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Rights of Possession and Control: </h3>
-                                </header>
-                                <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Right of Disposal:</h3>
-                                </header>
-                                <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Freedom from Competing Claims:</h3>
-                                </header>
-                                <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Bearing the Burdens of Ownership:</h3>
-                                </header>
-                                <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                              </article>
-                            </section>
-                          </div>
-                          <div class="row">
-                            <section>
-                              <header>
-                                <h2>Power</h2>
-                                <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
-                              </header>
-                              <aside>
-                                <i>   
-                                  No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                                </i>
-                              </aside>
-                              <article>
-                                <header>
-                                  <h3>Subjectivity in Definition:</h3>
-                                </header>
-                                <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Qualitative Aspects:</h3>
-                                </header>
-                                <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Contextual Dependence:</h3>
-                                </header>
-                                <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                              </article>
-                              <aside>
-                                <i>
-                                  However, there are some aspects that can be measured or assessed to some degree:
-                                </i>
-                              </aside>
-                              <article>
-                                <header>
-                                  <h3>Visible Demonstrations:</h3>
-                                </header>
-                                <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Compliance and Obedience:</h3>
-                                </header>
-                                <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                              </article>
-                              <article>
-                                <header>
-                                  <h3>Social Influence:</h3>
-                                </header>
-                                <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                              </article>
-                              <aside>
-                                <h3>In conclusion:</h3>
-                                <p style="text-align: left">
-                                While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                                </p>
-                              </aside>
-                            </section>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-            </div></div></div></div>
+            </div>
+            <div class="nav-right flex-div responsive-section">
+              <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+            </div>
+          </nav>
+          <main class="responsive-section receipt red sidebar">
+            <section class="responsive-section amber">
+              <header class="card-panel green">
+                <h2>Owe</h2>
+                <aside class="responsive-section card-panel">
+                  <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                </aside>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Legal Title:</h3>
+                  </header>
+                  <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Rights of Possession and Control: </h3>
+                  </header>
+                  <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Right of Disposal:</h3>
+                  </header>
+                  <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Freedom from Competing Claims:</h3>
+                  </header>
+                  <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Bearing the Burdens of Ownership:</h3>
+                  </header>
+                  <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                </article>
+              </header>
+            </section>
+          </div>
+          <div class="row responsive-section">
+            <section class="responsive-section red">
+              <header class="responsive-section card-panel brown">
+                <h2>Power</h2>
+                <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                <aside class="responsive-section card-panel">
+                  <i>   
+                    No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
+                  </i>
+                </aside>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Subjectivity in Definition:</h3>
+                  </header>
+                  <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Qualitative Aspects:</h3>
+                  </header>
+                  <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Contextual Dependence:</h3>
+                  </header>
+                  <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                </article>
+                <aside class="responsive-section card-panel">
+                  <i>
+                    However, there are some aspects that can be measured or assessed to some degree:
+                  </i>
+                </aside>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Visible Demonstrations:</h3>
+                  </header>
+                  <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Compliance and Obedience:</h3>
+                  </header>
+                  <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                </article>
+                <article class="responsive-section">
+                  <header class="responsive-section">
+                    <h3>Social Influence:</h3>
+                  </header>
+                  <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                </article>
+                <aside class="responsive-section card-panel">
+                  <h3>In conclusion:</h3>
+                  <p style="text-align: left">
+                  While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                  </p>
+                </aside>
+              </header>
+            </section>
           </main>
-          <aside class="socials">
-            <article>
-              <div>
+          <footer class="boiler-footer socials receipt-footer responsive-section card-panel red">
+            <article class="responsive-section">
+              <div class="row responsive-section">
                 <?!= renTemp ?>
               </div>
             </article>
-            <div class="row">
-              <article>
-                <footer class="receipt-footer">
-                  <p>
-                    <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                  </p>
-                </footer>
-              </article>
+            <div class="row responsive-section">
+              <aside class="pulse purple">
+                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+              </aside>
             </div>
-          </aside>
-          ${materializeJs.getContent()}
+          </footer>
+          <?!= materializeJs.getContent() ?>
           <script>
             document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
             document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
@@ -1316,264 +1303,141 @@ var renderTemplate = function (blob, argsObject, title) {
       `
     <html id="renderTemplate">
       <head>
-        <?!= builtStyling().evaluate().getContent() ?>
-          <style>
-          
-            /* Remove all default table styling and override inline styles */
-            table, thead, tbody, tr, th, td {
-              all: unset !important; /* This is a powerful reset, removing all inherited and default styles */
-              display: block !important; /* Treat all table elements as block-level to remove table-specific layout */
-            }
-
-            /* You might want to re-add some basic block-level display for structure */
-            table {
-              width: 100% !important; /* Example: set table width */
-              border-collapse: separate !important; /* Override default collapse if present */
-              border-spacing: 0 !important; /* Remove spacing between cells */
-            }
-
-            tr {
-              display: flex !important; /* Use flexbox for rows for more control */
-              width: 100% !important;
-            }
-
-            th, td {
-              flex: 1 !important; /* Make cells equally distribute space within the flex row */
-              padding: 0 !important; /* Remove default padding */
-              margin: 0 !important; /* Remove default margin */
-              border: none !important; /* Remove any default borders */
-              vertical-align: top !important; /* Reset vertical alignment */
-              text-align: left !important; /* Reset text alignment */
-            }
-
-            /* If you have specific classes on your table, you can target them with higher specificity if needed */
-            /* For example, to target the inner table specifically */
-            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {
-              all: unset !important;
-              display: block !important;
-            }
-
-            /* And for its cells, rows, etc. */
-            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table tr,
-            .receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table td {
-              all: unset !important;
-              display: block !important; /* Or display: flex for rows, display: block for cells */
-            }
-                #jsonInput,#getArea {
-                  display: none;
-                  width: 100%;
-                  height: 8vh; /* Or whatever height you need */
-                  margin:10px auto;
-                  padding: 0px;
-                  box-sizing: border-box; /* Include padding in width/height */
-                  border:1px solid #ccc;
-                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
-                  font-size: 14px;
-                  line-height: 1.5; /* Good for readability */
-                  white-space:pre-wrap;
-                  text-align:left;
-                  background-color: #282c34; /* Dark background common for code editors */
-                  color: #abb2bf; /* Light text color for contrast */
-                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
-                  overflow: auto; /* Enable scrolling if content exceeds height */
-
-
-                  /* Focus state */
-                  outline: none; /* Remove default blue outline on focus */
-                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
-                  transition: box-shadow 0.2s ease-in-out;
-                }
-                /* Style for the new textarea */
-                #indexBeta {
-                  /* Basic layout and appearance */
-                  width: 100%;
-                  height: 80vh; /* Or whatever height you need */
-                  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */
-                  font-size: 14px;
-                  line-height: 1.5; /* Good for readability */
-                  margin:10px auto;
-                  white-space:pre-wrap;
-                  text-align:left;
-                  padding: 0px;
-                  box-sizing: border-box; /* Include padding in width/height */
-                  border: 1px solid #333;
-                  background-color: #bfb8ab; /* Dark background common for code editors */
-                  color: #abb2bf; /* Light text color for contrast */
-                  resize: vertical; /* Allow vertical resizing, or 'none' to disable */
-                  overflow: auto; /* Enable scrolling if content exceeds height */
-
-                  /* Hide default textarea scrollbar (optional, but common for custom scrollbars) */
-                  /* If you hide this, you'd need to implement custom scrollbars with JavaScript */
-                  /* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices */
-                  /* &::-webkit-scrollbar { display: none; } */
-                  /* & { -ms-overflow-style: none; scrollbar-width: none; } */
-
-
-                  /* Focus state */
-                  outline: none; /* Remove default blue outline on focus */
-                  box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */
-                  transition: box-shadow 0.2s ease-in-out;
-                };
-
-                #indexBeta,#getArea,#jsonInput:focus {
-                    box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */
-                }
-
-                /* Optional: Placeholder styling */
-                #indexBeta,#getArea,#jsonInput::placeholder {
-                    color: #616e7f;
-                }
-      
-                /* This is the most likely culprit based on your computed styles */
-                /* Make the date numbers a dark color */
-                .datepicker-day-button {
-                  color: #424242 !important; /* A dark gray. Using !important ensures it overrides Materialize defaults and your other styles. */
-                }
-
-                /* Consider other states for the datepicker buttons if needed */
-                /* Example: If today's date also disappears */
-                .datepicker-table td.is-today .datepicker-day-button {
-                    color: #ff9800 !important; /* Example: orange for today's date */
-                }
-                /* Example: If selected dates' numbers disappear (often they should be white on a colored background) */
-                .datepicker-table td.is-selected .datepicker-day-button {
-                    color: white !important; /* Keep white if the selected background is dark */
-                }
-
-
-                /* --- SPECIFIC OVERRIDES FOR MATERIALIZE DATEPICKER --- */
-
-                .datepicker-container table {
-                  /* Re-establish standard table display */
-                  display: table !important;
-                  width: 100% !important; /* Ensure it takes full width of its container */
-                  border-collapse: collapse !important; /* Standard table styling */
-                }
-
-                .datepicker-container thead {
-                  display: table-header-group !important;
-                }
-
-                .datepicker-container tbody {
-                  display: table-row-group !important;
-                }
-
-                .datepicker-container tr {
-                  display: table-row !important;
-                }
-
-                .datepicker-container th,
-                .datepicker-container td {
-                  /* Re-establish table cell display */
-                  display: table-cell !important;
-                  /* Undo flex and reset padding/margin/border that your global rules removed */
-                  flex: none !important; /* Crucial to undo flex: 1 */
-                  padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */
-                  margin: 0 !important;
-                  border: none !important;
-                  vertical-align: middle !important; /* Standard for cells */
-                  text-align: center !important; /* Days of week and numbers are typically centered */
-                }
-
-                /* Also ensure the color fix is here with high specificity */
-                .datepicker-container .datepicker-day-button {
-                  color: #424242 !important;
-                }
-
-                /* You may need to inspect Materialize's default CSS to fine-tune padding, line-height, etc.,
-                  as "all: unset" also removes these. This is why Strategy 1 is preferred. */
-                  
-
-                /*
-                IMPORTANT NOTE ON YOUR GLOBAL TABLE RESETS:
-                You have:
-                table, thead, tbody, tr, th, td {
-                  all: unset !important;
-                  display: block !important;
-                }
-                AND
-                th, td {
-                  flex: 1 !important;
-                  padding: 0 !important;
-                  margin: 0 !important;
-                  border: none !important;
-                  vertical-align: top !important;
-                  text-align: left !important;
-                }
-
-                While the "color" fix above should work, these extremely aggressive table resets
-                could cause other layout issues with the Materialize datepicker (which uses a table).
-                If you encounter further layout problems (e.g., misalignment of days, weird spacing),
-                you might need to make these table resets less global or more specific to *only* the tables
-                you intend to radically change (like your .receipt table),
-                and *not* apply them to the datepicker's internal table.
-                For now, apply the color fix first, as it's the direct solution to the numbers being invisible.
-                */
-
-              
-
-          </style>
-        </head>
+        <style>
+          ${styleHtml.renderFile.getContent()}
+          <!--[if lt IE 9]>
+          <script>
+            document.createElement("article");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("nav");
+            document.createElement("main");
+            document.createElement("section");
+            document.createElement("aside");
+          </script>
+          <![endif]-->
+        </style>
+        ${materializeCss.getContent()}
+      </head>
       <body>
-      <div class="row">
-      <div class="col s12 card-panel amber">
-      <div class="responsive-section">
-      <div class="container">
-      <div class="col s12 receipt red">
-      <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-        <thead>
-        </thead>
-        <tbody>
-          <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-            <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-              <table class="striped centered highlight responsive-table grey z-depth-5" style="width:100%">
-                <tbody>
-                  <td>
-                    <div>
-                    <p> Is the conveyance of power and authority an objective, measurable quantity?</p><br />
-
-
-                    <i>   No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                    <br />
-                    <br />
-                    </i>
-                    <div>
-                          <p style="text-align: left">Subjectivity in Definition: Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                    <br />
-                          <p style="text-align: left">Qualitative Aspects: The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                    <br />
-                          <p style="text-align: left">Contextual Dependence: The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                    <br />
-                    </div>
-                    <i>
-                          However, there are some aspects that can be measured or assessed to some degree:
-                    <br />
-                    <br />
-                    </i>
-                    <div>
-                          <p style="text-align: left">Visible Demonstrations: Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                    <br />
-                          <p style="text-align: left">Compliance and Obedience: The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                    <br />
-                          <p style="text-align: left">Social Influence: The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                    <br />
-                    </div>
-                    <p style="text-align: left">
-                          In conclusion: While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                    <br />
-                    </p>
-                    <div><?!= renTemp ?></div>
-                    </div>
-                    <br />
-                  </td>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      </div></div></div></div></div>
-      <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <header class="banner responsive-section">
+          <h1>Blog</h1>
+          <p>Recent Applications</p>
+        </header>
+        <main class="responsive-section">
+          <nav class="flex-div responsive-section">
+            <div class="nav-left flex-div responsive-section">
+              <img src="${logo.getContent()}" class="logo" />
+            </div>
+            <div class="nav-middle flex-div responsive-section">
+              <div class="search-box flex-div">
+                <input type="text" placeholder="Search">
+              </div>
+            </div>
+            <div class="nav-right flex-div responsive-section">
+              <img src="${seaIcn.getContent()}" class="user-icon" />
+            </div>
+          </nav>
+          <div class="row responsive-section">
+          <div class="col s12 card-panel amber responsive-section">
+          <div class="responsive-section">
+          <div class="responsive-section">
+          <div class="col s12 receipt red responsive-section">
+          <table class="striped centered highlight responsive-table grey z-depth-5responsive-section" style="width:100%">
+            <thead>
+            </thead>
+            <tbody>
+              <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                  <table class="striped centered highlight responsive-table grey z-depth-5 responsive-section" style="width:100%">
+                    <tbody>
+                      <td>
+                        <div class="row responsive-section">
+                          <section class="responsive-section">
+                            <header class="responsive-section">
+                              <h2>Power</h2>
+                              <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                            </header>
+                            <aside class="responsive-section card-panel">
+                              <i>   
+                                No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
+                              </i>
+                            </aside>
+                            <article class="responsive-section card-panel">
+                              <header class="responsive-section">
+                                <h3>Subjectivity in Definition:</h3>
+                              </header>
+                              <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                            </article>
+                            <article class="responsive-section card-panel">
+                              <header class="responsive-section">
+                                <h3>Qualitative Aspects:</h3>
+                              </header>
+                              <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                            </article>
+                            <article class="responsive-section card-panel">
+                              <header class="responsive-section">
+                                <h3>Contextual Dependence:</h3>
+                              </header>
+                              <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                            </article>
+                            <aside class="responsive-section card-panel">
+                              <i>
+                                However, there are some aspects that can be measured or assessed to some degree:
+                              </i>
+                            </aside>
+                            <article class="responsive-section card-panel">
+                              <header class="responsive-section">
+                                <h3>Visible Demonstrations:</h3>
+                              </header>
+                              <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                            </article>
+                            <article class="responsive-section card-panel">
+                              <header class="responsive-section">
+                                <h3>Compliance and Obedience:</h3>
+                              </header>
+                              <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                            </article>
+                            <article class="responsive-section card-panel">
+                              <header class=""responsive-section>
+                                <h3>Social Influence:</h3>
+                              </header>
+                              <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                            </article>
+                            <aside class="responsive-section card-panel">
+                              <h3>In conclusion:</h3>
+                              <p style="text-align: left">
+                              While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                              </p>
+                            </aside>
+                          </section>
+                        </div>
+                      </td>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div></div></div></div></div>
+        </main>
+        <aside class="socials responsive-section card-panel">
+          <article class="responsive-section card-panel">
+            <div class="row responsive-section">
+              <?!= renTemp ?>
+            </div>
+          </article>
+          <div class="row responsive-section">
+            <article class="responsive-section card-panel">
+              <footer class="receipt-footer responsive-section">
+                <p>
+                  <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                </p>
+              </footer>
+            </article>
+          </div>
+        </aside>
+        ${materializeJs.getContent()}
         <script>
           function serverside(func, args) {
           return new Promise((resolve, reject) => {

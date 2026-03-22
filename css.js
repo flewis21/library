@@ -55,11 +55,13 @@ const block_display = HtmlService.createHtmlOutput(
   `article, aside, footer, header, nav, main, section {display: block;}`,
 );
 const body = HtmlService.createHtmlOutput(
-  `body {background-color: #ffc107;width: 960px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px; }`,
+  `body {background-image: url("https://flewis21.github.io/foobar/images/user.jpg");width: 960px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;background-position: center; }`,
 );
+const body_survey_player = HtmlService.createHtmlOutput(`body {flex-grow: 1;color:blue;text-decoration:bold;flex-flow: row wrap;grid-column: 1;grid-row: 1;text-align: center;align-content: flex-start;overflow: auto;}`)
 const body_unset = HtmlService.createHtmlOutput(
   `body, div, th, td{margin: 0.5px 0.5px 0.5px 0.5px !important; /* Remove default margin */width: 100% !important;}`,
 );
+const div_oddchances = HtmlService.createHtmlOutput(`div #content01 {clear: both;overflow-y: auto;overflow-x: hidden;text-align: center;}`);
 const figcaption = HtmlService.createHtmlOutput(
   `figcaption {color: white;text-align: center;user-select: none;}`,
 );
@@ -77,17 +79,20 @@ const img = HtmlService.createHtmlOutput(`img {width: 160px;cursor: pointer;}`);
 const link_all = HtmlService.createHtmlOutput(
   `a {text-decoration: none;color: #5a5a5a;}`,
 );
+const link_active = HtmlService.createHtmlOutput(`a:hover,a:active {color: white !important;text-decoration: none !important;}`);
+const link_visited = HtmlService.createHtmlOutput(`a:link,a:visited {color: black !important;}`);
 const list_item_link = HtmlService.createHtmlOutput(`li a {color: white;}`);
 const main = HtmlService.createHtmlOutput(
-  `main {height: 92%;margin-top: 10px;width: 570px;float: left;margin-bottom: 10px;}`,
+  `main {height: 92%;margin-top: 10px;width: 40%;float: left;margin-bottom: 10px;}`,
 );
 const nav = HtmlService.createHtmlOutput(
-  `nav {background-color: #20416c;padding: 5px;margin-top: 1px;}`,
+  `nav {background-color: #20416c;padding: 10px 2%;justify-content: space-between;margin-top: 1px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);background: #fff;position: sticky;top: 0;z-index: 10;}`,
 );
+const nav_oddchances = HtmlService.createHtmlOutput(`nav {font-size: 30px;}`);
 const section = HtmlService.createHtmlOutput(
   `section {background-color: #bbbbbb;margin-top: 10px;padding: 5px;}`,
 );
-const table_border = HtmlService.createHtmlOutput(
+const table_display = HtmlService.createHtmlOutput(
   `table {width: 100% !important; /* Example: set table width */border-collapse: separate !important; /* Override default collapse if present */border-spacing: 0 !important; /* Remove spacing between cells */}`,
 );
 const table_display_unset = HtmlService.createHtmlOutput(
@@ -105,12 +110,13 @@ const tbodySummary_table_tdNth_child2 = HtmlService.createHtmlOutput(
 const tbodySummary_table_tdNth_child3 = HtmlService.createHtmlOutput(
   `tbody.summary-table td:nth-child(3) {width: 25px;}`,
 );
+const td_display = HtmlService.createHtmlOutput(`vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;`);
 const th_description = HtmlService.createHtmlOutput(
   `th.description {width: 180px;text-align: left;}`,
 );
 const th_price = HtmlService.createHtmlOutput(`th.price {width: 75px;}`);
 const tr_display = HtmlService.createHtmlOutput(
-  `tr {display: flex; /* Use flexbox for rows for more control */width: 100%;}`,
+  `tr {display: flex; /* Use flexbox for rows for more control */width: 100%;justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;margin: auto;}`,
 );
 const website = HtmlService.createHtmlOutput(
   `* {box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;}`,
@@ -118,6 +124,7 @@ const website = HtmlService.createHtmlOutput(
 const banner_page_header = HtmlService.createHtmlOutput(
   `.banner {background-color: #11233b;color: white;padding: 10px 20px;}`,
 );
+const boiler_footer = HtmlService.createHtmlOutput(`.boiler-footer {clear: none;margin-top: 10px;height: 92%;}`) 
 const company_info = HtmlService.createHtmlOutput(
   `.company-info {margin-top: 5px;}`,
 );
@@ -182,6 +189,15 @@ const menu_itemHover = HtmlService.createHtmlOutput(
 const menu_payment = HtmlService.createHtmlOutput(
   `.menu-payment {background: rgba(255, 255, 255, .05);flex-grow: 1;z-index: 0;}`,
 );
+const nav_left_menu_ico = HtmlService.createHtmlOutput(`.nav-left .menu-icon {width: 22px;margin-right: 25px;}`);
+const nav_left_logo = HtmlService.createHtmlOutput(`.nav-left .logo {width: 30px;}`);
+const nav_middle = HtmlService.createHtmlOutput(``);
+const nav_middle_mic_ico = HtmlService.createHtmlOutput(`.nav-middle .mic-icon {width: 16px;}`);
+const nav_middle_search_box = HtmlService.createHtmlOutput(`.nav-middle .search-box {border: 1px solid #ccc;margin-right: 15px;padding: 8px 12px;border-radius: 25px;}`);
+const nav_middle_search_box_img = HtmlService.createHtmlOutput(`.nav-middle .search-box img {width: 15px;}`);
+const nav_middle_search_box_input = HtmlService.createHtmlOutput(`.nav-middle .search-box input {width: 400px;border: 0;outline: 0;background: transparent;}`);
+const nav_right_img = HtmlService.createHtmlOutput(`.nav-right img {width: 25px;margin-right: 25px;}`);
+const nav_right_user_ico = HtmlService.createHtmlOutput(`.nav-right .user-icon {width: 35px;border-radius: 50%;margin-right: 0;}`);
 const order = HtmlService.createHtmlOutput(
   `.order {background-color: white;flex: 0 0 440px;overflow: auto;}`,
 );
@@ -212,8 +228,11 @@ const receipt_unset = HtmlService.createHtmlOutput(
 const responsiveSection = HtmlService.createHtmlOutput(
   `.responsive-section .container {width: 100%;padding: 0px}`,
 );
+const shortcuts_links_a_img = HtmlService.createHtmlOutput(`.shortcut-links a img {width: 20px;margin-right: 20px;}`);
+const shortcuts_links_a = HtmlService.createHtmlOutput(`.shortcut-links a {display: flex;align-items: center;margin-bottom; 20px; width: fix-content;flex-wrap: wrap;}`);
+const sidebar = HtmlService.createHtmlOutput(`.sidebar {background: #fff;width: 15%;height: 100vh;position: fixed;top: 0;padding-left: 2%;padding-top: 80px}`);
 const socials = HtmlService.createHtmlOutput(
-  `.socials {float: right;width: 400px;}`,
+  `.socials {float: right;width: 55%;}`,
 );
 const toolbar = HtmlService.createHtmlOutput(
   `.toolbar {flex: 0 0 60px;justify-content: space-around;align-items: center;border: solid .5px;border-radius: 10px;margin: 0px 15px 5px 15px;}`,
@@ -252,10 +271,10 @@ const seperator1 = HtmlService.createHtmlOutput(
   `/* -----------------------------------ORDER--------------------------- */`,
 );
 const logo = HtmlService.createHtmlOutput(
-  `https://drive.google.com/file/d/11oKCk1am1bqTEIylMcsatdkMdF6jKkFe/preview`,
+  `https://flewis21.github.io/foobar/images/logo.jpg`,
 );
 const seaIcn = HtmlService.createHtmlOutput(
-  `https://drive.google.com/file/d/1--9TBDIYipI0ZN2bEb_77bITFzC1cRDK/preview`,
+  `https://flewis21.github.io/foobar/images/user.jpg`,
 );
 const materializeJs = HtmlService.createHtmlOutput(
   `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
@@ -340,15 +359,14 @@ const iframePlayer = HtmlService.createHtmlOutput(`function fPla() {
     }
     return myObj;
   }`);
-var styleHtml = function () {
-  const startPageUrl = getUrl(ScriptApp) + "?default";
-  var content = {};
-  content.startPageUrl = startPageUrl;
-  return content;
-}; //:contentFile('uiAccess');
+const styleHtml = {
+    renderFile: HtmlService.createHtmlOutput(`${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent()}`),
+    surveyPlayer: HtmlService.createHtmlOutput(`${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + receipt.getContent() + responsiveSection.getContent() + website.getContent() + body_survey_player.getContent() + nav.getContent()}`),
+    oddChances: HtmlService.createHtmlOutput(`${link_visited.getContent() + link_active.getContent()}`)
+  }; 
 
 var builtStyling = function (e) {
-  var content = styleHtml();
+  var content = styleHtml.renderFile.getContent();
   var frame = frameHtml();
 
   var htmlString = `

@@ -86,21 +86,11 @@ function surveyPlayer(searchString, joinString) {
     `<!DOCTYPE html>
       <html id="test">
         <head>
-          <base target="_top">
-          <?!= builtStyling().evaluate().getContent() ?>
-              <style>
-                body {
-                  flex-grow: 1;
-                  color:blue;
-                  text-decoration:bold;
-                  flex-flow: row wrap;
-                  grid-column: 1;
-                  grid-row: 1;
-                  text-align: center;
-                  align-content: flex-start;
-                  overflow: auto;
-                }
-              </style>
+          <base target="_top" />
+          ${utf_8.getContent() + xuacompatible.getContent() + viewport.getContent()}
+          <style>
+            <?!= styleHtml.surveyPlayer.getContent() ?>
+          </style>
         </head>
         <body  id="template">
           <div class="responsive-section">

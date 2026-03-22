@@ -1004,9 +1004,14 @@ function handleGetData(e) {
 
   Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // var contentData = isValidKeys(data);
-  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
-    ContentService.MimeType.JSON,
-  );
+  if (payLoad.type === "html") {
+    return renderTemplate(data.message.info,{},JSON.stringify(rndE));
+  }
+  else {
+    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
+      ContentService.MimeType.JSON,
+    );
+  }
 }
 
 function handleFormSubmission(e) {
