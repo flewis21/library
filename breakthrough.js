@@ -698,7 +698,7 @@ function rndDice() {
   } else if (dice === 2) {
     tres = tres + 3;
     trial["tres"] = tres;
-      trial["judge"] = sixes + fives + fours + tres + deuces + snakeEyes;
+    trial["judge"] = sixes + fives + fours + tres + deuces + snakeEyes;
   } else if (dice === 3) {
     fours = fours + 4;
     trial["fours"] = fours;
@@ -792,13 +792,11 @@ function rndDice() {
     } else {
       for (var i = judge, l = Object.keys(trial).length; i < l; i++) {
         console.log(JSON.stringify(trial["judge"]));
-        judge++
+        judge++;
       }
     }
   }
-  var form = FormApp.create("Dice Roll").setDescription(
-    judge + " Rolls",
-  );
+  var form = FormApp.create("Dice Roll").setDescription(judge + " Rolls");
   var formUrl = form.getPublishedUrl();
   for (var key in trial) {
     form
