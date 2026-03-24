@@ -3083,12 +3083,12 @@ function seoCapital(url) {
                       <div class="responsive-section">
                         <div class="container">
                           <div id="divSEOC" class="col s12 receipt amber flow-text">
-                            <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                            <table class="striped centered highlight amber z-depth-5" style="width:100%">
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
                                   <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                                    <table class="striped centered highlight responsive-table amber z-depth-5" style="width:100%">
+                                    <table class="striped centered highlight amber z-depth-5" style="width:100%">
                                       <tbody >
                                         <td>
                                           <div>

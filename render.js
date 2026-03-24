@@ -909,14 +909,10 @@ var renderFile = function (file, argsObject, title) {
           </style>
           <?!= materializeCss.getContent() ?>
         </head>
-        <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
-          <header class="banner responsive-section card-panel">
-            <h1>Blog</h1>
-            <p>Recent Applications</p>
-          </header>
-          <nav class="flex-div responsive-section card-panel">
+        <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
+          <nav class="flex-div responsive-section card-panel static-fix">
             <div class="nav-left flex-div responsive-section">
-              <img src="<?!= logo.getContent() ?>" class="logo" />
+              <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
             </div>
             <div class="nav-middle flex-div responsive-section">
               <div class="search-box flex-div responsive-section">
@@ -927,132 +923,77 @@ var renderFile = function (file, argsObject, title) {
               <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
             </div>
           </nav>
-          <main class="responsive-section receipt red sidebar">
-            <section class="responsive-section amber">
-              <header class="card-panel green">
-                <h2>Owe</h2>
-                <aside class="responsive-section card-panel">
-                  <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                </aside>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Legal Title:</h3>
-                  </header>
-                  <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Rights of Possession and Control: </h3>
-                  </header>
-                  <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Right of Disposal:</h3>
-                  </header>
-                  <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Freedom from Competing Claims:</h3>
-                  </header>
-                  <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Bearing the Burdens of Ownership:</h3>
-                  </header>
-                  <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                </article>
-              </header>
-            </section>
-          </div>
-          <div class="row responsive-section">
-            <section class="responsive-section red">
-              <header class="responsive-section card-panel brown">
-                <h2>Power</h2>
-                <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
-                <aside class="responsive-section card-panel">
-                  <i>   
-                    No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                  </i>
-                </aside>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Subjectivity in Definition:</h3>
-                  </header>
-                  <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Qualitative Aspects:</h3>
-                  </header>
-                  <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Contextual Dependence:</h3>
-                  </header>
-                  <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                </article>
-                <aside class="responsive-section card-panel">
-                  <i>
-                    However, there are some aspects that can be measured or assessed to some degree:
-                  </i>
-                </aside>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Visible Demonstrations:</h3>
-                  </header>
-                  <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Compliance and Obedience:</h3>
-                  </header>
-                  <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                </article>
-                <article class="responsive-section">
-                  <header class="responsive-section">
-                    <h3>Social Influence:</h3>
-                  </header>
-                  <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                </article>
-                <aside class="responsive-section card-panel">
-                  <h3>In conclusion:</h3>
-                  <p style="text-align: left">
-                  While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                  </p>
-                </aside>
-              </header>
-            </section>
+          <header class="banner responsive-section card-panel static-fix">
+            <h1>Blog</h1>
+            <p>Recent Applications</p>
+          </header>
+          <main class="responsive-section receipt black static-fix float-right">
+            <div class="row responsive-section">
+              <section class="responsive-section black">
+                <header class="card-panel green">
+                  <h2>Owe</h2>
+                  <aside class="responsive-section card-panel">
+                    <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                  </aside>
+                  <article class="responsive-section">
+                    <header class="responsive-section">
+                      <h3>Legal Title:</h3>
+                    </header>
+                    <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                  </article>
+                  <article class="responsive-section">
+                    <header class="responsive-section">
+                      <h3>Rights of Possession and Control: </h3>
+                    </header>
+                    <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                  </article>
+                  <article class="responsive-section">
+                    <header class="responsive-section">
+                      <h3>Right of Disposal:</h3>
+                    </header>
+                    <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                  </article>
+                  <article class="responsive-section">
+                    <header class="responsive-section">
+                      <h3>Freedom from Competing Claims:</h3>
+                    </header>
+                    <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                  </article>
+                  <article class="responsive-section">
+                    <header class="responsive-section">
+                      <h3>Bearing the Burdens of Ownership:</h3>
+                    </header>
+                    <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                  </article>
+                </header>
+              </section>
+            </div>
           </main>
-          <footer class="boiler-footer socials receipt-footer responsive-section card-panel red">
-            <article class="responsive-section">
-              <div class="row responsive-section">
+          <footer class="boiler-footer socials receipt-footer float-left responsive-section card-panel black static-fix">
+            <article class="responsive-section static-fix">
+              <div class="row responsive-section static-fix">
                 <?!= renTemp ?>
               </div>
             </article>
             <div class="row responsive-section">
-              <aside class="pulse purple">
+              <aside class="pulse brown sidebar">
                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                <hr>
+                <div class="subscribed-list">
+                  <h3>SUBSCRIBED</h3>
+                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                </div>
               </aside>
             </div>
           </footer>
           <?!= materializeJs.getContent() ?>
           <script>
+            ${collapse_menu.getContent()}
             document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
             document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
             document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");
             function serverside(func, args) {
-              return new Promise((resolve, reject) => {
-                google.script.run
-                  .withSuccessHandler(result => {
-                    resolve(result)})
-                  .withFailureHandler(error => {
-                    reject(error)})
-                  .runBoilerplate(func, args)
-              })
+              ${google_script_run_promise.getContent()}
             }; 
             $(document).ready(function() {
               $('select').formSelect();
@@ -1320,40 +1261,40 @@ var renderTemplate = function (blob, argsObject, title) {
         ${materializeCss.getContent()}
       </head>
       <body>
-        <header class="banner responsive-section">
+        <nav class="flex-div responsive-section static-fix">
+          <div class="nav-left flex-div responsive-section">
+            <img src="${logo.getContent()}" class="logo menu-icon" />
+          </div>
+          <div class="nav-middle flex-div responsive-section">
+            <div class="search-box flex-div">
+              <input type="text" placeholder="Search">
+            </div>
+          </div>
+          <div class="nav-right flex-div responsive-section">
+            <img src="${seaIcn.getContent()}" class="user-icon" />
+          </div>
+        </nav>
+        <header class="banner responsive-section static-fix">
           <h1>Blog</h1>
           <p>Recent Applications</p>
         </header>
-        <main class="responsive-section">
-          <nav class="flex-div responsive-section">
-            <div class="nav-left flex-div responsive-section">
-              <img src="${logo.getContent()}" class="logo" />
-            </div>
-            <div class="nav-middle flex-div responsive-section">
-              <div class="search-box flex-div">
-                <input type="text" placeholder="Search">
-              </div>
-            </div>
-            <div class="nav-right flex-div responsive-section">
-              <img src="${seaIcn.getContent()}" class="user-icon" />
-            </div>
-          </nav>
+        <main class="responsive-section float-right static-fix">
           <div class="row responsive-section">
-          <div class="col s12 card-panel amber responsive-section">
+          <div class="card-panel amber responsive-section">
           <div class="responsive-section">
           <div class="responsive-section">
-          <div class="col s12 receipt red responsive-section">
-          <table class="striped centered highlight responsive-table grey z-depth-5responsive-section" style="width:100%">
+          <div class="receipt red responsive-section">
+          <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
             <thead>
             </thead>
             <tbody>
-              <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+              <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
                 <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                  <table class="striped centered highlight responsive-table grey z-depth-5 responsive-section" style="width:100%">
+                  <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
                     <tbody>
                       <td>
                         <div class="row responsive-section">
-                          <section class="responsive-section">
+                          <section class="responsive-section static-fix">
                             <header class="responsive-section">
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
@@ -1421,32 +1362,31 @@ var renderTemplate = function (blob, argsObject, title) {
           </table>
           </div></div></div></div></div>
         </main>
-        <aside class="socials responsive-section card-panel">
-          <article class="responsive-section card-panel">
-            <div class="row responsive-section">
+        <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix float-left">
+          <article class="responsive-section card-panel static-fix">
+            <div class="row responsive-section static-fix">
               <?!= renTemp ?>
             </div>
           </article>
           <div class="row responsive-section">
-            <article class="responsive-section card-panel">
-              <footer class="receipt-footer responsive-section">
-                <p>
-                  <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                </p>
-              </footer>
-            </article>
+            <aside class="pulse sidebar">
+              <p>
+                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                <hr>
+                <div class="subscribed-list">
+                  <h3>SUBSCRIBED</h3>
+                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                </div>
+              </p>
+            </aside>
           </div>
-        </aside>
+        </footer>
         ${materializeJs.getContent()}
         <script>
+          ${collapse_menu.getContent()}
           function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler(result => {
-                resolve(result)})
-            .withFailureHandler(error => {
-                reject(error)})
-            .runBoilerplate(func, args)})};
+            ${google_script_run_promise.getContent()}
+          };
           $(document).ready(function() {
             $('select').formSelect();
 
