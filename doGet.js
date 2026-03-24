@@ -1005,13 +1005,15 @@ function handleGetData(e) {
   Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // var contentData = isValidKeys(data);
   if (payLoad.type === "html") {
-    return renderTemplate(data.message.info,{},JSON.stringify(rndE));
-  }
-  else if ((payLoad.type === "text" || payLoad.type === "url") && isValidUrl(payLoad.data).hostname && isValidUrl(iframeSrc).hostname) {
+    return renderTemplate(data.message.info, {}, JSON.stringify(rndE));
+  } else if (
+    (payLoad.type === "text" || payLoad.type === "url") &&
+    isValidUrl(payLoad.data).hostname &&
+    isValidUrl(iframeSrc).hostname
+  ) {
     var seoHtml = seoCapital(data.message.content);
-    return renderTemplate(seoHtml,{},JSON.stringify(rndE));
-  }
-  else {
+    return renderTemplate(seoHtml, {}, JSON.stringify(rndE));
+  } else {
     return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
       ContentService.MimeType.JSON,
     );
