@@ -143,7 +143,9 @@ const boiler_footer = HtmlService.createHtmlOutput(
 const company_info = HtmlService.createHtmlOutput(
   `.company-info {margin-top: 5px;}`,
 );
-const container = HtmlService.createHtmlOutput(`.container {background: #f9f9f9;padding-left: 17%;padding-right: 2%;padding-top: 20px;padding-bottom: 20px;}`);
+const container = HtmlService.createHtmlOutput(
+  `.container {background: #f9f9f9;padding-left: 17%;padding-right: 2%;padding-top: 20px;padding-bottom: 20px;}`,
+);
 const contentSection = HtmlService.createHtmlOutput(
   `.content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}`,
 );
@@ -193,9 +195,15 @@ const float_left = HtmlService.createHtmlOutput(`.float-left {float: left;}`);
 const float_right = HtmlService.createHtmlOutput(
   `.float-right {float: right;}`,
 );
-const grid = HtmlService.createHtmlOutput(`.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`);
-const large_container = HtmlService.createHtmlOutput(`.large-container {padding-left: 7%;}`);
-const list_container = HtmlService.createHtmlOutput(`.list-container {margin-top: 15px;}`);
+const grid = HtmlService.createHtmlOutput(
+  `.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`,
+);
+const large_container = HtmlService.createHtmlOutput(
+  `.large-container {padding-left: 7%;}`,
+);
+const list_container = HtmlService.createHtmlOutput(
+  `.list-container {margin-top: 15px;}`,
+);
 const menu = HtmlService.createHtmlOutput(
   `.menu {flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;}`,
 );
@@ -315,11 +323,21 @@ const toolbar_icon = HtmlService.createHtmlOutput(
 const toolbar_iconHover = HtmlService.createHtmlOutput(
   `.toolbar-icon:hover {transform: scale(1.2);}`,
 );
-const vid_info = HtmlService.createHtmlOutput(`.vid-info {color: #5a5a5a;font-size: 13px;}`);
-const vid_info_link = HtmlService.createHtmlOutput(`.vid-info a {color: #000;font-weight: 600;display: block;margin-bottom: 5px;}`);
-const vid_list_thumbnail = HtmlService.createHtmlOutput(`.vid-list .thumbnail {width: 100%;border-radius: 5px;}`);
-const vid_list_flex_div = HtmlService.createHtmlOutput(`.vid-list .flex-div {align-items: flex-start;margin-top: 7px;}`);
-const vid_list_flex_div_img = HtmlService.createHtmlOutput(`.vid-list .flex-div img {width: 35px;margin-right: 10px;border-radius: 50%;}`);
+const vid_info = HtmlService.createHtmlOutput(
+  `.vid-info {color: #5a5a5a;font-size: 13px;}`,
+);
+const vid_info_link = HtmlService.createHtmlOutput(
+  `.vid-info a {color: #000;font-weight: 600;display: block;margin-bottom: 5px;}`,
+);
+const vid_list_thumbnail = HtmlService.createHtmlOutput(
+  `.vid-list .thumbnail {width: 100%;border-radius: 5px;}`,
+);
+const vid_list_flex_div = HtmlService.createHtmlOutput(
+  `.vid-list .flex-div {align-items: flex-start;margin-top: 7px;}`,
+);
+const vid_list_flex_div_img = HtmlService.createHtmlOutput(
+  `.vid-list .flex-div img {width: 35px;margin-right: 10px;border-radius: 50%;}`,
+);
 const barcode = HtmlService.createHtmlOutput(
   `#barcode {font-family: "Libre Barcode 128", cursive;font-size: 70px;margin-top: 10px;}`,
 );
