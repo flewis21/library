@@ -927,56 +927,91 @@ var renderFile = function (file, argsObject, title) {
             <h1>Blog</h1>
             <p>Recent Applications</p>
           </header>
-          <main class="responsive-section receipt black static-fix float-right">
-            <div class="row responsive-section">
-              <section class="responsive-section black">
-                <header class="card-panel green">
-                  <h2>Owe</h2>
-                  <aside class="responsive-section card-panel">
-                    <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                  </aside>
-                  <article class="responsive-section">
-                    <header class="responsive-section">
-                      <h3>Legal Title:</h3>
-                    </header>
-                    <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                  </article>
-                  <article class="responsive-section">
-                    <header class="responsive-section">
-                      <h3>Rights of Possession and Control: </h3>
-                    </header>
-                    <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                  </article>
-                  <article class="responsive-section">
-                    <header class="responsive-section">
-                      <h3>Right of Disposal:</h3>
-                    </header>
-                    <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                  </article>
-                  <article class="responsive-section">
-                    <header class="responsive-section">
-                      <h3>Freedom from Competing Claims:</h3>
-                    </header>
-                    <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                  </article>
-                  <article class="responsive-section">
-                    <header class="responsive-section">
-                      <h3>Bearing the Burdens of Ownership:</h3>
-                    </header>
-                    <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                  </article>
-                </header>
-              </section>
-            </div>
-          </main>
-          <footer class="boiler-footer socials receipt-footer float-left responsive-section card-panel black static-fix">
+          <main class="responsive-section receipt black static-fix float-right menu">
+          <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix">
             <article class="responsive-section static-fix">
-              <div class="row responsive-section static-fix">
+              <div class="row responsive-section static-fix container">
                 <?!= renTemp ?>
               </div>
             </article>
             <div class="row responsive-section">
               <aside class="pulse brown sidebar">
+            <div class="row responsive-section">
+              <section class="responsive-section black">
+                <header class="card-panel green list-container grid">
+                  <h2>Owe</h2>
+                  <aside class="responsive-section card-panel vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                      </div>
+                    </div>
+                  </aside>
+                  <article class="responsive-section vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <header class="responsive-section">
+                          <h3><a href="">Legal Title:</a></h3>
+                        </header>
+                        <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="responsive-section vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <header class="responsive-section">
+                          <h3><a href="">Rights of Possession and Control:</a></h3>
+                        </header>
+                        <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="responsive-section vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <header class="responsive-section">
+                          <h3><a href="">Right of Disposal:</a></h3>
+                        </header>
+                        <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="responsive-section vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <header class="responsive-section">
+                          <h3><a href="">Freedom from Competing Claims:</a></h3>
+                        </header>
+                        <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                      </div>
+                    </div>
+                  </article>
+                  <article class="responsive-section vid-list">
+                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                    <div class="flex-div">
+                      <img src="<?!= seaIcn.getContent() ?>" />
+                      <div class="vid-info">
+                        <header class="responsive-section">
+                          <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
+                        </header>
+                        <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                      </div>
+                    </div>
+                  </article>
+                </header>
+              </section>
+            </div>
                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                 <hr>
                 <div class="subscribed-list">
@@ -986,6 +1021,7 @@ var renderFile = function (file, argsObject, title) {
               </aside>
             </div>
           </footer>
+          </main>
           <?!= materializeJs.getContent() ?>
           <script>
             ${collapse_menu.getContent()}
@@ -1295,62 +1331,117 @@ var renderTemplate = function (blob, argsObject, title) {
                       <td>
                         <div class="row responsive-section">
                           <section class="responsive-section static-fix">
-                            <header class="responsive-section">
+                            <header class="responsive-section list-container grid">
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                              <aside class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <i>   
+                                      No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
+                                    </i>
+                                  </div>
+                                </div>
+                              </aside>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="">Subjectivity in Definition:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""></a>
+                                <img src="<?!= logo.getContent() ?>" class="thumbnail" />
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="">Qualitative Aspects:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="">Contextual Dependence:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <aside class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <i>
+                                      However, there are some aspects that can be measured or assessed to some degree:
+                                    </i>
+                                  </div>
+                                </div>
+                              </aside>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="">Visible Demonstrations:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="">Compliance and Obedience:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <header class=""responsive-section>
+                                      <h3><a href="">Social Influence:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <aside class="responsive-section card-panel vid-list">
+                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <h3><a href="">In conclusion:</a></h3>
+                                    <p style="text-align: left">
+                                    While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                                    </p>
+                                  </div>
+                                </div>
+                              </aside>
                             </header>
-                            <aside class="responsive-section card-panel">
-                              <i>   
-                                No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                              </i>
-                            </aside>
-                            <article class="responsive-section card-panel">
-                              <header class="responsive-section">
-                                <h3>Subjectivity in Definition:</h3>
-                              </header>
-                              <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                            </article>
-                            <article class="responsive-section card-panel">
-                              <header class="responsive-section">
-                                <h3>Qualitative Aspects:</h3>
-                              </header>
-                              <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                            </article>
-                            <article class="responsive-section card-panel">
-                              <header class="responsive-section">
-                                <h3>Contextual Dependence:</h3>
-                              </header>
-                              <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                            </article>
-                            <aside class="responsive-section card-panel">
-                              <i>
-                                However, there are some aspects that can be measured or assessed to some degree:
-                              </i>
-                            </aside>
-                            <article class="responsive-section card-panel">
-                              <header class="responsive-section">
-                                <h3>Visible Demonstrations:</h3>
-                              </header>
-                              <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                            </article>
-                            <article class="responsive-section card-panel">
-                              <header class="responsive-section">
-                                <h3>Compliance and Obedience:</h3>
-                              </header>
-                              <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                            </article>
-                            <article class="responsive-section card-panel">
-                              <header class=""responsive-section>
-                                <h3>Social Influence:</h3>
-                              </header>
-                              <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                            </article>
-                            <aside class="responsive-section card-panel">
-                              <h3>In conclusion:</h3>
-                              <p style="text-align: left">
-                              While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                              </p>
-                            </aside>
                           </section>
                         </div>
                       </td>
@@ -1364,7 +1455,7 @@ var renderTemplate = function (blob, argsObject, title) {
         </main>
         <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix float-left">
           <article class="responsive-section card-panel static-fix">
-            <div class="row responsive-section static-fix">
+            <div class="row responsive-section static-fix container">
               <?!= renTemp ?>
             </div>
           </article>

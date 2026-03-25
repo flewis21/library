@@ -40,10 +40,10 @@ const googleApis_defer = HtmlService.createHtmlOutput(
   `<script async="" defer="" src="https://apis.google.com/js/platform.js"></script>`,
 );
 const desktopContainer = HtmlService.createHtmlOutput(
-  `@media only screen and (min-width: 601px) {.desktop-container {width: 85%;margin: 0 auto;};.responsive-section {width: 85%;margin: 20 auto;}}`,
+  `@media (min-width: 901px) {.desktop-container {width: 85%;margin: 0 auto;};.responsive-section {width: 85%;margin: 20 auto;}}`,
 );
 const mobileSection = HtmlService.createHtmlOutput(
-  `@media only screen and (max-width: 600px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px}}`,
+  `@media (max-width: 900px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px;} .menu-icon {display: none;} .sidebar {display: none;} .container .large-container {padding-left: 5%;padding-right: 5%;} .nav-right img {display: none;} .nav-right .user-icon  {display: block;width: 30px;} .nav-middle .search-box input {width: 100px;} .nav-middle .mic-icon {display: none;} .logo {width: 90px;}}`,
 );
 const article = HtmlService.createHtmlOutput(
   `article {background-color: white;margin-top: 5px;padding: 10px 15px;color: black;}`,
@@ -55,7 +55,7 @@ const block_display = HtmlService.createHtmlOutput(
   `article, aside, footer, header, nav, main, section {display: block;}`,
 );
 const body = HtmlService.createHtmlOutput(
-  `body {background-image: url("https://flewis21.github.io/foobar/images/user.jpg");width: 960px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;background-position: center; }`,
+  `body {background-image: url("https://flewis21.github.io/foobar/images/user.jpg");width: 1080px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;background-position: center; }`,
 );
 const body_survey_player = HtmlService.createHtmlOutput(
   `body {flex-grow: 1;color:blue;text-decoration:bold;flex-flow: row wrap;grid-column: 1;grid-row: 1;text-align: center;align-content: flex-start;overflow: auto;}`,
@@ -91,7 +91,7 @@ const link_visited = HtmlService.createHtmlOutput(
 );
 const list_item_link = HtmlService.createHtmlOutput(`li a {color: white;}`);
 const main = HtmlService.createHtmlOutput(
-  `main {height: 92%;margin-top: 10px;width: 40%;margin-bottom: 10px;}`,
+  `main {height: 92%;margin-top: 10px;width: 100%;margin-bottom: 10px;}`,
 );
 const nav = HtmlService.createHtmlOutput(
   `nav {background-color: #20416c;padding: 10px 2%;justify-content: space-between;margin-top: 1px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);background: #fff;position: stactic;top: 0;z-index: 10;}`,
@@ -132,7 +132,10 @@ const website = HtmlService.createHtmlOutput(
   `* {box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;}`,
 );
 const banner_page_header = HtmlService.createHtmlOutput(
-  `.banner {background-color: #11233b;color: white;padding: 10px 20px;}`,
+  `.banner {background-color: #11233b;color: white;padding: 10px 20px;width: 100%;}`,
+);
+const banner_img = HtmlService.createHtmlOutput(
+  `.banner img {width: 100%;border-radius: 8px;}`,
 );
 const boiler_footer = HtmlService.createHtmlOutput(
   `.boiler-footer {clear: none;margin-top: 10px;height: 92%;}`,
@@ -140,6 +143,7 @@ const boiler_footer = HtmlService.createHtmlOutput(
 const company_info = HtmlService.createHtmlOutput(
   `.company-info {margin-top: 5px;}`,
 );
+const container = HtmlService.createHtmlOutput(`.container {background: #f9f9f9;padding-left: 17%;padding-right: 2%;padding-top: 20px;padding-bottom: 20px;}`);
 const contentSection = HtmlService.createHtmlOutput(
   `.content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}`,
 );
@@ -189,7 +193,9 @@ const float_left = HtmlService.createHtmlOutput(`.float-left {float: left;}`);
 const float_right = HtmlService.createHtmlOutput(
   `.float-right {float: right;}`,
 );
-const grid = HtmlService.createHtmlOutput(`.grid {display: grid;}`);
+const grid = HtmlService.createHtmlOutput(`.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`);
+const large_container = HtmlService.createHtmlOutput(`.large-container {padding-left: 7%;}`);
+const list_container = HtmlService.createHtmlOutput(`.list-container {margin-top: 15px;}`);
 const menu = HtmlService.createHtmlOutput(
   `.menu {flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;}`,
 );
@@ -270,7 +276,7 @@ const shortcuts_links_a_first_child = HtmlService.createHtmlOutput(
   `.shortcut-links a:first-child {color: #ed3833;}`,
 );
 const sidebar = HtmlService.createHtmlOutput(
-  `.sidebar {background: #fff;width: 15%;height: 100vh;position: fixed;top: 0;padding-left: 2%;padding-top: 80px}`,
+  `.sidebar {background: #fff;width: 100%;height: 100vh;position: fixed;top: 0;padding-left: 2%;padding-top: 80px}`,
 );
 const sidebar_hr = HtmlService.createHtmlOutput(
   `.sidebar hr {border: 0;height: 1px;background: #ccc;width: 85%;}`,
@@ -287,7 +293,7 @@ const small_sidebar_h3 = HtmlService.createHtmlOutput(
 const small_sidebar_hr = HtmlService.createHtmlOutput(
   `.small-sidebar hr {width: 50%;margin-bottom: 25px;}`,
 );
-const socials = HtmlService.createHtmlOutput(`.socials {width: 55%;}`);
+const socials = HtmlService.createHtmlOutput(`.socials {width: 100%;}`);
 const static_fix = HtmlService.createHtmlOutput(
   `.static-fix {position: sticky;}`,
 );
@@ -309,6 +315,11 @@ const toolbar_icon = HtmlService.createHtmlOutput(
 const toolbar_iconHover = HtmlService.createHtmlOutput(
   `.toolbar-icon:hover {transform: scale(1.2);}`,
 );
+const vid_info = HtmlService.createHtmlOutput(`.vid-info {color: #5a5a5a;font-size: 13px;}`);
+const vid_info_link = HtmlService.createHtmlOutput(`.vid-info a {color: #000;font-weight: 600;display: block;margin-bottom: 5px;}`);
+const vid_list_thumbnail = HtmlService.createHtmlOutput(`.vid-list .thumbnail {width: 100%;border-radius: 5px;}`);
+const vid_list_flex_div = HtmlService.createHtmlOutput(`.vid-list .flex-div {align-items: flex-start;margin-top: 7px;}`);
+const vid_list_flex_div_img = HtmlService.createHtmlOutput(`.vid-list .flex-div img {width: 35px;margin-right: 10px;border-radius: 50%;}`);
 const barcode = HtmlService.createHtmlOutput(
   `#barcode {font-family: "Libre Barcode 128", cursive;font-size: 70px;margin-top: 10px;}`,
 );
@@ -367,8 +378,10 @@ const google_script_run_promise = HtmlService.createHtmlOutput(`
 const collapse_menu = HtmlService.createHtmlOutput(`
   var menuIcon = document.querySelector(".menu-icon");
   var sidebar = document.querySelector(".sidebar");
+  var container = document.querySelector(".container");
   menuIcon.onclick = function () {
     sidebar.classList.toggle("small-sidebar");
+    container.classList.toggle("large-container");
   } 
 `);
 const iframePlayer = HtmlService.createHtmlOutput(`function fPla() {
@@ -444,7 +457,7 @@ const iframePlayer = HtmlService.createHtmlOutput(`function fPla() {
   }`);
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
-    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent()}`,
+    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent()}`,
   ),
   surveyPlayer: HtmlService.createHtmlOutput(
     `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + receipt.getContent() + responsiveSection.getContent() + website.getContent() + body_survey_player.getContent() + nav.getContent()}`,
