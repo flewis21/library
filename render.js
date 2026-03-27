@@ -910,7 +910,7 @@ var renderFile = function (file, argsObject, title) {
           <?!= materializeCss.getContent() ?>
         </head>
         <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
-          <nav class="flex-div responsive-section card-panel static-fix">
+          <nav class="flex-div responsive-section card-panel transparent static-fix">
             <div class="nav-left flex-div responsive-section">
               <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
             </div>
@@ -923,95 +923,132 @@ var renderFile = function (file, argsObject, title) {
               <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
             </div>
           </nav>
-          <header class="banner responsive-section card-panel static-fix">
+          <header class="banner responsive-section card-panel transparent static-fix">
             <h1>Blog</h1>
             <p>Recent Applications</p>
           </header>
-          <main class="responsive-section receipt black static-fix float-right menu">
-          <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix">
-            <article class="responsive-section static-fix">
-              <div class="row responsive-section static-fix container">
-                <?!= renTemp ?>
-              </div>
-            </article>
+          <main class="responsive-section receipt transparent static-fix float-right menu">
+          <footer class="boiler-footer socials receipt-footer responsive-section card-panel transparent static-fix">
             <div class="row responsive-section">
-              <aside class="pulse brown sidebar">
-            <div class="row responsive-section">
-              <section class="responsive-section black">
-                <header class="card-panel green list-container grid">
-                  <h2>Owe</h2>
-                  <aside class="responsive-section card-panel vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                      </div>
-                    </div>
-                  </aside>
-                  <article class="responsive-section vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <header class="responsive-section">
-                          <h3><a href="">Legal Title:</a></h3>
-                        </header>
-                        <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="responsive-section vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <header class="responsive-section">
-                          <h3><a href="">Rights of Possession and Control:</a></h3>
-                        </header>
-                        <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="responsive-section vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <header class="responsive-section">
-                          <h3><a href="">Right of Disposal:</a></h3>
-                        </header>
-                        <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="responsive-section vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <header class="responsive-section">
-                          <h3><a href="">Freedom from Competing Claims:</a></h3>
-                        </header>
-                        <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="responsive-section vid-list">
-                    <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
-                    <div class="flex-div">
-                      <img src="<?!= seaIcn.getContent() ?>" />
-                      <div class="vid-info">
-                        <header class="responsive-section">
-                          <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
-                        </header>
-                        <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                      </div>
-                    </div>
-                  </article>
-                </header>
-              </section>
-            </div>
+              <aside class="pulse transparent sidebar">
+                <div class="row responsive-section">
+                  <section class="responsive-section transparent">
+                    <header class="card-panel transparent list-container grid">
+                      <h2>Owe</h2>
+                      <aside class="responsive-section card-panel transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                          </div>
+                        </div>
+                      </aside>
+                      <article class="responsive-section transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <header class="responsive-section">
+                              <h3><a href="">Legal Title:</a></h3>
+                            </header>
+                            <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="responsive-section transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <header class="responsive-section">
+                              <h3><a href="">Rights of Possession and Control:</a></h3>
+                            </header>
+                            <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="responsive-section transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <header class="responsive-section">
+                              <h3><a href="">Right of Disposal:</a></h3>
+                            </header>
+                            <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="responsive-section transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <header class="responsive-section">
+                              <h3><a href="">Freedom from Competing Claims:</a></h3>
+                            </header>
+                            <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="responsive-section transparent vid-list">
+                        <a href="">
+                          <article class="responsive-section static-fix">
+                            <div class="row responsive-section static-fix container">
+                              <?!= renTemp ?>
+                            </div>
+                          </article>
+                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                        </a>
+                        <div class="flex-div">
+                          <img src="<?!= seaIcn.getContent() ?>" />
+                          <div class="vid-info">
+                            <header class="responsive-section">
+                              <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
+                            </header>
+                            <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                          </div>
+                        </div>
+                      </article>
+                    </header>
+                  </section>
+                </div>
                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                 <hr>
                 <div class="subscribed-list">
@@ -1260,6 +1297,7 @@ var renderTemplate = function (blob, argsObject, title) {
           arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log("argsObject after tmp processing", argsObject);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
     try {
@@ -1271,6 +1309,7 @@ var renderTemplate = function (blob, argsObject, title) {
       return "Error in renderTemplate tmp" + error;
     }
   }
+  console.log("argsObject after tmp processing", tmp);
   // var funcCheck = appList();
   // var css = builtStyling();
   // var schedule = dateTime(new Date());
@@ -1335,7 +1374,14 @@ var renderTemplate = function (blob, argsObject, title) {
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1346,7 +1392,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </aside>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1358,8 +1411,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""></a>
-                                <img src="<?!= logo.getContent() ?>" class="thumbnail" />
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1371,7 +1430,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1383,7 +1449,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1394,7 +1467,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </aside>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1406,7 +1486,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1418,7 +1505,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1430,7 +1524,14 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href=""><img src="<?!= logo.getContent() ?>" class="thumbnail" /></a>
+                                <a href="<?!= driveB ?>">
+                                  <article class="responsive-section card-panel static-fix">
+                                    <div class="row responsive-section static-fix container">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
@@ -1454,13 +1555,8 @@ var renderTemplate = function (blob, argsObject, title) {
           </div></div></div></div></div>
         </main>
         <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix float-left">
-          <article class="responsive-section card-panel static-fix">
-            <div class="row responsive-section static-fix container">
-              <?!= renTemp ?>
-            </div>
-          </article>
           <div class="row responsive-section">
-            <aside class="pulse sidebar">
+            <aside class="pulse transparent sidebar">
               <p>
                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                 <hr>
@@ -1671,7 +1767,8 @@ var renderTemplate = function (blob, argsObject, title) {
           })();
         },
         renTemp: tmp.evaluate().getContent(),
-      },
+        driveB: tmp.payL.message.link,
+      }
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);

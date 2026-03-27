@@ -477,7 +477,187 @@ function handleGetData(e) {
   // }
 
   // Logging
-  let rndE = createRandomFunction(e);
+  if (!e) {
+    var rndE = createRandomFunction();
+    Logger.log("Logging object keys for Func uno/dos " + rndE);
+  }
+  else if (e && !e.parameter) {
+    var rndE = createRandomFunction(e);
+    Logger.log("Logging object keys for Func uno/dos " + rndE);
+  }
+  else if (e && e.parameter) {
+    let objData = Object.keys(e.parameter);
+    if (objData.length === 0) {
+      var rndE = createRandomFunction();
+    }
+    else if (objData.length > 0) {
+      if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
+        Logger.log(
+          ">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e),
+        );
+        if (e.parameter["file"]) {
+          // Determine funcTres
+          var funcTres = e?.parameter["file"];
+          try {
+            var htmlArray = functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
+            if (funcTres) {
+              if (Array.isArray(funcTres)) {
+                const firstArg = funcTres[0];
+                if (htmlArray.includes(firstArg)) {
+                  var funcTres0Index = htmlArray.findIndex(function (element) {
+                    return element === firstArg;
+                  });
+                  htmlTresArg = htmlArray[funcTres0Index];
+                }
+              } else if (htmlArray.includes(funcTres)) {
+                var funcTresIndex = htmlArray.findIndex(function (element) {
+                  return element === funcTres;
+                });
+                htmlTresArg = htmlArray[funcTresIndex];
+              }
+            }
+            try {
+              return renderFile(
+                funcTres,
+                {fileParam: funcTres,argsParam: e.parameter["args"],funcParam: e.parameter["func"],},
+                "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
+                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+                    ", " +
+                    {} +
+                    ", " +
+                    (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+              );
+            } 
+            catch (error) {
+              Logger.log("Library HTML file Out of Order", error.stack);
+            }
+            // try {
+            //   return renderFile(
+            //     foobarr,
+            //     {fileParam: funcTres,argsParam: funcDos,funcParam: funcUno,},
+            //     "GitHub Pages with Apps Script returning ?func=" +
+            //       libFunc +
+            //       "&args=" +
+            //       foobarr ||
+            //       (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+            //         ", " +
+            //         {} +
+            //         ", " +
+            //         templateName ||
+            //       foobarr ||
+            //       (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+            //   );
+            // } catch (error) {
+            //   Logger.log("Foobar HTML file Out of Order", error.stack);
+            //   if (e && e.parameter && !e.parameter["file"]) {
+            //     return this[libName].handleGetData(e);
+            //   }
+            //   else if (e && e.parameter && e.parameter["file"]) {
+            //     return this[libName].handleGetData(e.parameter["file"]);
+            //   }
+            //   // return renderTemplate(
+            //   //   foobar,
+            //   //   {
+            //   //   },
+            //   //   JSON.stringify(foobarr),
+            //   // );
+            // }
+          } catch (error) {
+            console.error(`Error executing function "${libFunc}":`, error.stack);
+            throw new Error(
+              "Error executing function: " + error.toString() + "\n" + error.stack,
+            );
+          }
+        }
+      } else {
+        if (!e.parameter["func"] && !e.parameter["args"]) {
+          var argsEd = createRandomFunction(e.parameter[objData[0]]);
+          if (typeof argsEd === "string") {
+            e = this[libName].objectOfS(
+              ["parameter"],
+              [
+                [
+                  ["func", argsEd],
+                  // ["args", argsEd],
+                ],
+              ],
+              functionRegistry.time,
+            );
+          } else if (typeof argsEd === "object" && argsEd !== null) {
+            let argsAP = Object.values(argsEd);
+            if (argsAP && argsAP.length > 0) {
+              e = this[libName].objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", Object.keys(argsEd)[0]],
+                    ["args", [...Object.values(argsEd)[0]]],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+            } else {
+              e = this[libName].objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ,
+                    ["func", Object.keys(argsEd)[0]],
+                    // ["args", argsEd.name],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+            }
+          } else {
+            console.log("Unexpected argsEd type: ", argsEd);
+            let argsedObj = []; //Object.values(argsEd);
+            let aOKeys = Object.keys(argsEd);
+            if (aOKeys.length > 0) {
+              aOKeys.forEach((key) => {
+                argsedObj.push(argsEd[key]);
+              });
+              e = this[libName].objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", aOKeys],
+                    ["args", argsedObj],
+                    // ["func", "mis"],
+                    // ["args", "Invalid Entry"],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+            } else {
+              e = this[libName].objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", "aVar"],
+                    ["args", "varA"],
+                    // ["func", "mis"],
+                    // ["args", "Invalid Entry"],
+                  ],
+                ],
+                functionRegistry.time,
+              );
+            }
+          }
+        }
+      }
+      // try {
+      //   var rndE = createRandomFunction(e.parameter[objData[0]]);
+      // } catch (nvrMnd) {
+      //   Logger.log("Library Content Service Out of Order: " + nvrMnd.stack);
+      //   // objData.forEach((key) => {
+      //   //   console.log("e.parameter(s) value(s)", e.parameter[key]);
+      //   //   funcCallParams.push(e.parameter[key]);
+      //   // });
+      //   // console.log("function call parameters", funcCallParams);
+      // }
+    }
+  }
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -487,8 +667,24 @@ function handleGetData(e) {
   //     ", = " +
   //     JSON.stringify(rndE),
   // );
-  var funcUno = Object.keys(rndE); //rndE.parameter["func"];
-  var funcDos = Object.values(rndE); //rndE.parameter["args"];
+  if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+    var funcUno;
+  }
+  else if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+    var funcUno = e.parameter["func"];
+  }
+  else {
+    var funcUno = Object.keys(rndE);
+  }
+  if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+    var funcDos;
+  }
+  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+    var funcDos = e.parameter["args"];
+  }
+  else {
+    var funcDos = Object.values(rndE);
+  }
   const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
   var payLoad = {}; // Initialize payload
 
@@ -506,75 +702,85 @@ function handleGetData(e) {
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
       let parsedFuncArgs = [];
+      let keyObject;
       //   if (funcDos) {
-      try {
-        var parType = isPropertyOf(funcDos);
-        if (parType[0] === "object") {
-          // try {
-          parsedFuncArgs = JSON.parse(funcDos);
-          //         if (!Array.isArray(parsedFuncArgs)) {
-          //           parsedFuncArgs = [parsedFuncArgs];
-          //         }
-          // }
-          // catch (error) {
-          console.info(error.stack);
-          //         if (typeof funcDos === "string") {
-          //           parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-          //         }
-          //         else if (Array.isArray(funcDos)) {
-          //           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-          //         }
-          // }
+      // var parType = isPropertyOf(funcDos);
+      //parType[0] === "object") {
+      if (typeof funcDos === "object") {
+        keyObject = Object.keys(funcDos);
+        if (keyObject && keyObject.length > 0){
+          Logger.log("This execution is trying to JSON Parse a(n) " + typeof funcDos);
+          try {
+            parsedFuncArgs = JSON.parse(funcDos);
+            console.info(error.stack);
+          } catch (jsonError) {
+            Logger.log("But, it is failing.");
+          } 
         }
-      } catch (jsonError) {
-        //     else {
-        //       if (!Array.isArray(funcDos)) {
-        //         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-        //       }
-        //       else {
-        if (Array.isArray(funcDos) && funcDos.length > 0) {
-          parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-        } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
-          parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-        } else {
+        else if (Array.isArray(funcDos) && funcDos.length > 0) {
           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
         }
-        //       }
-      }
-      //   }
-      try {
+      }  
+      else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+        parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+      } 
+      else {
+        parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+      }    //   }
         if (
           (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
           (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
         ) {
-          rawFuncResult = mis([funcUno]);
+          Logger.log("This execution is trying to process without funcDos. funcDos is  " + funcDos);
+          try {
+              rawFuncResult = mis([funcUno]);
+          } catch {
+            Logger.log("But, it is failing.");
+            rawFuncResult = globalThis[funcUno]();
+          }
           // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         } else if (
           funcUno &&
           typeof globalThis[funcUno] !== "function" &&
           funcDos
         ) {
-          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+          Logger.log("This execution is trying to process with funcDos. funcDos is  " + funcDos);
+          try {
+              rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+          } 
+          catch {
+            Logger.log("But, it is failing.");
+            if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
+              rawFuncResult = globalThis[funcUno]();
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            } else if (!funcUno && funcDos) {
+              rawFuncResult = globalThis[parsedFuncArgs]();
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            } else {
+              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            }
+          }
           // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         } else if (!funcUno && funcDos) {
-          rawFuncResult = mis([parsedFuncArgs]);
+          Logger.log("This execution is trying to process without funcUno. FuncUno is " + funcUno);
+          try {
+              rawFuncResult = mis([parsedFuncArgs]);
+          } catch {
+            Logger.log("But, it is failing.");
+            rawFuncResult = globalThis[parsedFuncArgs]();
+          }
           // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         } else {
-          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+          Logger.log("This execution is trying to process all input");
+          try {
+              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+          } catch {
+            Logger.log("But, it is failing.");
+            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+          }
           // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         }
-      } catch {
-        if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
-          rawFuncResult = globalThis[funcUno]();
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        } else if (!funcUno && funcDos) {
-          rawFuncResult = globalThis[parsedFuncArgs]();
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        } else {
-          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        }
-      }
       // }
       // else {
       //   console.error(
@@ -1005,14 +1211,14 @@ function handleGetData(e) {
   Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // var contentData = isValidKeys(data);
   if (payLoad.type === "html") {
-    return renderTemplate(data.message.info, {}, JSON.stringify(rndE));
+    return renderTemplate(data.message.info, {payL: data}, JSON.stringify(rndE));
   } else if (
     (payLoad.type === "text" || payLoad.type === "url") &&
     isValidUrl(payLoad.data).hostname &&
     isValidUrl(iframeSrc).hostname
   ) {
     var seoHtml = seoCapital(data.message.content);
-    return renderTemplate(seoHtml, {}, JSON.stringify(rndE));
+    return renderTemplate(seoHtml, {payL: data}, JSON.stringify(rndE));
   } else {
     return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
       ContentService.MimeType.JSON,

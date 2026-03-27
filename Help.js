@@ -3071,28 +3071,33 @@ function seoCapital(url) {
           <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
           <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
+          <style>
+            <?!= styleHtml.renderFile.getContent() ?>
+          </style>
         </head>
         <body>
-          <div class="row">
-            <div class="responsive-section">
-                <div class="container" id="seoData">
+          <div class="row maroon">
+            <div class="row brown">
+                <div class="col s12 purple" id="seoData">
                   <label id="labSEOC">
                     <strong></strong></label>
-                  <div class="row">
-                    <div class="col s12 card-panel amber">
-                      <div class="responsive-section">
-                        <div class="container">
-                          <div id="divSEOC" class="col s12 receipt amber flow-text">
-                            <table class="striped centered highlight amber z-depth-5" style="width:100%">
+                  <div class="row orange">
+                    <div class="col s12 card-panel black">
+                      <div class="row red">
+                        <div class="col s12 green">
+                          <div id="divSEOC" class="row receipt blue flow-text">
+                            <table class="striped centered highlight black z-depth-5 container grid responsive-table" style="max-width:100%;height:auto">
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                                    <table class="striped centered highlight amber z-depth-5" style="width:100%">
+                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
+                                    <table class="striped centered highlight amber z-depth-5 grid container responsive-table" style="max-width:100%;height: auto">
+                                      <thead></thead>
                                       <tbody >
-                                        <td>
-                                          <div>
-                                            <iframe src='${url}' id="w3Res" width="100%" height="1080vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                        <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
+                                          <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
+                                            <div>
+                                              <iframe src='${url}' id="w3Res" style="width: 480px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>

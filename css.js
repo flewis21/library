@@ -73,7 +73,7 @@ const footer = HtmlService.createHtmlOutput(
   `footer {clear: both;background-color: #20416c;color: white;padding: 5px 20px;}`,
 );
 const header = HtmlService.createHtmlOutput(
-  `header {background-color: rgba(255,255,255,.1);color: #a7e1ee;font-size: smaller;}`,
+  `header {background-color:rgba(255,255,255,.1);color: #a7e1ee;font-size: smaller;}`,
 );
 const header_h1 = HtmlService.createHtmlOutput(
   `header h1 {font-family: "Montserrat", cursive;margin-left: 15px;}`,
@@ -196,7 +196,7 @@ const float_right = HtmlService.createHtmlOutput(
   `.float-right {float: right;}`,
 );
 const grid = HtmlService.createHtmlOutput(
-  `.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`,
+  `.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(500px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`,
 );
 const large_container = HtmlService.createHtmlOutput(
   `.large-container {padding-left: 7%;}`,
