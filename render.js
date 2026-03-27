@@ -1768,7 +1768,7 @@ var renderTemplate = function (blob, argsObject, title) {
         },
         renTemp: tmp.evaluate().getContent(),
         driveB: tmp.payL.message.link,
-      }
+      },
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);

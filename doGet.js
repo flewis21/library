@@ -480,21 +480,16 @@ function handleGetData(e) {
   if (!e) {
     var rndE = createRandomFunction();
     Logger.log("Logging object keys for Func uno/dos " + rndE);
-  }
-  else if (e && !e.parameter) {
+  } else if (e && !e.parameter) {
     var rndE = createRandomFunction(e);
     Logger.log("Logging object keys for Func uno/dos " + rndE);
-  }
-  else if (e && e.parameter) {
+  } else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
     if (objData.length === 0) {
       var rndE = createRandomFunction();
-    }
-    else if (objData.length > 0) {
+    } else if (objData.length > 0) {
       if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
-        Logger.log(
-          ">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e),
-        );
+        Logger.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
         if (e.parameter["file"]) {
           // Determine funcTres
           var funcTres = e?.parameter["file"];
@@ -519,16 +514,20 @@ function handleGetData(e) {
             try {
               return renderFile(
                 funcTres,
-                {fileParam: funcTres,argsParam: e.parameter["args"],funcParam: e.parameter["func"],},
+                {
+                  fileParam: funcTres,
+                  argsParam: e.parameter["args"],
+                  funcParam: e.parameter["func"],
+                },
                 "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
                   (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                    ", " +
-                    {} +
-                    ", " +
-                    (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+                  ", " +
+                  {} +
+                  ", " +
+                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+                  ",",
               );
-            } 
-            catch (error) {
+            } catch (error) {
               Logger.log("Library HTML file Out of Order", error.stack);
             }
             // try {
@@ -563,9 +562,15 @@ function handleGetData(e) {
             //   // );
             // }
           } catch (error) {
-            console.error(`Error executing function "${libFunc}":`, error.stack);
+            console.error(
+              `Error executing function "${libFunc}":`,
+              error.stack,
+            );
             throw new Error(
-              "Error executing function: " + error.toString() + "\n" + error.stack,
+              "Error executing function: " +
+                error.toString() +
+                "\n" +
+                error.stack,
             );
           }
         }
@@ -667,22 +672,18 @@ function handleGetData(e) {
   //     ", = " +
   //     JSON.stringify(rndE),
   // );
-  if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+  if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
     var funcUno;
-  }
-  else if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+  } else if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
     var funcUno = e.parameter["func"];
-  }
-  else {
+  } else {
     var funcUno = Object.keys(rndE);
   }
-  if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+  if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
     var funcDos;
-  }
-  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+  } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
     var funcDos = e.parameter["args"];
-  }
-  else {
+  } else {
     var funcDos = Object.values(rndE);
   }
   const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
@@ -708,79 +709,90 @@ function handleGetData(e) {
       //parType[0] === "object") {
       if (typeof funcDos === "object") {
         keyObject = Object.keys(funcDos);
-        if (keyObject && keyObject.length > 0){
-          Logger.log("This execution is trying to JSON Parse a(n) " + typeof funcDos);
+        if (keyObject && keyObject.length > 0) {
+          Logger.log(
+            "This execution is trying to JSON Parse a(n) " + typeof funcDos,
+          );
           try {
             parsedFuncArgs = JSON.parse(funcDos);
             console.info(error.stack);
           } catch (jsonError) {
             Logger.log("But, it is failing.");
-          } 
-        }
-        else if (Array.isArray(funcDos) && funcDos.length > 0) {
+          }
+        } else if (Array.isArray(funcDos) && funcDos.length > 0) {
           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
         }
-      }  
-      else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+      } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-      } 
-      else {
+      } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-      }    //   }
-        if (
-          (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
-          (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
-        ) {
-          Logger.log("This execution is trying to process without funcDos. funcDos is  " + funcDos);
-          try {
-              rawFuncResult = mis([funcUno]);
-          } catch {
-            Logger.log("But, it is failing.");
-            rawFuncResult = globalThis[funcUno]();
-          }
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        } else if (
-          funcUno &&
-          typeof globalThis[funcUno] !== "function" &&
-          funcDos
-        ) {
-          Logger.log("This execution is trying to process with funcDos. funcDos is  " + funcDos);
-          try {
-              rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-          } 
-          catch {
-            Logger.log("But, it is failing.");
-            if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
-              rawFuncResult = globalThis[funcUno]();
-              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-            } else if (!funcUno && funcDos) {
-              rawFuncResult = globalThis[parsedFuncArgs]();
-              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-            } else {
-              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-            }
-          }
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        } else if (!funcUno && funcDos) {
-          Logger.log("This execution is trying to process without funcUno. FuncUno is " + funcUno);
-          try {
-              rawFuncResult = mis([parsedFuncArgs]);
-          } catch {
-            Logger.log("But, it is failing.");
-            rawFuncResult = globalThis[parsedFuncArgs]();
-          }
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-        } else {
-          Logger.log("This execution is trying to process all input");
-          try {
-              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-          } catch {
-            Logger.log("But, it is failing.");
-            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-          }
-          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      } //   }
+      if (
+        (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
+        (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
+      ) {
+        Logger.log(
+          "This execution is trying to process without funcDos. funcDos is  " +
+            funcDos,
+        );
+        try {
+          rawFuncResult = mis([funcUno]);
+        } catch {
+          Logger.log("But, it is failing.");
+          rawFuncResult = globalThis[funcUno]();
         }
+        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      } else if (
+        funcUno &&
+        typeof globalThis[funcUno] !== "function" &&
+        funcDos
+      ) {
+        Logger.log(
+          "This execution is trying to process with funcDos. funcDos is  " +
+            funcDos,
+        );
+        try {
+          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+        } catch {
+          Logger.log("But, it is failing.");
+          if (
+            funcUno &&
+            typeof globalThis[funcUno] === "function " &&
+            !funcDos
+          ) {
+            rawFuncResult = globalThis[funcUno]();
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          } else if (!funcUno && funcDos) {
+            rawFuncResult = globalThis[parsedFuncArgs]();
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          } else {
+            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+          }
+        }
+        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      } else if (!funcUno && funcDos) {
+        Logger.log(
+          "This execution is trying to process without funcUno. FuncUno is " +
+            funcUno,
+        );
+        try {
+          rawFuncResult = mis([parsedFuncArgs]);
+        } catch {
+          Logger.log("But, it is failing.");
+          rawFuncResult = globalThis[parsedFuncArgs]();
+        }
+        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      } else {
+        Logger.log("This execution is trying to process all input");
+        try {
+          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+        } catch {
+          Logger.log("But, it is failing.");
+          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+        }
+        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+      }
       // }
       // else {
       //   console.error(
@@ -1211,14 +1223,18 @@ function handleGetData(e) {
   Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // var contentData = isValidKeys(data);
   if (payLoad.type === "html") {
-    return renderTemplate(data.message.info, {payL: data}, JSON.stringify(rndE));
+    return renderTemplate(
+      data.message.info,
+      { payL: data },
+      JSON.stringify(rndE),
+    );
   } else if (
     (payLoad.type === "text" || payLoad.type === "url") &&
     isValidUrl(payLoad.data).hostname &&
     isValidUrl(iframeSrc).hostname
   ) {
     var seoHtml = seoCapital(data.message.content);
-    return renderTemplate(seoHtml, {payL: data}, JSON.stringify(rndE));
+    return renderTemplate(seoHtml, { payL: data }, JSON.stringify(rndE));
   } else {
     return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
       ContentService.MimeType.JSON,
