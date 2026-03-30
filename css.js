@@ -384,14 +384,16 @@ const jsQuery = HtmlService.createHtmlOutput(
   `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
 );
 const google_script_run_promise = HtmlService.createHtmlOutput(`
-  return new Promise((resolve, reject) => {
-    google.script.run
-    .withSuccessHandler(result => {
-        resolve(result)})
-    .withFailureHandler(error => {
-        reject(error)})
-    .runBoilerplate(func, args)
-  })
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+          resolve(result)})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
 `);
 const collapse_menu = HtmlService.createHtmlOutput(`
   var menuIcon = document.querySelector(".menu-icon");
@@ -402,133 +404,169 @@ const collapse_menu = HtmlService.createHtmlOutput(`
     container.classList.toggle("large-container");
   } 
 `);
-const iframePlayer = HtmlService.createHtmlOutput(`function fPla() {
-    const myObj = {
-      appJS: function serverSide(func, args) {
-        "use strict";
-        return new Promise((resolve, reject) => {
-          google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result);
-            })
-            .withFailureHandler((error) => {
-              console.error(error);
-              reject(error);
-            })
-            .runBoilerplate(func, args);
-        });
+const yTPlayer = HtmlService.createHtmlOutput(
+  `const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName("script")[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  let ctr = 0;
+  let iframePlayer;
+  function onYouTubeIframeAPIReady() {
+    iframePlayer = new YT.Player("iframePlayer", {
+      height: "505",
+      width: "585",
+      //  videoId: 'OTeQee-gxa4',
+      playerVars: {
+        autoplay: 1,
+        loop: 1,
+        controls: 0,
+        showinfo: 0,
+        rel: 0,
+        autohide: 1,
+        playsinline: 1,
+        mute: 0,
+        modestbranding: 1,
+        vq: "hd1080",
+        iv_load_policy: 3,
+        cc_load_policy: 1,
+        listType: "playlist",
+        list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
       },
-    };
-    // Expose serverSide to the global scope or a specific namespace
-    if (!window && !window.myApp) {
-      window.myApp = {};
+      events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
+    });
+    function onPlayerReady(event) {
+      event.target.loadPlaylist("UU6DOFpA9UCTgNwJiVX1IOpQ", ctr);
+      ctr++;
+      event.target.setShuffle();
+      event.target.setLoop();
+      event.target.playVideo();
     }
-    window.myApp.serverSide = myObj.appJS; // Or, if you have a namespace
-    // : myApp.serverSide
-    // = serverSide;
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    let iframePlayer;
-    function onYouTubeIframeAPIReady() {
-      iframePlayer = new YT.Player("iframePlayer", {
-        height: "505",
-        width: "585",
-        //  videoId: 'OTeQee-gxa4',
-        playerVars: {
-          autoplay: 1,
-          loop: 1,
-          controls: 0,
-          showinfo: 0,
-          autohide: 1,
-          playsinline: 1,
-          mute: 1,
-          modestbranding: 1,
-          vq: "hd1080",
-          listType: "playlist",
-          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
-        },
-        events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
-      });
-      function onPlayerReady(event) {
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    let done = false;
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        setTimeout(nextVideo);
+        event.target.setShuffle();
+        event.target.setLoop();
+        ctr++;
+      }
+      else if (event.data == YT.PlayerState.UNSTARTED && !done) {
+        var youtubeID = event.target.getVideoUrl()
+        changeBorderColor(event.data);
+        setTimeout(playVideo);
+        event.target.setShuffle();
+        event.target.setLoop();
+        event.target.playVideo();
+        ctr++;
+      }
+      else if (event.data == YT.PlayerState.ENDED && !done) {
+        iframePlayer.loadPlaylist("UU6DOFpA9UCTgNwJiVX1IOpQ", ctr);
+        setTimeout(nextVideo);
+        changeBorderColor(event.data);
+        event.target.setShuffle();
+        event.target.setLoop();
+        event.target.playVideo();
+        ctr++;
+      }
+      else if (event.data == YT.PlayerState.PAUSED && !done) {
+        setTimeout(playVideo);
+        changeBorderColor(event.data);
+        event.target.setShuffle();
+        event.target.setLoop();
         event.target.playVideo();
       }
-      const done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-          setTimeout(playVideo); // done
-          // = true;
-        }
-      }
-      function stopVideo() {
-        iframePlayer.stopVideo();
-      }
-      function playVideo() {
-        iframePlayer.playVideo();
-      }
-      function nextVideo() {
-        iframePlayer.nextVideo();
-      }
-    }
-    return myObj;
-  }`);
-const yTPlayer =
-  HtmlService.createHtmlOutput(`const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    let iframePlayer;
-    function onYouTubeIframeAPIReady() {
-      iframePlayer = new YT.Player("iframePlayer", {
-        height: "505",
-        width: "585",
-        //  videoId: 'OTeQee-gxa4',
-        playerVars: {
-          autoplay: 1,
-          loop: 1,
-          controls: 0,
-          showinfo: 0,
-          autohide: 1,
-          playsinline: 1,
-          mute: 1,
-          modestbranding: 1,
-          vq: "hd1080",
-          listType: "playlist",
-          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
-        },
-        events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
-      });
-      function onPlayerReady(event) {
+      else if (event.data == YT.PlayerState.BUFFERING && !done) {
+        setTimeout(playVideo);
+        changeBorderColor(event.data);
+        event.target.setShuffle();
+        event.target.setLoop();
         event.target.playVideo();
       }
-      const done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-          setTimeout(playVideo); // done
-          // = true;
-        }
+      else if (event.data == YT.PlayerState.VIDEO_CUED && !done) {
+        setTimeout(playVideo);
+        changeBorderColor(event.data);
+        event.target.setShuffle();
+        event.target.setLoop();
+        event.target.playVideo();
       }
-      function stopVideo() {
-        iframePlayer.stopVideo();
+      done = true;
+    }
+
+    function changeBorderColor(playerStatus) {
+      let color;
+
+      if (playerStatus == -1) {
+        color = "#37474F"
+      } // unstarted = gray
+      else if (playerStatus == 0) {
+        color = "#FFFF00"
+      } // ended = yellow
+      else if (playerStatus == 1) {
+        color = "#33691E"
+      } // playing = green
+      else if (playerStatus == 2) {
+        color = "#DD2C00"
+      } // paused = red
+      else if (playerStatus == 3) {
+        color = "#AA00FF"
+      } // buffering = purple
+      else if (playerStatus == 5) {
+        color = "#FF6DOO"
+      } // video cued = orange
+
+      if (color) {
+        document.getElementById('iframePlayer').style.borderColor = color
       }
-      function playVideo() {
-        iframePlayer.playVideo();
-      }
-      function nextVideo() {
-        iframePlayer.nextVideo();
-      }
-    }`);
+    }
+    function stopVideo() {
+      iframePlayer.stopVideo();
+    }
+
+    function getVideoUrl() {
+      player1.getVideoUrl();
+    }
+
+    function setLoop() {
+      player1.setLoop(true);
+    }
+
+    function setShuffle() {
+      player1.setShuffle(true);
+    }
+
+    function playVideo() {
+      iframePlayer.playVideo();
+    }
+    function nextVideo() {
+      iframePlayer.nextVideo();
+    }
+
+    function pauseVideo() {
+      player1.pauseVideo();
+    }
+
+    function onPlayerError() {
+      player1.destroy;
+      onYouTubeIframeAPIReady();
+    }
+  }
+`);
 
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
     `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent()}`,
   ),
   surveyPlayer: HtmlService.createHtmlOutput(
-    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + receipt.getContent() + responsiveSection.getContent() + website.getContent() + body_survey_player.getContent() + nav.getContent()}`,
+    `${body_survey_player.getContent()}`,
   ),
   oddChances: HtmlService.createHtmlOutput(
     `${link_visited.getContent() + link_active.getContent()}`,
+  ),
+  runIt: HtmlService.createHtmlOutput(
+    `${google_script_run_promise.getContent() + yTPlayer.getContent()}`
   ),
 };
 
