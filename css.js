@@ -553,7 +553,8 @@ const yTPlayer = HtmlService.createHtmlOutput(
       onYouTubeIframeAPIReady();
     }
   }
-`);
+`,
+);
 
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
@@ -566,7 +567,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${google_script_run_promise.getContent() + yTPlayer.getContent()}`
+    `${google_script_run_promise.getContent() + yTPlayer.getContent()}`,
   ),
 };
 
