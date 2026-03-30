@@ -107,27 +107,31 @@ var createFunctionResult = function (funcUno, funcDos) {
   try {
     let objVal = funcDos?.toString();
     if (objVal?.indexOf(",") === -1) {
-  // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
+      // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
       var isObjValUrl = isValidUrl(objVal).hostname;
-  // executed++
+      // executed++
     }
-  // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
+    // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
     let rawUrlResult = isTruthy(isObjValUrl);
-  // executed++
+    // executed++
     if (!rawUrlResult) {
       let parsedFuncArgs = [];
       let keyObject;
       if (typeof funcDos === "object") {
         keyObject = Object.keys(funcDos);
-        if (keyObject && keyObject.length > 0){
-          Logger.log("This execution is trying to JSON Parse a(n) " + typeof funcDos);
+        if (keyObject && keyObject.length > 0) {
+          Logger.log(
+            "This execution is trying to JSON Parse a(n) " + typeof funcDos,
+          );
           try {
             if (!Array.isArray(funcDos)) {
-              Logger.log("These are the keys of the object that is being parsed - " + keyObject);
+              Logger.log(
+                "These are the keys of the object that is being parsed - " +
+                  keyObject,
+              );
               parsedFuncArgs = JSON.parse(funcDos);
               // console.info(error.stack);
-            }
-            else if (Array.isArray(funcDos) && funcDos.length > 0) {
+            } else if (Array.isArray(funcDos) && funcDos.length > 0) {
               Logger.log("But, it is failing. \n");
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
@@ -136,82 +140,95 @@ var createFunctionResult = function (funcUno, funcDos) {
             if (Array.isArray(funcDos) && funcDos.length > 0) {
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
-          } 
+          }
         }
-      }  
-      else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+      } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-      } 
-      else {
+      } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-      }    //   }
-        if (
-          (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
-          (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
-        ) {
-          Logger.log("This execution is trying to process without funcDos. funcDos is  " + funcDos);
-          try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
-              rawFuncResult = mis([funcUno]);
-  // executed++
-          } catch (error) {
-            Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+      } //   }
+      if (
+        (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
+        (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
+      ) {
+        Logger.log(
+          "This execution is trying to process without funcDos. funcDos is  " +
+            funcDos,
+        );
+        try {
+          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+          rawFuncResult = mis([funcUno]);
+          // executed++
+        } catch (error) {
+          Logger.log("But, it is failing.");
+          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+          rawFuncResult = globalThis[funcUno]();
+          // executed++
+        }
+      } else if (
+        funcUno &&
+        typeof globalThis[funcUno] !== "function" &&
+        funcDos
+      ) {
+        Logger.log(
+          "This execution is trying to process with funcDos. funcDos is  " +
+            funcDos,
+        );
+        try {
+          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+          // executed++
+        } catch (error) {
+          Logger.log("But, it is failing.");
+          if (
+            funcUno &&
+            typeof globalThis[funcUno] === "function " &&
+            !funcDos
+          ) {
+            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[funcUno]();
-  // executed++
-          }
-        } else if (
-          funcUno &&
-          typeof globalThis[funcUno] !== "function" &&
-          funcDos
-        ) {
-          Logger.log("This execution is trying to process with funcDos. funcDos is  " + funcDos);
-          try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
-              rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-  // executed++
-          } 
-          catch (error) {
-            Logger.log("But, it is failing.");
-            if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
-              rawFuncResult = globalThis[funcUno]();
-  // executed++
-            } else if (!funcUno && funcDos) {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
-              rawFuncResult = globalThis[parsedFuncArgs]();
-  // executed++
-            } else {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
-              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-  // executed++
-            }
-          }
-        } else if (!funcUno && funcDos) {
-          Logger.log("This execution is trying to process without funcUno. FuncUno is " + funcUno);
-          try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
-              rawFuncResult = mis([parsedFuncArgs]);
-  // executed++
-          } catch (error) {
-            Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+            // executed++
+          } else if (!funcUno && funcDos) {
+            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[parsedFuncArgs]();
-  // executed++
-          }
-        } else {
-          Logger.log("This execution is trying to process all input \n" + [funcUno, parsedFuncArgs]);
-          try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
-              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-  // executed++
-          } catch (error) {
-            Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+            // executed++
+          } else {
+            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-  // executed++
+            // executed++
           }
         }
+      } else if (!funcUno && funcDos) {
+        Logger.log(
+          "This execution is trying to process without funcUno. FuncUno is " +
+            funcUno,
+        );
+        try {
+          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+          rawFuncResult = mis([parsedFuncArgs]);
+          // executed++
+        } catch (error) {
+          Logger.log("But, it is failing.");
+          // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+          rawFuncResult = globalThis[parsedFuncArgs]();
+          // executed++
+        }
+      } else {
+        Logger.log(
+          "This execution is trying to process all input \n" +
+            [funcUno, parsedFuncArgs],
+        );
+        try {
+          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+          // executed++
+        } catch (error) {
+          Logger.log("But, it is failing.");
+          // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+          // executed++
+        }
+      }
     } else {
       rawFuncResult = objVal;
       console.log(
@@ -223,8 +240,8 @@ var createFunctionResult = function (funcUno, funcDos) {
     console.error(`Error during payload processing:`, error);
     appL = `Critical Error: ${error.stack}`;
   }
-  return rawFuncResult
-}
+  return rawFuncResult;
+};
 
 /**
  * Creates a new Function with a random structure and content,
@@ -244,7 +261,7 @@ function createRandomFunction(searchString) {
     ? Array(searchString)
     : functionRegistry.fileList;
   // --- Create the script ---
-  executed++
+  executed++;
   const scriptTitle =
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
@@ -252,7 +269,7 @@ function createRandomFunction(searchString) {
   Logger.log(`Script name: ${scriptTitle}`);
   console.info("previously exec count \ncreateRandomFunction - ", executed);
   const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
-  executed++
+  executed++;
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
@@ -269,45 +286,57 @@ function createRandomFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
-        executed++
+        executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         scriptUrl = resolveParams(tempObj);
-        executed++
+        executed++;
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
-        executed++
+        executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         scriptUrl = resolveParams(tempObj);
-        executed++
+        executed++;
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileIndex = crmT(scriptTitle);
-        executed++
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      executed++;
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileParams = functionRegistry.paramsList[fileIndex];
-        executed++
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      executed++;
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       let tempObj = isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
-        executed++
+      executed++;
       Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
       scriptUrl = resolveParams(tempObj);
-        executed++
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      executed++;
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
     }
   } else {
     console.log("isRequired", isRequired);
@@ -317,40 +346,52 @@ function createRandomFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
-        executed++
+        executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         scriptUrl = resolveParams(tempObj);
-        executed++
+        executed++;
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
-        executed++
+        executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+        console.info(
+          "previously exec count \ncreateRandomFunction - ",
+          executed,
+        );
         scriptUrl = resolveParams(tempObj);
-        executed++
+        executed++;
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileIndex = crmT(scriptTitle);
-        executed++
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      executed++;
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileParams = functionRegistry.paramsList[fileIndex];
-        executed++
+      executed++;
       mapArr[scriptTitle] = [];
-        console.info("previously exec count \ncreateRandomFunction - ", executed);
+      console.info("previously exec count \ncreateRandomFunction - ", executed);
       scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
-        executed++
+      executed++;
     }
   }
   // --- Log and Return Script URL ---

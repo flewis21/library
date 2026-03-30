@@ -1212,41 +1212,51 @@ function functionHandle(e) {
   var executed = 0;
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
   var htmlList = functionRegistry.getHtmlList();
-  executed++
+  executed++;
   let rndE = "";
 
   // Logging
   if (!e) {
-  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
+    console.info(
+      `previously exec count - \nhandleGetData(${htmlList}) - `,
+      executed,
+    );
     rndE = createRandomFunction();
     Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
-  executed++
-  }
-  else if (e && !e.parameter) {
-  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
+    executed++;
+  } else if (e && !e.parameter) {
+    console.info(
+      `previously exec count - \nhandleGetData(${htmlList}) - `,
+      executed,
+    );
     rndE = createRandomFunction(e);
     Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
-  executed++
-  }
-  else if (e && e.parameter) {
+    executed++;
+  } else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
     if (objData.length === 0) {
-  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
+      console.info(
+        `previously exec count - \nhandleGetData(${htmlList}) - `,
+        executed,
+      );
       rndE = createRandomFunction();
-  executed++
-    }
-    else if (objData.length > 0) {
+      executed++;
+    } else if (objData.length > 0) {
       if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
-        Logger.log(
-          ">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e),
-        );
+        Logger.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
         if (e.parameter["file"]) {
-          Logger.log("Determined that funcTres execution is requested! \n" + e.parameter["file"])
+          Logger.log(
+            "Determined that funcTres execution is requested! \n" +
+              e.parameter["file"],
+          );
           var funcTres = e?.parameter["file"];
           try {
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `, executed);
+            console.info(
+              `previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `,
+              executed,
+            );
             var htmlArray = functionRegistry.getHtmlList();
-  executed++
+            executed++;
             if (funcTres) {
               if (Array.isArray(funcTres)) {
                 const firstArg = funcTres[0];
@@ -1266,46 +1276,61 @@ function functionHandle(e) {
             try {
               return renderFile(
                 funcTres,
-                {fileParam: funcTres,argsParam: e.parameter["args"],funcParam: e.parameter["func"],},
+                {
+                  fileParam: funcTres,
+                  argsParam: e.parameter["args"],
+                  funcParam: e.parameter["func"],
+                },
                 "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
                   (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                    ", " +
-                    {} +
-                    ", " +
-                    (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
+                  ", " +
+                  {} +
+                  ", " +
+                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+                  ",",
               );
-            } 
-            catch (error) {
+            } catch (error) {
               Logger.log("Requested! HTML file is Out of Order", error.stack);
             }
           } catch (error) {
-            console.error(`Error executing function "RENDERFILE":`, error.stack);
+            console.error(
+              `Error executing function "RENDERFILE":`,
+              error.stack,
+            );
             throw new Error(
-              "Error executing function: " + error.toString() + "\n" + error.stack,
+              "Error executing function: " +
+                error.toString() +
+                "\n" +
+                error.stack,
             );
           }
         }
       } else {
         if (!e.parameter["func"] && !e.parameter["args"]) {
-  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
+          console.info(
+            `previously exec count - \nhandleGetData(${htmlList}) - `,
+            executed,
+          );
           var argsEd = createRandomFunction(e.parameter[objData[0]]);
-  executed++
+          executed++;
           if (typeof argsEd === "string") {
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+            console.info(
+              `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
+              executed,
+            );
             e = objectOfS(
               ["parameter"],
-              [
-                [
-                  ["func", argsEd],
-                ],
-              ],
+              [[["func", argsEd]]],
               functionRegistry.time,
             );
-  executed++
+            executed++;
           } else if (typeof argsEd === "object" && argsEd !== null) {
             let argsAP = Object.values(argsEd);
             if (argsAP && argsAP.length > 0) {
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              console.info(
+                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
+                executed,
+              );
               e = objectOfS(
                 ["parameter"],
                 [
@@ -1316,19 +1341,18 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-  executed++
+              executed++;
             } else {
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              console.info(
+                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
+                executed,
+              );
               e = objectOfS(
                 ["parameter"],
-                [
-                  [
-                    ["func", Object.keys(argsEd)[0]],
-                  ],
-                ],
+                [[["func", Object.keys(argsEd)[0]]]],
                 functionRegistry.time,
               );
-  executed++
+              executed++;
             }
           } else {
             console.log("Unexpected argsEd type: ", argsEd);
@@ -1338,7 +1362,10 @@ function functionHandle(e) {
               aOKeys.forEach((key) => {
                 argsedObj.push(argsEd[key]);
               });
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              console.info(
+                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
+                executed,
+              );
               e = objectOfS(
                 ["parameter"],
                 [
@@ -1349,9 +1376,12 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-  executed++
+              executed++;
             } else {
-  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              console.info(
+                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
+                executed,
+              );
               e = objectOfS(
                 ["parameter"],
                 [
@@ -1362,42 +1392,36 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-  executed++
+              executed++;
             }
           }
         }
       }
     }
   }
-  if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+  if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
     var funcUno;
-  }
-  else if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+  } else if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
     var funcUno = e.parameter["func"];
-  }
-  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+  } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
     var funcUno = e.parameter["func"];
-  }
-  else {
+  } else {
     var funcUno = Object.keys(rndE);
   }
-  if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+  if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
     var funcDos;
-  }
-  else if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+  } else if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
     var funcDos = e.parameter["args"];
-  }
-  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+  } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
     var funcDos = e.parameter["args"];
-  }
-  else {
+  } else {
     var funcDos = Object.values(rndE);
   }
   return {
-    exec:funcUno,
-    args:funcDos,
-    website:funcTres
-  }
+    exec: funcUno,
+    args: funcDos,
+    website: funcTres,
+  };
 
   // --- BEGIN Refactored payLoad processing ---
 
@@ -1428,12 +1452,12 @@ function functionHandle(e) {
   //           if (Array.isArray(funcDos) && funcDos.length > 0) {
   //             parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
   //           }
-  //         } 
+  //         }
   //       }
-  //     }  
+  //     }
   //     else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
   //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-  //     } 
+  //     }
   //     else {
   //       parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
   //     }    //   }
@@ -1462,7 +1486,7 @@ function functionHandle(e) {
   // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
   //             rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
   // executed++
-  //         } 
+  //         }
   //         catch (error) {
   //           Logger.log("But, it is failing.");
   //           if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {

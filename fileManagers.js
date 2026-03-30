@@ -1216,8 +1216,7 @@ function fileFold(folderX, fileX, time) {
     // var minFile = [fileX].join("").toLowerCase()
     try {
       JSON.parse();
-    }
-    catch (check) {}
+    } catch (check) {}
     while (tree.hasNext()) {
       nameTree = tree.next();
       let myName = nameTree.getName();

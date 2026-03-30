@@ -532,7 +532,9 @@ function allInvestors(rndKey, time) {
   if (typeof time === "undefined") {
     time = start;
   }
-  var coArray = rndKey? [rndKey]:[`bank semi fact bio science chain space coin`];
+  var coArray = rndKey
+    ? [rndKey]
+    : [`bank semi fact bio science chain space coin`];
   var reCoArray = coArray.toString().split(" ");
   var rndCoA = Math.floor(Math.random() * Math.floor(reCoArray.length));
   var myCoArray = reCoArray.sort((a, b) => {
@@ -560,9 +562,7 @@ function allInvestors(rndKey, time) {
   rndTitleVested
     .sort((a, b) => a - b)
     .filter((ac) => {
-      if (
-        ac["title"].toLowerCase().indexOf(matches) !== -1
-      ) {
+      if (ac["title"].toLowerCase().indexOf(matches) !== -1) {
         titleMatches.push(ac);
       }
     });
@@ -570,9 +570,7 @@ function allInvestors(rndKey, time) {
     var uniqueCoKey = [rndTitleVested].entries().next().value;
     var uniqueNum = 0;
     while (uniqueNum === 0) {
-      console.log(
-        "executing rndNum(" + uniqueCoArray[0]["title"] + ")",
-      );
+      console.log("executing rndNum(" + uniqueCoArray[0]["title"] + ")");
       uniqueNum = randNum(uniqueCoArray[0]["title"]);
     }
     var mathCalc = function () {

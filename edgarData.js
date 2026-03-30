@@ -886,5 +886,4 @@ function yahooSort(ticker, time) {
     }
     return freqArray;
   }
-
 }

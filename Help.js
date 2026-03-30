@@ -207,28 +207,28 @@ function mis(text, maxRetries = 3) {
   var executed = 0;
   if (text?.indexOf(",") === -1) {
     var validUrl = isValidUrl(text);
-    executed++
+    executed++;
   }
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
-    executed++
+    executed++;
     let truSup = isTruthy(supFunc.func);
-    executed++
+    executed++;
     if (truSup) {
-      Logger.log("function - " + supFunc.func)
+      Logger.log("function - " + supFunc.func);
     }
     while (!supFunc.func) {
       truSup = isTruthy(supFunc.func);
-    executed++
+      executed++;
       if (truSup) {
-        Logger.log("function - " + supFunc.func)
+        Logger.log("function - " + supFunc.func);
       }
       var funcSup = functionRegistry.fileList;
-    executed++
+      executed++;
       var rndSup =
         funcSup[Math.floor(Math.random() * Math.floor(funcSup.length))];
       supFunc = misSt(rndSup);
-    executed++
+      executed++;
     }
     if (supFunc && typeof supFunc === "object") {
       let isError = false;
@@ -246,12 +246,14 @@ function mis(text, maxRetries = 3) {
         console.error("Error(s) from misSt:", supFunc);
         var earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
         var errorUrl = text;
-        var form = driveManager([text].join("").toUpperCase()) || formMaker(
-          [text].join("").toUpperCase(),
-          "misForms",
-          functionRegistry.time,
-        );
-    executed++
+        var form =
+          driveManager([text].join("").toUpperCase()) ||
+          formMaker(
+            [text].join("").toUpperCase(),
+            "misForms",
+            functionRegistry.time,
+          );
+        executed++;
         if (typeof form === "object") {
           // fileManager(coData.rndTitle, "Forms")
           Logger.log(
@@ -293,8 +295,11 @@ function mis(text, maxRetries = 3) {
     var fx = supFunc?.func;
     var payLoad = supFunc?.args;
     Logger.log("The 'e.parameter[args]' for url links, " + payLoad);
-    Logger.log("The 'e.parameter[args]' for url links after encoding, " + encodeURIComponent(payLoad));
-    executed++
+    Logger.log(
+      "The 'e.parameter[args]' for url links after encoding, " +
+        encodeURIComponent(payLoad),
+    );
+    executed++;
     // if (supFunc.func) {
     // if (supFunc.args) {
     //     var html =
@@ -328,7 +333,7 @@ function mis(text, maxRetries = 3) {
       fx +
       "&args=" +
       (payLoad ? encodeURIComponent(payLoad) : "");
-    executed++
+    executed++;
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -366,14 +371,17 @@ function mis(text, maxRetries = 3) {
         funcStr: globalThis[supFunc.func]?.toString(),
         url: form,
       };
-    }
-    catch (balance){
-      var form = driveManager([formattedPayload][0] || payLoad) || formMaker(payT, "misForms", functionRegistry.time);
-      executed++
+    } catch (balance) {
+      var form =
+        driveManager([formattedPayload][0] || payLoad) ||
+        formMaker(payT, "misForms", functionRegistry.time);
+      executed++;
 
       if (typeof form === "object") {
         // fileManager(coData.rndTitle, "Forms")
-        Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+        Logger.log(
+          `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+        );
 
         // --- Set Basic Form Properties ---
 
@@ -408,7 +416,10 @@ function mis(text, maxRetries = 3) {
           form.addDateItem().setTitle("Birth Date").setRequired(true);
         }
         if (Math.random() < 0.7) {
-          form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+          form
+            .addParagraphTextItem()
+            .setTitle("Your Message")
+            .setRequired(true);
         }
         form.setConfirmationMessage("Thanks for your feedback !!");
       }
@@ -454,15 +465,16 @@ function mis(text, maxRetries = 3) {
           dataStr: seoPastTime(validUrl?.hostname),
           url: form,
         };
-      }
-      catch (balance) {
+      } catch (balance) {
         // var form = formMaker();
-        var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
-          [JSON.stringify(text)].join("").toUpperCase(),
-          "misForms",
-          functionRegistry.time,
-        );
-      executed++
+        var form =
+          driveManager([JSON.stringify(text)].join("").toUpperCase()) ||
+          formMaker(
+            [JSON.stringify(text)].join("").toUpperCase(),
+            "misForms",
+            functionRegistry.time,
+          );
+        executed++;
 
         if (typeof form === "object") {
           // fileManager(coData.rndTitle, "Forms")
@@ -507,7 +519,10 @@ function mis(text, maxRetries = 3) {
           if (Math.random() < 0.7) {
             form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
           }
-          form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+          form
+            .addTextItem()
+            .setTitle("Annualized Net Income")
+            .setRequired(false);
           form.addTextItem().setTitle("Total Equity").setRequired(false);
           form.addTextItem().setTitle("Retained Earnings").setRequired(false);
           if (Math.random() < 0.7) {
@@ -517,12 +532,18 @@ function mis(text, maxRetries = 3) {
               .setRequired(true);
           }
           if (Math.random() < 0.7) {
-            form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+            form
+              .addTextItem()
+              .setTitle("Accounts Receivable")
+              .setRequired(true);
           }
           if (Math.random() < 0.7) {
             form.addTextItem().setTitle("Inventories").setRequired(true);
           }
-          form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+          form
+            .addTextItem()
+            .setTitle("Long-term Investments")
+            .setRequired(false);
           form.addTextItem().setTitle("Net PP&E").setRequired(false);
           if (Math.random() < 0.7) {
             form
@@ -559,7 +580,7 @@ function mis(text, maxRetries = 3) {
             dataStr: seoPastTime(validUrl?.hostname),
             url: form.getPublishedUrl(),
           };
-      executed++
+          executed++;
         }
       }
     }
@@ -599,20 +620,23 @@ function mis(text, maxRetries = 3) {
               }).getContentText();
               supUrl = location;
               try {
-                var form = driveManager([JSON.stringify(text)].join("").toUpperCase());
+                var form = driveManager(
+                  [JSON.stringify(text)].join("").toUpperCase(),
+                );
                 var responseObj = {
                   dataStr: seoPastTime(isValidUrl(location).hostname),
                   url: form,
                 };
-              }
-              catch (balance) {
+              } catch (balance) {
                 // var form = formMaker();
-                var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
-                  [JSON.stringify(text)].join("").toUpperCase(),
-                  "misForms",
-                  functionRegistry.time,
-                );
-      executed++
+                var form =
+                  driveManager([JSON.stringify(text)].join("").toUpperCase()) ||
+                  formMaker(
+                    [JSON.stringify(text)].join("").toUpperCase(),
+                    "misForms",
+                    functionRegistry.time,
+                  );
+                executed++;
 
                 if (typeof form === "object") {
                   // fileManager(coData.rndTitle, "Forms")
@@ -645,13 +669,19 @@ function mis(text, maxRetries = 3) {
                     .addParagraphTextItem()
                     .setTitle("Industry/Market Corrections")
                     .setRequired(false);
-                  form.addParagraphTextItem().setTitle("News").setRequired(false);
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("News")
+                    .setRequired(false);
                   form
                     .addParagraphTextItem()
                     .setTitle("Economic/Business Cycles")
                     .setRequired(false);
                   if (Math.random() < 0.7) {
-                    form.addTextItem().setTitle("Stock Price").setRequired(true);
+                    form
+                      .addTextItem()
+                      .setTitle("Stock Price")
+                      .setRequired(true);
                   }
                   if (Math.random() < 0.7) {
                     form
@@ -669,7 +699,10 @@ function mis(text, maxRetries = 3) {
                     .addTextItem()
                     .setTitle("Annualized Net Income")
                     .setRequired(false);
-                  form.addTextItem().setTitle("Total Equity").setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Total Equity")
+                    .setRequired(false);
                   form
                     .addTextItem()
                     .setTitle("Retained Earnings")
@@ -687,7 +720,10 @@ function mis(text, maxRetries = 3) {
                       .setRequired(true);
                   }
                   if (Math.random() < 0.7) {
-                    form.addTextItem().setTitle("Inventories").setRequired(true);
+                    form
+                      .addTextItem()
+                      .setTitle("Inventories")
+                      .setRequired(true);
                   }
                   form
                     .addTextItem()
@@ -737,20 +773,23 @@ function mis(text, maxRetries = 3) {
               htmlData = location;
               supUrl = validUrl.hostname;
               try {
-                var form = driveManager([JSON.stringify(text)].join("").toUpperCase());
+                var form = driveManager(
+                  [JSON.stringify(text)].join("").toUpperCase(),
+                );
                 var responseObj = {
                   dataStr: seoPastTime(validUrl.hostname),
                   url: form,
                 };
-              }
-              catch (balance) {
+              } catch (balance) {
                 // var form = formMaker();
-                var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
-                  [JSON.stringify(text)].join("").toUpperCase(),
-                  "misForms",
-                  functionRegistry.time,
-                );
-      executed++
+                var form =
+                  driveManager([JSON.stringify(text)].join("").toUpperCase()) ||
+                  formMaker(
+                    [JSON.stringify(text)].join("").toUpperCase(),
+                    "misForms",
+                    functionRegistry.time,
+                  );
+                executed++;
 
                 if (typeof form === "object") {
                   // fileManager(coData.rndTitle, "Forms")
@@ -783,13 +822,19 @@ function mis(text, maxRetries = 3) {
                     .addParagraphTextItem()
                     .setTitle("Industry/Market Corrections")
                     .setRequired(false);
-                  form.addParagraphTextItem().setTitle("News").setRequired(false);
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("News")
+                    .setRequired(false);
                   form
                     .addParagraphTextItem()
                     .setTitle("Economic/Business Cycles")
                     .setRequired(false);
                   if (Math.random() < 0.7) {
-                    form.addTextItem().setTitle("Stock Price").setRequired(true);
+                    form
+                      .addTextItem()
+                      .setTitle("Stock Price")
+                      .setRequired(true);
                   }
                   if (Math.random() < 0.7) {
                     form
@@ -807,7 +852,10 @@ function mis(text, maxRetries = 3) {
                     .addTextItem()
                     .setTitle("Annualized Net Income")
                     .setRequired(false);
-                  form.addTextItem().setTitle("Total Equity").setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Total Equity")
+                    .setRequired(false);
                   form
                     .addTextItem()
                     .setTitle("Retained Earnings")
@@ -825,7 +873,10 @@ function mis(text, maxRetries = 3) {
                       .setRequired(true);
                   }
                   if (Math.random() < 0.7) {
-                    form.addTextItem().setTitle("Inventories").setRequired(true);
+                    form
+                      .addTextItem()
+                      .setTitle("Inventories")
+                      .setRequired(true);
                   }
                   form
                     .addTextItem()
@@ -1661,16 +1712,16 @@ function misSt(func, someArgs) {
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
   var trueFunc = isTruthy(func);
-  executed++
+  executed++;
   var trueSomeArgs = isTruthy(someArgs);
-  executed++
+  executed++;
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : functionRegistry.paramsList;
-  executed++
+  executed++;
   var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = randNum(funcUno.toString()); // Assuming randNum is globally accessible
-  executed++
+  executed++;
 
   if (funcUno || funcDos) {
     var argsX = []; // Holds function names found
@@ -1685,7 +1736,7 @@ function misSt(func, someArgs) {
     //   .split(",");
     var arrUno = Array.isArray(func);
     var arrDos = isTruthy(someArgs);
-  executed++
+    executed++;
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -1726,10 +1777,10 @@ function misSt(func, someArgs) {
                 typeof subA === "object" || Array.isArray(subA)
                   ? crmT(rtParamB)
                   : crmT(subA);
-  executed++
+              executed++;
               if (keyProParams >= 0) {
                 argsX.push(gsFiles()[keyProParams]);
-  executed++
+                executed++;
               } else {
                 // keyProParams = ;
                 if (typeof subA === "object" && !Array.isArray(subA)) {
@@ -1748,7 +1799,7 @@ function misSt(func, someArgs) {
           } else {
             // keyProParams = crmT(subParam);
             realItem = isTruthy(subParam);
-  executed++
+            executed++;
           }
           // let realItem;
           // if (typeof subParam !== "string" && subParam !== null) {
@@ -1764,10 +1815,10 @@ function misSt(func, someArgs) {
               typeof subParam === "object" || Array.isArray(subParam)
                 ? crmT(rtParamA)
                 : crmT(subParam);
-  executed++
+            executed++;
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
-  executed++
+              executed++;
             } else {
               // keyProParams = ;
               if (typeof subParam === "object" && !Array.isArray(subParam)) {
@@ -1791,17 +1842,17 @@ function misSt(func, someArgs) {
         // }
       } else {
         realItem = isTruthy(pro);
-  executed++
+        executed++;
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
               typeof pro === "object" || Array.isArray(pro)
                 ? crmT(pro[key])
                 : crmT(pro);
-  executed++
+            executed++;
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
-  executed++
+              executed++;
             } else {
               // keyProParams = ;
               initialContent.push(
@@ -1820,7 +1871,7 @@ function misSt(func, someArgs) {
       // Check if there are functions to process
       var allErrors = {};
       var fParams = functionRegistry.paramsList; // Assuming gsFParams is globally accessible
-  executed++
+      executed++;
       console.log("global functions list length:", Object.keys(fParams).length);
       var resCount = 0;
 
@@ -1869,13 +1920,13 @@ function misSt(func, someArgs) {
 
           // First, populate contentMap with any named matches (if initialContent is not just positional)
           // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-          var htmlArray = functionRegistry.getHtmlList()
+          var htmlArray = functionRegistry.getHtmlList();
           // [
           //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
           // ]
           //   .toString()
           //   .split(" ");
-  executed++
+          executed++;
           var allFolders;
           function payLoadReg() {
             var rndE = objectOfS(
@@ -1888,7 +1939,7 @@ function misSt(func, someArgs) {
               ],
               functionRegistry.time,
             );
-  executed++
+            executed++;
             var funcUnoMis = rndE.parameter["func"];
             var funcDosMis = rndE.parameter["args"];
             var payLoad = null; // Initialize payLoad
@@ -1909,7 +1960,7 @@ function misSt(func, someArgs) {
                 globalThis[funcUnoMis].toString(),
               );
               payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
-  executed++
+              executed++;
             } else {
               console.warn(
                 "Function for 'data' parameter not found:",
@@ -1917,7 +1968,7 @@ function misSt(func, someArgs) {
               );
               payLoad = "Function not found for data generation.";
             }
-            return payLoad
+            return payLoad;
           }
 
           initialContent.forEach((item) => {
@@ -2010,9 +2061,8 @@ function misSt(func, someArgs) {
                 console.log("resolved e.parameter pre-result", result);
                 try {
                   JSON.parse();
-                }
-                catch (check){
-                  Logger.log("Check/Balance for " + globalThis(this))
+                } catch (check) {
+                  Logger.log("Check/Balance for " + globalThis(this));
                 }
                 if (typeof result === "string" && result !== "undefined") {
                   args[declaredParamName] = objectOfS(
@@ -2059,7 +2109,7 @@ function misSt(func, someArgs) {
                     functionRegistry.time,
                   );
                 }
-  executed++
+                executed++;
                 resolvedArgs.push(JSON.stringify(args[declaredParamName]));
               } else if (declaredParamName === "time") {
                 args[declaredParamName] =
@@ -2067,7 +2117,7 @@ function misSt(func, someArgs) {
                   //   ? userProvidedValue
                   //   :
                   functionRegistry.time;
-  executed++
+                executed++;
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "data") {
                 // if (
@@ -2109,9 +2159,8 @@ function misSt(func, someArgs) {
                 // }
                 try {
                   JSON.parse();
-                }
-                catch (check){
-                  Logger.log("Check/Balance for " + globalThis(this))
+                } catch (check) {
+                  Logger.log("Check/Balance for " + globalThis(this));
                 }
 
                 args[declaredParamName] = {
@@ -2121,12 +2170,11 @@ function misSt(func, someArgs) {
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "func") {
-                  try {
-                    JSON.parse();
-                  }
-                  catch (check){
-                    Logger.log("Check/Balance for " + globalThis(this))
-                  }
+                try {
+                  JSON.parse();
+                } catch (check) {
+                  Logger.log("Check/Balance for " + globalThis(this));
+                }
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
@@ -2136,9 +2184,8 @@ function misSt(func, someArgs) {
               } else if (declaredParamName === "varA") {
                 try {
                   JSON.parse();
-                }
-                catch (check){
-                  Logger.log("Check/Balance for " + globalThis(this))
+                } catch (check) {
+                  Logger.log("Check/Balance for " + globalThis(this));
                 }
                 console.log(
                   "Declared parameter " +
@@ -2166,7 +2213,7 @@ function misSt(func, someArgs) {
                   typeof globalThis[randomFuncName] === "function"
                 ) {
                   randomFuncResult = globalThis[randomFuncName]();
-  executed++
+                  executed++;
                   console.log("Error: using ", randomFuncName);
                 } else if (
                   typeof randomFuncName === "object" &&
@@ -2178,7 +2225,7 @@ function misSt(func, someArgs) {
                     this,
                     randomFuncName.parameters || [],
                   );
-  executed++
+                  executed++;
                   console.log(
                     "Error: using, " +
                       randomFuncName.name +
@@ -2195,7 +2242,7 @@ function misSt(func, someArgs) {
                 // } else {
                 console.log("DEBUG: Generating epaAUrl...");
                 var data = coUtility(product)[0]; // Assuming 'product' is accessible
-  executed++
+                executed++;
                 console.log("DEBUG: data from coUtility:", data);
 
                 let generatedUrl = null;
@@ -2212,13 +2259,13 @@ function misSt(func, someArgs) {
                       )
                     ],
                   );
-  executed++
+                  executed++;
                   console.log("DEBUG: test from productNamePartial:", test);
 
                   if (test && typeof test.eparegno !== "undefined") {
                     var test2 = productRegNo(test.eparegno);
                     console.log("DEBUG: test2 from productRegNo:", test2);
-  executed++
+                    executed++;
 
                     if (
                       test2 &&
@@ -2229,7 +2276,7 @@ function misSt(func, someArgs) {
                       test2.active_ingredients.forEach((ing) => {
                         if (ing.active_ing) {
                           var pIName = productIngName(ing.active_ing);
-  executed++
+                          executed++;
                           if (typeof pIName !== "undefined") {
                             uniqueData.push(
                               pIName["items"] || pIName["first"] || pIName,
@@ -2300,9 +2347,9 @@ function misSt(func, someArgs) {
                 // } else {
                 // Assuming functionRegistry.gTree and fileBrowser are accessible
                 var folder = functionRegistry.getFolderList()[numVarRnd];
-  executed++
+                executed++;
                 args[declaredParamName] = fileBrowser(folder).url;
-  executed++
+                executed++;
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "object") {
@@ -2328,7 +2375,7 @@ function misSt(func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "fileX") {
                 var folderX = functionRegistry.getFolderList()[numVarRnd()];
-  executed++
+                executed++;
                 var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
                 let fileXName = "undefined";
                 if (folderRoot.hasNext) {
@@ -2360,7 +2407,7 @@ function misSt(func, someArgs) {
                   //   ? userProvidedValue
                   //   :
                   allFolders = functionRegistry.getFolderList();
-  executed++
+                executed++;
                 allFolders[numVarRnd]; // allFolders should be defined or passed
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
@@ -2378,13 +2425,13 @@ function misSt(func, someArgs) {
                   Math.random() *
                     Math.floor(globalThis.uniqueItemArray().length),
                 );
-  executed++
+                executed++;
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
                   //   :
                   globalThis.uniqueItemArray()[rndItemIndex]["Description"];
-  executed++
+                executed++;
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
                 ["tunPlay", "searchString", "rndKey", "search"].includes(
@@ -2395,9 +2442,9 @@ function misSt(func, someArgs) {
                 var rndCoIndex = Math.floor(
                   Math.random() * Math.floor(globalThis.uniqueCoArray().length),
                 );
-  executed++
+                executed++;
                 var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
-  executed++
+                executed++;
                 args[nameArray[nameArray.indexOf(declaredParamName)]] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
@@ -2414,19 +2461,21 @@ function misSt(func, someArgs) {
                   appSort(numVarRnd); // Assuming appSort is accessible
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "argsObject") {
-                  try {
-                    JSON.parse();
-                  }
-                  catch (check){
-                    Logger.log("Check/Balance for " + globalThis(this))
-                  }
+                try {
+                  JSON.parse();
+                } catch (check) {
+                  Logger.log("Check/Balance for " + globalThis(this));
+                }
                 args[declaredParamName] =
                   // userProvidedValue !== null &&
                   // userProvidedValue !== undefined &&
                   // Array.isArray(userProvidedValue)
                   //   ? userProvidedValue
                   //   :
-                  JSON.stringify({ message: payLoadReg(), timestamp: new Date() });
+                  JSON.stringify({
+                    message: payLoadReg(),
+                    timestamp: new Date(),
+                  });
                 resolvedArgs.push(args[declaredParamName]);
               }
             } else {
@@ -2511,7 +2560,7 @@ function misSt(func, someArgs) {
               this,
               lastResolvedArgs,
             );
-  executed++
+            executed++;
             console.log(
               `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
             );
@@ -2544,7 +2593,7 @@ function misSt(func, someArgs) {
                 this,
                 initialContent,
               ); // Using initialContent for simplicity for now
-  executed++
+              executed++;
               finalResultData.push({ [funcName]: resultForFunc });
             } catch (e) {
               console.error(
@@ -2843,9 +2892,8 @@ function resolveParams(func, someArgs) {
               console.log("resolved e.parameter pre-result", result);
               try {
                 JSON.parse();
-              }
-              catch (check){
-                Logger.log("Check/Balance for " + globalThis(this))
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = objectOfS(
@@ -2911,9 +2959,8 @@ function resolveParams(func, someArgs) {
               console.log("resolved data pre-result", result);
               try {
                 JSON.parse();
-              }
-              catch (check){
-                Logger.log("Check/Balance for " + globalThis(this))
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
               }
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
@@ -2981,9 +3028,8 @@ function resolveParams(func, someArgs) {
               console.log("resolved func pre-result", result);
               try {
                 JSON.parse();
-              }
-              catch (check){
-                Logger.log("Check/Balance for " + globalThis(this))
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = result;
@@ -3001,12 +3047,11 @@ function resolveParams(func, someArgs) {
               paramName === "varA" ||
               (paramName === null && declaredParamName === "varA")
             ) {
-                try {
-                  JSON.parse();
-                }
-                catch (check){
-                  Logger.log("Check/Balance for " + globalThis(this))
-                }
+              try {
+                JSON.parse();
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
+              }
               arrDRnd = appSort(numVarRnd);
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
@@ -3015,9 +3060,8 @@ function resolveParams(func, someArgs) {
               console.log("resolved varA pre-result", result);
               try {
                 JSON.parse();
-              }
-              catch (check){
-                Logger.log("Check/Balance for " + globalThis(this))
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
@@ -3028,17 +3072,15 @@ function resolveParams(func, someArgs) {
               ) {
                 try {
                   args[declaredParamName] = globalThis[result.name].apply(
-                  result.parameters,
+                    result.parameters,
                   );
-                }
-                catch (eR) {
+                } catch (eR) {
                   args[declaredParamName] = eR.toString();
                 }
               } else if (result !== null && result && result.name) {
                 try {
                   args[declaredParamName] = globalThis[result.name]();
-                }
-                catch (eR) {
+                } catch (eR) {
                   args[declaredParamName] = eR.toString();
                 }
               }
@@ -3176,12 +3218,11 @@ function resolveParams(func, someArgs) {
               paramName === "argsObject" ||
               (paramName === null && declaredParamName === "argsObject")
             ) {
-                try {
-                  JSON.parse();
-                }
-                catch (check){
-                  Logger.log("Check/Balance for " + globalThis(this))
-                }
+              try {
+                JSON.parse();
+              } catch (check) {
+                Logger.log("Check/Balance for " + globalThis(this));
+              }
               var rawVar = mis("VVar");
               args[declaredParamName] = rawVar.app["myVar"];
               resolvedArgs.push(args[declaredParamName]);

@@ -1770,7 +1770,7 @@ var renderTemplate = function (blob, argsObject, title) {
         driveB: tmp.payL.link,
         driveA: tmp.payL.type,
         driveC: tmp.payL.data,
-      }
+      },
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);
