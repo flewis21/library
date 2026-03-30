@@ -705,7 +705,7 @@ function lookupDomain(searchTerm) {
   var results = [];
   for (var i = 1; i < data.length; i++) {
     // Skip header row
-    if (data[i][0].toLowerCase().includes(searchTerm.toLowerCase())) {
+    if (data[i][0].toLowerCase().includes(searchTerm?.toLowerCase())) {
       // Simple search
       results.push({
         domain: data[i][0],
@@ -1797,7 +1797,7 @@ function sheetsUrls(fileX, folderX, time) {
   if (fileNameList) {
     while (mineField.length === 0) {
       fileNameList.sheets.map((repo) => {
-        if (repo.toLowerCase().includes(fileX.toLowerCase())) {
+        if (repo.toLowerCase().includes(fileX?.toLowerCase())) {
           var mineFile = DriveApp.getFilesByName(repo);
           if (mineFile.hasNext()) {
             var bogy = mineFile.next().getId();

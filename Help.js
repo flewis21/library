@@ -21,7 +21,7 @@ function crmCalc(func) {
     lowCapFunc = func.toLowerCase();
   }
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nlowCapFunc is !" +
@@ -204,16 +204,31 @@ function mis(text, maxRetries = 3) {
       maxRetries +
       ")\n ",
   );
+  var executed = 0;
   if (text?.indexOf(",") === -1) {
     var validUrl = isValidUrl(text);
+    executed++
   }
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
+    executed++
+    let truSup = isTruthy(supFunc.func);
+    executed++
+    if (truSup) {
+      Logger.log("function - " + supFunc.func)
+    }
     while (!supFunc.func) {
+      truSup = isTruthy(supFunc.func);
+    executed++
+      if (truSup) {
+        Logger.log("function - " + supFunc.func)
+      }
       var funcSup = functionRegistry.fileList;
+    executed++
       var rndSup =
         funcSup[Math.floor(Math.random() * Math.floor(funcSup.length))];
       supFunc = misSt(rndSup);
+    executed++
     }
     if (supFunc && typeof supFunc === "object") {
       let isError = false;
@@ -231,11 +246,12 @@ function mis(text, maxRetries = 3) {
         console.error("Error(s) from misSt:", supFunc);
         var earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
         var errorUrl = text;
-        var form = formMaker(
+        var form = driveManager([text].join("").toUpperCase()) || formMaker(
           [text].join("").toUpperCase(),
           "misForms",
           functionRegistry.time,
         );
+    executed++
         if (typeof form === "object") {
           // fileManager(coData.rndTitle, "Forms")
           Logger.log(
@@ -268,7 +284,7 @@ function mis(text, maxRetries = 3) {
               .setRequired(true);
           }
           form.setConfirmationMessage("Thanks for your feedback !!");
-          var url = seoPastTime(text) || form.getPublishedUrl();
+          var url = seoPastTime(text) || form.getPublishedUrl() || form;
         }
         console.log("Final app:", earlyReturn);
         return { index: url, app: earlyReturn, link: errorUrl };
@@ -276,6 +292,9 @@ function mis(text, maxRetries = 3) {
     }
     var fx = supFunc?.func;
     var payLoad = supFunc?.args;
+    Logger.log("The 'e.parameter[args]' for url links, " + payLoad);
+    Logger.log("The 'e.parameter[args]' for url links after encoding, " + encodeURIComponent(payLoad));
+    executed++
     // if (supFunc.func) {
     // if (supFunc.args) {
     //     var html =
@@ -309,6 +328,7 @@ function mis(text, maxRetries = 3) {
       fx +
       "&args=" +
       (payLoad ? encodeURIComponent(payLoad) : "");
+    executed++
     // var form = formMaker();
     let formattedPayload = "";
     if (payLoad && typeof payLoad === "object") {
@@ -340,48 +360,58 @@ function mis(text, maxRetries = 3) {
       payT += "(" + payLoad + ")";
     }
     payT = payT.toUpperCase();
-    var form = formMaker(payT, "misForms", functionRegistry.time);
+    try {
+      var form = driveManager([formattedPayload][0] || payLoad);
+      var webAppObj = {
+        funcStr: globalThis[supFunc.func]?.toString(),
+        url: form,
+      };
+    }
+    catch (balance){
+      var form = driveManager([formattedPayload][0] || payLoad) || formMaker(payT, "misForms", functionRegistry.time);
+      executed++
 
-    if (typeof form === "object") {
-      // fileManager(coData.rndTitle, "Forms")
-      Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
+      if (typeof form === "object") {
+        // fileManager(coData.rndTitle, "Forms")
+        Logger.log(`Created new form: ${form.getTitle()} - ${form.getEditUrl()}`);
 
-      // --- Set Basic Form Properties ---
+        // --- Set Basic Form Properties ---
 
-      // Randomly decide to collect email or not
-      form.setCollectEmail(Math.random() < 0.5);
+        // Randomly decide to collect email or not
+        form.setCollectEmail(Math.random() < 0.5);
 
-      // Randomly decide to show progress bar for multi-section forms
-      if (Math.random() < 0.7) {
-        form.setProgressBar(true);
-      }
-
-      // --- Add Sections and Questions ---
-
-      if (fx) {
-        form
-          .addSectionHeaderItem()
-          .setTitle(globalThis[supFunc.func].toString());
-      } else {
-        form.addSectionHeaderItem().setTitle("No Function Found");
-      }
-      if (supFunc && supFunc.res) {
-        if (typeof supFunc.res === "object") {
-          form.addSectionHeaderItem().setTitle(JSON.stringify(supFunc.res));
-        } else {
-          form.addSectionHeaderItem().setTitle(supFunc.res);
+        // Randomly decide to show progress bar for multi-section forms
+        if (Math.random() < 0.7) {
+          form.setProgressBar(true);
         }
+
+        // --- Add Sections and Questions ---
+
+        if (fx) {
+          form
+            .addSectionHeaderItem()
+            .setTitle(globalThis[supFunc.func].toString());
+        } else {
+          form.addSectionHeaderItem().setTitle("No Function Found");
+        }
+        if (supFunc && supFunc.res) {
+          if (typeof supFunc.res === "object") {
+            form.addSectionHeaderItem().setTitle(JSON.stringify(supFunc.res));
+          } else {
+            form.addSectionHeaderItem().setTitle(supFunc.res);
+          }
+        }
+        if (Math.random() < 0.7) {
+          form.addTextItem().setTitle("Your Name").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
+          form.addDateItem().setTitle("Birth Date").setRequired(true);
+        }
+        if (Math.random() < 0.7) {
+          form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
+        }
+        form.setConfirmationMessage("Thanks for your feedback !!");
       }
-      if (Math.random() < 0.7) {
-        form.addTextItem().setTitle("Your Name").setRequired(true);
-      }
-      if (Math.random() < 0.7) {
-        form.addDateItem().setTitle("Birth Date").setRequired(true);
-      }
-      if (Math.random() < 0.7) {
-        form.addParagraphTextItem().setTitle("Your Message").setRequired(true);
-      }
-      form.setConfirmationMessage("Thanks for your feedback !!");
       var webAppObj = {
         funcStr: globalThis[supFunc.func]?.toString(),
         url: form.getPublishedUrl(),
@@ -418,108 +448,119 @@ function mis(text, maxRetries = 3) {
       console.error("Error fetching URL: ", e.toString());
       htmlData = "Error fetching URL: " + e.toString();
       supUrl = validUrl?.hostname;
-      // var form = formMaker();
-      var form = formMaker(
-        [JSON.stringify(text)].join("").toUpperCase(),
-        "misForms",
-        functionRegistry.time,
-      );
-
-      if (typeof form === "object") {
-        // fileManager(coData.rndTitle, "Forms")
-        Logger.log(
-          `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
-        );
-
-        // --- Set Basic Form Properties ---
-
-        // Randomly decide to collect email or not
-        form.setCollectEmail(Math.random() < 0.5);
-
-        // Randomly decide to show progress bar for multi-section forms
-        if (Math.random() < 0.7) {
-          form.setProgressBar(true);
-        }
-
-        // --- Add Sections and Questions ---
-
-        form.addSectionHeaderItem().setTitle(htmlData);
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Industry").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Sector").setRequired(true);
-        }
-        form
-          .addParagraphTextItem()
-          .setTitle("Industry/Market Corrections")
-          .setRequired(false);
-        form.addParagraphTextItem().setTitle("News").setRequired(false);
-        form
-          .addParagraphTextItem()
-          .setTitle("Economic/Business Cycles")
-          .setRequired(false);
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Stock Price").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
-        }
-        form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
-        form.addTextItem().setTitle("Total Equity").setRequired(false);
-        form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-        if (Math.random() < 0.7) {
-          form
-            .addTextItem()
-            .setTitle("Cash & Marketable Securities")
-            .setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Inventories").setRequired(true);
-        }
-        form.addTextItem().setTitle("Long-term Investments").setRequired(false);
-        form.addTextItem().setTitle("Net PP&E").setRequired(false);
-        if (Math.random() < 0.7) {
-          form
-            .addTextItem()
-            .setTitle("Current Financial Liabilities")
-            .setRequired(true);
-        }
-        form
-          .addTextItem()
-          .setTitle("Long-term Interest-bearing Debts")
-          .setRequired(false);
-        form
-          .addTextItem()
-          .setTitle("Current Year Total Earnings")
-          .setRequired(false);
-        form
-          .addTextItem()
-          .setTitle("Base Year Total Earnings")
-          .setRequired(false);
-        if (Math.random() < 0.7) {
-          form.addTextItem().setTitle("Your Name").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form.addDateItem().setTitle("Birth Date").setRequired(true);
-        }
-        if (Math.random() < 0.7) {
-          form
-            .addParagraphTextItem()
-            .setTitle("Your Message")
-            .setRequired(true);
-        }
-        form.setConfirmationMessage("Thanks for your feedback !!");
+      try {
+        var form = driveManager([JSON.stringify(text)].join("").toUpperCase());
         var responseObj = {
           dataStr: seoPastTime(validUrl?.hostname),
-          url: form.getPublishedUrl(),
+          url: form,
         };
+      }
+      catch (balance) {
+        // var form = formMaker();
+        var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
+          [JSON.stringify(text)].join("").toUpperCase(),
+          "misForms",
+          functionRegistry.time,
+        );
+      executed++
+
+        if (typeof form === "object") {
+          // fileManager(coData.rndTitle, "Forms")
+          Logger.log(
+            `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+          );
+
+          // --- Set Basic Form Properties ---
+
+          // Randomly decide to collect email or not
+          form.setCollectEmail(Math.random() < 0.5);
+
+          // Randomly decide to show progress bar for multi-section forms
+          if (Math.random() < 0.7) {
+            form.setProgressBar(true);
+          }
+
+          // --- Add Sections and Questions ---
+
+          form.addSectionHeaderItem().setTitle(htmlData);
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Industry").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Sector").setRequired(true);
+          }
+          form
+            .addParagraphTextItem()
+            .setTitle("Industry/Market Corrections")
+            .setRequired(false);
+          form.addParagraphTextItem().setTitle("News").setRequired(false);
+          form
+            .addParagraphTextItem()
+            .setTitle("Economic/Business Cycles")
+            .setRequired(false);
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Stock Price").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+          }
+          form.addTextItem().setTitle("Annualized Net Income").setRequired(false);
+          form.addTextItem().setTitle("Total Equity").setRequired(false);
+          form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+          if (Math.random() < 0.7) {
+            form
+              .addTextItem()
+              .setTitle("Cash & Marketable Securities")
+              .setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Accounts Receivable").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Inventories").setRequired(true);
+          }
+          form.addTextItem().setTitle("Long-term Investments").setRequired(false);
+          form.addTextItem().setTitle("Net PP&E").setRequired(false);
+          if (Math.random() < 0.7) {
+            form
+              .addTextItem()
+              .setTitle("Current Financial Liabilities")
+              .setRequired(true);
+          }
+          form
+            .addTextItem()
+            .setTitle("Long-term Interest-bearing Debts")
+            .setRequired(false);
+          form
+            .addTextItem()
+            .setTitle("Current Year Total Earnings")
+            .setRequired(false);
+          form
+            .addTextItem()
+            .setTitle("Base Year Total Earnings")
+            .setRequired(false);
+          if (Math.random() < 0.7) {
+            form.addTextItem().setTitle("Your Name").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form.addDateItem().setTitle("Birth Date").setRequired(true);
+          }
+          if (Math.random() < 0.7) {
+            form
+              .addParagraphTextItem()
+              .setTitle("Your Message")
+              .setRequired(true);
+          }
+          form.setConfirmationMessage("Thanks for your feedback !!");
+          var responseObj = {
+            dataStr: seoPastTime(validUrl?.hostname),
+            url: form.getPublishedUrl(),
+          };
+      executed++
+        }
       }
     }
     try {
@@ -557,256 +598,276 @@ function mis(text, maxRetries = 3) {
                 muteHttpExceptions: true,
               }).getContentText();
               supUrl = location;
-              // var form = formMaker();
-              var form = formMaker(
-                [JSON.stringify(text)].join("").toUpperCase(),
-                "misForms",
-                functionRegistry.time,
-              );
-
-              if (typeof form === "object") {
-                // fileManager(coData.rndTitle, "Forms")
-                Logger.log(
-                  `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
-                );
-
-                // --- Set Basic Form Properties ---
-
-                // Randomly decide to collect email or not
-                form.setCollectEmail(Math.random() < 0.5);
-
-                // Randomly decide to show progress bar for multi-section forms
-                if (Math.random() < 0.7) {
-                  form.setProgressBar(true);
-                }
-
-                // --- Add Sections and Questions ---
-
-                form
-                  .addSectionHeaderItem()
-                  .setTitle("Redirect occurred\n" + htmlData);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Industry").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Industry").setRequired(true);
-                }
-                form
-                  .addParagraphTextItem()
-                  .setTitle("Industry/Market Corrections")
-                  .setRequired(false);
-                form.addParagraphTextItem().setTitle("News").setRequired(false);
-                form
-                  .addParagraphTextItem()
-                  .setTitle("Economic/Business Cycles")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Stock Price").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Outstanding Shares")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Quarterly Earnings")
-                    .setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Annualized Net Income")
-                  .setRequired(false);
-                form.addTextItem().setTitle("Total Equity").setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Retained Earnings")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Cash & Marketable Securities")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Accounts Receivable")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Inventories").setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Long-term Investments")
-                  .setRequired(false);
-                form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Current Financial Liabilities")
-                    .setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Long-term Interest-bearing Debts")
-                  .setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Current Year Total Earnings")
-                  .setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Base Year Total Earnings")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Your Name").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addDateItem().setTitle("Birth Date").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Your Message")
-                    .setRequired(true);
-                }
-                form.setConfirmationMessage("Thanks for your feedback !!");
+              try {
+                var form = driveManager([JSON.stringify(text)].join("").toUpperCase());
                 var responseObj = {
                   dataStr: seoPastTime(isValidUrl(location).hostname),
-                  url: form.getPublishedUrl(),
+                  url: form,
                 };
+              }
+              catch (balance) {
+                // var form = formMaker();
+                var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
+                  [JSON.stringify(text)].join("").toUpperCase(),
+                  "misForms",
+                  functionRegistry.time,
+                );
+      executed++
+
+                if (typeof form === "object") {
+                  // fileManager(coData.rndTitle, "Forms")
+                  Logger.log(
+                    `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+                  );
+
+                  // --- Set Basic Form Properties ---
+
+                  // Randomly decide to collect email or not
+                  form.setCollectEmail(Math.random() < 0.5);
+
+                  // Randomly decide to show progress bar for multi-section forms
+                  if (Math.random() < 0.7) {
+                    form.setProgressBar(true);
+                  }
+
+                  // --- Add Sections and Questions ---
+
+                  form
+                    .addSectionHeaderItem()
+                    .setTitle("Redirect occurred\n" + htmlData);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Industry").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Industry").setRequired(true);
+                  }
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("Industry/Market Corrections")
+                    .setRequired(false);
+                  form.addParagraphTextItem().setTitle("News").setRequired(false);
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("Economic/Business Cycles")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Stock Price").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Outstanding Shares")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Quarterly Earnings")
+                      .setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Annualized Net Income")
+                    .setRequired(false);
+                  form.addTextItem().setTitle("Total Equity").setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Retained Earnings")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Cash & Marketable Securities")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Accounts Receivable")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Inventories").setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Long-term Investments")
+                    .setRequired(false);
+                  form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Current Financial Liabilities")
+                      .setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Long-term Interest-bearing Debts")
+                    .setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Current Year Total Earnings")
+                    .setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Base Year Total Earnings")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Your Name").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addDateItem().setTitle("Birth Date").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addParagraphTextItem()
+                      .setTitle("Your Message")
+                      .setRequired(true);
+                  }
+                  form.setConfirmationMessage("Thanks for your feedback !!");
+                  var responseObj = {
+                    dataStr: seoPastTime(isValidUrl(location).hostname),
+                    url: form.getPublishedUrl(),
+                  };
+                }
               }
             } else {
               // No redirect or other error
               location = response.getContentText();
               htmlData = location;
               supUrl = validUrl.hostname;
-              // var form = formMaker();
-              var form = formMaker(
-                [JSON.stringify(text)].join("").toUpperCase(),
-                "misForms",
-                functionRegistry.time,
-              );
-
-              if (typeof form === "object") {
-                // fileManager(coData.rndTitle, "Forms")
-                Logger.log(
-                  `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
-                );
-
-                // --- Set Basic Form Properties ---
-
-                // Randomly decide to collect email or not
-                form.setCollectEmail(Math.random() < 0.5);
-
-                // Randomly decide to show progress bar for multi-section forms
-                if (Math.random() < 0.7) {
-                  form.setProgressBar(true);
-                }
-
-                // --- Add Sections and Questions ---
-
-                form
-                  .addSectionHeaderItem()
-                  .setTitle("No redirect or other error\n" + htmlData);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Industry").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Sector").setRequired(true);
-                }
-                form
-                  .addParagraphTextItem()
-                  .setTitle("Industry/Market Corrections")
-                  .setRequired(false);
-                form.addParagraphTextItem().setTitle("News").setRequired(false);
-                form
-                  .addParagraphTextItem()
-                  .setTitle("Economic/Business Cycles")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Stock Price").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Outstanding Shares")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Quarterly Earnings")
-                    .setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Annualized Net Income")
-                  .setRequired(false);
-                form.addTextItem().setTitle("Total Equity").setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Retained Earnings")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Cash & Marketable Securities")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Accounts Receivable")
-                    .setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Inventories").setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Long-term Investments")
-                  .setRequired(false);
-                form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                if (Math.random() < 0.7) {
-                  form
-                    .addTextItem()
-                    .setTitle("Current Financial Liabilities")
-                    .setRequired(true);
-                }
-                form
-                  .addTextItem()
-                  .setTitle("Long-term Interest-bearing Debts")
-                  .setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Current Year Total Earnings")
-                  .setRequired(false);
-                form
-                  .addTextItem()
-                  .setTitle("Base Year Total Earnings")
-                  .setRequired(false);
-                if (Math.random() < 0.7) {
-                  form.addTextItem().setTitle("Your Name").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form.addDateItem().setTitle("Birth Date").setRequired(true);
-                }
-                if (Math.random() < 0.7) {
-                  form
-                    .addParagraphTextItem()
-                    .setTitle("Your Message")
-                    .setRequired(true);
-                }
-                form.setConfirmationMessage("Thanks for your feedback !!");
+              try {
+                var form = driveManager([JSON.stringify(text)].join("").toUpperCase());
                 var responseObj = {
                   dataStr: seoPastTime(validUrl.hostname),
-                  url: form.getPublishedUrl(),
+                  url: form,
                 };
+              }
+              catch (balance) {
+                // var form = formMaker();
+                var form = driveManager([JSON.stringify(text)].join("").toUpperCase()) || formMaker(
+                  [JSON.stringify(text)].join("").toUpperCase(),
+                  "misForms",
+                  functionRegistry.time,
+                );
+      executed++
+
+                if (typeof form === "object") {
+                  // fileManager(coData.rndTitle, "Forms")
+                  Logger.log(
+                    `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
+                  );
+
+                  // --- Set Basic Form Properties ---
+
+                  // Randomly decide to collect email or not
+                  form.setCollectEmail(Math.random() < 0.5);
+
+                  // Randomly decide to show progress bar for multi-section forms
+                  if (Math.random() < 0.7) {
+                    form.setProgressBar(true);
+                  }
+
+                  // --- Add Sections and Questions ---
+
+                  form
+                    .addSectionHeaderItem()
+                    .setTitle("No redirect or other error\n" + htmlData);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Industry").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Sector").setRequired(true);
+                  }
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("Industry/Market Corrections")
+                    .setRequired(false);
+                  form.addParagraphTextItem().setTitle("News").setRequired(false);
+                  form
+                    .addParagraphTextItem()
+                    .setTitle("Economic/Business Cycles")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Stock Price").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Outstanding Shares")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Quarterly Earnings")
+                      .setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Annualized Net Income")
+                    .setRequired(false);
+                  form.addTextItem().setTitle("Total Equity").setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Retained Earnings")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Cash & Marketable Securities")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Accounts Receivable")
+                      .setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Inventories").setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Long-term Investments")
+                    .setRequired(false);
+                  form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form
+                      .addTextItem()
+                      .setTitle("Current Financial Liabilities")
+                      .setRequired(true);
+                  }
+                  form
+                    .addTextItem()
+                    .setTitle("Long-term Interest-bearing Debts")
+                    .setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Current Year Total Earnings")
+                    .setRequired(false);
+                  form
+                    .addTextItem()
+                    .setTitle("Base Year Total Earnings")
+                    .setRequired(false);
+                  if (Math.random() < 0.7) {
+                    form.addTextItem().setTitle("Your Name").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form.addDateItem().setTitle("Birth Date").setRequired(true);
+                  }
+                  if (Math.random() < 0.7) {
+                    form
+                      .addParagraphTextItem()
+                      .setTitle("Your Message")
+                      .setRequired(true);
+                  }
+                  form.setConfirmationMessage("Thanks for your feedback !!");
+                  var responseObj = {
+                    dataStr: seoPastTime(validUrl.hostname),
+                    url: form.getPublishedUrl(),
+                  };
+                }
               }
             }
           }
@@ -1595,16 +1656,21 @@ function misSt(func, someArgs) {
       ")\n " +
       arguments.callee.caller.name,
   );
+  var executed = 0;
 
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
   var trueFunc = isTruthy(func);
+  executed++
   var trueSomeArgs = isTruthy(someArgs);
+  executed++
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : functionRegistry.paramsList;
+  executed++
   var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
-  var numVarRnd = randNum; // Assuming randNum is globally accessible
+  var numVarRnd = randNum(funcUno.toString()); // Assuming randNum is globally accessible
+  executed++
 
   if (funcUno || funcDos) {
     var argsX = []; // Holds function names found
@@ -1619,6 +1685,7 @@ function misSt(func, someArgs) {
     //   .split(",");
     var arrUno = Array.isArray(func);
     var arrDos = isTruthy(someArgs);
+  executed++
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -1659,8 +1726,10 @@ function misSt(func, someArgs) {
                 typeof subA === "object" || Array.isArray(subA)
                   ? crmT(rtParamB)
                   : crmT(subA);
+  executed++
               if (keyProParams >= 0) {
                 argsX.push(gsFiles()[keyProParams]);
+  executed++
               } else {
                 // keyProParams = ;
                 if (typeof subA === "object" && !Array.isArray(subA)) {
@@ -1679,6 +1748,7 @@ function misSt(func, someArgs) {
           } else {
             // keyProParams = crmT(subParam);
             realItem = isTruthy(subParam);
+  executed++
           }
           // let realItem;
           // if (typeof subParam !== "string" && subParam !== null) {
@@ -1694,8 +1764,10 @@ function misSt(func, someArgs) {
               typeof subParam === "object" || Array.isArray(subParam)
                 ? crmT(rtParamA)
                 : crmT(subParam);
+  executed++
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
+  executed++
             } else {
               // keyProParams = ;
               if (typeof subParam === "object" && !Array.isArray(subParam)) {
@@ -1719,14 +1791,17 @@ function misSt(func, someArgs) {
         // }
       } else {
         realItem = isTruthy(pro);
+  executed++
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
               typeof pro === "object" || Array.isArray(pro)
                 ? crmT(pro[key])
                 : crmT(pro);
+  executed++
             if (keyProParams >= 0) {
               argsX.push(gsFiles()[keyProParams]);
+  executed++
             } else {
               // keyProParams = ;
               initialContent.push(
@@ -1745,6 +1820,7 @@ function misSt(func, someArgs) {
       // Check if there are functions to process
       var allErrors = {};
       var fParams = functionRegistry.paramsList; // Assuming gsFParams is globally accessible
+  executed++
       console.log("global functions list length:", Object.keys(fParams).length);
       var resCount = 0;
 
@@ -1793,13 +1869,15 @@ function misSt(func, someArgs) {
 
           // First, populate contentMap with any named matches (if initialContent is not just positional)
           // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-          var htmlArray = [
-            `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
-          ]
-            .toString()
-            .split(" ");
+          var htmlArray = functionRegistry.getHtmlList()
+          // [
+          //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
+          // ]
+          //   .toString()
+          //   .split(" ");
+  executed++
           var allFolders;
-          if (!payLoad) {
+          function payLoadReg() {
             var rndE = objectOfS(
               ["parameter"],
               [
@@ -1810,6 +1888,7 @@ function misSt(func, someArgs) {
               ],
               functionRegistry.time,
             );
+  executed++
             var funcUnoMis = rndE.parameter["func"];
             var funcDosMis = rndE.parameter["args"];
             var payLoad = null; // Initialize payLoad
@@ -1830,6 +1909,7 @@ function misSt(func, someArgs) {
                 globalThis[funcUnoMis].toString(),
               );
               payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+  executed++
             } else {
               console.warn(
                 "Function for 'data' parameter not found:",
@@ -1837,6 +1917,7 @@ function misSt(func, someArgs) {
               );
               payLoad = "Function not found for data generation.";
             }
+            return payLoad
           }
 
           initialContent.forEach((item) => {
@@ -1921,20 +2002,43 @@ function misSt(func, someArgs) {
             // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
             if (userProvidedValue === null && userProvidedValue === undefined) {
               if (declaredParamName === "e") {
-                args[declaredParamName] =
-                  // userProvidedValue !== null && userProvidedValue !== undefined
-                  //   ? userProvidedValue
-                  //   :
-                  objectOfS(
+                arrDRnd = appSort();
+                searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+                result = fParams.find((rndS) => {
+                  return rndS.name === searchResult;
+                });
+                console.log("resolved e.parameter pre-result", result);
+                try {
+                  JSON.parse();
+                }
+                catch (check){
+                  Logger.log("Check/Balance for " + globalThis(this))
+                }
+                if (typeof result === "string" && result !== "undefined") {
+                  args[declaredParamName] = objectOfS(
                     ["parameter"],
                     [
                       [
                         ["func", result],
+                        ["action", "getData"],
+                        ["file", "uiAccess"],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+                } else if (
+                  typeof result === "object" &&
+                  result !== null &&
+                  result.name
+                ) {
+                  args[declaredParamName] = objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result.name],
                         [
                           "args",
-                          typeof initialContent === "object"
-                            ? JSON.stringify(initialContent)
-                            : initialContent,
+                          JSON.stringify(orderedContent) || result.parameters,
                         ],
                         ["action", "getData"],
                         ["file", "uiAccess"],
@@ -1942,6 +2046,20 @@ function misSt(func, someArgs) {
                     ],
                     functionRegistry.time,
                   );
+                } else if (result !== null && result && result.name) {
+                  args[declaredParamName] = objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", result.name],
+                        ["action", "getData"],
+                        ["file", "uiAccess"],
+                      ],
+                    ],
+                    functionRegistry.time,
+                  );
+                }
+  executed++
                 resolvedArgs.push(JSON.stringify(args[declaredParamName]));
               } else if (declaredParamName === "time") {
                 args[declaredParamName] =
@@ -1949,6 +2067,7 @@ function misSt(func, someArgs) {
                   //   ? userProvidedValue
                   //   :
                   functionRegistry.time;
+  executed++
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "data") {
                 // if (
@@ -1988,14 +2107,26 @@ function misSt(func, someArgs) {
                 //   );
                 //   payLoad = "Function not found for data generation.";
                 // }
+                try {
+                  JSON.parse();
+                }
+                catch (check){
+                  Logger.log("Check/Balance for " + globalThis(this))
+                }
 
                 args[declaredParamName] = {
-                  message: payLoad,
+                  message: payLoadReg(),
                   timestamp: new Date(),
                 };
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "func") {
+                  try {
+                    JSON.parse();
+                  }
+                  catch (check){
+                    Logger.log("Check/Balance for " + globalThis(this))
+                  }
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
@@ -2003,6 +2134,12 @@ function misSt(func, someArgs) {
                   result;
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "varA") {
+                try {
+                  JSON.parse();
+                }
+                catch (check){
+                  Logger.log("Check/Balance for " + globalThis(this))
+                }
                 console.log(
                   "Declared parameter " +
                     declaredParamName +
@@ -2029,6 +2166,7 @@ function misSt(func, someArgs) {
                   typeof globalThis[randomFuncName] === "function"
                 ) {
                   randomFuncResult = globalThis[randomFuncName]();
+  executed++
                   console.log("Error: using ", randomFuncName);
                 } else if (
                   typeof randomFuncName === "object" &&
@@ -2040,6 +2178,7 @@ function misSt(func, someArgs) {
                     this,
                     randomFuncName.parameters || [],
                   );
+  executed++
                   console.log(
                     "Error: using, " +
                       randomFuncName.name +
@@ -2056,6 +2195,7 @@ function misSt(func, someArgs) {
                 // } else {
                 console.log("DEBUG: Generating epaAUrl...");
                 var data = coUtility(product)[0]; // Assuming 'product' is accessible
+  executed++
                 console.log("DEBUG: data from coUtility:", data);
 
                 let generatedUrl = null;
@@ -2072,11 +2212,13 @@ function misSt(func, someArgs) {
                       )
                     ],
                   );
+  executed++
                   console.log("DEBUG: test from productNamePartial:", test);
 
                   if (test && typeof test.eparegno !== "undefined") {
                     var test2 = productRegNo(test.eparegno);
                     console.log("DEBUG: test2 from productRegNo:", test2);
+  executed++
 
                     if (
                       test2 &&
@@ -2087,6 +2229,7 @@ function misSt(func, someArgs) {
                       test2.active_ingredients.forEach((ing) => {
                         if (ing.active_ing) {
                           var pIName = productIngName(ing.active_ing);
+  executed++
                           if (typeof pIName !== "undefined") {
                             uniqueData.push(
                               pIName["items"] || pIName["first"] || pIName,
@@ -2157,7 +2300,9 @@ function misSt(func, someArgs) {
                 // } else {
                 // Assuming functionRegistry.gTree and fileBrowser are accessible
                 var folder = functionRegistry.getFolderList()[numVarRnd];
+  executed++
                 args[declaredParamName] = fileBrowser(folder).url;
+  executed++
                 // }
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "object") {
@@ -2183,6 +2328,7 @@ function misSt(func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "fileX") {
                 var folderX = functionRegistry.getFolderList()[numVarRnd()];
+  executed++
                 var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
                 let fileXName = "undefined";
                 if (folderRoot.hasNext) {
@@ -2214,6 +2360,7 @@ function misSt(func, someArgs) {
                   //   ? userProvidedValue
                   //   :
                   allFolders = functionRegistry.getFolderList();
+  executed++
                 allFolders[numVarRnd]; // allFolders should be defined or passed
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
@@ -2231,11 +2378,13 @@ function misSt(func, someArgs) {
                   Math.random() *
                     Math.floor(globalThis.uniqueItemArray().length),
                 );
+  executed++
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
                   //   :
-                  globalThis.uniqueItemArray()[rndItemIndex].Description;
+                  globalThis.uniqueItemArray()[rndItemIndex]["Description"];
+  executed++
                 resolvedArgs.push(args[declaredParamName]);
               } else if (
                 ["tunPlay", "searchString", "rndKey", "search"].includes(
@@ -2246,7 +2395,9 @@ function misSt(func, someArgs) {
                 var rndCoIndex = Math.floor(
                   Math.random() * Math.floor(globalThis.uniqueCoArray().length),
                 );
+  executed++
                 var tiParam = globalThis.uniqueCoArray()[rndCoIndex]["title"];
+  executed++
                 args[nameArray[nameArray.indexOf(declaredParamName)]] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
                   //   ? userProvidedValue
@@ -2263,13 +2414,19 @@ function misSt(func, someArgs) {
                   appSort(numVarRnd); // Assuming appSort is accessible
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "argsObject") {
+                  try {
+                    JSON.parse();
+                  }
+                  catch (check){
+                    Logger.log("Check/Balance for " + globalThis(this))
+                  }
                 args[declaredParamName] =
                   // userProvidedValue !== null &&
                   // userProvidedValue !== undefined &&
                   // Array.isArray(userProvidedValue)
                   //   ? userProvidedValue
                   //   :
-                  JSON.stringify({ message: payLoad, timestamp: new Date() });
+                  JSON.stringify({ message: payLoadReg(), timestamp: new Date() });
                 resolvedArgs.push(args[declaredParamName]);
               }
             } else {
@@ -2354,6 +2511,7 @@ function misSt(func, someArgs) {
               this,
               lastResolvedArgs,
             );
+  executed++
             console.log(
               `typeof ${typeof finalResultData}: finalResultData: ${finalResultData} (from direct call)`,
             );
@@ -2386,6 +2544,7 @@ function misSt(func, someArgs) {
                 this,
                 initialContent,
               ); // Using initialContent for simplicity for now
+  executed++
               finalResultData.push({ [funcName]: resultForFunc });
             } catch (e) {
               console.error(
@@ -2417,7 +2576,7 @@ function misSt(func, someArgs) {
 
   var argsObject = {
     func: argsX.toString(), // Consider joining with something like ', ' for readability
-    args: initialContent.toString().replace(/,/g, " "), // This is the original raw args
+    args: initialContent, // .toString().replace(/,/g, " "), // This is the original raw args
     res: finalResultData, // The actual result of the function call(s)
   };
   return argsObject;
@@ -2459,9 +2618,7 @@ function resolveParams(func, someArgs) {
     ? decodeURIComponent(func)
     : functionRegistry.paramsList;
   var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
-  // var numVarRnd = randNum(
-  //   arguments.callee.caller.name || arguments.callee.name,
-  // );
+  var numVarRnd = Math.floor(Math.random() * 25);
   if (funcUno || funcDos) {
     var argsX = [];
     var content = [];
@@ -2678,12 +2835,18 @@ function resolveParams(func, someArgs) {
               paramName === "e" ||
               (paramName === null && declaredParamName === "e")
             ) {
-              arrDRnd = appSort(numVarRnd);
+              arrDRnd = appSort();
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
               console.log("resolved e.parameter pre-result", result);
+              try {
+                JSON.parse();
+              }
+              catch (check){
+                Logger.log("Check/Balance for " + globalThis(this))
+              }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = objectOfS(
                   ["parameter"],
@@ -2746,6 +2909,12 @@ function resolveParams(func, someArgs) {
                 return rndS.name === searchResult;
               });
               console.log("resolved data pre-result", result);
+              try {
+                JSON.parse();
+              }
+              catch (check){
+                Logger.log("Check/Balance for " + globalThis(this))
+              }
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
                   ["parameter"],
@@ -2810,6 +2979,12 @@ function resolveParams(func, someArgs) {
                 return rndS.name === searchResult;
               });
               console.log("resolved func pre-result", result);
+              try {
+                JSON.parse();
+              }
+              catch (check){
+                Logger.log("Check/Balance for " + globalThis(this))
+              }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = result;
               } else if (
@@ -2826,12 +3001,24 @@ function resolveParams(func, someArgs) {
               paramName === "varA" ||
               (paramName === null && declaredParamName === "varA")
             ) {
+                try {
+                  JSON.parse();
+                }
+                catch (check){
+                  Logger.log("Check/Balance for " + globalThis(this))
+                }
               arrDRnd = appSort(numVarRnd);
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
               console.log("resolved varA pre-result", result);
+              try {
+                JSON.parse();
+              }
+              catch (check){
+                Logger.log("Check/Balance for " + globalThis(this))
+              }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
               } else if (
@@ -2839,11 +3026,21 @@ function resolveParams(func, someArgs) {
                 result !== null &&
                 result.name
               ) {
-                args[declaredParamName] = globalThis[result.name].apply(
+                try {
+                  args[declaredParamName] = globalThis[result.name].apply(
                   result.parameters,
-                );
+                  );
+                }
+                catch (eR) {
+                  args[declaredParamName] = eR.toString();
+                }
               } else if (result !== null && result && result.name) {
-                args[declaredParamName] = globalThis[result.name]();
+                try {
+                  args[declaredParamName] = globalThis[result.name]();
+                }
+                catch (eR) {
+                  args[declaredParamName] = eR.toString();
+                }
               }
               resolvedArgs.push(args[declaredParamName]);
             } else if (
@@ -2979,6 +3176,12 @@ function resolveParams(func, someArgs) {
               paramName === "argsObject" ||
               (paramName === null && declaredParamName === "argsObject")
             ) {
+                try {
+                  JSON.parse();
+                }
+                catch (check){
+                  Logger.log("Check/Balance for " + globalThis(this))
+                }
               var rawVar = mis("VVar");
               args[declaredParamName] = rawVar.app["myVar"];
               resolvedArgs.push(args[declaredParamName]);
@@ -3097,7 +3300,7 @@ function seoCapital(url) {
                                         <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
                                           <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
                                             <div>
-                                              <iframe src='${url}' id="w3Res" style="width: 480px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                              <iframe src='${url}' id="w3Res" style="width: 640px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>
@@ -3433,7 +3636,7 @@ function seoYoutube(searchString, time) {
   try {
     let options = { muteHttpExceptions: true };
     var unFilData = getUrlResponse(rndSearch, options).app; //UrlFetchApp.fetch(rndSearch, );
-    var data = unFilData.getContentText();
+    var data = unFilData?.getContentText();
     var idArray = vidFactor(data, time).vidArray;
     return { myIdArr: idArray || [] };
   } catch (erR) {

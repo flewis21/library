@@ -886,8 +886,8 @@ var renderFile = function (file, argsObject, title) {
       // END IF
       // Route[file] = argsObject
       // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
-      var funcCheck = appList();
-      var schedule = dateTime(new Date());
+      // var funcCheck = appList();
+      // var schedule = dateTime(new Date());
       var html = contentApp(
         `
     <!doctype html>
@@ -937,8 +937,8 @@ var renderFile = function (file, argsObject, title) {
                       <h2>Owe</h2>
                       <aside class="responsive-section card-panel transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -953,8 +953,8 @@ var renderFile = function (file, argsObject, title) {
                       </aside>
                       <article class="responsive-section transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -972,8 +972,8 @@ var renderFile = function (file, argsObject, title) {
                       </article>
                       <article class="responsive-section transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -991,8 +991,8 @@ var renderFile = function (file, argsObject, title) {
                       </article>
                       <article class="responsive-section transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -1010,8 +1010,8 @@ var renderFile = function (file, argsObject, title) {
                       </article>
                       <article class="responsive-section transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -1029,8 +1029,8 @@ var renderFile = function (file, argsObject, title) {
                       </article>
                       <article class="responsive-section transparent vid-list">
                         <a href="">
-                          <article class="responsive-section static-fix">
-                            <div class="row responsive-section static-fix container">
+                          <article class="responsive-section static-fix container">
+                            <div class="row responsive-section static-fix">
                               <?!= renTemp ?>
                             </div>
                           </article>
@@ -1286,7 +1286,7 @@ var renderFile = function (file, argsObject, title) {
 var renderTemplate = function (blob, argsObject, title) {
   console.log(
     "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
-      blob.length > 9
+      blob?.length > 9
       ? blob?.substring(0, 9)
       : "" +
           "..., argsObject: " +
@@ -1349,11 +1349,11 @@ var renderTemplate = function (blob, argsObject, title) {
             <img src="${seaIcn.getContent()}" class="user-icon" />
           </div>
         </nav>
-        <header class="banner responsive-section static-fix">
-          <h1>Blog</h1>
-          <p>Recent Applications</p>
-        </header>
-        <main class="responsive-section float-right static-fix">
+        <main class="responsive-section float-left">
+          <header class="banner responsive-section">
+            <h1>Blog</h1>
+            <p>Recent Applications</p>
+          </header>
           <div class="row responsive-section">
           <div class="card-panel amber responsive-section">
           <div class="responsive-section">
@@ -1375,8 +1375,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1393,8 +1393,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </aside>
                               <article class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1412,8 +1412,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </article>
                               <article class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1431,8 +1431,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </article>
                               <article class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1450,8 +1450,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </article>
                               <aside class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1468,8 +1468,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </aside>
                               <article class="responsive-section card-panel vid-list">
                                 <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1486,9 +1486,9 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                <a href="<?!= driveC ?>">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1505,9 +1505,9 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                <a href="<?!= driveA ?>">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1525,8 +1525,8 @@ var renderTemplate = function (blob, argsObject, title) {
                               </article>
                               <aside class="responsive-section card-panel vid-list">
                                 <a href="<?!= driveB ?>">
-                                  <article class="responsive-section card-panel static-fix">
-                                    <div class="row responsive-section static-fix container">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
@@ -1554,9 +1554,9 @@ var renderTemplate = function (blob, argsObject, title) {
           </table>
           </div></div></div></div></div>
         </main>
-        <footer class="boiler-footer socials receipt-footer responsive-section card-panel black static-fix float-left">
+        <footer class="receipt-footer responsive-section card-panel black float-right">
           <div class="row responsive-section">
-            <aside class="pulse transparent sidebar">
+            <aside class="pulse transparent sidebar float-right">
               <p>
                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                 <hr>
@@ -1767,8 +1767,10 @@ var renderTemplate = function (blob, argsObject, title) {
           })();
         },
         renTemp: tmp.evaluate().getContent(),
-        driveB: tmp.payL.message.link,
-      },
+        driveB: tmp.payL.link,
+        driveA: tmp.payL.type,
+        driveC: tmp.payL.data,
+      }
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);

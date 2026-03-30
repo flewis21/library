@@ -843,45 +843,48 @@ function yahooSort(ticker, time) {
   } catch (error) {
     console.error("Syntax Error: ", error.toString());
   }
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
-  var freqArray = [];
-  var i = 0;
-  var l = arrData.length;
-  for (i, l; i < l; i++) {
-    var sorArray = titleArray?.sort((a, b) => {
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
-      if (a[0].toLowerCase() === arrData[i]) {
-        freqArray.push(a);
-        return a - b;
-      }
-    });
+  if (titleArray) {
+    var arrData = [
+      "e",
+      "t",
+      "a",
+      "o",
+      "n",
+      "r",
+      "i",
+      "s",
+      "h",
+      "d",
+      "l",
+      "f",
+      "c",
+      "m",
+      "u",
+      "g",
+      "y",
+      "p",
+      "w",
+      "b",
+      "v",
+      "k",
+      "x",
+      "j",
+      "q",
+      "z",
+    ];
+    var freqArray = [];
+    var i = 0;
+    var l = arrData.length;
+    for (i, l; i < l; i++) {
+      var sorArray = titleArray?.sort((a, b) => {
+        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + "\nelaspeTime: " + elaspeTime)
+        if (a[0].toLowerCase() === arrData[i]) {
+          freqArray.push(a);
+          return a - b;
+        }
+      });
+    }
+    return freqArray;
   }
-  return freqArray;
+
 }

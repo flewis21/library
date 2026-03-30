@@ -184,7 +184,7 @@ function driveSheets() {
     "boilerplate fileManagers: line 146\ndriveSheets()\n " +
       arguments.callee.caller.name,
   );
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(formatTime(functionRegistry.time) + "\n" + arguments.callee.name);
   var fileList = [];
   while (fileList.length === 0) {
     fileList = matchManager("Sheets").sheets;
@@ -1214,6 +1214,10 @@ function fileFold(folderX, fileX, time) {
     // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
+    try {
+      JSON.parse();
+    }
+    catch (check) {}
     while (tree.hasNext()) {
       nameTree = tree.next();
       let myName = nameTree.getName();

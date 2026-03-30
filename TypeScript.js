@@ -118,11 +118,11 @@ var geneicType = function () {
   // let tyFile = wsSIPOC(randonWord);
   // console.log(tyFile);
   // let arrDRnd = appSort(randNum(randomWord));
-  let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
-  let result = functionRegistry.paramsList.find((rndS) => {
-    return rndS.name === searchResult;
-  });
-  let fileIndex = productTime(randomWord);
+  // let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
+  // let result = functionRegistry.paramsList.find((rndS) => {
+  //   return rndS.name === searchResult;
+  // });
+  let fileIndex = coUtility()[0]; //handleRequest({parameter: {action:"getData"}});
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");

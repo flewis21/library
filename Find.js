@@ -19,6 +19,8 @@ function driveManager(strNw, time) {
       '", isFalsy: ' +
       !strNw,
   );
+  var executed = 0;
+    console.info("previously exec count \ndriveManager - ", executed);
   if (!strNw) {
     console.log("driveManager: strNw is falsy. testlt() will be called.");
   } else {
@@ -38,9 +40,11 @@ function driveManager(strNw, time) {
   var arn = [mainStr].toString().toLowerCase();
   var iam;
   try {
+    console.info("previously exec count \ndriveManager - ", executed);
     iam = JSON.parse(
       convertToObjects([[mainStr]], ["file"], functionRegistry.time),
     );
+    executed++
     console.log("driveManager: iam successfully parsed:", iam);
     if (iam && iam[0] && iam[0]["file"]) {
       console.log('driveManager: iam[0]["file"] is:', iam[0]["file"]);
@@ -54,7 +58,9 @@ function driveManager(strNw, time) {
     return null; // Return null if JSON parsing fails
   }
 
+    console.info("previously exec count \ndriveManager - ", executed);
   var crmCalcResult = crmCalc(iam[0]["file"] || arn);
+    executed++
   console.log(
     "driveManager: crmCalc result (index of found function or -1): " +
       crmCalcResult,
@@ -111,10 +117,12 @@ function driveManager(strNw, time) {
       return null; // Handle search errors gracefully
     }
 
+    // console.info("previously exec count \ndriveManager - ", executed);
     console.log(
       "driveManager: Final dataTree length after search:",
       dataTree.length,
     );
+    // executed++
 
     if (dataTree.length > 0) {
       var rndFiledMain = Math.floor(Math.random() * dataTree.length);
@@ -128,7 +136,9 @@ function driveManager(strNw, time) {
       console.warn(
         "driveManager: No matching files found after DriveApp search. Returning null.",
       );
+    // console.info("previously exec count \ndriveManager - ", executed);
       let filedSide = createFormFunction(mainStr);
+    executed++
       let funcKeys = Object.keys(filedSide);
       let funcUrl;
       funcKeys.forEach((key) => {

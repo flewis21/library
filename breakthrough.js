@@ -233,7 +233,7 @@ function rndChoice(game) {
   var cArr = covertArr(trial, 0, 0);
   var form = FormApp.create("Coin Trial").setDescription(
     trial.length + " Tosses\n" + cArr,
-  );
+  ).setConfirmationMessage(rule());
   var formUrl = form.getPublishedUrl();
   var tailEnd = 0;
   var endTail = [];
@@ -375,7 +375,7 @@ function rndCoin() {
   }
   var form = FormApp.create("Coin Toss").setDescription(
     trial.length + " Tosses",
-  );
+  ).setConfirmationMessage(rule());
   var formUrl = form.getPublishedUrl();
   trial.map((seo) => {
     for (var key in seo) {
@@ -575,7 +575,7 @@ function rndControl(infinitum) {
   // return trial
   var form = FormApp.create("Coin Trial").setDescription(
     trial.length + " Tosses",
-  );
+  ).setConfirmationMessage(rule());
   var formUrl = form.getPublishedUrl();
   var tailEnd = 0;
   var headStart = 0;
@@ -796,7 +796,7 @@ function rndDice() {
       }
     }
   }
-  var form = FormApp.create("Dice Roll").setDescription(judge + " Rolls");
+  var form = FormApp.create("Dice Roll").setDescription(judge + " Rolls").setDescription(rule());
   var formUrl = form.getPublishedUrl();
   for (var key in trial) {
     form
@@ -908,7 +908,7 @@ function rndTrial(infinitum) {
   // return trial
   var form = FormApp.create("Coin Trial").setDescription(
     trial.length + " Tosses",
-  );
+  ).setConfirmationMessage(rule());
   var formUrl = form.getPublishedUrl();
   var tailEnd = 0;
   var headStart = 0;
@@ -1069,7 +1069,7 @@ function rndWinner(infinitum) {
   return trial;
   var form = FormApp.create("Coin Toss").setDescription(
     trial.length + " Tosses \n" + JSON.stringify(trial),
-  );
+  ).setConfirmationMessage(rule());
   var formUrl = form.getPublishedUrl();
   var tailEnd = 0;
   var endTail = [];

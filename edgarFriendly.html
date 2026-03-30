@@ -2,19 +2,21 @@
 <html>
   <head>
     <base target="_top" />
-    <? var style = styleHtml() ?> <?!= style ?>
+    <style>
+      <?!= styleHtml.renderFile.getContent() ?>
+    </style>
   </head>
   <body>
     <nav>
-      <a href="<?= startPageUrl ?>" target="_top">Back</a>
+      <a href="<?!= getScriptUrl() ?>" target="_top">Back</a>
     </nav>
-    <div class="menu-img"><?!= rule ?></div>
+    <div class="menu-img"><?!= rule() ?></div>
     <ul class="link-list min-list">
       <li><div class="query-results"></div></li>
     </ul>
     <div>
       <select id="edgarData">
-        <?!= opt ?>
+        <?!= opt() ?>
       </select>
     </div>
     <div class="search-box-outer container col s1">
@@ -24,6 +26,6 @@
       </div>
     </div>
     <div id="data-table"></div>
-    <input type="hidden" value="<?= startPageUrl ?>" id="gamerUrl" />
+    <input type="hidden" value="<?!= getScriptUrl() ?>" id="gamerUrl" />
   </body>
 </html>

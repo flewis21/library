@@ -473,6 +473,53 @@ const iframePlayer = HtmlService.createHtmlOutput(`function fPla() {
     }
     return myObj;
   }`);
+const yTPlayer = HtmlService.createHtmlOutput(`const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    let iframePlayer;
+    function onYouTubeIframeAPIReady() {
+      iframePlayer = new YT.Player("iframePlayer", {
+        height: "505",
+        width: "585",
+        //  videoId: 'OTeQee-gxa4',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          controls: 0,
+          showinfo: 0,
+          autohide: 1,
+          playsinline: 1,
+          mute: 1,
+          modestbranding: 1,
+          vq: "hd1080",
+          listType: "playlist",
+          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
+        },
+        events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
+      });
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+      const done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          setTimeout(playVideo); // done
+          // = true;
+        }
+      }
+      function stopVideo() {
+        iframePlayer.stopVideo();
+      }
+      function playVideo() {
+        iframePlayer.playVideo();
+      }
+      function nextVideo() {
+        iframePlayer.nextVideo();
+      }
+    }`);
+
+
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
     `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent()}`,

@@ -34,7 +34,7 @@ function ssFormsSnip(test) {
       mimeType === "GOOGLE_SLIDES" ||
       mimeType === "application/pdf"
     ) {
-      var service = fileTypeManager("DriveApp.Mimetype." + mimeType);
+      var service = fileTypeManager(mimeType);
       if (service) {
         var currentFileUrl = service.openByUrl(myFileUrl).getPublishedUrl();
       } else {

@@ -367,7 +367,14 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    return handleGetData();
+    const handles = functionHandle();
+    let funcU = handles["exec"];
+    let funcD = handles["args"]
+    let base = createFunctionResult(funcU, funcD)
+    const data = globalHandleGetData(base);
+    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
+      ContentService.MimeType.JSON,
+    );
   } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
@@ -379,7 +386,10 @@ function handleRequest(e) {
 }
 
 function handleGetData(e) {
+  var executed = 0;
+  console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
   var htmlList = functionRegistry.getHtmlList();
+  executed++
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
   // var pApp = payLoad.app;
@@ -478,23 +488,36 @@ function handleGetData(e) {
 
   // Logging
   if (!e) {
+  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
     var rndE = createRandomFunction();
-    Logger.log("Logging object keys for Func uno/dos " + rndE);
-  } else if (e && !e.parameter) {
+    Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
+  executed++
+  }
+  else if (e && !e.parameter) {
+  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
     var rndE = createRandomFunction(e);
-    Logger.log("Logging object keys for Func uno/dos " + rndE);
-  } else if (e && e.parameter) {
+    Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
+  executed++
+  }
+  else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
     if (objData.length === 0) {
+  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
       var rndE = createRandomFunction();
-    } else if (objData.length > 0) {
+  executed++
+    }
+    else if (objData.length > 0) {
       if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
-        Logger.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
+        Logger.log(
+          ">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e),
+        );
         if (e.parameter["file"]) {
-          // Determine funcTres
+          Logger.log("Determined that funcTres execution is requested! \n" + e.parameter["file"])
           var funcTres = e?.parameter["file"];
           try {
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `, executed);
             var htmlArray = functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
+  executed++
             if (funcTres) {
               if (Array.isArray(funcTres)) {
                 const firstArg = funcTres[0];
@@ -514,21 +537,17 @@ function handleGetData(e) {
             try {
               return renderFile(
                 funcTres,
-                {
-                  fileParam: funcTres,
-                  argsParam: e.parameter["args"],
-                  funcParam: e.parameter["func"],
-                },
+                {fileParam: funcTres,argsParam: e.parameter["args"],funcParam: e.parameter["func"],},
                 "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
                   (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                  ", " +
-                  {} +
-                  ", " +
-                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                  ",",
+                    ", " +
+                    {} +
+                    ", " +
+                    (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
               );
-            } catch (error) {
-              Logger.log("Library HTML file Out of Order", error.stack);
+            } 
+            catch (error) {
+              Logger.log("Requested! HTML file is Out of Order", error.stack);
             }
             // try {
             //   return renderFile(
@@ -562,23 +581,20 @@ function handleGetData(e) {
             //   // );
             // }
           } catch (error) {
-            console.error(
-              `Error executing function "${libFunc}":`,
-              error.stack,
-            );
+            console.error(`Error executing function "RENDERFILE":`, error.stack);
             throw new Error(
-              "Error executing function: " +
-                error.toString() +
-                "\n" +
-                error.stack,
+              "Error executing function: " + error.toString() + "\n" + error.stack,
             );
           }
         }
       } else {
         if (!e.parameter["func"] && !e.parameter["args"]) {
+  console.info(`previously exec count - \nhandleGetData(${htmlList}) - `, executed);
           var argsEd = createRandomFunction(e.parameter[objData[0]]);
+  executed++
           if (typeof argsEd === "string") {
-            e = this[libName].objectOfS(
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+            e = objectOfS(
               ["parameter"],
               [
                 [
@@ -588,10 +604,12 @@ function handleGetData(e) {
               ],
               functionRegistry.time,
             );
+  executed++
           } else if (typeof argsEd === "object" && argsEd !== null) {
             let argsAP = Object.values(argsEd);
             if (argsAP && argsAP.length > 0) {
-              e = this[libName].objectOfS(
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
@@ -601,8 +619,10 @@ function handleGetData(e) {
                 ],
                 functionRegistry.time,
               );
+  executed++
             } else {
-              e = this[libName].objectOfS(
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
@@ -613,6 +633,7 @@ function handleGetData(e) {
                 ],
                 functionRegistry.time,
               );
+  executed++
             }
           } else {
             console.log("Unexpected argsEd type: ", argsEd);
@@ -622,7 +643,8 @@ function handleGetData(e) {
               aOKeys.forEach((key) => {
                 argsedObj.push(argsEd[key]);
               });
-              e = this[libName].objectOfS(
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
@@ -634,8 +656,10 @@ function handleGetData(e) {
                 ],
                 functionRegistry.time,
               );
+  executed++
             } else {
-              e = this[libName].objectOfS(
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `, executed);
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
@@ -647,6 +671,7 @@ function handleGetData(e) {
                 ],
                 functionRegistry.time,
               );
+  executed++
             }
           }
         }
@@ -672,34 +697,53 @@ function handleGetData(e) {
   //     ", = " +
   //     JSON.stringify(rndE),
   // );
-  if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
+  if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
     var funcUno;
-  } else if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
+  }
+  else if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
     var funcUno = e.parameter["func"];
-  } else {
+  }
+  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+    var funcUno = e.parameter["func"];
+  }
+  else {
     var funcUno = Object.keys(rndE);
   }
-  if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
+  if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
     var funcDos;
-  } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
+  }
+  else if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
     var funcDos = e.parameter["args"];
-  } else {
+  }
+  else if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+    var funcDos = e.parameter["args"];
+  }
+  else {
     var funcDos = Object.values(rndE);
   }
   const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
   var payLoad = {}; // Initialize payload
 
   // --- BEGIN Refactored payLoad processing ---
+  console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
   let appL = "";
   let iframeSrc =
     "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
   let feed = "";
+  let data = {};
+  executed++
 
   try {
     let rawFuncResult = null;
-    let objVal = funcDos.toString();
-    let isObjValUrl = isValidUrl(objVal).hostname;
+    let objVal = funcDos?.toString();
+    if (objVal?.indexOf(",") === -1) {
+  console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
+      var isObjValUrl = isValidUrl(objVal).hostname;
+  executed++
+    }
+  console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
     let rawUrlResult = isTruthy(isObjValUrl);
+  executed++
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
       let parsedFuncArgs = [];
@@ -709,90 +753,100 @@ function handleGetData(e) {
       //parType[0] === "object") {
       if (typeof funcDos === "object") {
         keyObject = Object.keys(funcDos);
-        if (keyObject && keyObject.length > 0) {
-          Logger.log(
-            "This execution is trying to JSON Parse a(n) " + typeof funcDos,
-          );
+        if (keyObject && keyObject.length > 0){
+          Logger.log("This execution is trying to JSON Parse a(n) " + typeof funcDos);
           try {
+            Logger.log("These are the keys of the object that is being parsed - " + keyObject)
             parsedFuncArgs = JSON.parse(funcDos);
             console.info(error.stack);
           } catch (jsonError) {
-            Logger.log("But, it is failing.");
-          }
-        } else if (Array.isArray(funcDos) && funcDos.length > 0) {
-          parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+            Logger.log("But, it is failing. \n" + jsonError.stack);
+            if (Array.isArray(funcDos) && funcDos.length > 0) {
+              parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+            }
+          } 
         }
-      } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+      }  
+      else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-      } else {
+      } 
+      else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-      } //   }
-      if (
-        (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
-        (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
-      ) {
-        Logger.log(
-          "This execution is trying to process without funcDos. funcDos is  " +
-            funcDos,
-        );
-        try {
-          rawFuncResult = mis([funcUno]);
-        } catch {
-          Logger.log("But, it is failing.");
-          rawFuncResult = globalThis[funcUno]();
-        }
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      } else if (
-        funcUno &&
-        typeof globalThis[funcUno] !== "function" &&
-        funcDos
-      ) {
-        Logger.log(
-          "This execution is trying to process with funcDos. funcDos is  " +
-            funcDos,
-        );
-        try {
-          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-        } catch {
-          Logger.log("But, it is failing.");
-          if (
-            funcUno &&
-            typeof globalThis[funcUno] === "function " &&
-            !funcDos
-          ) {
+      }    //   }
+        if (
+          (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
+          (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
+        ) {
+          Logger.log("This execution is trying to process without funcDos. funcDos is  " + funcDos);
+          try {
+  console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+              rawFuncResult = mis([funcUno]);
+  executed++
+          } catch (error) {
+            Logger.log("But, it is failing.");
+  console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
             rawFuncResult = globalThis[funcUno]();
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          } else if (!funcUno && funcDos) {
-            rawFuncResult = globalThis[parsedFuncArgs]();
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-          } else {
-            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-            // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+  executed++
           }
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else if (
+          funcUno &&
+          typeof globalThis[funcUno] !== "function" &&
+          funcDos
+        ) {
+          Logger.log("This execution is trying to process with funcDos. funcDos is  " + funcDos);
+          try {
+  console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+              rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+  executed++
+          } 
+          catch (error) {
+            Logger.log("But, it is failing.");
+            if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
+  console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+              rawFuncResult = globalThis[funcUno]();
+  executed++
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            } else if (!funcUno && funcDos) {
+  console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+              rawFuncResult = globalThis[parsedFuncArgs]();
+  executed++
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            } else {
+  console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+  executed++
+              // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+            }
+          }
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else if (!funcUno && funcDos) {
+          Logger.log("This execution is trying to process without funcUno. FuncUno is " + funcUno);
+          try {
+  console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+              rawFuncResult = mis([parsedFuncArgs]);
+  executed++
+          } catch (error) {
+            Logger.log("But, it is failing.");
+  console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+            rawFuncResult = globalThis[parsedFuncArgs]();
+  executed++
+          }
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
+        } else {
+          Logger.log("This execution is trying to process all input \n" + [funcUno, parsedFuncArgs]);
+          try {
+  console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+  executed++
+          } catch (error) {
+            Logger.log("But, it is failing.");
+  console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+  executed++
+          }
+          // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
         }
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      } else if (!funcUno && funcDos) {
-        Logger.log(
-          "This execution is trying to process without funcUno. FuncUno is " +
-            funcUno,
-        );
-        try {
-          rawFuncResult = mis([parsedFuncArgs]);
-        } catch {
-          Logger.log("But, it is failing.");
-          rawFuncResult = globalThis[parsedFuncArgs]();
-        }
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      } else {
-        Logger.log("This execution is trying to process all input");
-        try {
-          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-        } catch {
-          Logger.log("But, it is failing.");
-          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-        }
-        // var funcData = isTypeScript(isValidDoubleObject(rawFuncResult));
-      }
       // }
       // else {
       //   console.error(
@@ -834,7 +888,7 @@ function handleGetData(e) {
         if (contentType.includes("application/json")) {
           try {
             return { type: "jsonData", data: JSON.parse(responseText) };
-          } catch (e) {
+          } catch (eR) {
             return {
               //iframeSrc in tenary
               type: "text",
@@ -1140,6 +1194,7 @@ function handleGetData(e) {
       }
     }
 
+    console.log("This is rawFuncResult - ", rawFuncResult);
     console.log("payLoad.type === ", payLoad.type);
     console.log("payLoad.data === ", payLoad.data);
     if (payLoad.data && typeof payLoad.data === "object") {
@@ -1154,21 +1209,38 @@ function handleGetData(e) {
       iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
       appL = payLoad.dataIndex || payLoad.dataData;
       feed = `${payLoad.link}`;
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+    var seoHtml = seoCapital(iframeSrc);
+  executed++
+    return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+  
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
       appL = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
       feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "jsonData") {
-      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
-      appL = JSON.stringify(payLoad, null, 2);
+      iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
+      appL = JSON.stringify(payLoad.dataIndex, null, 2);
       feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
     //iframeSrc in tenary
     else if (payLoad.type === "text") {
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
@@ -1180,11 +1252,19 @@ function handleGetData(e) {
           payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
         appL = `URL provided: ${payLoad.data || payLoad.dataIndex || iframeSrc}`;
         feed = `URL provided: ${payLoad.link}`;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
@@ -1192,18 +1272,29 @@ function handleGetData(e) {
           "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
         );
         feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(feed, {payL: payLoad}, JSON.stringify(rndE));
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
     appL = `Critical Error: ${error.stack}`;
     // iframeSrc = ""; // Clear iframe on critical error
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
   // --- END Refactored payLoad processing ---
-  var data = {
-    message: {
+  data["message"] = {
       content:
         (payLoad.type === "text" || payLoad.type === "url") &&
         isValidUrl(payLoad.data).hostname &&
@@ -1216,30 +1307,487 @@ function handleGetData(e) {
             })[Math.floor(Math.random() * Math.floor(htmlList.length))],
       info: appL,
       link: feed, // Clear iframe on critical error
-    },
-    timestamp: new Date(),
-  };
+    };
+    data["timestamp"] = new Date();
+    data["pL"] = payLoad;
+  
+  return data
+  
+  // Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
+  // // var contentData = isValidKeys(data);
+  // if (payLoad.type === "html") {
+  //   return renderTemplate(data.message.info, {payL: data}, JSON.stringify(rndE));
+  // } else if (isValidUrl(data.message.content).hostname
+  // ) {
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(data.message.content);
+  // executed++
+  //   return renderTemplate(seoHtml, {payL: data}, JSON.stringify(rndE));
+  // } else {
+  //   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
+  //     ContentService.MimeType.JSON,
+  //   );
+  // }
+}
 
-  Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
-  // var contentData = isValidKeys(data);
-  if (payLoad.type === "html") {
-    return renderTemplate(
-      data.message.info,
-      { payL: data },
-      JSON.stringify(rndE),
-    );
-  } else if (
-    (payLoad.type === "text" || payLoad.type === "url") &&
-    isValidUrl(payLoad.data).hostname &&
-    isValidUrl(iframeSrc).hostname
-  ) {
-    var seoHtml = seoCapital(data.message.content);
-    return renderTemplate(seoHtml, { payL: data }, JSON.stringify(rndE));
-  } else {
-    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
-      ContentService.MimeType.JSON,
-    );
+var globalHandleGetData = function (rawFuncResult) {
+  var executed = 0;
+  var htmlList = functionRegistry.getHtmlList();
+  // --- BEGIN Refactored payLoad processing ---
+  let appL = "";
+  let iframeSrc =
+    "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
+  let feed = "";
+  let data = {};
+  executed++
+  try {
+    // Helper function to process any value (rawFuncResult or a nested property like .app)
+    function processContent(content) {
+      content;
+      if (!content) {
+        return { type: "unknown", data: null };
+      }
+
+      // Regex for a basic HTTP/HTTPS URL validation
+      // This regex is fairly comprehensive for common URLs but can be refined if needed.
+      const urlRegex =
+        /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/[a-zA-Z0-9]+\.[^\s]{2,}|[a-zA-Z0-9]+\.[^\s]{2,})$/i;
+
+      // 1. Handle UrlFetchApp.HTTPResponse
+      if (
+        typeof content.getResponseCode === "function" &&
+        typeof content.getContentText === "function"
+      ) {
+        const contentType = content.getHeaders()["Content-Type"] || "";
+        const responseText = content.getContentText();
+
+        if (contentType.includes("application/json")) {
+          try {
+            return { type: "jsonData", data: JSON.parse(responseText) };
+          } catch (eR) {
+            return {
+              //iframeSrc in tenary
+              type: "text",
+              data: `Error parsing JSON from URL fetch: ${responseText}`,
+            };
+          }
+        } else if (contentType.includes("text/html")) {
+          return { type: "html", data: responseText };
+        } else {
+          //iframeSrc in tenary
+          return { type: "text", data: responseText };
+        }
+      }
+      // 2. Handle Google Apps Script HtmlOutput
+      else if (typeof content.getContent === "function") {
+        return { type: "html", data: content.getContent() };
+      }
+      // 3. Handle String content (URL, JSON, HTML, or plain text)
+      else if (typeof content === "string") {
+        // --- MODIFIED: Use Regex for URL check ---
+        if (urlRegex.test(content)) {
+          return { type: "url", data: content }; // New type "url" for strings
+        }
+        // --- END MODIFIED ---
+
+        try {
+          const parsedJson = JSON.parse(content);
+          return { type: "jsonData", data: parsedJson };
+        } catch (jsonError) {
+          // Not JSON, treat as HTML or plain text
+          if (content.trim().startsWith("<") && content.trim().endsWith(">")) {
+            // More robust HTML check
+            return { type: "html", data: content };
+          } else {
+            //iframeSrc in tenary
+            return { type: "text", data: content };
+          }
+        }
+      }
+      // 4. Handle Generic Objects
+      else if (typeof content === "object" && content !== null) {
+        // If the object itself contains structured data you want to directly use
+        if (content.html) {
+          // If there's an explicit 'html' property
+          return { type: "html", data: content.html };
+        }
+        if (content.url && urlRegex.test(content.url)) {
+          // Use regex for object.url as well
+          return { type: "url", data: content.url };
+        } else {
+          // Add other specific object property checks here if needed
+          return { type: "object", data: content }; // Default for other objects
+        }
+      }
+      // 5. Default unknown
+      else {
+        return { type: "unknown", data: content };
+      }
+    }
+
+    // Process the main rawFuncResult
+    payLoad = processContent(rawFuncResult);
+
+    // If rawFuncResult was an object and it had an 'app' property,
+    // we should specifically process that 'app' property as well.
+    // This assumes that the 'app' property might override or provide the primary content.
+    if (payLoad.type === "object" && payLoad.data.app) {
+      console.log("the 'app' property:", payLoad.data.app);
+      // rawFuncResult.app;
+      let appProcessed;
+
+      // Check if rawFuncResult.app exists and is an object
+      if (
+        payLoad.data.app &&
+        typeof payLoad.data.app === "object" &&
+        !Array.isArray(payLoad.data.app)
+      ) {
+        // If it's a non-array object, you can safely attempt to spread its values
+        // Choose one of the options from the previous response based on your exact need:
+
+        // Option 3: Spread all values (the arrays) of the app object
+        try {
+          if (typeof payLoad.data.app === "object") {
+            appProcessed = processContent(payLoad.data.app);
+            if (appProcessed.type === "object") {
+              var processCount = Object.keys(appProcessed.data);
+              processCount.forEach((beat) => {
+                appProcessed[beat] = processContent(appProcessed.data[beat]);
+              });
+            }
+            // while (appProcessed.type === "object") {
+            //   appProcessed = processContent(appProcessed.data[]);
+            // }
+
+            if (payLoad.data.index && typeof payLoad.data.index === "object") {
+              appProcessed["index"] = processContent(payLoad.data.index);
+              if (appProcessed.index.type === "object") {
+                var processCount = Object.keys(appProcessed.index.data);
+                processCount.forEach((beat) => {
+                  appProcessed.index[beat] = processContent(
+                    appProcessed.index.data[beat],
+                  );
+                });
+              }
+            }
+          }
+        } catch (err) {
+          console.log(err.stack); //appProcessed = processContent(payLoad.data);
+        }
+
+        /*
+        // Option 1: Spread the individual content arrays (most common intent)
+        appProcessed = processContent([
+          rawFuncResult.index,
+          ...(rawFuncResult.app.cik || []), // Use || [] to handle cases where cik might be missing
+          ...(rawFuncResult.app.ticker || []),
+          ...(rawFuncResult.app.title || [])
+        ]);
+
+        // Option 2: Spread the arrays themselves as elements
+        appProcessed = processContent([
+          rawFuncResult.index,
+          rawFuncResult.app.cik,
+          rawFuncResult.app.ticker,
+          rawFuncResult.app.title
+        ]);
+        */
+      } else if (
+        Array.isArray(payLoad.data.app) &&
+        payLoad.data.app.length > 0
+      ) {
+        // Handle cases where rawFuncResult.app is not a suitable object,
+        // e.g., it's null, undefined, an array, or a primitive.
+        // You might want to log a warning, assign a default value, or throw an error.
+        console.warn(
+          "payLoad.data.app is not a valid object for spreading. Value:",
+          payLoad.data.app,
+        );
+
+        // Example: Just include rawFuncResult.index or a placeholder
+        // appProcessed = processContent([rawFuncResult.index]);
+
+        // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
+        appProcessed = processContent(payLoad.data.app);
+      } else {
+        appProcessed = processContent(payLoad.data.app);
+      }
+      // Overwrite payLoad if 'app' property yields more specific or desired content
+      // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
+      if (
+        appProcessed.type !== "unknown" ||
+        (appProcessed.data !== null && typeof appProcessed.data !== "undefined")
+      ) {
+        // while (typeof appProcessed === "object") {
+        //   appProcessed = appProcessed.data;
+        // }
+        payLoad = appProcessed;
+        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+        // represent something distinct from the 'app' content but should still be propagated.
+        if (rawFuncResult.link && !payLoad.link) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+        //   // Only add if payLoad doesn't already have it
+        //   payLoad.index = rawFuncResult.index;
+        // }
+        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.funcStr;
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.dataStr;
+        }
+        if (rawFuncResult.index && rawFuncResult.index.url) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataIndex = payLoad.data;
+          payLoad.data = rawFuncResult.index.url;
+        }
+      }
+    } else if (payLoad.type === "object" && payLoad.data.index) {
+      console.log("the 'index' property:", payLoad.data.index);
+      // rawFuncResult.app;
+      let appProcessed;
+
+      // Check if rawFuncResult.app exists and is an object
+      if (
+        payLoad.data.index &&
+        typeof payLoad.data.index === "object" &&
+        !Array.isArray(payLoad.data.index)
+      ) {
+        // If it's a non-array object, you can safely attempt to spread its values
+        // Choose one of the options from the previous response based on your exact need:
+
+        // Option 3: Spread all values (the arrays) of the app object
+        try {
+          if (typeof payLoad.data.index === "object") {
+            appProcessed = processContent(payLoad.data.index);
+          }
+        } catch (err) {
+          console.log(err.stack); //appProcessed = processContent(payLoad.data);
+        }
+
+        /*
+        // Option 1: Spread the individual content arrays (most common intent)
+        appProcessed = processContent([
+          rawFuncResult.index,
+          ...(rawFuncResult.app.cik || []), // Use || [] to handle cases where cik might be missing
+          ...(rawFuncResult.app.ticker || []),
+          ...(rawFuncResult.app.title || [])
+        ]);
+
+        // Option 2: Spread the arrays themselves as elements
+        appProcessed = processContent([
+          rawFuncResult.index,
+          rawFuncResult.app.cik,
+          rawFuncResult.app.ticker,
+          rawFuncResult.app.title
+        ]);
+        */
+      } else if (
+        Array.isArray(payLoad.data.index) &&
+        payLoad.data.index.length > 0
+      ) {
+        // Handle cases where rawFuncResult.app is not a suitable object,
+        // e.g., it's null, undefined, an array, or a primitive.
+        // You might want to log a warning, assign a default value, or throw an error.
+        console.warn(
+          "payLoad.data.app is not a valid object for spreading. Value:",
+          payLoad.data.index,
+        );
+
+        // Example: Just include rawFuncResult.index or a placeholder
+        // appProcessed = processContent([rawFuncResult.index]);
+
+        // Or, if rawFuncResult.app itself should be passed as a single item if not spreadable:
+        appProcessed = processContent(payLoad.data.index);
+      } else {
+        appProcessed = processContent(payLoad.data.index);
+      }
+      // Overwrite payLoad if 'app' property yields more specific or desired content
+      // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
+      if (
+        appProcessed.type !== "unknown" ||
+        (appProcessed.data !== null && typeof appProcessed.data !== "undefined")
+      ) {
+        // while (typeof appProcessed === "object") {
+        //   appProcessed = appProcessed.data;
+        // }
+        payLoad = appProcessed;
+        // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+        // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+        // represent something distinct from the 'app' content but should still be propagated.
+        if (rawFuncResult.link && !payLoad.link) {
+          // Only add if payLoad doesn't already have it
+          payLoad.link = rawFuncResult.link;
+        }
+        // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+        //   // Only add if payLoad doesn't already have it
+        //   payLoad.index = rawFuncResult.index;
+        // }
+        if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.funcStr;
+        } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataData = rawFuncResult.index.dataStr;
+        }
+        if (rawFuncResult.index && rawFuncResult.index.url) {
+          // Only add if payLoad doesn't already have it
+          payLoad.dataIndex = payLoad.data;
+          payLoad.data = rawFuncResult.index.url;
+        }
+      }
+    } else if (
+      payLoad.type === "object" &&
+      payLoad.data !== null &&
+      payLoad.data !== undefined
+    ) {
+      // Also, if rawFuncResult has a 'link' or 'vApp' property, ensure it's retained if meaningful
+      // This part of merging can be tailored to your specific needs if 'link' or 'vApp'
+      // represent something distinct from the 'app' content but should still be propagated.
+      if (rawFuncResult.link && !payLoad.link) {
+        // Only add if payLoad doesn't already have it
+        payLoad.link = rawFuncResult.link;
+      }
+      // if (rawFuncResult.index && typeof rawFuncResult.index === "string" && !payLoad.index) {
+      //   // Only add if payLoad doesn't already have it
+      //   payLoad.index = rawFuncResult.index;
+      // }
+      if (rawFuncResult.index && rawFuncResult.index.funcStr) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataData = rawFuncResult.index.funcStr;
+      } else if (rawFuncResult.index && rawFuncResult.index.dataStr) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataData = rawFuncResult.index.dataStr;
+      }
+      if (rawFuncResult.index && rawFuncResult.index.url) {
+        // Only add if payLoad doesn't already have it
+        payLoad.dataIndex = payLoad.data;
+        payLoad.data = rawFuncResult.index.url;
+      }
+    }
+
+    console.log("This is rawFuncResult - ", rawFuncResult);
+    console.log("payLoad.type === ", payLoad.type);
+    console.log("payLoad.data === ", payLoad.data);
+    if (payLoad.data && typeof payLoad.data === "object") {
+      console.log("payLoad.data", JSON.stringify(payLoad.data));
+      console.log("payLoad.data keys", Object.keys(payLoad.data));
+      console.log("payLoad.data values", Object.values(payLoad.data));
+    }
+
+    // Now, use the structured 'payLoad' to set the final content variables
+    // (This part needs adjustments to handle the new "url" type)
+    if (payLoad.type === "html") {
+      iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
+      appL = payLoad.dataIndex || payLoad.dataData;
+      feed = `${payLoad.link}`;
+  console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+    var seoHtml = seoCapital(iframeSrc);
+  executed++
+    return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+  
+    } else if (payLoad.type === "url") {
+      // --- NEW: Handle "url" type directly ---
+      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
+      appL = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
+      feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
+    } else if (payLoad.type === "jsonData") {
+      iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
+      appL = JSON.stringify(payLoad.dataIndex, null, 2);
+      feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+    }
+    //iframeSrc in tenary
+    else if (payLoad.type === "text") {
+      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
+      appL = payLoad.data || payLoad.dataData;
+      feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+    } else if (payLoad.type === "object") {
+      // Here, if payLoad.data is an object, you need to decide how to display it.
+      // It could contain sub-properties you want to render.
+      if (payLoad.data.html || payLoad.data.app) {
+        appL =
+          payLoad.data.html ||
+          payLoad.data.app ||
+          payLoad.data ||
+          payLoad.dataData;
+        // If the object itself contains a URL, use it for iframeSrc
+        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+      } else if (payLoad.data.url) {
+        // If the object explicitly has a 'url' property
+        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+        appL = `URL provided: ${payLoad.data || payLoad.dataIndex || iframeSrc}`;
+        feed = `URL provided: ${payLoad.link}`;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+      } else {
+        // Default way to display a generic object: stringify it
+        iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
+        appL = payLoad?.dataData?.concat(
+          "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
+        );
+        feed = payLoad.link;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+      }
+    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
+      feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(feed, {payL: payLoad}, JSON.stringify(rndE));
+    }
+  } catch (error) {
+    console.error(`Error during payload processing:`, error);
+    appL = `Critical Error: ${error.stack}`;
+    // iframeSrc = ""; // Clear iframe on critical error
+  // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
+  //   var seoHtml = seoCapital(iframeSrc);
+  // executed++
+  //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
+  // --- END Refactored payLoad processing ---
+  data["message"] = {
+      content:
+        (payLoad.type === "text" || payLoad.type === "url") &&
+        isValidUrl(payLoad.data).hostname &&
+        isValidUrl(iframeSrc).hostname
+          ? iframeSrc
+          : getScriptUrl() +
+            "?file=" +
+            htmlList.sort((a, b) => {
+              return a - b;
+            })[Math.floor(Math.random() * Math.floor(htmlList.length))],
+      info: appL,
+      link: feed, // Clear iframe on critical error
+    };
+    data["timestamp"] = new Date();
+    data["pL"] = payLoad;
+  
+  return data
 }
 
 function handleFormSubmission(e) {
