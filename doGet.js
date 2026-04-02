@@ -1782,7 +1782,7 @@ var globalHandleGetData = function (rawFuncResult) {
       );
       var seoHtml = seoCapital(iframeSrc);
       executed++;
-      return renderTemplate(appL, { payL: payLoad }, JSON.stringify(rndE));
+      return renderTemplate(appL, { payL: payLoad }, payLoad.type);
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc

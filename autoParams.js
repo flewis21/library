@@ -1217,28 +1217,16 @@ function functionHandle(e) {
 
   // Logging
   if (!e) {
-    console.info(
-      `previously exec count - \nhandleGetData(${htmlList}) - `,
-      executed,
-    );
     rndE = createRandomFunction();
     Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
     executed++;
   } else if (e && !e.parameter) {
-    console.info(
-      `previously exec count - \nhandleGetData(${htmlList}) - `,
-      executed,
-    );
     rndE = createRandomFunction(e);
     Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
     executed++;
   } else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
     if (objData.length === 0) {
-      console.info(
-        `previously exec count - \nhandleGetData(${htmlList}) - `,
-        executed,
-      );
       rndE = createRandomFunction();
       executed++;
     } else if (objData.length > 0) {
@@ -1251,10 +1239,6 @@ function functionHandle(e) {
           );
           var funcTres = e?.parameter["file"];
           try {
-            console.info(
-              `previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `,
-              executed,
-            );
             var htmlArray = functionRegistry.getHtmlList();
             executed++;
             if (funcTres) {
@@ -1278,8 +1262,6 @@ function functionHandle(e) {
                 funcTres,
                 {
                   fileParam: funcTres,
-                  argsParam: e.parameter["args"],
-                  funcParam: e.parameter["func"],
                 },
                 "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
                   (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -1307,17 +1289,9 @@ function functionHandle(e) {
         }
       } else {
         if (!e.parameter["func"] && !e.parameter["args"]) {
-          console.info(
-            `previously exec count - \nhandleGetData(${htmlList}) - `,
-            executed,
-          );
           var argsEd = createRandomFunction(e.parameter[objData[0]]);
           executed++;
           if (typeof argsEd === "string") {
-            console.info(
-              `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
-              executed,
-            );
             e = objectOfS(
               ["parameter"],
               [[["func", argsEd]]],
@@ -1327,10 +1301,6 @@ function functionHandle(e) {
           } else if (typeof argsEd === "object" && argsEd !== null) {
             let argsAP = Object.values(argsEd);
             if (argsAP && argsAP.length > 0) {
-              console.info(
-                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
-                executed,
-              );
               e = objectOfS(
                 ["parameter"],
                 [
@@ -1343,10 +1313,6 @@ function functionHandle(e) {
               );
               executed++;
             } else {
-              console.info(
-                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
-                executed,
-              );
               e = objectOfS(
                 ["parameter"],
                 [[["func", Object.keys(argsEd)[0]]]],
@@ -1362,10 +1328,6 @@ function functionHandle(e) {
               aOKeys.forEach((key) => {
                 argsedObj.push(argsEd[key]);
               });
-              console.info(
-                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
-                executed,
-              );
               e = objectOfS(
                 ["parameter"],
                 [
@@ -1378,10 +1340,6 @@ function functionHandle(e) {
               );
               executed++;
             } else {
-              console.info(
-                `previously exec count - \nhandleGetData(${JSON.stringify(argsEd)}) - `,
-                executed,
-              );
               e = objectOfS(
                 ["parameter"],
                 [

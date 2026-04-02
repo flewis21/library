@@ -2062,7 +2062,7 @@ function misSt(func, someArgs) {
                 try {
                   JSON.parse();
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis(this));
+                  Logger.log("Check/Balance for " + globalThis[this]);
                 }
                 if (typeof result === "string" && result !== "undefined") {
                   args[declaredParamName] = objectOfS(
@@ -2160,7 +2160,7 @@ function misSt(func, someArgs) {
                 try {
                   JSON.parse();
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis(this));
+                  Logger.log("Check/Balance for " + globalThis[this]);
                 }
 
                 args[declaredParamName] = {
@@ -2173,7 +2173,7 @@ function misSt(func, someArgs) {
                 try {
                   JSON.parse();
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis(this));
+                  Logger.log("Check/Balance for " + globalThis[this]);
                 }
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2185,7 +2185,7 @@ function misSt(func, someArgs) {
                 try {
                   JSON.parse();
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis(this));
+                  Logger.log("Check/Balance for " + globalThis[this]);
                 }
                 console.log(
                   "Declared parameter " +
@@ -2464,7 +2464,7 @@ function misSt(func, someArgs) {
                 try {
                   JSON.parse();
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis(this));
+                  Logger.log("Check/Balance for " + globalThis[this]);
                 }
                 args[declaredParamName] =
                   // userProvidedValue !== null &&
@@ -2893,7 +2893,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = objectOfS(
@@ -2960,7 +2960,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
@@ -3029,7 +3029,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = result;
@@ -3050,7 +3050,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               arrDRnd = appSort(numVarRnd);
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
@@ -3061,7 +3061,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
@@ -3221,7 +3221,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse();
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis(this));
+                Logger.log("Check/Balance for " + globalThis[this]);
               }
               var rawVar = mis("VVar");
               args[declaredParamName] = rawVar.app["myVar"];
@@ -3341,7 +3341,7 @@ function seoCapital(url) {
                                         <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
                                           <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
                                             <div>
-                                              <iframe src='${url}' id="w3Res" style="width: 640px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                              <iframe src='${url}' id="w3Res" style="width: 840px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>

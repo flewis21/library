@@ -4,18 +4,8 @@
     <base target="_top" />
     <meta name="checkOnDay" content="Boilerplate Agenda" />
     <style>
-      a:link,
-      a:visited {
-        color: black !important;
-      }
-      a:hover,
-      a:active {
-        color: white !important;
-        text-decoration: none !important;
-      }
-      body: {
-        background: blue !important;
-      }
+      <?!= styleHtml.oddChances.getContent() ?>
+      <?!= styleHtml.renderFile.getContent() ?>
     </style>
   </head>
   <body class="blue">
@@ -55,7 +45,7 @@
         </div>
       </div>
     </div>
-    <div id="iframePlayer"><?!= seoIndex(myVid) ?></div>
+    <div class="banner" id="iframePlayer"><?!= seoIndex(myVid) ?></div>
     <script>
       <?!= yTPlayer.getContent() ?>
     </script>

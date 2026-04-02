@@ -383,178 +383,422 @@ const tabulatorJs = HtmlService.createHtmlOutput(
 const jsQuery = HtmlService.createHtmlOutput(
   `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
 );
-const google_script_run_promise = HtmlService.createHtmlOutput(`
-  function serverSide(func, args) {
-    return new Promise((resolve, reject) => {
-      google.script.run
-      .withSuccessHandler(result => {
-          resolve(result)})
-      .withFailureHandler(error => {
-          reject(error)})
-      .runBoilerplate(func, args)
-    });
-  }
+const div_query = HtmlService.createHtmlOutput(
+  `<script>document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");</script>
 `);
-const collapse_menu = HtmlService.createHtmlOutput(`
-  var menuIcon = document.querySelector(".menu-icon");
-  var sidebar = document.querySelector(".sidebar");
-  var container = document.querySelector(".container");
-  menuIcon.onclick = function () {
-    sidebar.classList.toggle("small-sidebar");
-    container.classList.toggle("large-container");
-  } 
+const body_query = HtmlService.createHtmlOutput(
+  `<script>document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");</script>
+`);
+const iframe_query = HtmlService.createHtmlOutput(
+  `<script>document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");</script>
+`);
+const domain_lookup = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    function lookupDomain(searchTerm) {
+      serverSide("lookupDomain", [searchTerm])
+        .then(results => {
+          console.log("Lookup results:", results);
+          displaySearchResults(results); // Display results
+        })
+        .catch(error => {
+          console.error("Error looking up domain:", error);
+          $("#errorMessage").text(error); // Display error message
+        });
+    }
+
+    $("#lookupButton").click(function() {
+      const searchTerm = $("#searchTerm").val();
+      lookupDomain(searchTerm);
+    });
+  </script>
+`);
+const key_press = HtmlService.createHtmlOutput(
+  `
+  <script>
+    var busa = document.getElementById("artiicleIndex");
+    var busx = document.getElementById("loadingLab");
+    var busc = document.getElementById("contentDiv");
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    busa.addEventListener('keypress', function(event) {
+      // If the user preses the "Enter" key on the keyboard. 
+      if (event.key === "Enter")  {
+        const strValue = busa.value;
+        busx.innerText = "... waiting for " + strValue;
+        serverSide("jFund", strValue)
+        .then((article) => {
+          if (article) {
+            // User clicked "No" or X in the title bar.
+            busx.innerText = ""
+            busc.innerHTML = article;}})
+        .catch((er) => {
+          console.log(er)
+          busx.innerText = JSON.stringify(er)})
+        busa.value = ""}})
+  </script>  
+`);
+const domain_submit = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    function submitDomain(formData) {
+      serverSide("submitDomain", [formData])
+        .then(result => {
+          console.log("Server response:", result);
+          $("#successMessage").text(result); // Display success message
+        })
+        .catch(error => {
+          console.error("Error submitting domain:", error);
+          $("#errorMessage").text(error); // Display error message
+        });
+    }
+
+    $("#domainForm").submit(function(event) {
+      event.preventDefault();
+      const formData = $(this).serializeObject();
+      submitDomain(formData); // Call the function
+    });
+  </script>
+`);
+const document_ready = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    $(document).ready(function() {
+      $('select').formSelect();
+
+      $('#templateSelect').change(function() {
+        var selectedTemplateUrl 
+          = $(this).val();
+          if (selectedTemplateUrl) {
+            $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+            $("#myForm").show(); // Show the form only after template is loaded.
+            $("#myForm").empty(); // Clear previous form fields.
+            // 2. Dynamically create form fields based on template placeholders (requires server-side)
+            serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+              placeholders.forEach(function(placeholder) {
+                var fieldName 
+                  = placeholder.replace(/{{|}}/g, ''); // Extract field name
+                $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+                $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+              });
+              $("#myForm").append("<button type='submit'>Submit</button>");
+
+
+              $("#myForm").submit(function(event) {
+                event.preventDefault();
+
+                var formData 
+                  = $(this).serializeObject();
+                serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+                  $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+                }).catch((error)=>{
+                  console.error("Error:", error);
+                  $("#result").html("<p>Error creating document. Please check the logs.</p>");
+                })
+
+              });
+
+            }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+          $("#editorFrame").prop("src", "");
+          $("#myForm").hide();}
+      });
+
+      $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+        var o 
+          = {};
+        var a 
+          = this.serializeArray();
+        $.each(a, function() {
+          if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+          } else {
+            o[this.name] = this.value || '';
+          }
+        });
+        return o;
+      };
+    });
+  </script>
+`);
+const google_script_run_promise = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+  </script>
+`);
+const collapse_menu = HtmlService.createHtmlOutput(
+  `
+  <script>
+    var menuIcon = document.querySelector(".menu-icon");
+    var sidebar = document.querySelector(".sidebar");
+    var container = document.querySelector(".container");
+    menuIcon.onclick = function () {
+      sidebar.classList.toggle("small-sidebar");
+      container.classList.toggle("large-container");
+    }
+  </script>
+`);
+const func_clicked = HtmlService.createHtmlOutput(
+  `
+  <script>
+    document.getElementById('func').addEventListener('change', funcClicked)
+    function funcClicked() {
+      //console.log(document.getElementById("test").innerHTML)
+      // Init a timeout variable to be used below
+      let timeout = null;
+      (() => {
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        // clearTimeout(timeout);
+        // Make a new timeout set to go off in 1000ms (1 second)
+        // timeout = setTimeout
+        // (function  ()
+        // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined") {
+          var urlData = document.getElementById("url").value;
+          var url = urlData.toString();
+        }
+        var func = document.getElementById("func").value;
+        var args = document.getElementById("args").value;
+        if (typeof args !== "undefined") {
+          var linkFollow = document.createElement("a");
+          linkFollow.href =
+            url +
+            "?func=" +
+            encodeURIComponent(func) +
+            "&args=" +
+            encodeURIComponent(args);
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("linkFOLLOW").remove();
+        }
+      })();
+    }
+  </script>
+`);
+const args_clicked = HtmlService.createHtmlOutput(
+  `
+  <script>
+    document.getElementById('args').addEventListener('change', argsClicked)
+    function argsClicked() {
+      //console.log(document.getElementById("test").innerHTML)
+      // Init a timeout variable to be used below
+      let timeout = null;
+      (() => {
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        // clearTimeout(timeout);
+        // Make a new timeout set to go off in 1000ms (1 second)
+        // timeout = setTimeout
+        // (function  ()
+        // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined") {
+          var urlData = document.getElementById("url").value;
+          var url = urlData.toString();
+        }
+        var func = document.getElementById("func").value;
+        var args = document.getElementById("args").value;
+        if (typeof func !== "undefined") {
+          var linkFollow = document.createElement("a");
+          linkFollow.href =
+            url +
+            "?func=" +
+            encodeURIComponent(func) +
+            "&args=" +
+            encodeURIComponent(args);
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("linkFOLLOW").remove();
+        }
+      })();
+    }
+  </script>
 `);
 const yTPlayer = HtmlService.createHtmlOutput(
-  `const tag = document.createElement("script");
-  tag.src = "https://www.youtube.com/iframe_api";
-  const firstScriptTag = document.getElementsByTagName("script")[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  let ctr = 0;
-  let iframePlayer;
-  function onYouTubeIframeAPIReady() {
-    iframePlayer = new YT.Player("iframePlayer", {
-      height: "505",
-      width: "585",
-      //  videoId: 'OTeQee-gxa4',
-      playerVars: {
-        autoplay: 1,
-        loop: 1,
-        controls: 0,
-        showinfo: 0,
-        rel: 0,
-        autohide: 1,
-        playsinline: 1,
-        mute: 0,
-        modestbranding: 1,
-        vq: "hd1080",
-        iv_load_policy: 3,
-        cc_load_policy: 1,
-        listType: "playlist",
-        list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
-      },
-      events: { onReady: onPlayerReady, onStateChange: onPlayerStateChange },
-    });
-    function onPlayerReady(event) {
-      event.target.loadPlaylist("UU6DOFpA9UCTgNwJiVX1IOpQ", ctr);
-      ctr++;
-      event.target.setShuffle();
-      event.target.setLoop();
-      event.target.playVideo();
-    }
-
-    // 5. The API calls this function when the player's state changes.
-    //    The function indicates that when playing a video (state=1),
-    //    the player should play for six seconds and then stop.
-    let done = false;
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        setTimeout(nextVideo);
-        event.target.setShuffle();
-        event.target.setLoop();
-        ctr++;
+  `
+  <script>
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    let ctr = 0;
+    let iframePlayer;
+    function onYouTubeIframeAPIReady() {
+      iframePlayer = new YT.Player("iframePlayer", {
+        height: "1405",
+        width: "2105",
+        //  videoId: 'OTeQee-gxa4',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          autohide: 1,
+          playsinline: 1,
+          mute: 0,
+          modestbranding: 1,
+          vq: "hd1080",
+          iv_load_policy: 3,
+          cc_load_policy: 1,
+          listType: "playlist",
+          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+          onError: onPlayerError,
+        },
+      });
+      function onPlayerReady(event) {
+        setShuffle();
+        event.target.nextVideo();
       }
-      else if (event.data == YT.PlayerState.UNSTARTED && !done) {
-        var youtubeID = event.target.getVideoUrl()
-        changeBorderColor(event.data);
-        setTimeout(playVideo);
-        event.target.setShuffle();
-        event.target.setLoop();
-        event.target.playVideo();
-        ctr++;
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      let done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          changeBorderColor(event.data);
+          setLoop();
+        } else if (event.data == YT.PlayerState.UNSTARTED) {
+          changeBorderColor(event.data);
+          event.target.playVideo();
+        } else if (event.data == YT.PlayerState.ENDED) {
+          changeBorderColor(event.data);
+          setShuffle();
+          event.target.playVideo();
+          setShuffle();
+          event.target.nextVideo();
+        } else if (event.data == YT.PlayerState.PAUSED) {
+          changeBorderColor(event.data);
+        } else if (event.data == YT.PlayerState.BUFFERING) {
+          changeBorderColor(event.data);
+          setShuffle();
+        } else if (event.data == YT.PlayerState.VIDEO_CUED) {
+          changeBorderColor(event.data);
+        }
+        done = true;
       }
-      else if (event.data == YT.PlayerState.ENDED && !done) {
-        iframePlayer.loadPlaylist("UU6DOFpA9UCTgNwJiVX1IOpQ", ctr);
-        setTimeout(nextVideo);
-        changeBorderColor(event.data);
-        event.target.setShuffle();
-        event.target.setLoop();
-        event.target.playVideo();
-        ctr++;
+
+      function changeBorderColor(playerStatus) {
+        let color;
+
+        if (playerStatus == -1) {
+          color = "#37474F";
+        } // unstarted = gray
+        else if (playerStatus == 0) {
+          color = "#FFFF00";
+        } // ended = yellow
+        else if (playerStatus == 1) {
+          color = "#33691E";
+        } // playing = green
+        else if (playerStatus == 2) {
+          color = "#DD2C00";
+        } // paused = red
+        else if (playerStatus == 3) {
+          color = "#AA00FF";
+        } // buffering = purple
+        else if (playerStatus == 5) {
+          color = "#FF6DOO";
+        } // video cued = orange
+
+        if (color) {
+          document.getElementById("iframePlayer").style.borderColor = color;
+        }
       }
-      else if (event.data == YT.PlayerState.PAUSED && !done) {
-        setTimeout(playVideo);
-        changeBorderColor(event.data);
-        event.target.setShuffle();
-        event.target.setLoop();
-        event.target.playVideo();
-      }
-      else if (event.data == YT.PlayerState.BUFFERING && !done) {
-        setTimeout(playVideo);
-        changeBorderColor(event.data);
-        event.target.setShuffle();
-        event.target.setLoop();
-        event.target.playVideo();
-      }
-      else if (event.data == YT.PlayerState.VIDEO_CUED && !done) {
-        setTimeout(playVideo);
-        changeBorderColor(event.data);
-        event.target.setShuffle();
-        event.target.setLoop();
-        event.target.playVideo();
-      }
-      done = true;
-    }
 
-    function changeBorderColor(playerStatus) {
-      let color;
+      function onPlayerError() {
+        iframePlayer.destroy;
+        onYouTubeIframeAPIReady();
+      }
+      function stopVideo() {
+        iframePlayer.stopVideo();
+      }
 
-      if (playerStatus == -1) {
-        color = "#37474F"
-      } // unstarted = gray
-      else if (playerStatus == 0) {
-        color = "#FFFF00"
-      } // ended = yellow
-      else if (playerStatus == 1) {
-        color = "#33691E"
-      } // playing = green
-      else if (playerStatus == 2) {
-        color = "#DD2C00"
-      } // paused = red
-      else if (playerStatus == 3) {
-        color = "#AA00FF"
-      } // buffering = purple
-      else if (playerStatus == 5) {
-        color = "#FF6DOO"
-      } // video cued = orange
+      function getVideoUrl() {
+        iframePlayer.getVideoUrl();
+      }
 
-      if (color) {
-        document.getElementById('iframePlayer').style.borderColor = color
+      function setLoop() {
+        iframePlayer.setLoop(true);
+      }
+
+      function setShuffle() {
+        iframePlayer.setShuffle(true);
+      }
+
+      function playVideo() {
+        iframePlayer.playVideo();
+      }
+      function nextVideo() {
+        iframePlayer.nextVideo();
+      }
+
+      function pauseVideo() {
+        iframePlayer.pauseVideo();
       }
     }
-    function stopVideo() {
-      iframePlayer.stopVideo();
-    }
-
-    function getVideoUrl() {
-      player1.getVideoUrl();
-    }
-
-    function setLoop() {
-      player1.setLoop(true);
-    }
-
-    function setShuffle() {
-      player1.setShuffle(true);
-    }
-
-    function playVideo() {
-      iframePlayer.playVideo();
-    }
-    function nextVideo() {
-      iframePlayer.nextVideo();
-    }
-
-    function pauseVideo() {
-      player1.pauseVideo();
-    }
-
-    function onPlayerError() {
-      player1.destroy;
-      onYouTubeIframeAPIReady();
-    }
-  }
-`,
-);
+  </script>
+`);
 
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
@@ -567,7 +811,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${google_script_run_promise.getContent() + yTPlayer.getContent()}`,
+    `${key_press.getContent() + yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent()}`
   ),
 };
 

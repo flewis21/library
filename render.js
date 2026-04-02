@@ -924,6 +924,7 @@ var renderFile = function (file, argsObject, title) {
             </div>
           </nav>
           <header class="banner responsive-section card-panel transparent static-fix">
+            <div id="iframePlayer" class="row card-panel transparent list-container grid"></div>
             <h1>Blog</h1>
             <p>Recent Applications</p>
           </header>
@@ -1060,207 +1061,11 @@ var renderFile = function (file, argsObject, title) {
           </footer>
           </main>
           <?!= materializeJs.getContent() ?>
-          <script>
-            ${collapse_menu.getContent()}
-            document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
-            document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
-            document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");
-            function serverside(func, args) {
-              ${google_script_run_promise.getContent()}
-            }; 
-            $(document).ready(function() {
-              $('select').formSelect();
-
-              $('#templateSelect').change(function() {
-                var selectedTemplateUrl 
-                  = $(this).val();
-                  if (selectedTemplateUrl) {
-                    $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
-                    $("#myForm").show(); // Show the form only after template is loaded.
-                    $("#myForm").empty(); // Clear previous form fields.
-                    // 2. Dynamically create form fields based on template placeholders (requires server-side)
-                    serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
-                      placeholders.forEach(function(placeholder) {
-                        var fieldName 
-                          = placeholder.replace(/{{|}}/g, ''); // Extract field name
-                        $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
-                        $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
-                      });
-                      $("#myForm").append("<button type='submit'>Submit</button>");
-
-
-                      $("#myForm").submit(function(event) {
-                        event.preventDefault();
-
-                        var formData 
-                          = $(this).serializeObject();
-                        serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
-                          $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
-                        }).catch((error)=>{
-                          console.error("Error:", error);
-                          $("#result").html("<p>Error creating document. Please check the logs.</p>");
-                        })
-
-                      });
-
-                    }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
-                  $("#editorFrame").prop("src", "");
-                  $("#myForm").hide();}
-              });
-
-              $.fn.serializeObject = function() { // jQuery plugin for serializing form data
-                var o 
-                  = {};
-                var a 
-                  = this.serializeArray();
-                $.each(a, function() {
-                  if (o[this.name] !== undefined) {
-                    if (!o[this.name].push) {
-                      o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                  } else {
-                    o[this.name] = this.value || '';
-                  }
-                });
-                return o;
-              };
-            });
-            function submitDomain(formData) {
-              serverside("submitDomain", [formData])
-                .then(result => {
-                  console.log("Server response:", result);
-                  $("#successMessage").text(result); // Display success message
-                })
-                .catch(error => {
-                  console.error("Error submitting domain:", error);
-                  $("#errorMessage").text(error); // Display error message
-                });
-            }
-
-            $("#domainForm").submit(function(event) {
-              event.preventDefault();
-              const formData = $(this).serializeObject();
-              submitDomain(formData); // Call the function
-            });
-
-            function lookupDomain(searchTerm) {
-              serverside("lookupDomain", [searchTerm])
-                .then(results => {
-                  console.log("Lookup results:", results);
-                  displaySearchResults(results); // Display results
-                })
-                .catch(error => {
-                  console.error("Error looking up domain:", error);
-                  $("#errorMessage").text(error); // Display error message
-                });
-            }
-
-            $("#lookupButton").click(function() {
-              const searchTerm = $("#searchTerm").val();
-              lookupDomain(searchTerm);
-            });
-
-            var busa = document.getElementById("artiicleIndex");
-            var busx = document.getElementById("loadingLab");
-            var busc = document.getElementById("contentDiv");
-            busa.addEventListener('keypress', function(event) {
-              // If the user preses the "Enter" key on the keyboard. 
-              if (event.key === "Enter")  {
-                const strValue = busa.value;
-                busx.innerText = "... waiting for " + strValue;
-                serverside("jFund", strValue)
-                  .then((article) => {
-                    if (article) {
-                      // User clicked "No" or X in the title bar.
-                      busx.innerText = ""
-                      busc.innerHTML = article;
-                    }
-                  })
-                  .catch((er) => {
-                    console.log(er)
-                    busx.innerText = JSON.stringify(er)
-                  })
-                busa.value = ""
-              }
-            });
-          </script>
-          <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
-          <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
+          <?!= styleHtml.runIt.getContent() ?>
           <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
         </body>
       </html>`,
         {
-          funcClicked: function () {
-            //console.log(document.getElementById("test").innerHTML)
-            // Init a timeout variable to be used below
-            let timeout = null;
-            (() => {
-              // Clear the timeout if it has already been set.
-              // This will prevent the previous task from executing
-              // if it has been less than <MILLISECONDS>
-              // clearTimeout(timeout);
-              // Make a new timeout set to go off in 1000ms (1 second)
-              // timeout = setTimeout
-              // (function  ()
-              // {console.log('Input Value:', textInput.value);}, 5000)();
-              if (typeof url === "undefined") {
-                var urlData = document.getElementById("url").value;
-                var url = urlData.toString();
-              }
-              var func = document.getElementById("func").value;
-              var args = document.getElementById("args").value;
-              if (typeof args !== "undefined") {
-                var linkFollow = document.createElement("a");
-                linkFollow.href =
-                  url +
-                  "?func=" +
-                  encodeURIComponent(func) +
-                  "&args=" +
-                  encodeURIComponent(args);
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_top";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              }
-            })();
-          },
-          argsClicked: function () {
-            //console.log(document.getElementById("test").innerHTML)
-            // Init a timeout variable to be used below
-            let timeout = null;
-            (() => {
-              // Clear the timeout if it has already been set.
-              // This will prevent the previous task from executing
-              // if it has been less than <MILLISECONDS>
-              // clearTimeout(timeout);
-              // Make a new timeout set to go off in 1000ms (1 second)
-              // timeout = setTimeout
-              // (function  ()
-              // {console.log('Input Value:', textInput.value);}, 5000)();
-              if (typeof url === "undefined") {
-                var urlData = document.getElementById("url").value;
-                var url = urlData.toString();
-              }
-              var func = document.getElementById("func").value;
-              var args = document.getElementById("args").value;
-              if (typeof func !== "undefined") {
-                var linkFollow = document.createElement("a");
-                linkFollow.href =
-                  url +
-                  "?func=" +
-                  encodeURIComponent(func) +
-                  "&args=" +
-                  encodeURIComponent(args);
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_top";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
-              }
-            })();
-          },
           renTemp: tmp.evaluate().getContent(),
         },
       );
@@ -1320,7 +1125,7 @@ var renderTemplate = function (blob, argsObject, title) {
     <html id="renderTemplate">
       <head>
         <style>
-          ${styleHtml.renderFile.getContent()}
+          <?!= styleHtml.renderFile.getContent() ?>
           <!--[if lt IE 9]>
           <script>
             document.createElement("article");
@@ -1333,12 +1138,12 @@ var renderTemplate = function (blob, argsObject, title) {
           </script>
           <![endif]-->
         </style>
-        ${materializeCss.getContent()}
+        <?!= materializeCss.getContent() ?>
       </head>
       <body>
         <nav class="flex-div responsive-section static-fix">
           <div class="nav-left flex-div responsive-section">
-            <img src="${logo.getContent()}" class="logo menu-icon" />
+            <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
           </div>
           <div class="nav-middle flex-div responsive-section">
             <div class="search-box flex-div">
@@ -1346,7 +1151,7 @@ var renderTemplate = function (blob, argsObject, title) {
             </div>
           </div>
           <div class="nav-right flex-div responsive-section">
-            <img src="${seaIcn.getContent()}" class="user-icon" />
+            <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
           </div>
         </nav>
         <main class="responsive-section float-left">
@@ -1374,7 +1179,7 @@ var renderTemplate = function (blob, argsObject, title) {
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="">
+                                <a href="<?!= drivedI ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1392,7 +1197,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </aside>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="">
+                                <a href="<?!= drivedU ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1422,6 +1227,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
+                                    <?!= drivedA ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Qualitative Aspects:</a></h3>
                                     </header>
@@ -1441,6 +1247,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
+                                    <?!= drivedD ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Contextual Dependence:</a></h3>
                                     </header>
@@ -1478,6 +1285,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
+                                    <?!= driveM ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Visible Demonstrations:</a></h3>
                                     </header>
@@ -1486,7 +1294,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveC ?>">
+                                <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1498,6 +1306,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
                                     <header class="responsive-section">
+                                      <?!= driveT ?>
                                       <h3><a href="">Compliance and Obedience:</a></h3>
                                     </header>
                                     <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
@@ -1505,7 +1314,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveA ?>">
+                                <a href="<?!= driveL ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1524,7 +1333,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveB ?>">
+                                <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1535,7 +1344,10 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <h3><a href="">In conclusion:</a></h3>
+                                    <header class=""responsive-section>
+                                      <?!= driveD ?>
+                                      <h3><a href="">In conclusion:</a></h3>
+                                    </header>
                                     <p style="text-align: left">
                                     While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
                                     </p>
@@ -1568,208 +1380,26 @@ var renderTemplate = function (blob, argsObject, title) {
             </aside>
           </div>
         </footer>
-        ${materializeJs.getContent()}
-        <script>
-          ${collapse_menu.getContent()}
-          function serverside(func, args) {
-            ${google_script_run_promise.getContent()}
-          };
-          $(document).ready(function() {
-            $('select').formSelect();
-
-            $('#templateSelect').change(function() {
-              var selectedTemplateUrl 
-                = $(this).val();
-                if (selectedTemplateUrl) {
-                  $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
-                  $("#myForm").show(); // Show the form only after template is loaded.
-                  $("#myForm").empty(); // Clear previous form fields.
-                  // 2. Dynamically create form fields based on template placeholders (requires server-side)
-                  serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
-                    placeholders.forEach(function(placeholder) {
-                      var fieldName 
-                        = placeholder.replace(/{{|}}/g, ''); // Extract field name
-                      $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
-                      $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
-                    });
-                    $("#myForm").append("<button type='submit'>Submit</button>");
-
-
-                    $("#myForm").submit(function(event) {
-                      event.preventDefault();
-
-                      var formData 
-                        = $(this).serializeObject();
-                      serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
-                        $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
-                      }).catch((error)=>{
-                        console.error("Error:", error);
-                        $("#result").html("<p>Error creating document. Please check the logs.</p>");
-                      })
-
-                    });
-
-                  }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
-                $("#editorFrame").prop("src", "");
-                $("#myForm").hide();}
-            });
-
-            $.fn.serializeObject = function() { // jQuery plugin for serializing form data
-              var o 
-                = {};
-              var a 
-                = this.serializeArray();
-              $.each(a, function() {
-                if (o[this.name] !== undefined) {
-                  if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                  }
-                  o[this.name].push(this.value || '');
-                } else {
-                  o[this.name] = this.value || '';
-                }
-              });
-              return o;
-            };
-          });
-        function submitDomain(formData) {
-          serverside("submitDomain", [formData])
-            .then(result => {
-              console.log("Server response:", result);
-              $("#successMessage").text(result); // Display success message
-            })
-            .catch(error => {
-              console.error("Error submitting domain:", error);
-              $("#errorMessage").text(error); // Display error message
-            });
-        }
-
-        $("#domainForm").submit(function(event) {
-          event.preventDefault();
-          const formData = $(this).serializeObject();
-          submitDomain(formData); // Call the function
-        });
-
-        function lookupDomain(searchTerm) {
-          serverside("lookupDomain", [searchTerm])
-            .then(results => {
-              console.log("Lookup results:", results);
-              displaySearchResults(results); // Display results
-            })
-            .catch(error => {
-              console.error("Error looking up domain:", error);
-              $("#errorMessage").text(error); // Display error message
-            });
-        }
-
-        $("#lookupButton").click(function() {
-          const searchTerm = $("#searchTerm").val();
-          lookupDomain(searchTerm);
-        });
-
-        var busa = document.getElementById("artiicleIndex");
-        var busx = document.getElementById("loadingLab");
-        var busc = document.getElementById("contentDiv");
-        busa.addEventListener('keypress', function(event) {
-          // If the user preses the "Enter" key on the keyboard. 
-          if (event.key === "Enter")  {
-            const strValue = busa.value;
-            busx.innerText = "... waiting for " + strValue;
-            serverside("jFund", strValue)
-            .then((article) => {
-              if (article) {
-                // User clicked "No" or X in the title bar.
-                busx.innerText = ""
-                busc.innerHTML = article;}})
-            .catch((er) => {
-              console.log(er)
-              busx.innerText = JSON.stringify(er)})
-            busa.value = ""}})
-      </script>
-        <script>document.getElementById('func').addEventListener('change', <?!= funcClicked ?>)</script>
-        <script>document.getElementById('args').addEventListener('change', <?!= argsClicked ?>)</script>
+        <?!= materializeJs.getContent() ?>
+        <?!= styleHtml.runIt.getContent() ?>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+        <div id="result"></div>
+        <div id="successMessage"></div>
+        <div id="errorMessage"></div>
+        <table id="resultsTable"></table>
       </body>
-    </html>
-  <div id="result"></div>
-  <div id="successMessage"></div>
-  <div id="errorMessage"></div>
-  <table id="resultsTable"></table>`,
+    </html>`,
       {
-        funcClicked: function () {
-          //console.log(document.getElementById("test").innerHTML)
-          // Init a timeout variable to be used below
-          let timeout = null;
-          (() => {
-            // Clear the timeout if it has already been set.
-            // This will prevent the previous task from executing
-            // if it has been less than <MILLISECONDS>
-            // clearTimeout(timeout);
-            // Make a new timeout set to go off in 1000ms (1 second)
-            // timeout = setTimeout
-            // (function  ()
-            // {console.log('Input Value:', textInput.value);}, 5000)();
-            if (typeof url === "undefined") {
-              var urlData = document.getElementById("url").value;
-              var url = urlData.toString();
-            }
-            var func = document.getElementById("func").value;
-            var args = document.getElementById("args").value;
-            if (typeof args !== "undefined") {
-              var linkFollow = document.createElement("a");
-              linkFollow.href =
-                url +
-                "?func=" +
-                encodeURIComponent(func) +
-                "&args=" +
-                encodeURIComponent(args);
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_top";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            }
-          })();
-        },
-        argsClicked: function () {
-          //console.log(document.getElementById("test").innerHTML)
-          // Init a timeout variable to be used below
-          let timeout = null;
-          (() => {
-            // Clear the timeout if it has already been set.
-            // This will prevent the previous task from executing
-            // if it has been less than <MILLISECONDS>
-            // clearTimeout(timeout);
-            // Make a new timeout set to go off in 1000ms (1 second)
-            // timeout = setTimeout
-            // (function  ()
-            // {console.log('Input Value:', textInput.value);}, 5000)();
-            if (typeof url === "undefined") {
-              var urlData = document.getElementById("url").value;
-              var url = urlData.toString();
-            }
-            var func = document.getElementById("func").value;
-            var args = document.getElementById("args").value;
-            if (typeof func !== "undefined") {
-              var linkFollow = document.createElement("a");
-              linkFollow.href =
-                url +
-                "?func=" +
-                encodeURIComponent(func) +
-                "&args=" +
-                encodeURIComponent(args);
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_top";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            }
-          })();
-        },
         renTemp: tmp.evaluate().getContent(),
-        driveB: tmp.payL.link,
-        driveA: tmp.payL.type,
-        driveC: tmp.payL.data,
+        driveD: tmp.payL.pL?.data,
+        drivedA: tmp.payL.pL?.data?.app,
+        drivedD: tmp.payL.pL?.dataData,
+        drivedH: tmp.payL.pL?.data?.html,
+        drivedI: tmp.payL.pL?.dataIndex,
+        drivedU: tmp.payL.pL?.data?.url,
+        driveL: tmp.payL.pL?.link,
+        driveM: tmp.payL.pL?.message,
+        driveT: tmp.payL.pL?.type,
       },
     );
   } catch (error) {
