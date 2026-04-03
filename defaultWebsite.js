@@ -107,11 +107,9 @@ var createFunctionResult = function (funcUno, funcDos) {
   try {
     let objVal = funcDos?.toString();
     if (objVal?.indexOf(",") === -1) {
-      // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
       var isObjValUrl = isValidUrl(objVal).hostname;
-      // executed++
+      executed++
     }
-    // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
     let rawUrlResult = isTruthy(isObjValUrl);
     // executed++
     if (!rawUrlResult) {
@@ -156,14 +154,12 @@ var createFunctionResult = function (funcUno, funcDos) {
             funcDos,
         );
         try {
-          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
           rawFuncResult = mis([funcUno]);
-          // executed++
+          executed++
         } catch (error) {
           Logger.log("But, it is failing.");
-          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
           rawFuncResult = globalThis[funcUno]();
-          // executed++
+          executed++
         }
       } else if (
         funcUno &&
@@ -175,9 +171,8 @@ var createFunctionResult = function (funcUno, funcDos) {
             funcDos,
         );
         try {
-          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
           rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-          // executed++
+          executed++
         } catch (error) {
           Logger.log("But, it is failing.");
           if (
@@ -185,17 +180,14 @@ var createFunctionResult = function (funcUno, funcDos) {
             typeof globalThis[funcUno] === "function " &&
             !funcDos
           ) {
-            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[funcUno]();
-            // executed++
+            executed++
           } else if (!funcUno && funcDos) {
-            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[parsedFuncArgs]();
-            // executed++
+            executed++
           } else {
-            // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
             rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-            // executed++
+            executed++
           }
         }
       } else if (!funcUno && funcDos) {
@@ -204,14 +196,12 @@ var createFunctionResult = function (funcUno, funcDos) {
             funcUno,
         );
         try {
-          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
           rawFuncResult = mis([parsedFuncArgs]);
-          // executed++
+          executed++
         } catch (error) {
           Logger.log("But, it is failing.");
-          // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
           rawFuncResult = globalThis[parsedFuncArgs]();
-          // executed++
+          executed++
         }
       } else {
         Logger.log(
@@ -219,14 +209,12 @@ var createFunctionResult = function (funcUno, funcDos) {
             [funcUno, parsedFuncArgs],
         );
         try {
-          // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
           rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-          // executed++
+          executed++
         } catch (error) {
           Logger.log("But, it is failing.");
-          // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
           rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-          // executed++
+          executed++
         }
       }
     } else {

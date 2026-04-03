@@ -1210,7 +1210,7 @@ function gMain() {
 
 function functionHandle(e) {
   var executed = 0;
-  console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
+  console.info(`previously exec count - \nfunctionHandle(${e}) - `, executed);
   var htmlList = functionRegistry.getHtmlList();
   executed++;
   let rndE = "";
@@ -1413,11 +1413,11 @@ function functionHandle(e) {
   //   let rawFuncResult = null;
   //   let objVal = funcDos?.toString();
   //   if (objVal?.indexOf(",") === -1) {
-  // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
   //     var isObjValUrl = isValidUrl(objVal).hostname;
   // executed++
   //   }
-  // console.info(`previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
   //   let rawUrlResult = isTruthy(isObjValUrl);
   // executed++
   //   if (!rawUrlResult) {
@@ -1451,12 +1451,12 @@ function functionHandle(e) {
   //       ) {
   //         Logger.log("This execution is trying to process without funcDos. funcDos is  " + funcDos);
   //         try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawUrlResult}) - `, executed);
   //             rawFuncResult = mis([funcUno]);
   // executed++
   //         } catch (error) {
   //           Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawUrlResult}) - `, executed);
   //           rawFuncResult = globalThis[funcUno]();
   // executed++
   //         }
@@ -1467,22 +1467,22 @@ function functionHandle(e) {
   //       ) {
   //         Logger.log("This execution is trying to process with funcDos. funcDos is  " + funcDos);
   //         try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawUrlResult}) - `, executed);
   //             rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
   // executed++
   //         }
   //         catch (error) {
   //           Logger.log("But, it is failing.");
   //           if (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawFuncResult}) - `, executed);
   //             rawFuncResult = globalThis[funcUno]();
   // executed++
   //           } else if (!funcUno && funcDos) {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawFuncResult}) - `, executed);
   //             rawFuncResult = globalThis[parsedFuncArgs]();
   // executed++
   //           } else {
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawFuncResult}) - `, executed);
   //             rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
   // executed++
   //           }
@@ -1490,24 +1490,24 @@ function functionHandle(e) {
   //       } else if (!funcUno && funcDos) {
   //         Logger.log("This execution is trying to process without funcUno. FuncUno is " + funcUno);
   //         try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawUrlResult}) - `, executed);
   //             rawFuncResult = globalThis.mis([parsedFuncArgs]);
   // executed++
   //         } catch (error) {
   //           Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawFuncResult}) - `, executed);
   //           rawFuncResult = globalThis[parsedFuncArgs]();
   // executed++
   //         }
   //       } else {
   //         Logger.log("This execution is trying to process all input \n" + [funcUno, parsedFuncArgs]);
   //         try {
-  // console.info(`previously exec count - \nhandleGetData(${rawUrlResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawUrlResult}) - `, executed);
   //             rawFuncResult = globalThis.mis([funcUno, ...parsedFuncArgs]);
   // executed++
   //         } catch (error) {
   //           Logger.log("But, it is failing.");
-  // console.info(`previously exec count - \nhandleGetData(${rawFuncResult}) - `, executed);
+  // console.info(`previously exec count - \nfunctionHandle(${rawFuncResult}) - `, executed);
   //           rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
   // executed++
   //         }

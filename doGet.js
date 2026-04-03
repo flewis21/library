@@ -1777,7 +1777,7 @@ var globalHandleGetData = function (rawFuncResult) {
       appL = payLoad.dataIndex || payLoad.dataData;
       feed = `${payLoad.link}`;
       console.info(
-        `previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `,
+        `previously exec count - \nglobalHandleGetData(${JSON.stringify(payLoad)}) - `,
         executed,
       );
       var seoHtml = seoCapital(iframeSrc);
@@ -1788,17 +1788,15 @@ var globalHandleGetData = function (rawFuncResult) {
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
       appL = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
       feed = payLoad.link;
-      // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
-      // executed++
+      executed++
       //   return renderTemplate(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
       appL = JSON.stringify(payLoad.dataIndex, null, 2);
       feed = payLoad.link;
-      // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
-      // executed++
+      executed++
       //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
     //iframeSrc in tenary
@@ -1806,9 +1804,8 @@ var globalHandleGetData = function (rawFuncResult) {
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
       appL = payLoad.data || payLoad.dataData;
       feed = payLoad.link;
-      // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
-      // executed++
+      executed++
       //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
@@ -1821,18 +1818,16 @@ var globalHandleGetData = function (rawFuncResult) {
           payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-        // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
-        // executed++
+        executed++
         //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
         appL = `URL provided: ${payLoad.data || payLoad.dataIndex || iframeSrc}`;
         feed = `URL provided: ${payLoad.link}`;
-        // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
-        // executed++
+        executed++
         //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
       } else {
         // Default way to display a generic object: stringify it
@@ -1841,25 +1836,22 @@ var globalHandleGetData = function (rawFuncResult) {
           "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
         );
         feed = payLoad.link;
-        // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
-        // executed++
+        executed++
         //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
-      // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
-      // executed++
+      executed++
       //   return renderTemplate(feed, {payL: payLoad}, JSON.stringify(rndE));
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
     appL = `Critical Error: ${error.stack}`;
     // iframeSrc = ""; // Clear iframe on critical error
-    // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
     //   var seoHtml = seoCapital(iframeSrc);
-    // executed++
+    executed++
     //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
   // --- END Refactored payLoad processing ---
