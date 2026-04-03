@@ -3341,7 +3341,7 @@ function seoCapital(url) {
                                         <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
                                           <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
                                             <div>
-                                              <iframe src='${url}' id="w3Res" style="width: 840px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                              <iframe src='${url}' id="w3Res" style="width: 900px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>

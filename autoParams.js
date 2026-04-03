@@ -1240,6 +1240,9 @@ function functionHandle(e) {
           var funcTres = e?.parameter["file"];
           try {
             var htmlArray = functionRegistry.getHtmlList();
+            var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
+            var rndPage = htmlArray[rndHtmlIndex];
+            var htmlTresArg; // = rndPage; // Default value
             executed++;
             if (funcTres) {
               if (Array.isArray(funcTres)) {
@@ -1264,15 +1267,38 @@ function functionHandle(e) {
                   fileParam: funcTres,
                 },
                 "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
-                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+                  (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
                   ", " +
                   {} +
                   ", " +
-                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
+                  (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
                   ",",
               );
             } catch (error) {
               Logger.log("Requested! HTML file is Out of Order", error.stack);
+              let payLoad = {};
+              payLoad["type"] = "url";
+              payLoad["data"] = {};
+              if (funcTres === "undefined") {
+                return getScriptUrl() + "?file=" + rndPage;
+              } else {
+                var fT = fileBrowser(null, funcTres);
+                payLoad.data["url"] = fT?.url
+                if (!fT?.url) {
+                  payLoad.data["url"] = driveManager(funcTres);
+                }
+                let options = {
+                  muteHttpExceptions: true,
+                };
+                payLoad.data["app"] = getUrlResponse(payLoad.data["url"] || getScriptUrl(), options);
+                return renderTemplate(
+                  payLoad.data["app"]?.app,
+                  {
+                    pL: payLoad,
+                  },
+                  JSON.stringify(fT?.name || funcTres),
+                );
+              }
             }
           } catch (error) {
             console.error(
