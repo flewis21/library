@@ -106,11 +106,13 @@ var createFunctionResult = function (funcUno, funcDos) {
 
   try {
     let objVal = funcDos?.toString();
-    if (objVal?.indexOf(",") === -1) {
-      var isObjValUrl = isValidUrl(objVal).hostname;
+    let truVal = isTruthy(objVal);
+    let rawUrlResult;
+    if (truVal && objVal?.indexOf(",") === -1) {
+      let isObjValUrl = isValidUrl(objVal).hostname;
+      rawUrlResult = isTruthy(isObjValUrl);
       executed++
     }
-    let rawUrlResult = isTruthy(isObjValUrl);
     // executed++
     if (!rawUrlResult) {
       let parsedFuncArgs = [];
@@ -118,24 +120,20 @@ var createFunctionResult = function (funcUno, funcDos) {
       if (typeof funcDos === "object") {
         keyObject = Object.keys(funcDos);
         if (keyObject && keyObject.length > 0) {
-          Logger.log(
+          console.log(
             "This execution is trying to JSON Parse a(n) " + typeof funcDos,
           );
           try {
-            if (!Array.isArray(funcDos)) {
-              Logger.log(
-                "These are the keys of the object that is being parsed - " +
-                  keyObject,
-              );
+            if (!objVal) {
               parsedFuncArgs = JSON.parse(funcDos);
-              // console.info(error.stack);
-            } else if (Array.isArray(funcDos) && funcDos.length > 0) {
-              Logger.log("But, it is failing. \n");
+            } 
+            else if (objVal && funcDos.length > 0) {
+              console.log("But, it is failing. \n");
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
           } catch (jsonError) {
-            Logger.log("But, it is failing. \n" + jsonError.stack);
-            if (Array.isArray(funcDos) && funcDos.length > 0) {
+            console.log("But, it is failing. \n" + jsonError.stack);
+            if (objVal && funcDos.length > 0) {
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
           }
@@ -149,7 +147,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
         (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
       ) {
-        Logger.log(
+        console.log(
           "This execution is trying to process without funcDos. funcDos is  " +
             funcDos,
         );
@@ -157,7 +155,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           rawFuncResult = mis([funcUno]);
           executed++
         } catch (error) {
-          Logger.log("But, it is failing.");
+          console.log("But, it is failing.");
           rawFuncResult = globalThis[funcUno]();
           executed++
         }
@@ -166,7 +164,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         typeof globalThis[funcUno] !== "function" &&
         funcDos
       ) {
-        Logger.log(
+        console.log(
           "This execution is trying to process with funcDos. funcDos is  " +
             funcDos,
         );
@@ -174,7 +172,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
           executed++
         } catch (error) {
-          Logger.log("But, it is failing.");
+          console.log("But, it is failing.");
           if (
             funcUno &&
             typeof globalThis[funcUno] === "function " &&
@@ -191,7 +189,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           }
         }
       } else if (!funcUno && funcDos) {
-        Logger.log(
+        console.log(
           "This execution is trying to process without funcUno. FuncUno is " +
             funcUno,
         );
@@ -199,12 +197,12 @@ var createFunctionResult = function (funcUno, funcDos) {
           rawFuncResult = mis([parsedFuncArgs]);
           executed++
         } catch (error) {
-          Logger.log("But, it is failing.");
+          console.log("But, it is failing.");
           rawFuncResult = globalThis[parsedFuncArgs]();
           executed++
         }
       } else {
-        Logger.log(
+        console.log(
           "This execution is trying to process all input \n" +
             [funcUno, parsedFuncArgs],
         );
@@ -212,7 +210,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
           executed++
         } catch (error) {
-          Logger.log("But, it is failing.");
+          console.log("But, it is failing.");
           rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
           executed++
         }
@@ -220,7 +218,7 @@ var createFunctionResult = function (funcUno, funcDos) {
     } else {
       rawFuncResult = objVal;
       console.log(
-        "Happens everytime createFandomFunction returns the form url as the objects value",
+        "Happens everytime createFunctionResult returns the form url as the objects value",
         rawFuncResult,
       );
     }

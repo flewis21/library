@@ -2283,6 +2283,7 @@ function ssSetName(randomSheet, sheetname) {
     var sheet = idSpreadSheet(randomSheet.getId()).getSheetByName(sheetName);
     return sheet;
   }
+  return null
 }
 
 var ssSetSheet = function () {

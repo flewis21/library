@@ -874,209 +874,212 @@ var renderFile = function (file, argsObject, title) {
   );
   try {
     if (file) {
-      const tmp = HtmlService.createTemplateFromFile(file);
-      if (argsObject) {
-        const keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
-      }
+      let htmlList = functionRegistry.getHtmlList();
+      if (htmlList.indexOf(file) !== -1) { 
+        const tmp = HtmlService.createTemplateFromFile(file);
+        if (argsObject) {
+          const keys = Object.keys(argsObject);
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+          });
+        }
 
-      // tmp["list"] = htmlListArray;
-      // END IF
-      // Route[file] = argsObject
-      // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
-      // var funcCheck = appList();
-      // var schedule = dateTime(new Date());
-      var html = contentApp(
-        `
-    <!doctype html>
-      <html lang="en">
-        <head>
-          <style>
-            <?!= styleHtml.renderFile.getContent() ?>
-            <!--[if lt IE 9]>
-            <script>
-              document.createElement("article");
-              document.createElement("footer");
-              document.createElement("header");
-              document.createElement("nav");
-              document.createElement("main");
-              document.createElement("section");
-              document.createElement("aside");
-            </script>
-            <![endif]-->
-          </style>
-          <?!= materializeCss.getContent() ?>
-        </head>
-        <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
-          <nav class="flex-div responsive-section card-panel transparent static-fix">
-            <div class="nav-left flex-div responsive-section">
-              <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
-            </div>
-            <div class="nav-middle flex-div responsive-section">
-              <div class="search-box flex-div responsive-section">
-                <input type="text" placeholder="Search">
-              </div>
-            </div>
-            <div class="nav-right flex-div responsive-section">
-              <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
-            </div>
-          </nav>
-          <header class="banner responsive-section card-panel transparent static-fix">
-            <div id="iframePlayer" class="row card-panel transparent list-container grid"></div>
-            <h1>Blog</h1>
-            <p>Recent Applications</p>
-          </header>
-          <main class="responsive-section receipt transparent static-fix float-right menu">
-          <footer class="boiler-footer socials receipt-footer responsive-section card-panel transparent static-fix">
-            <div class="row responsive-section">
-              <aside class="pulse transparent sidebar">
+        // tmp["list"] = htmlListArray;
+        // END IF
+        // Route[file] = argsObject
+        // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
+        // var funcCheck = appList();
+        // var schedule = dateTime(new Date());
+        var html = contentApp(
+          `
+        <!doctype html>
+          <html lang="en">
+            <head>
+              <style>
+                <?!= styleHtml.renderFile.getContent() ?>
+                <!--[if lt IE 9]>
+                <script>
+                  document.createElement("article");
+                  document.createElement("footer");
+                  document.createElement("header");
+                  document.createElement("nav");
+                  document.createElement("main");
+                  document.createElement("section");
+                  document.createElement("aside");
+                </script>
+                <![endif]-->
+              </style>
+              <?!= materializeCss.getContent() ?>
+            </head>
+            <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
+              <nav class="flex-div responsive-section card-panel transparent static-fix">
+                <div class="nav-left flex-div responsive-section">
+                  <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
+                </div>
+                <div class="nav-middle flex-div responsive-section">
+                  <div class="search-box flex-div responsive-section">
+                    <input type="text" placeholder="Search">
+                  </div>
+                </div>
+                <div class="nav-right flex-div responsive-section">
+                  <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+                </div>
+              </nav>
+              <header class="banner responsive-section card-panel transparent static-fix">
+                <div id="iframePlayer" class="row card-panel transparent list-container grid"></div>
+                <h1>Blog</h1>
+                <p>Recent Applications</p>
+              </header>
+              <main class="responsive-section receipt transparent static-fix float-right menu">
+              <footer class="boiler-footer socials receipt-footer responsive-section card-panel transparent static-fix">
                 <div class="row responsive-section">
-                  <section class="responsive-section transparent">
-                    <header class="card-panel transparent list-container grid">
-                      <h2>Owe</h2>
-                      <aside class="responsive-section card-panel transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
+                  <aside class="pulse transparent sidebar">
+                    <div class="row responsive-section">
+                      <section class="responsive-section transparent">
+                        <header class="card-panel transparent list-container grid">
+                          <h2>Owe</h2>
+                          <aside class="responsive-section card-panel transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                              </div>
+                            </div>
+                          </aside>
+                          <article class="responsive-section transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <header class="responsive-section">
+                                  <h3><a href="">Legal Title:</a></h3>
+                                </header>
+                                <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                              </div>
                             </div>
                           </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                          </div>
-                        </div>
-                      </aside>
-                      <article class="responsive-section transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
+                          <article class="responsive-section transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <header class="responsive-section">
+                                  <h3><a href="">Rights of Possession and Control:</a></h3>
+                                </header>
+                                <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                              </div>
                             </div>
                           </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <header class="responsive-section">
-                              <h3><a href="">Legal Title:</a></h3>
-                            </header>
-                            <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="responsive-section transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
+                          <article class="responsive-section transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <header class="responsive-section">
+                                  <h3><a href="">Right of Disposal:</a></h3>
+                                </header>
+                                <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                              </div>
                             </div>
                           </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <header class="responsive-section">
-                              <h3><a href="">Rights of Possession and Control:</a></h3>
-                            </header>
-                            <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="responsive-section transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
+                          <article class="responsive-section transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <header class="responsive-section">
+                                  <h3><a href="">Freedom from Competing Claims:</a></h3>
+                                </header>
+                                <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                              </div>
                             </div>
                           </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <header class="responsive-section">
-                              <h3><a href="">Right of Disposal:</a></h3>
-                            </header>
-                            <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="responsive-section transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
+                          <article class="responsive-section transparent vid-list">
+                            <a href="">
+                              <article class="responsive-section static-fix container">
+                                <div class="row responsive-section static-fix">
+                                  <?!= renTemp ?>
+                                </div>
+                              </article>
+                              <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                            </a>
+                            <div class="flex-div">
+                              <img src="<?!= seaIcn.getContent() ?>" />
+                              <div class="vid-info">
+                                <header class="responsive-section">
+                                  <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
+                                </header>
+                                <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                              </div>
                             </div>
                           </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <header class="responsive-section">
-                              <h3><a href="">Freedom from Competing Claims:</a></h3>
-                            </header>
-                            <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="responsive-section transparent vid-list">
-                        <a href="">
-                          <article class="responsive-section static-fix container">
-                            <div class="row responsive-section static-fix">
-                              <?!= renTemp ?>
-                            </div>
-                          </article>
-                          <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                        </a>
-                        <div class="flex-div">
-                          <img src="<?!= seaIcn.getContent() ?>" />
-                          <div class="vid-info">
-                            <header class="responsive-section">
-                              <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
-                            </header>
-                            <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                          </div>
-                        </div>
-                      </article>
-                    </header>
-                  </section>
+                        </header>
+                      </section>
+                    </div>
+                    <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    <hr>
+                    <div class="subscribed-list">
+                      <h3>SUBSCRIBED</h3>
+                      <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                    </div>
+                  </aside>
                 </div>
-                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                <hr>
-                <div class="subscribed-list">
-                  <h3>SUBSCRIBED</h3>
-                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
-                </div>
-              </aside>
-            </div>
-          </footer>
-          </main>
-          <?!= materializeJs.getContent() ?>
-          <?!= styleHtml.runIt.getContent() ?>
-          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-        </body>
-      </html>`,
-        {
-          renTemp: tmp.evaluate().getContent(),
-        },
-      );
-      return (
-        HtmlService.createHtmlOutput(html) //tmp
-          // .evaluate()
-          .setTitle(title)
-          // .append(html)
-          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      );
+              </footer>
+              </main>
+              <?!= materializeJs.getContent() ?>
+              <?!= styleHtml.runIt.getContent() ?>
+              <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+            </body>
+          </html>`,
+          {
+            renTemp: tmp.evaluate().getContent(),
+          },
+        );
+        return (
+          HtmlService.createHtmlOutput(html) //tmp
+            // .evaluate()
+            .setTitle(title)
+            // .append(html)
+            // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        );
+      }
     } else {
       return handleRequest(argsObject);
     }
@@ -1102,7 +1105,7 @@ var renderTemplate = function (blob, argsObject, title) {
           arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
-  console.log("argsObject after tmp processing", argsObject);
+  console.log("argsObject before tmp processing", argsObject);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
     try {
@@ -1156,7 +1159,7 @@ var renderTemplate = function (blob, argsObject, title) {
         </nav>
         <main class="responsive-section float-left">
           <header class="banner responsive-section">
-            <h1>Blog</h1>
+            <h1><?!= driveA ?></h1>
             <p>Recent Applications</p>
           </header>
           <div class="row responsive-section">
@@ -1391,6 +1394,7 @@ var renderTemplate = function (blob, argsObject, title) {
     </html>`,
       {
         renTemp: tmp.evaluate().getContent(),
+        driveA: JSON.stringify(argsObject),
         driveD: tmp.payL?.pL?.data,
         drivedA: tmp.payL?.pL?.data?.app,
         drivedD: tmp.payL?.pL?.dataData,
@@ -1399,13 +1403,14 @@ var renderTemplate = function (blob, argsObject, title) {
         drivedU: tmp.payL?.pL?.data?.url,
         driveL: tmp.payL?.pL?.link,
         driveM: tmp.payL?.pL?.message,
+        driveP: tmp.payL?.pL,
         driveT: tmp.payL?.pL?.type,
       },
     );
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);
     throw new Error(
-      "Error in rendertemplate html: " + error.toString() + "\n" + error.stack,
+      "Error in rendertemplate html: " + blob + "\n" + error.stack,
     );
   }
   return (

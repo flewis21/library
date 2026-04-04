@@ -1774,12 +1774,8 @@ var globalHandleGetData = function (rawFuncResult) {
     // (This part needs adjustments to handle the new "url" type)
     if (payLoad.type === "html") {
       iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
-      appL = payLoad.dataIndex || payLoad.dataData;
+      appL = payLoad.dataIndex;
       feed = `${payLoad.link}`;
-      console.info(
-        `previously exec count - \nglobalHandleGetData(${JSON.stringify(payLoad)}) - `,
-        executed,
-      );
       var seoHtml = seoCapital(iframeSrc);
       executed++;
       return renderTemplate(appL, { payL: payLoad }, payLoad.type);
@@ -1824,7 +1820,7 @@ var globalHandleGetData = function (rawFuncResult) {
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-        appL = `URL provided: ${payLoad.data || payLoad.dataIndex || iframeSrc}`;
+        appL = `URL provided: ${payLoad.data || payLoad.dataData}`;
         feed = `URL provided: ${payLoad.link}`;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++

@@ -1424,18 +1424,18 @@ function createRandomForm() {
 }
 
 function dtls(callFunc, time) {
-  var appList = [];
-  for (var key in globalThis) {
-    if (typeof globalThis[key] == "function") {
-      appList.push(key);
-    }
-  }
+  var appList = functionRegistry.getFileList();
+  // for (var key in globalThis) {
+  //   if (typeof globalThis[key] == "function") {
+  //     appList.push(key);
+  //   }
+  // }
   var rdmNumForName = Math.floor(Math.random() * Math.floor(appList.length));
-  var keysFunc = seoSheet(appList[rdmNumForName]).keyWords;
+  var keysFunc = appList[rdmNumForName];
   var formName =
     callFunc && callFunc !== "callFunc"
       ? callFunc
-      : keysFunc[Math.floor(Math.random() * Math.floor(keysFunc.length))];
+      : keysFunc;
   if (
     [appList].join().toLowerCase().includes([formName].join("").toLowerCase())
   ) {

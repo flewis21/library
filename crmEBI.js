@@ -21,7 +21,7 @@ function crmEBI(fx) {
     <head>
       <base target="_self">
       <style>
-        <?!= website ?>
+        <?!= website.getContent() ?>
         .app-container {
           background-color: white;
           padding: 30px;
@@ -81,8 +81,8 @@ function crmEBI(fx) {
     <html>
     <head>
       <title>Yes</title>
-      <?!= builtStyling().evaluate().getContent() ?>
       <style>
+        <?!= styleHtml.renderTemplate.getContent() ?>
         a:link, a:visited {color:metallic grey !important;
                           font-size: 4.5em;}
         a:hover, a:active{ 

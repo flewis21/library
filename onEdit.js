@@ -119,7 +119,7 @@ var endPoint = function (end, return_type) {
  * @param {string} partialAddress The partial address string to get suggestions for.
  * @returns {string[]} An array of formatted address suggestions.
  */
-function getSuggestions(partialAddress) {
+var getSuggestions = function (partialAddress) {
   // IMPORTANT: Replace 'YOUR_OPENCAGE_API_KEY' with your actual API key
   // It's best practice to store this in User Properties or a dedicated configuration
   // to avoid hardcoding it directly. For demonstration, it's here.

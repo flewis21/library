@@ -122,7 +122,12 @@ var geneicType = function () {
   // let result = functionRegistry.paramsList.find((rndS) => {
   //   return rndS.name === searchResult;
   // });
-  let fileIndex = coUtility()[0]; //handleRequest({parameter: {action:"getData"}});
+  // let fileIndex = handleRequest({parameter: {action:"getData"}});
+  let handles = functionHandle({parameter: {file:"iframe player"}});
+  let funcU = handles["exec"][0];
+  let funcD = handles["args"][0];
+  let base = createFunctionResult(funcU, funcD);
+  let dataOR = globalHandleGetData(base);
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");

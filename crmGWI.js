@@ -485,7 +485,7 @@ function crmGWI(fx) {
     <head>
       <base target="_self">
       <style>
-        <?!= website ?>
+        <?!= website.getContent() ?>
         .app-container {
           background-color: white;
           padding: 30px;

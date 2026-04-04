@@ -1218,11 +1218,9 @@ function functionHandle(e) {
   // Logging
   if (!e) {
     rndE = createRandomFunction();
-    Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
     executed++;
   } else if (e && !e.parameter) {
     rndE = createRandomFunction(e);
-    Logger.log("Logging object keys for Func uno/dos " + Object.keys(rndE));
     executed++;
   } else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
@@ -1231,9 +1229,9 @@ function functionHandle(e) {
       executed++;
     } else if (objData.length > 0) {
       if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
-        Logger.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
+        console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
         if (e.parameter["file"]) {
-          Logger.log(
+          console.log(
             "Determined that funcTres execution is requested! \n" +
               e.parameter["file"],
           );
@@ -1260,49 +1258,60 @@ function functionHandle(e) {
                 htmlTresArg = htmlArray[funcTresIndex];
               }
             }
-            try {
-              return renderFile(
-                funcTres,
-                {
-                  fileParam: funcTres,
-                },
-                "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
-                  (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
-                  ", " +
-                  {} +
-                  ", " +
-                  (htmlArray[funcTres0Index] || htmlArray[funcTresIndex]) +
-                  ",",
-              );
-            } catch (error) {
-              Logger.log("Requested! HTML file is Out of Order", error.stack);
-              let payLoad = {};
-              payLoad["type"] = "url";
-              payLoad["data"] = {};
-              if (funcTres === "undefined") {
-                return getScriptUrl() + "?file=" + rndPage;
-              } else {
-                var fT = fileBrowser(null, funcTres);
-                payLoad.data["url"] = fT?.url
-                if (!fT?.url) {
-                  payLoad.data["url"] = driveManager(funcTres);
+            if (!htmlTresArg) {
+              try{
+                let payLoad = {};
+                payLoad["type"] = "url";
+                payLoad["data"] = {};
+                if (funcTres === "undefined") {
+                  return getScriptUrl() + "?file=" + rndPage;
+                } else {
+                  var fT = fileBrowser(null, funcTres);
+                  payLoad.data["url"] = fT?.url
+                  if (!fT?.url) {
+                    payLoad.data["url"] = driveManager(funcTres);
+                  }
+                  let options = {
+                    muteHttpExceptions: true,
+                  };
+                  payLoad.data["app"] = getUrlResponse(payLoad.data["url"] || getScriptUrl(), options);
+                  return renderTemplate(
+                    payLoad.data["app"]?.app,
+                    {
+                      pL: payLoad,
+                    },
+                    JSON.stringify(fT?.name || funcTres),
+                  );
                 }
-                let options = {
-                  muteHttpExceptions: true,
-                };
-                payLoad.data["app"] = getUrlResponse(payLoad.data["url"] || getScriptUrl(), options);
-                return renderTemplate(
-                  payLoad.data["app"]?.app,
+              }
+              catch {
+                console.log("Requested template Out of Order", error.stack);
+              }
+            }
+            else if (htmlTresArg) {
+              try {
+                let driveA = 
                   {
-                    pL: payLoad,
-                  },
-                  JSON.stringify(fT?.name || funcTres),
+                    fileParam: funcTres,
+                  }
+                return renderFile(
+                  funcTres,
+                  driveA,
+                  "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
+                    htmlTresArg +
+                    ", " +
+                    JSON.stringify(driveA) +
+                    ", " +
+                    htmlTresArg +
+                    ",",
                 );
+              } catch (error) {
+                Logger.log("Requested! HTML Out of Order", error.stack);
               }
             }
           } catch (error) {
             console.error(
-              `Error executing function "RENDERFILE":`,
+              `Error in "RENDER" exec:`,
               error.stack,
             );
             throw new Error(
@@ -1311,6 +1320,24 @@ function functionHandle(e) {
                 "\n" +
                 error.stack,
             );
+          }
+        }
+        else if ((e.parameter["func"] || e.parameter["args"])) {
+          try{
+            let funcU = e.parameter["func"] || "";
+            let funcD = e.parameter["args"] || "";
+            let base = createFunctionResult(funcU, funcD);
+            const data = globalHandleGetData(base);
+            return renderTemplate(
+              data?.message?.info,
+              {
+                pL: data.pL,
+              },
+              JSON.stringify(data.pL.type),
+            );
+          }
+          catch (error){
+            console.log("Requested template Out of Order", error.stack);
           }
         }
       } else {

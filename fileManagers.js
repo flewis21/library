@@ -1215,8 +1215,10 @@ function fileFold(folderX, fileX, time) {
     // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
     // var minFile = [fileX].join("").toLowerCase()
     try {
-      JSON.parse();
-    } catch (check) {}
+      JSON.parse(nameTree);
+    } catch (check) {
+      console.log(check);
+    }
     while (tree.hasNext()) {
       nameTree = tree.next();
       let myName = nameTree.getName();

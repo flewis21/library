@@ -144,7 +144,7 @@ function isValidUrl(text) {
     /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
   var matches = text.match(urlRegex);
   allMatches = matches ? [...matches] : [];
-  console.log("allMatches = matches ? [...matches] : []", allMatches);
+  console.log(`allMatches = matches ? [...${allMatches}]`);
   if (allMatches) {
     let currentProtocol = "";
     let currentHostname = "";
@@ -294,8 +294,8 @@ function mis(text, maxRetries = 3) {
     }
     var fx = supFunc?.func;
     var payLoad = supFunc?.args;
-    Logger.log("The 'e.parameter[args]' for url links, " + payLoad);
-    Logger.log(
+    console.log("The 'e.parameter[args]' for url links, " + payLoad);
+    console.log(
       "The 'e.parameter[args]' for url links after encoding, " +
         encodeURIComponent(payLoad),
     );
@@ -2060,9 +2060,9 @@ function misSt(func, someArgs) {
                 });
                 console.log("resolved e.parameter pre-result", result);
                 try {
-                  JSON.parse();
+                  JSON.parse(result.toString());
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis[this]);
+                  console.log("Check/Balance for " + result.toString());
                 }
                 if (typeof result === "string" && result !== "undefined") {
                   args[declaredParamName] = objectOfS(
@@ -2158,9 +2158,9 @@ function misSt(func, someArgs) {
                 //   payLoad = "Function not found for data generation.";
                 // }
                 try {
-                  JSON.parse();
+                  JSON.parse(result.toString());
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis[this]);
+                  console.log("Check/Balance for " + result.toString());
                 }
 
                 args[declaredParamName] = {
@@ -2171,9 +2171,9 @@ function misSt(func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "func") {
                 try {
-                  JSON.parse();
+                  JSON.parse(result.toString());
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis[this]);
+                  console.log("Check/Balance for " + result.toString());
                 }
                 args[declaredParamName] =
                   // userProvidedValue !== null && userProvidedValue !== undefined
@@ -2183,9 +2183,9 @@ function misSt(func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "varA") {
                 try {
-                  JSON.parse();
+                  JSON.parse(result.toString());
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis[this]);
+                  console.log("Check/Balance for " + result.toString());
                 }
                 console.log(
                   "Declared parameter " +
@@ -2462,9 +2462,9 @@ function misSt(func, someArgs) {
                 resolvedArgs.push(args[declaredParamName]);
               } else if (declaredParamName === "argsObject") {
                 try {
-                  JSON.parse();
+                  JSON.parse(result.toString());
                 } catch (check) {
-                  Logger.log("Check/Balance for " + globalThis[this]);
+                  console.log("Check/Balance for " + result.toString());
                 }
                 args[declaredParamName] =
                   // userProvidedValue !== null &&
@@ -2891,9 +2891,9 @@ function resolveParams(func, someArgs) {
               });
               console.log("resolved e.parameter pre-result", result);
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = objectOfS(
@@ -2958,9 +2958,9 @@ function resolveParams(func, someArgs) {
               });
               console.log("resolved data pre-result", result);
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
@@ -3027,9 +3027,9 @@ function resolveParams(func, someArgs) {
               });
               console.log("resolved func pre-result", result);
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = result;
@@ -3048,9 +3048,9 @@ function resolveParams(func, someArgs) {
               (paramName === null && declaredParamName === "varA")
             ) {
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result.toString());
               }
               arrDRnd = appSort(numVarRnd);
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
@@ -3059,9 +3059,9 @@ function resolveParams(func, someArgs) {
               });
               console.log("resolved varA pre-result", result);
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();
@@ -3219,9 +3219,9 @@ function resolveParams(func, someArgs) {
               (paramName === null && declaredParamName === "argsObject")
             ) {
               try {
-                JSON.parse();
+                JSON.parse(result.toString());
               } catch (check) {
-                Logger.log("Check/Balance for " + globalThis[this]);
+                console.log("Check/Balance for " + result);
               }
               var rawVar = mis("VVar");
               args[declaredParamName] = rawVar.app["myVar"];
