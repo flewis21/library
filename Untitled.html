@@ -75,7 +75,7 @@
         return Math.floor(Math.random() * Math.floor(htmSearchList.length));
       };
       var rndPage = htmSearchList[htmNum()];
-      alert(rndPage + "...");
+      // alert(rndPage + "...");
       function updatePage() {
         localStorage.setItem("htmSearch", rndPage);
         document.getElementById("indexSEO").innerHTML =
@@ -85,8 +85,8 @@
           .withFailureHandler(error)
           .runBoilerplate("seoIndex");
         function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
+          // alert(rndPage + "(" + drop + ")");
+          // alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
           serverside("getScriptUrl")
             .then((cChange) => {
@@ -106,7 +106,7 @@
               }
             })
             .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
+              // alert(rndPage + " error(" + er + ")");
               console.log(er);
               document.getElementById("indexSEO").innerHTML =
                 JSON.stringify(er);
@@ -124,8 +124,8 @@
           .withFailureHandler(error)
           .runBoilerplate("seoIndex");
         function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
+          // alert(rndPage + "(" + drop + ")");
+          // alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
           serverside("getScriptUrl")
             .then((cChange) => {
@@ -145,7 +145,7 @@
               }
             })
             .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
+              // alert(rndPage + " error(" + er + ")");
               console.log(er);
               document.getElementById("indexSEO").innerHTML =
                 JSON.stringify(er);
@@ -153,7 +153,7 @@
         }
       }
       function error(er) {
-        alert(rndPage + " error(" + er + ")");
+        // alert(rndPage + " error(" + er + ")");
         console.log(er);
         document.getElementById("indexSEO").innerHTML = JSON.stringify(er);
       }

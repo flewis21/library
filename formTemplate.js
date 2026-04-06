@@ -1439,7 +1439,12 @@ function dtls(callFunc, time) {
   if (
     [appList].join().toLowerCase().includes([formName].join("").toLowerCase())
   ) {
-    var jsFunc = globalThis[formName]();
+    if (typeof globalThis[formName] === "function") {
+      var jsFunc = globalThis[formName]();
+    }
+    else {
+      var jsFunc;
+    }
     var isProduct = formsUrls([formName].join("").toLowerCase(), "Forms");
     console.log(typeof isProduct);
     if (typeof isProduct === "string") {

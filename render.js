@@ -341,17 +341,17 @@ var contentTemplate = function (file, argsObject) {
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
 var contentCDN = function (url, argsObject) {
-  var redirectURL = encodeURIComponent(
-    url +
-      "?" +
-      Object.keys(argsObject)
-        .map((key) => key + "=" + argsObject[key])
-        .join("&"),
-  );
+  // var redirectURL = encodeURIComponent(
+  //   url +
+  //     "?" +
+  //     Object.keys(argsObject)
+  //       .map((key) => key + "=" + argsObject[key])
+  //       .join("&"),
+  // );
   return HtmlService.createHtmlOutputFromFile("cors")
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
     .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-    .addMetaTag("http-equiv", "refresh", "0; url=" + redirectURL);
+    .setContent(seoCapital(url));
 };
 
 var contentFile = function (file, argsObject) {
@@ -1159,7 +1159,7 @@ var renderTemplate = function (blob, argsObject, title) {
         </nav>
         <main class="responsive-section float-left">
           <header class="banner responsive-section">
-            <h1><?!= driveA ?></h1>
+            <h6><?!= JSON.stringify(driveD) ?></h6>
             <p>Recent Applications</p>
           </header>
           <div class="row responsive-section">
@@ -1288,7 +1288,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= driveM ?>
+                                    <?!= JSON.stringify(driveM) ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Visible Demonstrations:</a></h3>
                                     </header>
@@ -1396,13 +1396,13 @@ var renderTemplate = function (blob, argsObject, title) {
         renTemp: tmp.evaluate().getContent(),
         driveA: JSON.stringify(argsObject),
         driveD: tmp.payL?.pL?.data,
-        drivedA: tmp.payL?.pL?.data?.app,
+        drivedA: tmp.payL?.message?.content,
         drivedD: tmp.payL?.pL?.dataData,
-        drivedH: tmp.payL?.pL?.data?.html,
+        drivedH: tmp.payL?.message?.info,
         drivedI: tmp.payL?.pL?.dataIndex,
-        drivedU: tmp.payL?.pL?.data?.url,
+        drivedU: tmp.payL?.message?.feed,
         driveL: tmp.payL?.pL?.link,
-        driveM: tmp.payL?.pL?.message,
+        driveM: tmp.payL?.message,
         driveP: tmp.payL?.pL,
         driveT: tmp.payL?.pL?.type,
       },

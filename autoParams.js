@@ -1210,9 +1210,6 @@ function gMain() {
 
 function functionHandle(e) {
   var executed = 0;
-  console.info(`previously exec count - \nfunctionHandle(${e}) - `, executed);
-  var htmlList = functionRegistry.getHtmlList();
-  executed++;
   let rndE = "";
 
   // Logging

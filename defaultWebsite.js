@@ -14,13 +14,13 @@
 
 function appSort(numIndex, time) {
   // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
-  var titleArray = [];
-  for (var key in globalThis) {
+  var titleArray = functionRegistry.getFileList();
+  // for (var key in globalThis) {
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelapsedTime: " + elapsedTime)
-    if (typeof globalThis[key] == "function") {
-      titleArray.push(key);
-    }
-  }
+  //   if (typeof globalThis[key] == "function") {
+  //     titleArray.push(key);
+  //   }
+  // }
   var arrData = [
     "e",
     "t",
@@ -49,43 +49,14 @@ function appSort(numIndex, time) {
     "q",
     "z",
   ];
-  var numLen = [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    numIndex,
-  ];
-  var rndNumLen = numLen[Math.floor(Math.random() * Math.floor(numLen.length))];
+  var rndNumLen = numIndex || Math.floor(Math.random() * 26);
   var freqArray = [];
   var i = 0;
-  var l = arrData.length;
+  var l = 1;
   for (i, l; i < l; i++) {
     titleArray.sort((a, b) => {
       // return console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + " OR " + b + "\nelapsedTime: " + elapsedTime)
-      if (a[0].toLowerCase() === arrData[rndNumLen || i]) {
+      if (a[0].toLowerCase() === arrData[numIndex || i]) {
         if (freqArray.indexOf(a) > -1) {
           return;
         } else {
@@ -242,7 +213,6 @@ var createFunctionResult = function (funcUno, funcDos) {
 function createRandomFunction(searchString) {
   // --- Configuration for randomness ---
   var executed = 0;
-  console.info("previously exec count \ncreateRandomFunction - ", executed);
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
     : functionRegistry.fileList;
@@ -253,7 +223,6 @@ function createRandomFunction(searchString) {
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
-  console.info("previously exec count \ncreateRandomFunction - ", executed);
   const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
   executed++;
 
@@ -272,49 +241,30 @@ function createRandomFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         scriptUrl = resolveParams(tempObj);
         executed++;
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
         executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         scriptUrl = resolveParams(tempObj);
         executed++;
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileIndex = crmT(scriptTitle);
       executed++;
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileParams = functionRegistry.paramsList[fileIndex];
       executed++;
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       let tempObj = isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
@@ -322,7 +272,6 @@ function createRandomFunction(searchString) {
       Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
       scriptUrl = resolveParams(tempObj);
       executed++;
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
     }
   } else {
     console.log("isRequired", isRequired);
@@ -332,50 +281,31 @@ function createRandomFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         scriptUrl = resolveParams(tempObj);
         executed++;
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         executed++;
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
-        console.info(
-          "previously exec count \ncreateRandomFunction - ",
-          executed,
-        );
         scriptUrl = resolveParams(tempObj);
         executed++;
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileIndex = crmT(scriptTitle);
       executed++;
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       fileParams = functionRegistry.paramsList[fileIndex];
       executed++;
       mapArr[scriptTitle] = [];
-      console.info("previously exec count \ncreateRandomFunction - ", executed);
       scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
       executed++;
     }

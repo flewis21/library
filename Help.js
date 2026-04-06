@@ -3095,7 +3095,7 @@ function resolveParams(func, someArgs) {
               functionRegistry.gTree;
               var folder = functionRegistry.getFolderList()[numVarRnd];
               args[declaredParamName] =
-                fileBrowser(folder).url || driveManager();
+                fileBrowser(folder)?.url || driveManager();
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "object" ||
@@ -3330,11 +3330,11 @@ function seoCapital(url) {
                       <div class="row red">
                         <div class="col s12 green">
                           <div id="divSEOC" class="row receipt blue flow-text">
-                            <table class="striped centered highlight black z-depth-5 container grid responsive-table" style="max-width:100%;height:auto">
+                            <table class="striped centered highlight black z-depth-5 grid responsive-table" style="max-width:100%;height:auto">
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
+                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;width: 900px;overflow: auto;">
                                     <table class="striped centered highlight amber z-depth-5 grid container responsive-table" style="max-width:100%;height: auto">
                                       <thead></thead>
                                       <tbody >

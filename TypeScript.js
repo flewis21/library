@@ -112,6 +112,7 @@ var geneicType = function () {
     b: 123,
     c: ["string"],
   };
+  var numVarRnd = Math.floor(Math.random() * 25);
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
   // let randomWord = rndWord();
