@@ -173,10 +173,10 @@
         google.script.run
           .withSuccessHandler(done)
           .withFailureHandler(error)
-          .runBoilerplate("seoIndex", [rndPage]);
+          .runBoilerplate("vidPlayList", [rndPage]);
         function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
+          // alert(rndPage + "(" + drop + ")");
+          // alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
 
           serverside("getScriptUrl")
@@ -197,7 +197,7 @@
               }
             })
             .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
+              // alert(rndPage + " error(" + er + ")");
               console.log(er);
               document.getElementById("seoData").innerHTML = er;
             });
@@ -214,8 +214,8 @@
           .withFailureHandler(error)
           .runBoilerplate("seoIndex", [rndPage]);
         function done(drop) {
-          alert(rndPage + "(" + drop + ")");
-          alert("droplet.length = " + drop.length);
+          // alert(rndPage + "(" + drop + ")");
+          // alert("droplet.length = " + drop.length);
           // alert(droplet.length + " is not the required length")
 
           serverside("getScriptUrl")
@@ -236,14 +236,14 @@
               }
             })
             .catch((er) => {
-              alert(rndPage + " error(" + er + ")");
+              // alert(rndPage + " error(" + er + ")");
               console.log(er);
               document.getElementById("seoData").innerHTML = er;
             });
         }
       }
       function error(er) {
-        alert(rndPage + " error(" + er + ")");
+        // alert(rndPage + " error(" + er + ")");
         console.log(er);
         document.getElementById("seoData").innerHTML = er;
       }

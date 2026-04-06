@@ -1271,7 +1271,7 @@ function functionHandle(e) {
                   let options = {
                     muteHttpExceptions: true,
                   };
-                  payLoad.data["app"] = getUrlResponse(payLoad.data["url"] || getScriptUrl(), options);
+                  payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
                   return renderTemplate(
                     payLoad.data["app"]?.app,
                     {
@@ -1324,9 +1324,9 @@ function functionHandle(e) {
             let funcU = e.parameter["func"] || "";
             let funcD = e.parameter["args"] || "";
             let base = createFunctionResult(funcU, funcD);
-            const data = globalHandleGetData(base);
+            let data = globalHandleGetData(base);
             return renderTemplate(
-              data?.message?.info,
+              base || data?.message?.info,
               {
                 pL: data.pL,
               },
@@ -1409,20 +1409,15 @@ function functionHandle(e) {
   }
   if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
     var funcUno;
+    var funcDos = e.parameter["args"];
   } else if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
     var funcUno = e.parameter["func"];
+    var funcDos;
   } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
     var funcUno = e.parameter["func"];
+    var funcDos = e.parameter["args"];
   } else {
     var funcUno = Object.keys(rndE);
-  }
-  if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
-    var funcDos;
-  } else if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
-    var funcDos = e.parameter["args"];
-  } else if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
-    var funcDos = e.parameter["args"];
-  } else {
     var funcDos = Object.values(rndE);
   }
   return {

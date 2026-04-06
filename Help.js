@@ -3320,28 +3320,21 @@ function seoCapital(url) {
           </style>
         </head>
         <body>
-          <div class="row maroon">
-            <div class="row brown">
-                <div class="col s12 purple" id="seoData">
+          <div class="maroon">
+            <div class="brown">
+                <div class="purple" id="seoData">
                   <label id="labSEOC">
                     <strong></strong></label>
-                  <div class="row orange">
-                    <div class="col s12 card-panel black">
-                      <div class="row red">
-                        <div class="col s12 green">
-                          <div id="divSEOC" class="row receipt blue flow-text">
-                            <table class="striped centered highlight black z-depth-5 grid responsive-table" style="max-width:100%;height:auto">
+                  <div class="orange">
+                    <div class="card-panel black">
+                      <div class="blue">
+                        <div class="row">
+                          <div id="divSEOC" class="col s12 receipt flow-text">
+                            <table class="striped centered highlight z-depth-5 grid responsive-table" style="max-width:100%;height:auto">
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;width: 900px;overflow: auto;">
-                                    <table class="striped centered highlight amber z-depth-5 grid container responsive-table" style="max-width:100%;height: auto">
-                                      <thead></thead>
-                                      <tbody >
-                                        <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                          <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: auto;max-width: 100%;overflow: auto;">
-                                            <div>
-                                              <iframe src='${url}' id="w3Res" style="width: 900px;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></div></td></tr></tbody></table></td></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                              <iframe src='${url}' id="w3Res" style="width: 100%;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>
