@@ -294,12 +294,19 @@ function needPastTime(searchString) {
         matchKeys.forEach((match) => {
           let vidMatch = vidObj[match];
           let truMatch = isTruthy(vidMatch);
-          if (truMatch) {
+          if (truMatch && typeof vidMatch !== "number") {
             let searchMatch = vidMatch.indexOf(searchString) > -1;
             let matchSearch = searchString.indexOf(vidMatch) > -1;
             if (searchMatch || matchSearch) {
               playVid.push(videoId);
             }
+          }
+          else if (truMatch && typeof vidMatch === "number") {
+            let matchSearch = searchString.indexOf(vidMatch) > -1;
+            if (searchMatch || matchSearch) {
+              playVid.push(videoId);
+            }
+
           }
         });
       });

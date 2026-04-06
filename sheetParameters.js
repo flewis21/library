@@ -2483,7 +2483,7 @@ function wsSIPOC(fileX, col) {
   return result;
 }
 
-function xkcdRSS() {
+var xkcdRSS = function() {
   var feed = UrlFetchApp.fetch("http://xkcd.com/rss.xml").getContentText();
   feed = feed.replace(
     /(&lt;img.*?alt="(.*?)".*?&gt;)/g,

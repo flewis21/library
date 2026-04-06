@@ -124,9 +124,9 @@ var geneicType = function () {
   //   return rndS.name === searchResult;
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
-  let handles = functionHandle({parameter: {file:"iframe player"}});
-  let funcU = handles["exec"][0];
-  let funcD = handles["args"][0];
+  let handles = functionHandle({parameter: {q:"donorsChoice"}});
+  let funcU = handles["exec"];
+  let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
   let dataOR = globalHandleGetData(base);
   // let fileParams = functionRegistry.paramsList[fileIndex];
