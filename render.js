@@ -909,6 +909,7 @@ var renderFile = function (file, argsObject, title) {
                 </script>
                 <![endif]-->
               </style>
+              <?!= fontAwesome.getContent() ?>
               <?!= materializeCss.getContent() ?>
             </head>
             <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
@@ -1141,6 +1142,7 @@ var renderTemplate = function (blob, argsObject, title) {
           </script>
           <![endif]-->
         </style>
+        <?!= fontAwesome.getContent() ?>
         <?!= materializeCss.getContent() ?>
       </head>
       <body>
@@ -1200,25 +1202,6 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </aside>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= drivedU ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <header class="responsive-section">
-                                      <h3><a href="">Subjectivity in Definition:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
                                 <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
@@ -1230,7 +1213,26 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= drivedA ?>
+                                    <?!= drivedI ?>
+                                    <header class="responsive-section">
+                                      <h3><a href="">Subjectivity in Definition:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                  </div>
+                                </div>
+                              </article>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href="<?!= drivedA ?>">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
                                     <header class="responsive-section">
                                       <h3><a href="">Qualitative Aspects:</a></h3>
                                     </header>
@@ -1336,7 +1338,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="">
+                                <a href="<?!= driveD ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1348,7 +1350,6 @@ var renderTemplate = function (blob, argsObject, title) {
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
                                     <header class=""responsive-section>
-                                      <?!= driveD ?>
                                       <h3><a href="">In conclusion:</a></h3>
                                     </header>
                                     <p style="text-align: left">

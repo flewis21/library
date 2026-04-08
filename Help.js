@@ -2884,16 +2884,16 @@ function resolveParams(func, someArgs) {
               paramName === "e" ||
               (paramName === null && declaredParamName === "e")
             ) {
-              arrDRnd = appSort();
+              arrDRnd = appSort(numVarRnd);
               searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
               console.log("resolved e.parameter pre-result", result);
               try {
-                JSON.parse(result.toString());
+                JSON.parse(result);
               } catch (check) {
-                console.log("Check/Balance for " + result.toString());
+                console.log("Check/Balance for ", JSON.stringify(result));
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = objectOfS(
@@ -2917,10 +2917,7 @@ function resolveParams(func, someArgs) {
                   [
                     [
                       ["func", result.name],
-                      [
-                        "args",
-                        JSON.stringify(orderedContent) || result.parameters,
-                      ],
+                      ["args", result.parameters],
                       ["action", "getData"],
                       ["file", "uiAccess"],
                     ],

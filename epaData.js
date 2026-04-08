@@ -408,21 +408,52 @@ function epaIng(e) {
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=dateTime&args=";
   var urlPlay =
     "https://script.google.com/macros/s/AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA/exec?func=misBing&args=";
-  var res = productIngName(e);
-  var product =
-    [e][0] ||
-    res.toString().split(" ")[
-      Math.floor(Math.random() * Math.floor(res.toString().split(" ").length))
-    ];
-  var randNum = Math.floor(Math.random() * Math.floor(res["items"]?.length));
-  var coTable = res["items"]?.map((r) => {
+    var arrayMath = [`acme`];
+    var product =
+      [e][0] ||
+      arrayMath.toString().split(" ")[
+        Math.floor(
+          Math.random() * Math.floor(arrayMath.toString().split(" ").length),
+        )
+      ];
+    var test = productNamePartial(product);
+    var test2 = productRegNo(test["eparegno"]);
+    var uniqueCo = [];
+  try {
+    if (test2 && test2["active_ingredients"].length > 0) {
+      for (var i = 0, l = test2["active_ingredients"].length; i < l; i++) {
+        if (test2["active_ingredients"][i]["active_ing"]) {
+          var pIName = productIngName(
+            test2["active_ingredients"][i]["active_ing"],
+          );
+          uniqueCo.push(pIName["items"]);
+        }
+      }
+      var rndIng = Math.floor(
+        Math.random() * Math.floor(test2["active_ingredients"].length),
+      );
+      // var uniqueCo = productIngName(test2["active_ingredients"][rndIng]["active_ing"])
+      var productRnD =
+        test2["active_ingredients"][0]["active_ing"] ||
+        uniqueCo.toString().split(" ")[
+          Math.floor(
+            Math.random() * Math.floor(uniqueCo.toString().split(" ").length),
+          )
+        ];
+    }
+  }
+  catch {
+  }
+  var res = pIName;
+  var randNum = Math.floor(Math.random() * Math.floor(res?.items?.length));
+  var coTable = res?.items?.map((r) => {
     return `<tr><td><a class="waves-effect waves-light btn" href="${urlIngredient + encodeURIComponent(r["ingredientname"])}" target="_blank">${r["ingredientname"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["registrationstatus"])}" target="_blank">${r["registrationstatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlPlay + encodeURIComponent(r["productnamestatus"])}" target="_blank">${r["productnamestatus"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlCalendar + encodeURIComponent(r["productstatusdate"])}" target="_blank">${r["productstatusdate"]}</a></td><td><a class="waves-effect waves-light btn" href="${urlProduct + encodeURIComponent(r["productname"])}" target="_blank">${r["productname"]}</a></td></tr>`;
   });
   var result = JSON.stringify(coTable);
-  var ing2name = res["items"][randNum]["productname"] || product;
-  var statusDate = res["items"][randNum]["productstatusdate"];
-  var nameStatus = res["items"][randNum]["productnamestatus"];
-  var productStatus = res["items"][randNum]["registrationstatus"];
+  var ing2name = res?.items?.randNum?.productname || product;
+  var statusDate = res?.items?.randNum?.productstatusdate;
+  var nameStatus = res?.items?.randNum?.productnamestatus;
+  var productStatus = res?.items.randNum?.registrationstatus;
   var startPageUrl = getUrl(ScriptApp);
   var today = new Date(statusDate);
   var dateNow = today.toDateString();

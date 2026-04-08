@@ -217,14 +217,14 @@ function createRandomFunction(searchString) {
     ? Array(searchString)
     : functionRegistry.fileList;
   // --- Create the script ---
-  executed++;
+  console.log("SCRIPT_TITLES",executed++);
   const scriptTitle =
     SCRIPT_TITLES[Math.floor(Math.random() * SCRIPT_TITLES.length)];
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
   const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
-  executed++;
+  console.log("isRequired",executed++);
 
   let fileIndex; //= crmT(scriptTitle)
   let fileParams; //= functionRegistry.paramsList[fileIndex]
@@ -235,79 +235,79 @@ function createRandomFunction(searchString) {
     // console.info(userEMail);
     if (!script || (script && script?.length === 0)) {
       console.log("!script || (script && script?.length === 0)");
-      console.info(script?.toString() || scriptTitle);
+      // console.info(script?.toString() || scriptTitle);
       // var tempObj =
       if (!script) {
-        console.log("!script");
+        console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
-        executed++;
+        console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
-        executed++;
+        console.log("scriptUrl",executed++);
       } else {
-        console.log("(script && script?.length === 0)");
+        console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
-        executed++;
+        console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
-        executed++;
+        console.log("scriptUrl",executed++);
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
-      executed++;
+      console.log("fileIndex",executed++);
       fileParams = functionRegistry.paramsList[fileIndex];
-      executed++;
+      console.log("fileParams",executed++);
       let tempObj = isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
-      executed++;
-      Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
+      console.log("tempObj",executed++);
+      console.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
       scriptUrl = resolveParams(tempObj);
-      executed++;
+      console.log("scriptUrl",executed++);
     }
   } else {
     console.log("isRequired", isRequired);
     if (!script || script.length === 0) {
       console.log("!script || (script && script?.length === 0)");
       if (!script) {
-        console.log("!script");
+        console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [
           "driveManager",
           [scriptTitle, functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
-        executed++;
+        console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
-        executed++;
+        console.log("scriptUrl",executed++);
       } else {
-        console.log("(script && script?.length === 0)");
+        console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, functionRegistry.time);
         let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
-        executed++;
+        console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
-        executed++;
+        console.log("scriptUrl",executed++);
       }
     } else {
       // console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
-      executed++;
+      console.log("fileIndex",executed++);
       fileParams = functionRegistry.paramsList[fileIndex];
-      executed++;
+      console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
       scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
-      executed++;
+      console.log("scriptUrl",executed++);
     }
   }
   // --- Log and Return Script URL ---
