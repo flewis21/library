@@ -895,6 +895,7 @@ var renderFile = function (file, argsObject, title) {
         <!doctype html>
           <html lang="en">
             <head>
+              <?!= styleHtml.abcIt.getContent() ?>
               <style>
                 <?!= styleHtml.renderFile.getContent() ?>
                 <!--[if lt IE 9]>
@@ -909,8 +910,6 @@ var renderFile = function (file, argsObject, title) {
                 </script>
                 <![endif]-->
               </style>
-              <?!= fontAwesome.getContent() ?>
-              <?!= materializeCss.getContent() ?>
             </head>
             <body id="renderFile" clas="flex-div static-fix" background-image="<?!= logo.getContent() ?>">
               <nav class="flex-div responsive-section card-panel transparent static-fix">
@@ -927,6 +926,7 @@ var renderFile = function (file, argsObject, title) {
                 </div>
               </nav>
               <header class="banner responsive-section card-panel transparent static-fix">
+                <a href="#">Remove</a>
                 <div id="iframePlayer" class="row card-panel transparent list-container grid"></div>
                 <h1>Blog</h1>
                 <p>Recent Applications</p>
@@ -1063,7 +1063,6 @@ var renderFile = function (file, argsObject, title) {
                 </div>
               </footer>
               </main>
-              <?!= materializeJs.getContent() ?>
               <?!= styleHtml.runIt.getContent() ?>
               <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
             </body>
@@ -1128,6 +1127,7 @@ var renderTemplate = function (blob, argsObject, title) {
       `
     <html id="renderTemplate">
       <head>
+        <?!= styleHtml.abcIt.getContent() ?>
         <style>
           <?!= styleHtml.renderFile.getContent() ?>
           <!--[if lt IE 9]>
@@ -1142,8 +1142,6 @@ var renderTemplate = function (blob, argsObject, title) {
           </script>
           <![endif]-->
         </style>
-        <?!= fontAwesome.getContent() ?>
-        <?!= materializeCss.getContent() ?>
       </head>
       <body>
         <nav class="flex-div responsive-section static-fix">
@@ -1184,7 +1182,7 @@ var renderTemplate = function (blob, argsObject, title) {
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="<?!= drivedI ?>">
+                                <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1195,12 +1193,35 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <i>   
-                                      No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                                    </i>
+                                    <?!= drivedD ?>
+                                    <p>
+                                      <i>   
+                                        No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
+                                      </i>
+                                    </p>
                                   </div>
                                 </div>
                               </aside>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href="<?!= drivemC ?>">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <?!= JSON.stringify(driveM) ?>
+                                    <header class="responsive-section">
+                                      <h3><a href="">Subjectivity in Definition:</a></h3>
+                                    </header>
+                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                  </div>
+                                </div>
+                              </article>
                               <article class="responsive-section card-panel vid-list">
                                 <a href="">
                                   <article class="responsive-section card-panel static-fix container">
@@ -1213,26 +1234,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= drivedI ?>
-                                    <header class="responsive-section">
-                                      <h3><a href="">Subjectivity in Definition:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= drivedA ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
+                                    <?!= driveT ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Qualitative Aspects:</a></h3>
                                     </header>
@@ -1252,7 +1254,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= drivedD ?>
+                                    <?!= drivedI ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Contextual Dependence:</a></h3>
                                     </header>
@@ -1290,7 +1292,6 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= JSON.stringify(driveM) ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Visible Demonstrations:</a></h3>
                                     </header>
@@ -1311,7 +1312,6 @@ var renderTemplate = function (blob, argsObject, title) {
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
                                     <header class="responsive-section">
-                                      <?!= driveT ?>
                                       <h3><a href="">Compliance and Obedience:</a></h3>
                                     </header>
                                     <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
@@ -1384,7 +1384,6 @@ var renderTemplate = function (blob, argsObject, title) {
             </aside>
           </div>
         </footer>
-        <?!= materializeJs.getContent() ?>
         <?!= styleHtml.runIt.getContent() ?>
         <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
         <div id="result"></div>
@@ -1397,13 +1396,13 @@ var renderTemplate = function (blob, argsObject, title) {
         renTemp: tmp.evaluate().getContent(),
         driveA: JSON.stringify(argsObject),
         driveD: tmp.payL?.pL?.data,
-        drivedA: tmp.payL?.message?.content,
         drivedD: tmp.payL?.pL?.dataData,
         drivedH: tmp.payL?.message?.info,
         drivedI: tmp.payL?.pL?.dataIndex,
         drivedU: tmp.payL?.message?.feed,
         driveL: tmp.payL?.pL?.link,
         driveM: tmp.payL?.message,
+        drivemC: tmp.payL?.message?.content,
         driveP: tmp.payL?.pL,
         driveT: tmp.payL?.pL?.type,
       },

@@ -834,6 +834,17 @@ const yTPlayer = HtmlService.createHtmlOutput(
     }
   </script>
 `);
+const remove_iframe = HtmlService.createHtmlOutput(
+  `
+    <script>
+      $('a').click(function(){
+          $('iframe')[0].contentWindow.location.reload();
+          setTimeout(function(){
+            $('iframe').remove();
+          }, 1000);
+      });
+    </script>
+`);
 
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
@@ -846,8 +857,12 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent()}`
+    `${key_press.getContent() + yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent()}`
   ),
+  abcIt: HtmlService.createHtmlOutput(
+    `
+      ${utf_8.getContent() + b_top.getContent() + xuacompatible.getContent() + viewport.getContent() + google_signin_client.getContent() + fontAwesome.getContent() + googleApis_preConnect.getContent() + gstatic_preConnect.getContent() + googleApisCss.getContent() + materializeCss.getContent() + tabulatorCss.getContent() + googleApisIcon.getContent() + google_charts_loader.getContent() + googleApisOnApiLoad.getContent() + googleApis_defer.getContent()}
+  `)
 };
 
 var builtStyling = function (e) {
