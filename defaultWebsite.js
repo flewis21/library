@@ -72,6 +72,8 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
+  let truUno = isTruthy(funcUno);
+  let truDos = isTruthy(funcDos);
 
   // --- BEGIN Refactored payLoad processing ---
 
@@ -98,20 +100,24 @@ var createFunctionResult = function (funcUno, funcDos) {
             if (!objVal) {
               parsedFuncArgs = JSON.parse(funcDos);
             } 
-            else if (objVal && funcDos.length > 0) {
+            else 
+            if (objVal && funcDos.length > 0) {
               console.log("But, it is failing. \n");
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
-          } catch (jsonError) {
+          } 
+          catch (jsonError) {
             console.log("But, it is failing. \n" + jsonError.stack);
             if (objVal && funcDos.length > 0) {
               parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
             }
           }
         }
-      } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+      } else 
+      if (typeof funcDos !== "object" && truDos) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
-      } else {
+      } 
+      else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
       } //   }
       if (
@@ -125,12 +131,14 @@ var createFunctionResult = function (funcUno, funcDos) {
         try {
           rawFuncResult = mis([funcUno]);
           executed++
-        } catch (error) {
+        } 
+        catch (error) {
           console.log("But, it is failing.");
           rawFuncResult = globalThis[funcUno]();
           executed++
         }
-      } else if (
+      } else 
+      if (
         funcUno &&
         typeof globalThis[funcUno] !== "function" &&
         funcDos

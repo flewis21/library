@@ -1182,27 +1182,6 @@ var renderTemplate = function (blob, argsObject, title) {
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <?!= drivedD ?>
-                                    <p>
-                                      <i>   
-                                        No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:
-                                      </i>
-                                    </p>
-                                  </div>
-                                </div>
-                              </aside>
-                              <article class="responsive-section card-panel vid-list">
                                 <a href="<?!= drivemC ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
@@ -1214,7 +1193,28 @@ var renderTemplate = function (blob, argsObject, title) {
                                 <div class="flex-div">
                                   <img src="<?!= seaIcn.getContent() ?>" />
                                   <div class="vid-info">
-                                    <?!= JSON.stringify(driveM) ?>
+                                    <p>
+                                      <i>   
+                                        No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
+                                        <?!= JSON.stringify(driveM) ?>
+                                      </i>
+                                    </p>
+                                  </div>
+                                </div>
+                              </aside>
+                              <article class="responsive-section card-panel vid-list">
+                                <a href="<?!= driveL ?>">
+                                  <article class="responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
+                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                </a>
+                                <div class="flex-div">
+                                  <img src="<?!= seaIcn.getContent() ?>" />
+                                  <div class="vid-info">
+                                    <?!= drivedD ?>
                                     <header class="responsive-section">
                                       <h3><a href="">Subjectivity in Definition:</a></h3>
                                     </header>
@@ -1223,7 +1223,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="">
+                                <a href="<?= drivemI ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1243,7 +1243,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="">
+                                <a href="<?!= drivedI ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1319,7 +1319,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveL ?>">
+                                <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1397,7 +1397,7 @@ var renderTemplate = function (blob, argsObject, title) {
         driveA: JSON.stringify(argsObject),
         driveD: tmp.payL?.pL?.data,
         drivedD: tmp.payL?.pL?.dataData,
-        drivedH: tmp.payL?.message?.info,
+        drivemI: tmp.payL?.message?.info,
         drivedI: tmp.payL?.pL?.dataIndex,
         drivedU: tmp.payL?.message?.feed,
         driveL: tmp.payL?.pL?.link,

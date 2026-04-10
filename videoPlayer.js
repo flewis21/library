@@ -303,7 +303,7 @@ function needPastTime(searchString) {
           }
           else if (truMatch && typeof vidMatch === "number") {
             let matchSearch = searchString.indexOf(vidMatch) > -1;
-            if (searchMatch || matchSearch) {
+            if (matchSearch) {
               playVid.push(videoId);
             }
 

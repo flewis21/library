@@ -1215,19 +1215,19 @@ function functionHandle(e) {
   // Logging
   if (!e) {
     rndE = createRandomFunction();
-    executed++;
+    console.log("rndE = " + rndE, executed++);
   } else if (e && !e.parameter) {
     rndE = createRandomFunction(e);
-    executed++;
+    console.log("rndE = " + rndE, executed++);
   } else if (e && e.parameter) {
     let objData = Object.keys(e.parameter);
     if (objData.length === 0) {
       rndE = createRandomFunction();
-      executed++;
+      console.log("rndE = " + rndE, executed++);
     } else if (objData.length > 0) {
-      if (e.parameter["func"] || e.parameter["args"] || e.parameter["file"]) {
+      if (e.parameter["file"]) {
         console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
-        if (e.parameter["file"]) {
+        // if (e.parameter["file"]) {
           console.log(
             "Determined that funcTres execution is requested! \n" +
               e.parameter["file"],
@@ -1238,7 +1238,7 @@ function functionHandle(e) {
             var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
             var rndPage = htmlArray[rndHtmlIndex];
             var htmlTresArg; // = rndPage; // Default value
-            executed++;
+            console.log("htmlArray = " + htmlArray, executed++);
             if (funcTres) {
               if (Array.isArray(funcTres)) {
                 const firstArg = funcTres[0];
@@ -1318,36 +1318,36 @@ function functionHandle(e) {
                 error.stack,
             );
           }
-        }
-        else if ((e.parameter["func"] || e.parameter["args"])) {
-          try{
-            let funcU = e.parameter["func"] || "";
-            let funcD = e.parameter["args"] || "";
-            let base = createFunctionResult(funcU, funcD);
-            let data = globalHandleGetData(base);
-            return renderTemplate(
-              base || data?.message?.info,
-              {
-                pL: data.pL,
-              },
-              JSON.stringify(data.pL.type),
-            );
-          }
-          catch (error){
-            console.log("Requested template Out of Order", error.stack);
-          }
-        }
+        // }
+        // else if ((e.parameter["func"] || e.parameter["args"])) {
+        //   try{
+        //     let funcU = e.parameter["func"] || "";
+        //     let funcD = e.parameter["args"] || "";
+        //     let base = createFunctionResult(funcU, funcD);
+        //     let data = globalHandleGetData(base);
+        //     return renderTemplate(
+        //       base || data?.message?.info,
+        //       {
+        //         pL: data.pL,
+        //       },
+        //       JSON.stringify(data.pL.type),
+        //     );
+        //   }
+        //   catch (error){
+        //     console.log("Requested template Out of Order", error.stack);
+        //   }
+        // }
       } else {
-        if (!e.parameter["func"] && !e.parameter["args"]) {
+        // if (!e.parameter["func"] && !e.parameter["args"]) {
           var argsEd = createRandomFunction(e.parameter[objData[0]]);
-          executed++;
+          console.log("argsEd = " + argsEd, executed++);
           if (typeof argsEd === "string") {
             e = objectOfS(
               ["parameter"],
               [[["func", argsEd]]],
               functionRegistry.time,
             );
-            executed++;
+            console.log("e = " + e, executed++);
           } else if (typeof argsEd === "object" && argsEd !== null) {
             let argsAP = Object.values(argsEd);
             if (argsAP && argsAP.length > 0) {
@@ -1361,14 +1361,14 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-              executed++;
+              console.log("e = " + e, executed++);
             } else {
               e = objectOfS(
                 ["parameter"],
                 [[["func", Object.keys(argsEd)[0]]]],
                 functionRegistry.time,
               );
-              executed++;
+              console.log("e = " + e, executed++);
             }
           } else {
             console.log("Unexpected argsEd type: ", argsEd);
@@ -1388,7 +1388,7 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-              executed++;
+              console.log("e = " + e, executed++);
             } else {
               e = objectOfS(
                 ["parameter"],
@@ -1400,10 +1400,10 @@ function functionHandle(e) {
                 ],
                 functionRegistry.time,
               );
-              executed++;
+              console.log("e = " + e, executed++);
             }
           }
-        }
+        // }
       }
     }
   }

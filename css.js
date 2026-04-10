@@ -725,7 +725,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
         } else if (event.data == YT.PlayerState.UNSTARTED) {
           changeBorderColor(event.data);
           setTimeout(2000, playvideo)
-          // event.target.playVideo();
+          event.target.playVideo();
         } else if (event.data == YT.PlayerState.ENDED) {
           changeBorderColor(event.data);
           setShuffle();

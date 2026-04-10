@@ -124,7 +124,7 @@ var geneicType = function () {
   //   return rndS.name === searchResult;
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
-  let handles = functionHandle({parameter: {q:"epaIng"}});
+  let handles = functionHandle({parameter: {q:"form 172 1045 nol"}});
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
