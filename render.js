@@ -1104,6 +1104,7 @@ var renderTemplate = function (blob, argsObject, title) {
           ")\n" +
           arguments.callee.caller.name,
   );
+  var executed = 0;
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   console.log("argsObject before tmp processing", argsObject);
   const tmp = HtmlService.createTemplate(blob);
@@ -1159,7 +1160,11 @@ var renderTemplate = function (blob, argsObject, title) {
         </nav>
         <main class="responsive-section float-left">
           <header class="banner responsive-section">
-            <h6><?!= JSON.stringify(driveD) ?></h6>
+            <div id="player1" class="row card-panel transparent list-container grid"></div>
+            <div id="loadingSurvey">
+              <a href="#">Remove</a>
+            </div>
+            <h6><?!= drivedD?.split("\)")[0] ?></h6>
             <p>Recent Applications</p>
           </header>
           <div class="row responsive-section">
@@ -1182,7 +1187,7 @@ var renderTemplate = function (blob, argsObject, title) {
                               <h2>Power</h2>
                               <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
                               <aside class="responsive-section card-panel vid-list">
-                                <a href="<?!= drivemC ?>">
+                                <a href="<?= drivemI ?>">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>
@@ -1223,7 +1228,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                 </div>
                               </article>
                               <article class="responsive-section card-panel vid-list">
-                                <a href="<?= drivemI ?>">
+                                <a href="">
                                   <article class="responsive-section card-panel static-fix container">
                                     <div class="row responsive-section static-fix">
                                       <?!= renTemp ?>

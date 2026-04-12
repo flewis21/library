@@ -394,6 +394,7 @@ const iframe_query = HtmlService.createHtmlOutput(
 `);
 const domain_lookup = HtmlService.createHtmlOutput(
   `
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     function serverSide(func, args) {
       return new Promise((resolve, reject) => {
@@ -458,6 +459,7 @@ const key_press = HtmlService.createHtmlOutput(
 `);
 const domain_submit = HtmlService.createHtmlOutput(
   `
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     function serverSide(func, args) {
       return new Promise((resolve, reject) => {
@@ -490,6 +492,7 @@ const domain_submit = HtmlService.createHtmlOutput(
 `);
 const document_ready = HtmlService.createHtmlOutput(
   `
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     function serverSide(func, args) {
       return new Promise((resolve, reject) => {
@@ -836,6 +839,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
 `);
 const remove_iframe = HtmlService.createHtmlOutput(
   `
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $('a').click(function(){
           $('iframe')[0].contentWindow.location.reload();
@@ -843,6 +847,399 @@ const remove_iframe = HtmlService.createHtmlOutput(
             $('iframe').remove();
           }, 1000);
       });
+    </script>
+`);
+const enter_key_event_listener = HtmlService.createHtmlOutput(
+  `
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+            resolve(result)
+          })
+          .withFailureHandler((error) => {
+            reject(error)
+          })
+          .runBoilerplate(func, args)
+        })
+      };
+
+      var eventG = document.getElementById("linkload01");
+      var eventH = document.getElementById("spSearch");
+      var eventL = document.getElementById("spLab");
+      var eventV = document.getElementById("player2");
+      var vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+
+      eventH.addEventListener("keypress", function(event) {
+        // If the user preses the "Enter" key on the keyboard. 
+        if (event.key === "Enter")  {
+          let parsedE;
+
+          try {
+            // Parse the user's input as the new 'args' value
+            // Allow direct strings or JSON arrays/objects
+            try {
+              parsedE = JSON.parse(eventH.value);
+            } 
+            catch (jsonError) {
+              // If it's not valid JSON, treat it as a plain string
+              parsedE = eventH.value;
+            }
+          } 
+          catch(error) {
+            alert("Error parsing JSON. Please ensure the input is valid JSON.");
+            console.error("JSON parsing error:", error);
+          };
+
+          var strValue = parsedE;
+
+          serverside("substanceVegas", [null,null,null,1,1,5])
+            .then((sub) => {
+              var hosts = sub.substHost;
+              var rndHost = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];
+              eventH.value = rndHost;
+            });
+
+          if (!strValue) {
+            eventL.innerText = "... Loading";
+
+            serverside("mis")
+              .then((retn) => {
+                var stream = retn.index;
+
+                if (stream) {
+                  if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+                    eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';
+                    document.getElementById("eventRes01").src = stream;
+                    eventG.href = stream;
+                    eventL.innerText = "Research"
+                  } 
+                  else {
+                    let data;
+                    // 1. Handle UrlFetchApp.HTTPResponse
+
+                    if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+                      const contentType = stream.getHeaders()["Content-Type"] || "";
+                      const responseText = stream.getContentText();
+
+                      if (contentType.includes("application/json")) {
+                        try {
+                          data = JSON.parse(responseText);
+                        } 
+                        catch (e) {
+                          data = "Error parsing JSON from URL fetch: " + responseText
+                        }
+                      } 
+                      else if (contentType.includes("text/html")) {
+                        data = responseText;
+                      } 
+                      else {
+                        data = responseText;
+                      }
+                    };
+
+                    eventV.innerHTML = JSON.stringify(stream);
+                    eventG.href = stream;
+                    eventL.innerText = "Research"
+                  }
+                }
+              })
+              .catch((er) => {
+                eventL.innerText = er.stack;
+              })
+          } 
+          else {
+            document.getElementById("spSearch").value = "";
+            eventL.innerText = "... Loading " + strValue;
+
+            serverside("mis", [strValue])
+              .then((retn) => {
+                var stream = retn.index; 
+
+                if (stream) {
+                  if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+                    eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src = stream;
+                    eventG.href = stream;
+                    eventL.innerText = "Research"
+                  } 
+                  else {
+                    let data;
+                    // 1. Handle UrlFetchApp.HTTPResponse
+
+                    if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+                      const contentType = stream.getHeaders()["Content-Type"] || "";
+                      const responseText = stream.getContentText();
+
+                      if (contentType.includes("application/json")) {
+                        try {
+                          data = JSON.parse(responseText);
+                        } 
+                        catch (e) {
+                          data = "Error parsing JSON from URL fetch: " + responseText
+                        }
+                      } 
+                      else if (contentType.includes("text/html")) {
+                        data = responseText;
+                      } 
+                      else {
+                        data = responseText;
+                      }
+                    };
+
+                    eventV.innerHTML = JSON.stringify(stream);
+                    eventG.href = stream;
+                    eventL.innerText = "Research"
+                  }
+                }
+              })
+              .catch((er) => {
+                eventL.innerText = er
+              })
+          }
+        }
+      })
+    })
+  </script>
+`);
+const player2 = HtmlService.createHtmlOutput(
+  `
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+            resolve(result)
+          })
+          .withFailureHandler((error) => {
+            reject(error)
+          })
+          .runBoilerplate(func, args)
+        })
+      };
+
+      var eventV = document.getElementById("player2");
+      serverside("mis", link)
+      .then((misHome) => {
+        var emPlay = document.getElementById("player2");
+        if (emPlay.innerHTML === "") {
+          emplay.innerHTML = misHome;
+        }
+      })
+      .catch((er) => {
+        eventL.innerText = er.stack;
+      })
+    });
+  </script>
+`);
+const spyTPlayer = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result)
+            })
+            .withFailureHandler((error) => {
+              reject(error)
+            })
+            .runBoilerplate(func, args)
+          })
+        };
+        serverside("vidPlaylist", [])
+        .then((myPlayList) => {
+          // 1. Load the IFrame Player API code asynchronously.
+          const tag = document.createElement("script");
+          tag.src = "https://www.youtube.com/iframe_api"; // *** FIX THIS URL ***
+          const firstScriptTag = document.getElementsByTagName("script")[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+          let player1; // Declare player1 once globally or within appropriate scope
+          let ctr = 0;
+
+          // This global function will be called by the YouTube API once it's loaded
+          function onYouTubeIframeAPIReady() {
+            try {
+              const loadingSurveyElement = document.getElementById('loadingSurvey');
+              const player1Div = document.getElementById('player1');
+
+              if (!player1Div) {
+                console.log("Error: The 'player1' div element was not found in the DOM.");
+                return; // Stop execution if player div is missing
+              }
+              
+              if (!loadingSurveyElement) {
+                loadingSurveyElement.style.display = 'none'; // Hide loading if element missing
+              }
+
+              // Show the loading indicator *after* player1Div is confirmed to exist
+              if (loadingSurveyElement) {
+                loadingSurveyElement.style.display = 'block';
+              }
+            } 
+            catch (error) {
+              console.error("Error creating YouTube player:", error);
+              if (loadingSurveyElement) {
+                  loadingSurveyElement.style.display = 'none'; // Hide loading indicator on player creation error
+              }
+            }
+            console.log("youtube API ready");
+
+              player1 = new YT.Player("player1", {
+                height: "360",
+                width: "535",
+                // videoId: "OTeQee-gxa4",
+                playerVars: {
+                  autoplay: 1,
+                  loop: 1,
+                  controls: 0,
+                  rel: 0,
+                  autohide: 1,
+                  playsinline: 0,
+                  mute: 0,
+                  vq: "hd1080",
+                  iv_load_policy: 3,
+                  cc_load_policy: 1,
+                  listType: "playlist",
+                  list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
+                },
+                events: {
+                  onReady: onPlayerReady,
+                  onStateChange: onPlayerStateChange,
+                  onError: onPlayerError,
+                },
+              });
+            console.log("YT.Player initialization attempted for player1.");
+          }
+
+          function onPlayerReady(event) {
+            console.log("Player ready, loading playlist.");
+            // event.target.loadPlaylist(myPlayList, ctr);
+            // ctr++;
+            setShuffle();
+            setLoop();
+            event.target.playVideo();
+
+            // Hide the loading indicator once the player is ready and playing
+            // const loadingSurveyElement = document.getElementById('loadingSurvey');
+            if (loadingSurveyElement) {
+              loadingSurveyElement.style.display = 'none';
+            }
+          }
+
+          
+          // 5. The API calls this function when the player's state changes.The function indicates that when playing a video (state=1),the player should play for six seconds and then stop.
+          let done = false;
+
+          function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.UNSTARTED) {
+              var youtubeID = event.target.getVideoUrl();
+              setTimeout(2000, playVideo);
+              changeBorderColor(event.data);
+            }
+            else if (event.data == YT.PlayerState.ENDED) {
+              //console.log("load another video");
+              player1.loadPlaylist(myPlayList, ctr);
+              ctr++
+              // setTimeout(player1.loadVideoById());
+              setTimeout(2000, nextVideo);
+              changeBorderColor(event.data);
+            }
+            else if (event.data == YT.PlayerState.PAUSED) {
+              setTimeout(2000, pauseVideo);
+              changeBorderColor(event.data)
+            }
+            else if (event.data == YT.PlayerState.BUFFERING) {
+              setTimeout(2000, playVideo);
+              changeBorderColor(event.data)
+            }
+            else if (event.data == YT.PlayerState.VIDEO_CUED) {
+              setTimeout(2000, playVideo);
+              changeBorderColor(event.data)
+            };
+            done = true;
+          };
+
+          function changeBorderColor(playerStatus) {
+            let color;
+            
+            if (playerStatus == -1) {
+              color = "#37474F"
+            } // unstarted = gray
+            else if (playerStatus == 0) {
+              color = "#FFFF00"
+            } // ended = yellow
+            else if (playerStatus == 1) {
+              color = "#33691E"
+            } // playing = green
+            else if (playerStatus == 2) {
+              color = "#DD2C00"
+            } // paused = red
+            else if (playerStatus == 3) {
+              color = "#AA00FF"
+            } // buffering = purple
+            else if (playerStatus == 5) {
+              color = "#FF6DOO"
+            }; // video cued = orange
+            if (color) {
+              document.getElementById('player1').style.borderColor = color;
+            };
+          };
+          
+          function onPlayerError(event) {
+            console.log("YouTube Player Error (Code:", event.data, "):", event);
+            // const loadingSurveyElement = document.getElementById('loadingSurvey');
+            if (loadingSurveyElement) {
+              loadingSurveyElement.style.display = 'none'; // Hide loading indicator
+            }
+
+            if (player1) {
+              player1.destroy(); // Properly destroy the player instance
+              player1 = null; // Clear the reference to the destroyed player
+            }
+            // Do NOT call onYouTubeIframeAPIReady() here.
+            // Depending on the error code, you might:
+            // - Display a user-friendly error message.
+            // - Attempt to load a different video if the current one is broken.
+            // - Log the error to a server for monitoring.
+          }
+
+          
+          function stopVideo() {
+            player1.stopVideo();
+          };
+
+          function getVideoUrl() {
+            player1.getVideoUrl();
+          };
+
+          function setLoop() {
+            player1.setLoop(true);
+          };
+
+          function setShuffle() {
+            player1.setShuffle(true);
+          };
+
+          function playVideo() {
+            player1.playVideo();
+          };
+
+          function nextVideo() {
+            player1.nextVideo();
+          };
+
+          function pauseVideo() {
+            player1.pauseVideo();
+          };
+        })
+      
     </script>
 `);
 
@@ -857,12 +1254,16 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent()}`
+    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent()}`
   ),
   abcIt: HtmlService.createHtmlOutput(
     `
       ${utf_8.getContent() + b_top.getContent() + xuacompatible.getContent() + viewport.getContent() + google_signin_client.getContent() + fontAwesome.getContent() + googleApis_preConnect.getContent() + gstatic_preConnect.getContent() + googleApisCss.getContent() + materializeCss.getContent() + tabulatorCss.getContent() + googleApisIcon.getContent() + google_charts_loader.getContent() + googleApisOnApiLoad.getContent() + googleApis_defer.getContent()}
-  `)
+  `),
+  spRunIt: HtmlService.createHtmlOutput(
+    `
+      ${spyTPlayer.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
+  `),
 };
 
 var builtStyling = function (e) {

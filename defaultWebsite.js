@@ -84,7 +84,7 @@ var createFunctionResult = function (funcUno, funcDos) {
     if (truVal && objVal?.indexOf(",") === -1) {
       let isObjValUrl = isValidUrl(objVal).hostname;
       rawUrlResult = isTruthy(isObjValUrl);
-      executed++
+      console.log("rawFuncResult = " + rawFuncResult, executed++);
     }
     // executed++
     if (!rawUrlResult) {
@@ -93,17 +93,16 @@ var createFunctionResult = function (funcUno, funcDos) {
       if (typeof funcDos === "object") {
         keyObject = Object.keys(funcDos);
         if (keyObject && keyObject.length > 0) {
-          console.log(
-            "This execution is trying to JSON Parse a(n) " + typeof funcDos,
-          );
+          console.log("This execution is trying to JSON Parse a(n) " , typeof funcDos);
           try {
             if (!objVal) {
               parsedFuncArgs = JSON.parse(funcDos);
             } 
-            else 
-            if (objVal && funcDos.length > 0) {
-              console.log("But, it is failing. \n");
-              parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+            else {
+              if (objVal && funcDos.length > 0) {
+                console.log("But, it is failing. \n");
+                parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+              }
             }
           } 
           catch (jsonError) {
@@ -113,95 +112,74 @@ var createFunctionResult = function (funcUno, funcDos) {
             }
           }
         }
-      } else 
-      if (typeof funcDos !== "object" && truDos) {
-        parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } 
       else {
-        parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
-      } //   }
-      if (
-        (funcUno && typeof globalThis[funcUno] === "function " && !funcDos) ||
-        (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)
-      ) {
-        console.log(
-          "This execution is trying to process without funcDos. funcDos is  " +
-            funcDos,
-        );
+        if (typeof funcDos !== "object" && truDos) {
+          parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
+        }
+        else {
+          parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
+        }
+      }
+      if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
+        console.log("This execution is trying to process without funcDos. funcDos is  " , funcDos);
         try {
-          rawFuncResult = mis([funcUno]);
-          executed++
+          rawFuncResult = globalThis[funcUno]() || mis([funcUno]);
         } 
         catch (error) {
           console.log("But, it is failing.");
-          rawFuncResult = globalThis[funcUno]();
-          executed++
         }
-      } else 
-      if (
-        funcUno &&
-        typeof globalThis[funcUno] !== "function" &&
-        funcDos
-      ) {
-        console.log(
-          "This execution is trying to process with funcDos. funcDos is  " +
-            funcDos,
-        );
-        try {
-          rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
-          executed++
-        } catch (error) {
-          console.log("But, it is failing.");
-          if (
-            funcUno &&
-            typeof globalThis[funcUno] === "function " &&
-            !funcDos
-          ) {
-            rawFuncResult = globalThis[funcUno]();
-            executed++
-          } else if (!funcUno && funcDos) {
-            rawFuncResult = globalThis[parsedFuncArgs]();
-            executed++
-          } else {
-            rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-            executed++
+        console.log("rawFuncResult = " + rawFuncResult, executed++);
+      } 
+      else {
+        if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
+          console.log("This execution is trying to process with funcDos. funcDos is  " , funcDos);
+          try {
+            rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+          } 
+          catch (error) {
+            console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
+          }
+          console.log("rawFuncResult = " + rawFuncResult, executed++);
+        } 
+        else { 
+          if (!funcUno && funcDos) {
+            console.log("This execution is trying to process without funcUno.", !funcUno);
+            if (typeof globalThis[funcDos] === "function") {
+              try {
+                rawFuncResult = globalThis[parsedFuncArgs]();
+              } 
+              catch (error) {
+                console.log("But, it is failing.");
+              }
+            }
+            else {
+              rawFuncResult = mis([parsedFuncArgs]);
+            }
+            console.log("rawFuncResult = " + rawFuncResult, executed++);
+          } 
+          else {
+            console.log(
+              "This execution is trying to process all input \n" +
+                [funcUno, parsedFuncArgs],
+            );
+            try {
+              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs) || mis([funcUno, ...parsedFuncArgs]);
+            } 
+            catch (error) {
+              console.log("But, it is failing.");
+            }
+            console.log("rawFuncResult = " + rawFuncResult, executed++);
           }
         }
-      } else if (!funcUno && funcDos) {
-        console.log(
-          "This execution is trying to process without funcUno. FuncUno is " +
-            funcUno,
-        );
-        try {
-          rawFuncResult = mis([parsedFuncArgs]);
-          executed++
-        } catch (error) {
-          console.log("But, it is failing.");
-          rawFuncResult = globalThis[parsedFuncArgs]();
-          executed++
-        }
-      } else {
-        console.log(
-          "This execution is trying to process all input \n" +
-            [funcUno, parsedFuncArgs],
-        );
-        try {
-          rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-          executed++
-        } catch (error) {
-          console.log("But, it is failing.");
-          rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-          executed++
-        }
       }
-    } else {
+    }  
+    else {
       rawFuncResult = objVal;
-      console.log(
-        "Happens everytime createFunctionResult returns the form url as the objects value",
-        rawFuncResult,
-      );
+      console.log("Happens everytime createFunctionResult returns the form url as the objects value", rawFuncResult);
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error(`Error during payload processing:`, error);
     appL = `Critical Error: ${error.stack}`;
   }
