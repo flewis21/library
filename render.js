@@ -1164,7 +1164,7 @@ var renderTemplate = function (blob, argsObject, title) {
             <div id="loadingSurvey">
               <a href="#">Remove</a>
             </div>
-            <h6><?!= drivedD?.split("\)")[0] ?></h6>
+            <h4><?!= drivedD?.split("{")[0] ?></h4>
             <p>Recent Applications</p>
           </header>
           <div class="row responsive-section">
