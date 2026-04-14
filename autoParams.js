@@ -113,7 +113,6 @@ const functionRegistry = {
     });
   },
   getImageList: function () {
-    // functionRegistry.gTree();
     return this.arrImgVals;
   },
 
@@ -156,6 +155,15 @@ const functionRegistry = {
       return sheet;
     })();
     var itemArrays = itemSheet.getDataRange().getValues().slice(1);
+    for (const key in itemArrays) {
+      this.arrDomainVals.push(
+        {
+          Domain: itemArrays[key][0],
+          Price: "$" + itemArrays[key][1] + ".00",
+          Email: itemArrays[key][2],
+          Status: itemArrays[key][3]
+      })
+    }
     this.arrDomainVals = itemArrays.map((val) => {
       return {
         Domain: val[0],
@@ -269,9 +277,9 @@ const functionRegistry = {
 };
 
 // Set some global variables
-console.log("boilerplate autoParams: line 175");
+console.log("boilerplate autoParams: line 272");
 functionRegistry.initialize();
-console.log("boilerplate autoParams: line 177");
+console.log("boilerplate autoParams: line 274");
 functionRegistry.startProcessTimer();
 // A hypothetical frequency-based order for the Zulu alphabet
 const zuluFrequencyOrder = [

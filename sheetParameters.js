@@ -1096,77 +1096,38 @@ function rndString(inputArray, time) {
   };
 }
 
-// var strArray = testString.join("").split("")
-// console.log("Calling randomSubstance with testString: " + testString)
-// var str = randomSubstance(0,2,testString, null, time).myNewArr
-// console.log("Recieved str: " + str + " from randomSubstance with testString: " + testString)
-
 var seoBites = function (searchString, idArray, time) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\nsearchString is !" +
-  //     !searchString +
-  //     ", = " +
-  //     searchString +
-  //     "\nidArray is !" +
-  //     idArray +
-  //     ", = " +
-  //     idArray +
-  //     "\ntime is !" +
-  //     !time +
-  //     ", = " +
-  //     time,
-  // );
+  let executed = 0;
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   let uniqueSeo = [];
   let searchWords = [];
   searchString
     ? searchString
     : (searchString = globalThis.searchString().myNewArr);
+    console.log("searchString = " + searchString, executed++);
   if (typeof searchString === "object") {
     if (searchString.parameter && searchString.parameter["func"]) {
       searchString = searchString.parameter["func"];
+      console.log("searchString = " + searchString, executed++);
     } else {
       searchString = Object.values(searchString);
+      console.log("searchString = " + searchString, executed++);
     }
   }
   let searchUI = [searchString].join("").split(" ");
   searchUI.map((l) => {
     var elaspeTime = functionRegistry.time;
-    // console.log(
-    //   formatTime(functionRegistry.time) +
-    //     "\nseoBites: \nsearchString: " +
-    //     searchString +
-    //     "\nl: " +
-    //     l +
-    //     "\nelaspeTime: " +
-    //     formatTime(elaspeTime),
-    // );
+    console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     searchWords.push(l);
   });
   for (var i = 0, l = searchWords.length; i < l; i++) {
     idArray.map((w) => {
       if (w !== "") {
-        // console.log(
-        //   formatTime(functionRegistry.time) + "\nseoBites: \nw is !" + !w + " !== '': " + w,
-        // );
         let hasId = [w][0].includes(searchWords[i]);
         if (w.indexOf(hasId) !== -1) {
-          // console.log(
-          //   formatTime(functionRegistry.time) +
-          //     "\nseoBites: \nw is !" +
-          //     !w +
-          //     ".indexOf(" +
-          //     w[0] +
-          //     ".includes(" +
-          //     searchWords[i] +
-          //     ")) !== -1: " +
-          //     w.indexOf(w[0].includes(searchWords[i])),
-          // );
           uniqueSeo.push(w);
         }
       }
@@ -1178,28 +1139,21 @@ var seoBites = function (searchString, idArray, time) {
   return uniqueSeo;
 };
 
-// var elaspeTime = new Date() - time
-// console.log("w: \nelaspeTime: " + elaspeTime)
-// var elaspeTime = new Date() - time
-// console.log("w: \nelaspeTime: " + elaspeTime)
-
 var seoFactor = function (data, time) {
+  let executed = 0;
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   var idArray = [];
   if (!Array.isArray(data)) {
     idArray.push(data);
   } else {
     data?.map((seoData) => {
-      // var elaspeTime = new Date() - time
-      // console.log("seoData: \nelaspeTime: " + elaspeTime)
+      var elaspeTime = functionRegistry.time;
+      console.log("elaspeTime + " + formatTime(elaspeTime), executed++);
       try {
         var strDiv = seoData.split("<div>");
-        // for (var i=0,l=seoData.length; i<l; i++) {
-        // var sliDiv = seoData.slice(strDiv)
-        // var spDiv = sliDiv.toString()
-        // var arrDiv = spDiv.split("</div>")}
         idArray.push(strDiv.slice(strDiv.indexOf("</div>")));
       } catch (error) {
         return;
@@ -1207,7 +1161,6 @@ var seoFactor = function (data, time) {
     });
   }
   var factorArray = [idArray].toString().replace(/,/g, "");
-  // console.log("seoFactor: \nvar " + factorArray + " = " + [idArray].toString().replace(/,/g, ''))
   return {
     factorData: factorArray,
   };
@@ -1240,16 +1193,18 @@ var seoIndex = function (searchWord) {
 };
 
 function seoPictTime(searchString, time) {
+  let executed = 0;
   functionRegistry.imgTree();
   var imgSheetVals = functionRegistry.getImageList();
+  console.log("imgSheetVals = " + imgSheetVals, executed++);
   var imgData = [];
   var imgVals = Object.values(imgSheetVals);
   imgVals.forEach((img) => {
     var inValsKeys = Object.keys(img);
     var inVVals = Object.values(img);
     inVVals.forEach((inV) => {
-      // console.log("I'm holding the value of vidVals", inV)
       let truInv = isTruthy(inV);
+      console.log("truInv = " + truInv, executed++);
       if (truInv) {
         imgData.push(inV);
       } else {
@@ -1261,61 +1216,32 @@ function seoPictTime(searchString, time) {
     ? searchString
     : (searchString = objectOfS(
         ["parameter"],
-        [[["func", testlt()]]],
+        [[["func", functionRegistry.fileList[Math.floor(Math.random() * functionRegistry.fileList.length)]]]],
         functionRegistry.time,
       ));
+  console.log("searchString = " + searchString, executed++);
   if (typeof searchString === "object") {
     if (searchString.parameter && searchString.parameter["func"]) {
       searchString = searchString.parameter["func"];
+      console.log("searchString = " + searchString, executed++);
     } else {
       searchString = Object.values(searchString);
+      console.log("searchString = " + searchString, executed++);
     }
   }
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\nsearchString is !" +
-  //     !searchString +
-  //     " = " +
-  //     searchString +
-  //     "\ntime is !" +
-  //     !time +
-  //     " = " +
-  //     time,
-  // );
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
+    console.log("searchString = " + searchString, executed++);
   }
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\nseoPictTime: \nvar altSearch = seoSheet(" +
-  //     searchString,
-  //   time + ")",
-  // );
   var altSearch = seoSheet(searchString, time);
+  console.log("altSearch = " + altSearch, executed++);
   var listSearch = altSearch.keyWords;
   var rndListKey = Math.floor(Math.random() * Math.floor(listSearch.length));
   var testSearch = listSearch[rndListKey];
-  // if (
-  //   [searchString]
-  //     .toString()
-  //     .toLowerCase()
-  //     .includes([testSearch].toString().toLowerCase())
-  // ) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\nseoPictTime: \n[" +
-  //     testSearch +
-  //     "].join().indexOf(" +
-  //     searchString +
-  //     ") === " +
-  //     [testSearch].join("").indexOf(searchString),
-  // );
-  // }
   if (
     searchString &&
     typeof searchString === "string" &&
@@ -1331,19 +1257,17 @@ function seoPictTime(searchString, time) {
       !searchString.toLowerCase().includes(listSearch[0].toLowerCase())
     ) {
       searchString = allInvestors().title;
+      console.log("searchString = " + searchString, executed++);
     }
   }
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\nseoPictTime: \nvar uniqueVid = seoPictures(" +
-  //     searchString,
-  //   time + ")",
-  // );
   var uniqueVid = seoPictures(searchString, time);
+  console.log("uniqueVid = " + uniqueVid, executed++);
   var sorFndOrd = [];
   uniqueVid.results.forEach((vidObject) => {
     var elaspeTime = functionRegistry.time;
+    console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     var timeToExecute = functionRegistry.timeLeftToExecute;
+    console.log("timeToExecute = " + formatTime(timeToExecute), executed++);
     var res = [vidObject].join("").split(" ");
     let wHttps = res[0].indexOf("https");
     let wDoct = res[0].indexOf("<!DOCTYPE");
@@ -1360,54 +1284,21 @@ function seoPictTime(searchString, time) {
   var i = 0;
   var l = sorFndOrd.length;
   for (i, l; i < l; i++) {
-    // sorFndOrd.sort((a, b) => {
-    //   console.log(
-    //     formatTime(functionRegistry.time) +
-    //       "\nseoPictTime: \n" +
-    //       a +
-    //       ".toLowerCase() === " +
-    //       sorFndOrd[i] +
-    //       ".toLowerCase() " +
-    //       a.toLowerCase() ===
-    //       sorFndOrd[i].toLowerCase(),
-    //   );
-    //   if (a.toLowerCase() === sorFndOrd[i].toLowerCase()) {
-    //     console.log(
-    //       formatTime(functionRegistry.time) +
-    //         "\nseoPictTime: \nfndOrd.indexOf(" +
-    //         a +
-    //         ") > -1 " +
-    //         fndOrd.indexOf(a),
-    //     );
-    //   }
-    // });
     if (!fndOrd.indexOf(sorFndOrd) > -1) {
       fndOrd.push(sorFndOrd);
     }
-    // else {
-    //   fndOrd.push(sorFndOrd);
-    // }
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = [];
     fndOrd.forEach((test) => {
       var elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       var timeToExecute = functionRegistry.timeLeftToExecute;
+      console.log("timeToExecute = " + formatTime(timeToExecute), executed++);
       for (var i = 0, l = randomKey; i < l; i++) {
-        // console.log(
-        //   formatTime(functionRegistry.time) +
-        //     "\nseoPictTime: \ntest.indexOf(" +
-        //     "tse4.mm.bing.net" +
-        //     ") > -1 " +
-        //     test.indexOf("tse4.mm.bing.net"),
-        // );
         if (test.indexOf("tse4.mm.bing.net") > -1) {
-          // if (JSON.stringify(i) >= 3) {
-          //   break;
-          // }
           var imgUrl = [test].join("").split('"')[1];
-          // rndRes.push(imgUrl);
           if (test && rndRes.indexOf(test) === -1) {
             if (imgData.indexOf(test) !== -1) {
               return;
@@ -1427,8 +1318,9 @@ function seoPictTime(searchString, time) {
       }
     });
     if (rndRes.length > 0) {
-      functionRegistry.imgTree();
-      imgSheetVals = functionRegistry.getImageList();
+      // functionRegistry.imgTree();
+      // imgSheetVals = functionRegistry.getImageList();
+      // console.log("imgSheetVals = " + imgSheetVals, executed++);
       imgData = [];
       // var vidKeys = Object.keys(vidSheetVals);
       imgVals = Object.values(imgSheetVals);
@@ -1436,8 +1328,8 @@ function seoPictTime(searchString, time) {
         let inValsKeys = Object.keys(img);
         let inVVals = Object.values(img);
         inVVals.forEach((inV) => {
-          // console.log("I'm holding the value of vidVals", inV)
           let truInv = isTruthy(inV);
+          console.log("truInv = " + truInv, executed++);
           if (truInv) {
             imgData.push(inV);
           } else {
@@ -1466,6 +1358,7 @@ function seoPictTime(searchString, time) {
       matchKeys.forEach((match) => {
         let imgMatch = imgObj[match];
         let truMatch = isTruthy(imgMatch);
+        console.log("truMatch = " + truMatch, executed++);
         if (truMatch) {
           let searchMatch = imgMatch.indexOf(searchString) > -1;
           let matchSearch = searchString.indexOf(imgMatch) > -1;
@@ -1481,85 +1374,61 @@ function seoPictTime(searchString, time) {
   }
 }
 
-// console.log("seoPictTime: \n")
-// console.log("vidObject: " + vidObject + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-// console.log(a)
-// console.log(fndOrd)
-// Math.floor(Math.random());
-// console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
-// var form = formMaker(searchString)
-// fileManager(searchString, "Forms")
-// var lowerCaseS = seoSheet(searchString).keyWords
-// lowerCaseS.map((b) => {
-// console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])))
-// return form.addVideoItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setAlignment(FormApp.Alignment.CENTER).setWidth(612).setVideoUrl(needUtility(b)[0].videoItemUrl)})
-// var formUrl = form.getPublishedUrl()
-// url: formUrl
-
 function seoPictures(searchString, time) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\n!" +
-  //     searchString +
-  //     "= " +
-  //     !searchString +
-  //     "\n!" +
-  //     time +
-  //     "= " +
-  //     !time,
-  // );
+  let executed = 0;
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
+    console.log("searchString = " + searchString, executed++);
   }
-  var rndSearch = `https://www.bing.com/images/search?q=(${encodeURIComponent(searchString)})%20intitle%3A - +AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-  // console.log(
-  //   "seoPictures: \nvar data = [urlFetchApp.fetch(" + rndSearch,
-  //   { muteHttpExceptions: true } + ")]",
-  // );
-  var data = [UrlFetchApp.fetch(rndSearch, { muteHttpExceptions: true })];
-  // console
-  //   .log(
-  //     "seoPictures: \nvar uniqueSeo = data.slice(" +
-  //       data.indexOf(" + 'src2=' + "),
-  //   )
-  // .toString()
-  // .split(" + 'src2=' + " + ")");
-  var uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
-  return { results: uniqueSeo, hardLink: rndSearch };
+  let rndSearch;
+  rndSearch = `https://www.bing.com/images/search?q=(${encodeURIComponent(searchString)})%20intitle%3A - +AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+  let options = { muteHttpExceptions: true };
+  let data;
+  let uniqueSeo;
+  data = getUrlResponse(rndSearch, options).app;
+  console.log("data = " + data, executed++);
+  if (!data) {
+    functionRegistry.getDomainList();
+    let domainEngine = [];
+     let mainList= functionRegistry.arrDomainVals;
+     console.log("mainList = " + mainList.slice(mainList.length - 1), executed++);
+     for (const key in mainList) {
+      let truD = isTruthy(mainList[key]);
+     console.log("truD = " + truD, executed++);
+      if (key === "Domain" && truD) {
+        domainEngine.push(mainList[key]);
+      }
+     }
+    domainEngine.forEach((main) => {
+      while (!data) {
+        data = getUrlResponse(main, options).app;
+        console.log("data = " + data, executed++);
+      }
+    });
+    console.log("data = " + data, executed++);
+    uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
+    return { results: uniqueSeo, hardLink: rndSearch };
+  }
+  else {
+    uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
+    return { results: uniqueSeo, hardLink: rndSearch };
+  }
 }
 
-// console.log("seoPictures: \n");var i = 0;var l = [data].join("").split(" ").length;for (i,l;i<l;i++) {var res = [data].join("").split(" ")[i]
-// if (res.indexOf("https") > -1) {console.log(res)}};console.log(uniqueSeo.join("").split('"')[6])
-
 var seoTwitter = function (folderX, searchString, time) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\n!" +
-  //     folderX +
-  //     "= " +
-  //     !folderX +
-  //     "\n!" +
-  //     searchString +
-  //     "= " +
-  //     !searchString +
-  //     "\n!" +
-  //     time +
-  //     "= " +
-  //     !time,
-  // );
+  let executed = 0;
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   var foldCounter = 0;
   var foldData = folderManager(folderX); // && folderX !== "folderX" ? folderX : randomFolderName);
+  console.log("foldData = " + foldData.slice(foldData.length - 1), executed++);
   var randomFolderCount = Math.floor(
     Math.random() * Math.floor(foldData.length),
   );
   var minFold = fileFold(foldData[randomFolderCount]);
+  console.log("minFold = " + minFold, executed++);
   var rndString =
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
@@ -1568,6 +1437,7 @@ var seoTwitter = function (folderX, searchString, time) {
     searchString = rndString;
   }
   var uniqueSeo = seoBites(searchString, minFold, time);
+  console.log("uniqueSeo = " + uniqueSeo, executed++);
   return { twiData: uniqueSeo };
   var data = [];
   while (data.length === 0) {
@@ -1598,9 +1468,6 @@ var seoTwitter = function (folderX, searchString, time) {
   //   idArray = minFold
   // }
 };
-// var rndSearch = `https://www.bing.com/search?q=${encodeURIComponent(searchString)}%20intitle%3A - twitter+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN`;var unFilData = UrlFetchApp.fetch(rndSearch,{muteHttpExceptions:true});var data = [unFilData.getContentText()];console.log("seoTwitter: \nDeclaring foldData = folderManager()");console.log(data.length);console.log(data.length);console.log(foldData[foldCounter]);console.log("seoTwitter: \nvar minFold = fileFold(" + foldData[foldCounter], searchString + ")")
-// console.log("seoTwitter: \n data = " + minFold.map((p) => {console.log("fileFold: \nif ([" + p + "].join(" + "" + ").toLowerCase().includes([" + searchString +"].join(" + "" + ").toLowerCase())) = " + "\n" + [p].join("").toLowerCase().includes([searchString].join("").toLowerCase()) + " return " + p);
-// if ([p].join("").toLowerCase().includes([searchString].join("").toLowerCase()));return p}));console.log(data);console.log("seoTwitter: \nvar " + idArray + " = " + [seoFactor(data, time).factorData].toString().split("\n"));console.log("seoTwitter: \nvar " + uniqueSeo + " = seoBites(" + searchString,idArray, time + ")")
 
 function sheetsMaker(fileName, folderX, time) {
   console.log(

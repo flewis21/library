@@ -1181,20 +1181,12 @@ var fbTester = function () {
 };
 
 function fileFold(folderX, fileX, time) {
-  // console.log(
-  //   "boilerplate fileManagers: line 1027\nfileFold(folderX: " +
-  //     folderX +
-  //     ", fileX: " +
-  //     fileX +
-  //     ", time: " +
-  //     formatTime(functionRegistry.timeLeftToExecute) +
-  //     ")\n " +
-  //     arguments.callee.caller.name,
-  // );
-  // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\n!" + folderX + ", = " + !folderX + "\n!" + fileX + ", = " + !fileX + "\n!" + time + ", = " + !time)
-  var elapsedTime = functionRegistry.time;
+  let executed = 0;
+  var elapsedTime = functionRegistry.elapsedTimeInSeconds;
+  console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];
   var folderXIsValid = isTruthy(folderX);
+  console.log("folderXIsValid = " + folderXIsValid, executed++);
   if (folderXIsValid) {
     if (!folderXIsValid) {
       return;
@@ -1207,32 +1199,19 @@ function fileFold(folderX, fileX, time) {
       tree = pyroFolder.getFiles();
     }
     var nameTree;
-    // if (tree.hasNext()) {
-    //   nameTree = tree.next()
-    // }
-    // console.log(folderX + "\n" + typeof folderX)
-    // console.log("fileFold: \nDeclaring pyFolder = DriveApp.getFoldersByName(" + folderX + ").next()")
-    // console.log("fileFold: \nDeclaring tree = pyFolder.getFiles()")
-    // var minFile = [fileX].join("").toLowerCase()
-    try {
-      JSON.parse(nameTree);
-    } catch (check) {
-      console.log(check);
-    }
     while (tree.hasNext()) {
       nameTree = tree.next();
+      try {
+        JSON.parse(nameTree);
+      } catch (check) {
+        console.log(check);
+      }
       let myName = nameTree.getName();
       fileFree.push(myName);
     }
   } else {
     return;
   }
-  // console.log("fileFold: \nDeclaring minFold = [" + tree.next().getName() + "].join('').toLowerCase()");
-  // var minFold = [tree.next().getName()].join("").toLowerCase();
-  // console.log("fileFold: \nDeclaring minFile = [" + fileX + "].join('').toLowerCase()")
-  // if (minFold.includes(minFile)) {
-  // }
-  // break
   return fileFree;
 }
 

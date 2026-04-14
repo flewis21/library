@@ -3540,12 +3540,14 @@ function seoPastTime(searchString, time) {
       ", = " +
       time,
   );
+  let executed = 0;
   let items;
   if (typeof searchString === "undefined") {
     items = globalThis.uniqueItemArray();
   } else {
     items = [{ Description: searchString }];
   }
+  console.log("items = " + items, executed++);
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
   var searchString = items[rndItenIndex]["Description"]
@@ -3557,12 +3559,16 @@ function seoPastTime(searchString, time) {
     })
     .join("")
     .replace(/,/g, ""); // .searchString().myNewArr;
+  console.log("searchString = " + searchString, executed++);
   var uniqueVid = seoYoutube(searchString, functionRegistry.time)?.myIdArr;
+  console.log("uniqueVid = " + uniqueVid, executed++);
   let fndOrd = [];
   while (fndOrd.length === 0) {
     var sorFndOrd = uniqueVid?.filter((vidObject) => {
       var elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + elaspeTime, executed++);
       var timeToExecute = functionRegistry.timeLeftToExecute;
+      console.log("timeToExecute = " + timeToExecute, executed++);
       if (
         vidObject.length === 11 &&
         vidObject !== '"' &&
@@ -3655,6 +3661,7 @@ function seoPastTime(searchString, time) {
         "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
           encodeURIComponent(searchString),
       ).url;
+      console.log("domainSearch = " + domainSearch, executed++);
       // var unFilData = mis(domainSearch)
       // var data = unFilData.app
       return { playList: domainSearch };
@@ -3668,13 +3675,16 @@ function seoPastTime(searchString, time) {
           .replace(/,/g, "") +
         ".com";
       uniqueVid = seoYoutube(searchString, functionRegistry.time).myIdArr;
+      console.log("uniqueVid = " + uniqueVid, executed++);
     }
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
       var elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + elaspeTime, executed++);
       var timeToExecute = functionRegistry.timeLeftToExecute;
+      console.log("timeToExecute = " + timeToExecute, executed++);
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
           test.indexOf("false") === -1 &&
@@ -3746,8 +3756,10 @@ function seoYoutube(searchString, time) {
   //     ", = " +
   //     time,
   // );
+  let executed = 0;
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
+    console.log("items = " + items, executed++);
     var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
     var searchString = items[rndItenIndex]["Description"]
       .split(" ")
@@ -3759,8 +3771,10 @@ function seoYoutube(searchString, time) {
   try {
     let options = { muteHttpExceptions: true };
     var unFilData = getUrlResponse(rndSearch, options).app; //UrlFetchApp.fetch(rndSearch, );
+    console.log("unFilData = " + unFilData, executed++);
     var data = unFilData?.getContentText();
     var idArray = vidFactor(data, time).vidArray;
+    console.log("idArray = " + idArray, executed++);
     return { myIdArr: idArray || [] };
   } catch (erR) {
     Logger.log("Result " + null);

@@ -1851,7 +1851,7 @@ var getUrlResponse = function (url, options) {
     let retries = 0;
     let delay = 1000;
     try {
-      response = UrlFetchApp.fetch(url, options);
+      response = UrlFetchApp.fetch(validUrl.hostname, options);
       try {
         if (response) {
           var res = response.getResponseCode();
@@ -1918,8 +1918,8 @@ var getUrlResponse = function (url, options) {
     console.log("Final app:", htmlData);
     return { index: responseObj, app: htmlData, link: supUrl };
   } else {
-    Logger.log("Invalid input, " + [url, options]);
-    console.log("Invalid input, ", [url, options]);
+    Logger.log("Invalid input, " + [validUrl.hostname, options]);
+    console.log("Invalid input, ", [validUrl.hostname, options]);
     return null;
   }
 };

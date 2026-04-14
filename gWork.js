@@ -433,35 +433,24 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
 // console.log(randomWord)
 
 function seoSheet(searchString, time) {
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\n!" +
-  //     searchString +
-  //     ", = " +
-  //     !searchString,
-  // );
+  let executed = 0;
+  let elaspeTime;
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
     var searchString = globalThis.searchString().myNewArr;
+    console.log("searchString = " + searchString, executed++);
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
-  // console.log(
-  //   formatTime(functionRegistry.time) +
-  //     "\nseoSheet: \nvar " +
-  //     uniqueSeo +
-  //     " = seoTwitter(" +
-  //     searchString,
-  //   time + ").twiData",
-  // );
+  console.log("uniqueSeo = " + uniqueSeo, executed++);
   var fndOrd = uniqueSeo
     .join("")
     .split(" ")
     .filter((p) => {
-      var elaspeTime = new Date() - time;
+      elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       if (p.length > 3 && p.length < 18) {
         return p[0] !== "<";
       }
@@ -615,87 +604,47 @@ function seoSheet(searchString, time) {
           test.indexOf("disableSpriteLogo") === -1 &&
           test.indexOf("MWHEEEAP0025010") === -1
         ) {
-          // if (JSON.stringify(i) >= 3) {
-          //   break;
-          // }
-          return test[i];
+            return test[i];
         }
       }
     });
     var resData = rndRes.slice(0);
     var reSearch = resData.toString().replace(/,/g, " ").split(" ");
   }
+  let testString
   if (!Array.isArray(searchString)) {
     var stringSplit = [searchString].join("").split(" ");
   }
   if (stringSplit) {
     if (stringSplit.length > 0) {
-      var testString = testData([stringSplit], time).testArray;
-      // console.log(
-      //   formatTime(functionRegistry.time) +
-      //     "\nseoSheet: \nvar " +
-      //     testString +
-      //     " = " +
-      //     testData([stringSplit], time).testArray,
-      // );
+      testString = testData([stringSplit], time).testArray;
+      console.log("testString = " + testString, executed++);
     }
   } else {
-    var testString = testData([searchString], time).testArray;
-    // console.log(
-    //   formatTime(functionRegistry.time) +
-    //     "\nseoSheet: \nvar " +
-    //     testString +
-    //     " = " +
-    //     testData([searchString], time).testArray,
-    // );
+    testString = testData([searchString], time).testArray;
+    console.log("testString = " + testString, executed++);
   }
   var lowerCaseS = [];
   if (lowerCaseS.indexOf(testString) === -1) {
-    // console.log(
-    //   formatTime(functionRegistry.time) +
-    //     "\nseoSheet: \nlowerCaseS.indexOf(" +
-    //     testString +
-    //     ") === -1: " +
-    //     lowerCaseS.indexOf(testString),
-    // );
     var stringUI = [testString].join("").split(",");
     stringUI.map((increase) => {
-      var elaspeTime = new Date() - time;
-      lowerCaseS.push(increase);
+      elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     });
   }
   if (reSearch) {
     reSearch.map((seo) => {
-      var elaspeTime = new Date() - time;
+      elaspeTime = functionRegistry.time;
+      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[i][lowerCaseS[i].length - 1] !== "undefined") {
-          // console.log(
-          //   formatTime(functionRegistry.time) +
-          //     "\nseoSheet: \ntypeof " +
-          //     lowerCaseS[0][i] +
-          //     " !== undefined: " +
-          //     typeof lowerCaseS[0][i],
-          // );
           var lowerCaseSearchString =
             lowerCaseS[i][lowerCaseS[i].length - 1].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
-            // console.log(
-            //   formatTime(functionRegistry.time) +
-            //     "\nseoSheet: \nlowerCaseResearch.includes(" +
-            //     lowerCaseSearchString +
-            //     "): " +
-            //     lowerCaseResearch.includes(lowerCaseSearchString),
-            // );
             if (lowerCaseS.indexOf(seo) === -1) {
-              // console.log(
-              //   functionRegistry.time +
-              //     "\nseoSheet: \nlowerCaseS.indexOf(" +
-              //     seo +
-              //     ") === -1: " +
-              //     lowerCaseS.indexOf(seo),
-              // );
-              var elaspeTime = functionRegistry.time;
+              elaspeTime = functionRegistry.time;
+              console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
               lowerCaseS.push(seo);
             }
           }
