@@ -82,9 +82,9 @@ var createFunctionResult = function (funcUno, funcDos) {
     let truVal = isTruthy(objVal);
     let rawUrlResult;
     if (truVal && objVal?.indexOf(",") === -1) {
-      let isObjValUrl = isValidUrl(objVal).hostname;
-      rawUrlResult = isTruthy(isObjValUrl);
-      console.log("rawFuncResult = " + rawFuncResult, executed++);
+      let isObjValUrl = isValidUrl(objVal);
+      rawUrlResult = isTruthy(isObjValUrl.hostname);
+      console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
     // executed++
     if (!rawUrlResult) {
@@ -1859,7 +1859,7 @@ var getUrlResponse = function (url, options) {
             if (res === 429) {
               retries++;
               delay += 2;
-              Utilities.sleep(delay + Math.random() * 500);
+              Utilities.sleep(delay + Math.random() * 2000);
               Logger.log(`Rate limit hit, retrying in ${delay} ms`);
               while (retries < maxRetries) {
                 try {

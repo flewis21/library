@@ -1145,7 +1145,7 @@ var renderTemplate = function (blob, argsObject, title) {
         </style>
       </head>
       <body>
-        <nav class="flex-div responsive-section static-fix">
+        <nav class="flex-div responsive-section transparent static-fix">
           <div class="nav-left flex-div responsive-section">
             <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
           </div>

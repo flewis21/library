@@ -125,7 +125,7 @@ var geneicType = function () {
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
   // functionRegistry.domainTree();
-  let handles = functionHandle({parameter: {args:"seoPictTime,good ole' days"}});
+  let handles = functionHandle({parameter: {args:"getDomainValues"}});
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
