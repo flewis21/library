@@ -1242,6 +1242,15 @@ const spyTPlayer = HtmlService.createHtmlOutput(
       
     </script>
 `);
+const location_url = HtmlService.createHtmlOutput(
+  `
+  <script>
+    let drivMC = <?= drivemC ?>;
+    if (drivMC) {
+      window.location.href = drivMC;
+    }
+  </script>
+`);
 
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(

@@ -1895,7 +1895,7 @@ function misSt(func, someArgs) {
       // Check if there are functions to process
       var allErrors = {};
       var fParams = functionRegistry.paramsList; // Assuming gsFParams is globally accessible
-      console.log("fParams = " + fParams, executed++);
+      console.log("fParams = " + fParams.slice(0, 1), executed++);
       console.log("global functions list length:", Object.keys(fParams).length);
       var resCount = 0;
 

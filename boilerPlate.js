@@ -193,7 +193,7 @@ var getDomainValues = function () {
   var inValsKeys = Object.keys(domainSheetVals);
   inValsKeys.forEach((key) => {
     let domainObj = domainSheetVals[key];
-    let domainTLD = domainObj["domain"];
+    let domainTLD = domainObj["Domain"];
     domainData.push(domainTLD);
   });
   return domainData;
