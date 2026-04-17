@@ -124,7 +124,19 @@ var createFunctionResult = function (funcUno, funcDos) {
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
         console.log("This execution is trying to process without funcDos. funcDos is  " , funcDos);
         try {
-          rawFuncResult = globalThis[funcUno]() || mis([funcUno]);
+          let funcAFunc = crmT(funcUno);
+          console.log("funcAFunc = " + funcAFunc, executed++);
+          if (funcAFunc === -1) {
+            rawFuncResult = mis([funcUno]);
+          }
+          else {
+            if (!funcAFunc === -1) {
+              rawFuncResult = globalThis[funcUno]();
+            }
+            else {
+              rawFuncResult = handleGetData(funcUno);
+            }
+          }
         } 
         catch (error) {
           console.log("But, it is failing.");

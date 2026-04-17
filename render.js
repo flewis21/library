@@ -363,16 +363,31 @@ var contentCDN = function (url, argsObject) {
     //     arguments.callee.caller.name,
     // );
     //Early return
-    if (tmp.payL?.message?.content) {
-      let locObj = 
-        {
-          drivemC: tmp.payL?.message?.content,
-        }
-      let html = contentApp(tmp.append(location_url.getContent()).getContent(),locObj);
-      return HtmlService.createTemplate(html)
-        .evaluate()
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-        .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+    if (!tmp.payL?.pL?.type !== "url") {
+      if (tmp.payL?.message?.content) {
+        let locObj = 
+          {
+            drivemC: tmp.payL?.message?.content,
+          }
+        let html = contentApp(tmp.append(location_url.getContent()).getContent(),locObj);
+        return HtmlService.createTemplate(html)
+          .evaluate()
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+          .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+      }
+    }
+    else {
+      if (tmp.payL?.message?.info) {
+        let locObj = 
+          {
+            drivemC: tmp.payL?.message?.info,
+          }
+        let html = contentApp(tmp.append(location_url.getContent()).getContent(),locObj);
+        return HtmlService.createTemplate(html)
+          .evaluate()
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+          .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+      }
     }
     return tmp
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
@@ -952,7 +967,7 @@ var renderFile = function (file, argsObject, title) {
               </style>
             </head>
             <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
-              <nav class="flex-div card-panel transparent">
+              <nav class="flex-div card-panel transparent static-fix">
                 <div class="nav-left flex-div">
                   <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
                 </div>
@@ -965,7 +980,7 @@ var renderFile = function (file, argsObject, title) {
                   <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
                 </div>
               </nav>
-                <header class="banner card-panel transparent">
+                <header class="banner card-panel transparent static-fix">
                   <a href="#">Remove</a>
                   <div id="iframePlayer" class="row card-panel transparent"></div>
                   <h1>Blog</h1>
