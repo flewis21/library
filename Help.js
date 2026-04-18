@@ -3116,7 +3116,7 @@ function resolveParams(func, someArgs) {
               });
               console.log("resolved func pre-result", result);
               try {
-                JSON.parse(result.toString());
+                JSON.parse(result);
               } catch (check) {
                 console.log("Check/Balance for " + result.toString());
               }

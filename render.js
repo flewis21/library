@@ -363,8 +363,10 @@ var contentCDN = function (url, argsObject) {
     //     arguments.callee.caller.name,
     // );
     //Early return
-    if (!tmp.payL?.pL?.type !== "url") {
+    console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
+    if (tmp.payL?.pL?.type !== "url") {
       if (tmp.payL?.message?.content) {
+        console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
         let locObj = 
           {
             drivemC: tmp.payL?.message?.content,
@@ -378,6 +380,7 @@ var contentCDN = function (url, argsObject) {
     }
     else {
       if (tmp.payL?.message?.info) {
+        console.log("tmp payL message info\n" + tmp.payL?.message?.info, tmp.payL?.message);
         let locObj = 
           {
             drivemC: tmp.payL?.message?.info,
@@ -986,18 +989,18 @@ var renderFile = function (file, argsObject, title) {
                   <h1>Blog</h1>
                   <p>Recent Applications</p>
                 </header>
-                <div class="row responsive-section">
-                <div class="card-panel amber responsive-section">
-                <div class="responsive-section">
-                <div class="responsive-section">
-                <div class="receipt red responsive-section">
-                <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
+                <div class="row responsive-section transparent">
+                <div class="card-panel transparent responsive-section">
+                <div class="responsive-section transparent">
+                <div class="responsive-section transparent">
+                <div class="receipt transparent responsive-section">
+                <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
                   <thead>
                   </thead>
                   <tbody>
                     <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
                       <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                        <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
+                        <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
                           <tbody>
                             <td>
                               <div class="row">

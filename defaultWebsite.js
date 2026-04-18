@@ -74,6 +74,7 @@ var createFunctionResult = function (funcUno, funcDos) {
   let rawFuncResult = null;
   let truUno = isTruthy(funcUno);
   let truDos = isTruthy(funcDos);
+  console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
 
@@ -90,7 +91,7 @@ var createFunctionResult = function (funcUno, funcDos) {
     if (!rawUrlResult) {
       let parsedFuncArgs = [];
       let keyObject;
-      if (typeof funcDos === "object") {
+      if (typeof funcDos === "object" && funcDos !== null) {
         keyObject = Object.keys(funcDos);
         if (keyObject && keyObject.length > 0) {
           console.log("This execution is trying to JSON Parse a(n) " , typeof funcDos);
@@ -121,6 +122,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
         }
       }
+      console.log("" + [funcUno, parsedFuncArgs]);
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
         console.log("This execution is trying to process without funcDos. funcDos is  " , funcDos);
         try {
@@ -172,14 +174,15 @@ var createFunctionResult = function (funcUno, funcDos) {
           } 
           else {
             console.log(
-              "This execution is trying to process all input \n" +
-                [funcUno, parsedFuncArgs],
+              "This execution is trying to process all input \n",
+                [funcUno, parsedFuncArgs]
             );
             try {
-              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs) || mis([funcUno, ...parsedFuncArgs]);
+              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
             } 
             catch (error) {
               console.log("But, it is failing.");
+              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
             }
             console.log("rawFuncResult = " + rawFuncResult, executed++);
           }

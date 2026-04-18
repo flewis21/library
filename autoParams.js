@@ -1231,6 +1231,7 @@ function functionHandle(e) {
       } else {
         if (e && e.parameter) {
         let objData = Object.keys(e.parameter);
+        console.log("" + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
           rndE = createRandomFunction();
           console.log("rndE = " + rndE, executed++);
@@ -1428,25 +1429,27 @@ function functionHandle(e) {
       }
     }
   }
-  if (e && e.parameter && !e.parameter["func"] && e.parameter["args"]) {
-    var funcUno = null;
-    var funcDos = e.parameter["args"];
-  } else {
-    if (e && e.parameter && e.parameter["func"] && !e.parameter["args"]) {
+  if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+  var funcUno = e.parameter["func"];
+  var funcDos = e.parameter["args"];
+  }
+  else {
+    if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
       var funcUno = e.parameter["func"];
       var funcDos = null;
     } 
-    else { 
-      if (e && e.parameter && e.parameter["func"] && e.parameter["args"]) {
-      var funcUno = e.parameter["func"];
-      var funcDos = e.parameter["args"];
-      }
+    else {
+      if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+        var funcUno = null;
+        var funcDos = e.parameter["args"];
+      }  
       else {
         var funcUno = Object.keys(rndE);
         var funcDos = Object.values(rndE);
       }
     } 
   }
+  console.log("exec and args\n" + [funcUno, funcDos]);
   return {
     exec: funcUno,
     args: funcDos,
