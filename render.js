@@ -364,7 +364,7 @@ var contentCDN = function (url, argsObject) {
     // );
     //Early return
     console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
-    if (tmp.payL?.pL?.type !== "url") {
+    if (tmp.payL?.pL?.type !== "url" && tmp.payL?.pL?.type !== "text") {
       if (tmp.payL?.message?.content) {
         console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
         let locObj = 
@@ -997,12 +997,12 @@ var renderFile = function (file, argsObject, title) {
                 <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
                   <thead>
                   </thead>
-                  <tbody>
-                    <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
-                      <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                  <tbody class="transparent">
+                    <tr class="transparent" style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
+                      <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
                         <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
-                          <tbody>
-                            <td>
+                          <tbody class="transparent">
+                            <td class="transparent">
                               <div class="row">
                                 <section class="transparent">
                                   <header class="card-panel transparent list-container grid">
