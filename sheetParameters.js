@@ -2117,7 +2117,7 @@ function ssGetSheetBSI(url) {
   }
 }
 
-function ssGetSheetBySpreadsheetId(id, sheetname) {
+var ssGetSheetBySpreadsheetId = function(id, sheetname) {
   if (id && id !== "id") {
     var ss = idSpreadSheet(id);
     var sheet = ss.getSheetByName(sheetname);

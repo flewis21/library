@@ -92,7 +92,7 @@ function gsFiles() {
   return gsFileList;
 }
 
-function gsFParams() {
+var gsFParams = function() {
   // console.log(
   //   "boilerplate Help: line 339\ngsFParams(: )\n " +
   //     arguments.callee.caller.name,

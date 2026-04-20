@@ -1,26 +1,29 @@
 function allTime(rndKey, arrD, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      rndKey +
-      ", = " +
-      !rndKey +
-      "\n!" +
-      [arrD].toString().substring(0, 20) +
-      ", = " +
-      !arrD +
-      "\n!" +
-      time +
-      ", = " +
-      !time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     rndKey +
+  //     ", = " +
+  //     !rndKey +
+  //     "\n!" +
+  //     [arrD].toString().substring(0, 20) +
+  //     ", = " +
+  //     !arrD +
+  //     "\n!" +
+  //     time +
+  //     ", = " +
+  //     !time,
+  // );
+  let executed = 0;
   if (typeof time === "undefined") {
     var time = functionRegistry.time;
+    console.log("time = " + formatTime(time), executed++);
   }
   if (typeof rndKey === "undefined" || typeof rndKey === null) {
     var uniqueKey = randomSubstance(0, 4, null, arrD, time).myNewArr;
+    console.log("uniqueKey = " + uniqueKey, executed++);
     console.log(
       "allTime: \nvar " + uniqueKey + " = randomSubstance(" + 0,
       4,
@@ -33,6 +36,7 @@ function allTime(rndKey, arrD, time) {
       "allTime: \nvar " + uniCoArr + " = " + [uniqueKey].join("").split(" "),
     );
     var uniqueCoObjects = covObjects(uniCoArr, ["allTime"], time);
+    console.log("uniqueCoObjects = " + uniqueCoObjects, executed++);
     console.log(
       "allTime: \nvar " + uniqueCoObjects + " = covObjects(" + uniCoArr,
       ["allTime"],
@@ -43,6 +47,7 @@ function allTime(rndKey, arrD, time) {
         Math.floor(Math.random() * Math.floor(uniqueCoObjects.length))
       ];
     var uniqueCoArray = covArrays(rndCoObjects, time);
+    console.log("uniqueCoArray = " + uniqueCoArray, executed++);
     console.log(
       "allTime: \nvar " + uniqueCoArray + " = covArrays(" + rndCoObjects,
       time + ")",
@@ -54,6 +59,7 @@ function allTime(rndKey, arrD, time) {
   }
   var coKey = rndKey || rndCoArray;
   var seoArray = seoPastTime([coKey].join(""), time).playList;
+  console.log("seoArray = " + seoArray, executed++);
   console.log(
     "allTime: \nvar " +
       JSON.stringify(seoArray) +
@@ -81,6 +87,7 @@ function allTime(rndKey, arrD, time) {
         );
         var playListSorted = randomPlaylist.sort((a, b) => a - b);
         var videoObject = covObjects(playListSorted, ["youtubeID"], time);
+        console.log("videoObject = " + videoObject, executed++);
         console.log(
           "allTime: \nvar " +
             JSON.stringify(videoObject) +
@@ -102,6 +109,7 @@ function allTime(rndKey, arrD, time) {
         }
       };
       var sortaPlay = randomPlaylist.sort((a, b) => a - b);
+      console.log("sortaPlay = " + sortaPlay, executed++);
       var randomVideo =
         vidPlaylist() ||
         sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
@@ -144,7 +152,7 @@ function covArrays(object, time) {
 // console.log(JSON.stringify(dataArray[obj]))
 // console.log(dataArray)
 
-function covObjects(rows, headings, time) {
+var covObjects = function(rows, headings, time) {
   // console.log(
   //   formatTime(functionRegistry.time) +
   //     "\n" +
@@ -176,7 +184,7 @@ function covObjects(rows, headings, time) {
   }
 }
 
-function itemCalc() {
+var itemCalc = function() {
   var itemSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "items",
@@ -201,25 +209,27 @@ function itemCalc() {
 }
 
 function needUtility(rndClient, arrD, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      rndClient +
-      ", = " +
-      !rndClient +
-      "\n!" +
-      [arrD].toString().substring(0, 20) +
-      ", = " +
-      !arrD +
-      "\n!" +
-      time +
-      ", = " +
-      !time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     rndClient +
+  //     ", = " +
+  //     !rndClient +
+  //     "\n!" +
+  //     [arrD].toString().substring(0, 20) +
+  //     ", = " +
+  //     !arrD +
+  //     "\n!" +
+  //     time +
+  //     ", = " +
+  //     !time,
+  // );
+  let executed = 0;
   if (typeof rndClient === "undefined") {
-    var rndClient = "random";
+    var rndClient = globalThis.searchString().myNewArr;
+    console.log("rndClient = " + rndClient, executed++);
   }
   var client = rndClient;
   // console.log("needUtility: \n" + client + " is a:  \n" + typeof [client].join("") + ", and is " + [client].join("").length + " characters in length")
@@ -227,6 +237,7 @@ function needUtility(rndClient, arrD, time) {
   if (typeof client !== "undefined" && [client].join("").length > 0) {
     // console.log("needUtility: \n" + [client].join("").length + " is greater than " + 0);
     var seoTitle = seoSheet(client, time).keyWords;
+    console.log("seoTitle = " + seoTitle, executed++);
     console.log(
       "needUtility: \nvar " + seoTitle + " = seoSheet(" + client,
       time + ").keyWords",
@@ -253,6 +264,7 @@ function needUtility(rndClient, arrD, time) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
+      console.log("coName = " + coName, executed++);
       try {
         if (Array.isArray(rndTitle2)) {
           console.log(
@@ -278,6 +290,7 @@ function needUtility(rndClient, arrD, time) {
           Math.floor(Math.random() * Math.floor([error].length))
         ];
         var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
+        console.log("coName = " + coName, executed++);
         if (Array.isArray(rndTitle2)) {
           console.log(
             " + needUtility: \nvar " +
@@ -300,6 +313,7 @@ function needUtility(rndClient, arrD, time) {
       }
     } else {
       var coName = allTime(null, arrD, time);
+      console.log("coName = " + coName, executed++);
       console.log(
         "needUtility: \nvar " + coName + " = allTime(" + null,
         [arrD].toString().substring(0, 20),
@@ -308,6 +322,7 @@ function needUtility(rndClient, arrD, time) {
     }
   } else {
     var coName = allTime(null, arrD, time);
+    console.log("coName = " + coName, executed++);
     console.log(
       "needUtility: \nvar " + coName + " = allTime(" + null,
       [arrD].toString().substring(0, 20),
@@ -332,31 +347,31 @@ function needUtility(rndClient, arrD, time) {
 }
 
 function randomSubstance(index, loopLength, importedData, arrD, time) {
-  console.log(
-    formatTime(functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nindex is !" +
-      !index +
-      ", = " +
-      index +
-      "\nloopLength is !" +
-      !loopLength +
-      ", = " +
-      loopLength +
-      "\nimportedData is !" +
-      !importedData +
-      ", = " +
-      importedData +
-      "\narrD is !" +
-      !arrD +
-      ", = " +
-      [arrD].toString().substring(0, 20) +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   formatTime(functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nindex is !" +
+  //     !index +
+  //     ", = " +
+  //     index +
+  //     "\nloopLength is !" +
+  //     !loopLength +
+  //     ", = " +
+  //     loopLength +
+  //     "\nimportedData is !" +
+  //     !importedData +
+  //     ", = " +
+  //     importedData +
+  //     "\narrD is !" +
+  //     !arrD +
+  //     ", = " +
+  //     [arrD].toString().substring(0, 20) +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof time === "undefined") {
     var time = start;
   }
@@ -661,7 +676,7 @@ function seoSheet(searchString, time) {
 // else {console.log(b + "</></></></></></>" + JSON.stringify(covObjects([[b]], ["keywords"])));headForms.push(b);return;form.addParagraphTextItem().setTitle(JSON.stringify(covObjects([[b]], ["keywords"]))).setHelpText(b)}});form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());var formUrl = form.getPublishedUrl()}
 // else {var formUrl = form};url: formUrl,
 
-function sheetCalc() {
+var sheetCalc = function() {
   var secSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "sec",

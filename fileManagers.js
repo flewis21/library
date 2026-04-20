@@ -298,17 +298,18 @@ function driveWebForms() {
     "boilerplate fileManagers: line 233\n()\n " + arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
-  var fileList = [];
-  while (fileList.length === 0) {
-    fileList = matchManager("webForms").forms;
-  }
+  var fileList = matchManager("webForms").forms;
+  // while (fileList.length === 0) {
+  //   fileList = matchManager("webForms").forms;
+  // }
   // return console.log(fileList)
   var eFolder = DriveApp.getFoldersByName("webForms").next();
-  var rndFiled = Math.floor(Math.random() * Math.floor(fileList.length));
-  var file = fileList[rndFiled];
-  var folderFile = eFolder.getFilesByName(file);
   var dataTree = [];
-  while (folderFile.hasNext()) {
+  var file;
+  var folderFile;
+  while (dataTree.length < Math.floor(Math.random() * 26)) {
+    file = fileList[Math.floor(Math.random() * Math.floor(fileList.length))];
+    folderFile = eFolder.getFilesByName(file);
     var myFile = folderFile.next();
     var myFileUrl = myFile.getUrl();
     var currentFileUrl = FormApp.openByUrl(myFileUrl).getPublishedUrl();
@@ -401,17 +402,15 @@ function driveVideoForms() {
       arguments.callee.caller.name,
   );
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
-  var fileList = [];
-  while (fileList.length === 0) {
-    fileList = matchManager("videoForms").forms;
-  }
+  var  fileList = matchManager("videoForms").forms;
+  // while (fileList.length === 0) {
+  // }
   // return console.log(fileList)
   var eFolder = DriveApp.getFoldersByName("videoForms").next();
-  var rndFiled = Math.floor(Math.random() * Math.floor(fileList.length));
-  var file = fileList[rndFiled];
-  var folderFile = eFolder.getFilesByName(file);
   var dataTree = [];
-  while (folderFile.hasNext()) {
+  while (dataTree.length < Math.floor(Math.random() * 26)) {
+  var file = fileList[Math.floor(Math.random() * Math.floor(fileList.length))];
+  var folderFile = eFolder.getFilesByName(file);
     var myFile = folderFile.next();
     var myFileUrl = myFile.getUrl();
     var currentFileUrl = FormApp.openByUrl(myFileUrl).getPublishedUrl();

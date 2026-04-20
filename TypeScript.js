@@ -125,30 +125,30 @@ var geneicType = function () {
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
   // functionRegistry.domainTree();
-  let handles = functionHandle({parameter: {func:"rndCoin"}});
+  let handles = functionHandle({parameter: {q:testlt().name}});
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
-  let dataOR = globalHandleGetData(base);
-  let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
+  // let dataOR = globalHandleGetData(base);
+  // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
   // let bex = isOmit(exampleObjectType, "b");
   // bex = isOmit(bex, "c");
   // let scriptUrl = isMapped(bex, [...fileParams?.parameters]);
-  let crfRes = createRandomFunction();
-  var functionObjectType = handleGetData();
+  // let crfRes = createRandomFunction();
+  // var functionObjectType = handleGetData();
   //misSt([Object.keys(crfRes),Object.values(crfRes)]);
   // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
   // isExcludeValue = isOmit(isExcludeValue, "2");
   // isExcludeValue = isOmit(isExcludeValue, "3");
-  var teeValid1 = isMapped({ 0: null }, [
-    "isValidUrl",
-    "http://www.google.com",
-  ])[0];
-  var forTruth = resolveParams(teeValid1);
+  // var teeValid1 = isMapped({ 0: null }, [
+  //   "isValidUrl",
+  //   "http://www.google.com",
+  // ])[0];
+  // var forTruth = resolveParams(teeValid1);
   // var tee = isPropertyOf(teeValid1)
   // var kee = isMapped(tee)
-  var noB = isValidKeys(forTruth);
-  return noB;
+  // var noB = isValidKeys(forTruth);
+  // return noB;
 };

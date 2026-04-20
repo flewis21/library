@@ -895,7 +895,7 @@ var includeJs = function (blob, argsObject) {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 };
 
-var myFunction = function (webApp, argsObject) {
+var myWebFunction = function (webApp, argsObject) {
   const tmp = HtmlService.createHtmlOutput(webApp);
   if (argsObject) {
     const keys = Object.keys(argsObject);

@@ -465,6 +465,7 @@ function matchManager(folderX, narrow, time) {
     var arrFileNames = [];
     while (folderFiles.hasNext()) {
       var arrayFile = folderFiles.next();
+      filesArray.push(arrayFile);
       let arrFileName = arrayFile.getName();
       arrFileNames.push(arrFileName);
     }
@@ -474,39 +475,39 @@ function matchManager(folderX, narrow, time) {
       .includes([narrow].toString().toLowerCase());
     // while (folderFiles.hasNext() && iterationCount < maxiterations) {
     // if (goldFish) {
-    arrFileNames.forEach((arrFileName) => {
+    filesArray.forEach((file) => {
       // var arrayFile = folderFiles.next();
-      // let arrFileName = arrayFile.getName()
-      var fileMim = arrFileName.toLowerCase();
-      var mimeType = arrayFile.getMimeType();
+      let arrFN = file.getName()
+      var fileMim = arrFN.toLowerCase();
+      var mimeType = file.getMimeType();
       if (fileMim.includes(arn)) {
         if (mimeType === MimeType.GOOGLE_DOCS) {
-          docList.push(arrayFile.getName());
+          docList.push(arrFN);
         } else if (mimeType === MimeType.GOOGLE_SLIDES) {
-          slideList.push(arrayFile.getName());
+          slideList.push(arrFN);
         } else if (
           folderX === "Sheets" &&
           mimeType === MimeType.GOOGLE_SHEETS
         ) {
-          sheetList.push(arrayFile.getName());
+          sheetList.push(arrFN);
         } else if (mimeType === MimeType.GOOGLE_FORMS) {
-          formList.push(arrayFile.getName());
+          formList.push(arrFN);
         } else if (mimeType === MimeType.GOOGLE_APPS_SCRIPT) {
-          appTree.push(arrayFile.getName());
+          appTree.push(arrFN);
         } else if (mimeType === MimeType.PNG) {
-          pngTree.push(arrayFile.getName());
+          pngTree.push(arrFN);
         } else if (mimeType === MimeType.PDF) {
-          pdfTree.push(arrayFile.getName());
+          pdfTree.push(arrFN);
         }
       }
-      if (literate < 4) {
-        literate++;
-        filesArray.push(arrayFile);
-      } else {
-        literate = 0;
-        filesArray.push(arrayFile);
+      // if (literate < 4) {
+      //   literate++;
+      //   filesArray.push(arrayFile);
+      // } else {
+      //   literate = 0;
+      //   filesArray.push(arrayFile);
         // break;
-      }
+      // }
     });
     while (
       appTree.length === 0 &&
@@ -519,33 +520,28 @@ function matchManager(folderX, narrow, time) {
       iterationCount < maxiterations
     ) {
       filesArray.forEach(function (file) {
-        // var fileMim = file.getName().toLowerCase();
         var mimeType = file.getMimeType();
-        if (mimeType === MimeType.GOOGLE_DOCS && docList.length === 0) {
+        if (mimeType === MimeType.GOOGLE_DOCS) {
           docList.push(file.getName());
         } else if (
-          mimeType === MimeType.GOOGLE_SLIDES &&
-          slideList.length === 0
+          mimeType === MimeType.GOOGLE_SLIDES
         ) {
           slideList.push(file.getName());
         } else if (
-          mimeType === MimeType.GOOGLE_SHEETS &&
-          sheetList.length === 0
+          mimeType === MimeType.GOOGLE_SHEETS
         ) {
           sheetList.push(file.getName());
         } else if (
-          mimeType === MimeType.GOOGLE_FORMS &&
-          formList.length === 0
+          mimeType === MimeType.GOOGLE_FORMS
         ) {
           formList.push(file.getName());
         } else if (
-          mimeType === MimeType.GOOGLE_APPS_SCRIPT &&
-          appTree.length === 0
+          mimeType === MimeType.GOOGLE_APPS_SCRIPT
         ) {
           appTree.push(file.getName());
-        } else if (mimeType === MimeType.PNG && pngTree.length === 0) {
+        } else if (mimeType === MimeType.PNG) {
           pngTree.push(file.getName());
-        } else if (mimeType === MimeType.PDF && pdfTree.length === 0) {
+        } else if (mimeType === MimeType.PDF) {
           pdfTree.push(file.getName());
         } else {
           return;
@@ -555,7 +551,7 @@ function matchManager(folderX, narrow, time) {
         literate++;
       } else {
         literate = 0;
-        break;
+        // break;
       }
     }
     // }
