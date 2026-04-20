@@ -2499,11 +2499,11 @@ function misSt(func, someArgs) {
                                       } 
                                       else {
                                         if (
-                                          ["tunPlay", "searchString", "rndKey", "search"].includes(
+                                          ["tunPlay", "searchString", "rndKey", "search", "searchDTLS"].includes(
                                             declaredParamName,
                                           )
                                         ) {
-                                          var nameArray = ["tunPlay", "searchString", "rndKey", "search"];
+                                          var nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS"];
                                           var rndCoIndex = Math.floor(
                                             Math.random() * Math.floor(globalThis.uniqueCoArray().length),
                                           );

@@ -68,7 +68,7 @@ function carbon(email) {
   console.log(emailList);
 }
 
-function congressLeg(e) {
+function congressFunc(e) {
   // var gamerUrl = (getUrl(ScriptApp) + "?default")()
   var congressInfoAPI = (function (e) {
     var congressAPIEmail = "f.lewis20.specialist19@outlook.com";

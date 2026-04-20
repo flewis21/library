@@ -1214,7 +1214,7 @@ function fileFold(folderX, fileX, time) {
   return fileFree;
 }
 
-function fileManager(fileX, folder, time, content, mimeType) {
+var fileManager = function(fileX, folder, time, content, mimeType) {
   console.log(
     "boilerplate fileManagers: line 1015\nfileManager(fileX: " +
       fileX +
@@ -1491,7 +1491,7 @@ function folderIdGlobal(folderX, time) {
 
 function folderMatch(folderX, stringArray) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate fileManagers: line 1494\nfolderMatch(folderX: " + folderX +"stringArray: " + stringArray + ")\n " + arguments.callee.caller.name,
   );
   console.log(
     formatTime(functionRegistry.time) +

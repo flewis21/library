@@ -1,4 +1,4 @@
-function csvDataSource(url, params) {
+var csvDataSource = function(url, params) {
   console.log(
     functionRegistry.time +
       "\n" +

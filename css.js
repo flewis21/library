@@ -1252,6 +1252,70 @@ const location_url = HtmlService.createHtmlOutput(
   </script>
 `);
 
+const GameManager = {
+  setGameStart: function(classType) {
+    this.resetPlayer(classType);
+    this.setPreFight();
+  },
+  resetPlayer: function(classType) {
+    let gamer;
+    switch (classType) {
+      case "Warrior": gamer = 
+        new Gamer(classType, 200, 0, 200, 100, 50);
+        break;
+      case "Rouge": gamer = 
+        new Gamer(classType, 100, 0, 100, 150, 200);
+        break;
+      case "Mage": gamer = 
+        new Gamer(classType, 80, 0, 50, 200, 50);
+        break;
+      case "Hunter": gamer = 
+        new Gamer(classType, 200, 0, 50, 200, 100);
+        break;
+    } 
+  },
+  setPreFight: function() {
+    let enemy;
+  }
+}
+
+const getInterface = HtmlService.createHtmlOutput(
+  `
+  <script>
+    document.querySelector(\".interface\");
+    getInterface.innerHTML = 
+      "
+        <img src="" class="img-avatar">
+        <div>
+          <h3>
+            " + classType + "
+          </h3>
+          <p>
+            Health: " + gamer.health + "
+          </p>
+        </div>
+      ";
+  </script>
+`);
+
+const Gamer = function(classType, health, mana, strength, agility, speed) {
+  this.classType = classType;
+  this.health = health;
+  this.mana = mana;
+  this.strength = strength;
+  this.agility = agility;
+  this.speed = speed;
+}
+
+const Enemy = function(enemyType, health, mana, strength, agility, speed) {
+  this.classType = enemyType;
+  this.health = health;
+  this.mana = mana;
+  this.strength = strength;
+  this.agility = agility;
+  this.speed = speed;
+}
+        
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
     `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent()}`,

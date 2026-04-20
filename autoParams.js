@@ -1480,8 +1480,10 @@ function functionHandle(e) {
                 }
                 else {
                   if (typeof globalThis[e.parameter[objData[0]]] === "function") {
-                    let argsEd = e.parameter[objData[0]];
-                    console.log("argsEd = " + argsEd, executed++);
+                    let argsEd = functionRegistry.paramsList.find((rndS) => {
+                      return rndS.name === e.parameter[objData[0]];
+                    });
+                    console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                     if (typeof argsEd === "string") {
                       e = objectOfS(
                         ["parameter"],
@@ -1490,6 +1492,43 @@ function functionHandle(e) {
                       );
                       console.log("e = " + e, executed++);
                     } 
+                    else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
+                      if (argsEd.parameters && argsEd.parameters.length > 0) {
+                        e = objectOfS(
+                          ["parameter"],
+                          [
+                            [
+                              ["func", argsEd.name],
+                              ["args", [...argsEd.parameters]],
+                            ],
+                          ],
+                          functionRegistry.time,
+                        );
+                      } else {
+                        e = objectOfS(
+                          ["parameter"],
+                          [
+                            [
+                              ["func", argsEd.name],
+                            ],
+                          ],
+                          functionRegistry.time,
+                        );
+                      }
+                    } else {
+                      console.log("Unexpected argsEd type: ", argsEd);
+                      e = objectOfS(
+                        ["parameter"],
+                        [
+                          [
+                            ["func", "aVar"],
+                            ["args", "varA"],
+                          ],
+                        ],
+                        functionRegistry.time,
+                      );
+                    }
+                    console.log(JSON.stringify(e));
                   }
                   else {
                     console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));

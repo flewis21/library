@@ -829,8 +829,9 @@ function crmEBI(fx) {
       <html>
       <head>
         <title>Employee Benefits Inquiry</title>
-        <?!= builtStyling().evaluate().getContent() ?>
+        <?!= styleHtml.abcIt.getContent() ?>
         <style>
+          <?!= styleHtml.renderTemplate.getContent() ?>
           a:link, a:visited {color:metallic grey !important;
                             font-size: 4.5em;}
           a:hover, a:active{ 
@@ -924,37 +925,44 @@ function crmEBI(fx) {
         </style>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>
       </head>
-      <body>
-        <div class="container">
-          <div class="row">
-            <div class="col s12">
-              <div class="input-field col s12">
-                <select id="templateSelect">
-                  <option value="" disabled selected>Choose a Template Doc</option>
-                  <? var files = DriveApp.searchFiles('mimeType = "application/vnd.google-apps.document"'); ?>
-                  <? while (files.hasNext()) { ?>
-                    <? var file = files.next(); ?>
-                    <option value="<?= file.getUrl() ?>"><?= file.getName() ?></option>
-                  <? } ?>
-                </select>
-                <label for="templateSelect">Select a Google Doc</label>
+      <body class="transparent">
+        <main>
+          <nav class="flex-div">
+            <div class="container">
+              <div class="row">
+                <div class="col s12">
+                  <div class="input-field col s12">
+                    <select id="templateSelect">
+                      <option value="" disabled selected>Choose a Template Doc</option>
+                      <? var files = DriveApp.searchFiles('mimeType = "application/vnd.google-apps.document"'); ?>
+                      <? while (files.hasNext()) { ?>
+                        <? var file = files.next(); ?>
+                        <option value="<?= file.getUrl() ?>"><?= file.getName() ?></option>
+                      <? } ?>
+                    </select>
+                    <label for="templateSelect">Select a Google Doc</label>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col s12">
-              <h2>Hi, this is Fabian with WLS Community Benefits! Good morning/afternoon! How are you today? (Wait for answer before trying to continue)! Please tell me your name (again)! (Insert here or write it down)! <input type="text" id="name" name="name" style="font-size: 1em"><label for="name" style="font-size: 1em">Name:</label> <p>Thanks! Hi <input type="text" id="nameFr" name="nameFriendly" style="font-size: 1em"><label for="nameFr" style="font-size: 1em">Friendly Name:</label></p><p> Are you the person who handles employee benefits for</p></h2>
-              <h1><div id="companyName">Employee Benefits Inquiry</div></h1>
-              <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 1em">
-              <form id="ebiForm" style="font-size: .2em">
-                <div style="font-size: 5em">
-                  <h2>?(Wait for answer before trying to continue)! May I speak with the person who handles benefits, please?</h2><h2>Hi, <input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: 1em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name:</label> this is Fabian with WLS Community Benefits! I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</h2><h2> May I have a few minutes of your time? (If not, find out what would be a good time to call back) Do you offer employee benefits?</h2><div id="yesOffer"><h3>If yes, continue!</h3></div><div class="interface dotted_border"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" id="yesHL" target="_blank"><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&amp;pid=ImgRaw&amp;r=0" alt="Ask: Do you offer employee benefits?"></a></div><div class="interface dotted_border"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" id="noHL" target="_blank"><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&amp;pid=ImgDetMain" alt="Ask: Do you offer employee benefits?"></a></div><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><h2>I want to schedule some time for you to meet with my director to discuss it! How is<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="date" name="date" style="font-size: .6em"><label for="date" style="font-size: 1em">Date:</label> at<input placeholder="<?!= bh ?>"class="timepicker" type="time" id="time" name="time" style="font-size: .6em"><label for="time" style="font-size: 1em">Time:</label> or<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: .6em"><label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder="<?!= bh ?>" class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: .6em"><label for="timeAlt" style="font-size: 1em">Alternate Time:</label></h2>
-                  <h2>So that we can be better prepared for the meeting let me ask you a few additional questions:What is your email address?<input type="email" id="email" name="email" style="font-size: 1em"><label for="email" style="font-size: 1em">Email:</label>What is your cell phone number or the best way to reach you directly?<input type="tel" id="phone" name="phone" style="font-size: 1em"><label for="phone" style="font-size: 1em">Telephone:</label>How many full-time employees do you have?<input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: 1em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label> How many part-time employees do you have?<input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: 1em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label>Is there someone else at your business you would like to have attend this meeting as well? (get name and email)<input type="text" id="nameAdd" name="nameAdditional" style="font-size: 1em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><input type="email" id="emailAdd" name="emailAdditional" style="font-size: 1em"><label for="emailAdd" style="font-size: 1em">Additional Email:</label>Are you the final decision maker about benefits?</h2><h2>OK! Great! Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: .6em"><label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder="<?!= bh ?>" class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: .6em"><label for="timeFin" style="font-size: 1em">Finalized Time:</label> If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</h2></div></form><button type="submit" style="font-size: 1em">Submit</button>
+          </nav>
+          <header class="banner">
+            <div class="container">
+              <div class="row">
+                <div class="col s12">
+                  <h2>Hi, this is Fabian with WLS Community Benefits! Good morning/afternoon! How are you today? (Wait for answer before trying to continue)! Please tell me your name (again)! (Insert here or write it down)! <input type="text" id="name" name="name" style="font-size: 1em"><label for="name" style="font-size: 1em">Name:</label> <p>Thanks! Hi <input type="text" id="nameFr" name="nameFriendly" style="font-size: 1em"><label for="nameFr" style="font-size: 1em">Friendly Name:</label></p><p> Are you the person who handles employee benefits for</p></h2>
+                  <h1><div id="companyName">Employee Benefits Inquiry</div></h1>
+                  <input type="number" id="rowIndex" placeholder="Enter row number" value="1" style="font-size: 1em">
+                  <form id="ebiForm" style="font-size: .2em">
+                    <div style="font-size: 5em">
+                      <h2>?(Wait for answer before trying to continue)! May I speak with the person who handles benefits, please?</h2><h2>Hi, <input type="text" id="nameBM" name="nameBenefitsManager" style="font-size: 1em"><label for="nameBM" style="font-size: 1em">Benefits Manager Name:</label> this is Fabian with WLS Community Benefits! I am calling you today to share some exciting news about employee benefits and how you can save money on your employee health insurance!</h2><h2> May I have a few minutes of your time? (If not, find out what would be a good time to call back) Do you offer employee benefits?</h2><div id="yesOffer"><h3>If yes, continue!</h3></div><div class="interface dotted_border"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" id="yesHL" target="_blank"><img src="https://th.bing.com/th/id/R.57eccfdb6e4aa879a3f1916f680230cc?rik=lTo5WUyhUhAWdQ&amp;pid=ImgRaw&amp;r=0" alt="Ask: Do you offer employee benefits?"></a></div><div class="interface dotted_border"><a href="https://calendly.com/wlstraininginc/employee-benefits-consultation" id="noHL" target="_blank"><img src="https://th.bing.com/th/id/OIP.Ma7y1maQJ2aG4_SmBPZzxwHaFj?rs=1&amp;pid=ImgDetMain" alt="Ask: Do you offer employee benefits?"></a></div><div id="noOffer"><h3 class="header h1">If no, continue!</h3></div><h2>I want to schedule some time for you to meet with my director to discuss it! How is<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="date" name="date" style="font-size: .6em"><label for="date" style="font-size: 1em">Date:</label> at<input placeholder="<?!= bh ?>"class="timepicker" type="time" id="time" name="time" style="font-size: .6em"><label for="time" style="font-size: 1em">Time:</label> or<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="dateAlt" name="dateAlternate" style="font-size: .6em"><label for="dateAlt" style="font-size: 1em">Alternate Date:</label> at<input placeholder="<?!= bh ?>" class="timepicker" type="time" id="timeAlt" name="timeAlternate" style="font-size: .6em"><label for="timeAlt" style="font-size: 1em">Alternate Time:</label></h2>
+                      <h2>So that we can be better prepared for the meeting let me ask you a few additional questions:What is your email address?<input type="email" id="email" name="email" style="font-size: 1em"><label for="email" style="font-size: 1em">Email:</label>What is your cell phone number or the best way to reach you directly?<input type="tel" id="phone" name="phone" style="font-size: 1em"><label for="phone" style="font-size: 1em">Telephone:</label>How many full-time employees do you have?<input type="number" id="fullTimeEmployees" name="fullTimeEmployees" style="font-size: 1em"><label for="fullTimeEmployees" style="font-size: 1em">Full-time Employees:</label> How many part-time employees do you have?<input type="number" id="partTimeEmployees" name="partTimeEmployees" style="font-size: 1em"><label for="partTimeEmployees" style="font-size: 1em">Part-time Employees:</label>Is there someone else at your business you would like to have attend this meeting as well? (get name and email)<input type="text" id="nameAdd" name="nameAdditional" style="font-size: 1em"><label for="nameAdd" style="font-size: 1em">Additional Name:</label><input type="email" id="emailAdd" name="emailAdditional" style="font-size: 1em"><label for="emailAdd" style="font-size: 1em">Additional Email:</label>Are you the final decision maker about benefits?</h2><h2>OK! Great! Ms. Bridget Lewis will email you a reminder a few minutes before your meeting on<input placeholder="<?!= ph ?>" class="datepicker" type="date" id="dateFin" name="dateFinalized" style="font-size: .6em"><label for="dateFin" style="font-size: 1em">Finalized Date:</label> at<input placeholder="<?!= bh ?>" class="timepicker" type="time" id="timeFin" name="timeFinalized" style="font-size: .6em"><label for="timeFin" style="font-size: 1em">Finalized Time:</label> If you have any further questions or need to reschedule, her number 678-296-7290 and her email is bridget@wlstraininginc.com!</h2></div></form><button type="submit" style="font-size: 1em">Submit</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </header>
+        </main>
+        <?!= styleHtml.runIt.getContent() ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script> 
           $(document).ready(function() {

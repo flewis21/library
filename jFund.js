@@ -823,7 +823,7 @@ function superTest(e) {
         };
         document.getElementById("caller").onclick = go;
       },
-      link: getUrl(ScriptApp) + "?default=ssTest",
+      drivemC: getUrl(ScriptApp) + "?default=ssTest",
     },
   );
   return html;

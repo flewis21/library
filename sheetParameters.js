@@ -1018,12 +1018,12 @@ function renameSheetSafely(ss, newSheetName) {
   var sheetName = newSheetName; // Set your desired new sheet name here
 
   // Get the current sheet name
-  var currentName = sheet.getName();
+  var currentName = sheet?.getName();
 
   // Get the last row with content
-  var lastRow = sheet.getLastRow();
+  var lastRow = sheet?.getLastRow();
   // Get the last column with content
-  var lastColumn = sheet.getLastColumn();
+  var lastColumn = sheet?.getLastColumn();
 
   // Check if the sheet name is the default name
   var isDefaultName =
@@ -1037,7 +1037,7 @@ function renameSheetSafely(ss, newSheetName) {
 
   // Rename the sheet only if it has a default name AND is empty
   if (isDefaultName && isEmpty) {
-    sheet.setName(sheetName);
+    sheet?.setName(sheetName);
   }
 }
 

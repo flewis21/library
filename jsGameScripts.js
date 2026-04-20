@@ -1,55 +1,62 @@
 function jsGameScripts() {
   var gamerUrl = getScriptUrl();
-  var html = HtmlService.createTemplate(`<html id="jsGameScripts">
-                          <head>
-                            <base target="_top"></base>
-                            <meta charset="utf-8">
-                            <meta name="jsGameScripts" content="Boilerplate Script Game">
-                            <meta name=viewport content="width=device-width, initial-scale=1">
-                            <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-                          </head>
-                          <body>
-                            <div class="header toolbar toolbar-icon">
-                              <p>Play the greatest RPG ever to be made!</p>
-                              <h2>Choose Your Character</h2>
-                            </div>
-                            <div class="interface dotted_border">
-                              <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Warrior')">
-                                <img src="" alt="warrior">
-                                <div>
-                                  <h3>Warrior</h3> 
-                                  <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
-                                </div>
-                              </a>
-                              <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Rouge')">
-                                <img src="" alt="rouge">
-                                <div>
-                                  <h3 class="header h1">Rouge</h3> 
-                                  <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
-                                </div>
-                              </a>
-                              <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Mage')">
-                                <img src="" alt="mage">
-                                <div>
-                                  <h3>Mage</h3> 
-                                  <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
-                                </div>
-                              </a>
-                              <a href='<?= getUrl(ScriptApp) ?>' onclick="GameManager.setGameStart('Hunter')">
-                                <img src="" alt="hunter">
-                                <div>
-                                  <h3>Hunter</h3> 
-                                  <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
-                                </div>
-                              </a>
-                            </div>
-                            <div class="actions"></div>
-                            <div class="arena"></div>
-                            <div class="enemy"></div>
-                            <script>
-                            </script>  
-                          </body>
-                        </html>`);
+  var html = contentApp(
+    `
+    <html id="jsGameScripts">
+      <head>
+        <base target="_top"></base>
+        <meta charset="utf-8">
+        <meta name="jsGameScripts" content="Boilerplate Script Game">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+      </head>
+      <body>
+        <div class="header toolbar toolbar-icon">
+          <p>Play the greatest RPG ever to be made!</p>
+          <h2>Choose Your Character</h2>
+        </div>
+        <div class="interface dotted_border">
+          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= warrior ?>">
+            <img src="" alt="warrior">
+            <div>
+              <h3>Warrior</h3> 
+              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+            </div>
+          </a>
+          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= rouge ?>">
+            <img src="" alt="rouge">
+            <div>
+              <h3 class="header h1">Rouge</h3> 
+              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+            </div>
+          </a>
+          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= mage ?>">
+            <img src="" alt="mage">
+            <div>
+              <h3>Mage</h3> 
+              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+            </div>
+          </a>
+          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= hunter ?>">
+            <img src="" alt="hunter">
+            <div>
+              <h3>Hunter</h3> 
+              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+            </div>
+          </a>
+        </div>
+        <div class="actions"></div>
+        <div class="arena"></div>
+        <div class="enemy"></div>
+        <?!= getInterface.getContent() ?>
+      </body>
+    </html>`,
+    {
+      warrior: GameManager.setGameStart("Warrior"),
+      rouge: GameManager.setGameStart("Rouge"),
+      mage: GameManager.setGameStart("Mage"),
+      hunter: GameManager.setGameStart("Hunter"),
+    });
   html.gamemanager = HtmlService.createHtmlOutput(
     `let GameManager = 
       {

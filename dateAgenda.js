@@ -71,7 +71,7 @@ function busyDates() {
   return uniqueBusy;
 }
 
-async function agendaDates() {
+var agendaDates = async function() {
   Date.UTC(1970, 0, 1);
   var ss = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",

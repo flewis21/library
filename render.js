@@ -203,7 +203,7 @@ var contentApp = function (blob, argsObject) {
     "boilerplate render: line 201\ncontentApp(blob: " +
       blob.slice(0, 130) +
       "..., argsObject: " +
-      JSON.stringify(argsObject).slice(0, 130) +
+      JSON.stringify(argsObject)?.slice(0, 130) +
       ")\n" +
       arguments.callee.caller.name,
   );
@@ -995,7 +995,7 @@ var renderFile = function (file, argsObject, title) {
                 <div class="responsive-section transparent">
                 <div class="receipt transparent responsive-section">
                 <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
-                  <thead>
+                  <thead class="transparent">
                   </thead>
                   <tbody class="transparent">
                     <tr class="transparent" style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
@@ -1003,9 +1003,9 @@ var renderFile = function (file, argsObject, title) {
                         <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
                           <tbody class="transparent">
                             <td class="transparent">
-                              <div class="row">
+                              <div class="row transparent">
                                 <section class="transparent">
-                                  <header class="card-panel transparent list-container grid">
+                                    <header class="card-panel transparent list-container grid">
                                     <h2>Owe</h2>
                                     <aside class="card-panel transparent vid-list">
                                       <a href="">
@@ -1016,7 +1016,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
@@ -1032,7 +1032,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <header class="transparent">
@@ -1051,7 +1051,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <header class="transparent">
@@ -1070,7 +1070,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <header class="transparent">
@@ -1089,7 +1089,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <header class="transparent">
@@ -1108,7 +1108,7 @@ var renderFile = function (file, argsObject, title) {
                                         </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
-                                      <div class="flex-div">
+                                      <div class="flex-div transparent">
                                         <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
                                         <div class="vid-info">
                                           <header class="transparent">
@@ -1196,295 +1196,315 @@ var renderTemplate = function (blob, argsObject, title) {
   // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
   let html = null;
   try {
-    html = contentApp(
-      `
-    <html id="renderTemplate">
-      <head>
-        <?!= styleHtml.abcIt.getContent() ?>
-        <style>
-          <?!= styleHtml.renderFile.getContent() ?>
-          <!--[if lt IE 9]>
-          <script>
-            document.createElement("article");
-            document.createElement("footer");
-            document.createElement("header");
-            document.createElement("nav");
-            document.createElement("main");
-            document.createElement("section");
-            document.createElement("aside");
-          </script>
-          <![endif]-->
-        </style>
-      </head>
-      <body>
-        <nav class="flex-div responsive-section transparent static-fix">
-          <div class="nav-left flex-div responsive-section">
-            <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
-          </div>
-          <div class="nav-middle flex-div responsive-section">
-            <div class="search-box flex-div">
-              <input type="text" placeholder="Search">
+    if (tmp.payL?.pL?.type === "html") {
+      html = contentApp(tmp.payL?.message?.info,
+        {
+          renTemp: tmp.evaluate().getContent(),
+          driveA: JSON.stringify(argsObject),
+          driveD: tmp.payL?.pL?.data,
+          drivedD: tmp.payL?.pL?.dataData,
+          drivemI: tmp.payL?.message?.info,
+          drivedI: tmp.payL?.pL?.dataIndex,
+          drivedU: tmp.payL?.message?.feed,
+          driveL: tmp.payL?.pL?.link,
+          driveM: tmp.payL?.message,
+          drivemC: tmp.payL?.message?.content,
+          driveP: tmp.payL?.pL,
+          driveT: tmp.payL?.pL?.type,
+        },
+      )
+    }
+    else {
+      html = contentApp(
+        `
+      <html id="renderTemplate">
+        <head>
+          <?!= styleHtml.abcIt.getContent() ?>
+          <style>
+            <?!= styleHtml.renderFile.getContent() ?>
+            <!--[if lt IE 9]>
+            <script>
+              document.createElement("article");
+              document.createElement("footer");
+              document.createElement("header");
+              document.createElement("nav");
+              document.createElement("main");
+              document.createElement("section");
+              document.createElement("aside");
+            </script>
+            <![endif]-->
+          </style>
+        </head>
+        <body>
+          <nav class="flex-div responsive-section transparent static-fix">
+            <div class="nav-left flex-div responsive-section">
+              <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
             </div>
-          </div>
-          <div class="nav-right flex-div responsive-section">
-            <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
-          </div>
-        </nav>
-        <main class="responsive-section float-left">
-          <header class="banner responsive-section">
-            <div id="player1" class="row card-panel transparent list-container grid"></div>
-            <div id="loadingSurvey">
-              <a href="#">Remove</a>
+            <div class="nav-middle flex-div responsive-section">
+              <div class="search-box flex-div">
+                <input type="text" placeholder="Search">
+              </div>
             </div>
-            <h4><?!= drivedD?.split("{")[0] ?></h4>
-            <p>Recent Applications</p>
-          </header>
-          <div class="row responsive-section">
-          <div class="card-panel amber responsive-section">
-          <div class="responsive-section">
-          <div class="responsive-section">
-          <div class="receipt red responsive-section">
-          <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
-            <thead>
-            </thead>
-            <tbody>
-              <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
-                <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                  <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
-                    <tbody>
-                      <td>
-                        <div class="row responsive-section">
-                          <section class="responsive-section static-fix">
-                            <header class="responsive-section list-container grid">
-                              <h2>Power</h2>
-                              <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
-                              <aside class="responsive-section card-panel vid-list">
-                                <a href="<?= drivemI ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+            <div class="nav-right flex-div responsive-section">
+              <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+            </div>
+          </nav>
+          <main class="responsive-section float-left">
+            <header class="banner responsive-section">
+              <div id="player1" class="row card-panel transparent list-container grid"></div>
+              <div id="loadingSurvey">
+                <a href="#">Remove</a>
+              </div>
+              <h4><?!= drivedD?.split("{")[0] ?></h4>
+              <p>Recent Applications</p>
+            </header>
+            <div class="row responsive-section">
+            <div class="card-panel amber responsive-section">
+            <div class="responsive-section">
+            <div class="responsive-section">
+            <div class="receipt red responsive-section">
+            <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
+              <thead>
+              </thead>
+              <tbody>
+                <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
+                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                    <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
+                      <tbody>
+                        <td>
+                          <div class="row responsive-section">
+                            <section class="responsive-section static-fix">
+                              <header class="responsive-section list-container grid">
+                                <h2>Power</h2>
+                                <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                                <aside class="responsive-section card-panel vid-list">
+                                  <a href="<?= drivemI ?>">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <p>
+                                        <i>   
+                                          No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
+                                          <?!= JSON.stringify(driveM) ?>
+                                        </i>
+                                      </p>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <p>
-                                      <i>   
-                                        No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
-                                        <?!= JSON.stringify(driveM) ?>
+                                  </div>
+                                </aside>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="<?!= driveL ?>">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <?!= drivedD ?>
+                                      <header class="responsive-section">
+                                        <h3><a href="">Subjectivity in Definition:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                    </div>
+                                  </div>
+                                </article>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <?!= driveT ?>
+                                      <header class="responsive-section">
+                                        <h3><a href="">Qualitative Aspects:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                                    </div>
+                                  </div>
+                                </article>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="<?!= drivedI ?>">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <?!= drivedI ?>
+                                      <header class="responsive-section">
+                                        <h3><a href="">Contextual Dependence:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                                    </div>
+                                  </div>
+                                </article>
+                                <aside class="responsive-section card-panel vid-list">
+                                  <a href="">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <i>
+                                        However, there are some aspects that can be measured or assessed to some degree:
                                       </i>
-                                    </p>
-                                  </div>
-                                </div>
-                              </aside>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveL ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <?!= drivedD ?>
-                                    <header class="responsive-section">
-                                      <h3><a href="">Subjectivity in Definition:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
                                   </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                </aside>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <header class="responsive-section">
+                                        <h3><a href="">Visible Demonstrations:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <?!= driveT ?>
-                                    <header class="responsive-section">
-                                      <h3><a href="">Qualitative Aspects:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
                                   </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="<?!= drivedI ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                </article>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <header class="responsive-section">
+                                        <h3><a href="">Compliance and Obedience:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <?!= drivedI ?>
-                                    <header class="responsive-section">
-                                      <h3><a href="">Contextual Dependence:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
                                   </div>
-                                </div>
-                              </article>
-                              <aside class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                </article>
+                                <article class="responsive-section card-panel vid-list">
+                                  <a href="">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <header class=""responsive-section>
+                                        <h3><a href="">Social Influence:</a></h3>
+                                      </header>
+                                      <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <i>
-                                      However, there are some aspects that can be measured or assessed to some degree:
-                                    </i>
                                   </div>
-                                </div>
-                              </aside>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                </article>
+                                <aside class="responsive-section card-panel vid-list">
+                                  <a href="<?!= driveD ?>">
+                                    <article class="responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                  </a>
+                                  <div class="flex-div">
+                                    <img src="<?!= seaIcn.getContent() ?>" />
+                                    <div class="vid-info">
+                                      <header class=""responsive-section>
+                                        <h3><a href="">In conclusion:</a></h3>
+                                      </header>
+                                      <p style="text-align: left">
+                                      While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                                      </p>
                                     </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <header class="responsive-section">
-                                      <h3><a href="">Visible Demonstrations:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
                                   </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <header class="responsive-section">
-                                      <h3><a href="">Compliance and Obedience:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                                  </div>
-                                </div>
-                              </article>
-                              <article class="responsive-section card-panel vid-list">
-                                <a href="">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <header class=""responsive-section>
-                                      <h3><a href="">Social Influence:</a></h3>
-                                    </header>
-                                    <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                                  </div>
-                                </div>
-                              </article>
-                              <aside class="responsive-section card-panel vid-list">
-                                <a href="<?!= driveD ?>">
-                                  <article class="responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                </a>
-                                <div class="flex-div">
-                                  <img src="<?!= seaIcn.getContent() ?>" />
-                                  <div class="vid-info">
-                                    <header class=""responsive-section>
-                                      <h3><a href="">In conclusion:</a></h3>
-                                    </header>
-                                    <p style="text-align: left">
-                                    While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                                    </p>
-                                  </div>
-                                </div>
-                              </aside>
-                            </header>
-                          </section>
-                        </div>
-                      </td>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          </div></div></div></div></div>
-        </main>
-        <footer class="receipt-footer responsive-section card-panel black float-right">
-          <div class="row responsive-section">
-            <aside class="pulse transparent sidebar float-right">
-              <p>
-                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                <hr>
-                <div class="subscribed-list">
-                  <h3>SUBSCRIBED</h3>
-                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
-                </div>
-              </p>
-            </aside>
-          </div>
-        </footer>
-        <?!= location_url.getContent() ?>
-        <?!= styleHtml.runIt.getContent() ?>
-        <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-        <div id="result"></div>
-        <div id="successMessage"></div>
-        <div id="errorMessage"></div>
-        <table id="resultsTable"></table>
-      </body>
-    </html>`,
-      {
-        renTemp: tmp.evaluate().getContent(),
-        driveA: JSON.stringify(argsObject),
-        driveD: tmp.payL?.pL?.data,
-        drivedD: tmp.payL?.pL?.dataData,
-        drivemI: tmp.payL?.message?.info,
-        drivedI: tmp.payL?.pL?.dataIndex,
-        drivedU: tmp.payL?.message?.feed,
-        driveL: tmp.payL?.pL?.link,
-        driveM: tmp.payL?.message,
-        drivemC: tmp.payL?.message?.content,
-        driveP: tmp.payL?.pL,
-        driveT: tmp.payL?.pL?.type,
-      },
-    );
+                                </aside>
+                              </header>
+                            </section>
+                          </div>
+                        </td>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div></div></div></div></div>
+          </main>
+          <footer class="receipt-footer responsive-section card-panel black float-right">
+            <div class="row responsive-section">
+              <aside class="pulse transparent sidebar float-right">
+                <p>
+                  <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  <hr>
+                  <div class="subscribed-list">
+                    <h3>SUBSCRIBED</h3>
+                    <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                  </div>
+                </p>
+              </aside>
+            </div>
+          </footer>
+          <?!= location_url.getContent() ?>
+          <?!= styleHtml.runIt.getContent() ?>
+          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+          <div id="result"></div>
+          <div id="successMessage"></div>
+          <div id="errorMessage"></div>
+          <table id="resultsTable"></table>
+        </body>
+      </html>`,
+        {
+          renTemp: tmp.evaluate().getContent(),
+          driveA: JSON.stringify(argsObject),
+          driveD: tmp.payL?.pL?.data,
+          drivedD: tmp.payL?.pL?.dataData,
+          drivemI: tmp.payL?.message?.info,
+          drivedI: tmp.payL?.pL?.dataIndex,
+          drivedU: tmp.payL?.message?.feed,
+          driveL: tmp.payL?.pL?.link,
+          driveM: tmp.payL?.message,
+          drivemC: tmp.payL?.message?.content,
+          driveP: tmp.payL?.pL,
+          driveT: tmp.payL?.pL?.type,
+        },
+      );
+    }
   } catch (error) {
     console.error("Error rendering template:", error, error.stack);
     throw new Error(

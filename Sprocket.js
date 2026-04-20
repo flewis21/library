@@ -651,9 +651,20 @@ function dtlsMain(file) {
       ", = " +
       file,
   );
-  var isProduct = driveManager(file, functionRegistry.time);
+  functionRegistry.gTree();
+  let mFold = functionRegistry.folderTree.sort((a, b) => {
+    let up = getZuluPriority(a);
+    let down = getZuluPriority(b);
+    return down - up
+  })[Math.floor(Math.random() * functionRegistry.folderTree.length)];
+  let mFil = file || itemCalc().sort((a, b) => {
+    let up = getZuluFreqPriority(a.Description);
+    let down = getZuluFreqPriority(b.Description);
+    return up - down
+  })[Math.floor(Math.random() * 26)].Description;
+  let isProduct = matchManager(mFold, mFil, functionRegistry.time).forms[Math.floor(Math.random() * 26)];
   console.log(
-    functionRegistry.time +
+    formatTime(functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -665,7 +676,7 @@ function dtlsMain(file) {
     try {
       var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     } catch (error) {
-      return mis(isProduct);
+        console.log("isProduct = " + isProduct, error.stack)
     }
     return formUrl;
   } else {
