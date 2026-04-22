@@ -953,6 +953,7 @@ var renderFile = function (file, argsObject, title) {
         <!doctype html>
           <html lang="en">
             <head>
+              <base target="_self" />
               <?!= styleHtml.abcIt.getContent() ?>
               <style>
                 <?!= styleHtml.renderFile.getContent() ?>
@@ -1008,12 +1009,12 @@ var renderFile = function (file, argsObject, title) {
                                     <header class="card-panel transparent list-container grid">
                                     <h2>Owe</h2>
                                     <aside class="card-panel transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1024,12 +1025,12 @@ var renderFile = function (file, argsObject, title) {
                                       </div>
                                     </aside>
                                     <article class="transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1043,12 +1044,12 @@ var renderFile = function (file, argsObject, title) {
                                       </div>
                                     </article>
                                     <article class="transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1062,12 +1063,12 @@ var renderFile = function (file, argsObject, title) {
                                       </div>
                                     </article>
                                     <article class="transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1081,12 +1082,12 @@ var renderFile = function (file, argsObject, title) {
                                       </div>
                                     </article>
                                     <article class="transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1100,12 +1101,12 @@ var renderFile = function (file, argsObject, title) {
                                       </div>
                                     </article>
                                     <article class="transparent vid-list">
+                                      <article class="transparent">
+                                        <div class="row">
+                                          <?!= renTemp ?>
+                                        </div>
+                                      </article>
                                       <a href="">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">

@@ -203,6 +203,19 @@ var getFolderValues = function () {
   return functionRegistry.getFolderList();
 };
 
+var getVI = function () {
+  functionRegistry.vidTree();
+  var videoSheetVals = functionRegistry.arrVidVals;
+  var videoData = [];
+  var inValsKeys = Object.keys(videoSheetVals);
+  inValsKeys.forEach((key) => {
+    let videoObj = videoSheetVals[key];
+    let videoId = videoObj["Video"];
+    videoData.push(videoId);
+  });
+  return videoData;
+};
+
 var objectOfS = function (keys, values, time) {
   /**
    * Creates an object of objects from key-value pairs.

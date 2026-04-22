@@ -262,7 +262,7 @@ function pill() {
     Route[route] = callback;
   };
   Route.path("test", contentFile);
-  pill = Route["test"]("epaWebsite", {
+  let data = {
     materializeCss:
       '\n  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></link>\n',
     tabulatorCss:
@@ -275,8 +275,9 @@ function pill() {
       '\n<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>',
     dOMContentLoaded:
       '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\nvar elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
-  });
-  return contentApp(pill);
+  }
+  pill = Route["test"]("epaWebsite", data);
+  return contentApp(pill, data);
   //:contentFile('uiAccess')
 }
 

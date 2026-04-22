@@ -376,7 +376,7 @@ function videoPlayer(searchString) {
   if (randomPlaylist.length === 0) {
     return;
   }
-  const vidPlaylist = function () {
+  let vidPlaylist = function () {
     const randomVidKey = Math.floor(
       Math.random() * Math.floor(randomPlaylist.length),
     ); // Math.floor(Math.random());

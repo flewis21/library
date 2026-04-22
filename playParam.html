@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_self" />
+    <?!= styleHtml.abcIt.getContent() ?>
+    <style>
+      <?!= styleHtml.renderFile.getContent() ?>
+    </style>
+  </head>
+  <body>
+    <main class="transparent">
+      <header class="flex-div transparent">
+        <div class="nav-left flex-div">
+          <div class="search-box flex-div">
+            <nav class="flex-div nav-left card-panel float-left transparent static-fix">
+              <button class="userClickedNext">
+                <strong>
+                  Load
+                </strong>
+              </button>
+            </nav>
+            <input
+              class="datepicker prefDate float-right menu-img z-depth-5 card-panel transparent center scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" 
+              id="a" 
+              type="text" 
+              placeholder="Book a date"
+            />
+          </div>
+        </div>
+        <div class="nav-center flex-div">
+        </div>
+        <div class="nav-right flex-div float-right">
+          <div class="search-box flex-div">
+            <input
+              class="timepicker prefTime float-left menu-img z-depth-5 card-panel transparent scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in center" 
+              id="b" 
+              type="text" 
+              placeholder="Book a time"
+            />
+            <nav class="flex-div nav-right float-right card-panel transparent static-fix">
+              <button class="userClickedAgain">
+                <strong>
+                  Reload
+                </strong>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </header>
+    </main>
+    <aside class="float-right socials transparent">
+      <div id="c" class="template"></div>
+      <div id="d" class="test"></div>
+    </aside>
+    <?!= styleHtml.mgfRunIt.getContent() ?>
+    <?!= styleHtml.runIt.getContent() ?>
+  </body>
+</html>

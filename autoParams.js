@@ -13,6 +13,7 @@ const functionRegistry = {
     "editor",
     "edgarFriendly",
     "cors",
+    "playParam",
     "cGWI",
     "proMedia",
     "epaWebsite",

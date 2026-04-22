@@ -769,7 +769,7 @@ function crmGWI(fx) {
               // Fallback to empty array if the structure is not as expected
               fullList = {};
             }
-            localSuggestionsCache[columnName] = fullList
+            localSuggestionsCache[columnName] = fullList;
             // console.log('Successfully fetched full list for', columnName);
             // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
           })

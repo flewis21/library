@@ -2499,11 +2499,11 @@ function misSt(func, someArgs) {
                                       } 
                                       else {
                                         if (
-                                          ["tunPlay", "searchString", "rndKey", "search", "searchDTLS"].includes(
+                                          ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName"].includes(
                                             declaredParamName,
                                           )
                                         ) {
-                                          var nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS"];
+                                          var nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName"];
                                           var rndCoIndex = Math.floor(
                                             Math.random() * Math.floor(globalThis.uniqueCoArray().length),
                                           );
@@ -3274,10 +3274,16 @@ function resolveParams(func, someArgs) {
               paramName === "searchString" ||
               paramName === "rndKey" ||
               paramName === "search" ||
+              paramName === "searchDTLS" ||
+              paramName === "filterFiles" ||
+              paramName === "fileName" ||
               (paramName === null && declaredParamName === "tunPlay") ||
               declaredParamName === "searchString" ||
               declaredParamName === "search" ||
-              declaredParamName === "rndKey"
+              declaredParamName === "rndKey" ||
+              declaredParamName === "searchDTLS" ||
+              declaredParamName === "filterFiles" ||
+              declaredParamName === "fileName"
             ) {
               var uniqueCoArray = sheetCalc();
               var rndItemIndex = Math.floor(

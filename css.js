@@ -424,6 +424,55 @@ const domain_lookup = HtmlService.createHtmlOutput(
     });
   </script>
 `);
+const busy_calendar = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverSide(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        // mod the array
+        let timePicker = document.querySelectorAll(".prefTime");
+        M.Timepicker.init(timePicker, { 
+          defaultTime: "now" ,
+        });
+        serverSide("busyDates", [])
+          .then((response) => { 
+            // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let disabledDays = [];
+            if (response && response.type === "object" && Array.isArray(response.data)) {
+              disabledDays = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              disabledDays = [];
+            }
+            let datePicker = document.querySelectorAll(".prefDate");
+            M.Datepicker.init(datePicker, {
+              defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
+              setDefaultDate: true,
+              minDate: new Date(),
+              disableDayFn: 
+                function (day) {
+                  return disabledDays.indexOf(day.valueOf()) > -1;
+                },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    </script>
+`);
 const key_press = HtmlService.createHtmlOutput(
   `
   <script>
@@ -490,7 +539,7 @@ const domain_submit = HtmlService.createHtmlOutput(
     });
   </script>
 `);
-const document_ready = HtmlService.createHtmlOutput(
+const document_ready_select = HtmlService.createHtmlOutput(
   `
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -592,7 +641,7 @@ const collapse_menu = HtmlService.createHtmlOutput(
   </script>
 `);
 const func_clicked = HtmlService.createHtmlOutput(
-  `
+  ` 
   <script>
     document.getElementById('func').addEventListener('change', funcClicked)
     function funcClicked() {
@@ -629,6 +678,680 @@ const func_clicked = HtmlService.createHtmlOutput(
           document.getElementById("linkFOLLOW").remove();
         }
       })();
+    }
+  </script>
+`);
+const auto_video = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+            alert("Error handling: ")
+              // console.log(error)
+              reject(error)})
+          .runBoilerplate(func, args)})};
+
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+        // Client-side code
+        const localSuggestionsCache = {};
+        const input = document.getElementById(inputId);
+        const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+        
+        serverside('getVI', [])
+          .then((response) => { 
+            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let fullList = {};
+            if (response && response.type === "object") {
+              fullList = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = {};
+            }
+            localSuggestionsCache[columnName] = fullList
+            // console.log('Successfully fetched full list for', columnName);
+            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + ":", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } else {
+            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+        }
+      }
+      // Setup Autocomplete
+      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+    </script>
+`);
+const auto_complete = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+        // Client-side code
+        const localSuggestionsCache = {};
+        const input = document.getElementById(inputId);
+        const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+        
+        serverside('chaseFunction', [columnName])
+          .then((response) => { 
+            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let fullList = {};
+            if (response && response.type === "object") {
+              fullList = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = {};
+            }
+            localSuggestionsCache[columnName] = fullList
+            // console.log('Successfully fetched full list for', columnName);
+            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + ":", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } else {
+            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+        }
+      }
+      // Setup Autocomplete
+      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+    </script>
+`);
+const next_clicked_video = HtmlService.createHtmlOutput(
+  `
+    <script>
+
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // Client-side code
+        const localSuggestionsCache = {};
+        const nVid = document.querySelectorAll(".userClickedNext");
+        const input = document.querySelectorAll(".prefDate");
+        const suggestionsDiv = document.querySelectorAll(".test");
+        let fullList = [];
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+
+        serverside("getVI", [])
+          .then((response) => {
+            // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the response
+            if (response && typeof response === "object") {
+              for (var key in response) {
+                // alert(response[key][0]);
+                let i = 0;
+                let l = response[key].length;
+                // alert(l);
+                for (i,l;i<l;i++) {
+                  let tData = response[key][i];
+                  let dLoc =  "https://www.youtube.com/watch?v=";
+                  fullList.push(dLoc + tData);
+                //   let clVid = tData[i]]
+                //   // .replace(/\"/g, "");
+                //   alert(cVid);
+                }
+              }
+              // fullList = response.data;
+            } else {
+              console.warn("Expected an array in response from getVI, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = [];
+            }
+            localSuggestionsCache["allMatches"] = fullList;
+            // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
+            // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
+            // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
+            const confirmation = window.confirm(
+              "Click OK to continue to the destination.",
+            );
+            if (confirmation) {
+              var linkFollow = document.createElement("a");
+              linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)];
+              linkFollow.id = "linkFOLLOW";
+              linkFollow.target = "_self";
+              linkFollow.rel = "noopener noreferrer";
+              document.body.appendChild(linkFollow);
+              document.getElementById("linkFOLLOW").click();
+              document.getElementById("linkFOLLOW").remove();
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + " :", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } else {
+            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+        }
+
+
+      });
+    </script>
+`);
+const next_clicked = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      document
+        .querySelectorall("userClickedNext")
+        .addEventListener("click", nextFunc);
+      function nextFunc() {
+        serverside("getVI").then((drop) => {
+          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+          var rndFunc = drop[rndNumDrop];
+          localStorage.setItem("gsSearch", rndFunc);
+          console.log(rndFunc + "...");
+          document.getElementById("template").innerHTML =
+            "waiting for nextFunc: " + rndFunc + "...";
+          serverside(rndFunc)
+            .then((droplet) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+              // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\ndroplet.length = " + droplet.length;
+              // alert(
+              //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+              // );
+              if (droplet.length === 99) {
+                serverside("seoCapital", droplet).then((myFile) => {
+                  document.getElementById("template").innerHTML =
+                    rndFunc + "(" + myFile + ")";
+                  // alert(rndFunc + "(" + myFile + ")");
+                  if (
+                    myFile.length === 99 ||
+                    myFile.length === 86 ||
+                    myFile.length === 101 ||
+                    myFile.length === 112
+                  ) {
+                    // console.log(cChange)
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = myFile + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  } else {
+                    document.getElementById("template").innerHTML =
+                      JSON.stringify(myFile);
+                  }
+                });
+              } else {
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name +
+                    "\n" +
+                    droplet.length +
+                    " is not the required length",;
+                // alert(
+                //   arguments.callee.name +
+                //     "\n" +
+                //     droplet.length +
+                //     " is not the required length",
+                // );
+                serverside("getScriptUrl")
+                  .then((cChange) => {
+                    console.log(
+                      arguments.callee.name +
+                        "\n" +
+                        typeof cChange +
+                        " with length = " +
+                        cChange.length,
+                    );
+                    if (cChange.length === 112 || cChange.length === 86) {
+                      // console.log(cChange)
+                      const confirmation = window.confirm(
+                        "Click OK to continue to the destination.",
+                      );
+                      if (confirmation) {
+                        var linkFollow = document.createElement("a");
+                        linkFollow.href = cChange + "?func=" + rndFunc;
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                      }
+                    } else {
+                      var docWnd = document.getElementById("template");
+                      docWnd.innerHTML = cChange;
+                    }
+                  })
+                  .catch((er) => {
+                    document.getElementById("template").innerHTML =
+                      arguments.callee.name +
+                        "\n" +
+                        rndFunc +
+                        " error(" +
+                        er +
+                        ")";
+                    // alert(
+                    //   arguments.callee.name +
+                    //     "\n" +
+                    //     rndFunc +
+                    //     " error(" +
+                    //     er +
+                    //     ")",
+                    // );
+                    console.log(arguments.callee.name + "\n" + er);
+                    document.getElementById("template").innerHTML =
+                      JSON.stringify(er);
+                  });
+              }
+            })
+            .catch((er) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+              // );
+              serverside("getScriptUrl")
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
+                  if (cChange.length === 112 || cChange.length === 86) {
+                    // console.log(cChange)
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
+                    if (confirmation) {
+                      var linkFollow = document.createElement("a");
+                      linkFollow.href = cChange + "?func=" + rndFunc;
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  document.getElementById("template").innerHTML =
+                    arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+                  // alert(
+                  //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                  // );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            });
+        });
+      }
+    </script>
+`);
+const again_clicked = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverside(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    document
+      .getElementById("userClickedAgain")
+      .addEventListener("click", againFunc);
+    function againFunc() {
+      againCap = localStorage.getItem("gsSearch");
+      document.getElementById("template").innerHTML =
+        "waiting for againFunc: " + againCap + "...";
+      serverside(againCap)
+        .then((droplet) => {
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\n" + againCap + "(" + droplet + ")";
+          // alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\ndroplet.length = " + droplet.length;
+          // alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
+          if (
+            droplet.length === 99 ||
+            droplet.length === 101 ||
+            droplet.length === 112 ||
+            droplet.length === 86
+          ) {
+            serverside("seoCapital", droplet).then((myFile) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + againCap + "(" + myFile + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
+              // );
+              document.getElementById("template").innerHTML =
+                JSON.stringify(myFile);
+            });
+          } else {
+            document.getElementById("template").innerHTML =
+              arguments.callee.name +
+                "\n" +
+                droplet.length +
+                " is not the required length";
+            // alert(
+            //   arguments.callee.name +
+            //     "\n" +
+            //     droplet.length +
+            //     " is not the required length",
+            // );
+            serverside("getScriptUrl")
+              .then((cChange) => {
+                console.log(
+                  arguments.callee.name +
+                    "\n" +
+                    typeof cChange +
+                    " with length = " +
+                    cChange.length,
+                );
+                if (cChange.length === 112 || cChange.length === 86) {
+                  // console.log(cChange)
+                  const confirmation = window.confirm(
+                    "Click OK to continue to the destination.",
+                  );
+                  if (confirmation) {
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = cChange + "?func=" + againCap;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                } else {
+                  var docWnd = document.getElementById("template");
+                  docWnd.innerHTML = cChange;
+                }
+              })
+              .catch((er) => {
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name +
+                    "\n" +
+                    againCap +
+                    " error(" +
+                    er +
+                    ")";
+                // alert(
+                //   arguments.callee.name +
+                //     "\n" +
+                //     againCap +
+                //     " error(" +
+                //     er +
+                //     ")",
+                // );
+                console.log(arguments.callee.name + "\n" + er);
+                document.getElementById("template").innerHTML =
+                  JSON.stringify(er);
+              });
+          }
+        })
+        .catch((er) => {
+          document.getElementById("template").innerHTML =
+            arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+          // alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
+          serverside("getScriptUrl")
+            .then((cChange) => {
+              console.log(
+                arguments.callee.name +
+                  "\n" +
+                  typeof cChange +
+                  " with length = " +
+                  cChange.length,
+              );
+              if (droplet.length === 86 || cChange.length === 112) {
+                // console.log(cChange)
+                const confirmation = window.confirm(
+                  "Click OK to continue to the destination.",
+                );
+                if (confirmation) {
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href = cChange + "?func=" + againCap;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                }
+              } else {
+                var docWnd = document.getElementById("template");
+                docWnd.innerHTML = cChange;
+              }
+            })
+            .catch((er) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + againCap + " error(" + er + ")",
+              // );
+              console.log(arguments.callee.name + "\n" + er);
+              document.getElementById("template").innerHTML =
+                JSON.stringify(er);
+            });
+        });
     }
   </script>
 `);
@@ -1327,7 +2050,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent()}`
+    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent()}`
   ),
   abcIt: HtmlService.createHtmlOutput(
     `
@@ -1336,6 +2059,10 @@ const styleHtml = {
   spRunIt: HtmlService.createHtmlOutput(
     `
       ${spyTPlayer.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
+  `),
+  mgfRunIt: HtmlService.createHtmlOutput(
+    `
+      ${next_clicked_video.getContent() + busy_calendar.getContent()}
   `),
 };
 
