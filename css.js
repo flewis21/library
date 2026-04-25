@@ -2064,6 +2064,10 @@ const styleHtml = {
     `
       ${next_clicked_video.getContent() + busy_calendar.getContent()}
   `),
+  cCDNRunIt: HtmlService.createHtmlOutput(
+    `
+      ${location_url.getContent() + next_clicked_video.getContent()}
+  `),
 };
 
 var builtStyling = function (e) {

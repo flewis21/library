@@ -3415,17 +3415,17 @@ function seoCapital(url) {
           </style>
         </head>
         <body>
-          <div class="maroon">
-            <div class="brown">
-                <div class="purple" id="seoData">
+          <div class="transparent">
+            <div class="transparent">
+                <div class="transparent" id="seoData">
                   <label id="labSEOC">
                     <strong></strong></label>
-                  <div class="orange">
+                  <div class="transparent">
                     <div class="card-panel black">
-                      <div class="blue">
-                        <div class="row">
-                          <div id="divSEOC" class="col s12 receipt flow-text">
-                            <table class="striped centered highlight z-depth-5 grid responsive-table" style="max-width:100%;height:auto">
+                      <div class="transparent">
+                        <div class="row transparent">
+                          <div id="divSEOC" class="col s12 receipt flow-text transparent">
+                            <table class="striped centered highlight z-depth-5 grid transparent responsive-table" style="max-width:100%;height:auto">
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">

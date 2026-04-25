@@ -371,7 +371,7 @@ var contentCDN = function (url, argsObject) {
           {
             drivemC: tmp.payL?.message?.content,
           }
-        let html = contentApp(tmp.append(location_url.getContent()).getContent(),locObj);
+        let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
         return HtmlService.createTemplate(html)
           .evaluate()
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
@@ -385,7 +385,7 @@ var contentCDN = function (url, argsObject) {
           {
             drivemC: tmp.payL?.message?.info,
           }
-        let html = contentApp(tmp.append(location_url.getContent()).getContent(),locObj);
+        let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
         return HtmlService.createTemplate(html)
           .evaluate()
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
