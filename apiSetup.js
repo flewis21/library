@@ -36,7 +36,7 @@ var apiSetupActiveSheet = function () {
 var apiSetup = function () {
   var wsId = activeSsId();
   var cprops = PropertiesService.getScriptProperties();
-  if (wsId !== "undefined" && wsId !== null) {
+  if (wsId !== "" && typeof wsId !==  "undefined" && wsId !== null) {
     var scriptKey = cprops.setProperty("key", wsId);
     return scriptKey;
   } else {

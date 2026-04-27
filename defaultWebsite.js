@@ -637,7 +637,7 @@ var formatTime = function (milliseconds) {
   return parts.join(", ");
 };
 
-function funcCalc() {
+var funcCalc = function() {
   var appList = [];
   for (var key in globalThis) {
     if (typeof globalThis[key] == "function") {

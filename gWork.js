@@ -386,7 +386,8 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof importedData: " +  typeof importedData + "\nelaspeTime: " + elaspeTime)
       if (
         typeof importedData !== "undefined" &&
-        typeof importedData !== "string"
+        typeof importedData !== "string" &&
+        [importedData].length > 1
       ) {
         var myImportData = importedData.sort((a, b) => a - b)[
           Math.floor(Math.random() * importedData.length)

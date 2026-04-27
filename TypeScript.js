@@ -129,7 +129,9 @@ var geneicType = function () {
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
-  // let dataOR = globalHandleGetData(base);
+  if (!base?.myVar && !base[0]?.rndTitle && typeof base[0] !== "number") {
+    let dataOR = globalHandleGetData(base);
+  }
   // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];

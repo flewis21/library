@@ -2142,9 +2142,9 @@ function ssGetSheetBySpreadsheetUrl(url, sheetname) {
   }
 }
 
-function ssSetName(randomSheet, sheetname) {
-  if (randomSheet) {
-    var sheetName = idSpreadSheet(randomSheet.getId())
+function ssSetName(randomSheet) {
+  if (randomSheet && randomShet !== "randomSheet") {
+    let sheetName = idSpreadSheet(randomSheet.getId())
       .getSheetByName("sheet1")
       .setName(sheetname);
     var sheet = idSpreadSheet(randomSheet.getId()).getSheetByName(sheetName);

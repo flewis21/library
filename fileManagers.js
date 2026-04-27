@@ -1179,7 +1179,7 @@ var fbTester = function () {
   return res;
 };
 
-function fileFold(folderX, fileX, time) {
+var fileFold = function(folderX, fileX, time) {
   let executed = 0;
   var elapsedTime = functionRegistry.elapsedTimeInSeconds;
   console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
@@ -1350,12 +1350,16 @@ function fileMatchManager(folderX, fileX, time) {
       ", = " +
       !folderX,
   );
+  if (time === "time") {
+    time = functionRegistry.time
+  }
   var elapsedTime;
   var fileTree = [];
   if (
     typeof folderX === "undefined" ||
     folderX === null ||
-    [folderX].join("").length === 0
+    [folderX].join("").length === 0 ||
+    folderX === "folderX"
   ) {
     console.log(
       formatTime(functionRegistry.time) +
@@ -1391,7 +1395,7 @@ function fileMatchManager(folderX, fileX, time) {
   var tree = pyFolder.getFiles();
   let l;
   // let treeIt = tree.hasNext()
-  if (fileX) {
+  if (fileX && fileX !== "fileX") {
     var matchFile = [fileX].join("").toLowerCase();
     while (tree.hasNext()) {
       var testFile = [tree.next().getName()].join("").toLowerCase();

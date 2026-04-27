@@ -485,7 +485,7 @@ function defSBD(e) {
     )
   ];
   try {
-    if (!globalThis.hasOwnProperty(e.parameter["func"])) {
+    if (e && e.parameter && e.parameter["func"] && !globalThis.hasOwnProperty(e.parameter["func"])) {
       // Get the actual function
       var foobarr = globalThis["renderFile"];
       return renderTemplate(
@@ -1167,7 +1167,7 @@ var renderTemplate = function (blob, argsObject, title) {
   console.log(
     "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
       blob?.length > 9
-      ? blob?.substring(0, 9)
+      ? blob?.substring(0, 130)
       : "" +
           "..., argsObject: " +
           JSON.stringify(argsObject) +
@@ -1176,7 +1176,7 @@ var renderTemplate = function (blob, argsObject, title) {
           ")\n" +
           arguments.callee.caller.name,
   );
-  var executed = 0;
+  let executed = 0;
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
   console.log("argsObject before tmp processing", argsObject);
   const tmp = HtmlService.createTemplate(blob);
@@ -1197,23 +1197,34 @@ var renderTemplate = function (blob, argsObject, title) {
   // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
   let html = null;
   try {
-    if (tmp.payL?.pL?.type === "html") {
-      html = contentApp(tmp.payL?.message?.info,
-        {
-          renTemp: tmp.evaluate().getContent(),
-          driveA: JSON.stringify(argsObject),
-          driveD: tmp.payL?.pL?.data,
-          drivedD: tmp.payL?.pL?.dataData,
-          drivemI: tmp.payL?.message?.info,
-          drivedI: tmp.payL?.pL?.dataIndex,
-          drivedU: tmp.payL?.message?.feed,
-          driveL: tmp.payL?.pL?.link,
-          driveM: tmp.payL?.message,
-          drivemC: tmp.payL?.message?.content,
-          driveP: tmp.payL?.pL,
-          driveT: tmp.payL?.pL?.type,
-        },
-      )
+    if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
+      if (tmp.payL?.type === "html") {
+        html = contentApp(tmp.payL?.data,
+          {
+            driveT: tmp.payL?.type,
+          },
+        )
+      }
+      else {
+        if (tmp.payL?.pL?.type === "html") {
+          html = contentApp(tmp.payL?.message?.info,
+            {
+              renTemp: tmp.evaluate().getContent(),
+              driveA: JSON.stringify(argsObject),
+              driveD: tmp.payL?.pL?.data,
+              drivedD: tmp.payL?.pL?.dataData,
+              drivemI: tmp.payL?.message?.info,
+              drivedI: tmp.payL?.pL?.dataIndex,
+              drivedU: tmp.payL?.message?.feed,
+              driveL: tmp.payL?.pL?.link,
+              driveM: tmp.payL?.message,
+              drivemC: tmp.payL?.message?.content,
+              driveP: tmp.payL?.pL,
+              driveT: tmp.payL?.pL?.type,
+            },
+          )
+        }
+      }
     }
     else {
       html = contentApp(

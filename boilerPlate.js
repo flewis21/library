@@ -744,7 +744,12 @@ function testObject(dataArray, fVarHeaders) {
       ", = " +
       dataArray,
   );
-  myRows = testData(dataArray);
-  myObject = covObjects(myRows, fVar(fVarHeaders));
-  return myObject;
+  if (!dataArray === "dataArray" && !fVarHeaders === "fVarHeaders") {
+    myRows = testData(dataArray);
+    myObject = covObjects(myRows, fVar(fVarHeaders));
+    return myObject;
+  }
+  else {
+    return null
+  }
 }

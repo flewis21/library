@@ -1975,13 +1975,14 @@ const location_url = HtmlService.createHtmlOutput(
   </script>
 `);
 
+let gamer;
+let enemy;
 const GameManager = {
   setGameStart: function(classType) {
     this.resetPlayer(classType);
-    this.setPreFight();
+    this.setPreFight(classType);
   },
   resetPlayer: function(classType) {
-    let gamer;
     switch (classType) {
       case "Warrior": gamer = 
         new Gamer(classType, 200, 0, 200, 100, 50);
@@ -1995,17 +1996,32 @@ const GameManager = {
       case "Hunter": gamer = 
         new Gamer(classType, 200, 0, 50, 200, 100);
         break;
-    } 
+    };
+    getInterface.getContent();
   },
-  setPreFight: function() {
-    let enemy;
+  setPreFight: function(classType) {
+    switch (classType) {
+      case "Warrior": enemy = 
+        new Gamer(classType, 200, 0, 200, 100, 50);
+        break;
+      case "Rouge": enemy = 
+        new Gamer(classType, 100, 0, 100, 150, 200);
+        break;
+      case "Mage": enemy = 
+        new Gamer(classType, 80, 0, 50, 200, 50);
+        break;
+      case "Hunter": enemy = 
+        new Gamer(classType, 200, 0, 50, 200, 100);
+        break;
+    };
+    getInterface.getContent();
   }
 }
 
 const getInterface = HtmlService.createHtmlOutput(
   `
   <script>
-    document.querySelector(\".interface\");
+    let getInterface = document.querySelector(".interface");
     getInterface.innerHTML = 
       "
         <img src="" class="img-avatar">
@@ -2038,6 +2054,46 @@ const Enemy = function(enemyType, health, mana, strength, agility, speed) {
   this.agility = agility;
   this.speed = speed;
 }
+
+const game_warrior = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("wro").addEventListener("click", function() {
+        GameManager.setGameStart("Warrior")
+        return gamer
+      })
+    </script>
+`);
+
+const game_rouge = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("roe").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Rouge") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
+
+const game_mage = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("mge").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Mage") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
+
+const game_hunter = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("hne").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Hunter") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
         
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(

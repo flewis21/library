@@ -1,6 +1,6 @@
 function jsGameScripts() {
-  var gamerUrl = getScriptUrl();
-  var html = contentApp(
+  let gamerUrl = getScriptUrl();
+  let html = contentApp(
     `
     <html id="jsGameScripts">
       <head>
@@ -16,28 +16,28 @@ function jsGameScripts() {
           <h2>Choose Your Character</h2>
         </div>
         <div class="interface dotted_border">
-          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= warrior ?>">
+          <a id="wro" href='<?= getUrl(ScriptApp) ?>'>
             <img src="" alt="warrior">
             <div>
               <h3>Warrior</h3> 
               <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
             </div>
           </a>
-          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= rouge ?>">
+          <a id="roe" href='<?= getUrl(ScriptApp) ?>'>
             <img src="" alt="rouge">
             <div>
               <h3 class="header h1">Rouge</h3> 
               <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
             </div>
           </a>
-          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= mage ?>">
+          <a id="mge" href='<?= getUrl(ScriptApp) ?>'>
             <img src="" alt="mage">
             <div>
               <h3>Mage</h3> 
               <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
             </div>
           </a>
-          <a href='<?= getUrl(ScriptApp) ?>' onclick="<?!= hunter ?>">
+          <a id="hne" href='<?= getUrl(ScriptApp) ?>'>
             <img src="" alt="hunter">
             <div>
               <h3>Hunter</h3> 
@@ -48,70 +48,17 @@ function jsGameScripts() {
         <div class="actions"></div>
         <div class="arena"></div>
         <div class="enemy"></div>
-        <?!= getInterface.getContent() ?>
+        <?!= game_warrior.getContent() ?>
+        <?!= game_rouge.getContent() ?>
+        <?!= game_mage.getContent() ?>
+        <?!= game_hunter.getContent() ?>
       </body>
     </html>`,
     {
-      warrior: GameManager.setGameStart("Warrior"),
-      rouge: GameManager.setGameStart("Rouge"),
-      mage: GameManager.setGameStart("Mage"),
-      hunter: GameManager.setGameStart("Hunter"),
-    });
-  html.gamemanager = HtmlService.createHtmlOutput(
-    `let GameManager = 
-      {
-        setGameStart: function(classType) {
-          this.resetPlayer(classType);
-          this.setPreFight();
-        },
-        resetPlayer: function(classType) {
-          switch (classType) {
-            case "Warrior": gamer = 
-              new Gamer(classType, 200, 0, 200, 100, 50);
-              break;
-            case "Rouge": gamer = 
-              new Gamer(classType, 100, 0, 100, 150, 200);
-              break;
-            case "Mage": gamer = 
-              new Gamer(classType, 80, 0, 50, 200, 50);
-              break;
-            case "Hunter": gamer = 
-              new Gamer(classType, 200, 0, 50, 200, 100);
-              break;
-          } 
-          let getInterface = document.querySelector(\".interface\");
-          getInterface.innerHTML = 
-            "<img src="" class="img-avatar">
-            <div><h3>" + classType + "</h3>
-            <p>Health: " + gamer.health + "</p>";
-        },
-        setPreFight: function() {
-        }
-      }`,
-  ).getContent();
-  html.gamer = HtmlService.createHtmlOutput(
-    `let gamer;
-        var Gamer = function(classType, health, mana, strength, agility, speed) {
-          this.classType = classType;
-          this.health = health;
-          this.mana = mana;
-          this.strength = strength;
-          this.agility = agility;
-          this.speed = speed;
-        }`,
-  ).getContent();
-  html.enemy = HtmlService.createHtmlOutput(
-    `let enemy;
-        var Enemy = function(enemyType, health, mana, strength, agility, speed) {
-          this.classType = enemyType;
-          this.health = health;
-          this.mana = mana;
-          this.strength = strength;
-          this.agility = agility;
-          this.speed = speed;
-        }`,
-  ).getContent();
+      gamwstart: gamer
+    },
+  );
   html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();
   html.gamerUrl = gamerUrl;
-  return html.getRawContent(); //: contentFile("uiAccess")
+  return html; //: contentFile("uiAccess")
 }

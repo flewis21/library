@@ -236,8 +236,13 @@ function dateModel(days) {
 function flatten(input) {
   console.log(input);
   var stocks = [];
-  if (!Array.isArray(input)) {
-    return input;
+  if (input === "input") {
+    return null
+  }
+  else {
+    if (!Array.isArray(input)) {
+      return input;
+    }
   }
   for (let data of input) {
     stocks = stocks.concat(flatten(data));

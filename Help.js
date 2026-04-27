@@ -3801,7 +3801,7 @@ function testlt() {
   // var arrDRnd = appSort(arrNum);
   // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
   var ssearchString = globalThis.searchString().myNewArr;
-  var fParams = gsFParams();
+  var fParams = functionRegistry.paramsList;
   var result = fParams.find((rndS) => {
     return rndS.name === ssearchString;
   });
