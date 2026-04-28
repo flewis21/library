@@ -16,7 +16,7 @@ function jsGameScripts() {
           <h2>Choose Your Character</h2>
         </div>
         <div class="interface dotted_border">
-          <a id="wro" href='<?= getUrl(ScriptApp) ?>'>
+          <a id="wro" href="#">
             <img src="" alt="warrior">
             <div>
               <h3>Warrior</h3> 
@@ -49,13 +49,10 @@ function jsGameScripts() {
         <div class="arena"></div>
         <div class="enemy"></div>
         <?!= game_warrior.getContent() ?>
-        <?!= game_rouge.getContent() ?>
-        <?!= game_mage.getContent() ?>
-        <?!= game_hunter.getContent() ?>
       </body>
     </html>`,
     {
-      gamwstart: gamer
+      gamestart: rePlay("Warrior")
     },
   );
   html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();

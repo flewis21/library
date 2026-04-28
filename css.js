@@ -1975,12 +1975,12 @@ const location_url = HtmlService.createHtmlOutput(
   </script>
 `);
 
-let gamer;
 let enemy;
 const GameManager = {
   setGameStart: function(classType) {
     this.resetPlayer(classType);
     this.setPreFight(classType);
+    GameManager.setGameStart.instances.push(gamer);
   },
   resetPlayer: function(classType) {
     switch (classType) {
@@ -2016,26 +2016,8 @@ const GameManager = {
     };
     getInterface.getContent();
   }
-}
-
-const getInterface = HtmlService.createHtmlOutput(
-  `
-  <script>
-    let getInterface = document.querySelector(".interface");
-    getInterface.innerHTML = 
-      "
-        <img src="" class="img-avatar">
-        <div>
-          <h3>
-            " + classType + "
-          </h3>
-          <p>
-            Health: " + gamer.health + "
-          </p>
-        </div>
-      ";
-  </script>
-`);
+};
+GameManager.setGameStart.instances = [];
 
 const Gamer = function(classType, health, mana, strength, agility, speed) {
   this.classType = classType;
@@ -2055,13 +2037,53 @@ const Enemy = function(enemyType, health, mana, strength, agility, speed) {
   this.speed = speed;
 }
 
+var rePlay = function(classType) {
+  GameManager.setGameStart(classType);
+  let mmoRpgPlay = GameManager.setGameStart.instances[0];
+  let mmoRpgEnemy = GameManager.setGameStart.instances[1];
+  return {
+    gamer: mmoRpgPlay,
+    enemy: mmoRpgEnemy,
+  }
+}
+
+const get_interface = HtmlService.createHtmlOutput(
+    `
+      <script>
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result)
+            })
+            .withFailureHandler((error) => {
+              reject(error)
+            })
+            .runBoilerplate(func, args)
+          })
+        };
+        document.addEventListener("DOMContentLoaded", glPlay)
+          function glPlay(classType) {
+            serverside("rePlay", [classType])
+              .then((gPl) => {
+                let gamB = gPl.gamer;
+                let eneB = gPl.enemy;
+                let getInterface = document.querySelector(".interface");
+                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + classType + "</h3><p>Health: " + gamB.health + "</p></div>"
+              })
+          }
+      </script>
+    `
+);
+
 const game_warrior = HtmlService.createHtmlOutput(
   `
     <script>
-      document.getElementById("wro").addEventListener("click", function() {
-        GameManager.setGameStart("Warrior")
-        return gamer
-      })
+      document.getElementById("wro").addEventListener("click", function(event) {
+        event.preventDefault();
+        let getInterface = document.querySelector(".interface");
+        getInterface.innerHTML = ""
+      });
     </script>
 `);
 
