@@ -4,58 +4,63 @@ function jsGameScripts() {
     `
     <html id="jsGameScripts">
       <head>
-        <base target="_top"></base>
-        <meta charset="utf-8">
+        <?!= styleHtml.abcIt.getContent() ?>
         <meta name="jsGameScripts" content="Boilerplate Script Game">
-        <meta name=viewport content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+        <style>
+          <?!= styleHtml.renderFile.getContent() ?>
+        </style>
       </head>
       <body>
-        <div class="header toolbar toolbar-icon">
+        <div class="header toolbar toolbar-icon menu-icon">
           <p>Play the greatest RPG ever to be made!</p>
           <h2>Choose Your Character</h2>
         </div>
-        <div class="interface dotted_border">
+        <div class="interface dotted_border container">
           <a id="wro" href="#">
             <img src="" alt="warrior">
             <div>
-              <h3>Warrior</h3> 
-              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+              <h3>Warrior</h3>
+              <input type="text" id="delAddr" class="datepicker prefDate float-right menu-img z-depth-5 card-panel transparent center scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" name="delAddr" placeholder="Function execution has timed out. Restart the debugger to continue debugging.">
+              <div id="delAddrSuggestions" class="autocomplete-suggestions"></div>
             </div>
           </a>
-          <a id="roe" href='<?= getUrl(ScriptApp) ?>'>
+          <a id="roe" href="#">
             <img src="" alt="rouge">
             <div>
-              <h3 class="header h1">Rouge</h3> 
-              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+              <h3 class="header h1">Rouge</h3>
+              <input type="text" id="delAddr" class="datepicker prefDate float-right menu-img z-depth-5 card-panel transparent center scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" name="delAddr" placeholder="Function execution has timed out. Restart the debugger to continue debugging.">
+              <div id="delAddrSuggestions" class="autocomplete-suggestions"></div>
             </div>
           </a>
-          <a id="mge" href='<?= getUrl(ScriptApp) ?>'>
+          <a id="mge" href="#">
             <img src="" alt="mage">
             <div>
-              <h3>Mage</h3> 
-              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+              <h3>Mage</h3>
+              <input type="text" id="delAddr" class="datepicker prefDate float-right menu-img z-depth-5 card-panel transparent center scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" name="delAddr" placeholder="Function execution has timed out. Restart the debugger to continue debugging.">
+              <div id="delAddrSuggestions" class="autocomplete-suggestions"></div>
             </div>
           </a>
-          <a id="hne" href='<?= getUrl(ScriptApp) ?>'>
+          <a id="hne" href="#">
             <img src="" alt="hunter">
             <div>
-              <h3>Hunter</h3> 
-              <p>Function execution has timed out. Restart the debugger to continue debugging.</p>
+              <h3>Hunter</h3>
+              <input type="text" id="delAddr" class="datepicker prefDate float-right menu-img z-depth-5 card-panel transparent center scale-transition receipt toolbar toolbar_icon toolbar_iconHover scale-out scale-in" name="delAddr" placeholder="Function execution has timed out. Restart the debugger to continue debugging.">
+              <div id="delAddrSuggestions" class="autocomplete-suggestions"></div>
             </div>
           </a>
         </div>
         <div class="actions"></div>
         <div class="arena"></div>
         <div class="enemy"></div>
-        <?!= game_warrior.getContent() ?>
+        <?!= styleHtml.runIt.getContent() ?>
+        <?!= styleHtml.mgfRunIt.getContent() ?>
+        <?!= styleHtml.jsGameScriptsRunIt.getContent() ?>
       </body>
-    </html>`,
-    {
-      gamestart: rePlay("Warrior")
+    </html>`
+    ,{
+      gamestart: new Gamer("Warrior",100,0,50,10,25)
     },
   );
-  html.img = HtmlService.createHtmlOutput(`img {width: 160px;}`).getContent();
   html.gamerUrl = gamerUrl;
   return html; //: contentFile("uiAccess")
 }

@@ -2062,27 +2062,59 @@ const get_interface = HtmlService.createHtmlOutput(
             .runBoilerplate(func, args)
           })
         };
-        document.addEventListener("DOMContentLoaded", glPlay)
-          function glPlay(classType) {
-            serverside("rePlay", [classType])
+          document.querySelectorAll("delAddr").addEventListener("select", function(event) {
+            serverside("rePlay", [event.target.value])
               .then((gPl) => {
                 let gamB = gPl.gamer;
                 let eneB = gPl.enemy;
                 let getInterface = document.querySelector(".interface");
-                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + classType + "</h3><p>Health: " + gamB.health + "</p></div>"
+                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
               })
-          }
+          });
       </script>
     `
 );
 
-const game_warrior = HtmlService.createHtmlOutput(
+const warrior_clicks = HtmlService.createHtmlOutput(
   `
     <script>
-      document.getElementById("wro").addEventListener("click", function(event) {
+      document
+        .getElementById("wro")
+        .addEventListener("click", function(event) {
         event.preventDefault();
-        let getInterface = document.querySelector(".interface");
-        getInterface.innerHTML = ""
+      });
+    </script>
+`);
+
+const rouge_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("roe")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+
+const mage_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("mge")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+
+const hunter_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("hne")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
       });
     </script>
 `);
@@ -2145,6 +2177,10 @@ const styleHtml = {
   cCDNRunIt: HtmlService.createHtmlOutput(
     `
       ${location_url.getContent() + next_clicked_video.getContent()}
+  `),
+  jsGameScriptsRunIt: HtmlService.createHtmlOutput(
+    `
+      ${warrior_clicks.getContent() + rouge_clicks.getContent() + mage_clicks.getContent() + hunter_clicks.getContent() + get_interface.getContent()}
   `),
 };
 
