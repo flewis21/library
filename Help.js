@@ -79,7 +79,7 @@ function crmT(func) {
   return funFirst;
 }
 
-function gsFiles() {
+var gsFiles = function() {
   // console.log(
   //   "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
   // );
@@ -3118,7 +3118,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse(result);
               } catch (check) {
-                console.log("Check/Balance for " + result.toString());
+                console.log("Check/Balance for " + result?.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = result;

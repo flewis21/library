@@ -937,7 +937,7 @@ function productFullName(productName) {
   }
 }
 
-function productDist(
+var productDist = function(
   epaAUrl,
   epaDUrl,
   epaDXpath,

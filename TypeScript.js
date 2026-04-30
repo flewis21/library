@@ -112,12 +112,12 @@ var geneicType = function () {
     b: 123,
     c: ["string"],
   };
-  GameManager.setGameStart("Warrior");
-  let mmoRpgPlay = GameManager.setGameStart.instances[0];
-  let mmoRpgEnemy = GameManager.setGameStart.instances[1];
-  GameManager.setGameStart.instances.forEach((instance) => {
-    console.log(`${JSON.stringify(instance)}`)
-  })
+  // GameManager.setGameStart("Warrior");
+  // let mmoRpgPlay = GameManager.setGameStart.instances[0];
+  // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
+  // GameManager.setGameStart.instances.forEach((instance) => {
+  //   console.log(`${JSON.stringify(instance)}`)
+  // })
   // var numVarRnd = Math.floor(Math.random() * 25);
   // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
   // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
@@ -135,7 +135,7 @@ var geneicType = function () {
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
-  if (!base?.myVar && !base[0]?.rndTitle && typeof base[0] !== "number") {
+  if (!base?.myVar || !base[0]?.rndTitle || typeof base[0] !== "number" || [base].length !== 0) {
     let dataOR = globalHandleGetData(base);
   }
   // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})

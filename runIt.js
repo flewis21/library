@@ -77,7 +77,7 @@ function congressFunc(e) {
       "X-API-Key": "d2E8liJwaPel5hHe3erhvLhneEj4zOWbAGKerZSv",
     };
     var congressEndpoint = "https://api.congress.gov/v3/bill";
-    var data = urlDataSource(congressEndpoint, {
+    var data = getUrlResponse(congressEndpoint, {
       method: "get",
       contentType: "application/json",
       headers: congressAPIkey,
@@ -87,12 +87,12 @@ function congressFunc(e) {
       "tableS",
       "usCongress",
       ["Last Name", "First Name", "Party", "Leadership Role"],
-      testData(covertArr(data)),
+      testData(covertArr(data.app)),
       2,
     );
     // return data
     // var chart = Charts.newDashboardPanel().setDataTable(data)
-    console.log(data);
+    console.log(data.app);
   })();
   // var data = urlDataSource(congressUrl)
   var civicInfoAPI = (function () {

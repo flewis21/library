@@ -1143,6 +1143,7 @@ var renderFile = function (file, argsObject, title) {
             renTemp: tmp.evaluate().getContent(),
           },
         );
+        return renderTemplate(html,argsObject,title)
         return (
           HtmlService.createHtmlOutput(html) //tmp
             // .evaluate()

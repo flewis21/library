@@ -1235,7 +1235,8 @@ function functionHandle(e) {
         console.log("" + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
           // rndE = createRandomFunction();
-          rndE = functionRegistry.paramsList[Math.floor(Math.random() * functionRegistry.paramsList.length)]
+          rndE = createRandomFunction(); 
+          //functionRegistry.paramsList[Math.floor(Math.random() * functionRegistry.paramsList.length)]
           console.log("rndE = " + rndE, executed++);
           if (typeof rndE === "string") {
             e = bjectOfS(
@@ -1247,41 +1248,46 @@ function functionHandle(e) {
               ],
               functionRegistry.time,
             );
-          } else if (typeof rndE === "object" && rndE !== null && rndE.name) {
-            if (rndE.parameters && rndE.parameters.length > 0) {
-              e = objectOfS(
-                ["parameter"],
-                [
+          }
+          else {
+            if (typeof rndE === "object" && rndE !== null) {
+              let rndEAP = Object.values(rndE);
+              if (rrndEAP && rndEAP.length > 0) {
+                e = objectOfS(
+                  ["parameter"],
                   [
-                    ["func", rndE.name],
-                    ["args", [...rndE.parameters]],
+                    [
+                      ["func", Object.keys(rrndEAP)[0]],
+                      ["args", Object.values(rrndEAP)[0]],
+                    ],
                   ],
-                ],
-                functionRegistry.time,
-              );
-            } else {
+                  functionRegistry.time,
+                );
+              } else {
+                e = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", Object.keys(rrndEAP)[0]],
+                    ],
+                  ],
+                  functionRegistry.time,
+                );
+              }
+            }
+            else {
+              console.log("Unexpected rndE type: ", rndE);
               e = objectOfS(
                 ["parameter"],
                 [
                   [
-                    ["func", rndE.name],
+                    ["func", "aVar"],
+                    ["args", "varA"],
                   ],
                 ],
                 functionRegistry.time,
               );
             }
-          } else {
-            console.log("Unexpected rndE type: ", rndE);
-            e = objectOfS(
-              ["parameter"],
-              [
-                [
-                  ["func", "aVar"],
-                  ["args", "varA"],
-                ],
-              ],
-              functionRegistry.time,
-            );
           }
           console.log(JSON.stringify(e));
         } else { 
@@ -1481,9 +1487,10 @@ function functionHandle(e) {
                 }
                 else {
                   if (typeof globalThis[e.parameter[objData[0]]] === "function") {
-                    let argsEd = functionRegistry.paramsList.find((rndS) => {
-                      return rndS.name === e.parameter[objData[0]];
-                    });
+                    let argsEd = createRandomFunction(e.parameter[objData[0]]);
+                    //functionRegistry.paramsList.find((rndS) => {
+                    //   return rndS.name === e.parameter[objData[0]];
+                    // });
                     console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                     if (typeof argsEd === "string") {
                       e = objectOfS(
@@ -1493,41 +1500,60 @@ function functionHandle(e) {
                       );
                       console.log("e = " + e, executed++);
                     } 
-                    else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
-                      if (argsEd.parameters && argsEd.parameters.length > 0) {
+                    else if (typeof argsEd === "object" && argsEd !== null) {
+                      let argsAP = Object.values(argsEd);
+                      if (argsAP && argsAP.length > 0) {
                         e = objectOfS(
                           ["parameter"],
                           [
                             [
-                              ["func", argsEd.name],
-                              ["args", [...argsEd.parameters]],
+                              ["func", Object.keys(argsEd)[0]],
+                              ["args", [...Object.values(argsEd)[0]]],
                             ],
                           ],
                           functionRegistry.time,
                         );
+                        console.log("e = " + e, executed++);
+                      } else {
+                        e = objectOfS(
+                          ["parameter"],
+                          [[["func", Object.keys(argsEd)[0]]]],
+                          functionRegistry.time,
+                        );
+                        console.log("e = " + e, executed++);
+                      }
+                    } else {
+                      console.log("Unexpected argsEd type: ", argsEd);
+                      let argsedObj = [];
+                      let aOKeys = Object.keys(argsEd);
+                      if (aOKeys.length > 0) {
+                        aOKeys.forEach((key) => {
+                          argsedObj.push(argsEd[key]);
+                        });
+                        e = objectOfS(
+                          ["parameter"],
+                          [
+                            [
+                              ["func", aOKeys],
+                              ["args", argsedObj],
+                            ],
+                          ],
+                          functionRegistry.time,
+                        );
+                        console.log("e = " + e, executed++);
                       } else {
                         e = objectOfS(
                           ["parameter"],
                           [
                             [
-                              ["func", argsEd.name],
+                              ["func", "aVar"],
+                              ["args", "varA"],
                             ],
                           ],
                           functionRegistry.time,
                         );
+                        console.log("e = " + e, executed++);
                       }
-                    } else {
-                      console.log("Unexpected argsEd type: ", argsEd);
-                      e = objectOfS(
-                        ["parameter"],
-                        [
-                          [
-                            ["func", "aVar"],
-                            ["args", "varA"],
-                          ],
-                        ],
-                        functionRegistry.time,
-                      );
                     }
                     console.log(JSON.stringify(e));
                   }
