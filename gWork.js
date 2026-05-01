@@ -385,58 +385,66 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
       var elaspeTime = new Date() - time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof importedData: " +  typeof importedData + "\nelaspeTime: " + elaspeTime)
       if (
-        typeof importedData !== "undefined" &&
-        typeof importedData !== "string" &&
-        [importedData].length > 1
+        (typeof importedData !== "undefined" &&
+        typeof importedData !== "string") &&
+        [importedData].length > 0
       ) {
         var myImportData = importedData.sort((a, b) => a - b)[
-          Math.floor(Math.random() * importedData.length)
-        ];
-        newArr.push(myImportData);
-        var elaspeTime = new Date() - time;
-        // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
-      } else if (
-        typeof importedData !== "undefined" &&
-        typeof importedData === "string"
-      ) {
-        var myImportData = [importedData].sort((a, b) => a - b)[
-          Math.floor(Math.random() * [importedData].length)
+          Math.floor(Math.random() * i)
         ];
         newArr.push(myImportData);
         var elaspeTime = new Date() - time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       }
-    }
-  } else if (typeof arrD !== "undefined") {
-    for (i, l; i < l; i++) {
-      var myArrData = arrD.sort((a, b) => a - b)[
-        Math.floor(Math.random() * arrD.length)
-      ];
-      newArr.push(myArrData);
-      var elaspeTime = new Date() - time;
-      // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
+      else {
+        if (
+          typeof importedData !== "undefined" &&
+          typeof importedData === "string" &&
+          [importedData].length > 0
+        ) {
+          var myImportData = [importedData].sort((a, b) => a - b)[
+            Math.floor(Math.random() * i)
+          ];
+          newArr.push(myImportData);
+          var elaspeTime = new Date() - time;
+          // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
+        }
+        else {
+          if (typeof arrD !== "undefined") {
+            var myArrData = arrD.sort((a, b) => a - b)[
+              Math.floor(Math.random() * i)
+            ];
+            newArr.push(myArrData);
+            var elaspeTime = new Date() - time;
+            // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
+          }
+        }
+      }
     }
   }
-  console.log(
-    "randomSubstance: \n( \nindex: " +
-      index +
-      "\nLoop Length: " +
-      loopLength +
-      "\nImported Data: " +
-      importedData +
-      "\nArray Data: " +
-      [arrD].toString().substring(0, 20) +
-      "\nTime: " +
-      formatTime(functionRegistry.time) +
-      " )",
-  );
+  // console.log(
+  //   "randomSubstance: \n( \nindex: " +
+  //     index +
+  //     "\nLoop Length: " +
+  //     loopLength +
+  //     "\nImported Data: " +
+  //     importedData +
+  //     "\nArray Data: " +
+  //     [arrD].toString().substring(0, 20) +
+  //     "\nTime: " +
+  //     formatTime(functionRegistry.time) +
+  //     " )",
+  // );
   if (newArr) {
-    var sortNewArr = newArr.sort((a, b) => a - b)[
-      Math.floor(Math.random() * newArr.length)
-    ];
-    // return console.log({myNewArr: sortNewArr});
+    for (i, l; i < l; i++) {
+      var sortNewArr = newArr.sort((a, b) => a - b)[
+        Math.floor(Math.random() * i)
+      ];
+    }
     return { myNewArr: sortNewArr };
-    console.log();
+  }
+  else {
+    return null
   }
 }
 

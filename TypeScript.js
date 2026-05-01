@@ -106,7 +106,7 @@ var isPick = function (t, k) {
   return valuesList;
 };
 
-var geneicType = function () {
+var geneicType = function (e) {
   var exampleObjectType = {
     a: "string",
     b: 123,
@@ -131,12 +131,22 @@ var geneicType = function () {
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
   // functionRegistry.domainTree();
-  let handles = functionHandle({parameter: {q:testlt().name}});
+  let handles
+  if (e) {
+    handles = functionHandle(e);
+  }
+  else {
+    handles = functionHandle({parameter: {q:testlt().name}});
+  }
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
   if (!base?.myVar || !base[0]?.rndTitle || typeof base[0] !== "number" || [base].length !== 0) {
     let dataOR = globalHandleGetData(base);
+    return dataOR
+  }
+  else {
+    return base
   }
   // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
   // let fileParams = functionRegistry.paramsList[fileIndex];

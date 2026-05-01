@@ -55,7 +55,7 @@ const block_display = HtmlService.createHtmlOutput(
   `article, aside, footer, header, nav, main, section {display: block;}`,
 );
 const body = HtmlService.createHtmlOutput(
-  `body {background-image: url("https://flewis21.github.io/foobar/images/user.jpg");width: 1080px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;background-position: center; }`,
+  `body {background-image: url("https://flewis21.github.io/foobar/images/user.jpg");width: 2280px;margin-left: auto;margin-right: auto;border-radius: 0.5px;background-color: #f0f0f0;font-family: Helvetica, Arial, sans-serif;font-size: 15px;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;background-position: center; }`,
 );
 const body_survey_player = HtmlService.createHtmlOutput(
   `body {flex-grow: 1;color:blue;text-decoration:bold;flex-flow: row wrap;grid-column: 1;grid-row: 1;text-align: center;align-content: flex-start;overflow: auto;}`,
@@ -196,7 +196,7 @@ const float_right = HtmlService.createHtmlOutput(
   `.float-right {float: right;}`,
 );
 const grid = HtmlService.createHtmlOutput(
-  `.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(500px, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`,
+  `.grid {display: grid;grid-template-columns: repeat(auto-fit,minmax(100%, 1fr));grid-column-gap: 16px;grid-row-gap: 30px;}`,
 );
 const large_container = HtmlService.createHtmlOutput(
   `.large-container {padding-left: 7%;}`,
@@ -957,19 +957,21 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
             // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
             // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
-            const confirmation = window.confirm(
-              "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-            );
-            if (confirmation) {
-              var linkFollow = document.createElement("a");
-              linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)];
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_blank";
-              linkFollow.rel = "noopener noreferrer";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-            }
+            $('a').click(function(){
+              const confirmation = window.confirm(
+                "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+              );
+              if (confirmation) {
+                var linkFollow = document.createElement("a");
+                linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)];
+                linkFollow.id = "linkFOLLOW";
+                linkFollow.target = "_blank";
+                linkFollow.rel = "noopener noreferrer";
+                document.body.appendChild(linkFollow);
+                document.getElementById("linkFOLLOW").click();
+                document.getElementById("linkFOLLOW").remove();
+              }
+            });
           })
           .catch(error => {
             console.error("Error fetching address suggestions for " + inputId + " :", error);
@@ -1572,6 +1574,16 @@ const remove_iframe = HtmlService.createHtmlOutput(
       });
     </script>
 `);
+const remove_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("ifReload")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
 const enter_key_event_listener = HtmlService.createHtmlOutput(
   `
   <script>
@@ -2160,7 +2172,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + remove_iframe.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent() + remove_clicks.getContent()}`
   ),
   abcIt: HtmlService.createHtmlOutput(
     `

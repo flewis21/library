@@ -766,7 +766,7 @@ function summarizeText(text, summarizationApiKey) {
   return fetchData(url, options);
 }
 
-function getScriptProperty(propName) {
+var getScriptProperty = function(propName) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +
@@ -778,7 +778,7 @@ function getScriptProperty(propName) {
 }
 
 // Helper Function to make server calls with promises (included in HTML)
-function callServerFunction(functionName, args) {
+var callServerFunction = function(functionName, args) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +
@@ -787,11 +787,23 @@ function callServerFunction(functionName, args) {
       !functionName,
   );
   return new Promise((resolve, reject) => {
-    google.script.run
-      .withSuccessHandler(resolve)
-      .withFailureHandler(reject)
-      [functionName](...args);
-  });
+    let html = 
+    HtmlService.createHtmlOutput(
+      `
+        google.script.run
+        .withSuccessHandler(() => {
+          <?!= resolve ?>
+        })
+        .withFailureHandler(() => {
+          <?!= reject ?>
+        })
+        [<?!= functionName ?>](...<?!= args ?>);
+    `);
+    html.solve = resolve;
+    html.problem = reject;
+    html.name = functionName;
+    html.params = args;
+  })
 }
 
 function superTest(e) {

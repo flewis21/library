@@ -1157,7 +1157,7 @@ function mis(text, maxRetries = 3) {
 //               args["varA"] = userProvidedValue;
 //             } else {
 //               // arrDRnd = appSort(numVarRnd);
-//               // searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+//               // searchString = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
 //               result = fParams.find((rndS) => {
 //                 return rndS.name === searchString;
 //               });
@@ -2084,7 +2084,7 @@ function misSt(func, someArgs) {
             if (userProvidedValue === null && userProvidedValue === undefined) {
               if (declaredParamName === "e") {
                 arrDRnd = appSort();
-                searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+                searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
                 result = fParams.find((rndS) => {
                   return rndS.name === searchResult;
                 });
@@ -2977,7 +2977,7 @@ function resolveParams(func, someArgs) {
               (paramName === null && declaredParamName === "e")
             ) {
               arrDRnd = appSort(numVarRnd);
-              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
@@ -3041,13 +3041,13 @@ function resolveParams(func, someArgs) {
               (paramName === null && declaredParamName === "data")
             ) {
               arrDRnd = appSort(numVarRnd);
-              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
               console.log("resolved data pre-result", result);
               try {
-                JSON.parse(result.toString());
+                JSON.parse(result?.toString());
               } catch (check) {
                 console.log("Check/Balance for " + result.toString());
               }
@@ -3110,7 +3110,7 @@ function resolveParams(func, someArgs) {
               (paramName === null && declaredParamName === "func")
             ) {
               arrDRnd = appSort(numVarRnd);
-              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
@@ -3142,7 +3142,7 @@ function resolveParams(func, someArgs) {
                 console.log("Check/Balance for " + result.toString());
               }
               arrDRnd = appSort(numVarRnd);
-              searchResult = randomSubstance(0, 6, arrDRnd).myNewArr;
+              searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
               result = fParams.find((rndS) => {
                 return rndS.name === searchResult;
               });
@@ -3799,7 +3799,7 @@ function testlt() {
   // var numVarRnd = randNum;
   // var arrNum = numVarRnd
   // var arrDRnd = appSort(arrNum);
-  // var searchString = randomSubstance(0, 6, arrDRnd).myNewArr;
+  // var searchString = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
   var ssearchString = globalThis.searchString().myNewArr;
   var fParams = functionRegistry.paramsList;
   var result = fParams.find((rndS) => {

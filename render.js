@@ -985,7 +985,6 @@ var renderFile = function (file, argsObject, title) {
                 </div>
               </nav>
                 <header class="banner card-panel transparent static-fix">
-                  <a href="#">Remove</a>
                   <div id="iframePlayer" class="row card-panel transparent"></div>
                   <h1>Blog</h1>
                   <p>Recent Applications</p>
@@ -999,8 +998,8 @@ var renderFile = function (file, argsObject, title) {
                   <thead class="transparent">
                   </thead>
                   <tbody class="transparent">
-                    <tr class="transparent" style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
-                      <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
+                    <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                      <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
                         <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
                           <tbody class="transparent">
                             <td class="transparent">
@@ -1123,6 +1122,13 @@ var renderFile = function (file, argsObject, title) {
                                 </section>
                               </div>
                               <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                              <header class="banner transparent responsive-section">
+                                <div id="loadingSurvey">
+                                  <a id="ifReload" href="#">
+                                    <h5>Remove</h5>
+                                  </a>
+                                </div>
+                              </header>
                               <hr>
                               <div class="subscribed-list">
                                 <h3>SUBSCRIBED</h3>
@@ -1263,40 +1269,37 @@ var renderTemplate = function (blob, argsObject, title) {
             </div>
           </nav>
           <main class="responsive-section float-left">
-            <header class="banner responsive-section">
+            <header class="transparent banner responsive-section">
               <div id="player1" class="row card-panel transparent list-container grid"></div>
-              <div id="loadingSurvey">
-                <a href="#">Remove</a>
-              </div>
               <h4><?!= drivedD?.split("{")[0] ?></h4>
               <p>Recent Applications</p>
             </header>
             <div class="row responsive-section">
-            <div class="card-panel amber responsive-section">
+            <div class="card-panel transparent responsive-section">
             <div class="responsive-section">
             <div class="responsive-section">
-            <div class="receipt red responsive-section">
-            <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
-              <thead>
+            <div class="receipt transparent responsive-section">
+            <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+              <thead class="transparent" >
               </thead>
-              <tbody>
-                <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;height: auto;display: block;margin: auto;">
-                  <td style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;">
-                    <table class="striped centered highlight grey z-depth-5 responsive-section static-fix">
-                      <tbody>
-                        <td>
-                          <div class="row responsive-section">
-                            <section class="responsive-section static-fix">
-                              <header class="responsive-section list-container grid">
+              <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                  <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                    <table class="striped centered highlight purple z-depth-5 responsive-section static-fix">
+                      <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                        <td class="transparent">
+                          <div class="transparent row responsive-section">
+                            <section class="transparent responsive-section static-fix">
+                              <header class="transparent responsive-section list-container grid">
                                 <h2>Power</h2>
                                 <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
-                                <aside class="responsive-section card-panel vid-list">
+                                <aside class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="<?= drivemI ?>">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1311,13 +1314,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </aside>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="<?!= driveL ?>">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1331,13 +1334,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1351,13 +1354,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="<?!= drivedI ?>">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1371,13 +1374,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <aside class="responsive-section card-panel vid-list">
+                                <aside class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1389,13 +1392,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </aside>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1408,13 +1411,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1427,13 +1430,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <article class="responsive-section card-panel vid-list">
+                                <article class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1446,13 +1449,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </div>
                                 </article>
-                                <aside class="responsive-section card-panel vid-list">
+                                <aside class="transparent responsive-section card-panel vid-list">
+                                  <article class="transparent responsive-section card-panel static-fix container">
+                                    <div class="row responsive-section static-fix">
+                                      <?!= renTemp ?>
+                                    </div>
+                                  </article>
                                   <a href="<?!= driveD ?>">
-                                    <article class="responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1479,11 +1482,18 @@ var renderTemplate = function (blob, argsObject, title) {
             </table>
             </div></div></div></div></div>
           </main>
-          <footer class="receipt-footer responsive-section card-panel black float-right">
+          <footer class="transparent receipt-footer responsive-section card-panel float-right">
             <div class="row responsive-section">
               <aside class="pulse transparent sidebar float-right">
                 <p>
                   <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  <header class="banner transparent responsive-section">
+                    <div id="loadingSurvey">
+                      <a id="ifReload" href="#">
+                        <h5>Remove</h5>
+                      </a>
+                    </div>
+                  </header>
                   <hr>
                   <div class="subscribed-list">
                     <h3>SUBSCRIBED</h3>
@@ -1493,7 +1503,6 @@ var renderTemplate = function (blob, argsObject, title) {
               </aside>
             </div>
           </footer>
-          <?!= location_url.getContent() ?>
           <?!= styleHtml.runIt.getContent() ?>
           <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
           <div id="result"></div>
