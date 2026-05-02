@@ -957,11 +957,12 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
             // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
             // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
-            $('a').click(function(){
+            $('a').click(function(event){
               const confirmation = window.confirm(
                 "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
               );
               if (confirmation) {
+                event.preventDefault();
                 var linkFollow = document.createElement("a");
                 linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)];
                 linkFollow.id = "linkFOLLOW";
@@ -1574,11 +1575,21 @@ const remove_iframe = HtmlService.createHtmlOutput(
       });
     </script>
 `);
-const remove_clicks = HtmlService.createHtmlOutput(
+const remove_iframe_clicks_rt = HtmlService.createHtmlOutput(
   `
     <script>
       document
-        .getElementById("ifReload")
+        .getElementById("rtif")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+const remove_iframe_clicks_rf = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("rfif")
         .addEventListener("click", function(event) {
         event.preventDefault();
       });
@@ -2172,7 +2183,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent() + remove_clicks.getContent()}`
+    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
   ),
   abcIt: HtmlService.createHtmlOutput(
     `

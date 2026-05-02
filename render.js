@@ -1013,7 +1013,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="tro" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1029,7 +1029,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="lti" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1048,7 +1048,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="rpc" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1067,7 +1067,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="rdi" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1086,7 +1086,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="ccm" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1105,7 +1105,7 @@ var renderFile = function (file, argsObject, title) {
                                           <?!= renTemp ?>
                                         </div>
                                       </article>
-                                      <a href="">
+                                      <a id="beb" href="#">
                                         <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
                                       </a>
                                       <div class="flex-div transparent">
@@ -1124,7 +1124,7 @@ var renderFile = function (file, argsObject, title) {
                               <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                               <header class="banner transparent responsive-section">
                                 <div id="loadingSurvey">
-                                  <a id="ifReload" href="#">
+                                  <a id="rfif" href="#">
                                     <h5>Remove</h5>
                                   </a>
                                 </div>
@@ -1299,7 +1299,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="<?= drivemI ?>">
+                                  <a id="dmi" href="<?= drivemI ?>">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1320,7 +1320,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="<?!= driveL ?>">
+                                  <a id="del" href="<?!= driveL ?>">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1340,7 +1340,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="">
+                                  <a id="qua" href="#">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1360,7 +1360,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="<?!= drivedI ?>">
+                                  <a id="ddi" href="<?!= drivedI ?>">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1380,7 +1380,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="">
+                                  <a id="ama" href="#">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1398,7 +1398,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="">
+                                  <a id="vsd" href="#">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1417,7 +1417,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="">
+                                  <a id="ccc" href="#">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1436,7 +1436,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="">
+                                  <a id="sli" href="#">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1455,7 +1455,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                       <?!= renTemp ?>
                                     </div>
                                   </article>
-                                  <a href="<?!= driveD ?>">
+                                  <a id="drd" href="<?!= driveD ?>">
                                     <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
                                   </a>
                                   <div class="flex-div">
@@ -1489,7 +1489,7 @@ var renderTemplate = function (blob, argsObject, title) {
                   <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                   <header class="banner transparent responsive-section">
                     <div id="loadingSurvey">
-                      <a id="ifReload" href="#">
+                      <a id="rtif" href="#">
                         <h5>Remove</h5>
                       </a>
                     </div>
