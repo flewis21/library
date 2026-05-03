@@ -1328,7 +1328,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                     <div class="vid-info">
                                       <?!= drivedD ?>
                                       <header class="responsive-section">
-                                        <h3><a href="">Subjectivity in Definition:</a></h3>
+                                        <h3><a href="#">Subjectivity in Definition:</a></h3>
                                       </header>
                                       <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
                                     </div>
@@ -1348,7 +1348,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                     <div class="vid-info">
                                       <?!= driveT ?>
                                       <header class="responsive-section">
-                                        <h3><a href="">Qualitative Aspects:</a></h3>
+                                        <h3><a href="#">Qualitative Aspects:</a></h3>
                                       </header>
                                       <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
                                     </div>
@@ -1368,7 +1368,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                     <div class="vid-info">
                                       <?!= drivedI ?>
                                       <header class="responsive-section">
-                                        <h3><a href="">Contextual Dependence:</a></h3>
+                                        <h3><a href="#">Contextual Dependence:</a></h3>
                                       </header>
                                       <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
                                     </div>
@@ -1405,7 +1405,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                     <img src="<?!= seaIcn.getContent() ?>" />
                                     <div class="vid-info">
                                       <header class="responsive-section">
-                                        <h3><a href="">Visible Demonstrations:</a></h3>
+                                        <h3><a href="#">Visible Demonstrations:</a></h3>
                                       </header>
                                       <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
                                     </div>
@@ -1424,7 +1424,7 @@ var renderTemplate = function (blob, argsObject, title) {
                                     <img src="<?!= seaIcn.getContent() ?>" />
                                     <div class="vid-info">
                                       <header class="responsive-section">
-                                        <h3><a href="">Compliance and Obedience:</a></h3>
+                                        <h3><a href="#">Compliance and Obedience:</a></h3>
                                       </header>
                                       <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
                                     </div>
@@ -1437,13 +1437,13 @@ var renderTemplate = function (blob, argsObject, title) {
                                     </div>
                                   </article>
                                   <a id="sli" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    <img src="<?!= seaIcn.getContent() ?>" class="thumbnail" />
                                   </a>
                                   <div class="flex-div">
                                     <img src="<?!= seaIcn.getContent() ?>" />
                                     <div class="vid-info">
-                                      <header class=""responsive-section>
-                                        <h3><a href="">Social Influence:</a></h3>
+                                      <header class="responsive-section">
+                                        <h3><a href="#">Social Influence:</a></h3>
                                       </header>
                                       <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
                                     </div>
@@ -1461,8 +1461,8 @@ var renderTemplate = function (blob, argsObject, title) {
                                   <div class="flex-div">
                                     <img src="<?!= seaIcn.getContent() ?>" />
                                     <div class="vid-info">
-                                      <header class=""responsive-section>
-                                        <h3><a href="">In conclusion:</a></h3>
+                                      <header class="responsive-section">
+                                        <h3><a href="#">In conclusion:</a></h3>
                                       </header>
                                       <p style="text-align: left">
                                       While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.

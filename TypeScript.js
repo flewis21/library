@@ -141,12 +141,12 @@ var geneicType = function (e) {
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
-  if (!base?.myVar || !base[0]?.rndTitle || typeof base[0] !== "number" || [base].length !== 0) {
+  if (base && !base?.myVar || !base[0]?.rndTitle || typeof base[0] !== "number" || [base].length !== 0) {
     let dataOR = globalHandleGetData(base);
     return dataOR
   }
   else {
-    return base
+    return {payload: base}
   }
   // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
   // let fileParams = functionRegistry.paramsList[fileIndex];

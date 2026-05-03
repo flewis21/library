@@ -1940,7 +1940,7 @@ var getUrlResponse = function (url, options) {
 };
 
 function prepareDataBrain(data, ratio = 29) {
-  if (data) {
+  if (data && data !== "data") {
     return Array.isArray(data)
       ? data.map((row) => {
           const rings = Object.values(row).slice(0, 1);

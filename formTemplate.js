@@ -1464,7 +1464,7 @@ function dtls(callFunc, time) {
           .addParagraphTextItem()
           .setHelpText(globalThis[formName].toString());
       }
-      jsFunc.map((piece) => {
+      jsFunc?.map((piece) => {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - time;

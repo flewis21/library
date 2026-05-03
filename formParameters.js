@@ -135,39 +135,6 @@ function searchUrlsRoot(fileX) {
   }
 }
 
-function searchUrlsTree(fileX) {
-  console.log(
-    functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      fileX +
-      ", = " +
-      !fileX,
-  );
-  var elapsedTime;
-  var fileTree = [];
-  var tree = DriveApp.getFolders();
-  while (tree.hasNext()) {
-    fileTree.push(tree.next().getId());
-  }
-  fileTree.map((id) => {
-    var treeFolder = DriveApp.getFolderById(id);
-    var numFolder = treeFolder.getFiles();
-    while (numFolder.hasNext()) {
-      elapsedTime = new Date().valueOf() - start;
-      var trueNumName = numFolder.next();
-
-      if (trueNumName.getName().includes(fileX)) {
-        return trueNumName.getUrl();
-      } else if (elapsedTime < oneTime) {
-        break;
-      }
-    }
-  });
-  return matchManager(fileX);
-}
-
 function searchUrlsRandom() {
   console.log(functionRegistry.time + "\n" + arguments.callee.name);
 

@@ -615,6 +615,42 @@ function matchManager(folderX, narrow, time) {
 //   }
 // };
 
+function searchUrlsTree(fileX) {
+  console.log(
+    functionRegistry.time +
+      "\n" +
+      arguments.callee.name +
+      "\n!" +
+      fileX +
+      ", = " +
+      !fileX,
+  );
+  var elapsedTime;
+  var fileTree = [];
+  var tree = DriveApp.getFolders();
+  while (tree.hasNext()) {
+    fileTree.push(tree.next().getId());
+  }
+  fileTree.map((id) => {
+    var treeFolder = DriveApp.getFolderById(id);
+    var numFolderFiles = treeFolder.getFiles();
+    while (numFolderFiles.hasNext()) {
+      elapsedTime = new Date().valueOf() - start;
+      var trueNum = numFolderFiles.next();
+
+      if (trueNum.getName().includes(fileX)) {
+        return trueNum.getUrl();
+      }
+      else {
+        if (elapsedTime < oneTime) {
+          break;
+        }
+      }
+    }
+  });
+  return
+}
+
 var validateFiles = function () {
   // Grant or Deny access
   const emailList = (() => {
