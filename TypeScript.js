@@ -131,6 +131,7 @@ var geneicType = function (e) {
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
   // functionRegistry.domainTree();
+  console.log(typeof initForm);
   let handles
   if (e) {
     handles = functionHandle(e);
@@ -141,7 +142,7 @@ var geneicType = function (e) {
   let funcU = handles["exec"];
   let funcD = handles["args"];
   let base = createFunctionResult(funcU, funcD);
-  if (base && !base?.myVar || !base[0]?.rndTitle || typeof base[0] !== "number" || [base].length !== 0) {
+  if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
     let dataOR = globalHandleGetData(base);
     return dataOR
   }

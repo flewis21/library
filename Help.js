@@ -3049,7 +3049,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse(result?.toString());
               } catch (check) {
-                console.log("Check/Balance for " + result.toString());
+                console.log("Check/Balance for " + result?.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 var rndE = objectOfS(
@@ -3150,7 +3150,7 @@ function resolveParams(func, someArgs) {
               try {
                 JSON.parse(result.toString());
               } catch (check) {
-                console.log("Check/Balance for " + result.toString());
+                console.log("Check/Balance for " + result?.toString());
               }
               if (typeof result === "string" && result !== "undefined") {
                 args[declaredParamName] = globalThis[result]();

@@ -977,7 +977,8 @@ var renderFile = function (file, argsObject, title) {
                 </div>
                 <div class="nav-middle flex-div">
                   <div class="search-box flex-div">
-                    <input type="text" placeholder="Search">
+                    <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                    <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
                   </div>
                 </div>
                 <div class="nav-right flex-div">
@@ -987,7 +988,11 @@ var renderFile = function (file, argsObject, title) {
                 <header class="banner card-panel transparent static-fix">
                   <div id="iframePlayer" class="row card-panel transparent"></div>
                   <h1>Blog</h1>
-                  <p>Recent Applications</p>
+                  <label id="loadingLab">
+                    <strong>
+                      <p>Recent Applications</p>
+                    </strong>
+                  </label>
                 </header>
                 <div class="row responsive-section transparent">
                 <div class="card-panel transparent responsive-section">
@@ -1261,7 +1266,8 @@ var renderTemplate = function (blob, argsObject, title) {
             </div>
             <div class="nav-middle flex-div responsive-section">
               <div class="search-box flex-div">
-                <input type="text" placeholder="Search">
+                <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
               </div>
             </div>
             <div class="nav-right flex-div responsive-section">
@@ -1272,7 +1278,11 @@ var renderTemplate = function (blob, argsObject, title) {
             <header class="transparent banner responsive-section">
               <div id="player1" class="row card-panel transparent list-container grid"></div>
               <h4><?!= drivedD?.split("{")[0] ?></h4>
-              <p>Recent Applications</p>
+              <label id="loadingLab">
+                <strong>
+                  <p>Recent Applications</p>
+                </strong>
+              </label>
             </header>
             <div class="row responsive-section">
             <div class="card-panel transparent responsive-section">

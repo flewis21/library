@@ -209,9 +209,12 @@ var getVI = function () {
   var videoData = [];
   var inValsKeys = Object.keys(videoSheetVals);
   inValsKeys.forEach((key) => {
+    let tempObj = {};
     let videoObj = videoSheetVals[key];
-    let videoId = videoObj["Video"];
-    videoData.push(videoId);
+    tempObj.videoId = videoObj["Video"];
+    tempObj.description = videoObj["Description"];
+    // let videoId = videoObj["Video"];
+    videoData.push(tempObj);
   });
   return videoData;
 };

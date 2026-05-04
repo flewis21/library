@@ -506,6 +506,45 @@ const key_press = HtmlService.createHtmlOutput(
         busa.value = ""}})
   </script>  
 `);
+const key_press_video = HtmlService.createHtmlOutput(
+  `
+  <script>
+    var busa = document.getElementById("artiicleIndex");
+    var busx = document.getElementById("loadingLab");
+    var busc = document.getElementById("contentDiv");
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    busa.addEventListener('keypress', function(event) {
+      // If the user preses the "Enter" key on the keyboard. 
+      if (event.key === "Enter")  {
+        const strValue = busa.value;
+        busx.innerText = "... waiting for " + strValue;
+        const confirmation = window.confirm(
+          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+        );
+        if (confirmation) {
+          if (strValue) {
+            localSuggestionsCache["allMatches"].map((val) => {
+              if (val.description.indexOf(strValue) > -1) {
+                window.open(val.youtubeUrl);
+              }
+            });
+          }
+          else {
+            window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
+          }
+        }
+        busa.value = ""}})
+  </script>  
+`);
 const domain_submit = HtmlService.createHtmlOutput(
   `
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -919,8 +958,10 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         // Client-side code
         const localSuggestionsCache = {};
         const nVid = document.querySelectorAll(".userClickedNext");
-        const input = document.querySelectorAll(".prefDate");
-        const suggestionsDiv = document.querySelectorAll(".test");
+        const input = document.getElementById("artiicleIndex");
+        const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
+        // const input = document.querySelectorAll(".getVideo");
+        // const suggestionsDiv = document.querySelectorAll(".autocomplete-suggestions");
         let fullList = [];
 
         if (!input || !suggestionsDiv) {
@@ -934,17 +975,17 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             // Access the actual array from the response
             if (response && typeof response === "object") {
               for (var key in response) {
-                // alert(response[key][0]);
+                // alert(JSON.stringify(response[key]));
                 let i = 0;
                 let l = response[key].length;
                 // alert(l);
                 for (i,l;i<l;i++) {
-                  let tData = response[key][i];
+                  let tempObj = {};
+                  tempObj.description = response[key][i].description;
+                  let tData = response[key][i].videoId;
                   let dLoc =  "https://www.youtube.com/watch?v=";
-                  fullList.push(dLoc + tData);
-                //   let clVid = tData[i]]
-                //   // .replace(/\"/g, "");
-                //   alert(cVid);
+                  tempObj.youtubeUrl = dLoc + tData;
+                  fullList.push(tempObj);
                 }
               }
               // fullList = response.data;
@@ -958,13 +999,13 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
             // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
             $('a').click(function(event){
-              const confirmation = window.confirm(
+              let confirmation = window.confirm(
                 "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
               );
               if (confirmation) {
                 event.preventDefault();
                 var linkFollow = document.createElement("a");
-                linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)];
+                linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
                 linkFollow.id = "linkFOLLOW";
                 linkFollow.target = "_blank";
                 linkFollow.rel = "noopener noreferrer";
@@ -986,10 +1027,10 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           }
           
           // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache[columnName] || [];
-          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const localList = localSuggestionsCache["allMatches"] || [];
+          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
           const suggestions = localList.filter(item => 
-            String(item).toLowerCase().includes(query.toLowerCase())
+            String(item.description).toLowerCase().includes(query.toLowerCase())
           );
           
           suggestionsDiv.innerHTML = '';
@@ -997,9 +1038,15 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             suggestions.forEach(suggestion => {
               // console.log(suggestion)
               const div = document.createElement('div');
-              div.textContent = suggestion;
+              div.textContent = suggestion.description;
               div.addEventListener('click', () => {
-                input.value = suggestion;
+                input.value = suggestion.description;
+                let confirmation = window.confirm(
+                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  window.open(suggestion.youtubeUrl);
+                }
                 suggestionsDiv.innerHTML = '';
               });
               suggestionsDiv.appendChild(div);
@@ -1023,6 +1070,19 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             if (event.key === 'Escape') {
                 suggestionsDiv.innerHTML = '';
                 input.blur();
+            }
+            // If the user preses the "Enter" key on the keyboard. 
+            if (event.key === "Enter")  {
+              let confirmation = window.confirm(
+                "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+              );
+              if (confirmation) {
+                window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
+              }
+              else {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+              }
             }
           });
 
@@ -2183,7 +2243,7 @@ const styleHtml = {
     `${link_visited.getContent() + link_active.getContent()}`,
   ),
   runIt: HtmlService.createHtmlOutput(
-    `${key_press.getContent() + yTPlayer.getContent() + spyTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+    `${yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
   ),
   abcIt: HtmlService.createHtmlOutput(
     `
