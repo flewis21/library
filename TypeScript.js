@@ -1,8 +1,9 @@
 var isTypeScript = function (typePassedIn) {
-  var mapTypes = {};
+  var mapTypes = class Home {};
   for (var key in typePassedIn) {
     mapTypes[key] = typePassedIn[key];
   }
+  console.log(new mapTypes());
   return mapTypes;
 };
 
@@ -19,8 +20,35 @@ function isValidKeys(v) {
   }
 }
 
+function isValidDoubleObject(t) {
+  // var validKeys = isMapped(t);
+  if (t) {
+    var validList = Object.values(t);
+    class Valid{
+      constructor(object) {
+        this.object = object
+      }
+    }
+    if (validList.length === 2) {
+      var valid1 = new Valid(validList[0]);
+      var valid2 = new Valid(validList[1]);
+      if (typeof valid1 === typeof valid2) {
+        return new Valid(t)
+      }
+    }
+    else {
+      return t
+    }
+  }
+};
+
 var isMapped = function (t, v) {
-  var mapKeys = {};
+  var mapKeys = class Home {
+    constructor(t, v) {
+      this.t = t;
+      this.v = v;
+    }
+  };
   for (var key in t) {
     mapKeys[key] = v || typeof t[key];
   }
@@ -45,23 +73,8 @@ var isTruthy = function (t) {
   }
 };
 
-var isValidDoubleObject = function (t) {
-  // var validKeys = isMapped(t);
-  var validList = Object.values(t);
-  if (validList.length === 2) {
-    var valid1 = validList[0];
-    var valid2 = validList[1];
-    if (typeof valid1 === typeof valid2) {
-      return typeof valid1;
-    } else {
-      return;
-    }
-  }
-  return validList;
-};
-
 var isKeyOf = function (t) {
-  var keyList = {}; //Object.keys(t);
+  var keyList = class Home {}; //Object.keys(t);
   for (var key in t) {
     keyList[key] = key;
   }
@@ -112,6 +125,10 @@ var geneicType = function (e) {
     b: 123,
     c: ["string"],
   };
+  let script = new isValidDoubleObject({parameter: {q:testlt().name}});
+  // console.log(script);
+  // console.log(Object.getOwnPropertyNames(script));
+  // console.log(Object.getOwnPropertyNames(script.prototype));
   // GameManager.setGameStart("Warrior");
   // let mmoRpgPlay = GameManager.setGameStart.instances[0];
   // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
@@ -131,24 +148,6 @@ var geneicType = function (e) {
   // });
   // let fileIndex = handleRequest({parameter: {action:"getData"}});
   // functionRegistry.domainTree();
-  console.log(typeof initForm);
-  let handles
-  if (e) {
-    handles = functionHandle(e);
-  }
-  else {
-    handles = functionHandle({parameter: {q:testlt().name}});
-  }
-  let funcU = handles["exec"];
-  let funcD = handles["args"];
-  let base = createFunctionResult(funcU, funcD);
-  if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-    let dataOR = globalHandleGetData(base);
-    return dataOR
-  }
-  else {
-    return {payload: base}
-  }
   // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
   // let fileParams = functionRegistry.paramsList[fileIndex];
   // exampleObjectType[randonWord] = [];
@@ -169,5 +168,22 @@ var geneicType = function (e) {
   // var tee = isPropertyOf(teeValid1)
   // var kee = isMapped(tee)
   // var noB = isValidKeys(forTruth);
-  // return noB;
+  console.log(typeof initForm);
+  let handles
+  if (e) {
+    handles = functionHandle(e);
+  }
+  else {
+    handles = functionHandle(script);
+  }
+  let funcU = handles["exec"];
+  let funcD = handles["args"];
+  let base = createFunctionResult(funcU, funcD);
+  if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+    let dataOR = globalHandleGetData(base);
+    return dataOR
+  }
+  else {
+    return {payload: base}
+  }
 };

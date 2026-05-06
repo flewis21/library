@@ -351,7 +351,7 @@ const jsoninput = HtmlService.createHtmlOutput(
   `#jsonInput {display: none;width: 100%;height: 8vh; /* Or whatever height you need */margin:10px auto;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border:1px solid #ccc;font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */white-space:pre-wrap;text-align:left;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
 );
 const indexbeta = HtmlService.createHtmlOutput(
-  `#indexBeta,#player1,#player2 {/* Basic layout and appearance */width: 100%;height: 80vh; /* Or whatever height you need */font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */margin:10px auto;white-space:pre-wrap;text-align:left;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border: 1px solid #333;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Hide default textarea scrollbar (optional, but common for custom scrollbars) *//* If you hide this, you'd need to implement custom scrollbars with JavaScript *//* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices *//* &::-webkit-scrollbar { display: none; } *//* & { -ms-overflow-style: none; scrollbar-width: none; } *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
+  `#indexBeta,#player1,#player2,#artiicleIndexSuggestions {/* Basic layout and appearance */width: 100%;height: 80vh; /* Or whatever height you need */font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */margin:10px auto;white-space:pre-wrap;text-align:left;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border: 1px solid #333;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Hide default textarea scrollbar (optional, but common for custom scrollbars) *//* If you hide this, you'd need to implement custom scrollbars with JavaScript *//* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices *//* &::-webkit-scrollbar { display: none; } *//* & { -ms-overflow-style: none; scrollbar-width: none; } *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
 );
 const indexbeta_color_boxshadow = HtmlService.createHtmlOutput(
   `#indexBeta,#jsonInput,#player1,#player2:focus {box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */}`,
@@ -1051,6 +1051,60 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               });
               suggestionsDiv.appendChild(div);
             });
+          }
+          else {
+            serverside("vidPlaylist", [query]);
+            serverside("getVI", [])
+              .then((response) => {
+                // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                // Access the actual array from the response
+                if (response && typeof response === "object") {
+                  for (var key in response) {
+                    // alert(JSON.stringify(response[key]));
+                    let i = 0;
+                    let l = response[key].length;
+                    // alert(l);
+                    for (i,l;i<l;i++) {
+                      let tempObj = {};
+                      tempObj.description = response[key][i].description;
+                      let tData = response[key][i].videoId;
+                      let dLoc =  "https://www.youtube.com/watch?v=";
+                      tempObj.youtubeUrl = dLoc + tData;
+                      fullList.push(tempObj);
+                    }
+                  }
+                  // fullList = response.data;
+                } else {
+                  console.warn("Expected an array in response from getVI, received:", response);
+                  // Fallback to empty array if the structure is not as expected
+                  fullList = [];
+                }
+                localSuggestionsCache["allMatches"] = fullList;
+                // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
+                // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
+                // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
+                $('a').click(function(event){
+                  let confirmation = window.confirm(
+                    "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  );
+                  if (confirmation) {
+                    event.preventDefault();
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  }
+                });
+              })
+              .catch(error => {
+                console.error("Error fetching address suggestions for " + inputId + " :", error);
+                suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+              });
+              window.scrollTo(0,0);
           }
 
         }, 300);
@@ -2234,7 +2288,7 @@ const game_hunter = HtmlService.createHtmlOutput(
         
 const styleHtml = {
   renderFile: HtmlService.createHtmlOutput(
-    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent()}`,
+    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
   ),
   surveyPlayer: HtmlService.createHtmlOutput(
     `${body_survey_player.getContent()}`,
