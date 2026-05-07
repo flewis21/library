@@ -78,7 +78,7 @@ function needPastTime(searchString) {
     var inVVals = Object.values(val);
     inVVals.forEach((inV) => {
       // console.log("I'm holding the value of vidVals", inV)
-      let truInv = isTruthy(inV);
+      let truInv = Script.prototype.isTruthy(inV);
       if (truInv) {
         vidData.push(inV);
       } else {
@@ -263,7 +263,7 @@ function needPastTime(searchString) {
           let inVVals = Object.values(val);
           inVVals.forEach((inV) => {
             // console.log("I'm holding the value of vidVals", inV)
-            let truInv = isTruthy(inV);
+            let truInv = Script.prototype.isTruthy(inV);
             if (truInv) {
               vidData.push(inV);
             } else {
@@ -293,7 +293,7 @@ function needPastTime(searchString) {
         let matchKeys = Object.keys(vidObj);
         matchKeys.forEach((match) => {
           let vidMatch = vidObj[match];
-          let truMatch = isTruthy(vidMatch);
+          let truMatch = Script.prototype.isTruthy(vidMatch);
           if (truMatch && typeof vidMatch !== "number") {
             let searchMatch = vidMatch.indexOf(searchString) > -1;
             let matchSearch = searchString.indexOf(vidMatch) > -1;

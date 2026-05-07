@@ -783,7 +783,7 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = isTruthy(isObjValUrl);
+    let rawUrlResult = Script.prototype.isTruthy(isObjValUrl);
     executed++;
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
@@ -812,7 +812,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+      } else if (typeof funcDos !== "object" && Script.prototype.isTruthy(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON

@@ -1700,7 +1700,7 @@ function functionHandle(e) {
   // executed++
   //   }
   // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
-  //   let rawUrlResult = isTruthy(isObjValUrl);
+  //   let rawUrlResult = Script.prototype.isTruthy(isObjValUrl);
   // executed++
   //   if (!rawUrlResult) {
   //     let parsedFuncArgs = [];
@@ -1721,7 +1721,7 @@ function functionHandle(e) {
   //         }
   //       }
   //     }
-  //     else if (typeof funcDos !== "object" && isTruthy(funcDos)) {
+  //     else if (typeof funcDos !== "object" && Script.prototype.isTruthy(funcDos)) {
   //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
   //     }
   //     else {

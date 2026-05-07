@@ -1184,7 +1184,7 @@ var fileFold = function(folderX, fileX, time) {
   var elapsedTime = functionRegistry.elapsedTimeInSeconds;
   console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];
-  var folderXIsValid = isTruthy(folderX);
+  var folderXIsValid = Script.prototype.isTruthy(folderX);
   console.log("folderXIsValid = " + folderXIsValid, executed++);
   if (folderXIsValid) {
     if (!folderXIsValid) {

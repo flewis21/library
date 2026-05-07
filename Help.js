@@ -212,13 +212,13 @@ function mis(text, maxRetries = 3) {
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
     executed++;
-    let truSup = isTruthy(supFunc.func);
+    let truSup = Script.prototype.isTruthy(supFunc.func);
     executed++;
     if (truSup) {
       Logger.log("function - " + supFunc.func);
     }
     while (!supFunc.func) {
-      truSup = isTruthy(supFunc.func);
+      truSup = Script.prototype.isTruthy(supFunc.func);
       executed++;
       if (truSup) {
         Logger.log("function - " + supFunc.func);
@@ -1711,9 +1711,9 @@ function misSt(func, someArgs) {
 
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
-  var trueFunc = isTruthy(func);
+  var trueFunc = Script.prototype.isTruthy(func);
   console.log("trueFunc = " + trueFunc, executed++);
-  var trueSomeArgs = isTruthy(someArgs);
+  var trueSomeArgs = Script.prototype.isTruthy(someArgs);
   console.log("trueSomeArgs = " + trueSomeArgs, executed++);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
@@ -1735,7 +1735,7 @@ function misSt(func, someArgs) {
     //   .toString()
     //   .split(",");
     var arrUno = Array.isArray(func);
-    var arrDos = isTruthy(someArgs);
+    var arrDos = Script.prototype.isTruthy(someArgs);
     console.log("arrDos = " + arrDos, executed++);
     if (arrUno && arrDos) {
       var keys = Object.values(func).toString().split(",").concat(someArgs);
@@ -1757,7 +1757,7 @@ function misSt(func, someArgs) {
     }
 
     keys.forEach((pro) => {
-      // let proFact = isTruthy(pro)
+      // let proFact = Script.prototype.isTruthy(pro)
       let keysArrArr;
       if (typeof pro !== "string" && pro !== null) {
         let proValue = Object.keys(pro);
@@ -1815,7 +1815,7 @@ function misSt(func, someArgs) {
           } 
           else {
             // keyProParams = crmT(subParam);
-            realItem = isTruthy(subParam);
+            realItem = Script.prototype.isTruthy(subParam);
             console.log("realItem = " + realItem, executed++);
           }
           // let realItem;
@@ -1864,7 +1864,7 @@ function misSt(func, someArgs) {
         // }
       } 
       else {
-        realItem = isTruthy(pro);
+        realItem = Script.prototype.isTruthy(pro);
         console.log("realItem = " + realItem, executed++);
         if (realItem) {
           for (var key in keyPro) {
@@ -2753,8 +2753,8 @@ function resolveParams(func, someArgs) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  var trueFunc = isTruthy(func);
-  var trueSomeArgs = isTruthy(someArgs);
+  var trueFunc = Script.prototype.isTruthy(func);
+  var trueSomeArgs = Script.prototype.isTruthy(someArgs);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : functionRegistry.paramsList;
@@ -2764,7 +2764,7 @@ function resolveParams(func, someArgs) {
     var argsX = [];
     var content = [];
     var arrUno = Array.isArray(func);
-    var arrDos = isTruthy(someArgs);
+    var arrDos = Script.prototype.isTruthy(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -2778,12 +2778,12 @@ function resolveParams(func, someArgs) {
       let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = isTruthy(Array.isArray(pro));
+      let keysArrArr = Script.prototype.isTruthy(Array.isArray(pro));
       if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
-          realItem = isTruthy(subParam);
+          realItem = Script.prototype.isTruthy(subParam);
           if (realItem) {
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
@@ -2810,7 +2810,7 @@ function resolveParams(func, someArgs) {
           content.push(paramLimit);
         }
       } else {
-        realItem = isTruthy(pro);
+        realItem = Script.prototype.isTruthy(pro);
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
@@ -2867,14 +2867,14 @@ function resolveParams(func, someArgs) {
           let realItem;
           declaredParams.forEach((declaredParam, declaredParamIndex) => {
             // content.forEach((item) => {
-            let declaredParamArrArr = isTruthy(Array.isArray(declaredParam));
+            let declaredParamArrArr = Script.prototype.isTruthy(Array.isArray(declaredParam));
             if (declaredParamArrArr) {
               let paramLimit = 0;
               declaredParam.forEach((subParam, subParamIndex) => {
                 //item.forEach((subItem) => {
                 contentLimit.forEach((item, currentDeclaredIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  realItem = isTruthy(subItem);
+                  realItem = Script.prototype.isTruthy(subItem);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2894,10 +2894,10 @@ function resolveParams(func, someArgs) {
               if (Array.isArray(contentLimit)) {
                 contentLimit.forEach((item, contentLimitIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  let contentLimitArrArr = isTruthy(Array.isArray(item));
+                  let contentLimitArrArr = Script.prototype.isTruthy(Array.isArray(item));
                   if (contentLimitArrArr) {
                     item.forEach((subItem, mapItemIndex) => {
-                      realItem = isTruthy(subItem);
+                      realItem = Script.prototype.isTruthy(subItem);
                       if (realItem) {
                         // if (subItem === declaredParam) {
                         // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2915,7 +2915,7 @@ function resolveParams(func, someArgs) {
                       }
                     });
                   } else {
-                    realItem = isTruthy(item);
+                    realItem = Script.prototype.isTruthy(item);
                     if (realItem) {
                       // if (subItem === declaredParam) {
                       // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2934,10 +2934,10 @@ function resolveParams(func, someArgs) {
                   }
                 });
               } else {
-                let contentArrArr = isTruthy(Array.isArray(contentLimit));
+                let contentArrArr = Script.prototype.isTruthy(Array.isArray(contentLimit));
                 if (contentArrArr) {
                 } else {
-                  realItem = isTruthy(contentLimit);
+                  realItem = Script.prototype.isTruthy(contentLimit);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3892,7 +3892,7 @@ function vidPlaylist(tunPlay) {
       // let matchKeys = Object.keys(vidObj);
       // matchKeys.forEach((match) =>{
       //   let vidMatch = vidObj[match];
-      //     let truMatch = isTruthy(vidMatch);
+      //     let truMatch = Script.prototype.isTruthy(vidMatch);
       //     if (truMatch) {
       //       let searchMatch = vidMatch.indexOf(searchString) > -1;
       //       let matchSearch = searchString.indexOf(vidMatch) > -1;

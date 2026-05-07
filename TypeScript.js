@@ -1,40 +1,38 @@
-var isTypeScript = function (typePassedIn) {
-  var mapTypes = class Home {};
+class Script{};
+Script.prototype.isTypeScript = function (typePassedIn) {
+  var mapTypes = {};
   for (var key in typePassedIn) {
     mapTypes[key] = typePassedIn[key];
   }
-  console.log(new mapTypes());
   return mapTypes;
 };
 
-function isValidKeys(v) {
+Script.prototype.isValidKeys = function(v) {
   var isExcludeValue = isOmit(v, "1");
   isExcludeValue = isOmit(isExcludeValue, "2");
   isExcludeValue = isOmit(isExcludeValue, "3");
   var isValueOfTypePassedIn = isValidDoubleObject(isExcludeValue);
   if (isValueOfTypePassedIn) {
-    var isInferredTruthy = isTruthy(isValueOfTypePassedIn);
+    var isInferredTruthy = Script.prototype.isTruthy(isValueOfTypePassedIn);
     if (isInferredTruthy) {
       return isValueOfTypePassedIn;
     }
   }
 }
 
-function isValidDoubleObject(t) {
+Script.prototype.isValidDoubleObject = function (t) {
   // var validKeys = isMapped(t);
   if (t) {
     var validList = Object.values(t);
     class Valid{
-      constructor(object) {
-        this.object = object
+      constructor() {
+        this.validObj1 = validList[0];
+        this.validObj2 = validList[1];
       }
     }
-    if (validList.length === 2) {
-      var valid1 = new Valid(validList[0]);
-      var valid2 = new Valid(validList[1]);
-      if (typeof valid1 === typeof valid2) {
-        return new Valid(t)
-      }
+    let myValiObj = new Valid();
+    if (typeof myValiObj.validObj1 === typeof myValiObj.validObj2) {
+      return nmyValiObj
     }
     else {
       return t
@@ -42,7 +40,7 @@ function isValidDoubleObject(t) {
   }
 };
 
-var isMapped = function (t, v) {
+Script.prototype.isMapped = function (t, v) {
   var mapKeys = class Home {
     constructor(t, v) {
       this.t = t;
@@ -55,7 +53,7 @@ var isMapped = function (t, v) {
   return mapKeys;
 };
 
-var isTruthy = function (t) {
+Script.prototype.isTruthy = function (t) {
   if (
     typeof t === null ||
     t === null ||
@@ -73,7 +71,7 @@ var isTruthy = function (t) {
   }
 };
 
-var isKeyOf = function (t) {
+Script.prototype.isKeyOf = function (t) {
   var keyList = class Home {}; //Object.keys(t);
   for (var key in t) {
     keyList[key] = key;
@@ -81,17 +79,17 @@ var isKeyOf = function (t) {
   return keyList;
 };
 
-var isPropertyOf = function (t) {
+Script.prototype.isPropertyOf = function (t) {
   var propertyList = isMapped(t);
   return propertyList;
 };
 
-var isOmit = function (t, k) {
+Script.prototype.isOmit = function (t, k) {
   var valuesList = isPick(t, k);
   return valuesList;
 };
 
-var isExclude = function (t, k) {
+Script.prototype.isExclude = function (t, k) {
   var keyList = Object.keys(t);
   var excludeList = [];
   Array.isArray(keyList)
@@ -108,7 +106,7 @@ var isExclude = function (t, k) {
   return excludeList;
 };
 
-var isPick = function (t, k) {
+Script.prototype.isPick = function (t, k) {
   var excludeList = isExclude(t, k);
   var valuesList = {};
   for (var key in t) {
@@ -125,65 +123,73 @@ var geneicType = function (e) {
     b: 123,
     c: ["string"],
   };
-  let script = new isValidDoubleObject({parameter: {q:testlt().name}});
-  // console.log(script);
-  // console.log(Object.getOwnPropertyNames(script));
-  // console.log(Object.getOwnPropertyNames(script.prototype));
-  // GameManager.setGameStart("Warrior");
-  // let mmoRpgPlay = GameManager.setGameStart.instances[0];
-  // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
-  // GameManager.setGameStart.instances.forEach((instance) => {
-  //   console.log(`${JSON.stringify(instance)}`)
-  // })
-  // var numVarRnd = Math.floor(Math.random() * 25);
-  // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
-  // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
-  // let randomWord = rndWord();
-  // let tyFile = wsSIPOC(randonWord);
-  // console.log(tyFile);
-  // let arrDRnd = appSort(randNum(randomWord));
-  // let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
-  // let result = functionRegistry.paramsList.find((rndS) => {
-  //   return rndS.name === searchResult;
-  // });
-  // let fileIndex = handleRequest({parameter: {action:"getData"}});
-  // functionRegistry.domainTree();
-  // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
-  // let fileParams = functionRegistry.paramsList[fileIndex];
-  // exampleObjectType[randonWord] = [];
-  // let bex = isOmit(exampleObjectType, "b");
-  // bex = isOmit(bex, "c");
-  // let scriptUrl = isMapped(bex, [...fileParams?.parameters]);
-  // let crfRes = createRandomFunction();
-  // var functionObjectType = handleGetData();
-  //misSt([Object.keys(crfRes),Object.values(crfRes)]);
-  // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
-  // isExcludeValue = isOmit(isExcludeValue, "2");
-  // isExcludeValue = isOmit(isExcludeValue, "3");
-  // var teeValid1 = isMapped({ 0: null }, [
-  //   "isValidUrl",
-  //   "http://www.google.com",
-  // ])[0];
-  // var forTruth = resolveParams(teeValid1);
-  // var tee = isPropertyOf(teeValid1)
-  // var kee = isMapped(tee)
-  // var noB = isValidKeys(forTruth);
-  console.log(typeof initForm);
-  let handles
-  if (e) {
-    handles = functionHandle(e);
+
+  let testPro = new Script();
+  console.log(testPro.isTypeScript(exampleObjectType))
+  let script = Script.prototype.isValidDoubleObject({parameter: {q:testlt().name}});
+  try {
+    let proScript = Object.getOwnPropertyNames(script.prototype);
   }
-  else {
-    handles = functionHandle(script);
-  }
-  let funcU = handles["exec"];
-  let funcD = handles["args"];
-  let base = createFunctionResult(funcU, funcD);
-  if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-    let dataOR = globalHandleGetData(base);
-    return dataOR
-  }
-  else {
-    return {payload: base}
+  catch (proError) {
+    console.log(script);
+    console.log(Object.getOwnPropertyNames(script));
+    console.log(Object.getPrototypeOf(script));
+    // GameManager.setGameStart("Warrior");
+    // let mmoRpgPlay = GameManager.setGameStart.instances[0];
+    // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
+    // GameManager.setGameStart.instances.forEach((instance) => {
+    //   console.log(`${JSON.stringify(instance)}`)
+    // })
+    // var numVarRnd = Math.floor(Math.random() * 25);
+    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"isMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","Script.prototype.isTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
+    // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
+    // let randomWord = rndWord();
+    // let tyFile = wsSIPOC(randonWord);
+    // console.log(tyFile);
+    // let arrDRnd = appSort(randNum(randomWord));
+    // let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
+    // let result = functionRegistry.paramsList.find((rndS) => {
+    //   return rndS.name === searchResult;
+    // });
+    // let fileIndex = handleRequest({parameter: {action:"getData"}});
+    // functionRegistry.domainTree();
+    // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
+    // let fileParams = functionRegistry.paramsList[fileIndex];
+    // exampleObjectType[randonWord] = [];
+    // let bex = isOmit(exampleObjectType, "b");
+    // bex = isOmit(bex, "c");
+    // let scriptUrl = isMapped(bex, [...fileParams?.parameters]);
+    // let crfRes = createRandomFunction();
+    // var functionObjectType = handleGetData();
+    //misSt([Object.keys(crfRes),Object.values(crfRes)]);
+    // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
+    // isExcludeValue = isOmit(isExcludeValue, "2");
+    // isExcludeValue = isOmit(isExcludeValue, "3");
+    // var teeValid1 = isMapped({ 0: null }, [
+    //   "isValidUrl",
+    //   "http://www.google.com",
+    // ])[0];
+    // var forTruth = resolveParams(teeValid1);
+    // var tee = isPropertyOf(teeValid1)
+    // var kee = isMapped(tee)
+    // var noB = isValidKeys(forTruth);
+    console.log(typeof initForm);
+    let handles
+    if (e) {
+      handles = functionHandle(e);
+    }
+    else {
+      handles = functionHandle(script);
+    }
+    let funcU = handles["exec"];
+    let funcD = handles["args"];
+    let base = createFunctionResult(funcU, funcD);
+    if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+      let dataOR = globalHandleGetData(base);
+      return dataOR
+    }
+    else {
+      return {payload: base}
+    }
   }
 };

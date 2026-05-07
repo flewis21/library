@@ -72,19 +72,19 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = isTruthy(funcUno);
-  let truDos = isTruthy(funcDos);
+  let truUno = Script.prototype.isTruthy(funcUno);
+  let truDos = Script.prototype.isTruthy(funcDos);
   console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
 
   try {
     let objVal = funcDos?.toString();
-    let truVal = isTruthy(objVal);
+    let truVal = Script.prototype.isTruthy(objVal);
     let rawUrlResult;
     if (truVal && objVal?.indexOf(",") === -1) {
       let isObjValUrl = isValidUrl(objVal);
-      rawUrlResult = isTruthy(isObjValUrl.hostname);
+      rawUrlResult = Script.prototype.isTruthy(isObjValUrl.hostname);
       console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
     // executed++

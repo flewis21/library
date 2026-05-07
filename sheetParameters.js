@@ -1203,7 +1203,7 @@ function seoPictTime(searchString, time) {
     var inValsKeys = Object.keys(img);
     var inVVals = Object.values(img);
     inVVals.forEach((inV) => {
-      let truInv = isTruthy(inV);
+      let truInv = Script.prototype.isTruthy(inV);
       console.log("truInv = " + truInv, executed++);
       if (truInv) {
         imgData.push(inV);
@@ -1328,7 +1328,7 @@ function seoPictTime(searchString, time) {
         let inValsKeys = Object.keys(img);
         let inVVals = Object.values(img);
         inVVals.forEach((inV) => {
-          let truInv = isTruthy(inV);
+          let truInv = Script.prototype.isTruthy(inV);
           console.log("truInv = " + truInv, executed++);
           if (truInv) {
             imgData.push(inV);
@@ -1357,7 +1357,7 @@ function seoPictTime(searchString, time) {
       let matchKeys = Object.keys(imgObj);
       matchKeys.forEach((match) => {
         let imgMatch = imgObj[match];
-        let truMatch = isTruthy(imgMatch);
+        let truMatch = Script.prototype.isTruthy(imgMatch);
         console.log("truMatch = " + truMatch, executed++);
         if (truMatch) {
           let searchMatch = imgMatch.indexOf(searchString) > -1;
@@ -1393,7 +1393,7 @@ function seoPictures(searchString, time) {
      let mainList= functionRegistry.arrDomainVals;
      console.log("mainList = " + mainList.slice(mainList.length - 1), executed++);
      for (const key in mainList) {
-      let truD = isTruthy(mainList[key]);
+      let truD = Script.prototype.isTruthy(mainList[key]);
      console.log("truD = " + truD, executed++);
       if (key === "Domain" && truD) {
         domainEngine.push(mainList[key]);
@@ -1463,7 +1463,7 @@ var seoTwitter = function (folderX, searchString, time) {
   //   }
   // }
   // var idArray = [seoFactor(data || minFold, time).factorData].toString().split("\n");
-  // let seoTruth = isTruthy(idArray);
+  // let seoTruth = Script.prototype.isTruthy(idArray);
   // if (!seoTruth) {
   //   idArray = minFold
   // }
