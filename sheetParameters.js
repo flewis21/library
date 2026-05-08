@@ -481,10 +481,10 @@ function jsonToSpreadsheet(data, time) {
   data
     ? data
     : (data = JSON.parse(
-        convertToObjects([[testlt()]], ["name"], functionRegistry.time),
+        convertToObjects([[testlt()]], ["name"], autoP.functionRegistry.time),
       )[0]);
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -501,7 +501,7 @@ function jsonToSpreadsheet(data, time) {
   const keys = Object.keys(data);
   keys.forEach(function (key) {
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nkey is !" +
@@ -518,7 +518,7 @@ function jsonToSpreadsheet(data, time) {
     sheetName,
     colArray,
     arrayData[0],
-    functionRegistry.time,
+    autoP.functionRegistry.time,
   ).myFileX;
   return playSheet;
 }
@@ -544,13 +544,13 @@ function jsonXCalc(searchString, time) {
     : (searchString = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       ));
   if (typeof searchString === "object") {
     searchString = searchString.parameter["func"];
   }
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ndata is !" +
@@ -566,7 +566,7 @@ function jsonXCalc(searchString, time) {
     sheetsUrls([searchString].join("").toLowerCase()),
   ).getUrl();
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -583,7 +583,7 @@ function jsonXCalc(searchString, time) {
       convertToObjects(
         [[[contentData], [arguments.callee.caller.name], [searchString]]],
         ["content", "function", "title"],
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       ),
     );
     var playSheet = jsonToSpreadsheet(formData);
@@ -612,13 +612,13 @@ function jsonXSpreadsheet(rndTitle, time) {
     : (rndTitle = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       ));
   if (typeof rndTitle === "object") {
     rndTitle = rndTitle.parameter["func"];
   }
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nrndTitle is !" +
@@ -633,7 +633,7 @@ function jsonXSpreadsheet(rndTitle, time) {
   var urlTitle = "<?= getScriptUrl() ?>?func=dtlsResearchForm&args=";
   var urlFunction = "<?= getScriptUrl() ?>?func=dtlsBridgeForm&args=";
   var urlContent = "http://www.youtube.com/watch?v=";
-  const uniqueCo = jsonXCalc(rndTitle, functionRegistry.time);
+  const uniqueCo = jsonXCalc(rndTitle, autoP.functionRegistry.time);
   const uniqueCoArray = covArrays(uniqueCo);
   const matches = [];
   const alTheCo = uniqueCoArray.filter((ac) => {
@@ -719,7 +719,7 @@ function lookupDomain(searchTerm) {
 
 function mapValues(data, index) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\ndata is !" +
@@ -798,8 +798,8 @@ function pastSeo(namedVar, time) {
     fileManager([namedVar].join("").toUpperCase(), "Forms", time);
     seoPlaylist.map((d) => {
       while (d) {
-        var elapsedTime = functionRegistry.time;
-        var timeToExecute = functionRegistry.timeLeftToExecute;
+        var elapsedTime = autoP.functionRegistry.time;
+        var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
         form.addPageBreakItem().setTitle([namedVar].join(""));
         form
           .addSectionHeaderItem()
@@ -923,8 +923,8 @@ function pictBing(searchString, time) {
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = functionRegistry.time;
-      var timeToExecute = functionRegistry.timeLeftToExecute;
+      var elaspeTime = autoP.functionRegistry.time;
+      var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
       var e = 0;
       var q = randomKey;
       for (var e, q; e < q; i++) {
@@ -1047,13 +1047,13 @@ function rndString(inputArray, time) {
     : (inputArray = objectOfS(
         ["parameter"],
         [[["func", testlt()]]],
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       ));
   if (typeof searchString === "object") {
     searchString = searchString.parameter["func"];
   }
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1066,26 +1066,26 @@ function rndString(inputArray, time) {
       !time,
   );
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
   }
   if (typeof inputArray === "undefined") {
     var inputArray = ["01234567"].join("").split(",");
   }
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\ninputArray: " +
       inputArray +
       "\nTime: " +
-      formatTime(functionRegistry.time),
+      formatTime(autoP.functionRegistry.time),
   );
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\nCalling testData with inputArray: " +
       inputArray,
   );
   var testString = testData(inputArray, time).testArray;
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\nRecieved testString: " +
       testString +
       " from testData with inputArray: " +
@@ -1099,7 +1099,7 @@ function rndString(inputArray, time) {
 var seoBites = function (searchString, idArray, time) {
   let executed = 0;
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   let uniqueSeo = [];
@@ -1119,7 +1119,7 @@ var seoBites = function (searchString, idArray, time) {
   }
   let searchUI = [searchString].join("").split(" ");
   searchUI.map((l) => {
-    var elaspeTime = functionRegistry.time;
+    var elaspeTime = autoP.functionRegistry.time;
     console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     searchWords.push(l);
   });
@@ -1142,7 +1142,7 @@ var seoBites = function (searchString, idArray, time) {
 var seoFactor = function (data, time) {
   let executed = 0;
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   var idArray = [];
@@ -1150,7 +1150,7 @@ var seoFactor = function (data, time) {
     idArray.push(data);
   } else {
     data?.map((seoData) => {
-      var elaspeTime = functionRegistry.time;
+      var elaspeTime = autoP.functionRegistry.time;
       console.log("elaspeTime + " + formatTime(elaspeTime), executed++);
       try {
         var strDiv = seoData.split("<div>");
@@ -1194,8 +1194,8 @@ var seoIndex = function (searchWord) {
 
 function seoPictTime(searchString, time) {
   let executed = 0;
-  functionRegistry.imgTree();
-  var imgSheetVals = functionRegistry.getImageList();
+  autoP.functionRegistry.imgTree();
+  var imgSheetVals = autoP.functionRegistry.getImageList();
   console.log("imgSheetVals = " + imgSheetVals, executed++);
   var imgData = [];
   var imgVals = Object.values(imgSheetVals);
@@ -1216,8 +1216,8 @@ function seoPictTime(searchString, time) {
     ? searchString
     : (searchString = objectOfS(
         ["parameter"],
-        [[["func", functionRegistry.fileList[Math.floor(Math.random() * functionRegistry.fileList.length)]]]],
-        functionRegistry.time,
+        [[["func", autoP.functionRegistry.fileList[Math.floor(Math.random() * autoP.functionRegistry.fileList.length)]]]],
+        autoP.functionRegistry.time,
       ));
   console.log("searchString = " + searchString, executed++);
   if (typeof searchString === "object") {
@@ -1230,7 +1230,7 @@ function seoPictTime(searchString, time) {
     }
   }
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
@@ -1264,9 +1264,9 @@ function seoPictTime(searchString, time) {
   console.log("uniqueVid = " + uniqueVid, executed++);
   var sorFndOrd = [];
   uniqueVid.results.forEach((vidObject) => {
-    var elaspeTime = functionRegistry.time;
+    var elaspeTime = autoP.functionRegistry.time;
     console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
-    var timeToExecute = functionRegistry.timeLeftToExecute;
+    var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
     console.log("timeToExecute = " + formatTime(timeToExecute), executed++);
     var res = [vidObject].join("").split(" ");
     let wHttps = res[0].indexOf("https");
@@ -1292,9 +1292,9 @@ function seoPictTime(searchString, time) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = [];
     fndOrd.forEach((test) => {
-      var elaspeTime = functionRegistry.time;
+      var elaspeTime = autoP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
-      var timeToExecute = functionRegistry.timeLeftToExecute;
+      var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
       console.log("timeToExecute = " + formatTime(timeToExecute), executed++);
       for (var i = 0, l = randomKey; i < l; i++) {
         if (test.indexOf("tse4.mm.bing.net") > -1) {
@@ -1318,8 +1318,8 @@ function seoPictTime(searchString, time) {
       }
     });
     if (rndRes.length > 0) {
-      // functionRegistry.imgTree();
-      // imgSheetVals = functionRegistry.getImageList();
+      // autoP.functionRegistry.imgTree();
+      // imgSheetVals = autoP.functionRegistry.getImageList();
       // console.log("imgSheetVals = " + imgSheetVals, executed++);
       imgData = [];
       // var vidKeys = Object.keys(vidSheetVals);
@@ -1388,9 +1388,9 @@ function seoPictures(searchString, time) {
   data = getUrlResponse(rndSearch, options).app;
   console.log("data = " + data, executed++);
   if (!data) {
-    functionRegistry.getDomainList();
+    autoP.functionRegistry.getDomainList();
     let domainEngine = [];
-     let mainList= functionRegistry.arrDomainVals;
+     let mainList= autoP.functionRegistry.arrDomainVals;
      console.log("mainList = " + mainList.slice(mainList.length - 1), executed++);
      for (const key in mainList) {
       let truD = Script.prototype.isTruthy(mainList[key]);
@@ -1418,7 +1418,7 @@ function seoPictures(searchString, time) {
 var seoTwitter = function (folderX, searchString, time) {
   let executed = 0;
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   var foldCounter = 0;
@@ -1471,7 +1471,7 @@ var seoTwitter = function (folderX, searchString, time) {
 
 function sheetsMaker(fileName, folderX, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileName is !" +
@@ -1503,7 +1503,7 @@ function sheetsMaker(fileName, folderX, time) {
     });
     var newFileName = fileName ? fileName : "base";
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nnewFileName is !" +
@@ -1526,7 +1526,7 @@ function sheetsMaker(fileName, folderX, time) {
     // }
     var newFile = SpreadsheetApp.create(newFileName.toString());
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nnewFile is !" +
@@ -1541,7 +1541,7 @@ function sheetsMaker(fileName, folderX, time) {
 
 // var sheetsMaker = function (fileName, folderX, time) {
 //   console.log(
-//     functionRegistry.time +
+//     autoP.functionRegistry.time +
 //       "\n" +
 //       arguments.callee.name +
 //       "\nfileName is !" +
@@ -1587,7 +1587,7 @@ function sheetsMaker(fileName, folderX, time) {
 
 //     var newFile = SpreadsheetApp.create(newFileName);
 //     console.log(
-//       functionRegistry.time +
+//       autoP.functionRegistry.time +
 //         "\n" +
 //         arguments.callee.name +
 //         "\nnewFile is !" +
@@ -1606,7 +1606,7 @@ function sheetSeo(namedVar, time) {
   var pageArray = [];
   var seoArray = seoSheet(namedVar, time).keyWords;
   seoArray.map((tv) => {
-    var elaspeTime = new Date() - functionRegistry.time;
+    var elaspeTime = new Date() - autoP.functionRegistry.time;
     console.log(
       "that function: " +
         arguments.callee.caller.name +
@@ -1625,7 +1625,7 @@ function sheetSeo(namedVar, time) {
 
 function sheetsUrls(fileX, folderX, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -1642,7 +1642,7 @@ function sheetsUrls(fileX, folderX, time) {
       time,
   );
   var runRndMat = function () {
-    var rndName = functionRegistry.fileList;
+    var rndName = autoP.functionRegistry.fileList;
     let nameRnd =
       rndName[Math.floor(Math.random() * Math.floor(rndName.length))];
     return nameRnd;
@@ -1650,7 +1650,7 @@ function sheetsUrls(fileX, folderX, time) {
   if (typeof fileX === "undefined") {
     var fileX = runRndMat();
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nfileX is !" +
@@ -1716,7 +1716,7 @@ function skyNeed(namedVar, time) {
     0,
     3,
     [wanVar].sort((a, b) => a - b),
-    functionRegistry.time,
+    autoP.functionRegistry.time,
   );
   var rndSeo = needUtility(rndVar, time)[0]?.rndTitle;
   return rndSeo;
@@ -1730,7 +1730,7 @@ var spreadSheet = function () {
 
 // var spreadSheetCreate = function (fileX, sheetName, rowHeaders, data, time) {
 // console.log(
-//   functionRegistry.time +
+//   autoP.functionRegistry.time +
 //     "\n" +
 //     arguments.callee.name +
 //     "\nfileX is !" +
@@ -1834,7 +1834,7 @@ var spreadSheet = function () {
 //   sicSliceArray,
 // );
 // console.log(
-//   functionRegistry.time +
+//   autoP.functionRegistry.time +
 //     "\nCalled function: " +
 //     arguments.callee.name +
 //     "\nCaller function: " +
@@ -1859,7 +1859,7 @@ var spreadSheet = function () {
 
 function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -1966,7 +1966,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       // );
       ws.getRange(2, 1, 1, headers.length)?.setValues([sicSliceArray]);
       console.log(
-        formatTime(functionRegistry.time) +
+        formatTime(autoP.functionRegistry.time) +
           "\nCalled function: " +
           arguments.callee.name +
           "\nCaller function: " +
@@ -2016,7 +2016,7 @@ var ssCell = function (column, rowOffSet, colOffSet) {
 
 function ssData(playSheet, sheetName, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nplaySheet is !" +
@@ -2036,7 +2036,7 @@ function ssData(playSheet, sheetName, time) {
   if (sheetWS) {
     var sheetD = sliceValues(sheetWS.getDataRange().getValues(), 1);
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\n" +
         arguments.callee.name +
         "\nsheetD is !" +
@@ -2227,7 +2227,7 @@ function tutorial(text) {
 
 function updateSheet(url, sheetName, data, numCols, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -2279,7 +2279,7 @@ function urlSpreadSheet(url) {
 
 function wanUtil(namedVar, time) {
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
   }
   console.log("namedVar: " + namedVar + "\nTime: " + time);
   // console.log("Calling rndString with namedVar: " + namedVar)

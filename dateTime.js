@@ -1,6 +1,6 @@
 function dateTime(date) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ndate is !" +

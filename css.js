@@ -1039,6 +1039,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               // console.log(suggestion)
               const div = document.createElement('div');
               div.textContent = suggestion.description;
+              div.classList.add("card-panel", "receipt", "btn-large");
               div.addEventListener('click', () => {
                 input.value = suggestion.description;
                 let confirmation = window.confirm(

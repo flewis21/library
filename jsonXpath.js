@@ -1,6 +1,6 @@
 var csvDataSource = function(url, params) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -43,7 +43,7 @@ var csvDataSource = function(url, params) {
 
 var dataRowIndex = function (data, row, index) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -62,7 +62,7 @@ var dataRowIndex = function (data, row, index) {
 
 var dtlsCapital = function (url) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -89,7 +89,7 @@ var dtlsCapital = function (url) {
 
 var forArray = function (arrayData) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -108,7 +108,7 @@ var forArray = function (arrayData) {
 
 var forHeaders = function (objectData) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -125,7 +125,7 @@ var forHeaders = function (objectData) {
 
 var forObjects = function (data, delimiter) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -145,7 +145,7 @@ var forObjects = function (data, delimiter) {
 
 function getSize(url, params) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -168,7 +168,7 @@ function getSize(url, params) {
 
 function jsonDataX(data) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -184,7 +184,7 @@ function jsonDataX(data) {
 }
 
 async function jsonFormatter() {
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   var res = UrlFetchApp.fetch(
     "https://ordspub.epa.gov/ords/pesticides/ppls/66551-1",
   );
@@ -221,7 +221,7 @@ async function jsonFormatter() {
 
 function jsonINIT(json) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -271,7 +271,7 @@ function jsonINIT(json) {
 
 function jsonXpath(jsonXpathDataRange) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -303,7 +303,7 @@ function jsonXpath(jsonXpathDataRange) {
 
 var needCapital = function (searchString) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -328,7 +328,7 @@ var needCapital = function (searchString) {
 
 var objectHeaders = function (object, index) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -344,7 +344,7 @@ var objectHeaders = function (object, index) {
 
 var rowsToReturn = function (data, index) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -366,7 +366,7 @@ var rowsToReturn = function (data, index) {
 
 var tabData = function (url, xpath, headers) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -383,7 +383,7 @@ var tabData = function (url, xpath, headers) {
 
 var tabField = function (url, xpath, index, time) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -402,7 +402,7 @@ var tabField = function (url, xpath, index, time) {
 
 var tabIndex = function (url, xpath, index, headers) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -419,7 +419,7 @@ var tabIndex = function (url, xpath, index, headers) {
 
 var tempArrayNoX = function (url, indexParsed, index) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -437,7 +437,7 @@ var tempArrayNoX = function (url, indexParsed, index) {
 
 var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -463,7 +463,7 @@ var tempArrayX = function (url, indexParsed, xpath, delimiter, index) {
 
 var udsCache = function (content) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -492,7 +492,7 @@ var udsCache = function (content) {
 
 function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       urlDataSource.name +
       "\n!" +
@@ -501,7 +501,7 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
       !cokey,
   );
   if (typeof time === "undefined") {
-    time = functionRegistry.time;
+    time = autoP.functionRegistry.time;
   }
   if (typeof cokey === "undefined") {
     var rndStr = globalThis.uniqueItemArray();

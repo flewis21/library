@@ -1,7 +1,7 @@
 // The main function that generates your web app HTML
 // var crmGWI = function (fx) {
 //   console.log(
-//     functionRegistry.time +
+//     autoP.functionRegistry.time +
 //     "\n" +
 //     arguments.callee.name +
 //     "\n!" +
@@ -12,7 +12,7 @@
 
 //   // --- First contentApp call: For the main form HTML ---
 //   var indexContent = (function index() {
-//     console.log(functionRegistry.time + "\n" + arguments.callee.name);
+//     console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
 //     return contentApp(
 //       `
 //     <h1>General Work Invoice</h1>
@@ -468,7 +468,7 @@
 
 function crmGWI(fx) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -536,7 +536,7 @@ function crmGWI(fx) {
   </html>`,
     {
       index: (function index() {
-        console.log(functionRegistry.time + "\n" + arguments.callee.name);
+        console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
         return contentApp(
           `<!DOCTYPE html>
   <html>
@@ -1152,7 +1152,7 @@ function crmGWI(fx) {
 
 var workEd = function (ed) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1191,7 +1191,7 @@ var workEd = function (ed) {
     sheetName,
     sicSliceArray,
     numCols,
-    functionRegistry.time,
+    autoP.functionRegistry.time,
   ).myFileX;
 };
 
@@ -1211,7 +1211,7 @@ var workEd = function (ed) {
 //   convertToObjects(
 //     [[arguments.callee.name]],
 //     ["name"],
-//     functionRegistry.time,
+//     autoP.functionRegistry.time,
 //   ),
 // )[0];
 // console.log("Fake formData for quote acceptance:", formData);
@@ -1342,7 +1342,7 @@ var acceptQuote = function (formDataJson) {
         convertToObjects(
           [[formatDataJson || arguments.callee.name, "007", "Bugatti"]],
           ["name", "number", "car"],
-          functionRegistry.time,
+          autoP.functionRegistry.time,
         ),
       )[0];
       console.log("Fake formData for quote acceptance:", formData);
@@ -1374,7 +1374,7 @@ var acceptQuote = function (formDataJson) {
       sheetId,
       colArray,
       arrayData,
-      functionRegistry.time,
+      autoP.functionRegistry.time,
     );
     console.log(
       "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
@@ -1495,7 +1495,7 @@ var updateQuote = function (formDataJson) {
         convertToObjects(
           [[arguments.callee.name, "007", "McClaren"]],
           ["name", "number", "car"],
-          functionRegistry.time,
+          autoP.functionRegistry.time,
         ),
       )[0];
       // console.log("Fake formData for quote updatance:", formData);
@@ -1528,7 +1528,7 @@ var updateQuote = function (formDataJson) {
     //   sheetId,
     //   colArray,
     //   arrayData,
-    //   functionRegistry,time,
+    //   autoP.functionRegistry,time,
     // );
     // console.log(
     //   "SpreadsheetApp.openByUrl(rawSpreadSheet) ",

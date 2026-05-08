@@ -61,7 +61,7 @@ function iframeC() {
 
 function needPastTime(searchString) {
   // console.log(
-  //   functionRegistry.time +
+  //   autoP.functionRegistry.time +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -69,8 +69,8 @@ function needPastTime(searchString) {
   //     ", = " +
   //     !searchString,
   // );
-  functionRegistry.vidTree();
-  var vidSheetVals = functionRegistry.getVideoList();
+  autoP.functionRegistry.vidTree();
+  var vidSheetVals = autoP.functionRegistry.getVideoList();
   var vidData = [];
   var vidVals = Object.values(vidSheetVals);
   vidVals.forEach((val) => {
@@ -203,8 +203,8 @@ function needPastTime(searchString) {
       randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
       fndOrd.forEach((test) => {
         // console.log("I'm looping for each index", fndOrd.indexOf(test));
-        var elaspeTime = functionRegistry.time;
-        var timeToExecute = functionRegistry.timeLeftToExecute;
+        var elaspeTime = autoP.functionRegistry.time;
+        var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
         for (var i = 0, l = randomKey; i < l; i++) {
           // console.log("I'm counting loops until I reach", l)
           if (
@@ -253,8 +253,8 @@ function needPastTime(searchString) {
         // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       });
       if (rndRes.length > 0) {
-        functionRegistry.vidTree();
-        vidSheetVals = functionRegistry.getVideoList();
+        autoP.functionRegistry.vidTree();
+        vidSheetVals = autoP.functionRegistry.getVideoList();
         vidData = [];
         // var vidKeys = Object.keys(vidSheetVals);
         vidVals = Object.values(vidSheetVals);

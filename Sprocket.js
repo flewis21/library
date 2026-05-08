@@ -3,7 +3,7 @@ function dtlsPro(searchDTLS) {
   if (typeof searchDTLS === "undefined") {
     searchDTLS
       ? (cokey = searchDTLS)
-      : (cokey = functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
+      : (cokey = autoP.functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
   } else {
     cokey = searchDTLS;
   }
@@ -17,7 +17,7 @@ function dtlsPro(searchDTLS) {
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
   var isProduct = matchManager("Forms", [cokey].join("").toLowerCase());
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -31,7 +31,7 @@ function dtlsPro(searchDTLS) {
       return formUrl;
     }
   }
-  var time = functionRegistry.time;
+  var time = autoP.functionRegistry.time;
   var seoArray = seoPastTime([cokey].join(""), time);
   var uti = seoArray.playList;
   var coData = coUtility(cokey)[0];
@@ -67,7 +67,7 @@ function dtlsPro(searchDTLS) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = functionRegistry.timeLeftToExecute;
+              var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -126,7 +126,7 @@ function dtlsPro(searchDTLS) {
           while (piece) {
             if (piece) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = functionRegistry.timeLeftToExecute;
+              var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -195,7 +195,7 @@ function portBing(searchPort) {
     "http://www.bing.com/search?q=" +
     encodeURIComponent(cokey) +
     "+intitle:+-+AND+*&PC=U316&top=50&skip=0&FORM=CHROMN";
-  var seoArray = seoPastTime([cokey].join(""), functionRegistry.time);
+  var seoArray = seoPastTime([cokey].join(""), autoP.functionRegistry.time);
   var uti = seoArray.playList;
   var coData = coUtility(cokey)[0];
   if (coData) {
@@ -217,7 +217,7 @@ function portBing(searchPort) {
       var form = formMaker(
         [cokey].join("").toUpperCase(),
         "webForms",
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       );
       if (typeof form === "object") {
         form
@@ -233,8 +233,8 @@ function portBing(searchPort) {
         uti.map((piece) => {
           while (piece) {
             if (piece) {
-              var elaspeTime = new Date() - functionRegistry.time;
-              var timeToExecute = functionRegistry.timeLeftToExecute;
+              var elaspeTime = new Date() - autoP.functionRegistry.time;
+              var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -281,7 +281,7 @@ function portBing(searchPort) {
       var form = formMaker(
         [cokey].join("").toUpperCase(),
         "webForms",
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       );
       if (typeof form === "object") {
         form
@@ -293,8 +293,8 @@ function portBing(searchPort) {
         uti.map((piece) => {
           while (piece) {
             if (piece) {
-              var elaspeTime = new Date() - functionRegistry.time;
-              var timeToExecute = functionRegistry.timeLeftToExecute;
+              var elaspeTime = new Date() - autoP.functionRegistry.time;
+              var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
               form.addPageBreakItem().setTitle([cokey].join(""));
               form
                 .addSectionHeaderItem()
@@ -350,18 +350,18 @@ function dtlsBridge(func, time) {
           [
             [
               "func",
-              functionRegistry.fileList[
+              autoP.functionRegistry.fileList[
                 Math.floor(
-                  Math.random() * Math.floor(functionRegistry.fileList),
+                  Math.random() * Math.floor(autoP.functionRegistry.fileList),
                 )
               ],
             ],
           ],
         ],
-        functionRegistry.time,
+        autoP.functionRegistry.time,
       ).parameter["func"]);
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfunc is !" +
@@ -479,8 +479,8 @@ function dtlsBridge(func, time) {
       [jsFunc].map((piece) => {
         while (piece) {
           if (piece) {
-            var elaspeTime = new Date() - functionRegistry.time;
-            var timeToExecute = functionRegistry.timeLeftToExecute;
+            var elaspeTime = new Date() - autoP.functionRegistry.time;
+            var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
             form.addPageBreakItem().setTitle([formName].join(""));
             form.addSectionHeaderItem().setHelpText(JSON.stringify(piece));
             if (
@@ -517,7 +517,7 @@ function dtlsBridge(func, time) {
 
 function allInvestors(rndKey, time) {
   // console.log(
-  //   functionRegistry.time +
+  //   autoP.functionRegistry.time +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nrndKey is !" +
@@ -601,7 +601,7 @@ function allInvestors(rndKey, time) {
 
 function coUtility(rndClient) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nrndClient is !" +
@@ -617,7 +617,7 @@ function coUtility(rndClient) {
   if (typeof client !== "undefined") {
     var coName = allInvestors(client.toString().toLowerCase());
     console.log(
-      functionRegistry.time +
+      autoP.functionRegistry.time +
         "\ncoUtility: \nvar coName = allInvestors(" +
         client +
         ".toString().toLowerCase())",
@@ -625,7 +625,7 @@ function coUtility(rndClient) {
   } else {
     var coName = allInvestors();
     console.log(
-      functionRegistry.time + "\ncoUtility: \nvar coName = allInvestors()",
+      autoP.functionRegistry.time + "\ncoUtility: \nvar coName = allInvestors()",
     );
   }
   if (typeof coName["cik"] === "undefined") {
@@ -643,7 +643,7 @@ function coUtility(rndClient) {
 
 function dtlsMain(file) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfile is !" +
@@ -651,20 +651,20 @@ function dtlsMain(file) {
       ", = " +
       file,
   );
-  functionRegistry.gTree();
-  let mFold = functionRegistry.folderTree.sort((a, b) => {
+  autoP.functionRegistry.gTree();
+  let mFold = autoP.functionRegistry.folderTree.sort((a, b) => {
     let up = getZuluPriority(a);
     let down = getZuluPriority(b);
     return down - up
-  })[Math.floor(Math.random() * functionRegistry.folderTree.length)];
+  })[Math.floor(Math.random() * autoP.functionRegistry.folderTree.length)];
   let mFil = file || itemCalc().sort((a, b) => {
     let up = getZuluFreqPriority(a.Description);
     let down = getZuluFreqPriority(b.Description);
     return up - down
   })[Math.floor(Math.random() * 26)].Description;
-  let isProduct = matchManager(mFold, mFil, functionRegistry.time).forms[Math.floor(Math.random() * 26)];
+  let isProduct = matchManager(mFold, mFil, autoP.functionRegistry.time).forms[Math.floor(Math.random() * 26)];
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nisProduct is !" +
@@ -689,7 +689,7 @@ function dtlsMain(file) {
 // if ([rndKey].join("").length > 1){ //     var timeKey = [rndKey].join("").split(" ");};return console.log(myTitleArray);var myCikArray = [];while (myCikArray.length < 1) {  if (typeof rndKey === "undefined") {var uniqueKey = [urlDataSource("company ticker", "https://www.sec.gov/files/company_tickers.json")];var uniqueCikArray = sheetCalc("A2:A");myCikArray = uniqueCikArray.filter((cik) => {return cik.includes(matches.toLowerCase())});return console.log(myCikArray)
 // if ([rndKey].join("").length > 1){var timeKey = [rndKey].join("").split(" ");}}}
 // if (typeof rndKey === "undefined" ){};return console.log(sheetCalc());return console.log(randomCik)
-// else if (JSON.stringify(ac.toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {matches.push(ac)};return console.log(uniqueNum);[randomKey][0]["title"];[randomKey][0]["ticker"];randomKey[randomKey][0]["cik_str"];while (randomCik < 99999 || randomCik > 999999999) {randomCik = randomKey};return console.log(cikUrl);var randomPlaylist = idArray;for (var i = 0;i<idArray.length;i++) {var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));randomPlaylist.push(idArray[randomVidKey])}return misBing;var func = "proMediaSnip";var timeToExecute = functionRegistry,timeToExecute;console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime);form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
+// else if (JSON.stringify(ac.toLowerCase().includes(rndTitleVested.toString().toLowerCase())) {matches.push(ac)};return console.log(uniqueNum);[randomKey][0]["title"];[randomKey][0]["ticker"];randomKey[randomKey][0]["cik_str"];while (randomCik < 99999 || randomCik > 999999999) {randomCik = randomKey};return console.log(cikUrl);var randomPlaylist = idArray;for (var i = 0;i<idArray.length;i++) {var randomVidKey = Math.floor(Math.random() * (Math.floor([idArray].length)));randomPlaylist.push(idArray[randomVidKey])}return misBing;var func = "proMediaSnip";var timeToExecute = autoP.functionRegistry,timeToExecute;console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime);form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
 // if (timeToExecute <= 5 * 60 * 1000 && timeToExecute >= 4.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit five minutes")}
 //if (timeToExecute <= 4 * 60 * 1000 && timeToExecute >= 3.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit four minutes")}
 //if (timeToExecute <= 3 * 60 * 1000 && timeToExecute >= 2.98 * 60 * 1000) {console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nTime limit three minutes")}

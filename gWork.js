@@ -1,6 +1,6 @@
 function allTime(rndKey, arrD, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -18,7 +18,7 @@ function allTime(rndKey, arrD, time) {
   // );
   let executed = 0;
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof rndKey === "undefined" || typeof rndKey === null) {
@@ -128,7 +128,7 @@ function allTime(rndKey, arrD, time) {
 
 function covArrays(object, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nobject is !" +
@@ -142,7 +142,7 @@ function covArrays(object, time) {
   // );
   const dataArray = [];
   for (var obj in object) {
-    var elaspeTime = new Date() - functionRegistry.time;
+    var elaspeTime = new Date() - autoP.functionRegistry.time;
     dataArray.push([object[obj]]);
   }
   return dataArray;
@@ -154,7 +154,7 @@ function covArrays(object, time) {
 
 var covObjects = function(rows, headings, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nrows is !" +
@@ -210,7 +210,7 @@ var itemCalc = function() {
 
 function needUtility(rndClient, arrD, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -348,7 +348,7 @@ function needUtility(rndClient, arrD, time) {
 
 function randomSubstance(index, loopLength, importedData, arrD, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nindex is !" +
@@ -432,7 +432,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
   //     "\nArray Data: " +
   //     [arrD].toString().substring(0, 20) +
   //     "\nTime: " +
-  //     formatTime(functionRegistry.time) +
+  //     formatTime(autoP.functionRegistry.time) +
   //     " )",
   // );
   if (newArr) {
@@ -460,7 +460,7 @@ function seoSheet(searchString, time) {
   let executed = 0;
   let elaspeTime;
   if (typeof time === "undefined") {
-    var time = functionRegistry.time;
+    var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
@@ -473,7 +473,7 @@ function seoSheet(searchString, time) {
     .join("")
     .split(" ")
     .filter((p) => {
-      elaspeTime = functionRegistry.time;
+      elaspeTime = autoP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       if (p.length > 3 && p.length < 18) {
         return p[0] !== "<";
@@ -652,13 +652,13 @@ function seoSheet(searchString, time) {
   if (lowerCaseS.indexOf(testString) === -1) {
     var stringUI = [testString].join("").split(",");
     stringUI.map((increase) => {
-      elaspeTime = functionRegistry.time;
+      elaspeTime = autoP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     });
   }
   if (reSearch) {
     reSearch.map((seo) => {
-      elaspeTime = functionRegistry.time;
+      elaspeTime = autoP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
@@ -667,7 +667,7 @@ function seoSheet(searchString, time) {
             lowerCaseS[i][lowerCaseS[i].length - 1].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             if (lowerCaseS.indexOf(seo) === -1) {
-              elaspeTime = functionRegistry.time;
+              elaspeTime = autoP.functionRegistry.time;
               console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
               lowerCaseS.push(seo);
             }

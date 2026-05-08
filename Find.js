@@ -1,6 +1,6 @@
 function driveManager(strNw, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nstrNw is !" +
@@ -40,7 +40,7 @@ function driveManager(strNw, time) {
   var iam;
   try {
     iam = JSON.parse(
-      convertToObjects([[mainStr]], ["file"], functionRegistry.time),
+      convertToObjects([[mainStr]], ["file"], autoP.functionRegistry.time),
     );
     console.log("iam = " + iam, executed++);
     console.log("driveManager: iam successfully parsed:", iam);
@@ -276,7 +276,7 @@ var fileTypeManager = function (fileType) {
 
 function folderManager(folderX, time) {
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nfolderX is !" +
@@ -288,8 +288,8 @@ function folderManager(folderX, time) {
   //     ", = " +
   //     time,
   // );
-  functionRegistry.gTree();
-  var folderTree = functionRegistry.folderTree;
+  autoP.functionRegistry.gTree();
+  var folderTree = autoP.functionRegistry.folderTree;
   // var tree = DriveApp.getFolders(); // Iterator for folders
 
   // // Corrected while loop: Call next() only once per iteration
@@ -304,7 +304,7 @@ function folderManager(folderX, time) {
 
   if (folderX) {
     // console.log(
-    //   formatTime(functionRegistry.time) +
+    //   formatTime(autoP.functionRegistry.time) +
     //     "\n" +
     //     arguments.callee.name +
     //     ":\nDeclaring match = folderMatch(" +
@@ -324,7 +324,7 @@ function folderManager(folderX, time) {
 
 function formsUrls(fileX, folderX, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -342,7 +342,7 @@ function formsUrls(fileX, folderX, time) {
   );
   if ([fileX].join("").length > 0) {
     console.log(
-      formatTime(functionRegistry.time) +
+      formatTime(autoP.functionRegistry.time) +
         "\nformUrls: \nDeclaring search = [" +
         fileX +
         "].join(" +
@@ -359,7 +359,7 @@ function formsUrls(fileX, folderX, time) {
     try {
       var dataTree = [];
       console.log(
-        formatTime(functionRegistry.time) +
+        formatTime(autoP.functionRegistry.time) +
           "\nformUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
           folderX +
           ").next()",
@@ -390,7 +390,7 @@ function formsUrls(fileX, folderX, time) {
       return filed;
     } catch (err) {
       console.log(
-        formatTime(functionRegistry.time) +
+        formatTime(autoP.functionRegistry.time) +
           "\n" +
           arguments.callee.name +
           "\nerr is !" +
@@ -406,7 +406,7 @@ function formsUrls(fileX, folderX, time) {
 function matchManager(folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nfolderX is !" +
@@ -446,7 +446,7 @@ function matchManager(folderX, narrow, time) {
       return a - b;
     })[Math.floor(Math.random() * Math.floor(allFolders.length))];
     // console.log(
-    //   formatTime(functionRegistry.time) +
+    //   formatTime(autoP.functionRegistry.time) +
     //     "\n" +
     //     arguments.callee.name +
     //     "\nfolderX is !" +
@@ -617,7 +617,7 @@ function matchManager(folderX, narrow, time) {
 
 function searchUrlsTree(fileX) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +

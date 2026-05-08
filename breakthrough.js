@@ -1,6 +1,6 @@
 function breakthrough(chance, time) {
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +

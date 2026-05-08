@@ -1,6 +1,6 @@
 function crmEBI(fx) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +

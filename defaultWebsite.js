@@ -14,7 +14,7 @@
 
 function appSort(numIndex, time) {
   // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
-  var titleArray = functionRegistry.getFileList();
+  var titleArray = autoP.functionRegistry.getFileList();
   // for (var key in globalThis) {
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelapsedTime: " + elapsedTime)
   //   if (typeof globalThis[key] == "function") {
@@ -216,7 +216,7 @@ function createRandomFunction(searchString) {
   var executed = 0;
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
-    : functionRegistry.fileList;
+    : autoP.functionRegistry.fileList;
   // --- Create the script ---
   console.log("SCRIPT_TITLES",executed++);
   const scriptTitle =
@@ -228,7 +228,7 @@ function createRandomFunction(searchString) {
   console.log("isRequired",executed++);
 
   let fileIndex; //= crmT(scriptTitle)
-  let fileParams; //= functionRegistry.paramsList[fileIndex]
+  let fileParams; //= autoP.functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
   if (isRequired) {
@@ -241,10 +241,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, [
+        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        let tempObj = Script.prototype.isMapped(mapArr, [
           "driveManager",
-          [scriptTitle, functionRegistry.time],
+          [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -253,7 +253,7 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle];
+        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle];
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -264,9 +264,9 @@ function createRandomFunction(searchString) {
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = functionRegistry.paramsList[fileIndex];
+      fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
-      let tempObj = isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
+      let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
       console.log("tempObj",executed++);
@@ -281,10 +281,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, [
+        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        let tempObj = Script.prototype.isMapped(mapArr, [
           "driveManager",
-          [scriptTitle, functionRegistry.time],
+          [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -293,8 +293,8 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        // let funcX = driveManager(scriptTitle, functionRegistry.time);
-        let tempObj = isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -304,10 +304,10 @@ function createRandomFunction(searchString) {
       // console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = functionRegistry.paramsList[fileIndex];
+      fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
-      scriptUrl = isMapped(mapArr, [...fileParams.parameters]);
+      scriptUrl = Script.prototype.isMapped(mapArr, [...fileParams.parameters]);
       console.log("scriptUrl",executed++);
     }
   }
@@ -655,7 +655,7 @@ var funcCalc = function() {
 
 function functionFlex(e) {
   if (e && typeof e !== "object") {
-    e = objectOfS(["parameter"], [[["func", e]]], functionRegistry.time);
+    e = objectOfS(["parameter"], [[["func", e]]], autoP.functionRegistry.time);
   }
   // Determine funcTres
   if (e && e.parameter["file"]) {
@@ -683,7 +683,7 @@ function functionFlex(e) {
     //           // ["args", argsEd],
     //         ],
     //       ],
-    //       functionRegistry.time,
+    //       autoP.functionRegistry.time,
     //     );
     //   } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
     //     if (argsEd.parameters && argsEd.parameters.length > 0) {
@@ -695,7 +695,7 @@ function functionFlex(e) {
     //             ["args", [...argsEd.parameters]],
     //           ],
     //         ],
-    //         functionRegistry.time,
+    //         autoP.functionRegistry.time,
     //       );
     //     } else {
     //       e = objectOfS(
@@ -706,7 +706,7 @@ function functionFlex(e) {
     //             // ["args", argsEd.name],
     //           ],
     //         ],
-    //         functionRegistry.time,
+    //         autoP.functionRegistry.time,
     //       );
     //     }
     //   } else {
@@ -719,7 +719,7 @@ function functionFlex(e) {
     //           ["args", "Invalid Entry"],
     //         ],
     //       ],
-    //       functionRegistry.time,
+    //       autoP.functionRegistry.time,
     //     );
     //   }
     //   Logger.log(">>> [MAIN] MAIN WEB APP's FINAL e: " + JSON.stringify(e));
@@ -728,7 +728,7 @@ function functionFlex(e) {
   }
   Logger.log(
     ">>> [MAIN] MAIN WEB APP's ELAPSED TIME: " +
-      functionRegistry.time +
+      autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -2191,7 +2191,7 @@ function wwwDe(url) {
     } else if (typeof response["app"] === "undefined") {
       var feed = response;
       //UrlFetchApp.fetch(url).getContentText();
-      feed = isMapped(feed)["app"].replace(
+      feed = Script.prototype.isMapped(feed)["app"].replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );

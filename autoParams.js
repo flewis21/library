@@ -1,4 +1,6 @@
-const functionRegistry = {
+class AutoParams{};
+let autoP = new AutoParams(); 
+AutoParams.prototype.functionRegistry = {
   fileList: [],
   paramsList: [],
   htmlArray: [
@@ -119,6 +121,7 @@ const functionRegistry = {
 
   folderTree: [],
   gTree: function () {
+    let gtAP = new AutoParams()
     var tree = DriveApp.getFolders(); // Iterator for folders
     // Corrected while loop: Call next() only once per iteration
     while (tree.hasNext()) {
@@ -132,7 +135,7 @@ const functionRegistry = {
           }
         } catch (err) {
           Logger.log("Error getting folder tree", err.stack);
-          functionRegistry.gTree();
+          gtAP.functionRegistry.gTree();
         }
       }
     }
@@ -279,11 +282,11 @@ const functionRegistry = {
 
 // Set some global variables
 console.log("boilerplate autoParams: line 272");
-functionRegistry.initialize();
+AutoParams.prototype.functionRegistry.initialize();
 console.log("boilerplate autoParams: line 274");
-functionRegistry.startProcessTimer();
+AutoParams.prototype.functionRegistry.startProcessTimer();
 // A hypothetical frequency-based order for the Zulu alphabet
-const zuluFrequencyOrder = [
+AutoParams.prototype.zuluFrequencyOrder = [
   "a",
   "u",
   "i",
@@ -329,7 +332,7 @@ const zuluFrequencyOrder = [
 ];
 
 const zuluFreqPriority = new Map();
-zuluFrequencyOrder.forEach((char, index) => {
+AutoParams.prototype.zuluFrequencyOrder.forEach((char, index) => {
   zuluFreqPriority.set(char, index);
 });
 // Function to get the priority of the first letter/multigraph
@@ -337,7 +340,7 @@ const getZuluFreqPriority = (word) => {
   const lowercaseWord = word.toLowerCase();
 
   // Check for multigraphs first, as they are longer
-  for (const key of zuluFrequencyOrder) {
+  for (const key of AutoParams.prototype.zuluFrequencyOrder) {
     if (lowercaseWord.startsWith(key)) {
       return zuluFreqPriority.get(key);
     }
@@ -350,7 +353,7 @@ const getZuluFreqPriority = (word) => {
 
   return Infinity; // For empty strings
 };
-const zuluOrder = [
+AutoParams.prototype.zuluOrder = [
   "a",
   "b",
   "bh",
@@ -391,7 +394,7 @@ const zuluOrder = [
 ];
 
 const zuluPriority = new Map();
-zuluOrder.forEach((char, index) => {
+AutoParams.prototype.zuluOrder.forEach((char, index) => {
   zuluPriority.set(char, index);
 });
 // Function to get the priority of the first letter/multigraph
@@ -399,7 +402,7 @@ const getZuluPriority = (word) => {
   const lowercaseWord = word.toLowerCase();
 
   // Check for multigraphs first, as they are longer
-  for (const key of zuluOrder) {
+  for (const key of AutoParams.prototype.zuluOrder) {
     if (lowercaseWord.startsWith(key)) {
       return zuluPriority.get(key);
     }
@@ -412,7 +415,7 @@ const getZuluPriority = (word) => {
 
   return Infinity; // For empty strings
 };
-const customOrder = [
+AutoParams.prototype.customOrder = [
   "e",
   "t",
   "a",
@@ -444,7 +447,7 @@ const customOrder = [
 // Step 1: Create a lookup map for quick access to priority/rank
 // Lower index in customOrder means higher priority (comes earlier in sort)
 const freqPriority = new Map();
-customOrder.forEach((char, index) => {
+AutoParams.prototype.customOrder.forEach((char, index) => {
   freqPriority.set(char, index);
 });
 
@@ -517,12 +520,12 @@ customOrder.forEach((char, index) => {
 //   return priorityA - priorityB;
 // });
 // console.log(mixedLetters); // Output: ["e", "a", "s", "q", "z"] (e first, then a, then s, q, z)
-// globalThis.htmlArray = [
+// AutoParams.prototype..htmlArray = [
 //   `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
 // ]
 //   .toString()
 //   .split(" ");
-globalThis.numVarRnd = (function () {
+AutoParams.prototype.numVarRnd = (function () {
   var numLen = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23, 24, 25,
@@ -532,8 +535,8 @@ globalThis.numVarRnd = (function () {
   var res = Math.floor(rnd * Math.floor(len));
   return res;
 })();
-// globalThis.allFolders = folderManager();
-globalThis.uniqueCoArray = function () {
+// AutoParams.prototype.allFolders = folderManager();
+AutoParams.prototype.uniqueCoArray = function () {
   var secSheet = (function () {
     var ss = (function () {
       var ssApp = SpreadsheetApp;
@@ -557,7 +560,7 @@ globalThis.uniqueCoArray = function () {
   }
   return rndArrVals;
 };
-globalThis.uniqueItemArray = function () {
+AutoParams.prototype.uniqueItemArray = function () {
   var itemSheet = (function () {
     var ss = (function () {
       var ssApp = SpreadsheetApp;
@@ -587,9 +590,10 @@ globalThis.uniqueItemArray = function () {
   }
   return rndArrVals;
 };
-globalThis.uniqueVideoItemArray = function () {
-  functionRegistry.vidTree();
-  var arrVals = functionRegistry.getVideoList();
+AutoParams.prototype.uniqueVideoItemArray = function () {
+  let vidIA = new AutoParams();
+  vidIA.functionRegistry.vidTree();
+  var arrVals = vidIA.functionRegistry.getVideoList();
   var rndArrVals = [];
   while (rndArrVals.length !== arrVals.length) {
     rndArrVals.push(
@@ -598,9 +602,10 @@ globalThis.uniqueVideoItemArray = function () {
   }
   return rndArrVals;
 };
-globalThis.uniqueImageItemArray = function () {
-  functionRegistry.imgTree();
-  var arrVals = functionRegistry.getImageList();
+AutoParams.prototype.uniqueImageItemArray = function () {
+  let imgIA = new AutoParams()
+  imgIA.functionRegistry.imgTree();
+  var arrVals = imgIA.functionRegistry.getImageList();
   var rndArrVals = [];
   while (rndArrVals.length !== arrVals.length) {
     rndArrVals.push(
@@ -609,42 +614,16 @@ globalThis.uniqueImageItemArray = function () {
   }
   return rndArrVals;
 };
-globalThis.arrD = function () {
-  var titleArray = functionRegistry.fileList;
+AutoParams.prototype.arrD = function () {
+  let arrDAP = new AutoParams()
+  var titleArray = arrDAP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     titleArray.push(key);
   //   }
   // }
 
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
+  var arrData = AutoParams.prototype.customOrder;
   var numLen = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23, 24, 25,
@@ -666,7 +645,7 @@ globalThis.arrD = function () {
   }
   return freqArray;
 };
-// globalThis.arrD = (function () {
+// AutoParams.prototype.arrD = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
 //     for (var key in globalThis) {
@@ -690,42 +669,16 @@ globalThis.arrD = function () {
 //     // console.log(freqArray)
 //     return freqArray
 // })();
-globalThis.arrDRnd = function () {
-  var titleArray = functionRegistry.fileList;
+AutoParams.prototype.arrDRnd = function () {
+  let arrnDAP = new AutoParams()
+  var titleArray = arrnDAP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     titleArray.push(key);
   //   }
   // }
 
-  var arrData = [
-    "e",
-    "t",
-    "a",
-    "o",
-    "n",
-    "r",
-    "i",
-    "s",
-    "h",
-    "d",
-    "l",
-    "f",
-    "c",
-    "m",
-    "u",
-    "g",
-    "y",
-    "p",
-    "w",
-    "b",
-    "v",
-    "k",
-    "x",
-    "j",
-    "q",
-    "z",
-  ];
+  var arrData = AutoParams.prototype.customOrder;
   var numLen = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23, 24, 25,
@@ -747,7 +700,7 @@ globalThis.arrDRnd = function () {
   }
   return freqArray;
 };
-// globalThis.arrDRnd = (function () {
+// AutoParams.prototype.arrDRnd = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
 //     for (var key in globalThis) {
@@ -771,14 +724,15 @@ globalThis.arrDRnd = function () {
 //     // console.log(freqArray)
 //     return freqArray
 // })();
-globalThis.searchString = function () {
+AutoParams.prototype.searchString = function () {
+  let secStAP = new AutoParams()
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(secStAP.functionRegistry.time) +
       "\nBoilerplate autoParams line 654\nsearchString()\n" +
       arguments.callee.caller.name,
   );
-  var arrDRnd = functionRegistry.getFileList();
-  var arrD = functionRegistry.getFileList();
+  var arrDRnd = secStAP.functionRegistry.getFileList();
+  var arrD = secStAP.functionRegistry.getFileList();
   var newArr = [];
   var i = 0 || 0;
   var l = 6 || 1;
@@ -786,14 +740,14 @@ globalThis.searchString = function () {
   // console.log(arrData.sort((a, b) => a - b))
   if (arrDRnd && typeof arrD === "undefined") {
     for (i, l; i < l; i++) {
-      var elaspeTime = new Date() - functionRegistry.time;
+      var elaspeTime = new Date() - secStAP.functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\ntypeof arrDRnd: " +  typeof arrDRnd + "\nelaspeTime: " + elaspeTime)
       if (typeof arrDRnd !== "undefined" && typeof arrDRnd !== "string") {
         var myImportData = arrDRnd.sort((a, b) => a - b)[
           Math.floor(Math.random() * arrDRnd.length)
         ];
         newArr.push(myImportData);
-        var elaspeTime = functionRegistry.time;
+        var elaspeTime = secStAP.functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       } else if (
         typeof arrDRnd !== "undefined" &&
@@ -805,7 +759,7 @@ globalThis.searchString = function () {
           return pA - pB;
         })[Math.floor(Math.random() * [arrDRnd].length)];
         newArr.push(myImportData);
-        var elaspeTime = functionRegistry.time;
+        var elaspeTime = secStAP.functionRegistry.time;
         // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyImportData: " +  myImportData + "\nelaspeTime: " + elaspeTime)
       }
     }
@@ -817,7 +771,7 @@ globalThis.searchString = function () {
         return pA - pB;
       })[Math.floor(Math.random() * arrD.length)];
       newArr.push(myArrData);
-      var elaspeTime = functionRegistry.time;
+      var elaspeTime = secStAP.functionRegistry.time;
       // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
     }
   }
@@ -846,11 +800,11 @@ globalThis.searchString = function () {
     console.log();
   }
 };
-// globalThis.result = gsFParams().find((rndS) => {
+// AutoParams.prototype..result = gsFParams().find((rndS) => {
 //       return rndS.name === searchString;
 //     });
-// globalThis.varA = globalThis[result.name].apply(result.parameters) || globalThis[result.name]();
-// globalThis.e = objectOfS(
+// AutoParams.prototype.varA = AutoParams.prototype.result.name.apply(AutoParams.prototype.result.parameters) || AutoParams.prototype.result.name();
+// AutoParams.prototype.e = objectOfS(
 //       ["parameter"],
 //       [
 //         [
@@ -1145,8 +1099,9 @@ globalThis.searchString = function () {
 // console.log("No function parameters found for:", searchString);
 // result.parameters
 
-function resolveFunctionArgs(funcName, providedArgs = {}) {
-  const funcParamsInfo = functionRegistry
+AutoParams.prototype.resolveFunctionArgs = function(funcName, providedArgs = {}) {
+  let resFAP =new AutoParams();
+  const funcParamsInfo = resFAP.functionRegistry
     .getParamsList()
     .find((item) => item.name === funcName);
   if (!funcParamsInfo) {
@@ -1179,7 +1134,7 @@ function resolveFunctionArgs(funcName, providedArgs = {}) {
 }
 
 // Example usage (assuming your global variables are already declared as you've shown)
-function myGVFunction(
+AutoParams.prototype.myGVFunction = function(
   e,
   time,
   data,
@@ -1206,19 +1161,21 @@ function myGVFunction(
   );
 }
 
-function gMain() {
+AutoParams.prototype.gMain = function() {
+  let gmAP = new AutoParams();
   // functionRegistry.initialize();
 
   // Example call where missing parameters will be populated from your globals
-  const args = resolveFunctionArgs("myGVFunction", {});
+  const args = gmAP.resolveFunctionArgs("myGVFunction", {});
   if (args) {
-    myGVFunction(...args);
+    gmAP.myGVFunction(...args);
   }
-  myGVFunction("explicit e", 123); // Overrides globals for e and time
+  gmAP.myGVFunction("explicit e", 123); // Overrides globals for e and time
 }
 
-function functionHandle(e) {
+AutoParams.prototype.functionHandle = function(e) {
   var executed = 0;
+  let funchAP = new AutoParams()
   let rndE = "";
 
   // Logging
@@ -1236,7 +1193,7 @@ function functionHandle(e) {
         if (objData.length === 0) {
           // rndE = createRandomFunction();
           rndE = createRandomFunction(); 
-          //functionRegistry.paramsList[Math.floor(Math.random() * functionRegistry.paramsList.length)]
+          //funchAP.functionRegistry.paramsList[Math.floor(Math.random() * funchAP.functionRegistry.paramsList.length)]
           console.log("rndE = " + rndE, executed++);
           if (typeof rndE === "string") {
             e = bjectOfS(
@@ -1246,7 +1203,7 @@ function functionHandle(e) {
                   ["func", rndE],
                 ],
               ],
-              functionRegistry.time,
+              funchAP.functionRegistry.time,
             );
           }
           else {
@@ -1261,7 +1218,7 @@ function functionHandle(e) {
                       ["args", Object.values(rrndEAP)[0]],
                     ],
                   ],
-                  functionRegistry.time,
+                  funchAP.functionRegistry.time,
                 );
               } else {
                 e = objectOfS(
@@ -1271,7 +1228,7 @@ function functionHandle(e) {
                       ["func", Object.keys(rrndEAP)[0]],
                     ],
                   ],
-                  functionRegistry.time,
+                  funchAP.functionRegistry.time,
                 );
               }
             }
@@ -1285,7 +1242,7 @@ function functionHandle(e) {
                     ["args", "varA"],
                   ],
                 ],
-                functionRegistry.time,
+                funchAP.functionRegistry.time,
               );
             }
           }
@@ -1301,7 +1258,7 @@ function functionHandle(e) {
                 );
                 var funcTres = e?.parameter["file"];
                 try {
-                  var htmlArray = functionRegistry.getHtmlList();
+                  var htmlArray = funchAP.functionRegistry.getHtmlList();
                   var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
                   var rndPage = htmlArray[rndHtmlIndex];
                   var htmlTresArg; // = rndPage; // Default value
@@ -1331,7 +1288,8 @@ function functionHandle(e) {
                       payLoad["data"] = {};
                       if (funcTres === "undefined") {
                         return getScriptUrl() + "?file=" + rndPage;
-                      } else {
+                      } 
+                      else {
                         var fT = fileBrowser(null, funcTres);
                         payLoad.data["url"] = fT?.url
                         if (!fT?.url) {
@@ -1423,7 +1381,7 @@ function functionHandle(e) {
                     e = objectOfS(
                       ["parameter"],
                       [[["func", argsEd]]],
-                      functionRegistry.time,
+                      funchAP.functionRegistry.time,
                     );
                     console.log("e = " + e, executed++);
                   } else {
@@ -1438,14 +1396,14 @@ function functionHandle(e) {
                               ["args", [...Object.values(argsEd)[0]]],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       } else {
                         e = objectOfS(
                           ["parameter"],
                           [[["func", Object.keys(argsEd)[0]]]],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       }
@@ -1466,7 +1424,7 @@ function functionHandle(e) {
                               ["args", argsedObj],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       } else {
@@ -1478,7 +1436,7 @@ function functionHandle(e) {
                               ["args", "varA"],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       }
@@ -1488,7 +1446,7 @@ function functionHandle(e) {
                 else {
                   if (typeof globalThis[e.parameter[objData[0]]] === "function") {
                     let argsEd = createRandomFunction(e.parameter[objData[0]]);
-                    //functionRegistry.paramsList.find((rndS) => {
+                    //funchAP.functionRegistry.paramsList.find((rndS) => {
                     //   return rndS.name === e.parameter[objData[0]];
                     // });
                     console.log("argsEd = " + JSON.stringify(argsEd), executed++);
@@ -1496,7 +1454,7 @@ function functionHandle(e) {
                       e = objectOfS(
                         ["parameter"],
                         [[["func", argsEd]]],
-                        functionRegistry.time,
+                        funchAP.functionRegistry.time,
                       );
                       console.log("e = " + e, executed++);
                     } 
@@ -1511,14 +1469,14 @@ function functionHandle(e) {
                               ["args", [...Object.values(argsEd)[0]]],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       } else {
                         e = objectOfS(
                           ["parameter"],
                           [[["func", Object.keys(argsEd)[0]]]],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       }
@@ -1538,7 +1496,7 @@ function functionHandle(e) {
                               ["args", argsedObj],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       } else {
@@ -1550,7 +1508,7 @@ function functionHandle(e) {
                               ["args", "varA"],
                             ],
                           ],
-                          functionRegistry.time,
+                          funchAP.functionRegistry.time,
                         );
                         console.log("e = " + e, executed++);
                       }
@@ -1565,7 +1523,7 @@ function functionHandle(e) {
                       );
                       var funcTres = e.parameter[objData[0]];
                       try {
-                        var htmlArray = functionRegistry.getHtmlList();
+                        var htmlArray = funchAP.functionRegistry.getHtmlList();
                         var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
                         var rndPage = htmlArray[rndHtmlIndex];
                         var htmlTresArg; // = rndPage; // Default value
@@ -1686,7 +1644,6 @@ function functionHandle(e) {
   return {
     exec: funcUno,
     args: funcDos,
-    website: funcTres,
   };
 
   // --- BEGIN Refactored payLoad processing ---

@@ -1,5 +1,5 @@
 function appList() {
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   return HtmlService.createTemplate(
     `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
         a:link, a:visited {color:black !important;}
@@ -208,7 +208,7 @@ var contentApp = function (blob, argsObject) {
       arguments.callee.caller.name,
   );
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nblob is !" +
@@ -551,7 +551,7 @@ function defSBD(e) {
 var eTest = function () {
   console.log(
     Math.floor(
-      functionRegistry.timeLeftToExecute - functionRegistry.time / 1000,
+      autoP.functionRegistry.timeLeftToExecute - autoP.functionRegistry.time / 1000,
     ),
   );
 };
@@ -914,7 +914,7 @@ globalThis.oneTime = 59.9 * 1000;
 
 var renderFile = function (file, argsObject, title) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfile is !" +
@@ -932,7 +932,7 @@ var renderFile = function (file, argsObject, title) {
   );
   try {
     if (file) {
-      let htmlList = functionRegistry.getHtmlList();
+      let htmlList = autoP.functionRegistry.getHtmlList();
       if (htmlList.indexOf(file) !== -1) { 
         const tmp = HtmlService.createTemplateFromFile(file);
         if (argsObject) {
@@ -978,13 +978,13 @@ var renderFile = function (file, argsObject, title) {
                 <div class="nav-middle flex-div">
                   <div class="search-box flex-div">
                     <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
-                    <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
                   </div>
                 </div>
                 <div class="nav-right flex-div">
                   <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
                 </div>
               </nav>
+              <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
                 <header class="banner card-panel transparent static-fix">
                   <div id="iframePlayer" class="row card-panel transparent"></div>
                   <h1>Blog</h1>
@@ -1154,7 +1154,7 @@ var renderFile = function (file, argsObject, title) {
             renTemp: tmp.evaluate().getContent(),
           },
         );
-        return renderTemplate(html,argsObject,title)
+        // return renderTemplate(html,argsObject,title)
         return (
           HtmlService.createHtmlOutput(html) //tmp
             // .evaluate()
@@ -1189,7 +1189,7 @@ var renderTemplate = function (blob, argsObject, title) {
           arguments.callee.caller.name,
   );
   let executed = 0;
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   console.log("argsObject before tmp processing", argsObject);
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
@@ -1267,13 +1267,13 @@ var renderTemplate = function (blob, argsObject, title) {
             <div class="nav-middle flex-div responsive-section">
               <div class="search-box flex-div">
                 <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
-                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
               </div>
             </div>
             <div class="nav-right flex-div responsive-section">
               <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
             </div>
           </nav>
+          <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
           <main class="responsive-section float-left">
             <header class="transparent banner responsive-section">
               <div id="player1" class="row card-panel transparent list-container grid"></div>

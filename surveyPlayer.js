@@ -8,7 +8,7 @@ function surveyPlayer(searchString, joinString) {
       arguments.callee.caller.name,
   );
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -46,7 +46,7 @@ function surveyPlayer(searchString, joinString) {
   var listGen = objectOfS(
     ["parameter"],
     [[["func", testGen]]],
-    functionRegistry.time,
+    autoP.functionRegistry.time,
   ).parameter["func"];
 
   var noList = [];

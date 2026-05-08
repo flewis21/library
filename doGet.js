@@ -67,11 +67,11 @@ function doGet(e) {
           ["action", "getData"],
         ],
       ],
-      functionRegistry.time,
+      autoP.functionRegistry.time,
     );
   }
   console.log(
-    formatTime(functionRegistry.time) +
+    formatTime(autoP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -85,10 +85,10 @@ function doGet(e) {
   } else if (typeof e === "object" && e.parameter && !e.parameter["func"]) {
     return functionFlex(e);
   } else if (typeof e !== "object") {
-    e = objectOfS(["parameter"], [[["func", e]]], functionRegistry.time);
+    e = objectOfS(["parameter"], [[["func", e]]], autoP.functionRegistry.time);
     var fx = e.parameter["func"];
   }
-  var titleArray = functionRegistry.getFileList();
+  var titleArray = autoP.functionRegistry.getFileList();
   if (typeof e === "object" && e.parameter && e.parameter["args"]) {
     var content = e.parameter["args"];
   }
@@ -367,7 +367,7 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    const handles = functionHandle();
+    const handles = AutoParams.prototype.functionHandle();
     let funcU = handles["exec"];
     let funcD = handles["args"];
     let base = createFunctionResult(funcU, funcD);
@@ -388,7 +388,7 @@ function handleRequest(e) {
 function handleGetData(e) {
   var executed = 0;
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
-  var htmlList = functionRegistry.getHtmlList();
+  var htmlList = autoP.functionRegistry.getHtmlList();
   executed++;
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
@@ -481,7 +481,7 @@ function handleGetData(e) {
   //         ["action", "getData"],
   //       ],
   //     ],
-  //     functionRegistry.time,
+  //     autoP.functionRegistry.time,
   //   );
   //   console.log(JSON.stringify(rndE));
   // }
@@ -526,7 +526,7 @@ function handleGetData(e) {
               `previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `,
               executed,
             );
-            var htmlArray = functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
+            var htmlArray = autoP.functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
             executed++;
             if (funcTres) {
               if (Array.isArray(funcTres)) {
@@ -628,7 +628,7 @@ function handleGetData(e) {
                   // ["args", argsEd],
                 ],
               ],
-              functionRegistry.time,
+              autoP.functionRegistry.time,
             );
             executed++;
           } else if (typeof argsEd === "object" && argsEd !== null) {
@@ -646,7 +646,7 @@ function handleGetData(e) {
                     ["args", [...Object.values(argsEd)[0]]],
                   ],
                 ],
-                functionRegistry.time,
+                autoP.functionRegistry.time,
               );
               executed++;
             } else {
@@ -663,7 +663,7 @@ function handleGetData(e) {
                     // ["args", argsEd.name],
                   ],
                 ],
-                functionRegistry.time,
+                autoP.functionRegistry.time,
               );
               executed++;
             }
@@ -689,7 +689,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                functionRegistry.time,
+                autoP.functionRegistry.time,
               );
               executed++;
             } else {
@@ -707,7 +707,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                functionRegistry.time,
+                autoP.functionRegistry.time,
               );
               executed++;
             }
@@ -727,7 +727,7 @@ function handleGetData(e) {
     }
   }
   // console.log(
-  //   formatTime(functionRegistry.time) +
+  //   formatTime(autoP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\ne is !" +
@@ -1424,7 +1424,7 @@ function handleGetData(e) {
 var globalHandleGetData = function (rawFuncResult) {
   var payLoad = {}; // Initialize payload
   var executed = 0;
-  var htmlList = functionRegistry.getHtmlList();
+  var htmlList = autoP.functionRegistry.getHtmlList();
   // --- BEGIN Refactored payLoad processing ---
   let appL = "";
   let iframeSrc =
@@ -2019,7 +2019,7 @@ var createJsonResponse = function (success, message) {
 
 function misBing(e, time) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -2188,7 +2188,7 @@ function userClicked() {
   return contentApp(
     `<script>
     
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
   let timeout = null;
@@ -2543,7 +2543,7 @@ function userClicked() {
 
 // var runBoilerplate = function (func, someargs) {
 //   console.log(
-//     functionRegistry.time +
+//     autoP.functionRegistry.time +
 //       "\n" +
 //       arguments.callee.name +
 //       "\nfunc is !" +
@@ -2573,10 +2573,10 @@ var runBoilerplate = function (func, args, callCount = 0) {
   var libName = "foo";
   // Check if maxTime exists as a global variable
   const timeRemaining =
-    typeof functionRegistry.maxTime !== "undefined" &&
-    functionRegistry.maxTime instanceof Date
+    typeof autoP.functionRegistry.maxTime !== "undefined" &&
+    autoP.functionRegistry.maxTime instanceof Date
       ? Math.floor(
-          (functionRegistry.maxTime.getTime() -
+          (autoP.functionRegistry.maxTime.getTime() -
             (new Date().getTime() % (1000 * 60))) /
             1000,
         ) // Use .getTime() for Date objects

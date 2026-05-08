@@ -1,6 +1,6 @@
 var apiRedeplaoy = function () {
   var funcInfo = gsFiles()[crmT(arguments.callee.name)];
-  var result = functionRegistry.getParamsList().find((rndS) => {
+  var result = autoP.functionRegistry.getParamsList().find((rndS) => {
     return rndS.name === funcInfo;
   });
   if (typeof result === "object" && result !== null && result.name) {

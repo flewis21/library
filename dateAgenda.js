@@ -35,7 +35,7 @@ function addDays() {
 }
 
 function busyDates() {
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   var calendars = CalendarApp.getAllCalendars();
   var myCalendar;
   while (!myCalendar) {
@@ -178,7 +178,7 @@ var calRecurrence = function (series) {
 };
 
 function dateAgenda() {
-  console.log(functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
   var sheetJSONSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Schedules",
@@ -214,7 +214,7 @@ function dateFunction(series) {
 
 function dateModel(days) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ndays is !" +

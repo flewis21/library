@@ -260,7 +260,7 @@ function epaData(e) {
 
 function epaA(epaAUrl) {
   console.log(
-    functionRegistry.time +
+    autoP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nepaAUrl is !" +
