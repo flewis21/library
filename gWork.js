@@ -228,7 +228,7 @@ function needUtility(rndClient, arrD, time) {
   // );
   let executed = 0;
   if (typeof rndClient === "undefined") {
-    var rndClient = globalThis.searchString().myNewArr;
+    var rndClient = autoP.searchString().myNewArr;
     console.log("rndClient = " + rndClient, executed++);
   }
   var client = rndClient;
@@ -464,7 +464,7 @@ function seoSheet(searchString, time) {
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
+    var searchString = autoP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;

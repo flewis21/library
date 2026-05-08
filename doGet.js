@@ -106,7 +106,7 @@ function doGet(e) {
     },
   };
   if (fx && typeof globalThis[fx] === "function") {
-    var rndStr = globalThis.searchString().myNewArr;
+    var rndStr = autoP.searchString().myNewArr;
     return functionFlex(e);
   } else if (fx && typeof globalThis[fx] !== "function") {
     try {

@@ -834,7 +834,7 @@ AutoParams.prototype.searchString = function () {
 //       timestamp: new Date(),
 //     };
 // globalThis.func = result;
-//   //   globalThis.searchString = substanceVegas(
+//   //   autoP.searchString = substanceVegas(
 //   //     0,
 //   //     [
 //   //       objectOfS(

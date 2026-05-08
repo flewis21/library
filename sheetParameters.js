@@ -1106,7 +1106,7 @@ var seoBites = function (searchString, idArray, time) {
   let searchWords = [];
   searchString
     ? searchString
-    : (searchString = globalThis.searchString().myNewArr);
+    : (searchString = autoP.searchString().myNewArr);
     console.log("searchString = " + searchString, executed++);
   if (typeof searchString === "object") {
     if (searchString.parameter && searchString.parameter["func"]) {
@@ -1168,7 +1168,7 @@ var seoFactor = function (data, time) {
 
 var seoIndex = function (searchWord) {
   if (typeof searchWord === "undefined") {
-    searchWord = globalThis.searchString().myNewArr;
+    searchWord = autoP.searchString().myNewArr;
   }
   console.log(
     "seoIndex: \nDeclaring infoSP = seoSheet(" +
@@ -1234,7 +1234,7 @@ function seoPictTime(searchString, time) {
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
+    var searchString = autoP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
   }
   var altSearch = seoSheet(searchString, time);
@@ -1377,7 +1377,7 @@ function seoPictTime(searchString, time) {
 function seoPictures(searchString, time) {
   let executed = 0;
   if (typeof searchString === "undefined") {
-    var searchString = globalThis.searchString().myNewArr;
+    var searchString = autoP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
   }
   let rndSearch;

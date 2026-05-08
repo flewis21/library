@@ -422,7 +422,7 @@ function matchManager(folderX, narrow, time) {
   //     ", = " +
   //     time,
   // );
-  var arn = [narrow || globalThis.searchString().myNewArr]
+  var arn = [narrow || autoP.searchString().myNewArr]
     .toString()
     .toLowerCase();
   var xFolder = [];

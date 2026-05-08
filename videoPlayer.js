@@ -88,7 +88,7 @@ function needPastTime(searchString) {
   });
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var noSearch = globalThis.searchString().myNewArr;
+      var noSearch = autoP.searchString().myNewArr;
       // console.log(
       //   "Nothing to search. Falling back to random string.",
       //   noSearch,
