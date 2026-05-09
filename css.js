@@ -1035,6 +1035,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           
           suggestionsDiv.innerHTML = '';
           if (suggestions && suggestions.length > 0) {
+            window.scrollTo(0,0);
             suggestions.forEach(suggestion => {
               // console.log(suggestion)
               const div = document.createElement('div');

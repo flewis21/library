@@ -365,7 +365,7 @@ function createFormFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [
+        let tempObj = new IsMapped(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -373,7 +373,7 @@ function createFormFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
-        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle];
+        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle];
         scriptUrl = resolveParams(tempObj);
       }
     } else {
@@ -381,7 +381,7 @@ function createFormFunction(searchString) {
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
-      let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
+      let tempObj = new IsMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
       scriptUrl = resolveParams(tempObj);
@@ -394,7 +394,7 @@ function createFormFunction(searchString) {
         console.log("!script");
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [
+        let tempObj = new IsMapped(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -403,7 +403,7 @@ function createFormFunction(searchString) {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {
@@ -411,7 +411,7 @@ function createFormFunction(searchString) {
       fileIndex = crmT(scriptTitle);
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [];
-      scriptUrl = Script.prototype.isMapped(mapArr, [...fileParams.parameters]);
+      scriptUrl = new IsMapped(mapArr, [...fileParams.parameters]);
     }
   }
   // scriptUrl = userSubmit.getPublishedUrl();
@@ -462,13 +462,13 @@ function createFormFunction(searchString) {
           //   if (script.length === 0) {
           //     console.info(script?.toString());
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+          //       new IsMapped({ a: [] }, [scriptTitle])["a"],
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+          //       new IsMapped({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
           //         [...fileParams.parameters],
           //       ])["a"],
@@ -477,13 +477,13 @@ function createFormFunction(searchString) {
           // } else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
-          //     scriptUrl = Script.prototype.isMapped(mapArr, []);
+          //     scriptUrl = new IsMapped(mapArr, []);
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = Script.prototype.isMapped(mapArr, [userText]);
+          //     scriptUrl = new IsMapped(mapArr, [userText]);
           //   }
           // }
           if (Math.random() < 0.4) {
@@ -534,13 +534,13 @@ function createFormFunction(searchString) {
           //   if (script.length === 0) {
           //     console.info(script?.toString());
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+          //       new IsMapped({ a: [] }, [scriptTitle])["a"],
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+          //       new IsMapped({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
           //         [...fileParams.parameters],
           //       ])["a"],
@@ -549,13 +549,13 @@ function createFormFunction(searchString) {
           // } else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
-          //     scriptUrl = Script.prototype.isMapped(mapArr, []);
+          //     scriptUrl = new IsMapped(mapArr, []);
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = Script.prototype.isMapped(mapArr, [pChoice.getMimeType()]);
+          //     scriptUrl = new IsMapped(mapArr, [pChoice.getMimeType()]);
           //   }
           // }
           if (Math.random() < 0.3) {
@@ -649,13 +649,13 @@ function createFormFunction(searchString) {
           //   if (script.length === 0) {
           //     console.info(script?.toString());
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+          //       new IsMapped({ a: [] }, [scriptTitle])["a"],
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+          //       new IsMapped({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
           //         [...fileParams.parameters],
           //       ])["a"],
@@ -664,13 +664,13 @@ function createFormFunction(searchString) {
           // } else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
-          //     scriptUrl = Script.prototype.isMapped(mapArr, []);
+          //     scriptUrl = new IsMapped(mapArr, []);
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = Script.prototype.isMapped(mapArr, [cChoice.getMimeType()]);
+          //     scriptUrl = new IsMapped(mapArr, [cChoice.getMimeType()]);
           //   }
           // }; // Randomly add 'Other' option
           // if (Math.random() < 0.2) cbItem.showOtherOption(true); // Randomly add 'Other' option
@@ -700,13 +700,13 @@ function createFormFunction(searchString) {
           //   if (script.length === 0) {
           //     console.info(script?.toString());
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+          //       new IsMapped({ a: [] }, [scriptTitle])["a"],
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+          //       new IsMapped({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
           //         [...fileParams.parameters],
           //       ])["a"],
@@ -715,13 +715,13 @@ function createFormFunction(searchString) {
           // } else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
-          //     scriptUrl = Script.prototype.isMapped(mapArr, []);
+          //     scriptUrl = new IsMapped(mapArr, []);
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = Script.prototype.isMapped(mapArr, [new Date().getDate().toLocaleString()]);
+          //     scriptUrl = new IsMapped(mapArr, [new Date().getDate().toLocaleString()]);
           //   }
           // }; //.setRequired(true);
           // if (isRequired) script();
@@ -751,7 +751,7 @@ function createFormFunction(searchString) {
           //     console.info(script?.toString());
           //     // var tempObj =
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+          //       new IsMapped({ a: [] }, [scriptTitle])["a"],
           //     );
           //   }
           //   else {
@@ -759,7 +759,7 @@ function createFormFunction(searchString) {
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     // var tempObj =
           //     scriptUrl = resolveParams(
-          //       Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+          //       new IsMapped({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
           //         [...fileParams.parameters],
           //       ])["a"],
@@ -769,13 +769,13 @@ function createFormFunction(searchString) {
           // else {
           //   mapArr[scriptTitle] = [];
           //   if (script.length === 0) {
-          //     scriptUrl = Script.prototype.isMapped(mapArr, []);
+          //     scriptUrl = new IsMapped(mapArr, []);
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
           //     fileParams = autoP.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
-          //     scriptUrl = Script.prototype.isMapped(mapArr, [userEMail]);
+          //     scriptUrl = new IsMapped(mapArr, [userEMail]);
           //   }
           // }
           break;
@@ -976,14 +976,14 @@ function createFormFunction(searchString) {
         //       console.info(script?.toString());
         //       // var tempObj =
         //       scriptUrl = resolveParams(
-        //         Script.prototype.isMapped({ a: [] }, [scriptTitle])["a"],
+        //         new IsMapped({ a: [] }, [scriptTitle])["a"],
         //       );
         //     } else {
         //       fileIndex = crmT(scriptTitle);
         //       fileParams = autoP.functionRegistry.paramsList[fileIndex];
         //       // var tempObj =
         //       scriptUrl = resolveParams(
-        //         Script.prototype.isMapped({ a: [...fileParams.parameters] }, [
+        //         new IsMapped({ a: [...fileParams.parameters] }, [
         //           scriptTitle,
         //           [...fileParams.parameters],
         //         ])["a"],
@@ -992,13 +992,13 @@ function createFormFunction(searchString) {
         //   } else {
         //     if (script.length === 0) {
         //       mapArr[scriptTitle] = [];
-        //       scriptUrl = Script.prototype.isMapped(mapArr, []);
+        //       scriptUrl = new IsMapped(mapArr, []);
         //     }
         //     else {
         //       fileIndex = crmT(scriptTitle);
         //       fileParams = autoP.functionRegistry.paramsList[fileIndex];
         //       mapArr[scriptTitle] = [...fileParams];
-        //       scriptUrl = Script.prototype.isMapped(mapArr, [userSubmit.getPublishedUrl()]);
+        //       scriptUrl = new IsMapped(mapArr, [userSubmit.getPublishedUrl()]);
         //     }
         //   }
         //   // scriptUrl = userSubmit.getPublishedUrl();

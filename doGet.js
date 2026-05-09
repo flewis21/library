@@ -367,7 +367,7 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    const handles = AutoParams.prototype.functionHandle();
+    const handles = new FunctionHandle();
     let funcU = handles["exec"];
     let funcD = handles["args"];
     let base = createFunctionResult(funcU, funcD);
@@ -783,9 +783,9 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = Script.prototype.isTruthy(isObjValUrl);
+    let rawUrlResult = new IsTruthy(isObjValUrl);
     executed++;
-    if (!rawUrlResult) {
+    if (!rawUrlResult.t === true) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
       let parsedFuncArgs = [];
       let keyObject;
@@ -812,7 +812,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && Script.prototype.isTruthy(funcDos)) {
+      } else if (typeof funcDos !== "object" && new IsTruthy(funcDos).t === true) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON

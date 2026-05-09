@@ -72,23 +72,23 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = Script.prototype.isTruthy(funcUno);
-  let truDos = Script.prototype.isTruthy(funcDos);
-  console.log("truUno and truDos\n" + [truUno, truDos]);
+  let truUno = new IsTruthy(funcUno);
+  let truDos = new IsTruthy(funcDos);
+  console.log("truUno and truDos\n" + [truUno.t, truDos.t]);
 
   // --- BEGIN Refactored payLoad processing ---
 
   try {
     let objVal = funcDos?.toString();
-    let truVal = Script.prototype.isTruthy(objVal);
+    let truVal = new IsTruthy(objVal);
     let rawUrlResult;
-    if (truVal && objVal?.indexOf(",") === -1) {
+    if (truVal.t === true && objVal?.indexOf(",") === -1) {
       let isObjValUrl = isValidUrl(objVal);
-      rawUrlResult = Script.prototype.isTruthy(isObjValUrl.hostname);
-      console.log("rawUrlResult = " + rawUrlResult, executed++);
+      rawUrlResult = new IsTruthy(isObjValUrl.hostname);
+      console.log("rawUrlResult = " + rawUrlResult.t, executed++);
     }
     // executed++
-    if (!rawUrlResult) {
+    if (!rawUrlResult.t === true) {
       let parsedFuncArgs = [];
       let keyObject;
       if (typeof funcDos === "object" && funcDos !== null) {
@@ -242,7 +242,7 @@ function createRandomFunction(searchString) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [
+        let tempObj = new IsMapped(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -253,7 +253,7 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle];
+        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle];
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -266,7 +266,7 @@ function createRandomFunction(searchString) {
       console.log("fileIndex",executed++);
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
-      let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
+      let tempObj = new IsMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
       console.log("tempObj",executed++);
@@ -282,7 +282,7 @@ function createRandomFunction(searchString) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [
+        let tempObj = new IsMapped(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -294,7 +294,7 @@ function createRandomFunction(searchString) {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = Script.prototype.isMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -307,7 +307,7 @@ function createRandomFunction(searchString) {
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
-      scriptUrl = Script.prototype.isMapped(mapArr, [...fileParams.parameters]);
+      scriptUrl = new IsMapped(mapArr, [...fileParams.parameters]);
       console.log("scriptUrl",executed++);
     }
   }
@@ -2191,7 +2191,7 @@ function wwwDe(url) {
     } else if (typeof response["app"] === "undefined") {
       var feed = response;
       //UrlFetchApp.fetch(url).getContentText();
-      feed = Script.prototype.isMapped(feed)["app"].replace(
+      feed = new IsMapped(feed)["app"].replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );

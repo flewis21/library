@@ -1184,10 +1184,10 @@ var fileFold = function(folderX, fileX, time) {
   var elapsedTime = autoP.functionRegistry.elapsedTimeInSeconds;
   console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];
-  var folderXIsValid = Script.prototype.isTruthy(folderX);
-  console.log("folderXIsValid = " + folderXIsValid, executed++);
-  if (folderXIsValid) {
-    if (!folderXIsValid) {
+  var folderXIsValid = new IsTruthy(folderX);
+  console.log("folderXIsValid = " + folderXIsValid.t, executed++);
+  if (folderXIsValid.t === true) {
+    if (!folderXIsValid.t === true) {
       return;
     }
     var pyFolder = DriveApp.getFoldersByName(folderX);
