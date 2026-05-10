@@ -1741,15 +1741,15 @@ function misSt(func, someArgs) {
       var keys = Object.values(func).toString().split(",").concat(someArgs);
     } 
     else {
-      if (arrUno && !arrDos) {
-      var keys = Object.values(func).toString().split(",");
+      if (arrUno && !arrDos.t === true) {
+        var keys = Object.values(func).toString().split(",");
       } 
       else {
-        if (!arrUno && arrDos) {
+        if (!arrUno && arrDos.t === true) {
           var keys = [func].concat(someArgs);
         } 
         else {
-          if (!arrUno && !arrDos) {
+          if (!arrUno && !arrDos.t === true) {
             var keys = [func];
           }
         }

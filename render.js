@@ -1,180 +1,182 @@
-function appList() {
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-  return HtmlService.createTemplate(
-    `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
-        a:link, a:visited {color:black !important;}
-        a:hover, a:active{ 
-          color:white  !important;
-          text-decoration:none  !important;}</style></head><body><? var nber = randNum(arguments.callee.caller.name) ?><? var appList = appSort(nber) ?><? var dropList = appList.map((item) => {return "<option>" + item + "</option>"}).join("") ?><? var result = JSON.stringify(dropList) ?><? var appUrl = getUrl(ScriptApp) + "?func=" ?><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="indexLab"><strong>Research</strong></label><div id="indexDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdIndexRes" style="width: 705px; height: 405px; padding: 0;">
+class AppList {
+  constructor () {
+    console.log(autoP.functionRegistry.time);
+    return HtmlService.createTemplate(
+      `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
+          a:link, a:visited {color:black !important;}
+          a:hover, a:active{ 
+            color:white  !important;
+            text-decoration:none  !important;}</style></head><body><? var nber = randNum(arguments.callee.caller.name) ?><? var appList = appSort(nber) ?><? var dropList = appList.map((item) => {return "<option>" + item + "</option>"}).join("") ?><? var result = JSON.stringify(dropList) ?><? var appUrl = getUrl(ScriptApp) + "?func=" ?><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="indexLab"><strong>Research</strong></label><div id="indexDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdIndexRes" style="width: 705px; height: 405px; padding: 0;">
+                      <iframe 
+                        class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
+                        src=""
+                        id="indexRes"
+                        style="width: 100%; height: 100%; border: none;"
+                        allow="autoplay"
+                        allow="encrypted-media"
+                        title="Dontime Life Website"
+                        frameborder="0"
+                        allowfullscreen
+                        ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red">
+                <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="homeIndex"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in receipt" style="font-size: 30px"><div class="container"><div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1"><div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt col s12"><span><input placeholder="Your Search Here Ex. apple,orange..." class="flow-text menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/></span></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="tubeLab"><strong>Research</strong></label><div id="tubeDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdTubeRes" style="width: 705px; height: 405px; padding: 0;">
+                      <iframe 
+                        class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
+                        src=""
+                        id="tubeRes"
+                        style= "width:'100%';height='100%'"
+                        allow="autoplay"
+                        allow="encrypted-media"
+                        title="Dontime Life Website"
+                        frameborder="0"
+                        allowfullscreen
+                        ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="tubeSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="bingLab"><strong>Research</strong></label><div id="bingDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBingRes" style="width: 705px; height: 405px; padding: 0;">
                     <iframe 
                       class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
                       src=""
-                      id="indexRes"
-                      style="width: 100%; height: 100%; border: none;"
-                      allow="autoplay"
-                      allow="encrypted-media"
-                      title="Dontime Life Website"
-                      frameborder="0"
-                      allowfullscreen
-                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red">
-              <input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="homeIndex"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 m12 l12 menu z-depth-5 card-panel amber scale-out scale-in receipt" style="font-size: 30px"><div class="container"><div class="col s12 m12 l12 receipt nav-wrapper deep-purple darken-1"><div class="agenda z-depth-5 btn-large card-panel blue scale-out scale-in receipt col s12"><span><input placeholder="Your Search Here Ex. apple,orange..." class="flow-text menu-img z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in receipt btn-large" id="uiApp" type="search"/></span></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="tubeLab"><strong>Research</strong></label><div id="tubeDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdTubeRes" style="width: 705px; height: 405px; padding: 0;">
-                    <iframe 
-                      class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
-                      src=""
-                      id="tubeRes"
+                      id="bingRes"
                       style= "width:'100%';height='100%'"
                       allow="autoplay"
                       allow="encrypted-media"
                       title="Dontime Life Website"
                       frameborder="0"
                       allowfullscreen
-                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="tubeSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 amber darken-0 receipt" id="seoData"><label id="bingLab"><strong>Research</strong></label><div id="bingDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBingRes" style="width: 705px; height: 405px; padding: 0;">
-                  <iframe 
-                    class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
-                    src=""
-                    id="bingRes"
-                    style= "width:'100%';height='100%'"
-                    allow="autoplay"
-                    allow="encrypted-media"
-                    title="Dontime Life Website"
-                    frameborder="0"
-                    allowfullscreen
-                    ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="bingSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 darken-0 receipt amber" id="seoData"><label id="busLab"><strong>Research</strong></label><div id="busDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBusRes" style="width: 705px; height: 405px; padding: 0;">
-                  <iframe 
-                    class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
-                    src=""
-                    id="busRes"
-                    style= "width:'100%';height='100%'"
-                    allow="autoplay"
-                    allow="encrypted-media"
-                    title="Dontime Life Website"
-                    frameborder="0"
-                    allowfullscreen
-                    ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" /></div></div></div></div></div></div></div></div><script>function serverside(func, args) {return new Promise((resolve, reject) => {google.script.run.withSuccessHandler((result) => {resolve(result)}).withFailureHandler((error) => {reject(error)}).runBoilerplate(func, args)})};var homeSearch 
-  = document.getElementById("homeIndex");homeSearch.addEventListener("change",(e) => {const strValue 
-  = homeSearch.value;var cap 
-  = e.target.value;document.getElementById("homeIndex").value 
-  = "";document.getElementById("indexLab").innerText 
-  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
+                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="bingSearch"  type="search" /></div></div></div></div></div></div></div></div><div class="row"><div class="col s12 l12 m12 card-panel amber receipt"><div class="menu-img btn-large valign-wrapper col s12 darken-0 receipt amber" id="seoData"><label id="busLab"><strong>Research</strong></label><div id="busDiv" class="video-container amber flow-text" style="clear: both;overflow-y: auto;overflow-x: hidden;text-align: center"><table class="striped centered highlight responsive-table amber z-depth-5"><thead></thead><tbody><tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;"><td style="vertical-align: top;text-align: left"><table class="striped centered highlight responsive-table amber z-depth-5"><tbody><td id="tdBusRes" style="width: 705px; height: 405px; padding: 0;">
+                    <iframe 
+                      class="z-depth-5 card-panel amber darken-0 scale-transition scale-out scale-in btn-large" 
+                      src=""
+                      id="busRes"
+                      style= "width:'100%';height='100%'"
+                      allow="autoplay"
+                      allow="encrypted-media"
+                      title="Dontime Life Website"
+                      frameborder="0"
+                      allowfullscreen
+                      ></iframe></td></tbody></table></td></tr></tbody></table></div><div class="row"><div class="col s12 card-panel l12 m12 receipt red"><div class="container"><div class="z-depth-5 grey toolbar_icon toolbar_iconHover container col s12 receipt"><div class="col s12 l12 m12 receipt red"><input style="font-size:18pt;color:green" placeholder="research" class="timepicker flow-text menu-img z-depth-5 card-panel black scale-transition scale-out scale-in receipt btn-large" id="busSearch"  type="search" /></div></div></div></div></div></div></div></div><script>function serverside(func, args) {return new Promise((resolve, reject) => {google.script.run.withSuccessHandler((result) => {resolve(result)}).withFailureHandler((error) => {reject(error)}).runBoilerplate(func, args)})};var homeSearch 
+    = document.getElementById("homeIndex");homeSearch.addEventListener("change",(e) => {const strValue 
+    = homeSearch.value;var cap 
+    = e.target.value;document.getElementById("homeIndex").value 
+    = "";document.getElementById("indexLab").innerText 
+    = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
+    // User clicked "No" or X in the title bar.
+    document.getElementById("indexLab").innerText 
+    = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
+    = vid}else {document.getElementById("tdIndexRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
+    = er})});homeSearch.addEventListener('keypress', function(event) {
+    // If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {const strValue 
+    = homeSearch.value;if (!strValue) {document.getElementById("indexLab").innerText 
+    = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("indexLab").innerText 
+    = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
+    = stream}else {document.getElementById("indexRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("indexLab").innerText 
+    =  e}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
+    = er})}}});var tube 
+    = document.getElementById("tubeSearch");tube.addEventListener("change",(e) => {const strValue 
+    = tube.value;var cap 
+    = e.target.value;document.getElementById("tubeSearch").value 
+    = "";document.getElementById("tubeLab").innerText 
+    = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
   // User clicked "No" or X in the title bar.
-  document.getElementById("indexLab").innerText 
-  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
-  = vid}else {document.getElementById("tdIndexRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
-  = er})});homeSearch.addEventListener('keypress', function(event) {
-  // If the user preses the "Enter" key on the keyboard. 
-  if (event.key === "Enter")  {const strValue 
-  = homeSearch.value;if (!strValue) {document.getElementById("indexLab").innerText 
-  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("indexLab").innerText 
-  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("indexRes").src 
-  = stream}else {document.getElementById("indexRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("indexLab").innerText 
-  =  e}}).catch((er) => {alert(er);document.getElementById("indexLab").innerText 
-  = er})}}});var tube 
-  = document.getElementById("tubeSearch");tube.addEventListener("change",(e) => {const strValue 
-  = tube.value;var cap 
-  = e.target.value;document.getElementById("tubeSearch").value 
-  = "";document.getElementById("tubeLab").innerText 
-  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {
- // User clicked "No" or X in the title bar.
-  document.getElementById("tubeLab").innerText 
-  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
-  = vid}else {document.getElementById("tdTubeRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
-  =  er})});tube.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
-  if (event.key === "Enter")  {const strValue 
-  = tube.value;if (!strValue) {document.getElementById("tubeLab").innerText 
-  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("tubeLab").innerText 
-  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
-  = stream}else {document.getElementById("tdTubeRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("tubeLab").innerText 
-  =  e}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
-  =  er})}}});var bing 
-  = document.getElementById("bingSearch");bing.addEventListener("change",(e) => {const strValue 
-  = bing.value;var cap 
-  = e.target.value;document.getElementById("bingSearch").value 
-  = "";document.getElementById("bingLab").innerText 
-  = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {// User clicked "No" or X in the title bar.
-  document.getElementById("bingLab").innerText 
-  = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
-  = vid}else {document.getElementById("tdBingRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
-  =  er})});bing.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
-  if (event.key === "Enter")  {const strValue 
-  = bing.value;if (!strValue) {document.getElementById("bingLab").innerText 
-  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("bingLab").innerText 
-  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
-  = stream}else {document.getElementById("tdBingRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("bingLab").innerText 
-  =  e}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
-  =  er})}}});var busn 
-  = document.getElementById("busSearch");busn.addEventListener("change",(e) => {const strValue 
-  = busn.value;var cap 
-  = e.target.value;document.getElementById("busSearch").value 
-  = "";document.getElementById("busLab").innerText 
-  = "... waiting for " + strValue;serverside("mis", [cap]).then((html) => {if (html) {// User clicked "No" or X in the title bar.
-  document.getElementById("busLab").innerText 
-  = "";if (html.length === 99 || html.length ===94 || html.length === 83 || html.length ===97 || html.length ===101 || html.length ===103 || html.length ===136 || html.length ===132 || html.indexOf("&entry") > -1) {document.getElementById("busRes").src 
-  = html}else {document.getElementById("tdBusRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + html + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
-  =  er})});busn.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
-  if (event.key === "Enter")  {const strValue
-  = busn.value;if (!strValue) {document.getElementById("busLab").innerText 
-  = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("busLab").innerText 
-  = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("busRes").src 
-  = stream}else {document.getElementById("tdBusRes").innerHTML 
-  = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("busLab").innerText 
-  =  e}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
-  =  er})}}});var appSearch 
-  = document.getElementById("uiApp");appSearch.addEventListener("change",(e) => {const bar 
-  = e.target.value || "";document.getElementById("uiApp").value 
-  = "";serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
-  var cBlinkFollow 
-  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cBlinkFollow.href 
-  = cChange;};cBlinkFollow.id 
-  = "cBlinkFOLLOW";cBlinkFollow.target 
-  = "_blank";document.body.appendChild(cBlinkFollow);document.getElementById("cBlinkFOLLOW").click();document.getElementById("cBlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
-  var cdtlinkFollow 
-  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cdtlinkFollow.href 
-  = cChange;};cdtlinkFollow.id 
-  = "cdtlinkFOLLOW";cdtlinkFollow.target 
-  = "_blank";document.body.appendChild(cdtlinkFollow);document.getElementById("cdtlinkFOLLOW").click();document.getElementById("cdtlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
-  var gwilinkFollow 
-  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {gwilinkFollow.href 
-  = cChange;};gwilinkFollow.id 
-  = "gwilinkFOLLOW";gwilinkFollow.target 
-  = "_blank";document.body.appendChild(gwilinkFollow);document.getElementById("gwilinkFOLLOW").click();document.getElementById("gwilinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
-  var hlinkFollow 
-  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {hlinkFollow.href 
-  = cChange;};hlinkFollow.id 
-  = "hlinkFOLLOW";hlinkFollow.target 
-  = "_blank";document.body.appendChild(hlinkFollow);document.getElementById("hlinkFOLLOW").click();document.getElementById("hlinkFOLLOW").remove()}}).catch((er) => {alert(er)})});appSearch.addEventListener('keypress', function(event) {var bar
-  appSearch.addEventListener("change",(e) => {bar 
-  = e.target.value || "";var foo 
-  = [];alert(foo);var content 
-  = [];alert(content);var argsObject 
-  = serverside("misSt", [bar]).then((res)=>{return JSON.stringify(res)}).catch((er)=>{alert(er)})})// If the user preses the "Enter" key on the keyboard. 
-  if (event.key === "Enter")  {serverside(foo, [content]).then((cChange) => {alert(cChange);var oulinkFollow 
-  = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {oulinkFollow.href 
-  = cChange;};oulinkFollow.id 
-  = "oulinkFOLLOW";oulinkFollow.target 
-  = "_blank";document.body.appendChild(oulinkFollow);document.getElementById("oulinkFOLLOW").click();document.getElementById("uiApp").value 
-  = "";document.getElementById("oulinkFOLLOW").remove()}).catch((er) => {alert(er)})}})</script></body></html>`,
-  )
-    .evaluate()
-    .getContent();
+    document.getElementById("tubeLab").innerText 
+    = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
+    = vid}else {document.getElementById("tdTubeRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
+    =  er})});tube.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {const strValue 
+    = tube.value;if (!strValue) {document.getElementById("tubeLab").innerText 
+    = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("tubeLab").innerText 
+    = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("tubeRes").src 
+    = stream}else {document.getElementById("tdTubeRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("tubeLab").innerText 
+    =  e}}).catch((er) => {alert(er);document.getElementById("tubeLab").innerText 
+    =  er})}}});var bing 
+    = document.getElementById("bingSearch");bing.addEventListener("change",(e) => {const strValue 
+    = bing.value;var cap 
+    = e.target.value;document.getElementById("bingSearch").value 
+    = "";document.getElementById("bingLab").innerText 
+    = "... waiting for " + strValue;serverside("mis", [cap]).then((vid) => {if (vid) {// User clicked "No" or X in the title bar.
+    document.getElementById("bingLab").innerText 
+    = "";if (vid.length === 99 || vid.length ===94 || vid.length === 83 || vid.length ===97 || vid.length ===101 || vid.length ===103 || vid.length ===136 || vid.length ===132 || vid.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
+    = vid}else {document.getElementById("tdBingRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + vid + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
+    =  er})});bing.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {const strValue 
+    = bing.value;if (!strValue) {document.getElementById("bingLab").innerText 
+    = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("bingLab").innerText 
+    = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("bingRes").src 
+    = stream}else {document.getElementById("tdBingRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("bingLab").innerText 
+    =  e}}).catch((er) => {alert(er);document.getElementById("bingLab").innerText 
+    =  er})}}});var busn 
+    = document.getElementById("busSearch");busn.addEventListener("change",(e) => {const strValue 
+    = busn.value;var cap 
+    = e.target.value;document.getElementById("busSearch").value 
+    = "";document.getElementById("busLab").innerText 
+    = "... waiting for " + strValue;serverside("mis", [cap]).then((html) => {if (html) {// User clicked "No" or X in the title bar.
+    document.getElementById("busLab").innerText 
+    = "";if (html.length === 99 || html.length ===94 || html.length === 83 || html.length ===97 || html.length ===101 || html.length ===103 || html.length ===136 || html.length ===132 || html.indexOf("&entry") > -1) {document.getElementById("busRes").src 
+    = html}else {document.getElementById("tdBusRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + html + '</div></body></html>'}}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
+    =  er})});busn.addEventListener('keypress', function(event) {// If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {const strValue
+    = busn.value;if (!strValue) {document.getElementById("busLab").innerText 
+    = "... Loading";serverside("mis").then((stream) => {if (stream) {document.getElementById("busLab").innerText 
+    = "";if (stream.length === 99 || stream.length ===94 || stream.length === 83 || stream.length ===97 || stream.length ===101 || stream.length ===103 || stream.length ===136 || stream.length ===132 || stream.indexOf("&entry") > -1) {document.getElementById("busRes").src 
+    = stream}else {document.getElementById("tdBusRes").innerHTML 
+    = '<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">' + stream + '</div></body></html>'}}else {document.getElementById("busLab").innerText 
+    =  e}}).catch((er) => {alert(er);document.getElementById("busLab").innerText 
+    =  er})}}});var appSearch 
+    = document.getElementById("uiApp");appSearch.addEventListener("change",(e) => {const bar 
+    = e.target.value || "";document.getElementById("uiApp").value 
+    = "";serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+    var cBlinkFollow 
+    = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cBlinkFollow.href 
+    = cChange;};cBlinkFollow.id 
+    = "cBlinkFOLLOW";cBlinkFollow.target 
+    = "_blank";document.body.appendChild(cBlinkFollow);document.getElementById("cBlinkFOLLOW").click();document.getElementById("cBlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+    var cdtlinkFollow 
+    = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {cdtlinkFollow.href 
+    = cChange;};cdtlinkFollow.id 
+    = "cdtlinkFOLLOW";cdtlinkFollow.target 
+    = "_blank";document.body.appendChild(cdtlinkFollow);document.getElementById("cdtlinkFOLLOW").click();document.getElementById("cdtlinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+    var gwilinkFollow 
+    = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {gwilinkFollow.href 
+    = cChange;};gwilinkFollow.id 
+    = "gwilinkFOLLOW";gwilinkFollow.target 
+    = "_blank";document.body.appendChild(gwilinkFollow);document.getElementById("gwilinkFOLLOW").click();document.getElementById("gwilinkFOLLOW").remove()}}).catch((er) => {alert(er)});serverside("mis", [bar]).then((cChange) => {if (cChange) {// console.log(cChange)
+    var hlinkFollow 
+    = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {hlinkFollow.href 
+    = cChange;};hlinkFollow.id 
+    = "hlinkFOLLOW";hlinkFollow.target 
+    = "_blank";document.body.appendChild(hlinkFollow);document.getElementById("hlinkFOLLOW").click();document.getElementById("hlinkFOLLOW").remove()}}).catch((er) => {alert(er)})});appSearch.addEventListener('keypress', function(event) {var bar
+    appSearch.addEventListener("change",(e) => {bar 
+    = e.target.value || "";var foo 
+    = [];alert(foo);var content 
+    = [];alert(content);var argsObject 
+    = serverside("misSt", [bar]).then((res)=>{return JSON.stringify(res)}).catch((er)=>{alert(er)})})// If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {serverside(foo, [content]).then((cChange) => {alert(cChange);var oulinkFollow 
+    = document.createElement("a");if (cChange.length === 99 || cChange.length ===94 || cChange.length === 83 || cChange.length ===97 || cChange.length ===101 || cChange.length ===103 || cChange.length ===136 || cChange.length ===132 || cChange.indexOf("&entry") > -1) {oulinkFollow.href 
+    = cChange;};oulinkFollow.id 
+    = "oulinkFOLLOW";oulinkFollow.target 
+    = "_blank";document.body.appendChild(oulinkFollow);document.getElementById("oulinkFOLLOW").click();document.getElementById("uiApp").value 
+    = "";document.getElementById("oulinkFOLLOW").remove()}).catch((er) => {alert(er)})}})</script></body></html>`,
+    )
+      .evaluate()
+      .getContent();
+  }
 }
 
 // <div class="row">
 //   <nav class="col s10 push-s1 push-m1 push-l1 menu z-depth-5 card-panel amber scale-out scale-in" style="font-size: 30px">
 //     <div class="container">
 //       <div class="col s12 receipt nav-wrapper deep-purple darken-1">
-//           <a href="#" onclick="aboutMeSearch()" target="_self" id="aboutme">About-Me</a><br />
-//           <a href="#" onclick="shopResearch()" id="shopstore">Store</a><br />
-//           <a href="#" onclick="secResearch()" id="secenv">Local Enviroment</a><br />
-//           <a href="#" onclick="calcResearch()" id="calculate">Calculate</a><br />
-//           <a href="#" onclick="investResearch()" id="invest">Investors</a><br />
-//           <a href="#" onclick="newResearch()" id="rndnew">New</a><br />
+//           <a href="javascript:void(0)" onclick="aboutMeSearch()" target="_self" id="aboutme">About-Me</a><br />
+//           <a href="javascript:void(0)" onclick="shopResearch()" id="shopstore">Store</a><br />
+//           <a href="javascript:void(0)" onclick="secResearch()" id="secenv">Local Enviroment</a><br />
+//           <a href="javascript:void(0)" onclick="calcResearch()" id="calculate">Calculate</a><br />
+//           <a href="javascript:void(0)" onclick="investResearch()" id="invest">Investors</a><br />
+//           <a href="javascript:void(0)" onclick="newResearch()" id="rndnew">New</a><br />
 //       </div></div>
 //     </nav>
 // </div>
@@ -198,84 +200,80 @@ function appList() {
 //   </div>
 // </div>
 
-var contentApp = function (blob, argsObject) {
-  console.log(
-    "boilerplate render: line 201\ncontentApp(blob: " +
-      blob.slice(0, 130) +
-      "..., argsObject: " +
-      JSON.stringify(argsObject)?.slice(0, 130) +
-      ")\n" +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    autoP.functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\nblob is !" +
-      !blob +
-      " = " +
-      blob.substring(0, 130) +
-      "...\nargsObject is !" +
-      !argsObject +
-      " = " +
-      JSON.stringify(argsObject).slice(0, 130),
-  );
-  let api;
-  try {
-    api = ContentService.createTextOutput(blob)
-      .setMimeType(ContentService.MimeType.JSON)
-      .getContent();
-  } catch (error) {
-    console.log("error in contentApp: " + error);
-    throw new Error(
-      "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
+class ContentApp {
+  constructor (blob, argsObject) {
+    console.log(
+      "boilerplate render: line 201\ncontentApp(blob: " +
+        blob.slice(0, 130) +
+        "..., argsObject: " +
+        JSON.stringify(argsObject)?.slice(0, 130) +
+        ")",
     );
-  }
-
-  let tmp;
-  try {
-    tmp = HtmlService.createTemplate(api);
-  } catch (error) {
-    console.log("error in contentApp: " + error);
-    throw new Error(
-      "Error in contentApp HTML template: " +
-        error.toString() +
-        "\n" +
-        error.stack,
+    console.log(
+      autoP.functionRegistry.time +
+        "\nlob is !" +
+        !blob +
+        " = " +
+        blob.substring(0, 130) +
+        "...\nargsObject is !" +
+        !argsObject +
+        " = " +
+        JSON.stringify(argsObject).slice(0, 130),
     );
-  }
-  try {
-    if (argsObject) {
-      const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+    let api;
+    try {
+      api = ContentService.createTextOutput(blob)
+        .setMimeType(ContentService.MimeType.JSON)
+        .getContent();
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      throw new Error(
+        "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
+      );
     }
-  } catch (error) {
-    console.log("error in contentApp: " + error);
-    throw new Error(
-      "Error in contentApp template: " + error.toString() + "\n" + error.stack,
-    );
-  }
-  try {
-    return (
-      tmp
-        .evaluate()
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .getContent()
-    );
-  } catch (error) {
-    console.log("error in contentApp: " + error);
-    throw new Error(
-      "Error in contentApp evaluation: " +
-        error.toString() +
-        "\n" +
-        error.stack,
-    );
-  }
-}; // or throw error.
 
+    let tmp;
+    try {
+      tmp = HtmlService.createTemplate(api);
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      throw new Error(
+        "Error in contentApp HTML template: " +
+          error.toString() +
+          "\n" +
+          error.stack,
+      );
+    }
+    try {
+      if (argsObject) {
+        const keys = Object.keys(argsObject);
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+        });
+      }
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      throw new Error(
+        "Error in contentApp template: " + error.toString() + "\n" + error.stack,
+      );
+    }
+    try {
+      this.tmp = tmp
+          .evaluate()
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .getContent()
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      throw new Error(
+        "Error in contentApp evaluation: " +
+          error.toString() +
+          "\n" +
+          error.stack,
+      );
+    }
+  }; // or throw error.
+}
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
 // if (argsObject) {
@@ -286,19 +284,21 @@ var contentApp = function (blob, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var contentBlob = function (blob, argsObject) {
+class ContentBlob {
+  constructor (blob, argsObject) {
   var tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
-    var keys = Object.keys(argsObject);
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
-  }
-  return tmp
-    .evaluate()
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-    .getContent();
-};
+    if (argsObject) {
+      var keys = Object.keys(argsObject);
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+      });
+    }
+    return tmp
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .getContent();
+  };
+}
 
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -311,23 +311,26 @@ var contentBlob = function (blob, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var contentTemplate = function (file, argsObject) {
-  try {
-    var tmp = HtmlService.createTemplateFromFile(file);
-    if (argsObject) {
-      var keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+class ContentTemplate {
+  constructor (file, argsObject) {
+    try {
+      var tmp = HtmlService.createTemplateFromFile(file);
+      if (argsObject) {
+        var keys = Object.keys(argsObject);
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+        });
+      }
+      return tmp
+        .evaluate()
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .getContent();
+    } catch (error) {
+      console.error("Exception: ", error.toString());
     }
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .getContent();
-  } catch (error) {
-    console.error("Exception: ", error.toString());
-  }
-};
+  };
+}
+
 
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -340,121 +343,125 @@ var contentTemplate = function (file, argsObject) {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-var contentCDN = function (url, argsObject) {
-  // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
-  try {
-    console.log("argsObject before tmp processing", argsObject);
-    const tmp = HtmlService.createHtmlOutputFromFile("cors")
-    if (argsObject) {
-      try {
-        const keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
-      } catch (error) {
-        return "Error in contentCDN tmp" + error;
+class ContentCDN {
+  constructor (url, argsObject) {
+    // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
+    try {
+      console.log("argsObject before tmp processing", argsObject);
+      const tmp = HtmlService.createHtmlOutputFromFile("cors")
+      if (argsObject) {
+        try {
+          const keys = Object.keys(argsObject);
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+          });
+        } catch (error) {
+          return "Error in contentCDN tmp" + error;
+        }
       }
+      console.log("argsObject after tmp processing", tmp);
+      // console.log(
+      //   "boilerplate render: line 359\ncontentCDN(tmp: " +
+      //     JSON.stringify(tmp) +
+      //     ")\n" +
+      //     arguments.callee.caller.name,
+      // );
+      //Early return
+      console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
+      if (tmp.payL?.pL?.type !== "url" && tmp.payL?.pL?.type !== "text") {
+        if (tmp.payL?.message?.content) {
+          console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
+          let locObj = 
+            {
+              drivemC: tmp.payL?.message?.content,
+            }
+          let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
+          return HtmlService.createTemplate(html)
+            .evaluate()
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+        }
+      }
+      else {
+        if (tmp.payL?.message?.info) {
+          console.log("tmp payL message info\n" + tmp.payL?.message?.info, tmp.payL?.message);
+          let locObj = 
+            {
+              drivemC: tmp.payL?.message?.info,
+            }
+          let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
+          return HtmlService.createTemplate(html)
+            .evaluate()
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+        }
+      }
+      return tmp
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .setContent(seoCapital(url));
     }
-    console.log("argsObject after tmp processing", tmp);
-    // console.log(
-    //   "boilerplate render: line 359\ncontentCDN(tmp: " +
-    //     JSON.stringify(tmp) +
-    //     ")\n" +
-    //     arguments.callee.caller.name,
+    catch (erR) {
+      console.log("error in contentCDN: " + erR);
+      throw new Error(
+        "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
+      );
+    }
+    // var redirectURL = encodeURIComponent(
+    //   url +
+    //     "?" +
+    //     Object.keys(argsObject)
+    //       .map((key) => key + "=" + argsObject[key])
+    //       .join("&"),
     // );
-    //Early return
-    console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
-    if (tmp.payL?.pL?.type !== "url" && tmp.payL?.pL?.type !== "text") {
-      if (tmp.payL?.message?.content) {
-        console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
-        let locObj = 
-          {
-            drivemC: tmp.payL?.message?.content,
-          }
-        let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
-        return HtmlService.createTemplate(html)
-          .evaluate()
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-          .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
-      }
-    }
-    else {
-      if (tmp.payL?.message?.info) {
-        console.log("tmp payL message info\n" + tmp.payL?.message?.info, tmp.payL?.message);
-        let locObj = 
-          {
-            drivemC: tmp.payL?.message?.info,
-          }
-        let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
-        return HtmlService.createTemplate(html)
-          .evaluate()
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-          .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
-      }
-    }
-    return tmp
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .setContent(seoCapital(url));
-  }
-  catch (erR) {
-    console.log("error in contentCDN: " + erR);
-    throw new Error(
-      "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
-    );
-  }
-  // var redirectURL = encodeURIComponent(
-  //   url +
-  //     "?" +
-  //     Object.keys(argsObject)
-  //       .map((key) => key + "=" + argsObject[key])
-  //       .join("&"),
-  // );
-};
+  };
+}
 
-var contentFile = function (file, argsObject) {
-  console.log("contentFile = function (file, argsObject) ", file, argsObject);
-  try {
-    const tmp = HtmlService.createTemplateFromFile(
-      ContentService.createTextOutput(file)
-        .setMimeType(ContentService.MimeType.JSON)
-        .getContent(),
-    );
-    console.log(
-      "boilerplate render: line 326\ncontentFile(tmp: " +
-        JSON.stringify(tmp) +
-        ")\n" +
-        arguments.callee.caller.name,
-    );
-    if (argsObject) {
-      const keys = Object.keys(argsObject);
+class ContentFile {
+  constructor (file, argsObject) {
+    console.log("contentFile = function (file, argsObject) ", file, argsObject);
+    try {
+      const tmp = HtmlService.createTemplateFromFile(
+        ContentService.createTextOutput(file)
+          .setMimeType(ContentService.MimeType.JSON)
+          .getContent(),
+      );
       console.log(
-        "boilerplate render: line 336\ncontentFile(keys: " +
-          keys[0] +
+        "boilerplate render: line 326\ncontentFile(tmp: " +
+          JSON.stringify(tmp) +
           ")\n" +
           arguments.callee.caller.name,
       );
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+      if (argsObject) {
+        const keys = Object.keys(argsObject);
+        console.log(
+          "boilerplate render: line 336\ncontentFile(keys: " +
+            keys[0] +
+            ")\n" +
+            arguments.callee.caller.name,
+        );
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+        });
+      }
+      console.log(
+        "boilerplate render: line 348\ncontentFile(tmp: " +
+          JSON.stringify(tmp[0]) +
+          ")\n" +
+          arguments.callee.caller.name,
+      );
+      return tmp
+        .evaluate()
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        .getContent();
+    } catch (error) {
+      console.log("error in contentFile: " + error);
+      throw new Error(
+        "Error in contentFile html: " + error.toString() + "\n" + error.stack,
+      );
     }
-    console.log(
-      "boilerplate render: line 348\ncontentFile(tmp: " +
-        JSON.stringify(tmp[0]) +
-        ")\n" +
-        arguments.callee.caller.name,
-    );
-    return tmp
-      .evaluate()
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .getContent();
-  } catch (error) {
-    console.log("error in contentFile: " + error);
-    throw new Error(
-      "Error in contentFile html: " + error.toString() + "\n" + error.stack,
-    );
-  }
-};
+  };
+}
 
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -912,645 +919,642 @@ var myWebFunction = function (webApp, argsObject) {
 
 globalThis.oneTime = 59.9 * 1000;
 
-var renderFile = function (file, argsObject, title) {
-  console.log(
-    autoP.functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\nfile is !" +
-      !file +
-      " = " +
-      file +
-      "\nargsObject is !" +
-      !argsObject +
-      " = " +
-      JSON.stringify(argsObject) +
-      "\ntitle is !" +
-      !title +
-      " = " +
-      title,
-  );
-  try {
-    if (file) {
-      let htmlList = autoP.functionRegistry.getHtmlList();
-      if (htmlList.indexOf(file) !== -1) { 
-        const tmp = HtmlService.createTemplateFromFile(file);
-        if (argsObject) {
-          const keys = Object.keys(argsObject);
-          keys.forEach(function (key) {
-            tmp[key] = argsObject[key];
-          });
-        }
-
-        // tmp["list"] = htmlListArray;
-        // END IF
-        // Route[file] = argsObject
-        // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
-        // var funcCheck = appList();
-        // var schedule = dateTime(new Date());
-        var html = contentApp(
-          `
-        <!doctype html>
-          <html lang="en">
-            <head>
-              <base target="_self" />
-              <?!= styleHtml.abcIt.getContent() ?>
-              <style>
-                <?!= styleHtml.renderFile.getContent() ?>
-                <!--[if lt IE 9]>
-                <script>
-                  document.createElement("article");
-                  document.createElement("footer");
-                  document.createElement("header");
-                  document.createElement("nav");
-                  document.createElement("main");
-                  document.createElement("section");
-                  document.createElement("aside");
-                </script>
-                <![endif]-->
-              </style>
-            </head>
-            <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
-              <nav class="flex-div card-panel transparent static-fix">
-                <div class="nav-left flex-div">
-                  <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
-                </div>
-                <div class="nav-middle flex-div">
-                  <div class="search-box flex-div">
-                    <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
-                  </div>
-                </div>
-                <div class="nav-right flex-div">
-                  <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
-                </div>
-              </nav>
-              <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
-                <header class="banner card-panel transparent static-fix">
-                  <div id="iframePlayer" class="row card-panel transparent"></div>
-                  <h1>Blog</h1>
-                  <label id="loadingLab">
-                    <strong>
-                      <p>Recent Applications</p>
-                    </strong>
-                  </label>
-                </header>
-                <div class="row responsive-section transparent">
-                <div class="card-panel transparent responsive-section">
-                <div class="responsive-section transparent">
-                <div class="responsive-section transparent">
-                <div class="receipt transparent responsive-section">
-                <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
-                  <thead class="transparent">
-                  </thead>
-                  <tbody class="transparent">
-                    <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
-                      <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                        <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
-                          <tbody class="transparent">
-                            <td class="transparent">
-                              <div class="row transparent">
-                                <section class="transparent">
-                                    <header class="card-panel transparent list-container grid">
-                                    <h2>Owe</h2>
-                                    <aside class="card-panel transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="tro" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                                        </div>
-                                      </div>
-                                    </aside>
-                                    <article class="transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="lti" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <header class="transparent">
-                                            <h3><a href="">Legal Title:</a></h3>
-                                          </header>
-                                          <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                                        </div>
-                                      </div>
-                                    </article>
-                                    <article class="transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="rpc" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <header class="transparent">
-                                            <h3><a href="">Rights of Possession and Control:</a></h3>
-                                          </header>
-                                          <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                                        </div>
-                                      </div>
-                                    </article>
-                                    <article class="transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="rdi" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <header class="transparent">
-                                            <h3><a href="">Right of Disposal:</a></h3>
-                                          </header>
-                                          <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                                        </div>
-                                      </div>
-                                    </article>
-                                    <article class="transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="ccm" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <header class="transparent">
-                                            <h3><a href="">Freedom from Competing Claims:</a></h3>
-                                          </header>
-                                          <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                                        </div>
-                                      </div>
-                                    </article>
-                                    <article class="transparent vid-list">
-                                      <article class="transparent">
-                                        <div class="row">
-                                          <?!= renTemp ?>
-                                        </div>
-                                      </article>
-                                      <a id="beb" href="#">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
-                                      </a>
-                                      <div class="flex-div transparent">
-                                        <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
-                                        <div class="vid-info">
-                                          <header class="transparent">
-                                            <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
-                                          </header>
-                                          <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                                        </div>
-                                      </div>
-                                    </article>
-                                  </header>
-                                </section>
-                              </div>
-                              <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                              <header class="banner transparent responsive-section">
-                                <div id="loadingSurvey">
-                                  <a id="rfif" href="#">
-                                    <h5>Remove</h5>
-                                  </a>
-                                </div>
-                              </header>
-                              <hr>
-                              <div class="subscribed-list">
-                                <h3>SUBSCRIBED</h3>
-                                <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
-                              </div>
-                            </td>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table></div></div></div></div></div>
-              <?!= styleHtml.runIt.getContent() ?>
-              <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-            </body>
-          </html>`,
-          {
-            renTemp: tmp.evaluate().getContent(),
-          },
-        );
-        // return renderTemplate(html,argsObject,title)
-        return (
-          HtmlService.createHtmlOutput(html) //tmp
-            // .evaluate()
-            .setTitle(title)
-            // .append(html)
-            // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        );
-      }
-    } else {
-      return handleRequest(argsObject);
-    }
-  } catch (error) {
-    console.log("error in renderTemplate: " + error);
-    throw new Error(
-      "Error in renderFile html: " + error.toString() + "\n" + error.stack,
+class RenderFile { 
+  constructor (file, argsObject, title) {
+    console.log(
+      autoP.functionRegistry.time +
+        "\nfile is !" +
+        !file +
+        " = " +
+        file +
+        "\nargsObject is !" +
+        !argsObject +
+        " = " +
+        JSON.stringify(argsObject) +
+        "\ntitle is !" +
+        !title +
+        " = " +
+        title,
     );
-  }
-};
-
-var renderTemplate = function (blob, argsObject, title) {
-  console.log(
-    "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
-      blob?.length > 9
-      ? blob?.substring(0, 130)
-      : "" +
-          "..., argsObject: " +
-          JSON.stringify(argsObject) +
-          ", title: " +
-          title +
-          ")\n" +
-          arguments.callee.caller.name,
-  );
-  let executed = 0;
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-  console.log("argsObject before tmp processing", argsObject);
-  const tmp = HtmlService.createTemplate(blob);
-  if (argsObject) {
     try {
-      const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
-    } catch (error) {
-      return "Error in renderTemplate tmp" + error;
-    }
-  }
-  console.log("argsObject after tmp processing", tmp);
-  // var funcCheck = appList();
-  // var css = builtStyling();
-  // var schedule = dateTime(new Date());
-  // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
-  let html = null;
-  try {
-    if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
-      if (tmp.payL?.type === "html") {
-        html = contentApp(tmp.payL?.data,
-          {
-            driveT: tmp.payL?.type,
-          },
-        )
-      }
-      else {
-        if (tmp.payL?.pL?.type === "html") {
-          html = contentApp(tmp.payL?.message?.info,
+      if (file) {
+        let htmlList = autoP.functionRegistry.getHtmlList();
+        if (htmlList.indexOf(file) !== -1) { 
+          const tmp = HtmlService.createTemplateFromFile(file);
+          if (argsObject) {
+            const keys = Object.keys(argsObject);
+            keys.forEach(function (key) {
+              tmp[key] = argsObject[key];
+            });
+          }
+
+          // tmp["list"] = htmlListArray;
+          // END IF
+          // Route[file] = argsObject
+          // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
+          // var funcCheck = appList();
+          // var schedule = dateTime(new Date());
+          var html = new ContentApp(
+            `
+          <!doctype html>
+            <html lang="en">
+              <head>
+                <base target="_self" />
+                <?!= styleHtml.abcIt.getContent() ?>
+                <style>
+                  <?!= styleHtml.renderFile.getContent() ?>
+                  <!--[if lt IE 9]>
+                  <script>
+                    document.createElement("article");
+                    document.createElement("footer");
+                    document.createElement("header");
+                    document.createElement("nav");
+                    document.createElement("main");
+                    document.createElement("section");
+                    document.createElement("aside");
+                  </script>
+                  <![endif]-->
+                </style>
+              </head>
+              <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
+                <nav class="flex-div card-panel transparent static-fix">
+                  <div class="nav-left flex-div">
+                    <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
+                  </div>
+                  <div class="nav-middle flex-div">
+                    <div class="search-box flex-div">
+                      <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                    </div>
+                  </div>
+                  <div class="nav-right flex-div">
+                    <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+                  </div>
+                </nav>
+                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
+                  <header class="banner card-panel transparent static-fix">
+                    <div id="iframePlayer" class="row card-panel transparent"></div>
+                    <h1>Blog</h1>
+                    <label id="loadingLab">
+                      <strong>
+                        <p>Recent Applications</p>
+                      </strong>
+                    </label>
+                  </header>
+                  <div class="row responsive-section transparent">
+                  <div class="card-panel transparent responsive-section">
+                  <div class="responsive-section transparent">
+                  <div class="responsive-section transparent">
+                  <div class="receipt transparent responsive-section">
+                  <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                    <thead class="transparent">
+                    </thead>
+                    <tbody class="transparent">
+                      <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                        <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                          <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                            <tbody class="transparent">
+                              <td class="transparent">
+                                <div class="row transparent">
+                                  <section class="transparent">
+                                      <header class="card-panel transparent list-container grid">
+                                      <h2>Owe</h2>
+                                      <aside class="card-panel transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="tro" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                                          </div>
+                                        </div>
+                                      </aside>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="lti" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Legal Title:</a></h3>
+                                            </header>
+                                            <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="rpc" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Rights of Possession and Control:</a></h3>
+                                            </header>
+                                            <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="rdi" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Right of Disposal:</a></h3>
+                                            </header>
+                                            <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="ccm" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Freedom from Competing Claims:</a></h3>
+                                            </header>
+                                            <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="beb" href="javascript:void(0)">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
+                                            </header>
+                                            <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                    </header>
+                                  </section>
+                                </div>
+                                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                                <header class="banner transparent responsive-section">
+                                  <div id="loadingSurvey">
+                                    <a id="rfif" href="javascript:void(0)">
+                                      <h5>Remove</h5>
+                                    </a>
+                                  </div>
+                                </header>
+                                <hr>
+                                <div class="subscribed-list">
+                                  <h3>SUBSCRIBED</h3>
+                                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                                </div>
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table></div></div></div></div></div>
+                <?!= styleHtml.runIt.getContent() ?>
+                <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+              </body>
+            </html>`,
             {
               renTemp: tmp.evaluate().getContent(),
-              driveA: JSON.stringify(argsObject),
-              driveD: tmp.payL?.pL?.data,
-              drivedD: tmp.payL?.pL?.dataData,
-              drivemI: tmp.payL?.message?.info,
-              drivedI: tmp.payL?.pL?.dataIndex,
-              drivedU: tmp.payL?.message?.feed,
-              driveL: tmp.payL?.pL?.link,
-              driveM: tmp.payL?.message,
-              drivemC: tmp.payL?.message?.content,
-              driveP: tmp.payL?.pL,
-              driveT: tmp.payL?.pL?.type,
+            },
+          );
+          // return renderTemplate(html,argsObject,title)
+          this.fileTemplate =  HtmlService.createHtmlOutput(html.tmp) //tmp
+              // .evaluate()
+              .setTitle(title)
+              // .append(html)
+              // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+              .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+        }
+      } else {
+        this.fileTemplate =  handleRequest(argsObject);
+      }
+    } catch (error) {
+      console.log("error in renderTemplate: " + error);
+      throw new Error(
+        "Error in renderFile html: " + error.toString() + "\n" + error.stack,
+      );
+    }
+  };
+}
+
+class RenderTemplate {
+  constructor (blob, argsObject, title) {
+    console.log(
+      "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
+        blob?.length > 9
+        ? blob?.substring(0, 130)
+        : "" +
+            "..., argsObject: " +
+            JSON.stringify(argsObject) +
+            ", title: " +
+            title +
+            ")",
+    );
+    let executed = 0;
+    console.log(autoP.functionRegistry.time);
+    console.log("argsObject before tmp processing", argsObject);
+    const tmp = HtmlService.createTemplate(blob);
+    if (argsObject) {
+      try {
+        const keys = Object.keys(argsObject);
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+        });
+      } catch (error) {
+        return "Error in renderTemplate tmp" + error;
+      }
+    }
+    console.log("argsObject after tmp processing", tmp);
+    // var funcCheck = appList();
+    // var css = builtStyling();
+    // var schedule = dateTime(new Date());
+    // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+    let html = null;
+    try {
+      if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
+        if (tmp.payL?.type === "html") {
+          html = contentApp(tmp.payL?.data,
+            {
+              driveT: tmp.payL?.type,
             },
           )
         }
+        else {
+          if (tmp.payL?.pL?.type === "html") {
+            html = contentApp(tmp.payL?.message?.info,
+              {
+                renTemp: tmp.evaluate().getContent(),
+                driveA: JSON.stringify(argsObject),
+                driveD: tmp.payL?.pL?.data,
+                drivedD: tmp.payL?.pL?.dataData,
+                drivemI: tmp.payL?.message?.info,
+                drivedI: tmp.payL?.pL?.dataIndex,
+                drivedU: tmp.payL?.message?.feed,
+                driveL: tmp.payL?.pL?.link,
+                driveM: tmp.payL?.message,
+                drivemC: tmp.payL?.message?.content,
+                driveP: tmp.payL?.pL,
+                driveT: tmp.payL?.pL?.type,
+              },
+            )
+          }
+        }
       }
-    }
-    else {
-      html = contentApp(
-        `
-      <html id="renderTemplate">
-        <head>
-          <?!= styleHtml.abcIt.getContent() ?>
-          <style>
-            <?!= styleHtml.renderFile.getContent() ?>
-            <!--[if lt IE 9]>
-            <script>
-              document.createElement("article");
-              document.createElement("footer");
-              document.createElement("header");
-              document.createElement("nav");
-              document.createElement("main");
-              document.createElement("section");
-              document.createElement("aside");
-            </script>
-            <![endif]-->
-          </style>
-        </head>
-        <body>
-          <nav class="flex-div responsive-section transparent static-fix">
-            <div class="nav-left flex-div responsive-section">
-              <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
-            </div>
-            <div class="nav-middle flex-div responsive-section">
-              <div class="search-box flex-div">
-                <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+      else {
+        html = new ContentApp(
+          `
+        <html id="renderTemplate">
+          <head>
+            <?!= styleHtml.abcIt.getContent() ?>
+            <style>
+              <?!= styleHtml.renderFile.getContent() ?>
+              <!--[if lt IE 9]>
+              <script>
+                document.createElement("article");
+                document.createElement("footer");
+                document.createElement("header");
+                document.createElement("nav");
+                document.createElement("main");
+                document.createElement("section");
+                document.createElement("aside");
+              </script>
+              <![endif]-->
+            </style>
+          </head>
+          <body>
+            <nav class="flex-div responsive-section transparent static-fix">
+              <div class="nav-left flex-div responsive-section">
+                <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
               </div>
-            </div>
-            <div class="nav-right flex-div responsive-section">
-              <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
-            </div>
-          </nav>
-          <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
-          <main class="responsive-section float-left">
-            <header class="transparent banner responsive-section">
-              <div id="player1" class="row card-panel transparent list-container grid"></div>
-              <h4><?!= drivedD?.split("{")[0] ?></h4>
-              <label id="loadingLab">
-                <strong>
-                  <p>Recent Applications</p>
-                </strong>
-              </label>
-            </header>
-            <div class="row responsive-section">
-            <div class="card-panel transparent responsive-section">
-            <div class="responsive-section">
-            <div class="responsive-section">
-            <div class="receipt transparent responsive-section">
-            <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
-              <thead class="transparent" >
-              </thead>
-              <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
-                  <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                    <table class="striped centered highlight purple z-depth-5 responsive-section static-fix">
-                      <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                        <td class="transparent">
-                          <div class="transparent row responsive-section">
-                            <section class="transparent responsive-section static-fix">
-                              <header class="transparent responsive-section list-container grid">
-                                <h2>Power</h2>
-                                <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
-                                <aside class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+              <div class="nav-middle flex-div responsive-section">
+                <div class="search-box flex-div">
+                  <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                </div>
+              </div>
+              <div class="nav-right flex-div responsive-section">
+                <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+              </div>
+            </nav>
+            <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
+            <main class="responsive-section float-left">
+              <header class="transparent banner responsive-section">
+                <div id="player1" class="row card-panel transparent list-container grid"></div>
+                <h4><?!= drivedD?.split("{")[0] ?></h4>
+                <label id="loadingLab">
+                  <strong>
+                    <p>Recent Applications</p>
+                  </strong>
+                </label>
+              </header>
+              <div class="row responsive-section">
+              <div class="card-panel transparent responsive-section">
+              <div class="responsive-section">
+              <div class="responsive-section">
+              <div class="receipt transparent responsive-section">
+              <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                <thead class="transparent" >
+                </thead>
+                <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                  <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                    <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                      <table class="striped centered highlight purple z-depth-5 responsive-section static-fix">
+                        <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                          <td class="transparent">
+                            <div class="transparent row responsive-section">
+                              <section class="transparent responsive-section static-fix">
+                                <header class="transparent responsive-section list-container grid">
+                                  <h2>Power</h2>
+                                  <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="dmi" href="<?= drivemI ?>">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <p>
+                                          <i>   
+                                            No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
+                                            <?!= JSON.stringify(driveM) ?>
+                                          </i>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </aside>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="del" href="<?!= driveL ?>">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= drivedD ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Subjectivity in Definition:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                      </div>
                                     </div>
                                   </article>
-                                  <a id="dmi" href="<?= drivemI ?>">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <p>
-                                        <i>   
-                                          No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
-                                          <?!= JSON.stringify(driveM) ?>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="qua" href="javascript:void(0)">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= driveT ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Qualitative Aspects:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ddi" href="<?!= drivedI ?>">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= drivedI ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Contextual Dependence:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ama" href="javascript:void(0)">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <i>
+                                          However, there are some aspects that can be measured or assessed to some degree:
                                         </i>
-                                      </p>
+                                      </div>
                                     </div>
-                                  </div>
-                                </aside>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <a id="del" href="<?!= driveL ?>">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <?!= drivedD ?>
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Subjectivity in Definition:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                                    </div>
-                                  </div>
-                                </article>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                  </aside>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="vsd" href="javascript:void(0)">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Visible Demonstrations:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                                      </div>
                                     </div>
                                   </article>
-                                  <a id="qua" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <?!= driveT ?>
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Qualitative Aspects:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                                    </div>
-                                  </div>
-                                </article>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <a id="ddi" href="<?!= drivedI ?>">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <?!= drivedI ?>
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Contextual Dependence:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                                    </div>
-                                  </div>
-                                </article>
-                                <aside class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ccc" href="javascript:void(0)">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Compliance and Obedience:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                                      </div>
                                     </div>
                                   </article>
-                                  <a id="ama" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <i>
-                                        However, there are some aspects that can be measured or assessed to some degree:
-                                      </i>
-                                    </div>
-                                  </div>
-                                </aside>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <a id="vsd" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Visible Demonstrations:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                                    </div>
-                                  </div>
-                                </article>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="sli" href="javascript:void(0)">
+                                      <img src="<?!= seaIcn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Social Influence:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                                      </div>
                                     </div>
                                   </article>
-                                  <a id="ccc" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Compliance and Obedience:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="drd" href="<?!= driveD ?>">
+                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">In conclusion:</a></h3>
+                                        </header>
+                                        <p style="text-align: left">
+                                        While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                                        </p>
+                                      </div>
                                     </div>
-                                  </div>
-                                </article>
-                                <article class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <a id="sli" href="#">
-                                    <img src="<?!= seaIcn.getContent() ?>" class="thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <header class="responsive-section">
-                                        <h3><a href="#">Social Influence:</a></h3>
-                                      </header>
-                                      <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                                    </div>
-                                  </div>
-                                </article>
-                                <aside class="transparent responsive-section card-panel vid-list">
-                                  <article class="transparent responsive-section card-panel static-fix container">
-                                    <div class="row responsive-section static-fix">
-                                      <?!= renTemp ?>
-                                    </div>
-                                  </article>
-                                  <a id="drd" href="<?!= driveD ?>">
-                                    <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
-                                  </a>
-                                  <div class="flex-div">
-                                    <img src="<?!= seaIcn.getContent() ?>" />
-                                    <div class="vid-info">
-                                      <header class="responsive-section">
-                                        <h3><a href="#">In conclusion:</a></h3>
-                                      </header>
-                                      <p style="text-align: left">
-                                      While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                                      </p>
-                                    </div>
-                                  </div>
-                                </aside>
-                              </header>
-                            </section>
-                          </div>
-                        </td>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            </div></div></div></div></div>
-          </main>
-          <footer class="transparent receipt-footer responsive-section card-panel float-right">
-            <div class="row responsive-section">
-              <aside class="pulse transparent sidebar float-right">
-                <p>
-                  <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                  <header class="banner transparent responsive-section">
-                    <div id="loadingSurvey">
-                      <a id="rtif" href="#">
-                        <h5>Remove</h5>
-                      </a>
+                                  </aside>
+                                </header>
+                              </section>
+                            </div>
+                          </td>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div></div></div></div></div>
+            </main>
+            <footer class="transparent receipt-footer responsive-section card-panel float-right">
+              <div class="row responsive-section">
+                <aside class="pulse transparent sidebar float-right">
+                  <p>
+                    <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    <header class="banner transparent responsive-section">
+                      <div id="loadingSurvey">
+                        <a id="rtif" href="javascript:void(0)">
+                          <h5>Remove</h5>
+                        </a>
+                      </div>
+                    </header>
+                    <hr>
+                    <div class="subscribed-list">
+                      <h3>SUBSCRIBED</h3>
+                      <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
                     </div>
-                  </header>
-                  <hr>
-                  <div class="subscribed-list">
-                    <h3>SUBSCRIBED</h3>
-                    <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
-                  </div>
-                </p>
-              </aside>
-            </div>
-          </footer>
-          <?!= styleHtml.runIt.getContent() ?>
-          <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
-          <div id="result"></div>
-          <div id="successMessage"></div>
-          <div id="errorMessage"></div>
-          <table id="resultsTable"></table>
-        </body>
-      </html>`,
-        {
-          renTemp: tmp.evaluate().getContent(),
-          driveA: JSON.stringify(argsObject),
-          driveD: tmp.payL?.pL?.data,
-          drivedD: tmp.payL?.pL?.dataData,
-          drivemI: tmp.payL?.message?.info,
-          drivedI: tmp.payL?.pL?.dataIndex,
-          drivedU: tmp.payL?.message?.feed,
-          driveL: tmp.payL?.pL?.link,
-          driveM: tmp.payL?.message,
-          drivemC: tmp.payL?.message?.content,
-          driveP: tmp.payL?.pL,
-          driveT: tmp.payL?.pL?.type,
-        },
+                  </p>
+                </aside>
+              </div>
+            </footer>
+            <?!= styleHtml.runIt.getContent() ?>
+            <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+            <div id="result"></div>
+            <div id="successMessage"></div>
+            <div id="errorMessage"></div>
+            <table id="resultsTable"></table>
+          </body>
+        </html>`,
+          {
+            renTemp: tmp.evaluate().getContent(),
+            driveA: JSON.stringify(argsObject),
+            driveD: tmp.payL?.pL?.data,
+            drivedD: tmp.payL?.pL?.dataData,
+            drivemI: tmp.payL?.message?.info,
+            drivedI: tmp.payL?.pL?.dataIndex,
+            drivedU: tmp.payL?.message?.feed,
+            driveL: tmp.payL?.pL?.link,
+            driveM: tmp.payL?.message,
+            drivemC: tmp.payL?.message?.content,
+            driveP: tmp.payL?.pL,
+            driveT: tmp.payL?.pL?.type,
+          },
+        );
+      }
+    } catch (error) {
+      console.error("Error rendering template:", error, error.stack);
+      throw new Error(
+        "Error in rendertemplate html: " + blob + "\n" + error.stack,
       );
     }
-  } catch (error) {
-    console.error("Error rendering template:", error, error.stack);
-    throw new Error(
-      "Error in rendertemplate html: " + blob + "\n" + error.stack,
-    );
-  }
-  return (
-    HtmlService.createHtmlOutput(html) //tmp
-      .setTitle(title)
-      // .append(html)
-      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-  );
-}; // or throw error.
+    this.blobTemplate = HtmlService.createHtmlOutput(html.tmp) //tmp
+        .setTitle(title)
+        // .append(html)
+        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }; // or throw error.
+}
 
 // Gets a cache that is common to all users of the script
 var sCache = CacheService.getScriptCache();

@@ -999,19 +999,21 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
             // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
             $('a').click(function(event){
-              let confirmation = window.confirm(
-                "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-              );
-              if (confirmation) {
-                event.preventDefault();
-                var linkFollow = document.createElement("a");
-                linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
-                linkFollow.id = "linkFOLLOW";
-                linkFollow.target = "_blank";
-                linkFollow.rel = "noopener noreferrer";
-                document.body.appendChild(linkFollow);
-                document.getElementById("linkFOLLOW").click();
-                document.getElementById("linkFOLLOW").remove();
+              if ($(this).attr('href') === "javascript:void(0)") {
+                let confirmation = window.confirm(
+                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  event.preventDefault();
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                }
               }
             });
           })
@@ -1087,7 +1089,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                     for (var key in done) {
                       // alert(JSON.stringify(done[key]));
                       let confirmation = window.confirm(
-                        "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                        "Leaving Don'time Life Services ...",
                       );
                       if (confirmation) {
                         window.open(done[key].hardUrl);
@@ -1147,19 +1149,21 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                     // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
                     // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
                     $('a').click(function(event){
-                      let confirmation = window.confirm(
-                        "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                      );
-                      if (confirmation) {
-                        event.preventDefault();
-                        var linkFollow = document.createElement("a");
-                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
+                      if ($(this).attr('href') === "javascript:void(0)") {
+                        let confirmation = window.confirm(
+                          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                        );
+                        if (confirmation) {
+                          event.preventDefault();
+                          var linkFollow = document.createElement("a");
+                          linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_blank";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                        }
                       }
                     });
                   })

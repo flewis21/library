@@ -97,7 +97,7 @@ function doGet(e) {
   //     titleArray.push(key);
   //   }
   // }
-  var lowCapApp = [appList].join("").toLowerCase().split(",");
+  var lowCapApp = [new AppList()].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {

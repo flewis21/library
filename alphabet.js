@@ -1,181 +1,233 @@
-var aVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class AVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var bVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class BVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var cVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class CVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var dVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class DVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var eVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class EVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var fVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class FVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var gVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class GVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var hVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class HVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var iVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class IVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var jVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class JVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var kVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class KVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var lVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class LVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var mVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class MVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var nVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class NVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var oVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class OVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var pVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class PVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var qVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class QVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var rVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class RVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var sVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class SVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var tVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class TVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var uVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class UVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var vVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class VVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var wVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class WVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var xVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class XVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var yVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class YVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
 
-var zVar = function (varA) {
-  aVar = varA;
-  return {
-    myVar: aVar,
+class ZVar {
+  constructor (varA) {
+    aVar = varA;
+    return {
+      myVar: aVar,
+    };
   };
 };
