@@ -997,7 +997,7 @@
 // }
 
 function myFileJS(e) {
-  content = contentFile("myGNUFreeJS", {
+  content = new ContentFile("myGNUFreeJS", {
     main: function () {
       const regTF = () => {
         const serverSide = function (func, args) {
@@ -1057,6 +1057,6 @@ function myFileJS(e) {
           });
       };
     },
-  });
-  return contentApp(content);
+  }).tmp;
+  return new ContentApp(content).tmp;
 }

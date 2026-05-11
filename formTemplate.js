@@ -2078,7 +2078,7 @@ function dtlsResearchForm(topic) {
 
 function dtlsSomeFunction(e) {
   var time = autoP.functionRegistry.time;
-  var importedData = globalThis.arrD();
+  var importedData = autoP.arrD();
   var funcStr = randomSubstance(0, 4, importedData).myNewArr;
   // var uniqueKey = [funcStr];
   // var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
@@ -2748,7 +2748,7 @@ function geneFrame(reference) {
 function mainMan(mainFile) {
   if (mainFile) {
     // var mainFile = "wild"
-    var stringSplit = mainFile.split(" ");
+    var stringSplit = [mainFile].split(" ");
     var lowerCaseS = [];
     testData([stringSplit])?.map((increase) => {
       if (lowerCaseS.indexOf(increase) === -1) {

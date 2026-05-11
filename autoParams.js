@@ -1642,7 +1642,7 @@ class FunctionHandle {
       } 
     }
     console.log("exec and args\n" + [funcUno, funcDos]);
-    return {
+    this.fhObj = {
       exec: funcUno,
       args: funcDos,
     };

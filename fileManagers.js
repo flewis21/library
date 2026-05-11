@@ -1388,9 +1388,9 @@ function fileMatchManager(folderX, fileX, time) {
         null,
     );
     var folderX = furtFolder();
-    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+    var pyFolder = DriveApp.getFoldersByName(folderX)?.next();
   } else {
-    var pyFolder = DriveApp.getFoldersByName(folderX).next();
+    var pyFolder = DriveApp.getFoldersByName(folderX)?.next();
   }
   var tree = pyFolder.getFiles();
   let l;

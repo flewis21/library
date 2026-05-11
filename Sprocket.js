@@ -401,7 +401,7 @@ function dtlsBridge(func, time) {
       var seoTwo = appList.indexOf(lowCapSeo[0]);
       var resSeo = appList[seoTwo];
     } else {
-      var sLen = rndKey.length;
+      var sLen = rndKey?.length;
       var sLenRnd = Math.floor(Math.random() * Math.floor(sLen));
       var seoFirst = appSort(sLenRnd);
       var lowCapSeo = [seoFirst].join("").toLowerCase().split(",");

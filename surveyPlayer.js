@@ -29,7 +29,7 @@ function surveyPlayer(searchString, joinString) {
   // var eFolder = DriveApp.getFoldersByName(rndFol).next();
   // var folderFile = eFolder.getFilesByName("Code Editor");
 
-  var rndStr = globalThis.uniqueItemArray();
+  var rndStr = autoP.uniqueItemArray();
 
   var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
 

@@ -1470,7 +1470,7 @@ var acceptQuote = function (formDataJson) {
 
     // You can return the PDF URL to the client-side for them to display or download.
 
-    let slideRender = renderFile("slideCard", formData, "Success");
+    let slideRender = new RenderFile("slideCard", formData, "Success").fileTemplate;
     return slideRender;
     return invoicePdfUrl;
   } catch (error) {
@@ -1625,7 +1625,7 @@ var updateQuote = function (formDataJson) {
 
     // You can return the PDF URL to the client-side for them to display or download.
 
-    let slideRender = renderFile("slideCard", formData, "Success");
+    let slideRender = new RenderFile("slideCard", formData, "Success").fileTemplate;
 
     return slideRender;
     return invoicePdfUrl;

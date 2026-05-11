@@ -1261,9 +1261,9 @@ function seoPictTime(searchString, time) {
     }
   }
   var uniqueVid = seoPictures(searchString, time);
-  console.log("uniqueVid = " + uniqueVid, executed++);
+  console.log("uniqueVid = " + JSON.stringify(uniqueVid), executed++);
   var sorFndOrd = [];
-  uniqueVid.results.forEach((vidObject) => {
+  uniqueVid?.results?.forEach((vidObject) => {
     var elaspeTime = autoP.functionRegistry.time;
     console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
@@ -1406,11 +1406,11 @@ function seoPictures(searchString, time) {
       }
     });
     console.log("data = " + data, executed++);
-    uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
+    uniqueSeo = data?.slice(data.indexOf("src2=")).toString().split("src2=");
     return { results: uniqueSeo, hardLink: rndSearch };
   }
   else {
-    uniqueSeo = data.slice(data.indexOf("src2=")).toString().split("src2=");
+    uniqueSeo = data?.slice(data.indexOf("src2=")).toString().split("src2=");
     return { results: uniqueSeo, hardLink: rndSearch };
   }
 }

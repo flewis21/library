@@ -504,7 +504,7 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
     time = autoP.functionRegistry.time;
   }
   if (typeof cokey === "undefined") {
-    var rndStr = globalThis.uniqueItemArray();
+    var rndStr = AutoParams.prototype.uniqueItemArray();
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var cokey = rndStrObj["Description"];

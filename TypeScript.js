@@ -39,13 +39,20 @@ class IsValidDoubleObject {
       }
       let myValiObj = new Valid();
       if (typeof myValiObj.validObj1 === typeof myValiObj.validObj2) {
-        return nmyValiObj
+        this.t = nmyValiObj
       }
       else {
-        return t
+        this.t = t
       }
     }
   };
+  objRes() {
+    if (this.t) {
+      let func = Object?.keys(this?.t);
+      let args = Object?.values(this?.t);
+    }
+      return doGet(this?.t);
+  }
 }
 
 class IsMapped {
@@ -172,7 +179,7 @@ var geneicType = function (e) {
     }
   }
   let script = new IsValidDoubleObject(eQueryObject);
-    console.log(script);
+    console.log(script.objRes());
     console.log(Object.getOwnPropertyNames(script));
     console.log(Object.getPrototypeOf(script));
     // GameManager.setGameStart("Warrior");
@@ -218,11 +225,11 @@ var geneicType = function (e) {
     let handles
     let parAuto = new AutoParams()
     if (e) {
-      handles =  new FunctionHandle(e);
+      handles =  new FunctionHandle(e).fhObj;
       console.log("handles = " + handles, executed++);
     }
     else {
-      handles = new FunctionHandle(script);
+      handles = new FunctionHandle(script.t).fhObj;
       console.log("handles = " + handles, executed++);
     }
     let base

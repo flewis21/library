@@ -688,19 +688,18 @@ function functionFlex(e) {
       }
     }
   }
-  let script = new IsValidDoubleObject(eQueryObject);
+  let script = new IsValidDoubleObject(eQueryObject).t;
   console.log(script);
   console.log(Object.getOwnPropertyNames(script));
   console.log(Object.getPrototypeOf(script));
   console.log(typeof initForm);
   let handles
-  let parAuto = new AutoParams()
   if (e) {
-    handles =  new FunctionHandle(e);
+    handles =  new FunctionHandle(e).fhObj;
     console.log("handles = " + handles, executed++);
   }
   else {
-    handles = new FunctionHandle(script);
+    handles = new FunctionHandle(script).fhObj;
     console.log("handles = " + handles, executed++);
   }
   let base

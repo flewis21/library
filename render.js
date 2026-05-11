@@ -1,7 +1,7 @@
 class AppList {
   constructor () {
     console.log(autoP.functionRegistry.time);
-    return HtmlService.createTemplate(
+    this.appTemplate =  HtmlService.createTemplate(
       `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           a:link, a:visited {color:black !important;}
           a:hover, a:active{ 
@@ -211,7 +211,7 @@ class ContentApp {
     );
     console.log(
       autoP.functionRegistry.time +
-        "\nlob is !" +
+        "\nBlob is !" +
         !blob +
         " = " +
         blob.substring(0, 130) +
@@ -450,7 +450,7 @@ class ContentFile {
           ")\n" +
           arguments.callee.caller.name,
       );
-      return tmp
+      this.tmp = tmp
         .evaluate()
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         .getContent();

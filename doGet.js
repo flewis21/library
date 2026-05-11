@@ -17,11 +17,8 @@ function doGet(e) {
   // validGroup();
   // validateFolders();
   // validateFiles();
-  var noEmptyE = Object?.keys(e).length;
-  console.log("Object?.keys(e).length", noEmptyE);
-  var nonPopulatedE = Object?.values(e).length;
-  console.log("Object?.values(e).length", Object?.values(e));
-  if (!e || noEmptyE < 1 || nonPopulatedE < 1 || e.queryString === "") {
+  let executed = 0;
+  if (!e || e.queryString === "") {
     var getDoFunction = createRandomFunction();
     var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [
       Object.values(getDoFunction),
@@ -30,7 +27,7 @@ function doGet(e) {
       `globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`,
       finalFS,
     );
-    return renderTemplate(
+    return new RenderTemplate(
       ` <!DOCTYPE html>
           <html>
             <head><base target="_self"></head>
@@ -42,7 +39,7 @@ function doGet(e) {
           </html>`,
       { funcResult: finalFS },
       JSON.stringify(getDoFunction),
-    );
+    ).blobTemplate;
     var argsEd = testlt();
     if (typeof globalThis.mis === "function") {
       var misArgs;
@@ -70,6 +67,10 @@ function doGet(e) {
       autoP.functionRegistry.time,
     );
   }
+  // var noEmptyE = Object?.keys(e).length;
+  // console.log("Object?.keys(e).length", noEmptyE);
+  // var nonPopulatedE = Object?.values(e).length;
+  // console.log("Object?.values(e).length", Object?.values(e));
   console.log(
     formatTime(autoP.functionRegistry.time) +
       "\n" +
@@ -79,25 +80,36 @@ function doGet(e) {
       ", = " +
       JSON.stringify(e),
   );
-  var webAppUrl = getScriptUrl();
-  if (typeof e === "object" && e.parameter && e.parameter["func"]) {
-    var fx = e.parameter["func"];
-  } else if (typeof e === "object" && e.parameter && !e.parameter["func"]) {
-    return functionFlex(e);
-  } else if (typeof e !== "object") {
-    e = objectOfS(["parameter"], [[["func", e]]], autoP.functionRegistry.time);
-    var fx = e.parameter["func"];
-  }
-  var titleArray = autoP.functionRegistry.getFileList();
-  if (typeof e === "object" && e.parameter && e.parameter["args"]) {
+  // var webAppUrl = getScriptUrl();
+  let fx = null;
+  if (e && typeof e === "object" && e.parameter && e.parameter["func"]) {
+    fx = e.parameter["func"];
+    console.log("e.parameter.func is defined: fx = " + fx, executed++ );
+  } 
+  // else {
+  //   if (e && typeof e === "object" && e.parameter && !e.parameter["func"]) {
+  //     console.log("e.parameter.func not defined: fx = " + fx, executed++ );
+  //     return functionFlex(e);
+  //   } 
+  //   else {
+  //     if (e && typeof e !== "object") {
+  //       e = objectOfS(["parameter"], [[["q", e]]], autoP.functionRegistry.time);
+  //       console.log("e not an object - redefined: e = " + e, executed++ );
+  //       return functionFlex(e);
+  //     }
+  //   }
+  // }
+  let titleArray = autoP.functionRegistry.getFileList();
+  if (e && typeof e === "object" && e.parameter && e.parameter["args"]) {
     var content = e.parameter["args"];
+    console.log("e.parameter.args is defined: content = " + content, executed++ );
   }
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     titleArray.push(key);
   //   }
   // }
-  var lowCapApp = [new AppList()].join("").toLowerCase().split(",");
+  var lowCapApp = [AutoParams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {
@@ -108,194 +120,277 @@ function doGet(e) {
   if (fx && typeof globalThis[fx] === "function") {
     var rndStr = autoP.searchString().myNewArr;
     return functionFlex(e);
-  } else if (fx && typeof globalThis[fx] !== "function") {
-    try {
-      var payload = mis([fx, ...content]);
-    } catch (error) {
-      return functionFlex(e);
-    }
-    if (payload) {
-      if (
-        payload.app.length === 99 ||
-        payload.app.length === 94 ||
-        payload.app.length === 83 ||
-        payload.app.length === 97 ||
-        payload.app.length === 101 ||
-        payload.app.length === 103 ||
-        payload.app.length === 136 ||
-        payload.app.length === 132 ||
-        payload.app.indexOf("&entry") > -1
-      ) {
-        return renderTemplate(mis(payload.app), {}, "All departments");
-      } else {
-        return renderTemplate(
-          `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload.app}</div></body></html>`,
-          {},
-          "All departments",
-        );
+  } 
+  else {
+    if (fx && typeof globalThis[fx] !== "function") {
+      try {
+        var payload = geneicType([fx, ...content]);
+      } 
+      catch (error) {
+        return functionFlex(e);
       }
-    }
-  } else if (fx === objMaster.miscellaneous.section[0]) {
-  } else if (fx === objMaster.miscellaneous.section[1]) {
-  } else if (fx === objMaster.miscellaneous.section[3]) {
-    return renderTemplate(DVar.apply(this, rndCoin));
-    var aVar = objectOfS(
-      ["parameter"],
-      [[["func", arguments.callee.name]]],
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
-    );
-
-    return renderTemplatedVar(dVar).myVar;
-  } else if (fx === objMaster.miscellaneous.section[10]) {
-  } else if (fx === objMaster.miscellaneous.section[11]) {
-  } else if (fx === objMaster.miscellaneous.section[21]) {
-  } else if (fx === objMaster.miscellaneous.section[31]) {
-  } else if (fx === objMaster.miscellaneous.section[41]) {
-  } else if (fx === objMaster.miscellaneous.section[51]) {
-  } else if (fx === objMaster.miscellaneous.section[58]) {
-    console.log(
-      Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
-        "\n" +
-        arguments.callee.name +
-        "\nfx is !" +
-        !fx +
-        ", = " +
-        fx,
-    );
-    // Replace with your actual sheet ID
-    // const spreadsheetId = 'YOUR_SPREADSHEET_ID';
-    // const range = 'Sheet1!A1:C'; // Adjust the range as needed
-
-    // Get the data from the sheet
-    // const ss = SpreadsheetApp.getActiveSpreadsheet();
-    // const sheet = ss.getSheetByName('Sheet1'); // Adjust the sheet name
-    const sheet = ssGetSheetBySpreadsheetUrl(
-      "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
-      "Receive",
-    );
-    const data = sheet.getDataRange().getValues();
-
-    // Generate the HTML table
-    let html = "<table>";
-    for (const row of data) {
-      html += "<tr>";
-      for (const cell of row) {
-        html += `<td>${cell}</td>`;
+      if (payload) {
+        if (
+          payload.app.length === 99 ||
+          payload.app.length === 94 ||
+          payload.app.length === 83 ||
+          payload.app.length === 97 ||
+          payload.app.length === 101 ||
+          payload.app.length === 103 ||
+          payload.app.length === 136 ||
+          payload.app.length === 132 ||
+          payload.app.indexOf("&entry") > -1
+        ) {
+          return renderTemplate(mis(payload.app), {}, "All departments");
+        } 
+        else {
+          return renderTemplate(
+            `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload.app}</div></body></html>`,
+            {},
+            "All departments",
+          );
+        }
       }
-      html += "</tr>";
-    }
-    html += "</table>";
+    } 
+    else {
+      if (fx === objMaster.miscellaneous.section[0]) {
+      } 
+      else {
+        if (fx === objMaster.miscellaneous.section[1]) {
+        } 
+        else {
+          if (fx === objMaster.miscellaneous.section[3]) {
+            return renderTemplate(DVar.apply(this, rndCoin));
+            var aVar = objectOfS(
+              ["parameter"],
+              [[["func", arguments.callee.name]]],
+              Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
+            );
 
-    // Create the HTML content
-    const pageHtml = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Financial Statements</title>
-        <style>
-          table {
-            border-collapse: collapse;
-            width: 100%;
-          }
-          th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-          }
-          th {
-            background-color: #f2f2f2;
-          }
-        </style>
-      </head>
-      <body>
-        <h1>Financial Statements</h1>
-        <div id="tabDiv">
-          ${html}
-        </div>
-      </body>
-    </html>
-  `;
+            return renderTemplatedVar(dVar).myVar;
+          } 
+          else {
+            if (fx === objMaster.miscellaneous.section[10]) {
+            } 
+            else {
+              if (fx === objMaster.miscellaneous.section[11]) {
+              } 
+              else {
+                if (fx === objMaster.miscellaneous.section[21]) {
+                } 
+                else {
+                  if (fx === objMaster.miscellaneous.section[31]) {
+                  } 
+                  else {
+                    if (fx === objMaster.miscellaneous.section[41]) {
+                    } 
+                    else {
+                      if (fx === objMaster.miscellaneous.section[51]) {
+                      } 
+                      else {
+                        if (fx === objMaster.miscellaneous.section[58]) {
+                          console.log(
+                            Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
+                              "\n" +
+                              arguments.callee.name +
+                              "\nfx is !" +
+                              !fx +
+                              ", = " +
+                              fx,
+                          );
+                          // Replace with your actual sheet ID
+                          // const spreadsheetId = 'YOUR_SPREADSHEET_ID';
+                          // const range = 'Sheet1!A1:C'; // Adjust the range as needed
 
-    // Return the HTML content
-    return renderTemplate(pageHtml, {}, "Finance Landing Page");
-  } else if (fx === objMaster.miscellaneous.section[59]) {
-    /**
-     * Handles HTTP GET requests.
-     * This is primarily for testing the web app URL directly or serving static content.
-     * Not strictly necessary for this specific POST-only use case, but good practice.
-     * @param {GoogleAppsScript.Events.DoGet} e The event object.
-     * @returns {GoogleAppsScript.HTML.HtmlOutput} A simple HTML page.
-     */
-    return HtmlService.createHtmlOutput(
-      "<h1>Business Card Generator Backend</h1><p>This Apps Script functions as a backend for the Business Card Generator form. Please submit data via a POST request.</p>",
-    );
-  } else if (fx === objMaster.miscellaneous.section[71]) {
-  } else if (fx === objMaster.miscellaneous.section[81]) {
-  } else if (fx === objMaster.miscellaneous.section[91]) {
-  } else if (fx === objMaster.miscellaneous.section[100]) {
-  } else if (fx === objMaster.miscellaneous.section[101]) {
-  } else if (fx === objMaster.miscellaneous.section[111]) {
-    return handleRequest(e);
-  } else if (fx === objMaster.miscellaneous.section[121]) {
-  } else if (fx === objMaster.miscellaneous.section[131]) {
-  } else if (fx === objMaster.miscellaneous.section[132]) {
-    return renderTemplate(oldSEC, {}, "Securities and Exchanges");
-  } else if (fx === objMaster.miscellaneous.section[141]) {
-  } else if (fx === objMaster.miscellaneous.section[151]) {
-  } else if (fx === objMaster.miscellaneous.section[161]) {
-  } else if (fx === objMaster.miscellaneous.section[171]) {
-  } else if (fx === objMaster.miscellaneous.section[181]) {
-  } else if (fx === objMaster.miscellaneous.section[191]) {
-  } else if (fx === objMaster.miscellaneous.section[201]) {
-  } else if (fx === objMaster.miscellaneous.section[210]) {
-  } else if (fx === objMaster.miscellaneous.section[211]) {
-  } else if (fx === objMaster.miscellaneous.section[221]) {
-  } else if (fx === objMaster.miscellaneous.section[231]) {
-  } else if (fx === objMaster.miscellaneous.section[241]) {
-  } else if (fx === objMaster.miscellaneous.section[251]) {
-  } else if (fx === objMaster.miscellaneous.section[261]) {
-  } else if (fx === objMaster.miscellaneous.section[271]) {
-  } else if (fx === objMaster.miscellaneous.section[281]) {
-  } else if (fx === objMaster.miscellaneous.section[291]) {
-  } else if (fx === objMaster.miscellaneous.section[301]) {
-  } else if (fx === objMaster.miscellaneous.section[310]) {
-  } else if (fx === objMaster.miscellaneous.section[311]) {
-  } else if (fx === objMaster.miscellaneous.section[321]) {
-  } else if (fx === objMaster.miscellaneous.section[331]) {
-  } else if (fx === objMaster.miscellaneous.section[341]) {
-  } else if (fx === objMaster.miscellaneous.section[351]) {
-  } else if (fx === objMaster.miscellaneous.section[361]) {
-  } else if (fx === objMaster.miscellaneous.section[362]) {
-  } else if (fx === objMaster.miscellaneous.section[363]) {
-  } else if (fx === objMaster.miscellaneous.section[364]) {
-  } else if (fx === objMaster.miscellaneous.section[365]) {
-  } else if (fx === objMaster.miscellaneous.section[366]) {
-  } else if (fx === objMaster.miscellaneous.section[367]) {
-  } else if (fx === objMaster.miscellaneous.section[368]) {
-  } else if (fx === objMaster.miscellaneous.section[369]) {
-  } else if (fx === objMaster.miscellaneous.section[370]) {
-  } else {
-    var libFunc = "renderFile";
-    var htmlArray = [
-      `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess`,
-    ]
-      .toString()
-      .split(" ");
-    var args =
-      htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
-    if (renderFile(args)) {
-      return renderTemplate(
-        contentApp(
-          `<?!= HtmlService.createTemplate(appL).evaluate().getContent() ?>`,
-          {
-            appL: this[libFunc].apply(this, ["oddChances"]),
-          },
-        ),
-        { e: e },
-        "oddChances",
-      );
-    } else {
-      return handleRequest(e);
+                          // Get the data from the sheet
+                          // const ss = SpreadsheetApp.getActiveSpreadsheet();
+                          // const sheet = ss.getSheetByName('Sheet1'); // Adjust the sheet name
+                          const sheet = ssGetSheetBySpreadsheetUrl(
+                            "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
+                            "Receive",
+                          );
+                          const data = sheet.getDataRange().getValues();
+
+                          // Generate the HTML table
+                          let html = "<table>";
+                          for (const row of data) {
+                            html += "<tr>";
+                            for (const cell of row) {
+                              html += `<td>${cell}</td>`;
+                            }
+                            html += "</tr>";
+                          }
+                          html += "</table>";
+
+                          // Create the HTML content
+                          const pageHtml = `
+                          <!DOCTYPE html>
+                          <html>
+                            <head>
+                              <title>Financial Statements</title>
+                              <style>
+                                table {
+                                  border-collapse: collapse;
+                                  width: 100%;
+                                }
+                                th, td {
+                                  border: 1px solid #ddd;
+                                  padding: 8px;
+                                  text-align: left;
+                                }
+                                th {
+                                  background-color: #f2f2f2;
+                                }
+                              </style>
+                            </head>
+                            <body>
+                              <h1>Financial Statements</h1>
+                              <div id="tabDiv">
+                                ${html}
+                              </div>
+                            </body>
+                          </html>
+                        `;
+
+                          // Return the HTML content
+                          return renderTemplate(pageHtml, {}, "Finance Landing Page");
+                        } 
+                        else {
+                          if (fx === objMaster.miscellaneous.section[59]) {
+                            /**
+                             * Handles HTTP GET requests.
+                             * This is primarily for testing the web app URL directly or serving static content.
+                             * Not strictly necessary for this specific POST-only use case, but good practice.
+                             * @param {GoogleAppsScript.Events.DoGet} e The event object.
+                             * @returns {GoogleAppsScript.HTML.HtmlOutput} A simple HTML page.
+                             */
+                            return HtmlService.createHtmlOutput(
+                              "<h1>Business Card Generator Backend</h1><p>This Apps Script functions as a backend for the Business Card Generator form. Please submit data via a POST request.</p>",
+                            );
+                          } 
+                          else {
+                            if (fx === objMaster.miscellaneous.section[71]) {
+                            } 
+                            else {
+                              if (fx === objMaster.miscellaneous.section[81]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[91]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[100]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[101]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[111]) {
+                                return handleRequest(e);
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[121]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[131]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[132]) {
+                                return renderTemplate(oldSEC, {}, "Securities and Exchanges");
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[141]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[151]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[161]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[171]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[181]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[191]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[201]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[210]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[211]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[221]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[231]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[241]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[251]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[261]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[271]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[281]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[291]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[301]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[310]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[311]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[321]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[331]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[341]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[351]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[361]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[362]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[363]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[364]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[365]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[366]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[367]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[368]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[369]) {
+                              } 
+                              else if (fx === objMaster.miscellaneous.section[370]) {
+                              } 
+                              else {
+                                let libFunc = "renderFile";
+                                let htmlArray = AutoParams.prototype.functionRegistry.htmlArray
+                                let args =
+                                  htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
+                                if (new RenderFile(args).fileTemplate) {
+                                let renF = new RenderFile("oddChances").fileTemplate
+                                  return new RenderTemplate(
+                                    new ContentApp(
+                                      `<?!= HtmlService.createTemplate(appL).evaluate().getContent() ?>`,
+                                      {
+                                        appL: renF,
+                                      },
+                                    ).tmp,
+                                    { e: e },
+                                    "oddChances",
+                                  ).blobTemplate;
+                                } else {
+                                  return handleRequest(e);
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -308,11 +403,19 @@ function doGetPost(e) {
       "\n!e, = " +
       !e,
   );
+  let foobarr = null;
+  let barArgs = null;
   if (e) {
-    var foobarr = e.parameter["func"];
-    var barArgs = e.parameter["args"];
+    if (e.parameter) {
+      if (e.parameter["func"]) {
+        foobarr = e.parameter["func"];
+      }
+      if (e.parameter["args"]) {
+        barArgs = e.parameter["args"];
+      }
+    }
   }
-  var libFunc = foobarr || "renderFile";
+  var libFunc = foobarr;
   var rndPage = [
     `index proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS`,
   ]
