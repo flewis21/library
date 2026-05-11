@@ -160,11 +160,12 @@
         });
       }
       document.addEventListener("DOMContentLoaded", updatePage);
-      var htmSearchList = [`theRybkaTwins`].toString().split(" ");
       var htmNum = function () {
-        return Math.floor(Math.random() * Math.floor(htmSearchList.length));
+        let htmSearchList = [`theRybkaTwins`].toString().split(" ");
+        let rybSearch = htmSearchList[Math.floor(Math.random() * Math.floor(htmSearchList.length))]
+        return rybSearch;
       };
-      var rndPage = htmSearchList[htmNum()];
+      var rndPage = htmNum();
       console.log(rndPage + "...");
       function updatePage() {
         localStorage.setItem("htmSearch", rndPage);

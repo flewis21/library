@@ -356,7 +356,7 @@ class ContentCDN {
             tmp[key] = argsObject[key];
           });
         } catch (error) {
-          return "Error in contentCDN tmp" + error;
+          this.cCDN = "Error in contentCDN tmp" + error;
         }
       }
       console.log("argsObject after tmp processing", tmp);
@@ -375,8 +375,8 @@ class ContentCDN {
             {
               drivemC: tmp.payL?.message?.content,
             }
-          let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
-          return HtmlService.createTemplate(html)
+          let html = new ContentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          this.cCDN =  HtmlService.createTemplate(html)
             .evaluate()
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
@@ -389,14 +389,14 @@ class ContentCDN {
             {
               drivemC: tmp.payL?.message?.info,
             }
-          let html = contentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
-          return HtmlService.createTemplate(html)
+          let html = new ContentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          this.cCDN = HtmlService.createTemplate(html)
             .evaluate()
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
-      return tmp
+      this.cCDN = tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setContent(seoCapital(url));
@@ -415,6 +415,10 @@ class ContentCDN {
     //       .join("&"),
     // );
   };
+}
+
+function contCDN(url, argsObject) {
+  return new ContentCDN(url, argsObject).cCDN;
 }
 
 class ContentFile {
@@ -511,7 +515,7 @@ function defSBD(e) {
   = document.getElementById("pageObj");pagE.innerHTML 
   = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: contentApp(
+          renBlob: new ContentApp(
             `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -542,7 +546,7 @@ function defSBD(e) {
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
             { appL: globalThis[foobarr].apply(this, [args]) },
-          ),
+          ).tmp,
           e: e,
         },
         args,
@@ -605,7 +609,7 @@ function freeSBD(func) {
           var pagE 
             = document.getElementById("pageObj");}</script></html>`,
         {
-          renBlob: contentApp(
+          renBlob: new ContentApp(
             `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -639,7 +643,7 @@ function freeSBD(func) {
               vUrl: urlFunc,
               appL: foobarr,
             },
-          ),
+          ).tmp,
         },
         foobarr,
       );
@@ -1159,7 +1163,7 @@ class RenderFile {
             {
               renTemp: tmp.evaluate().getContent(),
             },
-          );
+          ).tmp;
           // return renderTemplate(html,argsObject,title)
           this.fileTemplate =  HtmlService.createHtmlOutput(html.tmp) //tmp
               // .evaluate()
@@ -1178,6 +1182,10 @@ class RenderFile {
       );
     }
   };
+}
+
+function rendFile(file, argsObject, title) {
+  return new RenderFile(file, argsObject, title).fileTemplate
 }
 
 class RenderTemplate {
@@ -1216,15 +1224,15 @@ class RenderTemplate {
     try {
       if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
         if (tmp.payL?.type === "html") {
-          html = contentApp(tmp.payL?.data,
+          html = new ContentApp(tmp.payL?.data,
             {
               driveT: tmp.payL?.type,
             },
-          )
+          ).tmp;
         }
         else {
           if (tmp.payL?.pL?.type === "html") {
-            html = contentApp(tmp.payL?.message?.info,
+            html = new ContentApp(tmp.payL?.message?.info,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -1239,7 +1247,7 @@ class RenderTemplate {
                 driveP: tmp.payL?.pL,
                 driveT: tmp.payL?.pL?.type,
               },
-            )
+            ).tmp;
           }
         }
       }
@@ -1540,7 +1548,7 @@ class RenderTemplate {
             driveP: tmp.payL?.pL,
             driveT: tmp.payL?.pL?.type,
           },
-        );
+        ).tmp;
       }
     } catch (error) {
       console.error("Error rendering template:", error, error.stack);
@@ -1556,6 +1564,10 @@ class RenderTemplate {
   }; // or throw error.
 }
 
+function rendTemplate(blob, argsObject, title) {
+  return new RenderTemplate(blob, argsObject, title).blobTemplate
+}
+
 // Gets a cache that is common to all users of the script
 var sCache = CacheService.getScriptCache();
 
@@ -1563,7 +1575,7 @@ var start = new Date(0.1 * 1000).getMilliseconds();
 
 var tagBuilder = function (content) {
   console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const htmlBody = contentApp(content);
+  const htmlBody = new ContentApp(content).tmp;
   return htmlBody;
 };
 
@@ -1600,7 +1612,7 @@ function wildSBD(e) {
             = document.getElementById("pageObj");
           pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: contentApp(
+          renBlob: new ContentApp(
             `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
@@ -1643,7 +1655,7 @@ function wildSBD(e) {
             {
               appL: globalThis[e.parameter["func"]].apply(this, [args]),
             },
-          ),
+          ).tmp,
 
           e: e,
         },

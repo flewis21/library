@@ -14,7 +14,7 @@ function crmEBI(fx) {
       section: ["EBI Yes", "EBI No", "template"],
     },
   };
-  var result = contentApp(
+  var result = new ContentApp(
     `
 <!DOCTYPE html>
   <html>
@@ -76,7 +76,7 @@ function crmEBI(fx) {
           JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
         );
         if (fx === objMaster.miscellaneous.section[0]) {
-          return contentApp(
+          return new ContentApp(
             `<!DOCTYPE html>
     <html>
     <head>
@@ -230,9 +230,9 @@ function crmEBI(fx) {
       </body>
     </html>`,
             {},
-          );
+          ).tmp;
         } else if (fx === objMaster.miscellaneous.section[1]) {
-          return contentApp(
+          return new ContentApp(
             `<!DOCTYPE html>
     <html>
     <head>
@@ -385,9 +385,9 @@ function crmEBI(fx) {
         </body>
       </html>`,
             {},
-          );
+          ).tmp;
         } else if (fx === objMaster.miscellaneous.section[2]) {
-          return contentApp(
+          return new ContentApp(
             `<!DOCTYPE html>
               <html>
                 <head>
@@ -820,11 +820,11 @@ function crmEBI(fx) {
                 new Date() - new Date(new Date()).toLocaleDateString(),
             },
             " ",
-          );
+          ).tmp;
         } else if (fx === objMaster) {
-          return contentApp(``, {}, " ");
+          return new ContentApp(``, {}, " ").tmp;
         } else {
-          return contentApp(
+          return new ContentApp(
             `<!DOCTYPE html>
       <html>
       <head>
@@ -1266,7 +1266,7 @@ function crmEBI(fx) {
               dateDefault:
                 new Date() - new Date(new Date()).toLocaleDateString(),
             },
-          );
+          ).tmp;
         }
       })(),
       link: getUrl(ScriptApp) + "?func=crmEBI&args=" + fx,
@@ -1295,7 +1295,7 @@ function crmEBI(fx) {
       flex_column:
         "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
     },
-  );
+  ).tmp;
   return result;
 }
 

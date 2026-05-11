@@ -2168,7 +2168,6 @@ const GameManager = {
         new Gamer(classType, 200, 0, 50, 200, 100);
         break;
     };
-    getInterface.getContent();
   },
   setPreFight: function(classType) {
     switch (classType) {
@@ -2185,7 +2184,6 @@ const GameManager = {
         new Gamer(classType, 200, 0, 50, 200, 100);
         break;
     };
-    getInterface.getContent();
   }
 };
 GameManager.setGameStart.instances = [];

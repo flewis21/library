@@ -20,7 +20,7 @@ function dataEntry() {
           list.push([data[i][1] + " " + data[i][2] + " - Vin/:" + data[i][3]]);
         }
         return HtmlService.createTemplate(
-          contentApp(
+          new ContentApp(
             `<html id='test'>
               <body>
                 <div class='container'>
@@ -128,7 +128,7 @@ function dataEntry() {
                   });
               },
             },
-          ),
+          ).tmp,
         )
           .evaluate()
           .getContent();

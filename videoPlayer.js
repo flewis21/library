@@ -345,11 +345,11 @@ function videoPage(search) {
   var youPlayer = videoPlayer(content);
   var content = HtmlService.createTemplate(`
   ${
-    contentApp(
+    new ContentApp(
       `
     <?!= playerPlayer ?>`,
       { playerPlayer: youPlayer },
-    )
+    ).tmp
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
   return content.getRawContent();

@@ -39,7 +39,7 @@ class IsValidDoubleObject {
       }
       let myValiObj = new Valid();
       if (typeof myValiObj.validObj1 === typeof myValiObj.validObj2) {
-        this.t = nmyValiObj
+        this.t = myValiObj
       }
       else {
         this.t = t
@@ -153,33 +153,38 @@ var geneicType = function (e) {
     c: ["string"],
   };
   let eQueryObject;
-  if (Math.random() < .4) {
-    eQueryObject = {
-      parameter: {
-        q:testlt().name
-      }
-    };
-  }
-  else {
-    if (Math.random() > .3 && Math.random() < .7) {
+  if (!e) {
+    if (Math.random() < .4) {
       eQueryObject = {
         parameter: {
-          action:"getData"
+          q:testlt().name
         }
       };
     }
     else {
-      if (Math.random() > .6) {
+      if (Math.random() > .3 && Math.random() < .7) {
         eQueryObject = {
           parameter: {
-            file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
+            action:"getData"
           }
         };
       }
+      else {
+        if (Math.random() > .6) {
+          eQueryObject = {
+            parameter: {
+              file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
+            }
+          };
+        }
+      }
     }
   }
+  else {
+    eQueryObject = e
+  }
   let script = new IsValidDoubleObject(eQueryObject);
-    console.log(script.objRes());
+    // return script.objRes();
     console.log(Object.getOwnPropertyNames(script));
     console.log(Object.getPrototypeOf(script));
     // GameManager.setGameStart("Warrior");

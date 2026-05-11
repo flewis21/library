@@ -2249,7 +2249,7 @@ function dtlsStore(itemName, time) {
   baseUrl = getUrl(ScriptApp);
   inventoryUrl = getUrl(ScriptApp);
   financeUrl = getUrl(ScriptApp);
-  var itemContent = contentApp(
+  var itemContent = new ContentApp(
     `<div class="row">
         <div class="col s10 card-panel l12 m12 push-s1">
           <div class="z-depth-5 green toolbar_icon toolbar_iconHover container">
@@ -2296,7 +2296,7 @@ function dtlsStore(itemName, time) {
       fileUrl: formUrl,
       allTime: time,
     },
-  );
+  ).tmp;
   return itemContent;
 }
 
@@ -2504,7 +2504,7 @@ function generalWorkInvoice(clientName, time) {
       return formUrl;
     }
     return HtmlService.createTemplate(
-      contentApp(
+      new ContentApp(
         `
       <?  var clientBusName = busName ?>
       <?  var dtlsUrl =  portBing(clientBusName); ?>
@@ -2578,13 +2578,13 @@ function generalWorkInvoice(clientName, time) {
           clientTicker: yahooNeed,
           clientFile: coHelpText,
         },
-      ),
+      ).tmp,
     )
       .evaluate()
       .getContent();
   } else {
     return HtmlService.createTemplate(
-      contentApp(
+      new ContentApp(
         `
     <?  var clientBusName = busName ?>
     <?  var dtlsUrl =  portBing(clientBusName); ?>
@@ -2636,7 +2636,7 @@ function generalWorkInvoice(clientName, time) {
           clientTicker: yahooNeed,
           clientFile: coHelpText,
         },
-      ),
+      ).tmp,
     )
       .evaluate()
       .getContent();
@@ -2676,7 +2676,7 @@ function geneFrame(reference) {
     var reference = autoP.functionRegistry.htmlFile;
   }
   return HtmlService.createTemplate(
-    contentApp(
+    new ContentApp(
       `
     <? var rndClient = function() { ?>
     <?  return new Promise((resolve) => {resolve(formMaker(file, folder, time))})} ?>
@@ -2741,7 +2741,7 @@ function geneFrame(reference) {
         time: autoP.functionRegistry.time,
         folder: furtFolder(),
       },
-    ),
+    ).tmp,
   );
 }
 
@@ -2767,7 +2767,7 @@ function mainMan(mainFile) {
       }
     }
     return HtmlService.createTemplate(
-      contentApp(
+      new ContentApp(
         `
       <div class="row">
       <div class="col s10 l12 m12 card-panel push-s1">
@@ -2789,7 +2789,7 @@ function mainMan(mainFile) {
       `,
 
         { url: url },
-      ),
+      ).tmp,
     )
       .evaluate()
       .getContent();

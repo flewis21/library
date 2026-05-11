@@ -180,7 +180,7 @@ function congressFunc(e) {
 // ,{
 // gamerUrl:gamerUrl,
 // congressData: congressInfoAPI(),
-// civicData: civicInfoAPI()//"".concat(contentApp("\n  document.addEventListener('DOMContentLoaded', function() {\n   let getCivic = document.querySelector(\".civic\");\n   getCivic.textContent = <?!= data ?>;\n   })\n   ", {data: civicInfoAPI()}), "")});
+// civicData: civicInfoAPI()//"".concat(new ContentApp("\n  document.addEventListener('DOMContentLoaded', function() {\n   let getCivic = document.querySelector(\".civic\");\n   getCivic.textContent = <?!= data ?>;\n   })\n   ", {data: civicInfoAPI()}), "")});
 
 var email = function () {
   var emails = validateFiles();
@@ -277,7 +277,7 @@ function pill() {
       '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\nvar elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
   }
   pill = Route["test"]("epaWebsite", data);
-  return contentApp(pill, data);
+  return new ContentApp(pill, data).tmp;
   //:contentFile('uiAccess')
 }
 
@@ -290,32 +290,32 @@ var randomEmail = function () {
 
 function runIt(e) {
   //urlDataSource("https://www.sec.gov/files/company_tickers.json")
-  if (e?.parameter["args"] === "") {
+  if (e && e.parameter && e?.parameter["args"] === "") {
     return wwAccess("development", proMediaSnip)(e);
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "epa") {
-    return renderTemplate(wwAccess("epa", epaData)());
+  } else if (e && e.parameter && e?.parameter["args"] === "epa") {
+    return new RenderTemplate(wwAccess("epa", epaData)()).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "edgar") {
-    return renderTemplate(wwAccess("edgar", edgarData)());
+  } else if (e && e.parameter && e?.parameter["args"] === "edgar") {
+    return new RenderTemplate(wwAccess("edgar", edgarData)()).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "odd") {
-    return renderTemplate(wwAccess("odd", breakthrough)(e));
+  } else if (e && e.parameter && e?.parameter["args"] === "odd") {
+    return new RenderTemplate(wwAccess("odd", breakthrough)(e)).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "gamer") {
-    return renderTemplate(wwAccess("gamer", jsGameScripts)());
+  } else if (e && e.parameter && e?.parameter["args"] === "gamer") {
+    return new RenderTemplate(wwAccess("gamer", jsGameScripts)()).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "checkOD") {
-    return renderTemplate(wwAccess("checkOD", checkOnDay)());
+  } else if (e && e.parameter && e?.parameter["args"] === "checkOD") {
+    return new RenderTemplate(wwAccess("checkOD", checkOnDay)()).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "usGov") {
-    return renderTemplate(wwAccess("usGov", congressLeg)());
+  } else if (e && e.parameter && e?.parameter["args"] === "usGov") {
+    return new RenderTemplate(wwAccess("usGov", congressLeg)()).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "jFun") {
-    return renderTemplate(wwAccess("jFun", jFundamentals)(e));
+  } else if (e && e.parameter && e?.parameter["args"] === "jFun") {
+    return new RenderTemplate(wwAccess("jFun", jFundamentals)(e)).blobTemplate;
     //: contentFile("uiAccess");
-  } else if (e?.parameter["args"] === "ssTest") {
-    return renderTemplate(wwAccess("ssTest", superTest)(e));
+  } else if (e && e.parameter && e?.parameter["args"] === "ssTest") {
+    return new RenderTemplate(wwAccess("ssTest", superTest)(e)).blobTemplate;
     //: contentFile("uiAccess");
   } else {
     // Route.path("default", defaultWebsite);

@@ -171,7 +171,7 @@ function dtlsPro(searchDTLS) {
       }
     }
   } catch (error) {
-    console.log("error in contentApp: " + error);
+    console.log("error in ContentApp: " + error);
     return "This alley location does not make sense! " + error;
   }
   return formUrl;
@@ -335,7 +335,7 @@ function portBing(searchPort) {
       }
     }
   } catch (error) {
-    console.log("error in contentApp: " + error);
+    console.log("error in ContentApp: " + error);
     return "This alley location does not make sense! ";
   }
   return formUrl;

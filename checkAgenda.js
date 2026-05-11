@@ -54,9 +54,9 @@ function checkDay() {
   //     {
   //       objParts[test] = key
   //     }
-  return contentApp("<?!= companyInfo ?>", {
+  return new ContentApp("<?!= companyInfo ?>", {
     companyInfo: randomCompany,
     popUpOpen: openTheForm,
-  }); //:contentFile("uiAccess")
+  }).tmp; //:contentFile("uiAccess")
   console.log(html);
 }

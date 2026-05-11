@@ -11,14 +11,15 @@ function buildTags(posHtml) {
 }
 
 function doGet(e) {
-  Logger.log(
-    ">>> [LIBRARY] LIBRARY's doGet() called. e: " + e ? JSON.stringify(e) : "",
-  );
+  // Logger.log(
+  //   ">>> [LIBRARY] LIBRARY's doGet() called. e: " + e ? JSON.stringify(e) : "",
+  // );
   // validGroup();
   // validateFolders();
   // validateFiles();
   let executed = 0;
   if (!e || e.queryString === "") {
+    console.log("Executed " + e, [!e || e.queryString === ""]);
     var getDoFunction = createRandomFunction();
     var finalFS = globalThis[Object.keys(getDoFunction)].apply(this, [
       Object.values(getDoFunction),
@@ -83,6 +84,7 @@ function doGet(e) {
   // var webAppUrl = getScriptUrl();
   let fx = null;
   if (e && typeof e === "object" && e.parameter && e.parameter["func"]) {
+    console.log("Executed " + e.parameter["func"], [e && typeof e === "object" && e.parameter && e.parameter["func"]]);
     fx = e.parameter["func"];
     console.log("e.parameter.func is defined: fx = " + fx, executed++ );
   } 
@@ -101,6 +103,7 @@ function doGet(e) {
   // }
   let titleArray = autoP.functionRegistry.getFileList();
   if (e && typeof e === "object" && e.parameter && e.parameter["args"]) {
+    console.log("Executed " + e.parameter["args"], [e && typeof e === "object" && e.parameter && e.parameter["args"]]);
     var content = e.parameter["args"];
     console.log("e.parameter.args is defined: content = " + content, executed++ );
   }
@@ -118,18 +121,21 @@ function doGet(e) {
     },
   };
   if (fx && typeof globalThis[fx] === "function") {
+    console.log("Executed " + fx, [fx && typeof globalThis[fx] === "function"]);
     var rndStr = autoP.searchString().myNewArr;
     return functionFlex(e);
   } 
   else {
     if (fx && typeof globalThis[fx] !== "function") {
+      console.log("Executed " + fx, [fx && typeof globalThis[fx] !== "function"]);
       try {
-        var payload = geneicType([fx, ...content]);
+        var payload = createFunctionResult([fx, ...content]);
       } 
       catch (error) {
         return functionFlex(e);
       }
       if (payload) {
+        console.log("Executed " + payload, [payload]);
         if (
           payload.app.length === 99 ||
           payload.app.length === 94 ||
@@ -141,14 +147,14 @@ function doGet(e) {
           payload.app.length === 132 ||
           payload.app.indexOf("&entry") > -1
         ) {
-          return renderTemplate(mis(payload.app), {}, "All departments");
+          return new RenderTemplate(mis(payload.app), {}, "All departments").blobTemplate;
         } 
         else {
-          return renderTemplate(
+          return new RenderTemplate(
             `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload.app}</div></body></html>`,
             {},
             "All departments",
-          );
+          ).blobTemplate;
         }
       }
     } 
@@ -160,14 +166,15 @@ function doGet(e) {
         } 
         else {
           if (fx === objMaster.miscellaneous.section[3]) {
-            return renderTemplate(DVar.apply(this, rndCoin));
+            console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[3]]);
+            return new RenderTemplate(new DVar.apply(this, rndCoin)).blobTemplate;
             var aVar = objectOfS(
               ["parameter"],
               [[["func", arguments.callee.name]]],
               Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
             );
 
-            return renderTemplatedVar(dVar).myVar;
+            return new RenderTemplate(new DVar(new DVar).myVar).blobTemplate;
           } 
           else {
             if (fx === objMaster.miscellaneous.section[10]) {
@@ -189,6 +196,7 @@ function doGet(e) {
                       } 
                       else {
                         if (fx === objMaster.miscellaneous.section[58]) {
+                          console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[58]]);
                           console.log(
                             Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000) +
                               "\n" +
@@ -253,10 +261,11 @@ function doGet(e) {
                         `;
 
                           // Return the HTML content
-                          return renderTemplate(pageHtml, {}, "Finance Landing Page");
+                          return new RenderTemplate(pageHtml, {}, "Finance Landing Page").blobTemplate;
                         } 
                         else {
                           if (fx === objMaster.miscellaneous.section[59]) {
+                            console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[59]]);
                             /**
                              * Handles HTTP GET requests.
                              * This is primarily for testing the web app URL directly or serving static content.
@@ -288,7 +297,8 @@ function doGet(e) {
                               else if (fx === objMaster.miscellaneous.section[131]) {
                               } 
                               else if (fx === objMaster.miscellaneous.section[132]) {
-                                return renderTemplate(oldSEC, {}, "Securities and Exchanges");
+                                console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[132]]);
+                                return new RenderTemplate(oldSEC, {}, "Securities and Exchanges").blobTemplate;
                               } 
                               else if (fx === objMaster.miscellaneous.section[141]) {
                               } 
@@ -363,18 +373,9 @@ function doGet(e) {
                                 let htmlArray = AutoParams.prototype.functionRegistry.htmlArray
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
-                                if (new RenderFile(args).fileTemplate) {
-                                let renF = new RenderFile("oddChances").fileTemplate
-                                  return new RenderTemplate(
-                                    new ContentApp(
-                                      `<?!= HtmlService.createTemplate(appL).evaluate().getContent() ?>`,
-                                      {
-                                        appL: renF,
-                                      },
-                                    ).tmp,
-                                    { e: e },
-                                    "oddChances",
-                                  ).blobTemplate;
+                                let renF = new RenderFile(args,{payL: payload},args).fileTemplate
+                                if (renF) {
+                                  return renF
                                 } else {
                                   return handleRequest(e);
                                 }
@@ -434,8 +435,8 @@ function doGetPost(e) {
   ];
   args = barArgs || ["jFundamentals"];
   if (renderFile(args)) {
-    return renderTemplate(
-      contentApp(`<?!= appL ?>`, {
+    return new RenderTemplate(
+      new ContentApp(`<?!= appL ?>`, {
         appL:
           libFunc ||
           HtmlService.createHtmlOutput(
@@ -456,9 +457,9 @@ function doGetPost(e) {
               `,
                 ).getContent(),
             ]),
-      }),
+      }).tmp,
       { e: e },
-    );
+    ).blobTemplate;
   } else {
     return handleRequest(e);
   }
@@ -2288,7 +2289,7 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 function userClicked() {
-  return contentApp(
+  return new ContentApp(
     `<script>
     
   console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
@@ -2332,7 +2333,7 @@ function userClicked() {
 
   </script>`,
     {},
-  );
+  ).tmp;
 } //Global object closed
 
 //  {cik_str: await currentCik,
@@ -2391,7 +2392,7 @@ function userClicked() {
 //                 });
 //             },
 //             })
-//        return renderTemplate(contentApp(content))
+//        return new RenderTemplate(new ContentApp(content).tmp)
 //             }
 
 // var doGet = function(e)
@@ -2572,7 +2573,7 @@ function userClicked() {
 //      })
 //      )//: contentFile('uiAccess');
 //    Route.path("production", includeApp);
-//    return renderTemplate(Route["production"]("<?!= index ?>"))//, { properties: contentApp("\n \n  <? var style = styleHtml() ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: styleHtml(), })
+//    return renderTemplate(Route["production"]("<?!= index ?>"))//, { properties: new ContentApp("\n \n  <? var style = styleHtml() ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  ").tmp, htmlStyle: styleHtml(), })
 //   } else
 //   {//     switch (e.parameter["default"])
 //     {//       case "posHtml":

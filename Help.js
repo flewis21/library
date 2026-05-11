@@ -1894,6 +1894,7 @@ function misSt(func, someArgs) {
       console.log("Check if there are functions to process", argsX);
       // Check if there are functions to process
       var allErrors = {};
+      let arrDRnd = null;
       var fParams = autoP.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
       console.log("fParams = " + fParams.slice(0, 1), executed++);
       console.log("global functions list length:", Object.keys(fParams).length);
@@ -2760,6 +2761,7 @@ function resolveParams(func, someArgs) {
     : autoP.functionRegistry.paramsList;
   var funcDos = trueSomeArgs.t === true ? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = Math.floor(Math.random() * 25);
+  let arrDRnd = null;
   if (funcUno || funcDos) {
     var argsX = [];
     var content = [];
@@ -3397,8 +3399,7 @@ function seoCapital(url) {
   console.log(
     "boilerplate Help : line 2635\nseoCapital(url: " +
       url +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")",
   );
   const html = HtmlService.createTemplate(
     `<!DOCTYPE html>

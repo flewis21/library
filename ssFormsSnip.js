@@ -35,13 +35,13 @@ function ssFormsSnip(test) {
       mimeType === "application/pdf"
     ) {
       var service = fileTypeManager(mimeType);
-      if (service) {
-        var currentFileUrl = service.openByUrl(myFileUrl).getPublishedUrl();
+      if (MimeType.service) {
+        var currentFileUrl = service?.openByUrl(myFileUrl).getPublishedUrl();
       } else {
         console.error(
           "filetype manager returned undefined for mimetype: " + mimeType,
         );
-        currentFileUrl = "#";
+        currentFileUrl = "javaScript:Void()";
       }
     } else {
       try {

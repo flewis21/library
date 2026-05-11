@@ -2049,14 +2049,14 @@ function ssData(playSheet, sheetName, time) {
 }
 
 function ssDatabase(file, sheet, col, headers, data) {
-  var result = contentApp("<?!= `createProject()` ?> ", {
+  var result = new ContentApp("<?!= `createProject()` ?> ", {
     createProject: function myProject() {
       var ws = spreadSheetCreate(file, sheet);
       ws.appendRow(headers);
       var dataArray = testData(data);
       ssSheet().getRange(2, 1, dataArray.length, col).setValues(dataArray);
     },
-  });
+  }).tmp;
   return result;
 }
 
@@ -2219,9 +2219,9 @@ function taxiService() {
 }
 
 function tutorial(text) {
-  var html = contentApp(`
+  var html = new ContentApp(`
     <body id="screen"></body>
-    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
+    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`).tmp;
   return html;
 }
 
@@ -2301,7 +2301,7 @@ function wanUtil(namedVar, time) {
 }
 
 function wsSIPOC(fileX, col) {
-  var result = contentApp(
+  var result = new ContentApp(
     `
     <div id="ss"><?!= createSheet() ?></div>
     <script>
@@ -2346,7 +2346,7 @@ function wsSIPOC(fileX, col) {
       myFileX: fileX,
       myCol: col,
     },
-  );
+  ).tmp;
   return result;
 }
 

@@ -10,10 +10,10 @@
 //     !fx,
 //   );
 
-//   // --- First contentApp call: For the main form HTML ---
+//   // --- First new ContentApp call: For the main form HTML ---
 //   var indexContent = (function index() {
 //     console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-//     return contentApp(
+//     return new ContentApp(
 //       `
 //     <h1>General Work Invoice</h1>
 //     <form id="myForm">
@@ -68,12 +68,12 @@
 //       {
 //         ph: new Date().toLocaleDateString(),
 //       },
-//     );
+//     ).tmp;
 //   })();
 
-//   // --- Second contentApp call: For styles and client script ---
+//   // --- Second new ContentApp call: For styles and client script ---
 //   // Define the common styles and client script as a separate HTML blob
-//   var commonHeaderAndScripts = contentApp(
+//   var commonHeaderAndScripts = new ContentApp(
 //     `
 //     <?!= utf_8 ?>
 //     <?!= viewport ?>
@@ -431,7 +431,7 @@
 //         `, // End clientScript
 //       dateDefault: new Date().toISOString(), // Pass dateDefault here for the clientScript template
 //     }
-//   );
+//   ).tmp;
 
 //   var templateVariables = {
 //     fx: fx,
@@ -439,7 +439,7 @@
 //     index: indexContent,
 //     // We no longer need individual style/script variables here, as they're now in commonHeaderAndScripts
 //     // dateDefault: new Date().toISOString(), // This is now passed to commonHeaderAndScripts directly
-//     commonHeaderAndScripts: commonHeaderAndScripts, // This will embed the output of the second contentApp
+//     commonHeaderAndScripts: commonHeaderAndScripts, // This will embed the output of the second new ContentApp
 //   };
 
 //   var mainHtmlBlob = `
@@ -462,7 +462,7 @@
 // </html>
 // `;
 
-//   var result = contentApp(mainHtmlBlob, templateVariables);
+//   var result = new ContentApp(mainHtmlBlob, templateVariables).tmp;
 //   return result;
 // };
 
@@ -478,7 +478,7 @@ function crmGWI(fx) {
   );
   // var fx = e;
   var objMaster = { miscellaneous: { section: [] } };
-  var result = contentApp(
+  var result = new ContentApp(
     `
 <!DOCTYPE html>
   <html>
@@ -537,7 +537,7 @@ function crmGWI(fx) {
     {
       index: (function index() {
         console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-        return contentApp(
+        return new ContentApp(
           `<!DOCTYPE html>
   <html>
   <head>
@@ -1118,7 +1118,7 @@ function crmGWI(fx) {
             dateDefault: new Date() - new Date(new Date()).toLocaleDateString(),
             homePage: getScriptUrl(),
           },
-        );
+        ).tmp;
       })(),
       link: getUrl(ScriptApp) + "?func=crmGWI&args=" + fx,
       utf_8: '\n<meta charset="UTF-8">',
@@ -1146,7 +1146,7 @@ function crmGWI(fx) {
       flex_column:
         "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
     },
-  );
+  ).tmp;
   return result;
 }
 

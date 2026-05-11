@@ -341,7 +341,7 @@ function defaultWebsite(e) {
       // case "dlsindex": // <!------------------------------Main Website Index Page-----------------------------!>
       //     webApp = HtmlService.createTemplateFromFile("dlsindex");
       //     webApp.url = getUrl(ScriptApp);
-      //     return contentApp(webApp)//:contentFile('uiAccess');
+      //     return new ContentApp(webApp).tmp//:new ContentFile('uiAccess');
       //         case "help": // <!-------------------------------Main Help Page-----------------------------!>
       //             webApp = HtmlService.createTemplateFromFile("help");
       //             webApp.url = getUrl(ScriptApp);
@@ -382,7 +382,7 @@ function defaultWebsite(e) {
         );
         webApp.url = getUrl(ScriptApp);
         return renderTemplate(
-          contentApp(
+          new ContentApp(
             '\n   <body id="test">                 \n<h2 class="search-overlay__section-title">\n  General Information\n</h2>\n<ul class="link-list min-list">\n <li>\n    <a href="#">'.concat(
               webApp.getContent(),
               '</a>\n </li>\n</ul>\n<div class="container row s1 valign-wrapper video-container black darken-4">\n  <div id="player1"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player2"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player3"></div>\n<script>\n document.addEventListener("DOMContentLoaded", <?!= appJs ?>);\n</script>\n</div>\n </body>\n                              ',
@@ -394,8 +394,8 @@ function defaultWebsite(e) {
                 console.log(document.getElementById("test").innerHTML);
               },
             },
-          ),
-        ); //:contentFile('uiAccess');
+          ).tmp,
+        ); //:new ContentFile('uiAccess');
       //         case "jsonSECEdgar": // <!-----------------------JSON API Results-------------------------!>
       //             // webApp = jsonINIT("https://ordspub.epa.gov/ords/pesticides/ppls/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/pplstxt/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + e.parameter["product"], "items/" + e.parameter["result"] + "/productname"), "items/0/active_ingredients/0/active_ing"), "items/0/eparegnumber"));
       //             webApp.url = getUrl(ScriptApp);
@@ -493,7 +493,7 @@ function defaultWebsite(e) {
       //                 //     // console.log(jsonXpathOutputQuery)
       //                 // webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({ data: jsonXpathRowsToReturn, error: false })).setMimeType(ContentService.MimeType.JSON).getContent());
       //             }
-      //             webApp = contentApp("\"".concat(data, "\""), JSON.stringify({ data: jsonXpathRowsToReturn, error: false }))
+      //             webApp = new ContentApp("\"".concat(data, "\"").tmp, JSON.stringify({ data: jsonXpathRowsToReturn, error: false }))
       //             // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
       //             baseUrl = getUrl(ScriptApp);
       //             console.log(baseUrl)
@@ -590,17 +590,17 @@ function defaultWebsite(e) {
         // financeUrl = getUrl(ScriptApp)
         // console.log(financeUrl)
         // webApp.html =  HtmlService.createHtmlOutput(webApp).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-        return contentApp("\n\n <?!= html ?>\n\n  ", {
+        return new ContentApp("\n\n <?!= html ?>\n\n  ", {
           html: "".concat(
-            contentApp(
+            new ContentApp(
               '"'.concat(
                 navBar(baseUrl, "Finance"),
                 '"</div><div class="clubhouse"></div>',
               ),
-            ),
+            ).tmp,
             "",
           ),
-        }); //:contentFile('uiAccess');
+        }).tmp; //:contentFile('uiAccess');
       // return render("\n                    <?!= include(\"index\"); ?>\n                    <div class=\"navbar\">\n                    <nav class=\"nav\">\n                    <a href=\"".concat(financeUrl, "\" class=\"nav__link\" data-link>Finance</a>\n                    <a href=\"".concat(inventoryUrl, "\"  class=\"nav__link\"  data-link>Inventory</a>\n                    </nav>\n                    </div>\n                    <h2 class=\"search-overlay__section-title\">General Information</h2>\n                    <div class=\"container row s1 valign-wrapper video-container black darken-4\">\n                      <div id=\"player1\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player2\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player3\"></div>\n                    </div>\n                    <div class=\"clubhouse\">".concat(webApp.content, "</div>\n                              "))));
     }
   }
@@ -981,7 +981,7 @@ function functionFlex(e) {
         }
         // const result = globalThis[libFunc](foobarr);
         console.log(
-          "returning renderTemplate contentApp [" +
+          "returning renderTemplate new ContentApp [" +
             libFunc +
             "].apply(this, [" +
             foobarr ||
@@ -1651,13 +1651,13 @@ function functionFlex(e) {
                 tupL: htmlArray[funcTres0Index] || htmlArray[funcTresIndex],
                 homePage: getScriptUrl(),
               },
-            ),
+            ).tmp,
             aplot: dataOR.type === "text" ? iframeSrc : JSON.stringify(dataOR),
             e: JSON.stringify(e),
             homePage: getScriptUrl(),
           },
 
-          "returning renderTemplate contentApp [" +
+          "returning renderTemplate new ContentApp [" +
             libFunc +
             "].apply(this, [" +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -1706,7 +1706,7 @@ function functionFlex(e) {
         }
         // const result = globalThis[libFunc](foobarr);
         console.log(
-          "returning renderTemplate contentApp [" +
+          "returning renderTemplate new ContentApp [" +
             libFunc +
             "].apply(this, [" +
             foobarr ||
@@ -2376,13 +2376,13 @@ function functionFlex(e) {
                 tupL: htmlArray[funcTres0Index] || htmlArray[funcTresIndex],
                 homePage: getScriptUrl(),
               },
-            ),
+            ).tmp,
             aplot: dataOR.type === "text" ? iframeSrc : JSON.stringify(dataOR),
             e: JSON.stringify(e),
             homePage: getScriptUrl(),
           },
 
-          "returning renderTemplate contentApp [" +
+          "returning renderTemplate new ContentApp [" +
             libFunc +
             "].apply(this, [" +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -2627,8 +2627,8 @@ function functionFlex(e) {
   //     htmlTresArg = htmlArray[funcTresIndex];
   //   }
   // }
-  console.log("e {parameter: {func: " + libFunc + "}}");
-  const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+  // console.log("e {parameter: {func: " + libFunc + "}}");
+  // const vLen = [83, 94, 97, 99, 101, 103, 136, 132];
 }
 
 var getScriptUrl = function () {
@@ -2963,24 +2963,25 @@ function sheetWebsite(e) {
 // }
 
 function wwwDe(url) {
+  let feed = null;
   if (!url || url === "url") {
     var response = wwwUrl();
     if (response === null) {
-      var feed = response;
+      feed = response;
       //UrlFetchApp.fetch(url).getContentText();
       feed = feed?.replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );
     } else if (typeof response["app"] === "undefined") {
-      var feed = response;
+      feed = response;
       //UrlFetchApp.fetch(url).getContentText();
       feed = new IsMapped(feed)["app"].replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );
     } else {
-      var feed = response["app"];
+      feed = response["app"];
       //UrlFetchApp.fetch(url).getContentText();
       feed = feed.replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
@@ -2992,7 +2993,7 @@ function wwwDe(url) {
     let options = {
       muteHttpExceptions: true,
     };
-    var feed = getUrlResponse(url, options);
+    feed = getUrlResponse(url, options);
     //UrlFetchApp.fetch(url).getContentText();
     feed = feed.replace(
       /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
@@ -3011,7 +3012,7 @@ var wwwUrl = function () {
     muteHttpExceptions: true,
   };
   let count = 0;
-  let feed = {};
+  let feed = null;
   while (feed === null || !feed["app"]) {
     let uFP1 = rndWord().replace(/\(/g, "");
     let uFP2 = uFP1.replace(/\)/g, "");
