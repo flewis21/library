@@ -78,8 +78,8 @@ function needPastTime(searchString) {
     var inVVals = Object.values(val);
     inVVals.forEach((inV) => {
       // console.log("I'm holding the value of vidVals", inV)
-      let truInv = new IsTruthy(inV);
-      if (truInv.t === true) {
+      let truInv = IsTruthy.trueVfalse(inV);
+      if (truInv) {
         vidData.push(inV);
       } else {
         return;
@@ -95,7 +95,7 @@ function needPastTime(searchString) {
       // );
       var searchString = noSearch;
     }
-    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A - YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const data = UrlFetchApp.fetch(searchLink, { muteHTTPExceptions: true });
     const videoSearch = data.getContentText();
     // return videoSearch
@@ -263,8 +263,8 @@ function needPastTime(searchString) {
           let inVVals = Object.values(val);
           inVVals.forEach((inV) => {
             // console.log("I'm holding the value of vidVals", inV)
-            let truInv = new IsTruthy(inV);
-            if (truInv.t === true) {
+            let truInv = IsTruthy.trueVfalse(inV);
+            if (truInv) {
               vidData.push(inV);
             } else {
               return;
@@ -293,8 +293,8 @@ function needPastTime(searchString) {
         let matchKeys = Object.keys(vidObj);
         matchKeys.forEach((match) => {
           let vidMatch = vidObj[match];
-          let truMatch = new IsTruthy(vidMatch);
-          if (truMatch.t === true && typeof vidMatch !== "number") {
+          let truMatch = IsTruthy.trueVfalse(vidMatch);
+          if (truMatch && typeof vidMatch !== "number") {
             let searchMatch = vidMatch.indexOf(searchString) > -1;
             let matchSearch = searchString.indexOf(vidMatch) > -1;
             if (searchMatch || matchSearch) {
@@ -345,11 +345,11 @@ function videoPage(search) {
   var youPlayer = videoPlayer(content);
   var content = HtmlService.createTemplate(`
   ${
-    new ContentApp(
+    ContentApp.appContent(
       `
     <?!= playerPlayer ?>`,
       { playerPlayer: youPlayer },
-    ).tmp
+    )
     //:contentFile('uiAccess')
   }`); //("\n <? var yourVideos = videoPlayer(\"playlist\", \"UU6DOFpA9UCTgNwJiVX1IOpQ\"); ?><?!= yourVideos ?>");
   return content.getRawContent();

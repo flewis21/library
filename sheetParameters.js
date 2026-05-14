@@ -1203,9 +1203,9 @@ function seoPictTime(searchString, time) {
     var inValsKeys = Object.keys(img);
     var inVVals = Object.values(img);
     inVVals.forEach((inV) => {
-      let truInv = new IsTruthy(inV);
-      console.log("truInv = " + truInv.t, executed++);
-      if (truInv.t === true) {
+      let truInv = IsTruthy.trueVfalse(inV);
+      console.log("truInv = " + truInv, executed++);
+      if (truInv) {
         imgData.push(inV);
       } else {
         return;
@@ -1328,9 +1328,9 @@ function seoPictTime(searchString, time) {
         let inValsKeys = Object.keys(img);
         let inVVals = Object.values(img);
         inVVals.forEach((inV) => {
-          let truInv = new IsTruthy(inV);
-          console.log("truInv = " + truInv.t, executed++);
-          if (truInv.t === true) {
+          let truInv = IsTruthy.trueVfalse(inV);
+          console.log("truInv = " + truInv, executed++);
+          if (truInv) {
             imgData.push(inV);
           } else {
             return;
@@ -1357,9 +1357,9 @@ function seoPictTime(searchString, time) {
       let matchKeys = Object.keys(imgObj);
       matchKeys.forEach((match) => {
         let imgMatch = imgObj[match];
-        let truMatch = new IsTruthy(imgMatch);
-        console.log("truMatch = " + truMatch.t, executed++);
-        if (truMatch.t === true) {
+        let truMatch = IsTruthy.trueVfalse(imgMatch);
+        console.log("truMatch = " + truMatc);
+        if (truMatch) {
           let searchMatch = imgMatch.indexOf(searchString) > -1;
           let matchSearch = searchString.indexOf(imgMatch) > -1;
           if (searchMatch || matchSearch) {
@@ -1393,9 +1393,9 @@ function seoPictures(searchString, time) {
      let mainList= autoP.functionRegistry.arrDomainVals;
      console.log("mainList = " + mainList.slice(mainList.length - 1), executed++);
      for (const key in mainList) {
-      let truD = new IsTruthy(mainList[key]);
-     console.log("truD = " + truD.t, executed++);
-      if (key === "Domain" && truD.t === true) {
+      let truD = IsTruthy.trueVfalse(mainList[key]);
+     console.log("truD = " + truD, executed++);
+      if (key === "Domain" && truD) {
         domainEngine.push(mainList[key]);
       }
      }
@@ -1463,8 +1463,8 @@ var seoTwitter = function (folderX, searchString, time) {
   //   }
   // }
   // var idArray = [seoFactor(data || minFold, time).factorData].toString().split("\n");
-  // let seoTruth = new IsTruthy(idArray);
-  // if (!seoTruth.t === true) {
+  // let seoTruth = IsTruthy.trueVfalse(idArray);
+  // if (!seoTruth) {
   //   idArray = minFold
   // }
 };
@@ -2049,14 +2049,14 @@ function ssData(playSheet, sheetName, time) {
 }
 
 function ssDatabase(file, sheet, col, headers, data) {
-  var result = new ContentApp("<?!= `createProject()` ?> ", {
+  var result = ContentApp.appContent("<?!= `createProject()` ?> ", {
     createProject: function myProject() {
       var ws = spreadSheetCreate(file, sheet);
       ws.appendRow(headers);
       var dataArray = testData(data);
       ssSheet().getRange(2, 1, dataArray.length, col).setValues(dataArray);
     },
-  }).tmp;
+  });
   return result;
 }
 
@@ -2219,9 +2219,9 @@ function taxiService() {
 }
 
 function tutorial(text) {
-  var html = new ContentApp(`
+  var html = ContentApp.appContent(`
     <body id="screen"></body>
-    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`).tmp;
+    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
   return html;
 }
 
@@ -2301,7 +2301,7 @@ function wanUtil(namedVar, time) {
 }
 
 function wsSIPOC(fileX, col) {
-  var result = new ContentApp(
+  var result = ContentApp.appContent(
     `
     <div id="ss"><?!= createSheet() ?></div>
     <script>
@@ -2346,7 +2346,7 @@ function wsSIPOC(fileX, col) {
       myFileX: fileX,
       myCol: col,
     },
-  ).tmp;
+  );
   return result;
 }
 

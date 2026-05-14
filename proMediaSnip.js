@@ -124,7 +124,7 @@ function proMediaSnip(e) {
   html.menu_itemHover = HtmlService.createHtmlOutput(
     `.menu-item:hover>.menu-img {transform: scale(1.03);}`,
   ).getContent();
-  return wwAccess("test", renderTemplate, html.evaluate().getContent());
+  return wwAccess("test", rendTemplate, html.evaluate().getContent());
 }
 
 function prose() {
@@ -175,7 +175,7 @@ function prose() {
 
 // var author
 // = validGroup("f.");var myFileE
-// = myFileJS(e);return renderTemplate(wwAccess("something", contentFile)("epaWebsite", {materializeCss: ("\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n"),tabulatorCss: ("\n  <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">"),materializeJs: ("\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n  "),luxonJs: ("\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js\" integrity=\"sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>"),tabulatorJs: ("\n    <script type=\"text/javascript\" src=\"https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js\"></script>"),dOMContentLoaded: ("\n  document.addEventListener('DOMContentLoaded', function() {\n  let timePicker
+// = myFileJS(e);return RenderTemplate.templateRender(wwAccess("something", contentFile)("epaWebsite", {materializeCss: ("\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n"),tabulatorCss: ("\n  <link href=\"https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_materialize.min.css\" rel=\"stylesheet\">"),materializeJs: ("\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n  "),luxonJs: ("\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js\" integrity=\"sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"></script>"),tabulatorJs: ("\n    <script type=\"text/javascript\" src=\"https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js\"></script>"),dOMContentLoaded: ("\n  document.addEventListener('DOMContentLoaded', function() {\n  let timePicker
 // = document.getElementById(\"prefTime\");\n M.Timepicker.init(timePicker, { defaultTime: \"now\" })\n })\n \n  document.getElementById(\"btn\").addEventListener(\"click\", function() {\n  google.script.run.runItLog();\n  })\n    var elems
 // = document.querySelectorAll('select');\n    var instances
 // = M.FormSelect.init(elems, options);\n  });"),startPageUrl: getUrl(ScriptApp),rule

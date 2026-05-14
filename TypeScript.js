@@ -1,11 +1,17 @@
 class Script{};
 class IsTypeScript{
   constructor(typePassedIn) {
+    this.typePassedIn = typePassedIn
+  }
+  passedType() {
     var mapTypes = {};
-    for (var key in typePassedIn) {
-      mapTypes[key] = typePassedIn[key];
+    for (var key in this.typePassedIn) {
+      mapTypes[key] = this.typePassedIn[key];
     }
     return mapTypes;
+  };
+  res() {
+    return this.mTypes()
   }
 }
 // Script.prototype. = function () {
@@ -13,65 +19,109 @@ class IsTypeScript{
 
 class IsValidKeys {
   constructor(v) {
-    var isExcludeValue = new IsOmit(v, "1");
-    isExcludeValue = new IsOmit(isExcludeValue, "2");
-    isExcludeValue = new IsOmit(isExcludeValue, "3");
-    var isValueOfTypePassedIn = new IsValidDoubleObject(isExcludeValue);
+    this.v = v
+  }
+  keysValid() {
+    var isExcludeValue = new IsOmit(this.v, "1");
+    isExcludeValue = new IsOmit(isExcludeValue.omitIt(), "2");
+    isExcludeValue = new IsOmit(isExcludeValue.omitIt(), "3");
+    var isValueOfTypePassedIn = IsValidDoubleObject.validObject(isExcludeValue.omitIt());
     if (isValueOfTypePassedIn) {
-      var isInferredTruthy = new IsTruthy(isValueOfTypePassedIn);
-      if (isInferredTruthy.t === true) {
-        return isValueOfTypePassedIn;
+      var isInferredTruthy = IsTruthy.trueVfalse(isValueOfTypePassedIn.validObject());
+      if (isInferredTruthy) {
+        return isValueOfTypePassedIn.validObject();
       }
     }
+  }
+  res() {
+    return this.vLidKey
   }
 }
 
 class IsValidDoubleObject {
   constructor(t) {
-    // var validKeys = new IsMapped(t);
+    this.t = t
+  }
+  static validObject(t) {
+    // var validKeys = IsMapped.mapout(t);
     if (t) {
       var validList = Object.values(t);
       class Valid{
-        constructor() {
-          this.validObj1 = validList[0];
-          this.validObj2 = validList[1];
+        constructor(vList) {
+          this.vList = vList
+        }
+        static validateList(vList) {
+          for (let key in vList) {
+            let tempV = vList[key];
+            for (let tempVKey in tempV) {
+              let vKeyDouble = tempV[tempVKey];
+              let tempVDouble = [tempV[tempVKey]].sort((a,b) => {
+                let obj1 = a;
+                let obj2 = b;
+                if (obj1 === obj2) {
+                  return
+                }
+              })
+            }
+            let tempDouble = [vList[key]].sort((a,b) => {
+              let obj1 = a;
+              let obj2 = b;
+              if (obj1 === obj2) {
+                return
+              }
+            })
+            if (tempDouble) {
+              return tempDouble
+            }
+          }
+          // let validObj1 = validList[0];
+          // let validObj2 = validList[1];
         }
       }
-      let myValiObj = new Valid();
-      if (typeof myValiObj.validObj1 === typeof myValiObj.validObj2) {
-        this.t = myValiObj
+      let myValiObj = Valid.validateList(t);
+      let tempValid = myValiObj
+      if (typeof tempValid[0] === typeof tempValid[1]) {
+        return tempValid
       }
       else {
-        this.t = t
+        return t
       }
     }
   };
-  objRes() {
-    if (this.t) {
-      let func = Object?.keys(this?.t);
-      let args = Object?.values(this?.t);
+  static objRes(t) {
+    if (t) {
+      let func = Object?.keys(t);
+      let args = Object?.values(t);
     }
-      return doGet(this?.t);
+    return doGet(t);
+  }
+  res() {
+    return this.t
   }
 }
 
 class IsMapped {
   constructor (t, v) {
-    var mapKeys = class Home {
-      constructor(t, v) {
-        this.t = t;
-        this.v = v;
-      }
-    };
+    this.t = t;
+    this.v = v;
+  }
+  static mapout (t, v) {
+    var mapKeys = {};
     for (var key in t) {
       mapKeys[key] = v || typeof t[key];
     }
     return mapKeys;
   };
+  res() {
+    return this.mapKey;
+  }
 }
 
 class IsTruthy {
   constructor (t) {
+    this.t = t;
+  }
+  static trueVfalse (t) {
     if (
       typeof t === null ||
       t === null ||
@@ -83,65 +133,103 @@ class IsTruthy {
       t.length === 0 ||
       t === ""
     ) {
-      this.t = false;
+      return false;
     } else {
-      this.t = true;
+      return true;
     }
   };
+  res() {
+    return this.t;
+  }
 }
 
 class IsKeyOf {
   constructor (t) {
-    var keyList = class Home {}; //Object.keys(t);
-    for (var key in t) {
+    this.t = t;
+  }
+  keyIt () {
+    var keyList = {}; //Object.keys(t);
+    for (var key in this.t) {
       keyList[key] = key;
     }
     return keyList;
   };
+  res() {
+    return this.keyOf;
+  }
 }
 
 class IsPropertyOf {
   constructor (t) {
-    var propertyList = new IsMapped(t);
+    this.t = t;
+  }
+  propIt () {
+    let propertyList = IsMapped.mapout(t);
     return propertyList;
   };
+  res() {
+    return this.propList;
+  }
 }
 
-Script.prototype.isOmit = function (t, k) {
-  var valuesList = isPick(t, k);
-  return valuesList;
-};
+class IsOmit {
+  constructor(t, k) {
+    this.t = t;
+    this.k = k;
+  }
+  omitIt() {
+    let valuesList = new IsPick(this.t, this.k);
+    return valuesList.pickIt();
+  };
+  res() {
+    return this.omList;
+  }
+}
 
 class IsExclude {
   constructor (t, k) {
-    var keyList = Object.keys(t);
+    this.t = t;
+    this.k = k;
+  }
+  excludeIt () {
+    var keyList = Object.keys(this.t);
     var excludeList = [];
     Array.isArray(keyList)
       ? keyList.forEach((e, i) => {
-          if (!e.includes(k)) {
+          if (!e.includes(this.k)) {
             excludeList.push(e);
           }
         })
       : Array(keyList).forEach((e, i) => {
-          if (!e.includes(k)) {
+          if (!e.includes(this.k)) {
             excludeList.push(e);
           }
         });
     return excludeList;
   };
+  res() {
+    return this.exList;
+  }
 }
 
 class IsPick {
   constructor (t, k) {
-    var excludeList = isExclude(t, k);
+    this.t = t;
+    this.k = k;
+  }
+  pickIt () {
+    var excludeList = isExclude(this.t, this.k);
     var valuesList = {};
-    for (var key in t) {
+    for (var key in this.t) {
       if (excludeList.includes(key)) {
-        valuesList[key] = t[key];
+        valuesList[key] = this.t[key];
       }
     }
     return valuesList;
   };
+  res() {
+    return this.pipList;
+  }
 }
 
 var geneicType = function (e) {
@@ -152,30 +240,34 @@ var geneicType = function (e) {
     b: 123,
     c: ["string"],
   };
-  let eQueryObject;
+  let eQueryObject = exampleObjectType;
   if (!e) {
-    if (Math.random() < .4) {
-      eQueryObject = {
-        parameter: {
-          q:testlt().name
-        }
-      };
-    }
-    else {
-      if (Math.random() > .3 && Math.random() < .7) {
+    let i = Math.random();
+    let l = 1;
+    for (i,l;i<l;i++) {
+      if (i < .4) {
         eQueryObject = {
           parameter: {
-            action:"getData"
+            q:testlt().name
           }
         };
       }
       else {
-        if (Math.random() > .6) {
+        if (i > .3 && i < .7) {
           eQueryObject = {
             parameter: {
-              file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
+              action:"getData"
             }
           };
+        }
+        else {
+          if (i > .6) {
+            eQueryObject = {
+              parameter: {
+                file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
+              }
+            };
+          }
         }
       }
     }
@@ -183,7 +275,8 @@ var geneicType = function (e) {
   else {
     eQueryObject = e
   }
-  let script = new IsValidDoubleObject(eQueryObject);
+  let tmpSc = IsValidDoubleObject.validObject(eQueryObject);
+  let script = tmpSc;
     // return script.objRes();
     console.log(Object.getOwnPropertyNames(script));
     console.log(Object.getPrototypeOf(script));
@@ -194,7 +287,7 @@ var geneicType = function (e) {
     //   console.log(`${JSON.stringify(instance)}`)
     // })
     // var numVarRnd = Math.floor(Math.random() * 25);
-    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"new IsMapped",["e","f"],"isPropertyOf","e","isKeyOf","e","new IsTruthy","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
+    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"IsMapped.mapout",["e","f"],"isPropertyOf","e","isKeyOf","e","IsTruthy.trueVfalse","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
     // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
     // let randomWord = rndWord();
     // let tyFile = wsSIPOC(randonWord);
@@ -211,30 +304,32 @@ var geneicType = function (e) {
     // exampleObjectType[randonWord] = [];
     // let bex = isOmit(exampleObjectType, "b");
     // bex = isOmit(bex, "c");
-    // let scriptUrl = new IsMapped(bex, [...fileParams?.parameters]);
+    // let scriptUrl = IsMapped.mapout(bex, [...fileParams?.parameters]);
     // let crfRes = createRandomFunction();
     // var functionObjectType = handleGetData();
     //misSt([Object.keys(crfRes),Object.values(crfRes)]);
     // var isExcludeValue = isOmit(functionObjectType["dtlsPro"], "c");
     // isExcludeValue = isOmit(isExcludeValue, "2");
     // isExcludeValue = isOmit(isExcludeValue, "3");
-    // var teeValid1 = new IsMapped({ 0: null }, [
+    // var teeValid1 = IsMapped.mapout({ 0: null }, [
     //   "isValidUrl",
     //   "http://www.google.com",
     // ])[0];
     // var forTruth = resolveParams(teeValid1);
     // var tee = isPropertyOf(teeValid1)
-    // var kee = new IsMapped(tee)
+    // var kee = IsMapped.mapout(tee)
     // var noB = isValidKeys(forTruth);
     console.log(typeof initForm);
     let handles
     let parAuto = new AutoParams()
     if (e) {
-      handles =  new FunctionHandle(e).fhObj;
+      let tempObj = FunctionHandle.handleFunction(e);
+      handles =  tempObj
       console.log("handles = " + handles, executed++);
     }
     else {
-      handles = new FunctionHandle(script.t).fhObj;
+      let tempObj = FunctionHandle.handleFunction(script);
+      handles = tempObj;
       console.log("handles = " + handles, executed++);
     }
     let base

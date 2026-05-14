@@ -254,7 +254,7 @@ function jsonINIT(json) {
 // if (typeof (json) === "undefined")
 // {try {var res = UrlFetchApp.fetch(url);
 //       // console.log(UrlFetchApp.fetch(url));
-//       return new ContentApp(res.getContentText()).tmp;
+      // return ContentApp.appContent(res.getContentText());
 //       // console.log(res.getContentText());}
 //   catch (err) {return "Invalid request";}}
 // else if (typeof (json) === "object")
@@ -266,7 +266,7 @@ function jsonINIT(json) {
 // console.log(url)
 // var res = UrlFetchApp.fetch(url);
 // console.log(UrlFetchApp.fetch(url));
-// return new ContentApp(res.getContentText()).tmp;
+// return new ContentApp(res.getContentText());
 // console.log(res.getContentText());
 
 function jsonXpath(jsonXpathDataRange) {

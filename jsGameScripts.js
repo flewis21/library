@@ -1,6 +1,6 @@
 function jsGameScripts() {
   let gamerUrl = getScriptUrl();
-  let html = new ContentApp(
+  let html = ContentApp.appContent(
     `
     <html id="jsGameScripts">
       <head>
@@ -60,7 +60,7 @@ function jsGameScripts() {
     ,{
       gamestart: new Gamer("Warrior",100,0,50,10,25)
     },
-  ).tmp;
+  );
   html.gamerUrl = gamerUrl;
   return html; //: contentFile("uiAccess")
 }

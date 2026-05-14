@@ -28,7 +28,7 @@ function doGet(e) {
       `globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`,
       finalFS,
     );
-    return new RenderTemplate(
+    return RenderTemplate.templateRender(
       ` <!DOCTYPE html>
           <html>
             <head><base target="_self"></head>
@@ -40,7 +40,7 @@ function doGet(e) {
           </html>`,
       { funcResult: finalFS },
       JSON.stringify(getDoFunction),
-    ).blobTemplate;
+    );
     var argsEd = testlt();
     if (typeof globalThis.mis === "function") {
       var misArgs;
@@ -147,14 +147,14 @@ function doGet(e) {
           payload.app.length === 132 ||
           payload.app.indexOf("&entry") > -1
         ) {
-          return new RenderTemplate(mis(payload.app), {}, "All departments").blobTemplate;
+          return RenderTemplate.templateRender(mis(payload.app), {}, "All departments");
         } 
         else {
-          return new RenderTemplate(
+          return RenderTemplate.templateRender(
             `<!DOCTYPE html><html><head><base target="_self"></head><body class="amber"><div class="amber" id="div">${payload.app}</div></body></html>`,
             {},
             "All departments",
-          ).blobTemplate;
+          );
         }
       }
     } 
@@ -167,14 +167,14 @@ function doGet(e) {
         else {
           if (fx === objMaster.miscellaneous.section[3]) {
             console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[3]]);
-            return new RenderTemplate(new DVar.apply(this, rndCoin)).blobTemplate;
+            return RenderTemplate.templateRender(new DVar.apply(this, rndCoin));
             var aVar = objectOfS(
               ["parameter"],
               [[["func", arguments.callee.name]]],
               Math.floor((maxTime - (new Date() % (1000 * 60))) / 1000),
             );
 
-            return new RenderTemplate(new DVar(new DVar).myVar).blobTemplate;
+            return RenderTemplate.templateRender(new DVar(new DVar).myVar);
           } 
           else {
             if (fx === objMaster.miscellaneous.section[10]) {
@@ -261,7 +261,7 @@ function doGet(e) {
                         `;
 
                           // Return the HTML content
-                          return new RenderTemplate(pageHtml, {}, "Finance Landing Page").blobTemplate;
+                          return RenderTemplate.templateRender(pageHtml, {}, "Finance Landing Page");
                         } 
                         else {
                           if (fx === objMaster.miscellaneous.section[59]) {
@@ -298,7 +298,7 @@ function doGet(e) {
                               } 
                               else if (fx === objMaster.miscellaneous.section[132]) {
                                 console.log("Executed " + fx, [fx === objMaster.miscellaneous.section[132]]);
-                                return new RenderTemplate(oldSEC, {}, "Securities and Exchanges").blobTemplate;
+                                return RenderTemplate.templateRender(oldSEC, {}, "Securities and Exchanges");
                               } 
                               else if (fx === objMaster.miscellaneous.section[141]) {
                               } 
@@ -369,11 +369,11 @@ function doGet(e) {
                               else if (fx === objMaster.miscellaneous.section[370]) {
                               } 
                               else {
-                                let libFunc = "renderFile";
+                                let libFunc = "rendFile";
                                 let htmlArray = AutoParams.prototype.functionRegistry.htmlArray
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
-                                let renF = new RenderFile(args,{payL: payload},args).fileTemplate
+                                let renF = RenderFile.fileRender(args,{payL: payload},args)
                                 if (renF) {
                                   return renF
                                 } else {
@@ -434,9 +434,9 @@ function doGetPost(e) {
     )
   ];
   args = barArgs || ["jFundamentals"];
-  if (renderFile(args)) {
-    return new RenderTemplate(
-      new ContentApp(`<?!= appL ?>`, {
+  if (RenderFile.fileRender(args)) {
+    return RenderTemplate.templateRender(
+      ContentApp.appContent(`<?!= appL ?>`, {
         appL:
           libFunc ||
           HtmlService.createHtmlOutput(
@@ -457,9 +457,9 @@ function doGetPost(e) {
               `,
                 ).getContent(),
             ]),
-      }).tmp,
+      }),
       { e: e },
-    ).blobTemplate;
+    );
   } else {
     return handleRequest(e);
   }
@@ -649,14 +649,14 @@ function handleGetData(e) {
               }
             }
             try {
-              return renderFile(
+              return RenderFile.fileRender(
                 funcTres,
                 {
                   fileParam: funcTres,
                   argsParam: e.parameter["args"],
                   funcParam: e.parameter["func"],
                 },
-                "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
+                "GitHub Pages with Apps Script returning ?func=rendFile&args=" +
                   (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
                   ", " +
                   {} +
@@ -691,7 +691,7 @@ function handleGetData(e) {
             //   else if (e && e.parameter && e.parameter["file"]) {
             //     return this[libName].handleGetData(e.parameter["file"]);
             //   }
-            //   // return renderTemplate(
+            //   // return RenderTemplate.templateRender(
             //   //   foobar,
             //   //   {
             //   //   },
@@ -700,7 +700,7 @@ function handleGetData(e) {
             // }
           } catch (error) {
             console.error(
-              `Error executing function "RENDERFILE":`,
+              `Error executing function "RENDFILE":`,
               error.stack,
             );
             throw new Error(
@@ -887,9 +887,9 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = new IsTruthy(isObjValUrl);
+    let rawUrlResult = IsTruthy.trueVfalse(isObjValUrl);
     executed++;
-    if (!rawUrlResult.t === true) {
+    if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
       let parsedFuncArgs = [];
       let keyObject;
@@ -916,7 +916,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && new IsTruthy(funcDos).t === true) {
+      } else if (typeof funcDos !== "object" && IsTruthy.trueVfalse(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
@@ -1408,7 +1408,7 @@ function handleGetData(e) {
       );
       var seoHtml = seoCapital(iframeSrc);
       executed++;
-      return renderTemplate(appL, { payL: payLoad }, JSON.stringify(rndE));
+      return RenderTemplate.templateRender(appL, { payL: payLoad }, JSON.stringify(rndE));
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
@@ -1417,7 +1417,7 @@ function handleGetData(e) {
       // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
       // executed++
-      //   return renderTemplate(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
       appL = JSON.stringify(payLoad.dataIndex, null, 2);
@@ -1425,7 +1425,7 @@ function handleGetData(e) {
       // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
       // executed++
-      //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
     //iframeSrc in tenary
     else if (payLoad.type === "text") {
@@ -1435,7 +1435,7 @@ function handleGetData(e) {
       // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
       // executed++
-      //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
@@ -1450,7 +1450,7 @@ function handleGetData(e) {
         // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
         // executed++
-        //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
@@ -1459,7 +1459,7 @@ function handleGetData(e) {
         // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
         // executed++
-        //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
@@ -1470,14 +1470,14 @@ function handleGetData(e) {
         // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
         //   var seoHtml = seoCapital(iframeSrc);
         // executed++
-        //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
       // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
       //   var seoHtml = seoCapital(iframeSrc);
       // executed++
-      //   return renderTemplate(feed, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(feed, {payL: payLoad}, JSON.stringify(rndE));
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
@@ -1486,7 +1486,7 @@ function handleGetData(e) {
     // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
     //   var seoHtml = seoCapital(iframeSrc);
     // executed++
-    //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+    //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
   // --- END Refactored payLoad processing ---
   data["message"] = {
@@ -1511,13 +1511,13 @@ function handleGetData(e) {
   // Logger.log("The final value of handle Get Data. " + JSON.stringify(data));
   // // var contentData = isValidKeys(data);
   // if (payLoad.type === "html") {
-  //   return renderTemplate(data.message.info, {payL: data}, JSON.stringify(rndE));
+  //   return RenderTemplate.templateRender(data.message.info, {payL: data}, JSON.stringify(rndE));
   // } else if (isValidUrl(data.message.content).hostname
   // ) {
   // console.info(`previously exec count - \nhandleGetData(${JSON.stringify(payLoad)}) - `, executed);
   //   var seoHtml = seoCapital(data.message.content);
   // executed++
-  //   return renderTemplate(seoHtml, {payL: data}, JSON.stringify(rndE));
+  //   return RenderTemplate.templateRender(seoHtml, {payL: data}, JSON.stringify(rndE));
   // } else {
   //   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
   //     ContentService.MimeType.JSON,
@@ -1918,7 +1918,7 @@ var globalHandleGetData = function (rawFuncResult) {
       feed = `${payLoad.link}`;
       // var seoHtml = seoCapital(iframeSrc);
       executed++;
-      // return renderTemplate(rawFuncResult, { payL: payLoad }, payLoad.type);
+      // return RenderTemplate.templateRender(rawFuncResult, { payL: payLoad }, payLoad.type);
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
@@ -1926,14 +1926,14 @@ var globalHandleGetData = function (rawFuncResult) {
       feed = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
-      //   return renderTemplate(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "jsonData") {
       iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
       appL = JSON.stringify(payLoad.dataIndex, null, 2);
       feed = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
-      //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
     //iframeSrc in tenary
     else if (payLoad.type === "text") {
@@ -1942,7 +1942,7 @@ var globalHandleGetData = function (rawFuncResult) {
       feed = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
-      //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "object") {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
@@ -1956,7 +1956,7 @@ var globalHandleGetData = function (rawFuncResult) {
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
-        //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
         iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
@@ -1964,7 +1964,7 @@ var globalHandleGetData = function (rawFuncResult) {
         feed = `URL provided: ${payLoad.link}`;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
-        //   return renderTemplate(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
       } else {
         // Default way to display a generic object: stringify it
         iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
@@ -1974,13 +1974,13 @@ var globalHandleGetData = function (rawFuncResult) {
         feed = payLoad.link;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
-        //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
       feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
-      //   return renderTemplate(feed, {payL: payLoad}, JSON.stringify(rndE));
+      //   return RenderTemplate.templateRender(feed, {payL: payLoad}, JSON.stringify(rndE));
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
@@ -1988,7 +1988,7 @@ var globalHandleGetData = function (rawFuncResult) {
     // iframeSrc = ""; // Clear iframe on critical error
     //   var seoHtml = seoCapital(iframeSrc);
     executed++
-    //   return renderTemplate(appL, {payL: payLoad}, JSON.stringify(rndE));
+    //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
   // --- END Refactored payLoad processing ---
   data["message"] = {
@@ -2289,7 +2289,7 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 function userClicked() {
-  return new ContentApp(
+  return ContentApp.appContent(
     `<script>
     
   console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
@@ -2333,7 +2333,7 @@ function userClicked() {
 
   </script>`,
     {},
-  ).tmp;
+  );
 } //Global object closed
 
 //  {cik_str: await currentCik,
@@ -2392,7 +2392,7 @@ function userClicked() {
 //                 });
 //             },
 //             })
-//        return new RenderTemplate(new ContentApp(content).tmp)
+//        return RenderTemplate.templateRender(ContentApp.appContent(content))
 //             }
 
 // var doGet = function(e)
@@ -2409,79 +2409,79 @@ function userClicked() {
 //               {return wwAccess("development", proMediaSnip)(e)//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "epa")?
 //   (function()
-//               {return renderTemplate(wwAccess("epa", epaData)())//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("epa", epaData)())//: contentFile("uiAccess");
 //               })(): authLogic(e.parameter["default"] === "edgar")?
 //   (function()
-//               {return renderTemplate(wwAccess("edgar", edgarData)())//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("edgar", edgarData)())//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "odd")?
 //   (function()
-//               {return renderTemplate(wwAccess("odd", breakthrough)(e))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("odd", breakthrough)(e))//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "gamer")?
 //   (function()
-//               {return renderTemplate(wwAccess("gamer", jsGameScripts)())//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("gamer", jsGameScripts)())//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "checkOD")?
 //   (function()
-//             {return renderTemplate(wwAccess("checkOD", checkOnDay)())//: contentFile("uiAccess");
+//             {return RenderTemplate.templateRender(wwAccess("checkOD", checkOnDay)())//: contentFile("uiAccess");
 //               })(): authLogic(e.parameter["default"] === "usGov")?
 //   (function()
-//               {return renderTemplate(wwAccess("usGov", congressLeg)())//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("usGov", congressLeg)())//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "jFun")?
 //   (function()
-//               {return renderTemplate(wwAccess("jFun", jFundamentals)(e))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("jFun", jFundamentals)(e))//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "ssTest")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssTest", superTest)(e))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssTest", superTest)(e))//: contentFile("uiAccess");
 //                 })(): authLogic(e.parameter["default"] === "ssDataEntry")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssDataEntry", dataEntry)(e))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssDataEntry", dataEntry)(e))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssgnuFree")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssgnuFree", contentFile)("gnuFree"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssgnuFree", contentFile)("gnuFree"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssDCUO")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssDCUO", contentFile)("oddChances"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssDCUO", contentFile)("oddChances"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssPro")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssPro", contentFile)("proMedia"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssPro", contentFile)("proMedia"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssCSS")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssCSS", contentFile)("styling"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssCSS", contentFile)("styling"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssChemical")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssChemical", contentFile)("epaWebsite"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssChemical", contentFile)("epaWebsite"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssFinance")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssFinance", contentFile)("edgarFriendly"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssFinance", contentFile)("edgarFriendly"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssHome")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssHome", contentFile)("index"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssHome", contentFile)("index"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssJCalls")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssJCalls", contentFile)("callBack"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssJCalls", contentFile)("callBack"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssGamer")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssGamer", contentFile)("jsGame"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssGamer", contentFile)("jsGame"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssDateTime")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssDateTime", contentFile)("checkOnDay"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssDateTime", contentFile)("checkOnDay"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssCatch")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssCatch", contentFile)("uiAccess"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssCatch", contentFile)("uiAccess"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssForm")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssForm", contentFile)("popUpOpen"))//: contentFile("uiAccess");
+              // {return RenderTemplate.templateRender(wwAccess("ssForm", contentFile)("popUpOpen"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssUSCongress")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssUSCongress", contentFile)("congressLeg"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssUSCongress", contentFile)("congressLeg"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssUSHouse")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssUSHouse", contentFile)("congressMembers"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssUSHouse", contentFile)("congressMembers"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssJSFun")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssJSFun", contentFile)("jFundamentals"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssJSFun", contentFile)("jFundamentals"))//: contentFile("uiAccess");
 //                 })():  authLogic(e.parameter["default"] === "ssGNUJSFun")?
 //   (function()
-//               {return renderTemplate(wwAccess("ssGNUJSFun", contentFile)("myGNUFreeJS"))//: contentFile("uiAccess");
+//               {return RenderTemplate.templateRender(wwAccess("ssGNUJSFun", contentFile)("myGNUFreeJS"))//: contentFile("uiAccess");
 //                 })():
 //   (function()
 //       {// Route.path("default", defaultWebsite);
@@ -2501,7 +2501,7 @@ function userClicked() {
 //   return wwAccess(e.parameter["default"], defaultWebsite)(e)
 //                })()})():
 //   (function()
-//               {return renderTemplate(Route["default"]("html", contentFile)('index'))
+              // {return RenderTemplate.templateRender(Route["default"]("html", contentFile)('index'))
 //                 })()
 //                         }
 
@@ -2517,7 +2517,7 @@ function userClicked() {
 //   var randomEmail = emails[Math.floor(Math.random() * emailsCount)]
 //   var gamerUrl = getUrl(ScriptApp) + "?default"
 //   // var homeP = wwAccess("test", contentFile)
-//   return renderTemplate(wwAccess("test", contentFile)("index"    , {//         utf_8: ("\n<meta charset=\"UTF-8\">"),
+//   return RenderTemplate.templateRender(wwAccess("test", contentFile)("index"    , {//         utf_8: ("\n<meta charset=\"UTF-8\">"),
 //         viewport: ("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">"),
 //         fontAwesome: ("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css\" integrity=\"sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" />"),
 //         google_signin_client: ("\n<meta content=\"739921544160-nvqbr8cmqcs35n700q94mn5qnjh7vdr5.apps.googleusercontent.com\" name=\"google-signin-client_id\"></meta>"),
@@ -2573,7 +2573,7 @@ function userClicked() {
 //      })
 //      )//: contentFile('uiAccess');
 //    Route.path("production", includeApp);
-//    return renderTemplate(Route["production"]("<?!= index ?>"))//, { properties: new ContentApp("\n \n  <? var style = styleHtml() ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  ").tmp, htmlStyle: styleHtml(), })
+//    return RenderTemplate.templateRender(Route["production"]("<?!= index ?>"))//, { properties: ContentApp.appContent("\n \n  <? var style = styleHtml() ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: styleHtml(), })
 //   } else
 //   {//     switch (e.parameter["default"])
 //     {//       case "posHtml":

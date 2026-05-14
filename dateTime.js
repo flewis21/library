@@ -159,7 +159,7 @@ function dateTime(date) {
   dateTime.timeDefault = new Date(date).toLocaleTimeString();
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    new ContentApp(
+    ContentApp.appContent(
       `
   <html id="dateTimeTimePicker">
     <head>
@@ -187,10 +187,10 @@ function dateTime(date) {
       {
         ph: new Date(date).toLocaleTimeString(),
       },
-    ).tmp,
+    ),
   ).getContent();
   dateTime.datePicker = HtmlService.createHtmlOutput(
-    new ContentApp(
+    ContentApp.appContent(
       `
   <html id="dateTimeDatePicker">
     <head>
@@ -218,7 +218,7 @@ function dateTime(date) {
       {
         ph: new Date(date).toLocaleDateString(),
       },
-    ).tmp,
+    ),
   ).getContent();
   return dateTime.evaluate().getContent();
 } //:contentFile('uiAccess');

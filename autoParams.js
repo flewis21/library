@@ -9,7 +9,6 @@ AutoParams.prototype.functionRegistry = {
     "theWorks",
     "theRoll",
     "ssSheets",
-    "ssForms",
     "slideCard",
     "Section3.Challenge1",
     "editor",
@@ -1175,6 +1174,9 @@ AutoParams.prototype.gMain = function() {
 
 class FunctionHandle {
   constructor(e) {
+    this.e = e
+  }
+  static handleFunction(e) {
     var executed = 0;
     let funchAP = new AutoParams()
     let rndE = "";
@@ -1185,7 +1187,7 @@ class FunctionHandle {
       console.log("rndE = " + rndE, executed++);
     } else { 
         if (e && !e.parameter) {
-        rndE = createRandomFunction(e);
+        rndE = createRandomFunction(te);
         console.log("rndE = " + rndE, executed++);
         } else {
           if (e && e.parameter) {
@@ -1197,7 +1199,7 @@ class FunctionHandle {
             //funchAP.functionRegistry.paramsList[Math.floor(Math.random() * funchAP.functionRegistry.paramsList.length)]
             console.log("rndE = " + rndE, executed++);
             if (typeof rndE === "string") {
-              e = bjectOfS(
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
@@ -1300,13 +1302,14 @@ class FunctionHandle {
                             muteHttpExceptions: true,
                           };
                           payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                          return renderTemplate(
+                          let hTAml = RenderTemplate.templateRender(
                             payLoad.data["app"]?.app,
                             {
                               pL: payLoad,
                             },
                             JSON.stringify(fT?.name || funcTres),
                           );
+                          return hTAml
                         }
                       }
                       catch {
@@ -1320,7 +1323,7 @@ class FunctionHandle {
                             {
                               fileParam: funcTres,
                             }
-                          return renderFile(
+                          let noLhtml = RenderFile.fileRender(
                             funcTres,
                             driveA,
                             "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
@@ -1331,6 +1334,7 @@ class FunctionHandle {
                               htmlTresArg +
                               ",",
                           );
+                          return noLhtml
                         } catch (error) {
                           Logger.log("Requested! HTML Out of Order", error.stack);
                         }
@@ -1355,7 +1359,7 @@ class FunctionHandle {
                 //     let funcD = e.parameter["args"] || "";
                 //     let base = createFunctionResult(funcU, funcD);
                 //     let data = globalHandleGetData(base);
-                //     return renderTemplate(
+                    // return RenderTemplate.templateRender(
                 //       base || data?.message?.info,
                 //       {
                 //         pL: data.pL,
@@ -1564,13 +1568,14 @@ class FunctionHandle {
                                   muteHttpExceptions: true,
                                 };
                                 payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                                return renderTemplate(
+                                let hTAmla = RenderTemplate.templateRender(
                                   payLoad.data["app"]?.app,
                                   {
                                     pL: payLoad,
                                   },
                                   JSON.stringify(fT?.name || funcTres),
                                 );
+                                return hTAmla
                               }
                             }
                             catch {
@@ -1584,7 +1589,7 @@ class FunctionHandle {
                                   {
                                     fileParam: funcTres,
                                   }
-                                return renderFile(
+                                let noLhtmlb = RenderFile.fileRender(
                                   funcTres,
                                   driveA,
                                   "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
@@ -1595,6 +1600,7 @@ class FunctionHandle {
                                     htmlTresArg +
                                     ",",
                                 );
+                                return noLhtmlb
                               } catch (error) {
                                 Logger.log("Requested! HTML Out of Order", error.stack);
                               }
@@ -1642,7 +1648,7 @@ class FunctionHandle {
       } 
     }
     console.log("exec and args\n" + [funcUno, funcDos]);
-    this.fhObj = {
+    return {
       exec: funcUno,
       args: funcDos,
     };
@@ -1658,9 +1664,9 @@ class FunctionHandle {
     // executed++
     //   }
     // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
-    //   let rawUrlResult = new IsTruthy(isObjValUrl);
+    //   let rawUrlResult = IsTruthy.trueVfalse(isObjValUrl);
     // executed++
-    //   if (!rawUrlResult.t === true) {
+    //   if (!rawUrlResult) {
     //     let parsedFuncArgs = [];
     //     let keyObject;
     //     if (typeof funcDos === "object") {
@@ -1679,7 +1685,7 @@ class FunctionHandle {
     //         }
     //       }
     //     }
-    //     else if (typeof funcDos !== "object" && new IsTruthy(funcDos).t === true) {
+    //     else if (typeof funcDos !== "object" && IsTruthy.trueVfalse(funcDos)) {
     //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
     //     }
     //     else {
@@ -1765,4 +1771,12 @@ class FunctionHandle {
     //   appL = `Critical Error: ${error.stack}`;
     // }
   }
+  res() {
+    return this.fhRes
+  }
+}
+
+function funcHandle(e) {
+  let data = FunctionHandle.handleFunction(e);
+  return data
 }

@@ -72,21 +72,21 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = new IsTruthy(funcUno);
-  let truDos = new IsTruthy(funcDos);
-  console.log("truUno and truDos\n" + [truUno.t, truDos.t]);
+  let truUno = IsTruthy.trueVfalse(funcUno);
+  let truDos = IsTruthy.trueVfalse(funcDos);
+  console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
 
   try {
     let objVal = funcDos?.toString();
-    let truVal = new IsTruthy(objVal);
-    console.log("truVal and objVal\n" + [truVal.t, objVal]);
+    let truVal = IsTruthy.trueVfalse(objVal);
+    console.log("truVal and objVal\n" + [truVal, objVal]);
     let rawUrlResult;
-    if (truVal.t === true && objVal?.indexOf(",") === -1) {
+    if (truVal && objVal?.indexOf(",") === -1) {
       let isObjValUrl = isValidUrl(objVal);
-      rawUrlResult = new IsTruthy(isObjValUrl.hostname);
-      console.log("rawUrlResult = " + rawUrlResult.t, executed++);
+      rawUrlResult = IsTruthy.trueVfalse(isObjValUrl.hostname);
+      console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
     // executed++
     if (!rawUrlResult?.t === true) {
@@ -243,7 +243,7 @@ function createRandomFunction(searchString) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = new IsMapped(mapArr, [
+        let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -254,7 +254,7 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle];
+        let tempObj = IsMapped.mapout(mapArr, [scriptTitle])[scriptTitle];
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -267,9 +267,7 @@ function createRandomFunction(searchString) {
       console.log("fileIndex",executed++);
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
-      let tempObj = new IsMapped(mapArr, [scriptTitle, [...fileParams.parameters]])[
-        scriptTitle
-      ];
+      let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams.parameters]])[scriptTitle];
       console.log("tempObj",executed++);
       console.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
       scriptUrl = resolveParams(tempObj);
@@ -283,7 +281,7 @@ function createRandomFunction(searchString) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = new IsMapped(mapArr, [
+        let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
           [scriptTitle, autoP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
@@ -295,7 +293,7 @@ function createRandomFunction(searchString) {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
         // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
-        let tempObj = new IsMapped(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
+        let tempObj = IsMapped.mapout(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
         scriptUrl = resolveParams(tempObj);
@@ -308,7 +306,8 @@ function createRandomFunction(searchString) {
       fileParams = autoP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
-      scriptUrl = new IsMapped(mapArr, [...fileParams.parameters]);
+      let tempObj = IsMapped.mapout(mapArr, [...fileParams.parameters]);
+      scriptUrl = tempObj
       console.log("scriptUrl",executed++);
     }
   }
@@ -332,7 +331,7 @@ function defaultWebsite(e) {
 
   // var xpath = e.parameter['xpath'];
   //  baseUrl = getUrl(ScriptApp);
-  // Route.path("default", renderTemplate);
+  // Route.path("default", rendTemplate);
   // Route["default"]("<h1>Hello World!</h1>")
   if (Object.keys(e.parameter).indexOf("webApp") === -1) {
     return;
@@ -341,7 +340,7 @@ function defaultWebsite(e) {
       // case "dlsindex": // <!------------------------------Main Website Index Page-----------------------------!>
       //     webApp = HtmlService.createTemplateFromFile("dlsindex");
       //     webApp.url = getUrl(ScriptApp);
-      //     return new ContentApp(webApp).tmp//:new ContentFile('uiAccess');
+      //     return ContentApp.appContent(webApp)//:new ContentFile('uiAccess');
       //         case "help": // <!-------------------------------Main Help Page-----------------------------!>
       //             webApp = HtmlService.createTemplateFromFile("help");
       //             webApp.url = getUrl(ScriptApp);
@@ -381,8 +380,8 @@ function defaultWebsite(e) {
           ),
         );
         webApp.url = getUrl(ScriptApp);
-        return renderTemplate(
-          new ContentApp(
+        return RenderTemplate.templateRender(
+          ContentApp.appContent(
             '\n   <body id="test">                 \n<h2 class="search-overlay__section-title">\n  General Information\n</h2>\n<ul class="link-list min-list">\n <li>\n    <a href="#">'.concat(
               webApp.getContent(),
               '</a>\n </li>\n</ul>\n<div class="container row s1 valign-wrapper video-container black darken-4">\n  <div id="player1"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player2"></div>\n</div>\n<div class="container row s2 valign-wrapper video-container black darken-4">\n  <div id="player3"></div>\n<script>\n document.addEventListener("DOMContentLoaded", <?!= appJs ?>);\n</script>\n</div>\n </body>\n                              ',
@@ -394,7 +393,7 @@ function defaultWebsite(e) {
                 console.log(document.getElementById("test").innerHTML);
               },
             },
-          ).tmp,
+          ),
         ); //:new ContentFile('uiAccess');
       //         case "jsonSECEdgar": // <!-----------------------JSON API Results-------------------------!>
       //             // webApp = jsonINIT("https://ordspub.epa.gov/ords/pesticides/ppls/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/pplstxt/" + jsonINIT("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + e.parameter["product"], "items/" + e.parameter["result"] + "/productname"), "items/0/active_ingredients/0/active_ing"), "items/0/eparegnumber"));
@@ -493,7 +492,7 @@ function defaultWebsite(e) {
       //                 //     // console.log(jsonXpathOutputQuery)
       //                 // webApp = HtmlService.createTemplate(ContentService.createTextOutput(JSON.stringify({ data: jsonXpathRowsToReturn, error: false })).setMimeType(ContentService.MimeType.JSON).getContent());
       //             }
-      //             webApp = new ContentApp("\"".concat(data, "\"").tmp, JSON.stringify({ data: jsonXpathRowsToReturn, error: false }))
+      //             webApp = ContentApp.appContent("\"".concat(data, "\""), JSON.stringify({ data: jsonXpathRowsToReturn, error: false }))
       //             // webApp.content = jsonINIT("https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242");
       //             baseUrl = getUrl(ScriptApp);
       //             console.log(baseUrl)
@@ -590,17 +589,17 @@ function defaultWebsite(e) {
         // financeUrl = getUrl(ScriptApp)
         // console.log(financeUrl)
         // webApp.html =  HtmlService.createHtmlOutput(webApp).setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-        return new ContentApp("\n\n <?!= html ?>\n\n  ", {
+        return ContentApp.appContent("\n\n <?!= html ?>\n\n  ", {
           html: "".concat(
-            new ContentApp(
+            ContentApp.appContent(
               '"'.concat(
                 navBar(baseUrl, "Finance"),
                 '"</div><div class="clubhouse"></div>',
               ),
-            ).tmp,
+            ),
             "",
           ),
-        }).tmp; //:contentFile('uiAccess');
+        }); //:contentFile('uiAccess');
       // return render("\n                    <?!= include(\"index\"); ?>\n                    <div class=\"navbar\">\n                    <nav class=\"nav\">\n                    <a href=\"".concat(financeUrl, "\" class=\"nav__link\" data-link>Finance</a>\n                    <a href=\"".concat(inventoryUrl, "\"  class=\"nav__link\"  data-link>Inventory</a>\n                    </nav>\n                    </div>\n                    <h2 class=\"search-overlay__section-title\">General Information</h2>\n                    <div class=\"container row s1 valign-wrapper video-container black darken-4\">\n                      <div id=\"player1\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player2\"></div>\n                    </div>\n                    <div class=\"container row s2 valign-wrapper video-container black darken-4\">\n                      <div id=\"player3\"></div>\n                    </div>\n                    <div class=\"clubhouse\">".concat(webApp.content, "</div>\n                              "))));
     }
   }
@@ -688,18 +687,18 @@ function functionFlex(e) {
       }
     }
   }
-  let script = new IsValidDoubleObject(eQueryObject).t;
+  let script = IsValidDoubleObject.validObject(eQueryObject);
   console.log(script);
   console.log(Object.getOwnPropertyNames(script));
   console.log(Object.getPrototypeOf(script));
   console.log(typeof initForm);
   let handles
   if (e) {
-    handles =  new FunctionHandle(e).fhObj;
+    handles =  FunctionHandle.handleFunction(e);
     console.log("handles = " + handles, executed++);
   }
   else {
-    handles = new FunctionHandle(script).fhObj;
+    handles = FunctionHandle.handleFunction(script);
     console.log("handles = " + handles, executed++);
   }
   let base
@@ -830,7 +829,7 @@ function functionFlex(e) {
     //     return;
     //   }
     // }
-    var libFunc = funcUno || "renderFile";
+    var libFunc = funcUno || "rendFile";
     var foobarr = funcDos || funcTres || ""; // Redundant variable
 
     var htmlArray = AutoParams.prototype.functionRegistry.htmlArray;
@@ -905,7 +904,7 @@ function functionFlex(e) {
     //       // Handle other cases for foobarr, or it might be null/undefined
     //       finalArgsForFunction = [];
     //     }
-    //     if (libFunc === "renderFile") {
+    //     if (libFunc === "rendFile") {
     //       console.log(
     //         "returning ?func=" + libFunc + "&args=" + foobarr ||
     //           (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -953,9 +952,9 @@ function functionFlex(e) {
     let dataOR = globalHandleGetData(base);
     // return dataOR
 
-    // Final renderTemplate call
+    // Final RenderTemplate.templateRender call
       try {
-        if (libFunc === "renderFile") {
+        if (libFunc === "rendFile") {
           console.log(
             "returning ?func=" + libFunc + "&args=" + foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -966,7 +965,7 @@ function functionFlex(e) {
               foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
           );
-          return new RenderFile(
+          return RenderFile.fileRender(
             foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex],
             {},
             "returning ?func=" + libFunc + "&args=" + foobarr ||
@@ -977,11 +976,11 @@ function functionFlex(e) {
                 templateName ||
               foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
-          ).fileTemplate;
+          );
         }
         // const result = globalThis[libFunc](foobarr);
         console.log(
-          "returning renderTemplate new ContentApp [" +
+          "returning RenderTemplate.templateRender ContentApp.appContent [" +
             libFunc +
             "].apply(this, [" +
             foobarr ||
@@ -995,7 +994,7 @@ function functionFlex(e) {
             htmlArray[foobarr0Index] ||
             htmlArray[foobarrIndex],
         );
-        return new RenderTemplate(
+        return RenderTemplate.templateRender(
           `<!DOCTYPE html>
             <html lang="en">
               <head><base target="_top">
@@ -1177,7 +1176,7 @@ function functionFlex(e) {
               }
             </script>`,
           {
-            renBlob: new ContentApp(
+            renBlob: ContentApp.appContent(
               `<!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -1651,13 +1650,13 @@ function functionFlex(e) {
                 tupL: htmlArray[funcTres0Index] || htmlArray[funcTresIndex],
                 homePage: getScriptUrl(),
               },
-            ).tmp,
+            ),
             aplot: dataOR.type === "text" ? iframeSrc : JSON.stringify(dataOR),
             e: JSON.stringify(e),
             homePage: getScriptUrl(),
           },
 
-          "returning renderTemplate new ContentApp [" +
+          "returning RenderTemplate.templateRender ContentApp.appContent [" +
             libFunc +
             "].apply(this, [" +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -1667,7 +1666,7 @@ function functionFlex(e) {
             JSON.stringify(e) +
             " " +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]),
-        ).blobTemplate;
+        );
       } catch (error) {
         console.error(`Error executing function "${libFunc}":`, error);
         throw new Error(
@@ -1678,9 +1677,9 @@ function functionFlex(e) {
   else {
     // return {payload: base}
 
-    // Final renderTemplate call
+    // Final RenderTemplate.templateRender call
       try {
-        if (libFunc === "renderFile") {
+        if (libFunc === "rendFile") {
           console.log(
             "returning ?func=" + libFunc + "&args=" + foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -1691,7 +1690,7 @@ function functionFlex(e) {
               foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
           );
-          return new RenderFile(
+          return RenderFile.fileRender(
             foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex],
             {},
             "returning ?func=" + libFunc + "&args=" + foobarr ||
@@ -1702,11 +1701,11 @@ function functionFlex(e) {
                 templateName ||
               foobarr ||
               (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) + ",",
-          ).fileTemplate;
+          );
         }
         // const result = globalThis[libFunc](foobarr);
         console.log(
-          "returning renderTemplate new ContentApp [" +
+          "returning RenderTemplate.templateRender ContentApp.appContent [" +
             libFunc +
             "].apply(this, [" +
             foobarr ||
@@ -1720,7 +1719,7 @@ function functionFlex(e) {
             htmlArray[foobarr0Index] ||
             htmlArray[foobarrIndex],
         );
-        return new RenderTemplate(
+        return RenderTemplate.templateRender(
           `<!DOCTYPE html>
             <html lang="en">
               <head><base target="_top">
@@ -1902,7 +1901,7 @@ function functionFlex(e) {
               }
             </script>`,
           {
-            renBlob: new ContentApp(
+            renBlob: ContentApp.appContent(
               `<!DOCTYPE html>
               <html lang="en">
                 <head>
@@ -2376,13 +2375,13 @@ function functionFlex(e) {
                 tupL: htmlArray[funcTres0Index] || htmlArray[funcTresIndex],
                 homePage: getScriptUrl(),
               },
-            ).tmp,
+            ),
             aplot: dataOR.type === "text" ? iframeSrc : JSON.stringify(dataOR),
             e: JSON.stringify(e),
             homePage: getScriptUrl(),
           },
 
-          "returning renderTemplate new ContentApp [" +
+          "returning RenderTemplate.templateRender ContentApp.appContent [" +
             libFunc +
             "].apply(this, [" +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
@@ -2392,7 +2391,7 @@ function functionFlex(e) {
             JSON.stringify(e) +
             " " +
             (foobarr || htmlArray[foobarr0Index] || htmlArray[foobarrIndex]),
-        ).blobTemplate;
+        );
       } catch (error) {
         console.error(`Error executing function "${libFunc}":`, error);
         throw new Error(
@@ -2976,7 +2975,7 @@ function wwwDe(url) {
     } else if (typeof response["app"] === "undefined") {
       feed = response;
       //UrlFetchApp.fetch(url).getContentText();
-      feed = new IsMapped(feed)["app"].replace(
+      feed = IsMapped.mapout(feed)["app"].replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );

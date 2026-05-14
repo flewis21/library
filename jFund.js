@@ -29,7 +29,7 @@ function jFund(fx) {
       ],
     },
   };
-  var result = new ContentApp(
+  var result = ContentApp.appContent(
     `<!DOCTYPE html>
       <html>
         <head>
@@ -47,7 +47,7 @@ function jFund(fx) {
           JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
         );
         if (fx === objMaster.objects.challenges[1]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -72,9 +72,9 @@ function jFund(fx) {
             </html>`,
             {},
             "dynamicSentence1",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.challenges[2]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -116,9 +116,9 @@ function jFund(fx) {
             </html>`,
             {},
             "dynamicSentence2",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.challenges[3]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -176,9 +176,9 @@ function jFund(fx) {
             </html>`,
             {},
             "objBMI",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.challenges[0]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -214,10 +214,10 @@ function jFund(fx) {
             </html>`,
             {},
             "tip_Calculator",
-          ).tmp;
+          );
         }
         if (fx === objMaster.arrays.lessons[0]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -260,9 +260,9 @@ function jFund(fx) {
             </html>`,
             {},
             "arrays",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.lessons[0]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -302,9 +302,9 @@ function jFund(fx) {
             </html>`,
             {},
             "objects",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.lessons[2]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -350,9 +350,9 @@ function jFund(fx) {
             </html>`,
             {},
             "loops",
-          ).tmp;
+          );
         } else if (fx === objMaster.objects.lessons[1]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -412,9 +412,9 @@ function jFund(fx) {
             </html>`,
             {},
             "objMethods",
-          ).tmp;
+          );
         } else if (fx === objMaster.miscellaneous.section[0]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -451,9 +451,9 @@ function jFund(fx) {
             </html>`,
             {},
             "test",
-          ).tmp;
+          );
         } else if (fx === objMaster.miscellaneous.section[1]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<html>
               <head></head>
               <body>
@@ -476,9 +476,9 @@ function jFund(fx) {
             </html>`,
             {},
             "ssTest",
-          ).tmp;
+          );
         } else if (fx === objMaster.miscellaneous.section[2]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<!DOCTYPE html>
               <html lang="en">
 
@@ -552,9 +552,9 @@ function jFund(fx) {
               </html>`,
             {},
             "The Simple Webapp Trio",
-          ).tmp;
+          );
         } else if (fx === objMaster.miscellaneous.section[3]) {
-          return new ContentApp(
+          return ContentApp.appContent(
             `<!DOCTYPE html>
               <html>
                 <head><title>Journalism Web App</title></head>
@@ -646,9 +646,9 @@ function jFund(fx) {
               </html>`,
             {},
             " ",
-          ).tmp;
+          );
         } else if (fx === objMaster) {
-          return new ContentApp(``, {}, " ").tmp;
+          return ContentApp.appContent(``, {}, " ");
         }
       })(),
       link: getUrl(ScriptApp) + "?default=jFun&fx=" + fx,
@@ -677,7 +677,7 @@ function jFund(fx) {
       flex_column:
         "\n .flex-column {\n display: flex;\n flex-direction: column;\n }\n ",
     },
-  ).tmp;
+  );
   return result;
 }
 
@@ -814,7 +814,7 @@ function superTest(e) {
       "\n!ed, = " +
       !e,
   );
-  var html = new ContentApp(
+  var html = ContentApp.appContent(
     "\n   <body id='test'>\n<a id='caller' href='<?!= link ?>'>Update</a>\n<div id='div'>Waiting...</div><br>\n<script id='gold' type='text/javascript'>\ndocument.defaultView.addEventListener('DOMContentLoaded', test);\n<?!= misc ?>\n\n</script>\n    </body>\n   ",
     {
       misc: function test(e) {
@@ -837,6 +837,6 @@ function superTest(e) {
       },
       drivemC: getUrl(ScriptApp) + "?default=ssTest",
     },
-  ).tmp;
+  );
   return html;
 }

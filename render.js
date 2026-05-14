@@ -1,7 +1,10 @@
 class AppList {
-  constructor () {
+  constructor(appTemplate) {
+    this.appTemplate = appTemplate;
+  }
+  static listapps () {
     console.log(autoP.functionRegistry.time);
-    this.appTemplate =  HtmlService.createTemplate(
+    appTemplate =  HtmlService.createTemplate(
       `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           a:link, a:visited {color:black !important;}
           a:hover, a:active{ 
@@ -164,7 +167,10 @@ class AppList {
     )
       .evaluate()
       .getContent();
-  }
+  };
+  res() {
+    return this.appTemplate
+  };
 }
 
 // <div class="row">
@@ -201,7 +207,11 @@ class AppList {
 // </div>
 
 class ContentApp {
-  constructor (blob, argsObject) {
+  constructor(blob, argsObject) {
+    this.blob = blob;
+    this.argsObject = argsObject;
+  }
+  static appContent (blob, argsObject) {
     console.log(
       "boilerplate render: line 201\ncontentApp(blob: " +
         blob.slice(0, 130) +
@@ -258,7 +268,7 @@ class ContentApp {
       );
     }
     try {
-      this.tmp = tmp
+      return tmp
           .evaluate()
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
           // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -273,6 +283,9 @@ class ContentApp {
       );
     }
   }; // or throw error.
+  res() {
+    return this.tmp
+  };
 }
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -293,10 +306,13 @@ class ContentBlob {
         tmp[key] = argsObject[key];
       });
     }
-    return tmp
+    this.tmp = tmp
       .evaluate()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
       .getContent();
+  };
+  res() {
+    return this.tmp
   };
 }
 
@@ -321,13 +337,16 @@ class ContentTemplate {
           tmp[key] = argsObject[key];
         });
       }
-      return tmp
+      this.tmp = tmp
         .evaluate()
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         .getContent();
     } catch (error) {
       console.error("Exception: ", error.toString());
     }
+  };
+  res() {
+    return this.tmp
   };
 }
 
@@ -345,6 +364,10 @@ class ContentTemplate {
 
 class ContentCDN {
   constructor (url, argsObject) {
+    this.url = url;
+    this.argsObject = argsObject;
+  }
+  static cdnData(url, argsObject) {
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
       console.log("argsObject before tmp processing", argsObject);
@@ -355,8 +378,9 @@ class ContentCDN {
           keys.forEach(function (key) {
             tmp[key] = argsObject[key];
           });
-        } catch (error) {
-          this.cCDN = "Error in contentCDN tmp" + error;
+        } 
+        catch (error) {
+          throw new Error("Error in contentCDN tmp" + error);
         }
       }
       console.log("argsObject after tmp processing", tmp);
@@ -375,8 +399,8 @@ class ContentCDN {
             {
               drivemC: tmp.payL?.message?.content,
             }
-          let html = new ContentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj).tmp;
-          this.cCDN =  HtmlService.createTemplate(html)
+          let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
+          return HtmlService.createTemplate(html)
             .evaluate()
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
@@ -389,14 +413,14 @@ class ContentCDN {
             {
               drivemC: tmp.payL?.message?.info,
             }
-          let html = new ContentApp(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj).tmp;
-          this.cCDN = HtmlService.createTemplate(html)
+          let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
+          return HtmlService.createTemplate(html)
             .evaluate()
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
-      this.cCDN = tmp
+      return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setContent(seoCapital(url));
@@ -415,10 +439,14 @@ class ContentCDN {
     //       .join("&"),
     // );
   };
+  res() {
+    return this.cCDN
+  };
 }
 
 function contCDN(url, argsObject) {
-  return new ContentCDN(url, argsObject).cCDN;
+  let html = ContentCDN.cdnData(url, argsObject);
+  return html
 }
 
 class ContentFile {
@@ -465,6 +493,9 @@ class ContentFile {
       );
     }
   };
+  res() {
+    return this.tmp
+  };
 }
 
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -498,8 +529,8 @@ function defSBD(e) {
   try {
     if (e && e.parameter && e.parameter["func"] && !globalThis.hasOwnProperty(e.parameter["func"])) {
       // Get the actual function
-      var foobarr = globalThis["renderFile"];
-      return renderTemplate(
+      var foobarr = globalThis["rendFile"];
+      let html = RenderTemplate.templateRender(
         `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           body {
             flex-grow: 1;
@@ -515,7 +546,7 @@ function defSBD(e) {
   = document.getElementById("pageObj");pagE.innerHTML 
   = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: new ContentApp(
+          renBlob: ContentApp.appContent(
             `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -546,11 +577,12 @@ function defSBD(e) {
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"}}else {console.error("appL is undefined");inDaApp.src 
   = "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242";}</script></body></html>`,
             { appL: globalThis[foobarr].apply(this, [args]) },
-          ).tmp,
+          ),
           e: e,
         },
         args,
       );
+      return html;
     }
   } catch (error) {
     throw new Error(
@@ -593,7 +625,8 @@ function freeSBD(func) {
       // Get the actual function
       var foobarr = testArray.res;
       var urlFunc = isValidUrl(foobarr).hostname;
-      return renderTemplate(
+      let html = null;
+      html = RenderTemplate.templateRender(
         `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -609,7 +642,7 @@ function freeSBD(func) {
           var pagE 
             = document.getElementById("pageObj");}</script></html>`,
         {
-          renBlob: new ContentApp(
+          renBlob: ContentApp.appContent(
             `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -643,16 +676,18 @@ function freeSBD(func) {
               vUrl: urlFunc,
               appL: foobarr,
             },
-          ).tmp,
+          ),
         },
         foobarr,
       );
+      return html;
     } else {
       console.log(
         `Problem with content, exiting. globalThis[testTime] == "${typeof globalThis[testTime]}"`,
         foobarr,
       );
-      return renderFile("myGNUFreeJS", {}, "freeSDB");
+      html = RenderFile.fileRender("myGNUFreeJS", {}, "freeSDB");
+      return html
     }
   } catch (error) {
     console.error(error);
@@ -870,7 +905,7 @@ var includeGSFile = function (file, argsArray) {
 };
 
 var includeGSBlob = function (blob, argsObject) {
-  return renderTemplate(`<?!= appJS ?>`, {
+  return renderTemplate.templateRender(`<?!= appJS ?>`, {
     appJS: async function () {
       try {
         const content = await serverSide(blob, argsObject);
@@ -924,7 +959,12 @@ var myWebFunction = function (webApp, argsObject) {
 globalThis.oneTime = 59.9 * 1000;
 
 class RenderFile { 
-  constructor (file, argsObject, title) {
+  constructor(file, argsObject, title) {
+    this.file = file;
+    this.argsObject = argsObject;
+    this.title = title;
+  }
+  static fileRender (file, argsObject, title) {
     console.log(
       autoP.functionRegistry.time +
         "\nfile is !" +
@@ -944,6 +984,7 @@ class RenderFile {
       if (file) {
         let htmlList = autoP.functionRegistry.getHtmlList();
         if (htmlList.indexOf(file) !== -1) { 
+          console.log("argsObject before tmp processing", argsObject);
           const tmp = HtmlService.createTemplateFromFile(file);
           if (argsObject) {
             const keys = Object.keys(argsObject);
@@ -951,6 +992,7 @@ class RenderFile {
               tmp[key] = argsObject[key];
             });
           }
+          console.log("argsObject before tmp processing", argsObject);
 
           // tmp["list"] = htmlListArray;
           // END IF
@@ -958,7 +1000,7 @@ class RenderFile {
           // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
           // var funcCheck = appList();
           // var schedule = dateTime(new Date());
-          var html = new ContentApp(
+          var html = ContentApp.appContent(
             `
           <!doctype html>
             <html lang="en">
@@ -980,7 +1022,7 @@ class RenderFile {
                   <![endif]-->
                 </style>
               </head>
-              <body id="renderFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
+              <body id="rendFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
                 <nav class="flex-div card-panel transparent static-fix">
                   <div class="nav-left flex-div">
                     <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
@@ -1163,9 +1205,9 @@ class RenderFile {
             {
               renTemp: tmp.evaluate().getContent(),
             },
-          ).tmp;
-          // return renderTemplate(html,argsObject,title)
-          this.fileTemplate =  HtmlService.createHtmlOutput(html.tmp) //tmp
+          );
+          // return renderTemplate.templateRender(html,argsObject,title)
+          return HtmlService.createHtmlOutput(html) //tmp
               // .evaluate()
               .setTitle(title)
               // .append(html)
@@ -1173,7 +1215,7 @@ class RenderFile {
               .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
         }
       } else {
-        this.fileTemplate =  handleRequest(argsObject);
+        return handleRequest(argsObject);
       }
     } catch (error) {
       console.log("error in renderTemplate: " + error);
@@ -1182,16 +1224,25 @@ class RenderFile {
       );
     }
   };
+  res() {
+    return this.fileTemplate
+  };
 }
 
 function rendFile(file, argsObject, title) {
-  return new RenderFile(file, argsObject, title).fileTemplate
+  let html = RenderFile.fileRender(file, argsObject, title)
+  return html;
 }
 
 class RenderTemplate {
   constructor (blob, argsObject, title) {
+    this.blob = blob;
+    this.argsObject = argsObject;
+    this.title = title;
+  }
+  static templateRender (blob, argsObject, title) {
     console.log(
-      "boilerplate render: line 201\nrenderTemplate(blob: " + blob &&
+      "boilerplate render: line 201\nrenderTemplate.templateRender(blob: " + blob &&
         blob?.length > 9
         ? blob?.substring(0, 130)
         : "" +
@@ -1224,15 +1275,15 @@ class RenderTemplate {
     try {
       if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
         if (tmp.payL?.type === "html") {
-          html = new ContentApp(tmp.payL?.data,
+          html = ContentApp.appContent(tmp.payL?.data,
             {
               driveT: tmp.payL?.type,
             },
-          ).tmp;
+          );
         }
         else {
           if (tmp.payL?.pL?.type === "html") {
-            html = new ContentApp(tmp.payL?.message?.info,
+            html = ContentApp.appContent(tmp.payL?.message?.info,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -1247,12 +1298,12 @@ class RenderTemplate {
                 driveP: tmp.payL?.pL,
                 driveT: tmp.payL?.pL?.type,
               },
-            ).tmp;
+            );
           }
         }
       }
       else {
-        html = new ContentApp(
+        html = ContentApp.appContent(
           `
         <html id="renderTemplate">
           <head>
@@ -1548,7 +1599,7 @@ class RenderTemplate {
             driveP: tmp.payL?.pL,
             driveT: tmp.payL?.pL?.type,
           },
-        ).tmp;
+        );
       }
     } catch (error) {
       console.error("Error rendering template:", error, error.stack);
@@ -1556,16 +1607,20 @@ class RenderTemplate {
         "Error in rendertemplate html: " + blob + "\n" + error.stack,
       );
     }
-    this.blobTemplate = HtmlService.createHtmlOutput(html.tmp) //tmp
+    return HtmlService.createHtmlOutput(html) //tmp
         .setTitle(title)
         // .append(html)
         // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }; // or throw error.
+  res() {
+    return this.blobTemplate
+  }
 }
 
 function rendTemplate(blob, argsObject, title) {
-  return new RenderTemplate(blob, argsObject, title).blobTemplate
+  let html = RenderTemplate.templateRender(blob, argsObject, title);
+  return html
 }
 
 // Gets a cache that is common to all users of the script
@@ -1575,7 +1630,7 @@ var start = new Date(0.1 * 1000).getMilliseconds();
 
 var tagBuilder = function (content) {
   console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const htmlBody = new ContentApp(content).tmp;
+  const htmlBody = ContentApp.appContent(content);
   return htmlBody;
 };
 
@@ -1592,7 +1647,7 @@ function wildSBD(e) {
     ) {
       // Get the actual function
       var foobarr = globalThis[e.parameter["func"]];
-      return renderTemplate(
+      return RenderTemplate.templateRender(
         `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
@@ -1612,7 +1667,7 @@ function wildSBD(e) {
             = document.getElementById("pageObj");
           pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: new ContentApp(
+          renBlob: ContentApp.appContent(
             `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
@@ -1655,7 +1710,7 @@ function wildSBD(e) {
             {
               appL: globalThis[e.parameter["func"]].apply(this, [args]),
             },
-          ).tmp,
+          ),
 
           e: e,
         },

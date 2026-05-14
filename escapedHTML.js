@@ -46,13 +46,13 @@ function escapedHTML(e) {
 
         // webApp.url = getUrl(ScriptApp);
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webApp = epaA("https://ordspub.epa.gov/ords/pesticides/ppls/", epaB("https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/", epaC("https://ordspub.epa.gov/ords/pesticides/pplstxt/", epaD("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", product, "items/", result, "/productname"), "items/0/active_ingredients/0/active_ing"), "items/0/eparegnumber")); ?>\n <?! webApp ?>\n  <? var tabulator = edgarData(); ?>\n <?!= tabulator ?>\n <? var schedule = dateTime()?>\n  <?!= schedule ?>\n ',
           {
             product: product,
             result: result,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       case "epa": // <!----------------------------------JSON API Results------------------------------------!>
         // dataUrl = jsonINIT(itemA + itemB, "items/0/eparegnumber" + itemC, "items/0/active_ingredients/0/active_ing" + itemD, "items/" + e.parameter["result"] + "/productname");
@@ -69,12 +69,12 @@ function escapedHTML(e) {
 
         // webApp.url = getUrl(ScriptApp);
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webAppUrls = navBar("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "Pesticides"); ?>\n  <?!= webAppUrls ?>\n  <? var webApp = edgarData(covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), "items", "/")), [["key"], ["value"]])) ?>\n  <?!= webApp ?>\n  ',
           {
             product: product,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       case "tech": // <!----------------------------JSON API Results--------------------------------!>
         // dataUrl = jsonINIT(itemA + itemB, "items/0/eparegnumber" + itemC, "items/0/active_ingredients/0/active_ing" + itemD, "items/" + e.parameter["result"] + "/productname");
@@ -87,10 +87,10 @@ function escapedHTML(e) {
 
         // splittedJson = covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/ppls/66551-1"), "items/0", "/")), [["key"], ["value"]])
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar"); ?>\n  <?!= webAppUrls ?>\n <? var webApp = edgarData(widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])); ?>\n  <?!= webApp ?>\n  ',
           {},
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       default: // <!-------------------------------------Default Website-------------------------------------!>
         if (!username["parameter"]) {
@@ -189,12 +189,12 @@ function escapedHTML(e) {
 
           const outputQuery = covObjects(rowsToReturn, headings);
 
-          inventoryApp = new ContentApp(outputQuery, { outputQuery: "Fun Stuff" }).tmp;
+          inventoryApp = ContentApp.appContent(outputQuery, { outputQuery: "Fun Stuff" });
         } else {
-          inventoryApp = new ContentApp(
+          inventoryApp = ContentApp.appContent(
             "\n <h1>Funny Story, <?!= data ?> </h1>\n  `<h1>Ha Ha LOL</h1>\n  ",
             { data: "Die Without You! " },
-          ).tmp;
+          );
         }
 
         inventoryApp.content = jsonINIT(
@@ -248,7 +248,7 @@ function escapedHTML(e) {
 
         // const widgetData = JSON.stringify(covObjects(testData(jsData), [["id"],["ticker"],["title"]]));
 
-        return new ContentApp(
+        return ContentApp.appContent(
           `<? var properties = properties ?>
       <?!= properties ?>
       <script>document.getElementById("");}</script>
@@ -275,7 +275,7 @@ function escapedHTML(e) {
       <? var yourVideos = dtls(listType); ?><?!= yourVideos ?>
       <? var calendarDays = dateTime(); ?><?!= calendarDays ?>`,
           {
-            properties: new ContentApp(
+            properties: ContentApp.appContent(
               `<? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar", "https://avaddc.com/agency/the-paul-rue-agency/4022/", "Defensive Driving"); ?><?!= webAppUrls ?>
         <div class="row">
         <div class="container col s12">
@@ -290,7 +290,7 @@ function escapedHTML(e) {
             listType: listType,
             list: list,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
     }
   } else {
     switch (
@@ -306,13 +306,13 @@ function escapedHTML(e) {
 
         // webApp.url = getUrl(ScriptApp);
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webApp = epaA("https://ordspub.epa.gov/ords/pesticides/ppls/", epaB("https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithIngName/v1/", epaC("https://ordspub.epa.gov/ords/pesticides/pplstxt/", epaD("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/", product, "items/", result, "/productname"), "items/0/active_ingredients/0/active_ing"), "items/0/eparegnumber")); ?>\n <?! webApp ?>\n  <? var tabulator = edgarData(); ?>\n <?!= tabulator ?>\n <? var schedule = dateTime()?>\n  <?!= schedule ?>\n ',
           {
             product: product,
             result: result,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       case "epa": // <!----------------------------------JSON API Results------------------------------------!>
         // dataUrl = jsonINIT(itemA + itemB, "items/0/eparegnumber" + itemC, "items/0/active_ingredients/0/active_ing" + itemD, "items/" + e.parameter["result"] + "/productname");
@@ -329,12 +329,12 @@ function escapedHTML(e) {
 
         // webApp.url = getUrl(ScriptApp);
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webAppUrls = navBar("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "Pesticides"); ?>\n  <?!= webAppUrls ?>\n  <? var webApp = edgarData(covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), "items", "/")), [["key"], ["value"]])) ?>\n  <?!= webApp ?>\n  ',
           {
             product: product,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       case "tech": // <!----------------------------JSON API Results--------------------------------!>
         // dataUrl = jsonINIT(itemA + itemB, "items/0/eparegnumber" + itemC, "items/0/active_ingredients/0/active_ing" + itemD, "items/" + e.parameter["result"] + "/productname");
@@ -347,10 +347,10 @@ function escapedHTML(e) {
 
         // splittedJson = covObjects(testData(splitValues(fetchDataSource("https://ordspub.epa.gov/ords/pesticides/ppls/66551-1"), "items/0", "/")), [["key"], ["value"]])
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar"); ?>\n  <?!= webAppUrls ?>\n <? var webApp = edgarData(widgetData(splitNoX(fetchDataSource("https://www.sec.gov/files/company_tickers.json")), [["key"],["value"]])); ?>\n  <?!= webApp ?>\n  ',
           {},
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
 
       default: // <!-------------------------------------Default Website-------------------------------------!>
         var sheetName = e.parameter["sheetname"];
@@ -398,12 +398,12 @@ function escapedHTML(e) {
 
           const outputQuery = covObjects(rowsToReturn, headings);
 
-          inventoryApp = new ContentApp(outputQuery, { outputQuery: "Fun Stuff" }).tmp;
+          inventoryApp = ContentApp.appContent(outputQuery, { outputQuery: "Fun Stuff" });
         } else {
-          inventoryApp = new ContentApp(
+          inventoryApp = ContentApp.appContent(
             "\n <h1>Funny Story, <?!= data ?> </h1>\n  `<h1>Ha Ha LOL</h1>\n  ",
             { data: "Die Without You! " },
-          ).tmp;
+          );
         }
 
         inventoryApp.content = jsonINIT(
@@ -454,12 +454,12 @@ function escapedHTML(e) {
 
         // const widgetData = JSON.stringify(covObjects(testData(jsData), [["id"],["ticker"],["title"]]));
 
-        return new ContentApp(
+        return ContentApp.appContent(
           '\n  \n  <? var properties = properties ?>\n  <?!= properties ?>\n  \n  <script>\n  document.getElementById("");\n  }\n </script>\n \n  <? var productNameEpaData = JSON.stringify(productName("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product, "items", "/", 0, 1, "productname")); ?>\n  <?!= productNameEpaData ?>\n  </p>\n  </div>\n </div>\n </div>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <span><p id="p2" style="border-width:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>\n <? var runIt = ssDatabase(rowsO, ssO); ?>\n  <?!= runIt ?>\n  </strong></p></span>\n  </div>\n </div>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <span><p id="p2" style="border-width:3px; border-style:solid; border-color:#FF0000; padding: 1em;"><strong>\n <? var productDistEpaData = JSON.stringify(covArrays(companyName("https://ordspub.epa.gov/ords/pesticides/cswu/ProductSearch/partialprodsearch/v2/riname/" + product), 1)); ?>\n  <?!= productDistEpaData ?>\n  </strong></p></span>\n  </div>\n </div>\n <? var yourVideos = dtls(listType); ?>\n   <?!= yourVideos ?>\n  <? var calendarDays = dateTime(); ?>\n  <?!= calendarDays ?>\n  ',
           {
-            properties: new ContentApp(
+            properties: ContentApp.appContent(
               '\n \n  <? var webAppUrls = navBar("https://www.sec.gov/files/company_tickers.json", "Edgar", "https://avaddc.com/agency/the-paul-rue-agency/4022/", "Defensive Driving"); ?>\n  <?!= webAppUrls ?>\n  <div class="row">\n  <div class="container col s12">\n  <div class="container col s12">\n <p id="p1">\n  ',
-            ).tmp,
+            ),
             ssO: ssO,
             rowsO: rowsO,
             dataSheetName: dataSheetName,
@@ -468,7 +468,7 @@ function escapedHTML(e) {
             listType: listType,
             list: list,
           },
-        ).tmp; //:contentFile('uiAccess');
+        ); //:contentFile('uiAccess');
     }
   }
 }

@@ -993,7 +993,7 @@
 //             },
 // })                                                //})
 //                     }
-// return new ContentApp(content).tmp
+// return ContentApp.appContent(content)
 // }
 
 function myFileJS(e) {
@@ -1057,6 +1057,6 @@ function myFileJS(e) {
           });
       };
     },
-  }).tmp;
-  return new ContentApp(content).tmp;
+  });
+  return ContentApp.appContent(content);
 }
