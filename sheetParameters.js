@@ -114,7 +114,7 @@ function bingNeed(searchString, time) {
 }
 
 function cabDriver(e) {
-  var res = e || testlt();
+  var res = e || IsValidDoubleObject.objRes(testlt());
   var agendaCal = (function (request) {
     var events = CalendarApp.getEvents(
       new Date(Number([request][0]) * 1000),
@@ -143,7 +143,7 @@ function cabDriver(e) {
       .getContent();
   })();
   console.log("xkcdRSS: \ncoolStatus\n", JSON.stringify([coolStatus]));
-  var data = res?.split(" ");
+  var data = res?.toString().split(" ");
   var dataRandomLength = Math.floor(Math.random() * Math.floor(data.length));
   var headers = data.map((r) => {
     return covArrays([[r][0]])[0];
@@ -170,20 +170,35 @@ function cabDriver(e) {
   var ssUrl = driveUrls(randomSsName);
   var ws = ssGetSheetBySpreadsheetUrl(ssUrl, randomSheetName);
   var wsData = ws.getDataRange().getValues();
-  var apiPost = (function (e) {
-    const body = e || "";
-    const bodyJS = JSON.parse(body);
-    ws.appendRow([bodyJS]);
-  })();
-  console.log("xkcdRSS: \napiPost\n", apiPost);
-  return HtmlService.createTemplate(
-    `
-    <div id="dev">
-    </div>
-    <script>
-      document.getElementById("dev").textContent = ${JSON.stringify(agendaCal.getContent())}
-    </script>`,
-  ).getRawContent();
+  class PostAPI {
+    constructor(e, ws) {
+      this.ws = ws
+      this.body = e || "";
+      this.bodyJS = JSON.parse(this.body);
+      this.ws.appendRow([this.bodyJS]);
+    }
+  }
+  let apiPost = new PostAPI(e, ws);
+  class RSSFeed {
+    feed() {
+      console.log("xkcdRSS: \napiPost\n", apiPost.ws);
+    }
+  }
+  let comic = new RSSFeed()
+  comic.feed();
+  class  RenderFinalReturn{
+    static builtIn(agendaCal) {
+      return HtmlService.createTemplate(
+        `
+        <div id="dev">
+        </div>
+        <script>
+          document.getElementById("dev").textContent = ${JSON.stringify(agendaCal.getContent())}
+        </script>`,
+      ).getRawContent();
+    }
+  }
+  return RenderFinalReturn.builtIn(agendaCal)
 }
 
 function classifiedCapital(searchString, time) {
@@ -2221,7 +2236,15 @@ function taxiService() {
 function tutorial(text) {
   var html = ContentApp.appContent(`
     <body id="screen"></body>
-    <script>document.getElementById("screen").innerHTML = ${urlDataSource(encodeURI(text))} || ${urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))} </script>`);
+    <script>
+      document
+        .getElementById("screen")
+        .innerHTML = ${
+          urlDataSource(encodeURI(text))
+        } || ${
+          urlDataSource(encodeURI("https://avaddc.com/agency/the-paul-rue-agency/4022/"))
+        } 
+    </script>`);
   return html;
 }
 

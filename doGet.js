@@ -471,7 +471,7 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    const handles = new FunctionHandle();
+    const handles = FunctionHandle.handleFunction();
     let funcU = handles["exec"];
     let funcD = handles["args"];
     let base = createFunctionResult(funcU, funcD);
@@ -2007,6 +2007,7 @@ var globalHandleGetData = function (rawFuncResult) {
   };
   data["timestamp"] = new Date();
   data["pL"] = payLoad;
+  data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
 
   return data;
 };

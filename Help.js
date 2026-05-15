@@ -128,8 +128,7 @@ function isValidUrl(text) {
       text +
       ": " +
       typeof text +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")",
   );
   // var protocol = "";
   // var hostname = "";

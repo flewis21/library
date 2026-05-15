@@ -259,6 +259,7 @@ var geneicType = function (e) {
               action:"getData"
             }
           };
+          return handleRequest(eQueryObject);
         }
         else {
           if (i > .6) {

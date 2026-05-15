@@ -402,6 +402,7 @@ class ContentCDN {
           let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
+            .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
@@ -416,6 +417,7 @@ class ContentCDN {
           let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
+            .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
@@ -423,7 +425,8 @@ class ContentCDN {
       return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setContent(seoCapital(url));
+        .setContent(seoCapital(url))
+        .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3]);
     }
     catch (erR) {
       console.log("error in contentCDN: " + erR);

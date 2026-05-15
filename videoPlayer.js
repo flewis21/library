@@ -347,7 +347,7 @@ function videoPage(search) {
   ${
     ContentApp.appContent(
       `
-    <?!= playerPlayer ?>`,
+    <?!= playerPlayer ?><?!= yTPlayer.getContent() ?>`,
       { playerPlayer: youPlayer },
     )
     //:contentFile('uiAccess')
