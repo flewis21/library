@@ -394,10 +394,12 @@ class ContentCDN {
       console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
       if (tmp.payL?.pL?.type !== "url" && tmp.payL?.pL?.type !== "text") {
         if (tmp.payL?.message?.content) {
+          let contentMessage = driveManager(tmp.payL?.message?.content);
+          console.log("From driveManager: contentMessage = " + contentMessage);
           console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
           let locObj = 
             {
-              drivemC: tmp.payL?.message?.content,
+              drivemC: contentMessage,
             }
           let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
@@ -409,10 +411,12 @@ class ContentCDN {
       }
       else {
         if (tmp.payL?.message?.info) {
+          let infoMessage = driveManager(tmp.payL?.message?.info);
+          console.log("From driveManager: infoMessage = " + infoMessage);
           console.log("tmp payL message info\n" + tmp.payL?.message?.info, tmp.payL?.message);
           let locObj = 
             {
-              drivemC: tmp.payL?.message?.info,
+              drivemC: infoMessage,
             }
           let html = ContentApp.appContent(tmp.append(styleHtml.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
@@ -422,10 +426,12 @@ class ContentCDN {
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
+      let urlCDN = driveManager(url);
+      console.log("From driveManager: urlCDN = " + urlCDN);
       return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setContent(seoCapital(url))
+        .setContent(seoCapital(urlCDN))
         .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3]);
     }
     catch (erR) {
@@ -1275,10 +1281,12 @@ class RenderTemplate {
     // var schedule = dateTime(new Date());
     // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
     let html = null;
+    let htmlPayL = null;
+    let htmlPL = null;
     try {
       if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
         if (tmp.payL?.type === "html") {
-          html = ContentApp.appContent(tmp.payL?.data,
+          htmlPayL = ContentApp.appContent(tmp.payL?.data,
             {
               driveT: tmp.payL?.type,
             },
@@ -1286,7 +1294,7 @@ class RenderTemplate {
         }
         else {
           if (tmp.payL?.pL?.type === "html") {
-            html = ContentApp.appContent(tmp.payL?.message?.info,
+            htmlPL = ContentApp.appContent(tmp.payL?.message?.info,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -1610,11 +1618,20 @@ class RenderTemplate {
         "Error in rendertemplate html: " + blob + "\n" + error.stack,
       );
     }
-    return HtmlService.createHtmlOutput(html) //tmp
-        .setTitle(title)
-        // .append(html)
-        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    if(!htmlPayL || !htmlPL) {
+      return HtmlService.createHtmlOutput(html) //tmp
+          .setTitle(title)
+          // .append(html)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
+    else {
+      return HtmlService.createHtmlOutput(htmlPayL || htmlPL) //tmp
+          .setTitle(title)
+          // .append(html)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
   }; // or throw error.
   res() {
     return this.blobTemplate

@@ -1184,11 +1184,11 @@ class FunctionHandle {
     // Logging
     if (!e) {
       rndE = createRandomFunction();
-      console.log("rndE = " + rndE, executed++);
+      console.log("rndE = " + JSON.stringify(rndE), executed++);
     } else { 
         if (e && !e.parameter) {
         rndE = createRandomFunction(te);
-        console.log("rndE = " + rndE, executed++);
+        console.log("rndE = " + JSON.stringify(rndE), executed++);
         } else {
           if (e && e.parameter) {
           let objData = Object.keys(e.parameter);
@@ -1197,7 +1197,7 @@ class FunctionHandle {
             // rndE = createRandomFunction();
             rndE = createRandomFunction(); 
             //funchAP.functionRegistry.paramsList[Math.floor(Math.random() * funchAP.functionRegistry.paramsList.length)]
-            console.log("rndE = " + rndE, executed++);
+            console.log("rndE = " + JSON.stringify(rndE), executed++);
             if (typeof rndE === "string") {
               e = objectOfS(
                 ["parameter"],
@@ -1381,14 +1381,14 @@ class FunctionHandle {
                     else {
                       argsEd = createRandomFunction(e.parameter[objData[0]]);
                     }
-                    console.log("argsEd = " + argsEd, executed++);
+                    console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                     if (typeof argsEd === "string") {
                       e = objectOfS(
                         ["parameter"],
                         [[["func", argsEd]]],
                         funchAP.functionRegistry.time,
                       );
-                      console.log("e = " + e, executed++);
+                      console.log("e = " + JSON.stringify(e), executed++);
                     } else {
                       if (typeof argsEd === "object" && argsEd !== null) {
                         let argsAP = Object.values(argsEd);
@@ -1403,14 +1403,14 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         } else {
                           e = objectOfS(
                             ["parameter"],
                             [[["func", Object.keys(argsEd)[0]]]],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         }
                       } 
                       else {
@@ -1431,7 +1431,7 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         } else {
                           e = objectOfS(
                             ["parameter"],
@@ -1443,7 +1443,7 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         }
                       }
                     }
@@ -1461,7 +1461,7 @@ class FunctionHandle {
                           [[["func", argsEd]]],
                           funchAP.functionRegistry.time,
                         );
-                        console.log("e = " + e, executed++);
+                        console.log("e = " + JSON.stringify(e), executed++);
                       } 
                       else if (typeof argsEd === "object" && argsEd !== null) {
                         let argsAP = Object.values(argsEd);
@@ -1476,14 +1476,14 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         } else {
                           e = objectOfS(
                             ["parameter"],
                             [[["func", Object.keys(argsEd)[0]]]],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         }
                       } else {
                         console.log("Unexpected argsEd type: ", argsEd);
@@ -1503,7 +1503,7 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         } else {
                           e = objectOfS(
                             ["parameter"],
@@ -1515,7 +1515,7 @@ class FunctionHandle {
                             ],
                             funchAP.functionRegistry.time,
                           );
-                          console.log("e = " + e, executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         }
                       }
                       console.log(JSON.stringify(e));

@@ -1418,10 +1418,10 @@ function seoPictures(searchString, time) {
     autoP.functionRegistry.getDomainList();
     let domainEngine = [];
      let mainList= autoP.functionRegistry.arrDomainVals;
-     console.log("mainList = " + mainList.slice(mainList.length - 1), executed++);
+     console.log("mainList = " + JSON.stringify(mainList.slice(mainList.length - 1)), executed++);
      for (const key in mainList) {
       let truD = IsTruthy.trueVfalse(mainList[key]);
-     console.log("truD = " + truD, executed++);
+    //  console.log("truD = " + truD, executed++);
       if (key === "Domain" && truD) {
         domainEngine.push(mainList[key]);
       }

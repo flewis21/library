@@ -130,14 +130,16 @@ var createFunctionResult = function (funcUno, funcDos) {
           let funcAFunc = crmT(funcUno);
           console.log("funcAFunc = " + funcAFunc, executed++);
           if (funcAFunc === -1) {
-            rawFuncResult = mis([funcUno]);
+            return
+            // rawFuncResult = mis([funcUno]);
           }
           else {
             if (!funcAFunc === -1) {
               rawFuncResult = globalThis[funcUno]();
             }
             else {
-              rawFuncResult = handleGetData(funcUno);
+              return
+              // rawFuncResult = handleGetData(funcUno);
             }
           }
         } 
@@ -150,7 +152,8 @@ var createFunctionResult = function (funcUno, funcDos) {
         if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
           console.log("This execution is trying to process with funcDos. funcDos is  " , funcDos);
           try {
-            rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+            return
+            // rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
           } 
           catch (error) {
             console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
@@ -169,7 +172,8 @@ var createFunctionResult = function (funcUno, funcDos) {
               }
             }
             else {
-              rawFuncResult = mis([parsedFuncArgs]);
+              return
+              // rawFuncResult = mis([parsedFuncArgs]);
             }
             console.log("rawFuncResult = " + rawFuncResult, executed++);
           } 
@@ -183,7 +187,8 @@ var createFunctionResult = function (funcUno, funcDos) {
             } 
             catch (error) {
               console.log("But, it is failing.");
-              rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+              return
+              // rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
             }
             console.log("rawFuncResult = " + rawFuncResult, executed++);
           }
@@ -2647,6 +2652,7 @@ var getUrlResponse = function (url, options) {
     let htmlData;
     let supUrl;
     let retries = 0;
+    let maxRetries = 1;
     let delay = 1000;
     try {
       response = UrlFetchApp.fetch(validUrl.hostname, options);
@@ -2680,6 +2686,7 @@ var getUrlResponse = function (url, options) {
               if (res >= 300 && res < 400) {
                 // Redirect occurred
                 location = response.getHeaders().Location;
+                console.log("From response: Location = " + location);
                 htmlData = UrlFetchApp.fetch(location, {
                   followRedirects: true,
                   muteHttpExceptions: true,
@@ -2716,8 +2723,8 @@ var getUrlResponse = function (url, options) {
     console.log("Final app:", htmlData);
     return { index: responseObj, app: htmlData, link: supUrl };
   } else {
-    Logger.log("Invalid input, " + [validUrl.hostname, options]);
-    console.log("Invalid input, ", [validUrl.hostname, options]);
+    Logger.log("Invalid input, " + JSON.stringify([validUrl.hostname, options]));
+    console.log("Invalid input, ", JSON.stringify([validUrl.hostname, options]));
     return null;
   }
 };

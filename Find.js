@@ -25,13 +25,17 @@ function driveManager(strNw, time) {
   } else {
     console.log("driveManager: strNw is truthy. testlt() will NOT be called.");
   }
+  let searArn = getDomainValues()[Math.floor(Math.random() * getDomainValues().length)] 
+  if (searArn.indexOf("http") === -1) {
+    searArn = "http://" + searArn
+  }
 
   // NOTE: The testlt() call here is still explicit in your code.
   // This means testlt() will be called regardless of strNw's truthiness
   // due to its direct placement before the mainStr assignment.
-  var manString = !strNw ? testlt() : strNw;
+  var manString = !strNw ? searArn : strNw;
   console.log("driveManager: manString (from testlt()):", manString);
-  var testStrNw = !strNw ? manString.name : manString;
+  var testStrNw = !strNw ? manString : manString;
   console.log("driveManager: testStrNw:", testStrNw);
   var mainStr = strNw || testStrNw;
   console.log("driveManager: mainStr (strNw || testStrNw):", mainStr);
@@ -133,17 +137,29 @@ function driveManager(strNw, time) {
       console.warn(
         "driveManager: No matching files found after DriveApp search. Returning null.",
       );
-      // console.info("previously exec count \ndriveManager - ", executed);
-      let filedSide = createFormFunction(mainStr);
-      executed++;
-      let funcKeys = Object.keys(filedSide);
-      let funcUrl;
-      funcKeys.forEach((key) => {
-        let funcObj = filedSide[key];
-        funcUrl = funcObj[0];
-        // dataTree.push(funcUrl)
-      });
-      return funcUrl;
+      let options = { muteHttpExceptions: true };
+      let data;
+      try {}
+      catch(fromResponse) {}
+      data = getUrlResponse(mainStr, options)?.app;
+      console.log("data = " + data, executed++);
+      if (!data) {
+        // console.info("previously exec count \ndriveManager - ", executed);
+        let filedSide = createFormFunction(mainStr);
+        let fromDriveFile = driveManager(mainStr);
+        executed++;
+        let funcKeys = Object.keys(filedSide);
+        let funcUrl;
+        funcKeys.forEach((key) => {
+          let funcObj = filedSide[key];
+          funcUrl = funcObj[0];
+          // dataTree.push(funcUrl)
+        });
+        return fromDriveFile;
+      }
+      else {
+        return mainStr;
+      }
     }
   }
 }
