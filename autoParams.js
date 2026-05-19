@@ -1326,13 +1326,7 @@ class FunctionHandle {
                           let noLhtml = RenderFile.fileRender(
                             funcTres,
                             driveA,
-                            "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
-                              htmlTresArg +
-                              ", " +
-                              JSON.stringify(driveA) +
-                              ", " +
-                              htmlTresArg +
-                              ",",
+                            isValidUrl(getScriptUrl()).pathname.split("/")[3],
                           );
                           return noLhtml
                         } catch (error) {
@@ -1592,13 +1586,7 @@ class FunctionHandle {
                                 let noLhtmlb = RenderFile.fileRender(
                                   funcTres,
                                   driveA,
-                                  "GitHub Pages with Apps Script returning ?func=renderFile&args=" +
-                                    htmlTresArg +
-                                    ", " +
-                                    JSON.stringify(driveA) +
-                                    ", " +
-                                    htmlTresArg +
-                                    ",",
+                                  isValidUrl(getScriptUrl()).pathname.split("/")[3],
                                 );
                                 return noLhtmlb
                               } catch (error) {

@@ -656,13 +656,7 @@ function handleGetData(e) {
                   argsParam: e.parameter["args"],
                   funcParam: e.parameter["func"],
                 },
-                "GitHub Pages with Apps Script returning ?func=rendFile&args=" +
-                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                  ", " +
-                  {} +
-                  ", " +
-                  (htmlArray[foobarr0Index] || htmlArray[foobarrIndex]) +
-                  ",",
+                isValidUrl(getScriptUrl()).pathname.split("/")[3],
               );
             } catch (error) {
               Logger.log("Requested! HTML file is Out of Order", error.stack);
@@ -1996,12 +1990,12 @@ var globalHandleGetData = function (rawFuncResult) {
       (payLoad.type === "text" || payLoad.type === "url") &&
       isValidUrl(payLoad.data).hostname &&
       isValidUrl(iframeSrc).hostname
-        ? iframeSrc
-        : getScriptUrl() +
+        ? driveManager(iframeSrc)
+        : driveManager(getScriptUrl() +
           "?file=" +
           htmlList.sort((a, b) => {
             return a - b;
-          })[Math.floor(Math.random() * Math.floor(htmlList.length))],
+          })[Math.floor(Math.random() * Math.floor(htmlList.length))]),
     info: appL,
     link: feed, // Clear iframe on critical error
   };
