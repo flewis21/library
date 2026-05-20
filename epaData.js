@@ -1252,7 +1252,7 @@ function productChemCode(code) {
           "first",
           {
             $ref:
-              "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithPcCode/v1/" +
+              "https://comptox.epa.gov/dashboard/search-results?input_type=puc&inputs=" +
               encodeURIComponent(code),
           },
         ],
@@ -1332,7 +1332,7 @@ function productAbstractNum(abstract) {
           "first",
           {
             $ref:
-              "https://ordspub.epa.gov/ords/pesticides/ProductSearch/searchWithCasNum/v1/" +
+              "https://ordspub.epa.gov/ords/pesticides/f?p=CHEMICALSEARCH:1" +
               encodeURIComponent(abstract),
           },
         ],

@@ -453,7 +453,7 @@ class ContentCDN {
   };
 }
 
-function contCDN(url, argsObject) {
+var contCDN = function(url, argsObject) {
   let html = ContentCDN.cdnData(url, argsObject);
   return html
 }
@@ -1238,7 +1238,7 @@ class RenderFile {
   };
 }
 
-function rendFile(file, argsObject, title) {
+var rendFile = function(file, argsObject, title) {
   let html = RenderFile.fileRender(file, argsObject, title)
   return html;
 }
@@ -1638,7 +1638,7 @@ class RenderTemplate {
   }
 }
 
-function rendTemplate(blob, argsObject, title) {
+var rendTemplate = function(blob, argsObject, title) {
   let html = RenderTemplate.templateRender(blob, argsObject, title);
   return html
 }

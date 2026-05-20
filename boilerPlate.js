@@ -728,11 +728,12 @@ function trial() {
       (trial[0]["tails"] && trial[judge]["heads"])
     ) {
       break;
-    } else {
-      for (var i = judge, l = trial.length; i < l; i++) {
-        console.log(JSON.stringify(trial[judge]));
-      }
-    }
+    } 
+    // else {
+    //   for (var i = judge, l = trial.length; i < l; i++) {
+    //     trial[judge];
+    //   }
+    // }
   }
   return trial;
 }

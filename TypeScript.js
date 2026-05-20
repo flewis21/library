@@ -241,11 +241,11 @@ var geneicType = function (e) {
     c: ["string"],
   };
   let eQueryObject = exampleObjectType;
-  if (!e) {
-    let i = Math.random();
-    let l = 1;
-    for (i,l;i<l;i++) {
-      if (i < .4) {
+  let i = Math.random();
+  let l = 1;
+  for (i,l;i<l;i++) {
+    if (i < .4) {
+      if (!e) {
         eQueryObject = {
           parameter: {
             q:testlt().name
@@ -253,28 +253,61 @@ var geneicType = function (e) {
         };
       }
       else {
-        if (i > .3 && i < .7) {
+        eQueryObject = e
+      }
+      if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
+        return handleRequest(eQueryObject);
+      }
+      else {
+        if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
+          return wwwDe(eQueryObject);
+        }
+      }
+    }
+    else {
+      if (i > .3 && i < .7) {
+        if (!e) {
           eQueryObject = {
             parameter: {
               action:"getData"
             }
           };
+        }
+        else {
+          eQueryObject = e
+        }
+        if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
           return handleRequest(eQueryObject);
         }
         else {
-          if (i > .6) {
-            eQueryObject = {
-              parameter: {
-                file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
-              }
-            };
+          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
+            return wwwDe(eQueryObject);
+          }
+        }
+      }
+      else {
+        if (i > .6) {
+          if (!e) {
+              eQueryObject = {
+                parameter: {
+                  file:genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
+                }
+              };
+            }
+            else {
+              eQueryObject = e
+            }
+          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
+            return handleRequest(eQueryObject);
+          }
+          else {
+            if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
+              return wwwDe(eQueryObject);
+            }
           }
         }
       }
     }
-  }
-  else {
-    eQueryObject = e
   }
   let tmpSc = IsValidDoubleObject.validObject(eQueryObject);
   let script = tmpSc;
