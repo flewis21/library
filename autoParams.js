@@ -1,4 +1,3 @@
-class AutoParams{};
 let autoP = new AutoParams(); 
 AutoParams.prototype.functionRegistry = {
   fileList: [],
@@ -699,6 +698,33 @@ AutoParams.prototype.arrDRnd = function () {
   }
   return freqArray;
 };
+
+class RandomArray {
+  constructor() {
+    let titleArray = new ProjectFUnctionNames();
+    let arrData = AutoParams.prototype.customOrder;
+    let numLen = [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21, 22, 23, 24, 25,
+    ]; // Assuming numVarRnd isn't global yet or needs handling
+    var rndNumLen = numLen[Math.floor(Math.random() * numLen.length)]; // Pick a random index
+
+    var targetLetter = arrData[rndNumLen]; // The letter we're looking for functions starting with
+
+    var freqArray = [];
+    // Correct way to filter or iterate and build freqArray
+    for (let i = 0; i < titleArray.fileList.length; i++) {
+      const funcName = titleArray.fileList[i];
+      if (funcName[0] && funcName[0].toLowerCase() === targetLetter) {
+        if (freqArray.indexOf(funcName) === -1) {
+          // Check if not already added
+          freqArray.push(funcName);
+        }
+      }
+    }
+    this.freqArray = freqArray
+  }
+}
 // AutoParams.prototype.arrDRnd = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
@@ -799,6 +825,82 @@ AutoParams.prototype.searchString = function () {
     console.log();
   }
 };
+
+class SearchStrings {
+  constructor() {
+    let arrDRnd = new RandomArray();
+    let arrD = new RandomArray();
+    let newArr = [];
+    let i = 0 || 0;
+    let l = 6 || 1;
+    if (arrDRnd.freqArray) {
+      for (i, l; i < l; i++) {
+        if (typeof arrDRnd.freqArray!== "undefined" && typeof arrDRnd.freqArray !== "string") {
+          let myImportData = arrDRnd.freqArray.sort((a, b) => a - b)[
+            Math.floor(Math.random() * arrDRnd.freqArray.length)
+          ];
+          newArr.push(myImportData);
+        } 
+        else {
+          if (typeof arrDRnd.freqArray !== "undefined" && typeof arrDRnd.freqArray !== "string") {
+            let myImportData = arrDRnd.freqArray.sort((a, b) => a - b)[
+              Math.floor(Math.random() * arrDRnd.freqArray.length)
+            ];
+            newArr.push(myImportData);
+          } 
+          else {
+            if (
+              typeof arrDRnd.freqArray !== "undefined" &&
+              typeof arrDRnd.freqArray === "string"
+            ) {
+              let myImportData = [arrDRnd.freqArray].sort((a, b) => {
+                let pA = freqPriority.get(a);
+                let pB = freqPriority.get(b);
+                return pA - pB;
+              })[Math.floor(Math.random() * [arrDRnd.freqArray].length)];
+              newArr.push(myImportData);
+            }
+          }
+        }
+      }
+      if (newArr) {
+        let sortNewArr = newArr.sort((a, b) => {
+          let pA = freqPriority.get(a);
+          let pB = freqPriority.get(b);
+          return pA - pB;
+        })[Math.floor(Math.random() * newArr.length)];
+        this.myNewArr = sortNewArr;
+      }
+    }
+  }
+}
+
+class ProjectFUnctionNames {
+  constructor() {
+    this.fileList = [];
+    this.paramsList = [];
+      for (const key in globalThis) {
+        if (typeof globalThis[key] == "function") {
+          this.fileList.push(key);
+          try {
+            const funcString = globalThis[key].toString();
+            const params = funcString
+              .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
+              .split(",")
+              .map((param) => param.trim())
+              .filter((param) => param !== "");
+            this.paramsList.push({ name: key, parameters: params });
+          } catch (e) {
+            Logger.log(`Error processing function: ${key}. Error: ${e}`);
+            this.paramsList.push({
+              name: key,
+              parameters: ["(Unable to parse)"],
+            });
+          }
+        }
+      }
+  }  
+}
 // AutoParams.prototype..result = gsFParams().find((rndS) => {
 //       return rndS.name === searchString;
 //     });

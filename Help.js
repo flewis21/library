@@ -3362,6 +3362,248 @@ function resolveParams(func, someArgs) {
   }
 }
 
+class ResolveParameters {
+  constructor(func, someArgs) {
+    this.func = func;
+    this.someArgs = someArgs;
+    console.log(
+      "boilerplate Help: line 2284\nresolveParams(func: " +
+        this.func +
+        ", someArgs: " +
+        this.someArgs +
+        ") ",
+    );
+    var trueFunc = IsTruthy.trueVfalse(this.func);
+    var trueSomeArgs = IsTruthy.trueVfalse(this.someArgs);
+    var funcUno = trueFunc
+      ? decodeURIComponent(this.func)
+      : autoP.functionRegistry.paramsList;
+    var funcDos = trueSomeArgs ? decodeURIComponent(this.someArgs) : trueSomeArgs;
+    var numVarRnd = Math.floor(Math.random() * 25);
+    let arrDRnd = null;
+    if (funcUno || funcDos) {
+      var argsX = [];
+      var content = [];
+      var arrUno = Array.isArray(this.func);
+      var arrDos = IsTruthy.trueVfalse(this.someArgs);
+      if (arrUno && arrDos) {
+        var keys = Object.values(this.func).concat(this.someArgs);
+      } else if (arrUno && !arrDos) {
+        var keys = Object.values(this.func);
+      } else if (!arrUno && arrDos) {
+        var keys = [this.func].concat(this.someArgs);
+      } else if (!arrUno && !arrDos) {
+        var keys = [this.func];
+      }
+      keys.forEach((pro) => {
+        let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
+        let keyProParams;
+        let realItem;
+        let keysArrArr = IsTruthy.trueVfalse(Array.isArray(pro));
+        if (keysArrArr) {
+          let funcLimit = [];
+          let paramLimit = [];
+          pro.forEach((subParam, proIndex) => {
+            realItem = IsTruthy.trueVfalse(subParam);
+            if (realItem) {
+              keyProParams =
+                typeof subParam === "object" || Array.isArray(subParam)
+                  ? crmT(subParam[proIndex])
+                  : crmT(subParam);
+              if (keyProParams >= 0) {
+                funcLimit.push(autoP.functionRegistry.fileList[keyProParams]);
+              } else {
+                // keyProParams = ;
+                if (typeof subParam === "object") {
+                  paramLimit.push(subParam);
+                } else if (Array.isArray(subParam)) {
+                  paramLimit.push(subParam[proIndex]);
+                } else {
+                  paramLimit.push(subParam);
+                }
+              }
+            }
+          });
+          if (funcLimit.length > 0) {
+            argsX.push(funcLimit);
+          }
+          if (paramLimit.length > 0) {
+            content.push(paramLimit);
+          }
+        } else {
+          realItem = IsTruthy.trueVfalse(pro);
+          if (realItem) {
+            for (var key in keyPro) {
+              keyProParams =
+                typeof pro === "object" || Array.isArray(pro)
+                  ? crmT(pro[key])
+                  : crmT(pro);
+              if (keyProParams >= 0) {
+                argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+              } else {
+                // keyProParams = ;
+                content.push(
+                  typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
+                );
+              }
+            }
+          }
+        }
+      });
+      if (argsX) {
+        var allErrors = {};
+        var allResolutions = {};
+        var fParams = autoP.functionRegistry.paramsList; //gsFParams();
+        var resCount = 0;
+        argsX.forEach((result, argsXIndex) => {
+          console.log("argsX result " + resCount + ": " + result);
+          // var callerFuncX = argsX[argsX.indexOf(func)]
+          // if (result !== callerFuncX) {
+          //   return
+          // }
+          var args = {};
+          var resolvedArgs = [];
+          var missingParams = [];
+          let contentLimit = content[argsXIndex];
+          var searchResult = fParams.find((rndS) => {
+            return rndS.name === result;
+          });
+          var orderedContent = [];
+          if (
+            searchResult &&
+            searchResult !== "undefined" &&
+            searchResult !== null &&
+            searchResult.parameters
+          ) {
+            var declaredParams = searchResult.parameters;
+            if (contentLimit?.length > 0) {
+              console.log(
+                "Current content: " +
+                  contentLimit +
+                  "\nDeclared parameters: " +
+                  declaredParams,
+              );
+            }
+            var contentMap = {};
+            let realItem;
+            declaredParams.forEach((declaredParam, declaredParamIndex) => {
+              // content.forEach((item) => {
+              let declaredParamArrArr = IsTruthy.trueVfalse(Array.isArray(declaredParam));
+              if (declaredParamArrArr) {
+                let paramLimit = 0;
+                declaredParam.forEach((subParam, subParamIndex) => {
+                  //item.forEach((subItem) => {
+                  contentLimit.forEach((item, currentDeclaredIndex) => {
+                    // declaredParams.forEach((declaredParam) => {
+                    realItem = IsTruthy.trueVfalse(subItem);
+                    if (realItem) {
+                      // if (subItem === declaredParam) {
+                      // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                      //   contentMap[declaredParam] = subItem;
+                      // }
+                      let currentDeclared = contentMap[declaredParam];
+                      let currentSub = subItem;
+                      currentDeclared = currentSub;
+                      paramLimit++;
+                      if (contentMap.length === declaredParams.length) {
+                        return;
+                      }
+                    }
+                  });
+                });
+              } else {
+                if (Array.isArray(contentLimit)) {
+                  contentLimit.forEach((item, contentLimitIndex) => {
+                    // declaredParams.forEach((declaredParam) => {
+                    let contentLimitArrArr = IsTruthy.trueVfalse(Array.isArray(item));
+                    if (contentLimitArrArr) {
+                      item.forEach((subItem, mapItemIndex) => {
+                        realItem = IsTruthy.trueVfalse(subItem);
+                        if (realItem) {
+                          // if (subItem === declaredParam) {
+                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                          //   contentMap[declaredParam] = subItem;
+                          // }
+                          let paramDKey = declaredParams[mapItemIndex];
+                          if (!contentMap[paramDKey]) {
+                            contentMap[paramDKey] = subItem;
+                          }
+                          if (contentMap[paramDKey] === subItem) {
+                            return;
+                          }
+                          // for (var key in declaredParams) {
+                          // }
+                        }
+                      });
+                    } else {
+                      realItem = IsTruthy.trueVfalse(item);
+                      if (realItem) {
+                        // if (subItem === declaredParam) {
+                        // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                        //   contentMap[declaredParam] = subItem;
+                        // }
+                        let paramDKey = declaredParams[contentLimitIndex];
+                        if (!contentMap[paramDKey]) {
+                          contentMap[paramDKey] = item;
+                        }
+                        if (contentMap[paramDKey] === item) {
+                          return;
+                        }
+                        // for (var key in declaredParams) {
+                        // }
+                      }
+                    }
+                  });
+                } else {
+                  let contentArrArr = IsTruthy.trueVfalse(Array.isArray(contentLimit));
+                  if (contentArrArr) {
+                  } else {
+                    realItem = IsTruthy.trueVfalse(contentLimit);
+                    if (realItem) {
+                      // if (subItem === declaredParam) {
+                      // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
+                      //   contentMap[declaredParam] = subItem;
+                      // }
+                      for (var key in declaredParams) {
+                        let paramDKey = declaredParams[key];
+                        if (!contentMap[paramDKey]) {
+                          contentMap[paramDKey] = contentLimit;
+                        }
+                        if (contentMap[paramDKey] === contentLimit) {
+                          return;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            });
+            declaredParams.forEach((paramName) => {
+              if (contentMap.hasOwnProperty(paramName)) {
+                orderedContent.push(contentMap[paramName]);
+              } else {
+                orderedContent.push(null);
+              }
+            });
+            // if (orderedContent.length > 0) {
+            //   console.log("Ordered arguments: " + orderedContent);
+            // }
+            // content = orderedContent;
+          }
+          this.result = resolvedArgs
+        })
+      }
+    }
+  }
+  resParams() {
+  }
+}
+
+var testClassResolve = function() {
+  let newRes = new ResolveParameters(new TestedFunctions().result);
+  console.log("return = " + JSON.stringify(newRes));
+}
+
 // ? console.log("funcUno = " + typeof funcUno)
 // : console.error("funcUno = " + typeof funcUno);
 // ? console.log("funcDos = " + typeof funcDos)
@@ -3813,6 +4055,25 @@ function testlt() {
   }
   // Make sure testlt() returns something that JSON.parse expects,
   // or it will also cause issues down the line.
+}
+
+class TestedFunctions {
+  constructor() {
+    let searchString = new SearchStrings();
+    let fParams = new ProjectFUnctionNames()
+    let result = fParams.paramsList.find((rndS) => {
+      let mySearch = searchString.myNewArr;
+      let myTest = rndS.name;
+      return myTest === mySearch;
+    });
+    this.result = result;
+    this.searchString = searchString
+  }
+}
+
+var testTestedFunctions = function() {
+  let funcToTest = new TestedFunctions();
+  console.log("result = " + funcToTest.result);
 }
 
 function vidFactor(data, time) {

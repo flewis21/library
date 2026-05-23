@@ -113,18 +113,6 @@ function bingNeed(searchString, time) {
   }
 }
 
-class Presidential {
-  constructor() {
-    this.timeLeft = formatTime(AutoParams.prototype.functionRegistry.timeLeftToExecute)
-  }
-  spirit() {
-    console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
-  }
-};
-
-let kamala = new Presidential();
-kamala.spirit()
-
 function cabDriver(e) {
   var res = e || IsValidDoubleObject.objRes(testlt());
   var agendaCal = (function (request) { 
@@ -198,7 +186,7 @@ function cabDriver(e) {
   }
   let comic = new RSSFeed()
   comic.feed();
-  class  RenderFinalReturn{
+  class  RenderFinalReturn extends Presidential{
     static builtIn(agendaCal) {
       return HtmlService.createTemplate(
         `
@@ -210,6 +198,7 @@ function cabDriver(e) {
       ).getRawContent();
     }
   }
+  new RenderFinalReturn().spirit()
   return RenderFinalReturn.builtIn(agendaCal)
 }
 
