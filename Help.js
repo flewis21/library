@@ -79,6 +79,29 @@ function crmT(func) {
   return funFirst;
 }
 
+class RelatedFunctions {
+  constructor(func) {
+    this.func = func;
+    let appList = new ProjectFUnctionNames();
+    var lowCapApp = appList.fileList.map(function (item) {
+      return item.toLowerCase();
+    });
+    let lowCapFunc;
+    if (Array.isArray(this.func)) {
+      lowCapFunc = this.func.join("").toLowerCase().split(",");
+    } else if (typeof this.func === "string" && this.func) {
+      lowCapFunc = this.func.toLowerCase();
+    }
+    let funFirst;
+    if (Array.isArray(lowCapFunc)) {
+      funFirst = lowCapApp.indexOf(lowCapFunc[0]);
+    } else if (typeof lowCapFunc === "string" && lowCapFunc) {
+      funFirst = lowCapApp.indexOf(lowCapFunc);
+    }
+    this.funFirst = funFirst;
+  }
+}
+
 var gsFiles = function() {
   // console.log(
   //   "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
@@ -3373,30 +3396,50 @@ class ResolveParameters {
         this.someArgs +
         ") ",
     );
-    var trueFunc = IsTruthy.trueVfalse(this.func);
-    var trueSomeArgs = IsTruthy.trueVfalse(this.someArgs);
-    var funcUno = trueFunc
+    let trueFunc = IsTruthy.trueVfalse(this.func);
+    let trueSomeArgs = IsTruthy.trueVfalse(this.someArgs);
+    let funcUno = trueFunc
       ? decodeURIComponent(this.func)
-      : autoP.functionRegistry.paramsList;
-    var funcDos = trueSomeArgs ? decodeURIComponent(this.someArgs) : trueSomeArgs;
-    var numVarRnd = Math.floor(Math.random() * 25);
+      : new ProjectFUnctionNames().paramsList;
+    let funcDos = trueSomeArgs ? decodeURIComponent(this.someArgs) : trueSomeArgs;
+    let numVarRnd = Math.floor(Math.random() * funcUno.length);
     let arrDRnd = null;
     if (funcUno || funcDos) {
-      var argsX = [];
-      var content = [];
-      var arrUno = Array.isArray(this.func);
-      var arrDos = IsTruthy.trueVfalse(this.someArgs);
+      this.argsX = [];
+      this.content = [];
+      let arrUno = Array.isArray(this.func);
+      let arrDos = IsTruthy.trueVfalse(this.someArgs);
       if (arrUno && arrDos) {
-        var keys = Object.values(this.func).concat(this.someArgs);
-      } else if (arrUno && !arrDos) {
-        var keys = Object.values(this.func);
-      } else if (!arrUno && arrDos) {
-        var keys = [this.func].concat(this.someArgs);
-      } else if (!arrUno && !arrDos) {
-        var keys = [this.func];
+        this.keys = Object.values(this.func).concat(this.someArgs);
+      } 
+      else {
+        if (arrUno && !arrDos) {
+          this.keys = Object.values(this.func);
+        }
+        else {
+          if (!arrUno && arrDos) {
+            this.keys = [this.func].concat(this.someArgs);
+          } 
+          else {
+            if (!arrUno && !arrDos && trueFunc) {
+              this.keys = [this.func];
+            }
+            else {
+              if (!trueFunc) {
+                this.keys = Object.values(funcUno[numVarRnd])
+              }
+            }
+          }
+        }
       }
-      keys.forEach((pro) => {
-        let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
+      this.keys.forEach((pro) => {
+        let keyPro
+        if (typeof pro === "object" || Array.isArray(pro)) {
+          keyPro = pro;
+        }
+        else {
+          keyPro = [pro];
+        }
         let keyProParams;
         let realItem;
         let keysArrArr = IsTruthy.trueVfalse(Array.isArray(pro));
@@ -3406,14 +3449,16 @@ class ResolveParameters {
           pro.forEach((subParam, proIndex) => {
             realItem = IsTruthy.trueVfalse(subParam);
             if (realItem) {
-              keyProParams =
-                typeof subParam === "object" || Array.isArray(subParam)
-                  ? crmT(subParam[proIndex])
-                  : crmT(subParam);
-              if (keyProParams >= 0) {
-                funcLimit.push(autoP.functionRegistry.fileList[keyProParams]);
+              let keyProParams;
+              if (typeof subParam === "object" || Array.isArray(subParam)) {
+                keyProParams = new RelatedFunctions(subParam[proIndex]);
+              }
+              else {
+                keyProParams = new RelatedFunctions(subParam);
+              }
+              if (keyProParams.funFirst >= 0) {
+                funcLimit.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
               } else {
-                // keyProParams = ;
                 if (typeof subParam === "object") {
                   paramLimit.push(subParam);
                 } else if (Array.isArray(subParam)) {
@@ -3425,151 +3470,128 @@ class ResolveParameters {
             }
           });
           if (funcLimit.length > 0) {
-            argsX.push(funcLimit);
+            this.argsX.push(funcLimit);
           }
           if (paramLimit.length > 0) {
-            content.push(paramLimit);
+            this.content.push(paramLimit);
           }
         } else {
           realItem = IsTruthy.trueVfalse(pro);
           if (realItem) {
             for (var key in keyPro) {
-              keyProParams =
-                typeof pro === "object" || Array.isArray(pro)
-                  ? crmT(pro[key])
-                  : crmT(pro);
-              if (keyProParams >= 0) {
-                argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+              let keyProParams;
+              if (typeof pro === "object" || Array.isArray(pro)) {
+                keyProParams = new RelatedFunctions(pro[key]);
+              }
+              else {
+                keyProParams = new RelatedFunctions(pro);
+              }
+              if (keyProParams.funFirst >= 0) {
+                this.argsX.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
               } else {
-                // keyProParams = ;
-                content.push(
-                  typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
-                );
+                if (typeof pro === "object" || Array.isArray(pro)) {
+                  this.content.push(pro[key]);
+                }
+                else {
+                  this.content.push(pro);
+                }
               }
             }
           }
         }
       });
-      if (argsX) {
-        var allErrors = {};
-        var allResolutions = {};
-        var fParams = autoP.functionRegistry.paramsList; //gsFParams();
+      if (this.argsX) {
+        this.allErrors = {};
+        this.allResolutions = {};
+        var fParams = new ProjectFUnctionNames(); //gsFParams();
         var resCount = 0;
-        argsX.forEach((result, argsXIndex) => {
+        this.argsX.forEach((result, argsXIndex) => {
           console.log("argsX result " + resCount + ": " + result);
-          // var callerFuncX = argsX[argsX.indexOf(func)]
-          // if (result !== callerFuncX) {
-          //   return
-          // }
-          var args = {};
-          var resolvedArgs = [];
-          var missingParams = [];
-          let contentLimit = content[argsXIndex];
-          var searchResult = fParams.find((rndS) => {
+          this.args = {};
+          this.resolvedArgs = [];
+          this.missingParams = [];
+          this.contentLimit = this.content[argsXIndex];
+          this.searchResult = fParams.paramsList.find((rndS) => {
             return rndS.name === result;
           });
-          var orderedContent = [];
+          this.orderedContent = [];
           if (
-            searchResult &&
-            searchResult !== "undefined" &&
-            searchResult !== null &&
-            searchResult.parameters
+            this.searchResult &&
+            this.searchResult !== "undefined" &&
+            this.searchResult !== null &&
+            this.searchResult.parameters
           ) {
-            var declaredParams = searchResult.parameters;
-            if (contentLimit?.length > 0) {
+            this.declaredParams = this.searchResult.parameters;
+            if (this.contentLimit?.length > 0) {
               console.log(
                 "Current content: " +
-                  contentLimit +
+                  this.contentLimit +
                   "\nDeclared parameters: " +
-                  declaredParams,
+                  this.declaredParams,
               );
             }
-            var contentMap = {};
+            this.contentMap = {};
             let realItem;
-            declaredParams.forEach((declaredParam, declaredParamIndex) => {
-              // content.forEach((item) => {
+            this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
               let declaredParamArrArr = IsTruthy.trueVfalse(Array.isArray(declaredParam));
               if (declaredParamArrArr) {
                 let paramLimit = 0;
                 declaredParam.forEach((subParam, subParamIndex) => {
-                  //item.forEach((subItem) => {
-                  contentLimit.forEach((item, currentDeclaredIndex) => {
-                    // declaredParams.forEach((declaredParam) => {
+                  this.contentLimit.forEach((item, currentDeclaredIndex) => {
                     realItem = IsTruthy.trueVfalse(subItem);
                     if (realItem) {
-                      // if (subItem === declaredParam) {
-                      // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                      //   contentMap[declaredParam] = subItem;
-                      // }
-                      let currentDeclared = contentMap[declaredParam];
+                      let currentDeclared = this.contentMap[declaredParam];
                       let currentSub = subItem;
                       currentDeclared = currentSub;
                       paramLimit++;
-                      if (contentMap.length === declaredParams.length) {
+                      if (this.contentMap.length === this.declaredParams.length) {
                         return;
                       }
                     }
                   });
                 });
               } else {
-                if (Array.isArray(contentLimit)) {
-                  contentLimit.forEach((item, contentLimitIndex) => {
-                    // declaredParams.forEach((declaredParam) => {
+                if (Array.isArray(this.contentLimit)) {
+                  this.contentLimit.forEach((item, contentLimitIndex) => {
                     let contentLimitArrArr = IsTruthy.trueVfalse(Array.isArray(item));
                     if (contentLimitArrArr) {
                       item.forEach((subItem, mapItemIndex) => {
                         realItem = IsTruthy.trueVfalse(subItem);
                         if (realItem) {
-                          // if (subItem === declaredParam) {
-                          // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                          //   contentMap[declaredParam] = subItem;
-                          // }
-                          let paramDKey = declaredParams[mapItemIndex];
-                          if (!contentMap[paramDKey]) {
-                            contentMap[paramDKey] = subItem;
+                          let paramDKey = this.declaredParams[mapItemIndex];
+                          if (!this.contentMap[paramDKey]) {
+                            this.contentMap[paramDKey] = subItem;
                           }
-                          if (contentMap[paramDKey] === subItem) {
+                          if (this.contentMap[paramDKey] === subItem) {
                             return;
                           }
-                          // for (var key in declaredParams) {
-                          // }
                         }
                       });
                     } else {
                       realItem = IsTruthy.trueVfalse(item);
                       if (realItem) {
-                        // if (subItem === declaredParam) {
-                        // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                        //   contentMap[declaredParam] = subItem;
-                        // }
-                        let paramDKey = declaredParams[contentLimitIndex];
-                        if (!contentMap[paramDKey]) {
-                          contentMap[paramDKey] = item;
+                        let paramDKey = this.declaredParams[contentLimitIndex];
+                        if (!this.contentMap[paramDKey]) {
+                          this.contentMap[paramDKey] = item;
                         }
-                        if (contentMap[paramDKey] === item) {
+                        if (this.contentMap[paramDKey] === item) {
                           return;
                         }
-                        // for (var key in declaredParams) {
-                        // }
                       }
                     }
                   });
                 } else {
-                  let contentArrArr = IsTruthy.trueVfalse(Array.isArray(contentLimit));
+                  let contentArrArr = IsTruthy.trueVfalse(Array.isArray(this.contentLimit));
                   if (contentArrArr) {
                   } else {
-                    realItem = IsTruthy.trueVfalse(contentLimit);
+                    realItem = IsTruthy.trueVfalse(this.contentLimit);
                     if (realItem) {
-                      // if (subItem === declaredParam) {
-                      // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
-                      //   contentMap[declaredParam] = subItem;
-                      // }
-                      for (var key in declaredParams) {
-                        let paramDKey = declaredParams[key];
-                        if (!contentMap[paramDKey]) {
-                          contentMap[paramDKey] = contentLimit;
+                      for (var key in this.declaredParams) {
+                        let paramDKey = this.declaredParams[key];
+                        if (!this.contentMap[paramDKey]) {
+                          this.contentMap[paramDKey] = this.contentLimit;
                         }
-                        if (contentMap[paramDKey] === contentLimit) {
+                        if (this.contentMap[paramDKey] === this.contentLimit) {
                           return;
                         }
                       }
@@ -3578,19 +3600,15 @@ class ResolveParameters {
                 }
               }
             });
-            declaredParams.forEach((paramName) => {
-              if (contentMap.hasOwnProperty(paramName)) {
-                orderedContent.push(contentMap[paramName]);
+            this.declaredParams.forEach((paramName) => {
+              if (this.contentMap.hasOwnProperty(paramName)) {
+                this.orderedContent.push(this.contentMap[paramName]);
               } else {
-                orderedContent.push(null);
+                this.orderedContent.push(null);
               }
             });
-            // if (orderedContent.length > 0) {
-            //   console.log("Ordered arguments: " + orderedContent);
-            // }
-            // content = orderedContent;
           }
-          this.result = resolvedArgs
+          this.result = this.resolvedArgs
         })
       }
     }
@@ -3600,7 +3618,7 @@ class ResolveParameters {
 }
 
 var testClassResolve = function() {
-  let newRes = new ResolveParameters(new TestedFunctions().result);
+  let newRes = new ResolveParameters()
   console.log("return = " + JSON.stringify(newRes));
 }
 
@@ -3653,7 +3671,7 @@ function seoCapital(url) {
           <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
           <style>
-            <?!= styleHtml.renderFile.getContent() ?>
+            <?!= new StyleHtml().renderFile.getContent() ?>
           </style>
         </head>
         <body>

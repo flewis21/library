@@ -43,6 +43,10 @@ class IsMapped extends Presidential {
     super(t);
     this.t = t;
     this.v = v;
+    this.mapKeys = {};
+    for (var key in this.t) {
+      this.mapKeys[key] = this.v || typeof this.t[key];
+    }
   }
   static mapout (t, v) {
     var mapKeys = {};
@@ -52,7 +56,7 @@ class IsMapped extends Presidential {
     return mapKeys;
   };
   res() {
-    return this.mapKey;
+    return this.mapKeys;
   }
 }
 
@@ -273,7 +277,7 @@ var geneicType = function (e) {
       if (!e) {
         eQueryObject = {
           parameter: {
-            q:testlt().name
+            q: new ResolveParameters().argsX[0]
           }
         };
       }

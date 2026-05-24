@@ -2318,39 +2318,41 @@ const game_hunter = HtmlService.createHtmlOutput(
     </script>
 `);
         
-const styleHtml = {
-  renderFile: HtmlService.createHtmlOutput(
-    `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
-  ),
-  surveyPlayer: HtmlService.createHtmlOutput(
-    `${body_survey_player.getContent()}`,
-  ),
-  oddChances: HtmlService.createHtmlOutput(
-    `${link_visited.getContent() + link_active.getContent()}`,
-  ),
-  runIt: HtmlService.createHtmlOutput(
-    `${yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
-  ),
-  abcIt: HtmlService.createHtmlOutput(
-    `
-      ${utf_8.getContent() + b_top.getContent() + xuacompatible.getContent() + viewport.getContent() + google_signin_client.getContent() + fontAwesome.getContent() + googleApis_preConnect.getContent() + gstatic_preConnect.getContent() + googleApisCss.getContent() + materializeCss.getContent() + tabulatorCss.getContent() + googleApisIcon.getContent() + google_charts_loader.getContent() + googleApisOnApiLoad.getContent() + googleApis_defer.getContent()}
-  `),
-  spRunIt: HtmlService.createHtmlOutput(
-    `
-      ${spyTPlayer.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
-  `),
-  mgfRunIt: HtmlService.createHtmlOutput(
-    `
-      ${next_clicked_video.getContent() + busy_calendar.getContent()}
-  `),
-  cCDNRunIt: HtmlService.createHtmlOutput(
-    `
-      ${location_url.getContent() + next_clicked_video.getContent()}
-  `),
-  jsGameScriptsRunIt: HtmlService.createHtmlOutput(
-    `
-      ${warrior_clicks.getContent() + rouge_clicks.getContent() + mage_clicks.getContent() + hunter_clicks.getContent() + get_interface.getContent()}
-  `),
+class StyleHtml {
+  constructor() {
+    this.renderFile = HtmlService.createHtmlOutput(
+      `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
+    );
+    this.surveyPlayer = HtmlService.createHtmlOutput(
+      `${body_survey_player.getContent()}`,
+    );
+    this.oddChances = HtmlService.createHtmlOutput(
+      `${link_visited.getContent() + link_active.getContent()}`,
+    );
+    this.runIt = HtmlService.createHtmlOutput(
+      `${yTPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+    );
+    this.abcIt = HtmlService.createHtmlOutput(
+      `
+        ${utf_8.getContent() + b_top.getContent() + xuacompatible.getContent() + viewport.getContent() + google_signin_client.getContent() + fontAwesome.getContent() + googleApis_preConnect.getContent() + gstatic_preConnect.getContent() + googleApisCss.getContent() + materializeCss.getContent() + tabulatorCss.getContent() + googleApisIcon.getContent() + google_charts_loader.getContent() + googleApisOnApiLoad.getContent() + googleApis_defer.getContent()}
+    `);
+    this.spRunIt = HtmlService.createHtmlOutput(
+      `
+        ${spyTPlayer.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
+    `);
+    this.mgfRunIt = HtmlService.createHtmlOutput(
+      `
+        ${next_clicked_video.getContent() + busy_calendar.getContent()}
+    `);
+    this.cCDNRunIt = HtmlService.createHtmlOutput(
+      `
+        ${location_url.getContent() + next_clicked_video.getContent()}
+    `);
+    this.jsGameScriptsRunIt = HtmlService.createHtmlOutput(
+      `
+        ${warrior_clicks.getContent() + rouge_clicks.getContent() + mage_clicks.getContent() + hunter_clicks.getContent() + get_interface.getContent()}
+    `);
+  }
 };
 
 var builtStyling = function (e) {

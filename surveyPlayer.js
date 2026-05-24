@@ -86,9 +86,9 @@ function surveyPlayer(searchString, joinString) {
     `<!DOCTYPE html>
       <html id="test">
         <head>
-          <?= styleHtml.abcIt.getContent() ?>
+          <?= new StyleHtml().abcIt.getContent() ?>
           <style>
-            <?!= styleHtml.surveyPlayer.getContent() ?>
+            <?!= new StyleHtml().surveyPlayer.getContent() ?>
           </style>
         </head>
         <body  id="template">
@@ -167,7 +167,7 @@ function surveyPlayer(searchString, joinString) {
               </div>
             </div>
           </div>
-          <?!= styleHtml.spRunIt.getContent() ?>
+          <?!= new StyleHtml().spRunIt.getContent() ?>
         </body>
       </html>`,
   );

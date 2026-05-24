@@ -1282,274 +1282,271 @@ class FunctionHandle {
     var executed = 0;
     let funchAP = new AutoParams()
     let rndE = "";
+    let mapArr = {};
 
     // Logging
     if (!e) {
-      rndE = createRandomFunction();
+      let tempObj = new ResolveParameters().searchResult;
+      mapArr[tempObj.name] = [];
+      rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
       console.log("rndE = " + JSON.stringify(rndE), executed++);
-    } else { 
-        if (e && !e.parameter) {
-        rndE = createRandomFunction(te);
+    } 
+    else { 
+      if (e && !e.parameter) {
+        let tempObj = new ResolveParameters(e).searchResult;
+        mapArr[tempObj.name] = [];
+        rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
         console.log("rndE = " + JSON.stringify(rndE), executed++);
-        } else {
-          if (e && e.parameter) {
-          let objData = Object.keys(e.parameter);
-          console.log("" + e.parameter[objData[0]], objData);
-          if (objData.length === 0) {
-            // rndE = createRandomFunction();
-            rndE = createRandomFunction(); 
-            //funchAP.functionRegistry.paramsList[Math.floor(Math.random() * funchAP.functionRegistry.paramsList.length)]
-            console.log("rndE = " + JSON.stringify(rndE), executed++);
-            if (typeof rndE === "string") {
-              e = objectOfS(
-                ["parameter"],
+      } 
+      else {
+        if (e && e.parameter) {
+        let objData = Object.keys(e.parameter);
+        console.log("" + e.parameter[objData[0]], objData);
+        if (objData.length === 0) {
+          let tempObj = new ResolveParameters().searchResult;
+          mapArr[tempObj.name] = [];
+          rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+          console.log("rndE = " + JSON.stringify(rndE), executed++);
+          if (typeof rndE === "string") {
+            e = objectOfS(
+              ["parameter"],
+              [
                 [
-                  [
-                    ["func", rndE],
-                  ],
+                  ["func", rndE],
                 ],
-                funchAP.functionRegistry.time,
-              );
-            }
-            else {
-              if (typeof rndE === "object" && rndE !== null) {
-                let rndEAP = Object.values(rndE);
-                if (rrndEAP && rndEAP.length > 0) {
-                  e = objectOfS(
-                    ["parameter"],
-                    [
-                      [
-                        ["func", Object.keys(rrndEAP)[0]],
-                        ["args", Object.values(rrndEAP)[0]],
-                      ],
-                    ],
-                    funchAP.functionRegistry.time,
-                  );
-                } else {
-                  e = objectOfS(
-                    ["parameter"],
-                    [
-                      [
-                        ["func", Object.keys(rrndEAP)[0]],
-                      ],
-                    ],
-                    funchAP.functionRegistry.time,
-                  );
-                }
-              }
-              else {
-                console.log("Unexpected rndE type: ", rndE);
+              ],
+              funchAP.functionRegistry.time,
+            );
+          }
+          else {
+            if (typeof rndE === "object" && rndE !== null) {
+              let rndEAP = Object.values(rndE);
+              if (rrndEAP && rndEAP.length > 0) {
                 e = objectOfS(
                   ["parameter"],
                   [
                     [
-                      ["func", "aVar"],
-                      ["args", "varA"],
+                      ["func", Object.keys(rrndEAP)[0]],
+                      ["args", Object.values(rrndEAP)[0]],
+                    ],
+                  ],
+                  funchAP.functionRegistry.time,
+                );
+              } 
+              else {
+                e = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", Object.keys(rrndEAP)[0]],
                     ],
                   ],
                   funchAP.functionRegistry.time,
                 );
               }
             }
-            console.log(JSON.stringify(e));
-          } else { 
-            if (objData.length > 0) {
-              if (e.parameter["file"]) {
-                console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
-                // if (e.parameter["file"]) {
-                  console.log(
-                    "Determined that funcTres execution is requested! \n" +
-                      e.parameter["file"],
-                  );
-                  var funcTres = e?.parameter["file"];
-                  try {
-                    var htmlArray = funchAP.functionRegistry.getHtmlList();
-                    var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
-                    var rndPage = htmlArray[rndHtmlIndex];
-                    var htmlTresArg; // = rndPage; // Default value
-                    console.log("htmlArray = " + htmlArray, executed++);
-                    if (funcTres) {
-                      if (Array.isArray(funcTres)) {
-                        const firstArg = funcTres[0];
-                        if (htmlArray.includes(firstArg)) {
-                          var funcTres0Index = htmlArray.findIndex(function (element) {
-                            return element === firstArg;
-                          });
-                          htmlTresArg = htmlArray[funcTres0Index];
-                        }
-                      } else {
-                        if (htmlArray.includes(funcTres)) {
-                          var funcTresIndex = htmlArray.findIndex(function (element) {
-                            return element === funcTres;
-                          });
-                          htmlTresArg = htmlArray[funcTresIndex];
-                        }
-                      }
+            else {
+              console.log("Unexpected rndE type: ", rndE);
+              e = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", "aVar"],
+                    ["args", "varA"],
+                  ],
+                ],
+                funchAP.functionRegistry.time,
+              );
+            }
+          }
+          console.log(JSON.stringify(e));
+        } 
+        else { 
+          if (objData.length > 0) {
+            if (e.parameter["file"]) {
+              console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
+              console.log(
+                "Determined that funcTres execution is requested! \n" +
+                  e.parameter["file"],
+              );
+              var funcTres = e?.parameter["file"];
+              try {
+                var htmlArray = funchAP.functionRegistry.getHtmlList();
+                var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
+                var rndPage = htmlArray[rndHtmlIndex];
+                var htmlTresArg; // = rndPage; // Default value
+                console.log("htmlArray = " + htmlArray, executed++);
+                if (funcTres) {
+                  if (Array.isArray(funcTres)) {
+                    const firstArg = funcTres[0];
+                    if (htmlArray.includes(firstArg)) {
+                      var funcTres0Index = htmlArray.findIndex(function (element) {
+                        return element === firstArg;
+                      });
+                      htmlTresArg = htmlArray[funcTres0Index];
                     }
-                    if (!htmlTresArg) {
-                      try{
-                        let payLoad = {};
-                        payLoad["type"] = "url";
-                        payLoad["data"] = {};
-                        if (funcTres === "undefined") {
-                          return getScriptUrl() + "?file=" + rndPage;
-                        } 
-                        else {
-                          var fT = fileBrowser(null, funcTres);
-                          payLoad.data["url"] = fT?.url
-                          if (!fT?.url) {
-                            payLoad.data["url"] = driveManager(funcTres);
-                          }
-                          let options = {
-                            muteHttpExceptions: true,
-                          };
-                          payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                          let hTAml = RenderTemplate.templateRender(
-                            payLoad.data["app"]?.app,
-                            {
-                              pL: payLoad,
-                            },
-                            JSON.stringify(fT?.name || funcTres),
-                          );
-                          return hTAml
-                        }
-                      }
-                      catch {
-                        console.log("Requested template Out of Order", error.stack);
-                      }
+                  } 
+                  else {
+                    if (htmlArray.includes(funcTres)) {
+                      var funcTresIndex = htmlArray.findIndex(function (element) {
+                        return element === funcTres;
+                      });
+                      htmlTresArg = htmlArray[funcTresIndex];
                     }
-                    else { 
-                      if (htmlTresArg) {
-                        try {
-                          let driveA = 
-                            {
-                              fileParam: funcTres,
-                            }
-                          let noLhtml = RenderFile.fileRender(
-                            funcTres,
-                            driveA,
-                            isValidUrl(getScriptUrl()).pathname.split("/")[3],
-                          );
-                          return noLhtml
-                        } catch (error) {
-                          Logger.log("Requested! HTML Out of Order", error.stack);
-                        }
-                      }
-                    }
-                  } catch (error) {
-                    console.error(
-                      `Error in "RENDER" exec:`,
-                      error.stack,
-                    );
-                    throw new Error(
-                      "Error executing function: " +
-                        error.toString() +
-                        "\n" +
-                        error.stack,
-                    );
                   }
-                // }
-                // else if ((e.parameter["func"] || e.parameter["args"])) {
-                //   try{
-                //     let funcU = e.parameter["func"] || "";
-                //     let funcD = e.parameter["args"] || "";
-                //     let base = createFunctionResult(funcU, funcD);
-                //     let data = globalHandleGetData(base);
-                    // return RenderTemplate.templateRender(
-                //       base || data?.message?.info,
-                //       {
-                //         pL: data.pL,
-                //       },
-                //       JSON.stringify(data.pL.type),
-                //     );
-                //   }
-                //   catch (error){
-                //     console.log("Requested template Out of Order", error.stack);
-                //   }
-                // }
-              } else {
-                if (!e.parameter["func"] && !e.parameter["args"]) {
-                  if (typeof globalThis[e.parameter[objData[0]]] !== "function") {
-                    let argsEd;
-                    if (e.parameter[objData[0]].indexOf(",") > -1) {
-                        argsEd = e.parameter[objData[0]]
-                    }
+                }
+                if (!htmlTresArg) {
+                  try{
+                    let payLoad = {};
+                    payLoad["type"] = "url";
+                    payLoad["data"] = {};
+                    if (funcTres === "undefined") {
+                      return getScriptUrl() + "?file=" + rndPage;
+                    } 
                     else {
-                      argsEd = createRandomFunction(e.parameter[objData[0]]);
-                    }
-                    console.log("argsEd = " + JSON.stringify(argsEd), executed++);
-                    if (typeof argsEd === "string") {
-                      e = objectOfS(
-                        ["parameter"],
-                        [[["func", argsEd]]],
-                        funchAP.functionRegistry.time,
+                      var fT = fileBrowser(null, funcTres);
+                      payLoad.data["url"] = fT?.url
+                      if (!fT?.url) {
+                        payLoad.data["url"] = driveManager(funcTres);
+                      }
+                      let options = {
+                        muteHttpExceptions: true,
+                      };
+                      payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
+                      let hTAml = RenderTemplate.templateRender(
+                        payLoad.data["app"]?.app,
+                        {
+                          pL: payLoad,
+                        },
+                        JSON.stringify(fT?.name || funcTres),
                       );
-                      console.log("e = " + JSON.stringify(e), executed++);
-                    } else {
-                      if (typeof argsEd === "object" && argsEd !== null) {
-                        let argsAP = Object.values(argsEd);
-                        if (argsAP && argsAP.length > 0) {
-                          e = objectOfS(
-                            ["parameter"],
-                            [
-                              [
-                                ["func", Object.keys(argsEd)[0]],
-                                ["args", [...Object.values(argsEd)[0]]],
-                              ],
-                            ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        } else {
-                          e = objectOfS(
-                            ["parameter"],
-                            [[["func", Object.keys(argsEd)[0]]]],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
+                      return hTAml
+                    }
+                  }
+                  catch {
+                    console.log("Requested template Out of Order", error.stack);
+                  }
+                }
+                else { 
+                  if (htmlTresArg) {
+                    try {
+                      let driveA = 
+                        {
+                          fileParam: funcTres,
                         }
+                      let noLhtml = RenderFile.fileRender(
+                        funcTres,
+                        driveA,
+                        isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                      );
+                      return noLhtml
+                    } 
+                    catch (error) {
+                      Logger.log("Requested! HTML Out of Order", error.stack);
+                    }
+                  }
+                }
+              } 
+              catch (error) {
+                console.error(
+                  `Error in "RENDER" exec:`,
+                  error.stack,
+                );
+                throw new Error(
+                  "Error executing function: " +
+                    error.toString() +
+                    "\n" +
+                    error.stack,
+                );
+              }
+            } 
+            else {
+              if (!e.parameter["func"] && !e.parameter["args"]) {
+                if (typeof globalThis[e.parameter[objData[0]]] !== "function") {
+                  let argsEd;
+                  if (e.parameter[objData[0]].indexOf(",") > -1) {
+                      argsEd = e.parameter[objData[0]]
+                  }
+                  else {
+                    let tempObj = new ResolveParameters(e.parameter[objData[0]]).searchResult;
+                    mapArr[tempObj.name] = [];
+                    argsEd = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+                  }
+                  console.log("argsEd = " + JSON.stringify(argsEd), executed++);
+                  if (typeof argsEd === "string") {
+                    e = objectOfS(
+                      ["parameter"],
+                      [[["func", argsEd]]],
+                      funchAP.functionRegistry.time,
+                    );
+                    console.log("e = " + JSON.stringify(e), executed++);
+                  } 
+                  else {
+                    if (typeof argsEd === "object" && argsEd !== null) {
+                      let argsAP = Object.values(argsEd);
+                      if (argsAP && argsAP.length > 0) {
+                        e = objectOfS(
+                          ["parameter"],
+                          [
+                            [
+                              ["func", Object.keys(argsEd)[0]],
+                              ["args", [...Object.values(argsEd)[0]]],
+                            ],
+                          ],
+                          funchAP.functionRegistry.time,
+                        );
+                        console.log("e = " + JSON.stringify(e), executed++);
                       } 
                       else {
-                        console.log("Unexpected argsEd type: ", argsEd);
-                        let argsedObj = [];
-                        let aOKeys = Object.keys(argsEd);
-                        if (aOKeys.length > 0) {
-                          aOKeys.forEach((key) => {
-                            argsedObj.push(argsEd[key]);
-                          });
-                          e = objectOfS(
-                            ["parameter"],
+                        e = objectOfS(
+                          ["parameter"],
+                          [[["func", Object.keys(argsEd)[0]]]],
+                          funchAP.functionRegistry.time,
+                        );
+                        console.log("e = " + JSON.stringify(e), executed++);
+                      }
+                    } 
+                    else {
+                      console.log("Unexpected argsEd type: ", argsEd);
+                      let argsedObj = [];
+                      let aOKeys = Object.keys(argsEd);
+                      if (aOKeys.length > 0) {
+                        aOKeys.forEach((key) => {
+                          argsedObj.push(argsEd[key]);
+                        });
+                        e = objectOfS(
+                          ["parameter"],
+                          [
                             [
-                              [
-                                ["func", aOKeys],
-                                ["args", argsedObj],
-                              ],
+                              ["func", aOKeys],
+                              ["args", argsedObj],
                             ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        } else {
-                          e = objectOfS(
-                            ["parameter"],
+                          ],
+                          funchAP.functionRegistry.time,
+                        );
+                        console.log("e = " + JSON.stringify(e), executed++);
+                      } 
+                      else {
+                        e = objectOfS(
+                          ["parameter"],
+                          [
                             [
-                              [
-                                ["func", "aVar"],
-                                ["args", "varA"],
-                              ],
+                              ["func", "aVar"],
+                              ["args", "varA"],
                             ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        }
+                          ],
+                          funchAP.functionRegistry.time,
+                        );
+                        console.log("e = " + JSON.stringify(e), executed++);
+                      }
                       }
                     }
                   }
                   else {
                     if (typeof globalThis[e.parameter[objData[0]]] === "function") {
-                      let argsEd = createRandomFunction(e.parameter[objData[0]]);
-                      //funchAP.functionRegistry.paramsList.find((rndS) => {
-                      //   return rndS.name === e.parameter[objData[0]];
-                      // });
+                      let tempObj = new ResolveParameters(e.parameter[objData[0]]).searchResult;
+                      mapArr[tempObj.name] = [];
+                      let argsEd = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
                       console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                       if (typeof argsEd === "string") {
                         e = objectOfS(
@@ -1559,155 +1556,164 @@ class FunctionHandle {
                         );
                         console.log("e = " + JSON.stringify(e), executed++);
                       } 
-                      else if (typeof argsEd === "object" && argsEd !== null) {
-                        let argsAP = Object.values(argsEd);
-                        if (argsAP && argsAP.length > 0) {
-                          e = objectOfS(
-                            ["parameter"],
-                            [
+                      else {
+                        if (typeof argsEd === "object" && argsEd !== null) {
+                          let argsAP = Object.values(argsEd);
+                          if (argsAP && argsAP.length > 0) {
+                            e = objectOfS(
+                              ["parameter"],
                               [
-                                ["func", Object.keys(argsEd)[0]],
-                                ["args", [...Object.values(argsEd)[0]]],
+                                [
+                                  ["func", Object.keys(argsEd)[0]],
+                                  ["args", [...Object.values(argsEd)[0]]],
+                                ],
                               ],
-                            ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        } else {
-                          e = objectOfS(
-                            ["parameter"],
-                            [[["func", Object.keys(argsEd)[0]]]],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        }
-                      } else {
-                        console.log("Unexpected argsEd type: ", argsEd);
-                        let argsedObj = [];
-                        let aOKeys = Object.keys(argsEd);
-                        if (aOKeys.length > 0) {
-                          aOKeys.forEach((key) => {
-                            argsedObj.push(argsEd[key]);
-                          });
-                          e = objectOfS(
-                            ["parameter"],
-                            [
+                              funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(e), executed++);
+                          } 
+                          else {
+                            e = objectOfS(
+                              ["parameter"],
+                              [[["func", Object.keys(argsEd)[0]]]],
+                              funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(e), executed++);
+                          }
+                        } 
+                        else {
+                          console.log("Unexpected argsEd type: ", argsEd);
+                          let argsedObj = [];
+                          let aOKeys = Object.keys(argsEd);
+                          if (aOKeys.length > 0) {
+                            aOKeys.forEach((key) => {
+                              argsedObj.push(argsEd[key]);
+                            });
+                            e = objectOfS(
+                              ["parameter"],
                               [
-                                ["func", aOKeys],
-                                ["args", argsedObj],
+                                [
+                                  ["func", aOKeys],
+                                  ["args", argsedObj],
+                                ],
                               ],
-                            ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
-                        } else {
-                          e = objectOfS(
-                            ["parameter"],
-                            [
+                              funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(e), executed++);
+                          } 
+                          else {
+                            e = objectOfS(
+                              ["parameter"],
                               [
-                                ["func", "aVar"],
-                                ["args", "varA"],
+                                [
+                                  ["func", "aVar"],
+                                  ["args", "varA"],
+                                ],
                               ],
-                            ],
-                            funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(e), executed++);
+                              funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(e), executed++);
+                          }
                         }
                       }
                       console.log(JSON.stringify(e));
                     }
                     else {
                       console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
-                        console.log(
-                          "Determined that funcTres execution is requested! \n" +
-                            e.parameter[objData[0]],
-                        );
-                        var funcTres = e.parameter[objData[0]];
-                        try {
-                          var htmlArray = funchAP.functionRegistry.getHtmlList();
-                          var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
-                          var rndPage = htmlArray[rndHtmlIndex];
-                          var htmlTresArg; // = rndPage; // Default value
-                          console.log("htmlArray = " + htmlArray, executed++);
-                          if (funcTres) {
-                            if (Array.isArray(funcTres)) {
-                              const firstArg = funcTres[0];
-                              if (htmlArray.includes(firstArg)) {
-                                var funcTres0Index = htmlArray.findIndex(function (element) {
-                                  return element === firstArg;
-                                });
-                                htmlTresArg = htmlArray[funcTres0Index];
-                              }
-                            } else {
-                              if (htmlArray.includes(funcTres)) {
-                                var funcTresIndex = htmlArray.findIndex(function (element) {
-                                  return element === funcTres;
-                                });
-                                htmlTresArg = htmlArray[funcTresIndex];
-                              }
+                      console.log(
+                        "Determined that funcTres execution is requested! \n" +
+                          e.parameter[objData[0]],
+                      );
+                      var funcTres = e.parameter[objData[0]];
+                      try {
+                        var htmlArray = funchAP.functionRegistry.getHtmlList();
+                        var rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
+                        var rndPage = htmlArray[rndHtmlIndex];
+                        var htmlTresArg; // = rndPage; // Default value
+                        console.log("htmlArray = " + htmlArray, executed++);
+                        if (funcTres) {
+                          if (Array.isArray(funcTres)) {
+                            const firstArg = funcTres[0];
+                            if (htmlArray.includes(firstArg)) {
+                              var funcTres0Index = htmlArray.findIndex(function (element) {
+                                return element === firstArg;
+                              });
+                              htmlTresArg = htmlArray[funcTres0Index];
+                            }
+                          } 
+                          else {
+                            if (htmlArray.includes(funcTres)) {
+                              var funcTresIndex = htmlArray.findIndex(function (element) {
+                                return element === funcTres;
+                              });
+                              htmlTresArg = htmlArray[funcTresIndex];
                             }
                           }
-                          if (!htmlTresArg) {
-                            try{
-                              let payLoad = {};
-                              payLoad["type"] = "url";
-                              payLoad["data"] = {};
-                              if (funcTres === "undefined") {
-                                return getScriptUrl() + "?file=" + rndPage;
-                              } else {
-                                var fT = fileBrowser(null, funcTres);
-                                payLoad.data["url"] = fT?.url
-                                if (!fT?.url) {
-                                  payLoad.data["url"] = driveManager(funcTres);
-                                }
-                                let options = {
-                                  muteHttpExceptions: true,
-                                };
-                                payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                                let hTAmla = RenderTemplate.templateRender(
-                                  payLoad.data["app"]?.app,
-                                  {
-                                    pL: payLoad,
-                                  },
-                                  JSON.stringify(fT?.name || funcTres),
-                                );
-                                return hTAmla
-                              }
-                            }
-                            catch {
-                              console.log("Requested template Out of Order", error.stack);
-                            }
-                          }
-                          else { 
-                            if (htmlTresArg) {
-                              try {
-                                let driveA = 
-                                  {
-                                    fileParam: funcTres,
-                                  }
-                                let noLhtmlb = RenderFile.fileRender(
-                                  funcTres,
-                                  driveA,
-                                  isValidUrl(getScriptUrl()).pathname.split("/")[3],
-                                );
-                                return noLhtmlb
-                              } catch (error) {
-                                Logger.log("Requested! HTML Out of Order", error.stack);
-                              }
-                            }
-                          }
-                        } catch (error) {
-                          console.error(
-                            `Error in "RENDER" exec:`,
-                            error.stack,
-                          );
-                          throw new Error(
-                            "Error executing function: " +
-                              error.toString() +
-                              "\n" +
-                              error.stack,
-                          );
                         }
+                        if (!htmlTresArg) {
+                          try{
+                            let payLoad = {};
+                            payLoad["type"] = "url";
+                            payLoad["data"] = {};
+                            if (funcTres === "undefined") {
+                              return getScriptUrl() + "?file=" + rndPage;
+                            } 
+                            else {
+                              var fT = fileBrowser(null, funcTres);
+                              payLoad.data["url"] = fT?.url
+                              if (!fT?.url) {
+                                payLoad.data["url"] = driveManager(funcTres);
+                              }
+                              let options = {
+                                muteHttpExceptions: true,
+                              };
+                              payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
+                              let hTAmla = RenderTemplate.templateRender(
+                                payLoad.data["app"]?.app,
+                                {
+                                  pL: payLoad,
+                                },
+                                JSON.stringify(fT?.name || funcTres),
+                              );
+                              return hTAmla
+                            }
+                          }
+                          catch {
+                            console.log("Requested template Out of Order", error.stack);
+                          }
+                        }
+                        else { 
+                          if (htmlTresArg) {
+                            try {
+                              let driveA = 
+                                {
+                                  fileParam: funcTres,
+                                }
+                              let noLhtmlb = RenderFile.fileRender(
+                                funcTres,
+                                driveA,
+                                isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              );
+                              return noLhtmlb
+                            } 
+                            catch (error) {
+                              Logger.log("Requested! HTML Out of Order", error.stack);
+                            }
+                          }
+                        }
+                      } 
+                      catch (error) {
+                        console.error(
+                          `Error in "RENDER" exec:`,
+                          error.stack,
+                        );
+                        throw new Error(
+                          "Error executing function: " +
+                            error.toString() +
+                            "\n" +
+                            error.stack,
+                        );
+                      }
                     }
                   }
                 }
