@@ -60,15 +60,7 @@ function iframeC() {
 }
 
 function needPastTime(searchString) {
-  // console.log(
-  //   autoP.functionRegistry.time +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\n!" +
-  //     searchString +
-  //     ", = " +
-  //     !searchString,
-  // );
+  let autoP = new ResolveParameters();
   autoP.functionRegistry.vidTree();
   var vidSheetVals = autoP.functionRegistry.getVideoList();
   var vidData = [];
@@ -77,8 +69,7 @@ function needPastTime(searchString) {
     var inValsKeys = Object.keys(val);
     var inVVals = Object.values(val);
     inVVals.forEach((inV) => {
-      // console.log("I'm holding the value of vidVals", inV)
-      let truInv = IsTruthy.trueVfalse(inV);
+      let truInv = autoP.trueVfalse(inV);
       if (truInv) {
         vidData.push(inV);
       } else {
@@ -88,17 +79,13 @@ function needPastTime(searchString) {
   });
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var noSearch = autoP.searchString().myNewArr;
-      // console.log(
-      //   "Nothing to search. Falling back to random string.",
-      //   noSearch,
-      // );
+      var noSearch = autoP.searchResult.parameters;
       var searchString = noSearch;
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    const data = UrlFetchApp.fetch(searchLink, { muteHTTPExceptions: true });
-    const videoSearch = data.getContentText();
-    // return videoSearch
+    const options = { muteHTTPExceptions: true };
+    const data = getUrlResponse(searchLink, options);
+    const videoSearch = data.app;
     const vidsSearched = [];
     const vidValues = [];
     const sorFndOrd = [];
@@ -112,14 +99,8 @@ function needPastTime(searchString) {
         vidsSearched.push(playId);
         vidValues.push(playId.valueOf());
       }
-      // const vidV = [vidsSearched].map(function (v){console.log(v[0].valueOf());
-      // return v[0].valueOf();});
-      // console.log(vidV)
-      // console.log(vidsSearched.map((m) => {const mObject = Utilities.jsonStringify(m)
-      // console.log(mObject.indexOf(","))}))
       return vidsSearched.forEach(function (vid) {
         const vidObject = vid;
-        // console.log(typeof vidObject)
         if (
           vidObject[0].indexOf("=") === -1 &&
           vidObject[0].indexOf("query") === -1 &&
@@ -188,25 +169,19 @@ function needPastTime(searchString) {
       });
     }
     if (typeof fndOrd === "object") {
-      // console.log(seoArray.playList)
       break;
     }
   }
 
-  // console.log(fndOrd)
   if (fndOrd) {
-    // console.log("needPastTime \n" + fndOrd);
     var randomKey = 0;
     var rndRes = [];
     while (rndRes.length === 0) {
-      // console.log("I'm looping while results are at", rndRes.length);
       randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
       fndOrd.forEach((test) => {
-        // console.log("I'm looping for each index", fndOrd.indexOf(test));
         var elaspeTime = autoP.functionRegistry.time;
         var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
         for (var i = 0, l = randomKey; i < l; i++) {
-          // console.log("I'm counting loops until I reach", l)
           if (
             test.indexOf("false") === -1 &&
             test.indexOf("var") === -1 &&
@@ -230,9 +205,6 @@ function needPastTime(searchString) {
             test.indexOf("EdgeWorksp") === -1 &&
             test.indexOf("new XMLHttp") === -1
           ) {
-            // if (JSON.stringify(i) >= 3) {
-            //   break;
-            // }
             if (test && rndRes.indexOf(test) === -1) {
               if (vidData.indexOf(test) !== -1) {
                 return;
@@ -250,20 +222,17 @@ function needPastTime(searchString) {
             }
           }
         }
-        // console.log("test: " + test + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       });
       if (rndRes.length > 0) {
         autoP.functionRegistry.vidTree();
         vidSheetVals = autoP.functionRegistry.getVideoList();
         vidData = [];
-        // var vidKeys = Object.keys(vidSheetVals);
         vidVals = Object.values(vidSheetVals);
         vidVals.forEach((val) => {
           let inValsKeys = Object.keys(val);
           let inVVals = Object.values(val);
           inVVals.forEach((inV) => {
-            // console.log("I'm holding the value of vidVals", inV)
-            let truInv = IsTruthy.trueVfalse(inV);
+            let truInv = autoP.trueVfalse(inV);
             if (truInv) {
               vidData.push(inV);
             } else {
@@ -284,7 +253,6 @@ function needPastTime(searchString) {
         var rndKind = popKind.split(",");
       }
 
-      //  console.log(uniqueVid)
       var playVid = [];
       var vidKeys = Object.keys(vidSheetVals);
       vidKeys.forEach((key) => {
@@ -293,7 +261,7 @@ function needPastTime(searchString) {
         let matchKeys = Object.keys(vidObj);
         matchKeys.forEach((match) => {
           let vidMatch = vidObj[match];
-          let truMatch = IsTruthy.trueVfalse(vidMatch);
+          let truMatch = autoP.trueVfalse(vidMatch);
           if (truMatch && typeof vidMatch !== "number") {
             let searchMatch = vidMatch.indexOf(searchString) > -1;
             let matchSearch = searchString.indexOf(vidMatch) > -1;

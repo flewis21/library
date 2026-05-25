@@ -2645,6 +2645,7 @@ var getUrl = function (appInterface) {
 };
 
 var getUrlResponse = function (url, options) {
+  let autoP = new ResolveParameters();
   var validUrl = isValidUrl(url);
   if (validUrl.hostname) {
     let response;
@@ -2655,7 +2656,7 @@ var getUrlResponse = function (url, options) {
     let maxRetries = 1;
     let delay = 1000;
     try {
-      response = UrlFetchApp.fetch(validUrl.hostname, options);
+      response = UrlFetchApp.fetch(url, options);
       try {
         if (response) {
           var res = response.getResponseCode();
@@ -2693,7 +2694,16 @@ var getUrlResponse = function (url, options) {
                 }).getContentText();
                 supUrl = location;
                 var responseObj = {
-                  dataStr: seoPastTime(validUrl?.hostname),
+                  dataStr: vidFactor(htmlData, autoP.functionRegistry.time).vidArray,
+                };
+              }
+              else {
+                location = response.getContentText();
+                console.log("From response: Location = " + location);
+                htmlData = location;
+                supUrl = validUrl.hostname;
+                var responseObj = {
+                  dataStr: vidFactor(location, autoP.functionRegistry.time).vidArray,
                 };
               }
             }

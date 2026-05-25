@@ -955,6 +955,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
       }
 
       document.addEventListener("DOMContentLoaded", function() {
+        againCap = localStorage.getItem("gsSearch");
         // Client-side code
         const localSuggestionsCache = {};
         const nVid = document.querySelectorAll(".userClickedNext");
@@ -962,10 +963,13 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
         // const input = document.querySelectorAll(".getVideo");
         // const suggestionsDiv = document.querySelectorAll(".autocomplete-suggestions");
+        input.addEventListener('click', (event) => {
+          input.value = againCap;
+        })
         let fullList = [];
 
         if (!input || !suggestionsDiv) {
-          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
           return;
         }
 
@@ -1018,7 +1022,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             });
           })
           .catch(error => {
-            console.error("Error fetching address suggestions for " + inputId + " :", error);
+            console.error("Error fetching address suggestions for artiicleIndex :", error);
             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
           });
           
@@ -1055,6 +1059,28 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               });
               suggestionsDiv.appendChild(div);
             });
+            input.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter') {
+                let confirmation;
+                suggestions?.forEach(suggestion => {
+                  console.log(suggestion)
+                  if (suggestion && suggestion.description.includes(event.target.value)) {
+                    confirmation = window.confirm(
+                      suggestion.youtubeUrl,
+                    );
+                  }
+                  if (confirmation) {
+                    window.open(suggestion.youtubeUrl);
+                    suggestionsDiv.innerHTML = '';
+                  }
+                  else {
+                    suggestionsDiv.innerHTML = '';
+                    input.blur();
+                  }
+                  return
+                });
+              }
+            });
           }
           else {
             return
@@ -1079,7 +1105,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 input.blur();
             }
             // If the user preses the "Enter" key on the keyboard. 
-            if (event.key === "Enter")  {
+            if (event.key === 'Enter')  {
               input.blur();
               serverside("vidPlaylist", [event.target.value])
                 .then((done) => {
@@ -1088,17 +1114,6 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                   if (done && typeof done === "object") {
                     for (var key in done) {
                       // alert(JSON.stringify(done[key]));
-                      let confirmation = window.confirm(
-                        "Leaving Don'time Life Services ...",
-                      );
-                      if (confirmation) {
-                        window.open(done[key].hardUrl);
-                        suggestionsDiv.innerHTML = '';
-                      }
-                      else {
-                        suggestionsDiv.innerHTML = '';
-                        input.blur();
-                      }
                       // let i = 0;
                       // let l = done[key].length;
                       // alert(l);
@@ -1144,6 +1159,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                     }
                     localSuggestionsCache["allMatches"] = fullList;
                     window.scrollTo(0,0);
+                    localStorage.setItem("gsSearch", event.target.value);
                     event.target.value = '';
                     // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
                     // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
@@ -1168,14 +1184,14 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                     });
                   })
                   .catch(error => {
-                    console.error("Error fetching address suggestions for " + inputId + " :", error);
+                    console.error("Error fetching address suggestions for artiicleIndex :", error);
                     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
                   });
             }
           });
 
         } else {
-            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
         }
 
 

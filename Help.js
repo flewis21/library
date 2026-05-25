@@ -227,6 +227,7 @@ function mis(text, maxRetries = 3) {
       ")\n ",
   );
   var executed = 0;
+  let misAuto = new ResolveParameters();
   if (text?.indexOf(",") === -1) {
     var validUrl = isValidUrl(text);
     executed++;
@@ -234,13 +235,13 @@ function mis(text, maxRetries = 3) {
   if (!validUrl?.hostname) {
     var supFunc = misSt(text);
     executed++;
-    let truSup = IsTruthy.trueVfalse(supFunc.func);
+    let truSup = misAuto.trueVfalse(supFunc.func);
     executed++;
     if (truSup) {
       Logger.log("function - " + supFunc.func);
     }
     while (!supFunc.func) {
-      truSup = IsTruthy.trueVfalse(supFunc.func);
+      truSup = misAuto.trueVfalse(supFunc.func);
       executed++;
       if (truSup) {
         Logger.log("function - " + supFunc.func);
@@ -1730,12 +1731,13 @@ function misSt(func, someArgs) {
       arguments.callee.caller.name,
   );
   var executed = 0;
+  let misStAuto = new ResolveParameters();
 
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
-  var trueFunc = IsTruthy.trueVfalse(func);
+  var trueFunc = misStAuto.trueVfalse(func);
   console.log("trueFunc = " + trueFunc, executed++);
-  var trueSomeArgs = IsTruthy.trueVfalse(someArgs);
+  var trueSomeArgs = misStAuto.trueVfalse(someArgs);
   console.log("trueSomeArgs = " + trueSomeArgs, executed++);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
@@ -1757,7 +1759,7 @@ function misSt(func, someArgs) {
     //   .toString()
     //   .split(",");
     var arrUno = Array.isArray(func);
-    var arrDos = IsTruthy.trueVfalse(someArgs);
+    var arrDos = misStAuto.trueVfalse(someArgs);
     console.log("arrDos = " + arrDos, executed++);
     if (arrUno && arrDos) {
       var keys = Object.values(func).toString().split(",").concat(someArgs);
@@ -1779,7 +1781,7 @@ function misSt(func, someArgs) {
     }
 
     keys.forEach((pro) => {
-      // let proFact = IsTruthy.trueVfalse(pro)
+      // let proFact = misStAuto.trueVfalse(pro)
       let keysArrArr;
       if (typeof pro !== "string" && pro !== null) {
         let proValue = Object.keys(pro);
@@ -1837,7 +1839,7 @@ function misSt(func, someArgs) {
           } 
           else {
             // keyProParams = crmT(subParam);
-            realItem = IsTruthy.trueVfalse(subParam);
+            realItem = misStAuto.trueVfalse(subParam);
             console.log("realItem = " + realItem, executed++);
           }
           // let realItem;
@@ -1886,7 +1888,7 @@ function misSt(func, someArgs) {
         // }
       } 
       else {
-        realItem = IsTruthy.trueVfalse(pro);
+        realItem = misStAuto.trueVfalse(pro);
         console.log("realItem = " + realItem, executed++);
         if (realItem) {
           for (var key in keyPro) {
@@ -2776,8 +2778,9 @@ function resolveParams(func, someArgs) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  var trueFunc = IsTruthy.trueVfalse(func);
-  var trueSomeArgs = IsTruthy.trueVfalse(someArgs);
+  let rpAuto = new ResolveParameters();
+  var trueFunc = rpAuto.trueVfalse(func);
+  var trueSomeArgs = rpAuto.trueVfalse(someArgs);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : autoP.functionRegistry.paramsList;
@@ -2788,7 +2791,7 @@ function resolveParams(func, someArgs) {
     var argsX = [];
     var content = [];
     var arrUno = Array.isArray(func);
-    var arrDos = IsTruthy.trueVfalse(someArgs);
+    var arrDos = rpAuto.trueVfalse(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -2802,12 +2805,12 @@ function resolveParams(func, someArgs) {
       let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = IsTruthy.trueVfalse(Array.isArray(pro));
+      let keysArrArr = rpAuto.trueVfalse(Array.isArray(pro));
       if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
-          realItem = IsTruthy.trueVfalse(subParam);
+          realItem = rpAuto.trueVfalse(subParam);
           if (realItem) {
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
@@ -2834,7 +2837,7 @@ function resolveParams(func, someArgs) {
           content.push(paramLimit);
         }
       } else {
-        realItem = IsTruthy.trueVfalse(pro);
+        realItem = rpAuto.trueVfalse(pro);
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
@@ -2891,14 +2894,14 @@ function resolveParams(func, someArgs) {
           let realItem;
           declaredParams.forEach((declaredParam, declaredParamIndex) => {
             // content.forEach((item) => {
-            let declaredParamArrArr = IsTruthy.trueVfalse(Array.isArray(declaredParam));
+            let declaredParamArrArr = rpAuto.trueVfalse(Array.isArray(declaredParam));
             if (declaredParamArrArr) {
               let paramLimit = 0;
               declaredParam.forEach((subParam, subParamIndex) => {
                 //item.forEach((subItem) => {
                 contentLimit.forEach((item, currentDeclaredIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  realItem = IsTruthy.trueVfalse(subItem);
+                  realItem = rpAuto.trueVfalse(subItem);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2918,10 +2921,10 @@ function resolveParams(func, someArgs) {
               if (Array.isArray(contentLimit)) {
                 contentLimit.forEach((item, contentLimitIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  let contentLimitArrArr = IsTruthy.trueVfalse(Array.isArray(item));
+                  let contentLimitArrArr = rpAuto.trueVfalse(Array.isArray(item));
                   if (contentLimitArrArr) {
                     item.forEach((subItem, mapItemIndex) => {
-                      realItem = IsTruthy.trueVfalse(subItem);
+                      realItem = rpAuto.trueVfalse(subItem);
                       if (realItem) {
                         // if (subItem === declaredParam) {
                         // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2939,7 +2942,7 @@ function resolveParams(func, someArgs) {
                       }
                     });
                   } else {
-                    realItem = IsTruthy.trueVfalse(item);
+                    realItem = rpAuto.trueVfalse(item);
                     if (realItem) {
                       // if (subItem === declaredParam) {
                       // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2958,10 +2961,10 @@ function resolveParams(func, someArgs) {
                   }
                 });
               } else {
-                let contentArrArr = IsTruthy.trueVfalse(Array.isArray(contentLimit));
+                let contentArrArr = rpAuto.trueVfalse(Array.isArray(contentLimit));
                 if (contentArrArr) {
                 } else {
-                  realItem = IsTruthy.trueVfalse(contentLimit);
+                  realItem = rpAuto.trueVfalse(contentLimit);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3383,239 +3386,7 @@ function resolveParams(func, someArgs) {
     }
     return allResolutions;
   }
-}
-
-class ResolveParameters {
-  constructor(func, someArgs) {
-    this.func = func;
-    this.someArgs = someArgs;
-    console.log(
-      "boilerplate Help: line 2284\nresolveParams(func: " +
-        this.func +
-        ", someArgs: " +
-        this.someArgs +
-        ") ",
-    );
-    let trueFunc = IsTruthy.trueVfalse(this.func);
-    let trueSomeArgs = IsTruthy.trueVfalse(this.someArgs);
-    let funcUno = trueFunc
-      ? decodeURIComponent(this.func)
-      : new ProjectFUnctionNames().paramsList;
-    let funcDos = trueSomeArgs ? decodeURIComponent(this.someArgs) : trueSomeArgs;
-    let numVarRnd = Math.floor(Math.random() * funcUno.length);
-    let arrDRnd = null;
-    if (funcUno || funcDos) {
-      this.argsX = [];
-      this.content = [];
-      let arrUno = Array.isArray(this.func);
-      let arrDos = IsTruthy.trueVfalse(this.someArgs);
-      if (arrUno && arrDos) {
-        this.keys = Object.values(this.func).concat(this.someArgs);
-      } 
-      else {
-        if (arrUno && !arrDos) {
-          this.keys = Object.values(this.func);
-        }
-        else {
-          if (!arrUno && arrDos) {
-            this.keys = [this.func].concat(this.someArgs);
-          } 
-          else {
-            if (!arrUno && !arrDos && trueFunc) {
-              this.keys = [this.func];
-            }
-            else {
-              if (!trueFunc) {
-                this.keys = Object.values(funcUno[numVarRnd])
-              }
-            }
-          }
-        }
-      }
-      this.keys.forEach((pro) => {
-        let keyPro
-        if (typeof pro === "object" || Array.isArray(pro)) {
-          keyPro = pro;
-        }
-        else {
-          keyPro = [pro];
-        }
-        let keyProParams;
-        let realItem;
-        let keysArrArr = IsTruthy.trueVfalse(Array.isArray(pro));
-        if (keysArrArr) {
-          let funcLimit = [];
-          let paramLimit = [];
-          pro.forEach((subParam, proIndex) => {
-            realItem = IsTruthy.trueVfalse(subParam);
-            if (realItem) {
-              let keyProParams;
-              if (typeof subParam === "object" || Array.isArray(subParam)) {
-                keyProParams = new RelatedFunctions(subParam[proIndex]);
-              }
-              else {
-                keyProParams = new RelatedFunctions(subParam);
-              }
-              if (keyProParams.funFirst >= 0) {
-                funcLimit.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
-              } else {
-                if (typeof subParam === "object") {
-                  paramLimit.push(subParam);
-                } else if (Array.isArray(subParam)) {
-                  paramLimit.push(subParam[proIndex]);
-                } else {
-                  paramLimit.push(subParam);
-                }
-              }
-            }
-          });
-          if (funcLimit.length > 0) {
-            this.argsX.push(funcLimit);
-          }
-          if (paramLimit.length > 0) {
-            this.content.push(paramLimit);
-          }
-        } else {
-          realItem = IsTruthy.trueVfalse(pro);
-          if (realItem) {
-            for (var key in keyPro) {
-              let keyProParams;
-              if (typeof pro === "object" || Array.isArray(pro)) {
-                keyProParams = new RelatedFunctions(pro[key]);
-              }
-              else {
-                keyProParams = new RelatedFunctions(pro);
-              }
-              if (keyProParams.funFirst >= 0) {
-                this.argsX.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
-              } else {
-                if (typeof pro === "object" || Array.isArray(pro)) {
-                  this.content.push(pro[key]);
-                }
-                else {
-                  this.content.push(pro);
-                }
-              }
-            }
-          }
-        }
-      });
-      if (this.argsX) {
-        this.allErrors = {};
-        this.allResolutions = {};
-        var fParams = new ProjectFUnctionNames(); //gsFParams();
-        var resCount = 0;
-        this.argsX.forEach((result, argsXIndex) => {
-          console.log("argsX result " + resCount + ": " + result);
-          this.args = {};
-          this.resolvedArgs = [];
-          this.missingParams = [];
-          this.contentLimit = this.content[argsXIndex];
-          this.searchResult = fParams.paramsList.find((rndS) => {
-            return rndS.name === result;
-          });
-          this.orderedContent = [];
-          if (
-            this.searchResult &&
-            this.searchResult !== "undefined" &&
-            this.searchResult !== null &&
-            this.searchResult.parameters
-          ) {
-            this.declaredParams = this.searchResult.parameters;
-            if (this.contentLimit?.length > 0) {
-              console.log(
-                "Current content: " +
-                  this.contentLimit +
-                  "\nDeclared parameters: " +
-                  this.declaredParams,
-              );
-            }
-            this.contentMap = {};
-            let realItem;
-            this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
-              let declaredParamArrArr = IsTruthy.trueVfalse(Array.isArray(declaredParam));
-              if (declaredParamArrArr) {
-                let paramLimit = 0;
-                declaredParam.forEach((subParam, subParamIndex) => {
-                  this.contentLimit.forEach((item, currentDeclaredIndex) => {
-                    realItem = IsTruthy.trueVfalse(subItem);
-                    if (realItem) {
-                      let currentDeclared = this.contentMap[declaredParam];
-                      let currentSub = subItem;
-                      currentDeclared = currentSub;
-                      paramLimit++;
-                      if (this.contentMap.length === this.declaredParams.length) {
-                        return;
-                      }
-                    }
-                  });
-                });
-              } else {
-                if (Array.isArray(this.contentLimit)) {
-                  this.contentLimit.forEach((item, contentLimitIndex) => {
-                    let contentLimitArrArr = IsTruthy.trueVfalse(Array.isArray(item));
-                    if (contentLimitArrArr) {
-                      item.forEach((subItem, mapItemIndex) => {
-                        realItem = IsTruthy.trueVfalse(subItem);
-                        if (realItem) {
-                          let paramDKey = this.declaredParams[mapItemIndex];
-                          if (!this.contentMap[paramDKey]) {
-                            this.contentMap[paramDKey] = subItem;
-                          }
-                          if (this.contentMap[paramDKey] === subItem) {
-                            return;
-                          }
-                        }
-                      });
-                    } else {
-                      realItem = IsTruthy.trueVfalse(item);
-                      if (realItem) {
-                        let paramDKey = this.declaredParams[contentLimitIndex];
-                        if (!this.contentMap[paramDKey]) {
-                          this.contentMap[paramDKey] = item;
-                        }
-                        if (this.contentMap[paramDKey] === item) {
-                          return;
-                        }
-                      }
-                    }
-                  });
-                } else {
-                  let contentArrArr = IsTruthy.trueVfalse(Array.isArray(this.contentLimit));
-                  if (contentArrArr) {
-                  } else {
-                    realItem = IsTruthy.trueVfalse(this.contentLimit);
-                    if (realItem) {
-                      for (var key in this.declaredParams) {
-                        let paramDKey = this.declaredParams[key];
-                        if (!this.contentMap[paramDKey]) {
-                          this.contentMap[paramDKey] = this.contentLimit;
-                        }
-                        if (this.contentMap[paramDKey] === this.contentLimit) {
-                          return;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            });
-            this.declaredParams.forEach((paramName) => {
-              if (this.contentMap.hasOwnProperty(paramName)) {
-                this.orderedContent.push(this.contentMap[paramName]);
-              } else {
-                this.orderedContent.push(null);
-              }
-            });
-          }
-          this.result = this.resolvedArgs
-        })
-      }
-    }
-  }
-  resParams() {
-  }
-}
+};
 
 var testClassResolve = function() {
   let newRes = new ResolveParameters()
@@ -3785,6 +3556,7 @@ function seoCapital(url) {
 }
 
 function seoPastTime(searchString, time) {
+  let autoP = new ResolveParameters()
   console.log(
     "boilerplate Help: line 2\nseoPastTime(searchString: " +
       searchString +
@@ -4022,6 +3794,7 @@ function seoYoutube(searchString, time) {
   //     ", = " +
   //     time,
   // );
+  let autoP = new ResolveParameters();
   let executed = 0;
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
@@ -4032,7 +3805,20 @@ function seoYoutube(searchString, time) {
       .join("")
       .replace(/,/g, "");
   }
-  var rndSearch = "http://" + searchString + ".com"; // .searchString().myNewArr;
+  let rndSearch;
+  let rndSearchValidation = isValidUrl(searchString);
+  if (!rndSearchValidation.hostname) {
+    if ([searchString].indexOf("http://") === -1) {
+      rndSearch = "http://" + searchString
+    }
+    else {
+      if ([rndSearch].indexOf(".com") === -1) {
+        rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
+      }
+    }
+  }else {
+    rndSearch = searchString
+  }
   // = isValidUrl(searchString).pathname;
   try {
     let options = { muteHttpExceptions: true };
@@ -4095,27 +3881,6 @@ var testTestedFunctions = function() {
 }
 
 function vidFactor(data, time) {
-  // console.log(
-  //   "boilerplate Help: line 199\nvidFactor(data: " +
-  //     data.substring(0, 9) +
-  //     "..., time: " +
-  //     time +
-  //     ")\n " +
-  //     arguments.callee.caller.name,
-  // );
-  // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\ndata is !" +
-  //     !data +
-  //     ", = " +
-  //     data.substring(0, 100) +
-  //     "\ntime is !" +
-  //     !time +
-  //     ", = " +
-  //     time,
-  // );
   if (
     typeof data !== "object" &&
     typeof data !== "undefined" &&
@@ -4145,21 +3910,7 @@ function vidFactor(data, time) {
 }
 
 function vidPlaylist(tunPlay) {
-  // console.log(
-  //   "boilerplate Help : line 3087\n(tunPlay:" +
-  //     tunPlay +
-  //     ")\n " +
-  //     arguments.callee.caller.name,
-  // );
-  // console.log(
-  //   autoP.functionRegistry.time +
-  //     "\n" +
-  //     arguments.callee.name +
-  //     "\ntunPlay !" +
-  //     !tunPlay +
-  //     ", = " +
-  //     tunPlay,
-  // );
+  let vpAuto = new ResolveParameters();
   var randomPlaylist = [];
   if (!tunPlay) {
     autoP.functionRegistry.vidTree();
@@ -4168,79 +3919,24 @@ function vidPlaylist(tunPlay) {
     vidKeys.forEach((key) => {
       let vidObj = vidSheetVals[key];
       let videoId = vidObj["Video"];
-      // let matchKeys = Object.keys(vidObj);
-      // matchKeys.forEach((match) =>{
-      //   let vidMatch = vidObj[match];
-      //     let truMatch = IsTruthy.trueVfalse(vidMatch);
-      //     if (truMatch) {
-      //       let searchMatch = vidMatch.indexOf(searchString) > -1;
-      //       let matchSearch = searchString.indexOf(vidMatch) > -1;
-      //       if (searchMatch || matchSearch) {
       randomPlaylist.push(videoId);
-      //       }
-      //     }
-      // });
     });
-  } else {
+  } 
+  else {
     let nptVideo = needPastTime(tunPlay);
     var nptUrl = nptVideo.hardUrl;
     let listObj = nptVideo.playList;
     listObj.forEach((itemList) => {
       if (itemList) {
-        // if (!listObj) {
-        //   var listObj = [];
-        // }
         randomPlaylist.push(itemList);
       }
-      // return listObj;
     });
   }
-  // var testGen = testlt();
-  // var listGen = objectOfS(
-  //   ["parameter"],
-  //   [[["func", testGen]]],
-  //   autoP.functionRegistry.time,
-  // ).parameter["func"];
-  // var noList = [];
-  // while (noList.length < 3) {
-  //   var noVid = substanceVegas(
-  //     0,
-  //     [listGen].toString().length,
-  //     [listGen].toString().split(""),
-  //   ).substWord;
-  //   noList.push(noVid);
-  // }
-  // var randomPlaylist;
-  // tunPlay
-  //   ? (randomPlaylist = needPastTime(tunPlay).playList.map((itemList) => {
-  //       if (itemList) {
-  //         if (!listObj) {
-  //           var listObj = [];
-  //         }
-  //         listObj.push(itemList);
-  //       }
-  //       return listObj;
-  //     }))
-  //   : (randomPlaylist = noList);
-  // return console.log(randomPlaylist)
-  // console.log(arguments.callee.name + ": \nRecieved: " + randomPlaylist);
   var randomVidKey = Math.floor(
     Math.random() * Math.floor(randomPlaylist.length),
   );
   var playListSorted = randomPlaylist.sort((a, b) => a - b);
-  // console.log(
-  //   "vidPlaylist: \nDeclaring videoObject = covObjects(" +
-  //     playListSorted +
-  //     ",[youtubeID])",
-  // );
   var videoObject = covObjects(playListSorted, ["youtubeID"]);
-  // console.log(
-  //   "vidPlaylist: \nRecieved" +
-  //     JSON.stringify(videoObject) +
-  //     " from  declared variable videoObject = covObjects(" +
-  //     playListSorted +
-  //     ",[youtubeID])",
-  // );
   if (
     videoObject.length > 0 &&
     typeof videoObject[randomVidKey]["youtubeID"] !== "undefined"
@@ -4255,7 +3951,6 @@ function vidPlaylist(tunPlay) {
       ];
   }
   var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
-  // return console.log({videoItem: randomVideo,videoItemUrl: youtubeUrl,playlistArr: playListSorted})
   return {
     videoItem: randomVideo,
     videoItemUrl: youtubeUrl,

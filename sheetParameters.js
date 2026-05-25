@@ -1210,6 +1210,7 @@ var seoIndex = function (searchWord) {
 
 function seoPictTime(searchString, time) {
   let executed = 0;
+  let autoP = new ResolveParameters();
   autoP.functionRegistry.imgTree();
   var imgSheetVals = autoP.functionRegistry.getImageList();
   console.log("imgSheetVals = " + imgSheetVals, executed++);
@@ -1219,7 +1220,7 @@ function seoPictTime(searchString, time) {
     var inValsKeys = Object.keys(img);
     var inVVals = Object.values(img);
     inVVals.forEach((inV) => {
-      let truInv = IsTruthy.trueVfalse(inV);
+      let truInv = autoP.trueVfalse(inV);
       console.log("truInv = " + truInv, executed++);
       if (truInv) {
         imgData.push(inV);
@@ -1344,7 +1345,7 @@ function seoPictTime(searchString, time) {
         let inValsKeys = Object.keys(img);
         let inVVals = Object.values(img);
         inVVals.forEach((inV) => {
-          let truInv = IsTruthy.trueVfalse(inV);
+          let truInv = autoP.trueVfalse(inV);
           console.log("truInv = " + truInv, executed++);
           if (truInv) {
             imgData.push(inV);
@@ -1373,7 +1374,7 @@ function seoPictTime(searchString, time) {
       let matchKeys = Object.keys(imgObj);
       matchKeys.forEach((match) => {
         let imgMatch = imgObj[match];
-        let truMatch = IsTruthy.trueVfalse(imgMatch);
+        let truMatch = autoP.trueVfalse(imgMatch);
         console.log("truMatch = " + truMatc);
         if (truMatch) {
           let searchMatch = imgMatch.indexOf(searchString) > -1;
@@ -1392,6 +1393,7 @@ function seoPictTime(searchString, time) {
 
 function seoPictures(searchString, time) {
   let executed = 0;
+  let autoP = new ResolveParameters();
   if (typeof searchString === "undefined") {
     var searchString = autoP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
@@ -1409,7 +1411,7 @@ function seoPictures(searchString, time) {
      let mainList= autoP.functionRegistry.arrDomainVals;
      console.log("mainList = " + JSON.stringify(mainList.slice(mainList.length - 1)), executed++);
      for (const key in mainList) {
-      let truD = IsTruthy.trueVfalse(mainList[key]);
+      let truD = autoP.trueVfalse(mainList[key]);
     //  console.log("truD = " + truD, executed++);
       if (key === "Domain" && truD) {
         domainEngine.push(mainList[key]);
@@ -1433,6 +1435,7 @@ function seoPictures(searchString, time) {
 
 var seoTwitter = function (folderX, searchString, time) {
   let executed = 0;
+  let autoP = new ResolveParameters();
   if (typeof time === "undefined") {
     var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
@@ -1479,7 +1482,7 @@ var seoTwitter = function (folderX, searchString, time) {
   //   }
   // }
   // var idArray = [seoFactor(data || minFold, time).factorData].toString().split("\n");
-  // let seoTruth = IsTruthy.trueVfalse(idArray);
+  // let seoTruth = autoP.trueVfalse(idArray);
   // if (!seoTruth) {
   //   idArray = minFold
   // }
