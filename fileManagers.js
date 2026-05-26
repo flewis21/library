@@ -1181,10 +1181,11 @@ var fbTester = function () {
 
 var fileFold = function(folderX, fileX, time) {
   let executed = 0;
+  let autoP = new ResolveParameters();
   var elapsedTime = autoP.functionRegistry.elapsedTimeInSeconds;
   console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];
-  var folderXIsValid = IsTruthy.trueVfalse(folderX);
+  var folderXIsValid = autoP.trueVfalse(folderX);
   console.log("folderXIsValid = " + folderXIsValid, executed++);
   if (folderXIsValid) {
     if (!folderXIsValid) {

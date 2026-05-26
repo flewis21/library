@@ -371,1004 +371,18 @@ const logo = HtmlService.createHtmlOutput(
 const seaIcn = HtmlService.createHtmlOutput(
   `https://flewis21.github.io/foobar/images/user.jpg`,
 );
-const materializeJs = HtmlService.createHtmlOutput(
-  `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
+const jsQuery = HtmlService.createHtmlOutput(
+  `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
 );
 const luxonJs = HtmlService.createHtmlOutput(
   `<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`,
 );
+const materializeJs = HtmlService.createHtmlOutput(
+  `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
+);
 const tabulatorJs = HtmlService.createHtmlOutput(
   `<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>`,
 );
-const jsQuery = HtmlService.createHtmlOutput(
-  `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
-);
-const div_query = HtmlService.createHtmlOutput(
-  `<script>document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");</script>
-`);
-const body_query = HtmlService.createHtmlOutput(
-  `<script>document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");</script>
-`);
-const iframe_query = HtmlService.createHtmlOutput(
-  `<script>document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");</script>
-`);
-const domain_lookup = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    function lookupDomain(searchTerm) {
-      serverSide("lookupDomain", [searchTerm])
-        .then(results => {
-          console.log("Lookup results:", results);
-          displaySearchResults(results); // Display results
-        })
-        .catch(error => {
-          console.error("Error looking up domain:", error);
-          $("#errorMessage").text(error); // Display error message
-        });
-    }
-
-    $("#lookupButton").click(function() {
-      const searchTerm = $("#searchTerm").val();
-      lookupDomain(searchTerm);
-    });
-  </script>
-`);
-const busy_calendar = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverSide(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler(result => {
-              resolve(result)})
-          .withFailureHandler(error => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error)})
-          .runBoilerplate(func, args)
-        });
-      }
-      document.addEventListener("DOMContentLoaded", function() {
-        // mod the array
-        let timePicker = document.querySelectorAll(".prefTime");
-        M.Timepicker.init(timePicker, { 
-          defaultTime: "now" ,
-        });
-        serverSide("busyDates", [])
-          .then((response) => { 
-            // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let disabledDays = [];
-            if (response && response.type === "object" && Array.isArray(response.data)) {
-              disabledDays = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              disabledDays = [];
-            }
-            let datePicker = document.querySelectorAll(".prefDate");
-            M.Datepicker.init(datePicker, {
-              defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
-              setDefaultDate: true,
-              minDate: new Date(),
-              disableDayFn: 
-                function (day) {
-                  return disabledDays.indexOf(day.valueOf()) > -1;
-                },
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    </script>
-`);
-const key_press = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var busa = document.getElementById("artiicleIndex");
-    var busx = document.getElementById("loadingLab");
-    var busc = document.getElementById("contentDiv");
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    busa.addEventListener('keypress', function(event) {
-      // If the user preses the "Enter" key on the keyboard. 
-      if (event.key === "Enter")  {
-        const strValue = busa.value;
-        busx.innerText = "... waiting for " + strValue;
-        serverSide("jFund", strValue)
-        .then((article) => {
-          if (article) {
-            // User clicked "No" or X in the title bar.
-            busx.innerText = ""
-            busc.innerHTML = article;}})
-        .catch((er) => {
-          console.log(er)
-          busx.innerText = JSON.stringify(er)})
-        busa.value = ""}})
-  </script>  
-`);
-const key_press_video = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var busa = document.getElementById("artiicleIndex");
-    var busx = document.getElementById("loadingLab");
-    var busc = document.getElementById("contentDiv");
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    busa.addEventListener('keypress', function(event) {
-      // If the user preses the "Enter" key on the keyboard. 
-      if (event.key === "Enter")  {
-        const strValue = busa.value;
-        busx.innerText = "... waiting for " + strValue;
-        const confirmation = window.confirm(
-          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-        );
-        if (confirmation) {
-          if (strValue) {
-            localSuggestionsCache["allMatches"].map((val) => {
-              if (val.description.indexOf(strValue) > -1) {
-                window.open(val.youtubeUrl);
-              }
-            });
-          }
-          else {
-            window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
-          }
-        }
-        busa.value = ""}})
-  </script>  
-`);
-const domain_submit = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    function submitDomain(formData) {
-      serverSide("submitDomain", [formData])
-        .then(result => {
-          console.log("Server response:", result);
-          $("#successMessage").text(result); // Display success message
-        })
-        .catch(error => {
-          console.error("Error submitting domain:", error);
-          $("#errorMessage").text(error); // Display error message
-        });
-    }
-
-    $("#domainForm").submit(function(event) {
-      event.preventDefault();
-      const formData = $(this).serializeObject();
-      submitDomain(formData); // Call the function
-    });
-  </script>
-`);
-const document_ready_select = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    $(document).ready(function() {
-      $('select').formSelect();
-
-      $('#templateSelect').change(function() {
-        var selectedTemplateUrl 
-          = $(this).val();
-          if (selectedTemplateUrl) {
-            $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
-            $("#myForm").show(); // Show the form only after template is loaded.
-            $("#myForm").empty(); // Clear previous form fields.
-            // 2. Dynamically create form fields based on template placeholders (requires server-side)
-            serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
-              placeholders.forEach(function(placeholder) {
-                var fieldName 
-                  = placeholder.replace(/{{|}}/g, ''); // Extract field name
-                $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
-                $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
-              });
-              $("#myForm").append("<button type='submit'>Submit</button>");
-
-
-              $("#myForm").submit(function(event) {
-                event.preventDefault();
-
-                var formData 
-                  = $(this).serializeObject();
-                serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
-                  $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
-                }).catch((error)=>{
-                  console.error("Error:", error);
-                  $("#result").html("<p>Error creating document. Please check the logs.</p>");
-                })
-
-              });
-
-            }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
-          $("#editorFrame").prop("src", "");
-          $("#myForm").hide();}
-      });
-
-      $.fn.serializeObject = function() { // jQuery plugin for serializing form data
-        var o 
-          = {};
-        var a 
-          = this.serializeArray();
-        $.each(a, function() {
-          if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-              o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-          } else {
-            o[this.name] = this.value || '';
-          }
-        });
-        return o;
-      };
-    });
-  </script>
-`);
-const google_script_run_promise = HtmlService.createHtmlOutput(
-  `
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-  </script>
-`);
-const collapse_menu = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var menuIcon = document.querySelector(".menu-icon");
-    var sidebar = document.querySelector(".sidebar");
-    var container = document.querySelector(".container");
-    menuIcon.onclick = function () {
-      sidebar.classList.toggle("small-sidebar");
-      container.classList.toggle("large-container");
-    }
-  </script>
-`);
-const func_clicked = HtmlService.createHtmlOutput(
-  ` 
-  <script>
-    document.getElementById('func').addEventListener('change', funcClicked)
-    function funcClicked() {
-      //console.log(document.getElementById("test").innerHTML)
-      // Init a timeout variable to be used below
-      let timeout = null;
-      (() => {
-        // Clear the timeout if it has already been set.
-        // This will prevent the previous task from executing
-        // if it has been less than <MILLISECONDS>
-        // clearTimeout(timeout);
-        // Make a new timeout set to go off in 1000ms (1 second)
-        // timeout = setTimeout
-        // (function  ()
-        // {console.log('Input Value:', textInput.value);}, 5000)();
-        if (typeof url === "undefined") {
-          var urlData = document.getElementById("url").value;
-          var url = urlData.toString();
-        }
-        var func = document.getElementById("func").value;
-        var args = document.getElementById("args").value;
-        if (typeof args !== "undefined") {
-          var linkFollow = document.createElement("a");
-          linkFollow.href =
-            url +
-            "?func=" +
-            encodeURIComponent(func) +
-            "&args=" +
-            encodeURIComponent(args);
-          linkFollow.id = "linkFOLLOW";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkFOLLOW").remove();
-        }
-      })();
-    }
-  </script>
-`);
-const auto_video = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler((result) => {
-              resolve(result)})
-          .withFailureHandler((error) => {
-            alert("Error handling: ")
-              // console.log(error)
-              reject(error)})
-          .runBoilerplate(func, args)})};
-
-      function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
-      }
-
-      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
-
-        // Client-side code
-        const localSuggestionsCache = {};
-        const input = document.getElementById(inputId);
-        const suggestionsDiv = document.getElementById(suggestionsDivId);
-
-        if (!input || !suggestionsDiv) {
-          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
-          return;
-        }
-        
-        serverside('getVI', [])
-          .then((response) => { 
-            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let fullList = {};
-            if (response && response.type === "object") {
-              fullList = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = {};
-            }
-            localSuggestionsCache[columnName] = fullList
-            // console.log('Successfully fetched full list for', columnName);
-            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for " + inputId + ":", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
-          
-        const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
-            suggestionsDiv.innerHTML = '';
-            return;
-          }
-          
-          // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache[columnName] || [];
-          // console.log("localSuggestionsCache[columnName] || [] ", localList)
-          const suggestions = localList.filter(item => 
-            String(item).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
-            suggestions.forEach(suggestion => {
-              // console.log(suggestion)
-              const div = document.createElement('div');
-              div.textContent = suggestion;
-              div.addEventListener('click', () => {
-                input.value = suggestion;
-                suggestionsDiv.innerHTML = '';
-              });
-              suggestionsDiv.appendChild(div);
-            });
-          }
-
-        }, 300);
-        
-        if (input && suggestionsDiv) {
-          input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
-          });
-
-          document.addEventListener('click', (event) => {
-            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
-              suggestionsDiv.innerHTML = '';
-            }
-          });
-
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-          });
-
-        } else {
-            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
-        }
-      }
-      // Setup Autocomplete
-      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
-    </script>
-`);
-const auto_complete = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
-      }
-
-      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
-
-        // Client-side code
-        const localSuggestionsCache = {};
-        const input = document.getElementById(inputId);
-        const suggestionsDiv = document.getElementById(suggestionsDivId);
-
-        if (!input || !suggestionsDiv) {
-          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
-          return;
-        }
-        
-        serverside('chaseFunction', [columnName])
-          .then((response) => { 
-            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let fullList = {};
-            if (response && response.type === "object") {
-              fullList = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = {};
-            }
-            localSuggestionsCache[columnName] = fullList
-            // console.log('Successfully fetched full list for', columnName);
-            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for " + inputId + ":", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
-          
-        const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
-            suggestionsDiv.innerHTML = '';
-            return;
-          }
-          
-          // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache[columnName] || [];
-          // console.log("localSuggestionsCache[columnName] || [] ", localList)
-          const suggestions = localList.filter(item => 
-            String(item).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
-            suggestions.forEach(suggestion => {
-              // console.log(suggestion)
-              const div = document.createElement('div');
-              div.textContent = suggestion;
-              div.addEventListener('click', () => {
-                input.value = suggestion;
-                suggestionsDiv.innerHTML = '';
-              });
-              suggestionsDiv.appendChild(div);
-            });
-          }
-
-        }, 300);
-        
-        if (input && suggestionsDiv) {
-          input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
-          });
-
-          document.addEventListener('click', (event) => {
-            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
-              suggestionsDiv.innerHTML = '';
-            }
-          });
-
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-          });
-
-        } else {
-            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
-        }
-      }
-      // Setup Autocomplete
-      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
-    </script>
-`);
-const next_clicked_video = HtmlService.createHtmlOutput(
-  `
-    <script>
-
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler(result => {
-              resolve(result)})
-          .withFailureHandler(error => {
-              reject(error)})
-          .runBoilerplate(func, args)
-        });
-      }
-      function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
-      }
-
-      document.addEventListener("DOMContentLoaded", function() {
-        againCap = localStorage.getItem("gsSearch");
-        // Client-side code
-        const localSuggestionsCache = {};
-        const nVid = document.querySelectorAll(".userClickedNext");
-        const input = document.getElementById("artiicleIndex");
-        const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
-        // const input = document.querySelectorAll(".getVideo");
-        // const suggestionsDiv = document.querySelectorAll(".autocomplete-suggestions");
-        input.addEventListener('click', (event) => {
-          input.value = againCap;
-        })
-        let fullList = [];
-
-        if (!input || !suggestionsDiv) {
-          console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
-          return;
-        }
-
-        serverside("getVI", [])
-          .then((response) => {
-            // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the response
-            if (response && typeof response === "object") {
-              for (var key in response) {
-                // alert(JSON.stringify(response[key]));
-                let i = 0;
-                let l = response[key].length;
-                // alert(l);
-                for (i,l;i<l;i++) {
-                  let tempObj = {};
-                  tempObj.description = response[key][i].description;
-                  let tData = response[key][i].videoId;
-                  let dLoc =  "https://www.youtube.com/watch?v=";
-                  tempObj.youtubeUrl = dLoc + tData;
-                  fullList.push(tempObj);
-                }
-              }
-              // fullList = response.data;
-            } else {
-              console.warn("Expected an array in response from getVI, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = [];
-            }
-            localSuggestionsCache["allMatches"] = fullList;
-            // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
-            // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
-            // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
-            $('a').click(function(event){
-              if ($(this).attr('href') === "javascript:void(0)") {
-                let confirmation = window.confirm(
-                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                );
-                if (confirmation) {
-                  event.preventDefault();
-                  var linkFollow = document.createElement("a");
-                  linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
-                  linkFollow.id = "linkFOLLOW";
-                  linkFollow.target = "_blank";
-                  linkFollow.rel = "noopener noreferrer";
-                  document.body.appendChild(linkFollow);
-                  document.getElementById("linkFOLLOW").click();
-                  document.getElementById("linkFOLLOW").remove();
-                }
-              }
-            });
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for artiicleIndex :", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
-          
-        const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
-            suggestionsDiv.innerHTML = '';
-            return;
-          }
-          
-          // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache["allMatches"] || [];
-          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          const suggestions = localList.filter(item => 
-            String(item.description).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
-            window.scrollTo(0,0);
-            suggestions.forEach(suggestion => {
-              // console.log(suggestion)
-              const div = document.createElement('div');
-              div.textContent = suggestion.description;
-              div.classList.add("card-panel", "receipt", "btn-large");
-              div.addEventListener('click', () => {
-                input.value = suggestion.description;
-                let confirmation = window.confirm(
-                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                );
-                if (confirmation) {
-                  window.open(suggestion.youtubeUrl);
-                }
-                suggestionsDiv.innerHTML = '';
-              });
-              suggestionsDiv.appendChild(div);
-            });
-            input.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter') {
-                let confirmation;
-                suggestions?.forEach(suggestion => {
-                  console.log(suggestion)
-                  if (suggestion && suggestion.description.includes(event.target.value)) {
-                    confirmation = window.confirm(
-                      suggestion.youtubeUrl,
-                    );
-                  }
-                  if (confirmation) {
-                    window.open(suggestion.youtubeUrl);
-                    suggestionsDiv.innerHTML = '';
-                  }
-                  else {
-                    suggestionsDiv.innerHTML = '';
-                    input.blur();
-                  }
-                  return
-                });
-              }
-            });
-          }
-          else {
-            return
-          }
-
-        }, 300);
-        
-        if (input && suggestionsDiv) {
-          input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
-          });
-
-          document.addEventListener('click', (event) => {
-            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
-              suggestionsDiv.innerHTML = '';
-            }
-          });
-
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-            // If the user preses the "Enter" key on the keyboard. 
-            if (event.key === 'Enter')  {
-              input.blur();
-              serverside("vidPlaylist", [event.target.value])
-                .then((done) => {
-                  // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
-                  // Access the actual array from the done
-                  if (done && typeof done === "object") {
-                    for (var key in done) {
-                      // alert(JSON.stringify(done[key]));
-                      // let i = 0;
-                      // let l = done[key].length;
-                      // alert(l);
-                      // for (i,l;i<l;i++) {
-                      //   let tempObj = {};
-                      //   tempObj.description = done[key][i].description;
-                      //   let tData = done[key][i].videoId;
-                      //   let dLoc =  "https://www.youtube.com/watch?v=";
-                      //   tempObj.youtubeUrl = dLoc + tData;
-                      //   fullList.push(tempObj);
-                      // }
-                    }
-                  } else {
-                    console.warn("Expected an array in done from getVI, received:", done);
-                    // Fallback to empty array if the structure is not as expected
-                    fullList = [];
-                  }
-                });
-                serverside("getVI", [])
-                  .then((response) => {
-                    // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                    // Access the actual array from the response
-                    if (response && typeof response === "object") {
-                      for (var key in response) {
-                        // alert(JSON.stringify(response[key]));
-                        let i = 0;
-                        let l = response[key].length;
-                        // alert(l);
-                        for (i,l;i<l;i++) {
-                          let tempObj = {};
-                          tempObj.description = response[key][i].description;
-                          let tData = response[key][i].videoId;
-                          let dLoc =  "https://www.youtube.com/watch?v=";
-                          tempObj.youtubeUrl = dLoc + tData;
-                          fullList.push(tempObj);
-                        }
-                      }
-                      // fullList = response.data;
-                    } else {
-                      console.warn("Expected an array in response from getVI, received:", response);
-                      // Fallback to empty array if the structure is not as expected
-                      fullList = [];
-                    }
-                    localSuggestionsCache["allMatches"] = fullList;
-                    window.scrollTo(0,0);
-                    localStorage.setItem("gsSearch", event.target.value);
-                    event.target.value = '';
-                    // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
-                    // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
-                    // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
-                    $('a').click(function(event){
-                      if ($(this).attr('href') === "javascript:void(0)") {
-                        let confirmation = window.confirm(
-                          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                        );
-                        if (confirmation) {
-                          event.preventDefault();
-                          var linkFollow = document.createElement("a");
-                          linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
-                          linkFollow.id = "linkFOLLOW";
-                          linkFollow.target = "_blank";
-                          linkFollow.rel = "noopener noreferrer";
-                          document.body.appendChild(linkFollow);
-                          document.getElementById("linkFOLLOW").click();
-                          document.getElementById("linkFOLLOW").remove();
-                        }
-                      }
-                    });
-                  })
-                  .catch(error => {
-                    console.error("Error fetching address suggestions for artiicleIndex :", error);
-                    suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                  });
-            }
-          });
-
-        } else {
-            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
-        }
-
-
-      });
-    </script>
-`);
-const next_clicked = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler(result => {
-              resolve(result)})
-          .withFailureHandler(error => {
-              reject(error)})
-          .runBoilerplate(func, args)
-        });
-      }
-      document
-        .querySelectorall("userClickedNext")
-        .addEventListener("click", nextFunc);
-      function nextFunc() {
-        serverside("getVI").then((drop) => {
-          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
-          var rndFunc = drop[rndNumDrop];
-          localStorage.setItem("gsSearch", rndFunc);
-          console.log(rndFunc + "...");
-          document.getElementById("template").innerHTML =
-            "waiting for nextFunc: " + rndFunc + "...";
-          serverside(rndFunc)
-            .then((droplet) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
-              // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\ndroplet.length = " + droplet.length;
-              // alert(
-              //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
-              // );
-              if (droplet.length === 99) {
-                serverside("seoCapital", droplet).then((myFile) => {
-                  document.getElementById("template").innerHTML =
-                    rndFunc + "(" + myFile + ")";
-                  // alert(rndFunc + "(" + myFile + ")");
-                  if (
-                    myFile.length === 99 ||
-                    myFile.length === 86 ||
-                    myFile.length === 101 ||
-                    myFile.length === 112
-                  ) {
-                    // console.log(cChange)
-                    var linkFollow = document.createElement("a");
-                    linkFollow.href = myFile + "?func=" + rndFunc;
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                  } else {
-                    document.getElementById("template").innerHTML =
-                      JSON.stringify(myFile);
-                  }
-                });
-              } else {
-                document.getElementById("template").innerHTML =
-                  arguments.callee.name +
-                    "\n" +
-                    droplet.length +
-                    " is not the required length",;
-                // alert(
-                //   arguments.callee.name +
-                //     "\n" +
-                //     droplet.length +
-                //     " is not the required length",
-                // );
-                serverside("getScriptUrl")
-                  .then((cChange) => {
-                    console.log(
-                      arguments.callee.name +
-                        "\n" +
-                        typeof cChange +
-                        " with length = " +
-                        cChange.length,
-                    );
-                    if (cChange.length === 112 || cChange.length === 86) {
-                      // console.log(cChange)
-                      const confirmation = window.confirm(
-                        "Click OK to continue to the destination.",
-                      );
-                      if (confirmation) {
-                        var linkFollow = document.createElement("a");
-                        linkFollow.href = cChange + "?func=" + rndFunc;
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                      }
-                    } else {
-                      var docWnd = document.getElementById("template");
-                      docWnd.innerHTML = cChange;
-                    }
-                  })
-                  .catch((er) => {
-                    document.getElementById("template").innerHTML =
-                      arguments.callee.name +
-                        "\n" +
-                        rndFunc +
-                        " error(" +
-                        er +
-                        ")";
-                    // alert(
-                    //   arguments.callee.name +
-                    //     "\n" +
-                    //     rndFunc +
-                    //     " error(" +
-                    //     er +
-                    //     ")",
-                    // );
-                    console.log(arguments.callee.name + "\n" + er);
-                    document.getElementById("template").innerHTML =
-                      JSON.stringify(er);
-                  });
-              }
-            })
-            .catch((er) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
-              // alert(
-              //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-              // );
-              serverside("getScriptUrl")
-                .then((cChange) => {
-                  console.log(
-                    arguments.callee.name +
-                      "\n" +
-                      typeof cChange +
-                      " with length = " +
-                      cChange.length,
-                  );
-                  if (cChange.length === 112 || cChange.length === 86) {
-                    // console.log(cChange)
-                    const confirmation = window.confirm(
-                      "Click OK to continue to the destination.",
-                    );
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc;
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel = "noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove();
-                    }
-                  } else {
-                    var docWnd = document.getElementById("template");
-                    docWnd.innerHTML = cChange;
-                  }
-                })
-                .catch((er) => {
-                  document.getElementById("template").innerHTML =
-                    arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
-                  // alert(
-                  //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-                  // );
-                  console.log(arguments.callee.name + "\n" + er);
-                  document.getElementById("template").innerHTML =
-                    JSON.stringify(er);
-                });
-            });
-        });
-      }
-    </script>
-`);
 const again_clicked = HtmlService.createHtmlOutput(
   `
   <script>
@@ -1563,201 +577,428 @@ const args_clicked = HtmlService.createHtmlOutput(
     }
   </script>
 `);
-const yTPlayer = HtmlService.createHtmlOutput(
+const auto_complete = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+        // Client-side code
+        const localSuggestionsCache = {};
+        const input = document.getElementById(inputId);
+        const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+        
+        serverside('chaseFunction', [columnName])
+          .then((response) => { 
+            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let fullList = {};
+            if (response && response.type === "object") {
+              fullList = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = {};
+            }
+            localSuggestionsCache[columnName] = fullList
+            // console.log('Successfully fetched full list for', columnName);
+            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + ":", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } else {
+            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+        }
+      }
+      // Setup Autocomplete
+      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+    </script>
+`);
+const auto_video = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+            alert("Error handling: ")
+              // console.log(error)
+              reject(error)})
+          .runBoilerplate(func, args)})};
+
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+        // Client-side code
+        const localSuggestionsCache = {};
+        const input = document.getElementById(inputId);
+        const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+          return;
+        }
+        
+        serverside('getVI', [])
+          .then((response) => { 
+            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let fullList = {};
+            if (response && response.type === "object") {
+              fullList = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = {};
+            }
+            localSuggestionsCache[columnName] = fullList
+            // console.log('Successfully fetched full list for', columnName);
+            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for " + inputId + ":", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            return;
+          }
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache[columnName] || [];
+          // console.log("localSuggestionsCache[columnName] || [] ", localList)
+          const suggestions = localList.filter(item => 
+            String(item).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion;
+              div.addEventListener('click', () => {
+                input.value = suggestion;
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } else {
+            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+        }
+      }
+      // Setup Autocomplete
+      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+    </script>
+`);
+const body_query = HtmlService.createHtmlOutput(
+  `
+    <script
+      >document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
+    </script>
+`);
+const busy_calendar = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverSide(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              console.log(document.getElementById("test").innerHTML);
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        // mod the array
+        let timePicker = document.querySelectorAll(".prefTime");
+        M.Timepicker.init(timePicker, { 
+          defaultTime: "now" ,
+        });
+        serverSide("busyDates", [])
+          .then((response) => { 
+            // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the 'data' property
+            let disabledDays = [];
+            if (response && response.type === "object" && Array.isArray(response.data)) {
+              disabledDays = response.data;
+            } else {
+              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              disabledDays = [];
+            }
+            let datePicker = document.querySelectorAll(".prefDate");
+            M.Datepicker.init(datePicker, {
+              defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
+              setDefaultDate: true,
+              minDate: new Date(),
+              disableDayFn: 
+                function (day) {
+                  return disabledDays.indexOf(day.valueOf()) > -1;
+                },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    </script>
+`);
+const collapse_menu = HtmlService.createHtmlOutput(
   `
   <script>
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    let ctr = 0;
-    let iframePlayer;
-    let duration = 0;
-    let lastVolume = 100;
-    let seekBar, volumeSlider;
-    function onYouTubeIframeAPIReady() {
-      iframePlayer = new YT.Player("iframePlayer", {
-        height: "1405",
-        width: "2105",
-        //  videoId: 'OTeQee-gxa4',
-        playerVars: {
-          autoplay: 1,
-          loop: 1,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          autohide: 1,
-          playsinline: 1,
-          enablejsapi: 1,
-          mute: 0,
-          vq: "hd1080",
-          iv_load_policy: 3,
-          cc_load_policy: 1,
-          listType: "playlist",
-          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-          onError: onPlayerError,
-        },
-      });
-      function onPlayerReady(event) {
-        setShuffle();
-        event.target.nextVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      let done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-          changeBorderColor(event.data);
-          setLoop();
-        } else if (event.data == YT.PlayerState.UNSTARTED) {
-          changeBorderColor(event.data);
-          setTimeout(2000, playvideo)
-          event.target.playVideo();
-        } else if (event.data == YT.PlayerState.ENDED) {
-          changeBorderColor(event.data);
-          setShuffle();
-          setTimeout(2000, playVideo);
-          // event.target.playVideo();
-          setShuffle();
-          setTimeout(2000, nextVideo);
-          // event.target.nextVideo();
-        } else if (event.data == YT.PlayerState.PAUSED) {
-          changeBorderColor(event.data);
-        } else if (event.data == YT.PlayerState.BUFFERING) {
-          changeBorderColor(event.data);
-          setShuffle();
-        } else if (event.data == YT.PlayerState.VIDEO_CUED) {
-          changeBorderColor(event.data);
-        }
-        done = true;
-      }
-
-      function changeBorderColor(playerStatus) {
-        let color;
-
-        if (playerStatus == -1) {
-          color = "#37474F";
-        } // unstarted = gray
-        else if (playerStatus == 0) {
-          color = "#FFFF00";
-        } // ended = yellow
-        else if (playerStatus == 1) {
-          color = "#33691E";
-        } // playing = green
-        else if (playerStatus == 2) {
-          color = "#DD2C00";
-        } // paused = red
-        else if (playerStatus == 3) {
-          color = "#AA00FF";
-        } // buffering = purple
-        else if (playerStatus == 5) {
-          color = "#FF6DOO";
-        } // video cued = orange
-
-        if (color) {
-          document.getElementById("iframePlayer").style.borderColor = color;
-        }
-      }
-
-      function onPlayerError() {
-        iframePlayer.destroy;
-        onYouTubeIframeAPIReady();
-      }
-      function stopVideo() {
-        if (iframePlayer && iframePlayer.stopVideo) {
-          iframePlayer.stopVideo();
-        }
-      }
-
-      function getVideoUrl() {
-        if (iframePlayer && iframePlayer.getVideoUrl) {
-          iframePlayer.getVideoUrl();
-        }
-      }
-
-      function setLoop() {
-        if (iframePlayer && iframePlayer.setLoop) {
-          iframePlayer.setLoop(true);
-        }
-      }
-
-      function setShuffle() {
-        if (iframePlayer && iframePlayer.setShuffle) {
-          iframePlayer.setShuffle(true);
-        }
-      }
-
-      function playVideo() {
-        if (iframePlayer && iframePlayer.playVideo) {
-          iframePlayer.playVideo();
-        }
-      }
-      function nextVideo() {
-        if (iframePlayer && iframePlayer.nextVideo) {
-          iframePlayer.nextVideo();
-        }
-      }
-      function muteVideo() {
-        if (iframePlayer && iframePlayer.mute) {
-          iframePlayer.mute();
-        }
-      }
-      function unmuteVideo() {
-        if (iframePlayer && iframePlayer.unMute) {
-          iframePlayer.unMute();
-        }
-      }
-      function setVolume(vol) {
-        if (iframePlayer && iframePlayer.setVolume) {
-          iframePlayer.setVolume(vol);
-        }
-      }
-
-      function pauseVideo() {
-        if (iframePlayer && iframePlayer.pauseVideo) {
-          iframePlayer.pauseVideo();
-        }
-      }
+    var menuIcon = document.querySelector(".menu-icon");
+    var sidebar = document.querySelector(".sidebar");
+    var container = document.querySelector(".container");
+    menuIcon.onclick = function () {
+      sidebar.classList.toggle("small-sidebar");
+      container.classList.toggle("large-container");
     }
   </script>
 `);
-const remove_iframe = HtmlService.createHtmlOutput(
+const div_query = HtmlService.createHtmlOutput(
   `
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $('a').click(function(){
-          $('iframe')[0].contentWindow.location.reload();
-          setTimeout(function(){
-            $('iframe').remove();
-          }, 1000);
-      });
+      document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
     </script>
 `);
-const remove_iframe_clicks_rt = HtmlService.createHtmlOutput(
+const document_ready_select = HtmlService.createHtmlOutput(
   `
-    <script>
-      document
-        .getElementById("rtif")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
       });
-    </script>
+    }
+    $(document).ready(function() {
+      $('select').formSelect();
+
+      $('#templateSelect').change(function() {
+        var selectedTemplateUrl 
+          = $(this).val();
+          if (selectedTemplateUrl) {
+            $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+            $("#myForm").show(); // Show the form only after template is loaded.
+            $("#myForm").empty(); // Clear previous form fields.
+            // 2. Dynamically create form fields based on template placeholders (requires server-side)
+            serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+              placeholders.forEach(function(placeholder) {
+                var fieldName 
+                  = placeholder.replace(/{{|}}/g, ''); // Extract field name
+                $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+                $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+              });
+              $("#myForm").append("<button type='submit'>Submit</button>");
+
+
+              $("#myForm").submit(function(event) {
+                event.preventDefault();
+
+                var formData 
+                  = $(this).serializeObject();
+                serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+                  $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+                }).catch((error)=>{
+                  console.error("Error:", error);
+                  $("#result").html("<p>Error creating document. Please check the logs.</p>");
+                })
+
+              });
+
+            }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+          $("#editorFrame").prop("src", "");
+          $("#myForm").hide();}
+      });
+
+      $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+        var o 
+          = {};
+        var a 
+          = this.serializeArray();
+        $.each(a, function() {
+          if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+          } else {
+            o[this.name] = this.value || '';
+          }
+        });
+        return o;
+      };
+    });
+  </script>
 `);
-const remove_iframe_clicks_rf = HtmlService.createHtmlOutput(
+const domain_lookup = HtmlService.createHtmlOutput(
   `
-    <script>
-      document
-        .getElementById("rfif")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
       });
-    </script>
+    }
+    function lookupDomain(searchTerm) {
+      serverSide("lookupDomain", [searchTerm])
+        .then(results => {
+          console.log("Lookup results:", results);
+          displaySearchResults(results); // Display results
+        })
+        .catch(error => {
+          console.error("Error looking up domain:", error);
+          $("#errorMessage").text(error); // Display error message
+        });
+    }
+
+    $("#lookupButton").click(function() {
+      const searchTerm = $("#searchTerm").val();
+      lookupDomain(searchTerm);
+    });
+  </script>
+`);
+const domain_submit = HtmlService.createHtmlOutput(
+  `
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    function submitDomain(formData) {
+      serverSide("submitDomain", [formData])
+        .then(result => {
+          console.log("Server response:", result);
+          $("#successMessage").text(result); // Display success message
+        })
+        .catch(error => {
+          console.error("Error submitting domain:", error);
+          $("#errorMessage").text(error); // Display error message
+        });
+    }
+
+    $("#domainForm").submit(function(event) {
+      event.preventDefault();
+      const formData = $(this).serializeObject();
+      submitDomain(formData); // Call the function
+    });
+  </script>
 `);
 const enter_key_event_listener = HtmlService.createHtmlOutput(
   `
@@ -1914,6 +1155,682 @@ const enter_key_event_listener = HtmlService.createHtmlOutput(
     })
   </script>
 `);
+const func_clicked = HtmlService.createHtmlOutput(
+  ` 
+  <script>
+    document.getElementById('func').addEventListener('change', funcClicked)
+    function funcClicked() {
+      //console.log(document.getElementById("test").innerHTML)
+      // Init a timeout variable to be used below
+      let timeout = null;
+      (() => {
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        // clearTimeout(timeout);
+        // Make a new timeout set to go off in 1000ms (1 second)
+        // timeout = setTimeout
+        // (function  ()
+        // {console.log('Input Value:', textInput.value);}, 5000)();
+        if (typeof url === "undefined") {
+          var urlData = document.getElementById("url").value;
+          var url = urlData.toString();
+        }
+        var func = document.getElementById("func").value;
+        var args = document.getElementById("args").value;
+        if (typeof args !== "undefined") {
+          var linkFollow = document.createElement("a");
+          linkFollow.href =
+            url +
+            "?func=" +
+            encodeURIComponent(func) +
+            "&args=" +
+            encodeURIComponent(args);
+          linkFollow.id = "linkFOLLOW";
+          linkFollow.target = "_top";
+          document.body.appendChild(linkFollow);
+          document.getElementById("linkFOLLOW").click();
+          document.getElementById("linkFOLLOW").remove();
+        }
+      })();
+    }
+  </script>
+`);
+
+const game_hunter = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("hne").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Hunter") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
+
+const game_mage = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("mge").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Mage") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
+
+const game_rouge = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.getElementById("roe").addEventListener("click", function() {
+        <?!= GameManager.setGameStart("Rouge") ?>
+        return <?!= gamer ?>
+      })
+    </script>
+`);
+
+const get_interface = HtmlService.createHtmlOutput(
+    `
+      <script>
+        function serverside(func, args) {
+          return new Promise((resolve, reject) => {
+            google.script.run
+            .withSuccessHandler((result) => {
+              resolve(result)
+            })
+            .withFailureHandler((error) => {
+              reject(error)
+            })
+            .runBoilerplate(func, args)
+          })
+        };
+          document.querySelectorAll("delAddr").addEventListener("select", function(event) {
+            serverside("rePlay", [event.target.value])
+              .then((gPl) => {
+                let gamB = gPl.gamer;
+                let eneB = gPl.enemy;
+                let getInterface = document.querySelector(".interface");
+                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
+              })
+          });
+      </script>
+    `
+);
+const google_script_run_promise = HtmlService.createHtmlOutput(
+  `
+  <script>
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+  </script>
+`);
+
+const hunter_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("hne")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+const iframe_query = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");
+    </script>
+`);
+const key_press = HtmlService.createHtmlOutput(
+  `
+  <script>
+    var busa = document.getElementById("artiicleIndex");
+    var busx = document.getElementById("loadingLab");
+    var busc = document.getElementById("contentDiv");
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    busa.addEventListener('keypress', function(event) {
+      // If the user preses the "Enter" key on the keyboard. 
+      if (event.key === "Enter")  {
+        const strValue = busa.value;
+        busx.innerText = "... waiting for " + strValue;
+        serverSide("jFund", strValue)
+        .then((article) => {
+          if (article) {
+            // User clicked "No" or X in the title bar.
+            busx.innerText = ""
+            busc.innerHTML = article;}})
+        .catch((er) => {
+          console.log(er)
+          busx.innerText = JSON.stringify(er)})
+        busa.value = ""}})
+  </script>  
+`);
+const key_press_video = HtmlService.createHtmlOutput(
+  `
+  <script>
+    var busa = document.getElementById("artiicleIndex");
+    var busx = document.getElementById("loadingLab");
+    var busc = document.getElementById("contentDiv");
+    function serverSide(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler(result => {
+            resolve(result)})
+        .withFailureHandler(error => {
+            reject(error)})
+        .runBoilerplate(func, args)
+      });
+    }
+    busa.addEventListener('keypress', function(event) {
+      // If the user preses the "Enter" key on the keyboard. 
+      if (event.key === "Enter")  {
+        const strValue = busa.value;
+        busx.innerText = "... waiting for " + strValue;
+        const confirmation = window.confirm(
+          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+        );
+        if (confirmation) {
+          if (strValue) {
+            localSuggestionsCache["allMatches"].map((val) => {
+              if (val.description.indexOf(strValue) > -1) {
+                window.open(val.youtubeUrl);
+              }
+            });
+          }
+          else {
+            window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
+          }
+        }
+        busa.value = ""}})
+  </script>  
+`);
+const location_url = HtmlService.createHtmlOutput(
+  `
+  <script>
+    let drivMC = <?= drivemC ?>;
+    if (drivMC) {
+      window.location.href = drivMC;
+    }
+  </script>
+`);
+
+const mage_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("mge")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+const next_clicked = HtmlService.createHtmlOutput(
+  `
+    <script>
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      document
+        .querySelectorall("userClickedNext")
+        .addEventListener("click", nextFunc);
+      function nextFunc() {
+        serverside("getVI").then((drop) => {
+          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+          var rndFunc = drop[rndNumDrop];
+          localStorage.setItem("gsSearch", rndFunc);
+          console.log(rndFunc + "...");
+          document.getElementById("template").innerHTML =
+            "waiting for nextFunc: " + rndFunc + "...";
+          serverside(rndFunc)
+            .then((droplet) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+              // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\ndroplet.length = " + droplet.length;
+              // alert(
+              //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+              // );
+              if (droplet.length === 99) {
+                serverside("seoCapital", droplet).then((myFile) => {
+                  document.getElementById("template").innerHTML =
+                    rndFunc + "(" + myFile + ")";
+                  // alert(rndFunc + "(" + myFile + ")");
+                  if (
+                    myFile.length === 99 ||
+                    myFile.length === 86 ||
+                    myFile.length === 101 ||
+                    myFile.length === 112
+                  ) {
+                    // console.log(cChange)
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = myFile + "?func=" + rndFunc;
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                  } else {
+                    document.getElementById("template").innerHTML =
+                      JSON.stringify(myFile);
+                  }
+                });
+              } else {
+                document.getElementById("template").innerHTML =
+                  arguments.callee.name +
+                    "\n" +
+                    droplet.length +
+                    " is not the required length",;
+                // alert(
+                //   arguments.callee.name +
+                //     "\n" +
+                //     droplet.length +
+                //     " is not the required length",
+                // );
+                serverside("getScriptUrl")
+                  .then((cChange) => {
+                    console.log(
+                      arguments.callee.name +
+                        "\n" +
+                        typeof cChange +
+                        " with length = " +
+                        cChange.length,
+                    );
+                    if (cChange.length === 112 || cChange.length === 86) {
+                      // console.log(cChange)
+                      const confirmation = window.confirm(
+                        "Click OK to continue to the destination.",
+                      );
+                      if (confirmation) {
+                        var linkFollow = document.createElement("a");
+                        linkFollow.href = cChange + "?func=" + rndFunc;
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                      }
+                    } else {
+                      var docWnd = document.getElementById("template");
+                      docWnd.innerHTML = cChange;
+                    }
+                  })
+                  .catch((er) => {
+                    document.getElementById("template").innerHTML =
+                      arguments.callee.name +
+                        "\n" +
+                        rndFunc +
+                        " error(" +
+                        er +
+                        ")";
+                    // alert(
+                    //   arguments.callee.name +
+                    //     "\n" +
+                    //     rndFunc +
+                    //     " error(" +
+                    //     er +
+                    //     ")",
+                    // );
+                    console.log(arguments.callee.name + "\n" + er);
+                    document.getElementById("template").innerHTML =
+                      JSON.stringify(er);
+                  });
+              }
+            })
+            .catch((er) => {
+              document.getElementById("template").innerHTML =
+                arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+              // alert(
+              //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+              // );
+              serverside("getScriptUrl")
+                .then((cChange) => {
+                  console.log(
+                    arguments.callee.name +
+                      "\n" +
+                      typeof cChange +
+                      " with length = " +
+                      cChange.length,
+                  );
+                  if (cChange.length === 112 || cChange.length === 86) {
+                    // console.log(cChange)
+                    const confirmation = window.confirm(
+                      "Click OK to continue to the destination.",
+                    );
+                    if (confirmation) {
+                      var linkFollow = document.createElement("a");
+                      linkFollow.href = cChange + "?func=" + rndFunc;
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                    }
+                  } else {
+                    var docWnd = document.getElementById("template");
+                    docWnd.innerHTML = cChange;
+                  }
+                })
+                .catch((er) => {
+                  document.getElementById("template").innerHTML =
+                    arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+                  // alert(
+                  //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+                  // );
+                  console.log(arguments.callee.name + "\n" + er);
+                  document.getElementById("template").innerHTML =
+                    JSON.stringify(er);
+                });
+            });
+        });
+      }
+    </script>
+`);
+const next_clicked_video = HtmlService.createHtmlOutput(
+  `
+    <script>
+
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler(result => {
+              resolve(result)})
+          .withFailureHandler(error => {
+              reject(error)})
+          .runBoilerplate(func, args)
+        });
+      }
+      function debounce(func, delay) {
+        let timeout;
+        return function(...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), delay);
+        };
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // Client-side code
+        const localSuggestionsCache = {};
+        const nVid = document.querySelectorAll(".userClickedNext");
+        const input = document.getElementById("artiicleIndex");
+        const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
+        // const input = document.querySelectorAll(".getVideo");
+        // const suggestionsDiv = document.querySelectorAll(".autocomplete-suggestions");
+        let fullList = [];
+        let againCap = null;
+
+        if (!input || !suggestionsDiv) {
+          console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
+          return;
+        }
+
+        serverside("getVI", [])
+          .then((response) => {
+            // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the response
+            if (response && typeof response === "object") {
+              for (var key in response) {
+                // alert(JSON.stringify(response[key]));
+                let i = 0;
+                let l = response[key].length;
+                // alert(l);
+                for (i,l;i<l;i++) {
+                  let tempObj = {};
+                  tempObj.description = response[key][i].description;
+                  let tData = response[key][i].videoId;
+                  let dLoc =  "https://www.youtube.com/watch?v=";
+                  tempObj.youtubeUrl = dLoc + tData;
+                  fullList.push(tempObj);
+                }
+              }
+              // fullList = response.data;
+            } else {
+              console.warn("Expected an array in response from getVI, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = [];
+            }
+            localSuggestionsCache["allMatches"] = fullList;
+            // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
+            // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
+            // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
+            $('a').click(function(event){
+              if ($(this).attr('href') === "javascript:void(0)") {
+                let confirmation = window.confirm(
+                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  event.preventDefault();
+                  var linkFollow = document.createElement("a");
+                  linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                }
+              }
+            });
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for artiicleIndex :", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (query.length < 3) {
+            suggestionsDiv.innerHTML = '';
+            window.scrollTo(0,0);
+            input.blur();
+            return;
+          }
+
+          input.addEventListener('click', (event) => {
+            localStorage.setItem("gsSearch", event.target.value);
+          })
+          
+          // Filter the local list instead of making a server call
+          const localList = localSuggestionsCache["allMatches"] || [];
+          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+          const suggestions = localList.filter(item => 
+            String(item.description).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          suggestionsDiv.innerHTML = '';
+          if (suggestions && suggestions.length > 0) {
+            window.scrollTo(0,0);
+            suggestions.forEach(suggestion => {
+              // console.log(suggestion)
+              const div = document.createElement('div');
+              div.textContent = suggestion.description;
+              div.classList.add("card-panel", "receipt", "btn-large");
+              div.addEventListener('click', () => {
+                input.value = suggestion.description;
+                let confirmation = window.confirm(
+                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  window.open(suggestion.youtubeUrl);
+                }
+                suggestionsDiv.innerHTML = '';
+              });
+              suggestionsDiv.appendChild(div);
+            });
+            input.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter') {
+                let confirmation;
+                suggestions?.forEach(suggestion => {
+                  console.log(suggestion)
+                  if (suggestion && suggestion.description.includes(event.target.value)) {
+                    confirmation = window.confirm(
+                      suggestion.youtubeUrl,
+                    );
+                  }
+                  if (confirmation) {
+                    window.open(suggestion.youtubeUrl);
+                    suggestionsDiv.innerHTML = '';
+                  }
+                  else {
+                    suggestionsDiv.innerHTML = '';
+                    input.blur();
+                  }
+                  return
+                });
+              }
+            });
+          }
+          else {
+            input.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter') {
+                input.blur();
+                localStorage.setItem("gsSearch", event.target.value);
+                againCap = localStorage.getItem("gsSearch");
+                input.value = againCap
+                serverside("vidPlaylist", [event.target.value])
+                  .then((done) => {
+                    // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
+                    // Access the actual array from the done
+                    if (done && typeof done === "object") {
+                      for (var key in done) {
+                        alert(JSON.stringify(done[key]));
+                        let i = 0;
+                        let l = done[key].length;
+                        // alert(l);
+                        for (i,l;i<l;i++) {
+                          let tempObj = {};
+                          tempObj.description = done[key][i].description;
+                          let tData = done[key][i].videoId;
+                          let dLoc =  null;
+                          if ([tData].indexOf("http") === -1) {
+                            dLoc =  "https://www.youtube.com/watch?v=";
+                            tempObj.youtubeUrl = dLoc + tData;
+                          }
+                          else {
+                            tempObj.youtubeUrl = tData;
+                          }
+                          fullList.push(tempObj);
+                        }
+                      }
+                    } 
+                    else {
+                      console.warn("Expected an array in done from getVI, received:", done);
+                      // Fallback to empty array if the structure is not as expected
+                      fullList = [];
+                    }
+                    localSuggestionsCache["allMatches"] = fullList;
+                  });
+              }
+            });
+            return
+          }
+
+        }, 300);
+        
+        if (input && suggestionsDiv) {
+          input.addEventListener('input', (event) => {
+            fetchSuggestions(event.target.value);
+          });
+
+          document.addEventListener('click', (event) => {
+            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+              suggestionsDiv.innerHTML = '';
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+            // If the user preses the "Enter" key on the keyboard. 
+            // if (event.key === 'Enter')  {
+            //     serverside("getVI", [])
+            //       .then((response) => {
+            //         // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+            //         // Access the actual array from the response
+            //         if (response && typeof response === "object") {
+            //           for (var key in response) {
+            //             // alert(JSON.stringify(response[key]));
+            //             let i = 0;
+            //             let l = response[key].length;
+            //             // alert(l);
+            //             for (i,l;i<l;i++) {
+            //               let tempObj = {};
+            //               tempObj.description = response[key][i].description;
+            //               let tData = response[key][i].videoId;
+            //               let dLoc =  "https://www.youtube.com/watch?v=";
+            //               tempObj.youtubeUrl = dLoc + tData;
+            //               fullList.push(tempObj);
+            //             }
+            //           }
+            //           // fullList = response.data;
+            //         } else {
+            //           console.warn("Expected an array in response from getVI, received:", response);
+            //           // Fallback to empty array if the structure is not as expected
+            //           fullList = [];
+            //         }
+            //         localSuggestionsCache["allMatches"] = fullList;
+            //         // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
+            //         // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
+            //         // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
+            //         $('a').click(function(event){
+            //           if ($(this).attr('href') === "javascript:void(0)") {
+            //             let confirmation = window.confirm(
+            //               "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+            //             );
+            //             if (confirmation) {
+            //               event.preventDefault();
+            //               var linkFollow = document.createElement("a");
+            //               linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
+            //               linkFollow.id = "linkFOLLOW";
+            //               linkFollow.target = "_blank";
+            //               linkFollow.rel = "noopener noreferrer";
+            //               document.body.appendChild(linkFollow);
+            //               document.getElementById("linkFOLLOW").click();
+            //               document.getElementById("linkFOLLOW").remove();
+            //             }
+            //           }
+            //         });
+            //       })
+            //       .catch(error => {
+            //         console.error("Error fetching address suggestions for artiicleIndex :", error);
+            //         suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+            //       });
+            // }
+          });
+
+        } else {
+            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
+        }
+
+
+      });
+    </script>
+`);
 const player2 = HtmlService.createHtmlOutput(
   `
   <script>
@@ -1945,6 +1862,49 @@ const player2 = HtmlService.createHtmlOutput(
       })
     });
   </script>
+`);
+const remove_iframe = HtmlService.createHtmlOutput(
+  `
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $('a').click(function(){
+          $('iframe')[0].contentWindow.location.reload();
+          setTimeout(function(){
+            $('iframe').remove();
+          }, 1000);
+      });
+    </script>
+`);
+const remove_iframe_clicks_rf = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("rfif")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+const remove_iframe_clicks_rt = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("rtif")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+
+const rouge_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("roe")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
 `);
 const spyTPlayer = HtmlService.createHtmlOutput(
   `
@@ -2152,12 +2112,178 @@ const spyTPlayer = HtmlService.createHtmlOutput(
       
     </script>
 `);
-const location_url = HtmlService.createHtmlOutput(
+
+const warrior_clicks = HtmlService.createHtmlOutput(
+  `
+    <script>
+      document
+        .getElementById("wro")
+        .addEventListener("click", function(event) {
+        event.preventDefault();
+      });
+    </script>
+`);
+const yTPlayer = HtmlService.createHtmlOutput(
   `
   <script>
-    let drivMC = <?= drivemC ?>;
-    if (drivMC) {
-      window.location.href = drivMC;
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    let ctr = 0;
+    let iframePlayer;
+    let duration = 0;
+    let lastVolume = 100;
+    let seekBar, volumeSlider;
+    function onYouTubeIframeAPIReady() {
+      iframePlayer = new YT.Player("iframePlayer", {
+        height: "1405",
+        width: "2105",
+        //  videoId: 'OTeQee-gxa4',
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          controls: 0,
+          showinfo: 0,
+          rel: 0,
+          autohide: 1,
+          playsinline: 1,
+          enablejsapi: 1,
+          mute: 0,
+          vq: "hd1080",
+          iv_load_policy: 3,
+          cc_load_policy: 1,
+          listType: "playlist",
+          list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+          onError: onPlayerError,
+        },
+      });
+      function onPlayerReady(event) {
+        setShuffle();
+        event.target.nextVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      let done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          changeBorderColor(event.data);
+          setLoop();
+        } else if (event.data == YT.PlayerState.UNSTARTED) {
+          changeBorderColor(event.data);
+          setTimeout(2000, playvideo)
+          event.target.playVideo();
+        } else if (event.data == YT.PlayerState.ENDED) {
+          changeBorderColor(event.data);
+          setShuffle();
+          setTimeout(2000, playVideo);
+          // event.target.playVideo();
+          setShuffle();
+          setTimeout(2000, nextVideo);
+          // event.target.nextVideo();
+        } else if (event.data == YT.PlayerState.PAUSED) {
+          changeBorderColor(event.data);
+        } else if (event.data == YT.PlayerState.BUFFERING) {
+          changeBorderColor(event.data);
+          setShuffle();
+        } else if (event.data == YT.PlayerState.VIDEO_CUED) {
+          changeBorderColor(event.data);
+        }
+        done = true;
+      }
+
+      function changeBorderColor(playerStatus) {
+        let color;
+
+        if (playerStatus == -1) {
+          color = "#37474F";
+        } // unstarted = gray
+        else if (playerStatus == 0) {
+          color = "#FFFF00";
+        } // ended = yellow
+        else if (playerStatus == 1) {
+          color = "#33691E";
+        } // playing = green
+        else if (playerStatus == 2) {
+          color = "#DD2C00";
+        } // paused = red
+        else if (playerStatus == 3) {
+          color = "#AA00FF";
+        } // buffering = purple
+        else if (playerStatus == 5) {
+          color = "#FF6DOO";
+        } // video cued = orange
+
+        if (color) {
+          document.getElementById("iframePlayer").style.borderColor = color;
+        }
+      }
+
+      function onPlayerError() {
+        iframePlayer.destroy;
+        onYouTubeIframeAPIReady();
+      }
+      function stopVideo() {
+        if (iframePlayer && iframePlayer.stopVideo) {
+          iframePlayer.stopVideo();
+        }
+      }
+
+      function getVideoUrl() {
+        if (iframePlayer && iframePlayer.getVideoUrl) {
+          iframePlayer.getVideoUrl();
+        }
+      }
+
+      function setLoop() {
+        if (iframePlayer && iframePlayer.setLoop) {
+          iframePlayer.setLoop(true);
+        }
+      }
+
+      function setShuffle() {
+        if (iframePlayer && iframePlayer.setShuffle) {
+          iframePlayer.setShuffle(true);
+        }
+      }
+
+      function playVideo() {
+        if (iframePlayer && iframePlayer.playVideo) {
+          iframePlayer.playVideo();
+        }
+      }
+      function nextVideo() {
+        if (iframePlayer && iframePlayer.nextVideo) {
+          iframePlayer.nextVideo();
+        }
+      }
+      function muteVideo() {
+        if (iframePlayer && iframePlayer.mute) {
+          iframePlayer.mute();
+        }
+      }
+      function unmuteVideo() {
+        if (iframePlayer && iframePlayer.unMute) {
+          iframePlayer.unMute();
+        }
+      }
+      function setVolume(vol) {
+        if (iframePlayer && iframePlayer.setVolume) {
+          iframePlayer.setVolume(vol);
+        }
+      }
+
+      function pauseVideo() {
+        if (iframePlayer && iframePlayer.pauseVideo) {
+          iframePlayer.pauseVideo();
+        }
+      }
     }
   </script>
 `);
@@ -2211,7 +2337,7 @@ const Gamer = function(classType, health, mana, strength, agility, speed) {
   this.strength = strength;
   this.agility = agility;
   this.speed = speed;
-}
+};
 
 const Enemy = function(enemyType, health, mana, strength, agility, speed) {
   this.classType = enemyType;
@@ -2220,7 +2346,7 @@ const Enemy = function(enemyType, health, mana, strength, agility, speed) {
   this.strength = strength;
   this.agility = agility;
   this.speed = speed;
-}
+};
 
 var rePlay = function(classType) {
   GameManager.setGameStart(classType);
@@ -2230,109 +2356,7 @@ var rePlay = function(classType) {
     gamer: mmoRpgPlay,
     enemy: mmoRpgEnemy,
   }
-}
-
-const get_interface = HtmlService.createHtmlOutput(
-    `
-      <script>
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result)
-            })
-            .withFailureHandler((error) => {
-              reject(error)
-            })
-            .runBoilerplate(func, args)
-          })
-        };
-          document.querySelectorAll("delAddr").addEventListener("select", function(event) {
-            serverside("rePlay", [event.target.value])
-              .then((gPl) => {
-                let gamB = gPl.gamer;
-                let eneB = gPl.enemy;
-                let getInterface = document.querySelector(".interface");
-                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
-              })
-          });
-      </script>
-    `
-);
-
-const warrior_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("wro")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-
-const rouge_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("roe")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-
-const mage_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("mge")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-
-const hunter_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("hne")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-
-const game_rouge = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("roe").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Rouge") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
-
-const game_mage = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("mge").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Mage") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
-
-const game_hunter = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("hne").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Hunter") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
+};
         
 class StyleHtml {
   constructor() {

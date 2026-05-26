@@ -1760,7 +1760,7 @@ class FunctionHandle {
     // executed++
     //   }
     // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
-    //   let rawUrlResult = IsTruthy.trueVfalse(isObjValUrl);
+    //   let rawUrlResult = autoP.trueVfalse(isObjValUrl);
     // executed++
     //   if (!rawUrlResult) {
     //     let parsedFuncArgs = [];
@@ -1781,7 +1781,7 @@ class FunctionHandle {
     //         }
     //       }
     //     }
-    //     else if (typeof funcDos !== "object" && IsTruthy.trueVfalse(funcDos)) {
+    //     else if (typeof funcDos !== "object" && autoP.trueVfalse(funcDos)) {
     //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
     //     }
     //     else {

@@ -79,7 +79,7 @@ function needPastTime(searchString) {
   });
   while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var noSearch = autoP.searchResult.parameters;
+      var noSearch = autoP.searchResult?.parameters;
       var searchString = noSearch;
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -223,6 +223,26 @@ function needPastTime(searchString) {
           }
         }
       });
+      if (rndRes.length === 0) {
+        let searchLinkDrive = new DriveFiles(searchString, autoP.functionRegistry.time);
+        searchLinkDrive?.dataTree.forEach((fileUrl) => {
+          if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
+            if (vidData.indexOf(fileUrl) !== -1) {
+              return;
+            } else {
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: 001,
+                  videoid: fileUrl,
+                  videodescription: searchString,
+                }),
+              );
+            }
+            rndRes.push(fileUrl);
+          }
+        })
+      }
       if (rndRes.length > 0) {
         autoP.functionRegistry.vidTree();
         vidSheetVals = autoP.functionRegistry.getVideoList();

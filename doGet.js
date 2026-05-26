@@ -17,6 +17,7 @@ function doGet(e) {
   // validGroup();
   // validateFolders();
   // validateFiles();
+  let autoP = new ResolveParameters();
   let executed = 0;
   if (!e || e.queryString === "") {
     console.log("Executed " + e, [!e || e.queryString === ""]);
@@ -491,6 +492,7 @@ function handleRequest(e) {
 
 function handleGetData(e) {
   var executed = 0;
+  let autoP = new ResolveParameters();
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
   var htmlList = autoP.functionRegistry.getHtmlList();
   executed++;
@@ -881,7 +883,7 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = IsTruthy.trueVfalse(isObjValUrl);
+    let rawUrlResult = autoP.trueVfalse(isObjValUrl);
     executed++;
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
@@ -910,7 +912,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && IsTruthy.trueVfalse(funcDos)) {
+      } else if (typeof funcDos !== "object" && autoP.trueVfalse(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON

@@ -84,7 +84,7 @@ function driveManager(strNw, time) {
     );
 
     var dataTree = [];
-    var targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
+    let targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
 
     if (!targetFile) {
       console.warn(
@@ -96,20 +96,20 @@ function driveManager(strNw, time) {
     // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
     // Construct the search query. 'title contains' searches file names.
     // Use the exact targetFile for the query.
-    var searchQuery = 'title contains "' + targetFile + '"';
+    let searchQuery = 'title contains "' + targetFile + '"';
     console.log(
       "driveManager: Performing DriveApp search with query:",
       searchQuery,
     );
 
     try {
-      var files = DriveApp.searchFiles(searchQuery);
+      let files = DriveApp.searchFiles(searchQuery);
 
       while (files.hasNext()) {
-        var file = files.next();
+        let file = files.next();
         let fiTitle = file.getName();
         // file.setSharing()
-        var fileUrl = file.getUrl();
+        let fileUrl = file.getUrl();
         dataTree.push(fileUrl);
         // console.log("driveManager: Found and added file URL:", fileUrl);
       }
@@ -126,14 +126,15 @@ function driveManager(strNw, time) {
     // executed++
 
     if (dataTree.length > 0) {
-      var rndFiledMain = Math.floor(Math.random() * dataTree.length);
-      var filedMain = dataTree[rndFiledMain];
+      let rndFiledMain = Math.floor(Math.random() * dataTree.length);
+      let filedMain = dataTree[rndFiledMain];
       console.log(
         "driveManager: Returning a random found file URL:",
         filedMain,
       );
       return filedMain;
-    } else {
+    } 
+    else {
       console.warn(
         "driveManager: No matching files found after DriveApp search. Returning null.",
       );
@@ -146,19 +147,254 @@ function driveManager(strNw, time) {
       if (!data) {
         // console.info("previously exec count \ndriveManager - ", executed);
         let filedSide = createFormFunction(mainStr);
-        let fromDriveFile = driveManager(mainStr);
-        executed++;
-        let funcKeys = Object.keys(filedSide);
-        let funcUrl;
-        funcKeys.forEach((key) => {
-          let funcObj = filedSide[key];
-          funcUrl = funcObj[0];
-          // dataTree.push(funcUrl)
-        });
-        return fromDriveFile;
+        // let fromDriveFile = driveManager(mainStr);
+
+        // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
+        // Construct the search query. 'title contains' searches file names.
+        // Use the exact targetFile for the query.
+        let searchQuery = 'title contains "' + filedSide + '"';
+        console.log(
+          "driveManager: Performing DriveApp search with query:",
+          searchQuery,
+        );
+
+        try {
+          let files = DriveApp.searchFiles(searchQuery);
+
+          while (files.hasNext()) {
+            let file = files.next();
+            let fiTitle = file.getName();
+            // file.setSharing()
+            let fileUrl = file.getUrl();
+            dataTree.push(fileUrl);
+            // console.log("driveManager: Found and added file URL:", fileUrl);
+          }
+        } catch (e) {
+          console.error("driveManager: Error during DriveApp search:", e);
+          return null; // Handle search errors gracefully
+        }
+
+        // console.info("previously exec count \ndriveManager - ", executed);
+        console.log(
+          "driveManager: Final dataTree length after search:",
+          dataTree.length,
+        );
+        // executed++
+
+        if (dataTree.length > 0) {
+          let rndFiledMain = Math.floor(Math.random() * dataTree.length);
+          let filedMain = dataTree[rndFiledMain];
+          console.log(
+            "driveManager: Returning a random found file URL:",
+            filedMain,
+          );
+          return filedMain;
+        }
+        else {
+          executed++;
+          let funcKeys = Object.keys(filedSide);
+          let funcUrl;
+          funcKeys.forEach((key) => {
+            let funcObj = filedSide[key];
+            funcUrl = funcObj[0];
+            // dataTree.push(funcUrl)
+          });
+        }
+        // return fromDriveFile;
       }
       else {
         return mainStr;
+      }
+    }
+  }
+};
+
+class DriveFiles {
+  constructor(strNw, time) {
+    this.strNw = strNw;
+    this.time = time;
+    let autoP = new ResolveParameters();
+    console.log(
+      formatTime(autoP.functionRegistry.time) +
+        "\nstrNw is !" +
+        !this.strNw +
+        ", = " +
+        this.strNw +
+        "\ntime is !" +
+        !this.time +
+        ", = " +
+        this.time,
+    );
+
+    console.log(
+      'DriveFiles: Before iam definition. strNw value: "' +
+        this.strNw +
+        '", isFalsy: ' +
+        !this.strNw,
+    );
+    let executed = 0;
+    if (!this.strNw) {
+      console.log("DriveFiles: strNw is falsy. testlt() will be called.");
+    } else {
+      console.log("DriveFiles: strNw is truthy. testlt() will NOT be called.");
+    }
+    let searArn = getDomainValues()[Math.floor(Math.random() * getDomainValues().length)] 
+    if (searArn.indexOf("http") === -1) {
+      searArn = "http://" + searArn
+    }
+    // NOTE: The testlt() call here is still explicit in your code.
+    // This means testlt() will be called regardless of strNw's truthiness
+    // due to its direct placement before the mainStr assignment.
+    let manString = !this.strNw ? searArn : this.strNw;
+    console.log("DriveFiles: manString (from testlt()):", manString);
+    let testStrNw = !this.strNw ? manString : manString;
+    console.log("DriveFiles: testStrNw:", testStrNw);
+    let mainStr = this.strNw || testStrNw;
+    console.log("DriveFiles: mainStr (strNw || testStrNw):", mainStr);
+
+    let arn = [mainStr].toString().toLowerCase();
+    let iam;
+    try {
+      iam = JSON.parse(
+        convertToObjects([[mainStr]], ["file"], autoP.functionRegistry.time),
+      );
+      console.log("iam = " + iam, executed++);
+      console.log("DriveFiles: iam successfully parsed:", iam);
+      if (iam && iam[0] && iam[0]["file"]) {
+        console.log('DriveFiles: iam[0]["file"] is:', iam[0]["file"]);
+      } else {
+        console.warn(
+          'DriveFiles: iam or iam[0]["file"] is invalid after parsing.',
+        );
+      }
+    } catch (e) {
+      console.error("DriveFiles: Error parsing iam JSON:", e);
+      this.filedMain = null; // Return null if JSON parsing fails
+    }
+    let crmCalcResult = crmCalc(iam[0]["file"] || arn);
+    console.log("crmCalcResult = " + crmCalcResult, executed++);
+    console.log(
+      "DriveFiles: crmCalc result (index of found function or -1): " +
+        crmCalcResult,
+    );
+    // If crmCalcResult is 0 or positive (meaning a function was found),
+    // then we stop execution and return null as per your desired guard logic.
+    if (crmCalcResult >= 0) {
+      console.log(
+        "DriveFiles: Matching function name found (index: " +
+          crmCalcResult +
+          "). Stopping further DriveApp execution.",
+      );
+      this.filedMain = null;
+    } 
+    else {
+      // If crmCalcResult is -1 (meaning no function was found),
+      // then we proceed with the DriveApp search using DriveApp.searchFiles().
+      console.log(
+        "DriveFiles: No matching function name found. Proceeding with efficient DriveApp search.",
+      );
+      this.dataTree = [];
+      let targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
+
+      if (!targetFile) {
+        console.warn(
+          "DriveFiles: targetFile is invalid. Cannot perform DriveApp search. Returning null.",
+        );
+        this.filedMain = null;
+      }
+      // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
+      // Construct the search query. 'title contains' searches file names.
+      // Use the exact targetFile for the query.
+      let searchQuery = 'title contains "' + targetFile + '"';
+      console.log(
+        "DriveFiles: Performing DriveApp search with query:",
+        searchQuery,
+      );
+      try {
+        let files = DriveApp.searchFiles(searchQuery);
+
+        while (files.hasNext()) {
+          let file = files.next();
+          let fiTitle = file.getName();
+          let fileUrl = file.getUrl();
+          this.dataTree.push(fileUrl);
+        }
+      } catch (e) {
+        console.error("DriveFiles: Error during DriveApp search:", e);
+        this,filedMain = null; // Handle search errors gracefully
+      }
+      console.log(
+        "DriveFiles: Final dataTree length after search:",
+        this.dataTree.length,
+      );
+      if (this.dataTree.length > 0) {
+        let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
+        let filedMain = this.dataTree[rndFiledMain];
+        console.log(
+          "DriveFiles: Returning a random found file URL:",
+          filedMain,
+        );
+        this.filedMain = filedMain;
+      } 
+      else {
+        console.warn(
+          "DriveFiles: No matching files found after DriveApp search. Returning null.",
+        );
+        let options = { muteHttpExceptions: true };
+        let data;
+        try {}
+        catch(fromResponse) {}
+        data = getUrlResponse(mainStr, options)?.app;
+        console.log("data = " + data, executed++);
+        if (!data) {
+          // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
+          // Construct the search query. 'title contains' searches file names.
+          // Use the exact targetFile for the query.
+          let searchQuery = 'title contains "' + mainStr + '"';
+          console.log(
+            "DriveFiles: Performing DriveApp search with query:",
+            searchQuery,
+          );
+          try {
+            let files = DriveApp.searchFiles(searchQuery);
+
+            while (files.hasNext()) {
+              let file = files.next();
+              let fiTitle = file.getName();
+              let fileUrl = file.getUrl();
+              this.dataTree.push(fileUrl);
+            }
+          } catch (e) {
+            console.error("driveManager: Error during DriveApp search:", e);
+            this,filedMain = null; // Handle search errors gracefully
+          }
+          console.log(
+            "driveManager: Final dataTree length after search:",
+            this.dataTree.length,
+          );
+          if (this.dataTree.length > 0) {
+            let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
+            let filedMain = this.dataTree[rndFiledMain];
+            console.log(
+              "driveManager: Returning a random found file URL:",
+              filedMain,
+            );
+            this.filedMain = filedMain;
+          }
+          else {
+            executed++;
+            let filedSide = createFormFunction(mainStr);
+            let funcKeys = Object.keys(filedSide);
+            let funcUrl;
+            funcKeys.forEach((key) => {
+              let funcObj = filedSide[key];
+              funcUrl = funcObj[0];
+            });
+          }
+        }
+        else {
+          this.filedMain = mainStr;
+        }
       }
     }
   }

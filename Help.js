@@ -2,8 +2,7 @@ function crmCalc(func) {
   console.log(
     "boilerplate Help: line 232\ncrmCalc(func: " +
       func +
-      ")\n " +
-      arguments.callee.caller.name,
+      ") ",
   );
   var appList = [];
   for (var key in globalThis) {
