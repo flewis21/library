@@ -1879,9 +1879,7 @@ var spreadSheet = function () {
 function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
   console.log(
     formatTime(autoP.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nfileX is !" +
+     "\nfileX is !" +
       !fileX +
       ", = " +
       fileX +
@@ -1917,8 +1915,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
     console.log(
       "boilerplate sheetParameters: line 1660\nspreadSheetCreate(fileX: " +
         fileX +
-        ")\n " +
-        arguments.callee.caller.name,
+        ") ",
     );
 
     let ss = sheetsMaker(fileX, "Sheets", start); // Use let here too
@@ -1926,8 +1923,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       console.log(
         "boilerplate sheetParameters: line 1669\nspreadSheetCreate(ss.getUrl(): " +
           ss.getUrl() +
-          ")\n " +
-          arguments.callee.caller.name,
+          ") ",
       );
       var sheet = ss.getSheets()[0].activate();
       if (!sheetName) {
@@ -1936,8 +1932,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       console.log(
         "boilerplate sheetParameters: line 1679\nspreadSheetCreate(sheetName: " +
           sheetName +
-          ")\n " +
-          arguments.callee.caller.name,
+          ") ",
       );
       var ws = sheet.setName([sheetName][0]);
       var headers = [];
@@ -1947,8 +1942,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       console.log(
         "boilerplate sheetParameters: line 1690\nspreadSheetCreate(rowHeaders: " +
           rowHeaders +
-          ")\n " +
-          arguments.callee.caller.name,
+          ") "
       );
       rowHeaders.map((h) => {
         headers.push([h][0]);
@@ -1957,14 +1951,13 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       var dataArray = [];
       if (!data) {
         var data = JSON.parse(
-          convertToObjects([[arguments.callee.name]], ["name"], start),
+          convertToObjects([[autoPFN.paramsList[Math.floor(Math.random() * autoPFN.paramsList.length)].name]], ["name"], start),
         )[0];
       }
       console.log(
         "boilerplate sheetParameters: line 1706\nspreadSheetCreate(data: " +
           data +
-          ")\n " +
-          arguments.callee.caller.name,
+          ") ",
       );
       for (var key in data) {
         dataArray.push(data[key]);
@@ -1972,8 +1965,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       console.log(
         "boilerplate sheetParameters: line 1715\nspreadSheetCreate(dataArray: " +
           dataArray +
-          ")\n " +
-          arguments.callee.caller.name,
+          ") ",
       );
       var sicSliceArray = dataArray.slice(0);
       var dRange = ws.getDataRange().getValues();
@@ -1986,10 +1978,6 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       ws.getRange(2, 1, 1, headers.length)?.setValues([sicSliceArray]);
       console.log(
         formatTime(autoP.functionRegistry.time) +
-          "\nCalled function: " +
-          arguments.callee.name +
-          "\nCaller function: " +
-          arguments.callee.caller.name +
           "\nNew file with name " +
           fileX +
           " was created!",

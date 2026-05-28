@@ -130,37 +130,43 @@ function createFormFunction(searchString) {
   if (tubeArr.length > 0) {
     let tubeUrlsArr = [];
     tubeArr.forEach((vidId) => {
-      let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
-      // tubeUrlsArr.push(linkLocation);
-      // let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
-      // var tubeVideoUrl = tubeUrlsArr[rndTube];
-      videoItem
-        .addVideoItem()
-        .setTitle(questionTitle)
-        // .setHelpText(encodeURI(tubeEngine))
-        .setVideoUrl(linkLocation)
-        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
-        .setAlignment(
-          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-        );
+      let itHasHttp = String(vidId).indexOf("http");
+      if (itHasHttp === -1) {
+        let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
+        // tubeUrlsArr.push(linkLocation);
+        // let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));
+        // var tubeVideoUrl = tubeUrlsArr[rndTube];
+        videoItem
+          .addVideoItem()
+          .setTitle(questionTitle)
+          // .setHelpText(encodeURI(tubeEngine))
+          .setVideoUrl(linkLocation)
+          .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
+          .setAlignment(
+            videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+          );
+      }
     });
   }
   // }
   else {
     let tubeArr = vidPlaylist(scriptTitle).playlistArr;
     tubeArr.forEach((vidId) => {
-      let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
-      videoItem
-        .addVideoItem()
-        .setTitle(questionTitle)
-        // .setHelpText(encodeURI(tubeEngine))
-        .setVideoUrl(linkLocation)
-        // Aretha Franklin, Marvis Staples - Oh Happy Day (Official Music Video)
-        // Rick Astley - Never Gonna Give You Up dQw4w9WgXcQ (a classic placeholder)
-        .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
-        .setAlignment(
-          videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
-        );
+      let itHasHttp = String(vidId).indexOf("http");
+      if (itHasHttp === -1) {
+        let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
+        videoItem
+          .addVideoItem()
+          .setTitle(questionTitle)
+          // .setHelpText(encodeURI(tubeEngine))
+          .setVideoUrl(linkLocation)
+          // Aretha Franklin, Marvis Staples - Oh Happy Day (Official Music Video)
+          // Rick Astley - Never Gonna Give You Up dQw4w9WgXcQ (a classic placeholder)
+          .setWidth(Math.floor(Math.random() * 300) + 400) // 400-700px width
+          .setAlignment(
+            videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
+          );
+      }
     });
   }
   const imgFile = seoPictTime(scriptTitle, autoP.functionRegistry.time)?.playList;

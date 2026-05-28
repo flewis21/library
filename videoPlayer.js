@@ -224,12 +224,14 @@ function needPastTime(searchString) {
         }
       });
       if (rndRes.length === 0) {
+        // this.rndRes = [];
         let searchLinkDrive = new DriveFiles(searchString, autoP.functionRegistry.time);
-        searchLinkDrive?.dataTree.forEach((fileUrl) => {
+        searchLinkDrive?.dataTree?.forEach((fileUrl) => {
           if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
             if (vidData.indexOf(fileUrl) !== -1) {
               return;
-            } else {
+            } 
+            else {
               updateQuote(
                 JSON.stringify({
                   name: "videoSheet",
@@ -241,7 +243,7 @@ function needPastTime(searchString) {
             }
             rndRes.push(fileUrl);
           }
-        })
+        });
       }
       if (rndRes.length > 0) {
         autoP.functionRegistry.vidTree();

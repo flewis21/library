@@ -931,8 +931,7 @@ function fileBrowser(initialFolder, drillDown) {
   console.log(
     "boilerplate fileManagers: line 753\nfileBrowser(initialFolder: " +
       initialFolder +
-      ")\n " +
-      arguments.callee.caller.name,
+      ") ",
   );
   console.log(
     formatTime(autoP.functionRegistry.time) +
@@ -984,8 +983,7 @@ function fileBrowser(initialFolder, drillDown) {
     console.log(
       "boilerplate fileManagers: line 801\ngetFilesFromFolder(folderName: " +
         folderName +
-        ")\n " +
-        arguments.callee.caller.name,
+        ") ",
     );
     console.log(
       formatTime(autoP.functionRegistry.time) +
@@ -1039,8 +1037,6 @@ function fileBrowser(initialFolder, drillDown) {
           : glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
       console.log(
         formatTime(autoP.functionRegistry.time) +
-          "\n" +
-          arguments.callee.name +
           ":\nRandom file selected: " +
           file,
       );
@@ -1048,9 +1044,7 @@ function fileBrowser(initialFolder, drillDown) {
       // If no files in the specific folder, broaden the search or pick a different folder
       console.log(
         formatTime(autoP.functionRegistry.time) +
-          "\n" +
-          arguments.callee.name +
-          ": No files found in '" +
+          "\n: No files found in '" +
           currentFolderToSearch +
           "'. Retrying with a different folder if possible.",
       );
@@ -1094,8 +1088,6 @@ function fileBrowser(initialFolder, drillDown) {
   var dataTree = [];
   console.log(
     formatTime(autoP.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
       ":\nSearching for file: " +
       file,
   );
@@ -1119,9 +1111,7 @@ function fileBrowser(initialFolder, drillDown) {
   if (dataTree.length === 0) {
     console.log(
       formatTime(autoP.functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
-        ": File not found in specific folder. Searching entire Drive.",
+        "\n: File not found in specific folder. Searching entire Drive.",
     );
     try {
       var driveFileIterator = DriveApp.getFilesByName(file);
@@ -1142,8 +1132,6 @@ function fileBrowser(initialFolder, drillDown) {
   if (dataTree.length === 0) {
     console.error(
       formatTime(autoP.functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
         ":\nNo files found matching: " +
         file,
     );
@@ -1152,8 +1140,6 @@ function fileBrowser(initialFolder, drillDown) {
 
   console.log(
     formatTime(autoP.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
       ":\nFound files: " +
       dataTree.length,
   );
@@ -1163,8 +1149,6 @@ function fileBrowser(initialFolder, drillDown) {
 
   console.log(
     formatTime(autoP.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
       ":\nReturning: " +
       JSON.stringify(filedMain),
   );

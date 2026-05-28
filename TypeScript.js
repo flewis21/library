@@ -636,6 +636,7 @@ var geneicType = function (e) {
     //   return rndS.name === searchResult;
     // });
     // let fileIndex = handleRequest({parameter: {action:"getData"}});
+    // let tempObj = FunctionHandle.handleFunction({parameter: {q:"getData"}});
     // autoP.functionRegistry.domainTree();
     // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
     // let fileParams = autoP.functionRegistry.paramsList[fileIndex];

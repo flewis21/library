@@ -1286,16 +1286,16 @@ class FunctionHandle {
 
     // Logging
     if (!e) {
-      let tempObj = new ResolveParameters().searchResult;
-      mapArr[tempObj.name] = [];
-      rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+      let tempObj = new ResolveParameters();
+      mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
+      rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
       console.log("rndE = " + JSON.stringify(rndE), executed++);
     } 
     else { 
       if (e && !e.parameter) {
-        let tempObj = new ResolveParameters(e).searchResult;
-        mapArr[tempObj.name] = [];
-        rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+        let tempObj = new ResolveParameters(e);
+        mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
+        rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
         console.log("rndE = " + JSON.stringify(rndE), executed++);
       } 
       else {
@@ -1303,9 +1303,9 @@ class FunctionHandle {
         let objData = Object.keys(e.parameter);
         console.log("" + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
-          let tempObj = new ResolveParameters().searchResult;
-          mapArr[tempObj.name] = [];
-          rndE = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+          let tempObj = new ResolveParameters();
+          mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
+          rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
           console.log("rndE = " + JSON.stringify(rndE), executed++);
           if (typeof rndE === "string") {
             e = objectOfS(
@@ -1423,7 +1423,7 @@ class FunctionHandle {
                       return hTAml
                     }
                   }
-                  catch {
+                  catch (error) {
                     console.log("Requested template Out of Order", error.stack);
                   }
                 }
@@ -1468,9 +1468,9 @@ class FunctionHandle {
                       argsEd = e.parameter[objData[0]]
                   }
                   else {
-                    let tempObj = new ResolveParameters(e.parameter[objData[0]]).searchResult;
-                    mapArr[tempObj.name] = [];
-                    argsEd = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+                    let tempObj = new ResolveParameters(e.parameter[objData[0]])  ;
+                    mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
+                    argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
                   }
                   console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                   if (typeof argsEd === "string") {
@@ -1544,9 +1544,9 @@ class FunctionHandle {
                   }
                   else {
                     if (typeof globalThis[e.parameter[objData[0]]] === "function") {
-                      let tempObj = new ResolveParameters(e.parameter[objData[0]]).searchResult;
-                      mapArr[tempObj.name] = [];
-                      let argsEd = new IsMapped(mapArr, [...tempObj.parameters]).mapKeys;
+                      let tempObj = new ResolveParameters(e.parameter[objData[0]]);
+                      mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
+                      let argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
                       console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                       if (typeof argsEd === "string") {
                         e = objectOfS(
@@ -1678,7 +1678,7 @@ class FunctionHandle {
                               return hTAmla
                             }
                           }
-                          catch {
+                          catch (error) {
                             console.log("Requested template Out of Order", error.stack);
                           }
                         }

@@ -2,9 +2,9 @@
 <html>
   <head>
     <base target="_self" />
-    <?!= styleHtml.abcIt.getContent() ?>
+    <?!= new StyleHtml().abcIt.getContent() ?>
     <style>
-      <?!= styleHtml.renderFile.getContent() ?>
+      <?!= new StyleHtml().renderFile.getContent() ?>
     </style>
   </head>
   <body>
@@ -52,7 +52,7 @@
       <div id="c" class="template"></div>
       <div id="d" class="test"></div>
     </aside>
-    <?!= styleHtml.mgfRunIt.getContent() ?>
-    <?!= styleHtml.runIt.getContent() ?>
+    <?!= new StyleHtml().mgfRunIt.getContent() ?>
+    <?!= new StyleHtml().runIt.getContent() ?>
   </body>
 </html>

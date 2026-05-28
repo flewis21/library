@@ -3949,7 +3949,14 @@ function vidPlaylist(tunPlay) {
         Math.floor(Math.random() * Math.floor(playListSorted.length))
       ];
   }
-  var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+  let youtubeUrl = null;
+  let itHasHttp = String(randomVideo).indexOf("http");
+  if (itHasHttp === -1) {
+    youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+  }
+  else {
+    youtubeUrl = randomVideo;
+  }
   return {
     videoItem: randomVideo,
     videoItemUrl: youtubeUrl,

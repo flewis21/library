@@ -467,7 +467,7 @@ function doGetPost(e) {
 }
 
 function doGetStop(e) {
-  return handleRequest(e);
+  return geneicType();
 }
 
 function handleRequest(e) {

@@ -1340,7 +1340,7 @@ var acceptQuote = function (formDataJson) {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[formatDataJson || arguments.callee.name, "007", "Bugatti"]],
+          [[formatDataJson || autoPFN.paramsList[Math.floor(Math.random() * autoPFN.paramsList.length)].name, "007", "Bugatti"]],
           ["name", "number", "car"],
           autoP.functionRegistry.time,
         ),
@@ -1486,6 +1486,8 @@ var acceptQuote = function (formDataJson) {
  * @return {string} A confirmation message or URL.
  */
 var updateQuote = function (formDataJson) {
+  let autoP = new ResolveParameters();
+  let autoPFN = new ProjectFUnctionNames();
   let formData;
   try {
     // ... (rest of your existing code to parse formData)
@@ -1493,7 +1495,7 @@ var updateQuote = function (formDataJson) {
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[arguments.callee.name, "007", "McClaren"]],
+          [[autoPFN.paramsList[Math.floor(Math.random() * autoPFN.paramsList.length)].name, "007", "McClaren"]],
           ["name", "number", "car"],
           autoP.functionRegistry.time,
         ),
