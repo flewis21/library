@@ -1210,7 +1210,6 @@ var seoIndex = function (searchWord) {
 
 function seoPictTime(searchString, time) {
   let executed = 0;
-  let autoP = new ResolveParameters();
   autoP.functionRegistry.imgTree();
   var imgSheetVals = autoP.functionRegistry.getImageList();
   console.log("imgSheetVals = " + imgSheetVals, executed++);
@@ -1393,7 +1392,6 @@ function seoPictTime(searchString, time) {
 
 function seoPictures(searchString, time) {
   let executed = 0;
-  let autoP = new ResolveParameters();
   if (typeof searchString === "undefined") {
     var searchString = autoP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
@@ -1435,7 +1433,6 @@ function seoPictures(searchString, time) {
 
 var seoTwitter = function (folderX, searchString, time) {
   let executed = 0;
-  let autoP = new ResolveParameters();
   if (typeof time === "undefined") {
     var time = autoP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
@@ -2150,6 +2147,14 @@ function ssGetSheetBySpreadsheetUrl(url, sheetname) {
 }
 
 function ssSetName(randomSheet) {
+  if (randomSheet && Array.isArray(randomSheet)) {
+    if (randomSheet[0] !== "randomSheet") {
+      return
+    }
+    else {
+      randomSheet = randomSheet[0];
+    }
+  }
   if (randomSheet && randomShet !== "randomSheet") {
     let sheetName = idSpreadSheet(randomSheet.getId())
       .getSheetByName("sheet1")

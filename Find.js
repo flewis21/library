@@ -213,23 +213,6 @@ class DriveFiles {
   constructor(strNw, time) {
     this.strNw = strNw;
     this.time = time;
-    let autoP = new ResolveParameters();
-    autoP.functionRegistry.vidTree();
-    let vidSheetVals = autoP.functionRegistry.getVideoList();
-    this.vidData = [];
-    let vidVals = Object.values(vidSheetVals);
-    vidVals.forEach((val) => {
-      let inValsKeys = Object.keys(val);
-      let inVVals = Object.values(val);
-      inVVals.forEach((inV) => {
-        let truInv = autoP.trueVfalse(inV);
-        if (truInv) {
-          this.vidData.push(inV);
-        } else {
-          return;
-        }
-      });
-    });
     console.log(
       formatTime(autoP.functionRegistry.time) +
         "\nstrNw is !" +
@@ -337,33 +320,13 @@ class DriveFiles {
         }
       } catch (e) {
         console.error("DriveFiles: Error during DriveApp search:", e);
-        this,filedMain = null; // Handle search errors gracefully
+        this.filedMain = null; // Handle search errors gracefully
       }
       console.log(
         "DriveFiles: Final dataTree length after search:",
         this.dataTree.length,
       );
       if (this.dataTree.length > 0) {
-        this.rndRes = [];
-        // let searchLinkDrive = new DriveFiles(searchString, autoP.functionRegistry.time);
-        // searchLinkDrive?.
-        this.dataTree.forEach((fileUrl) => {
-          if (fileUrl && this.rndRes.indexOf(fileUrl) === -1) {
-            if (this.vidData.indexOf(fileUrl) !== -1) {
-              return;
-            } else {
-              updateQuote(
-                JSON.stringify({
-                  name: "videoSheet",
-                  number: parseInt("001", 8),
-                  videoid: fileUrl,
-                  videodescription: strNw,
-                }),
-              );
-            }
-            this.rndRes.push(fileUrl);
-          }
-        });
         let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
         let filedMain = this.dataTree[rndFiledMain];
         console.log(
@@ -409,25 +372,6 @@ class DriveFiles {
             this.dataTree.length,
           );
           if (this.dataTree.length > 0) {
-            // this.rndRes = [];
-            // // let searchLinkDrive = new DriveFiles(searchString, autoP.functionRegistry.time);
-            // dataTree.forEach((fileUrl) => {
-            //   if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-            //     if (vidData.indexOf(fileUrl) !== -1) {
-            //       return;
-            //     } else {
-            //       updateQuote(
-            //         JSON.stringify({
-            //           name: "videoSheet",
-            //           number: 001,
-            //           videoid: fileUrl,
-            //           videodescription: searchString,
-            //         }),
-            //       );
-            //     }
-            //     rndRes.push(fileUrl);
-            //       }
-            //     })
             let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
             let filedMain = this.dataTree[rndFiledMain];
             console.log(

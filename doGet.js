@@ -17,7 +17,6 @@ function doGet(e) {
   // validGroup();
   // validateFolders();
   // validateFiles();
-  let autoP = new ResolveParameters();
   let executed = 0;
   if (!e || e.queryString === "") {
     console.log("Executed " + e, [!e || e.queryString === ""]);
@@ -492,7 +491,6 @@ function handleRequest(e) {
 
 function handleGetData(e) {
   var executed = 0;
-  let autoP = new ResolveParameters();
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
   var htmlList = autoP.functionRegistry.getHtmlList();
   executed++;

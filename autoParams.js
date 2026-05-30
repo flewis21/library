@@ -1,4 +1,3 @@
-let autoP = new AutoParams(); 
 AutoParams.prototype.functionRegistry = {
   fileList: [],
   paramsList: [],
@@ -119,7 +118,7 @@ AutoParams.prototype.functionRegistry = {
 
   folderTree: [],
   gTree: function () {
-    let gtAP = new AutoParams()
+    let gtAP = autoP
     var tree = DriveApp.getFolders(); // Iterator for folders
     // Corrected while loop: Call next() only once per iteration
     while (tree.hasNext()) {
@@ -589,7 +588,7 @@ AutoParams.prototype.uniqueItemArray = function () {
   return rndArrVals;
 };
 AutoParams.prototype.uniqueVideoItemArray = function () {
-  let vidIA = new AutoParams();
+  let vidIA = autoP;
   vidIA.functionRegistry.vidTree();
   var arrVals = vidIA.functionRegistry.getVideoList();
   var rndArrVals = [];
@@ -601,7 +600,7 @@ AutoParams.prototype.uniqueVideoItemArray = function () {
   return rndArrVals;
 };
 AutoParams.prototype.uniqueImageItemArray = function () {
-  let imgIA = new AutoParams()
+  let imgIA = autoP;
   imgIA.functionRegistry.imgTree();
   var arrVals = imgIA.functionRegistry.getImageList();
   var rndArrVals = [];
@@ -613,7 +612,7 @@ AutoParams.prototype.uniqueImageItemArray = function () {
   return rndArrVals;
 };
 AutoParams.prototype.arrD = function () {
-  let arrDAP = new AutoParams()
+  let arrDAP = autoP;
   var titleArray = arrDAP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
@@ -668,7 +667,7 @@ AutoParams.prototype.arrD = function () {
 //     return freqArray
 // })();
 AutoParams.prototype.arrDRnd = function () {
-  let arrnDAP = new AutoParams()
+  let arrnDAP = autoP;
   var titleArray = arrnDAP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
@@ -701,7 +700,7 @@ AutoParams.prototype.arrDRnd = function () {
 
 class RandomArray {
   constructor() {
-    let titleArray = new ProjectFUnctionNames();
+    let titleArray = projectP;
     let arrData = AutoParams.prototype.customOrder;
     let numLen = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -725,6 +724,7 @@ class RandomArray {
     this.freqArray = freqArray
   }
 }
+let rndArrayP = new RandomArray();
 // AutoParams.prototype.arrDRnd = (function () {
 //     // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
 //     var titleArray = [];
@@ -750,7 +750,7 @@ class RandomArray {
 //     return freqArray
 // })();
 AutoParams.prototype.searchString = function () {
-  let secStAP = new AutoParams()
+  let secStAP = autoP;
   console.log(
     formatTime(secStAP.functionRegistry.time) +
       "\nBoilerplate autoParams line 654\nsearchString()\n" +
@@ -828,8 +828,8 @@ AutoParams.prototype.searchString = function () {
 
 class SearchStrings {
   constructor() {
-    let arrDRnd = new RandomArray();
-    let arrD = new RandomArray();
+    let arrDRnd = rndArrayP;
+    let arrD = rndArrayP;
     let newArr = [];
     let i = 0 || 0;
     let l = 6 || 1;
@@ -874,33 +874,8 @@ class SearchStrings {
     }
   }
 }
+let strSearch = new SearchStrings();
 
-class ProjectFUnctionNames {
-  constructor() {
-    this.fileList = [];
-    this.paramsList = [];
-      for (const key in globalThis) {
-        if (typeof globalThis[key] == "function") {
-          this.fileList.push(key);
-          try {
-            const funcString = globalThis[key].toString();
-            const params = funcString
-              .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
-              .split(",")
-              .map((param) => param.trim())
-              .filter((param) => param !== "");
-            this.paramsList.push({ name: key, parameters: params });
-          } catch (e) {
-            Logger.log(`Error processing function: ${key}. Error: ${e}`);
-            this.paramsList.push({
-              name: key,
-              parameters: ["(Unable to parse)"],
-            });
-          }
-        }
-      }
-  }  
-}
 // AutoParams.prototype..result = gsFParams().find((rndS) => {
 //       return rndS.name === searchString;
 //     });
@@ -1201,7 +1176,7 @@ class ProjectFUnctionNames {
 // result.parameters
 
 AutoParams.prototype.resolveFunctionArgs = function(funcName, providedArgs = {}) {
-  let resFAP =new AutoParams();
+  let resFAP = autoP;
   const funcParamsInfo = resFAP.functionRegistry
     .getParamsList()
     .find((item) => item.name === funcName);
@@ -1263,7 +1238,7 @@ AutoParams.prototype.myGVFunction = function(
 }
 
 AutoParams.prototype.gMain = function() {
-  let gmAP = new AutoParams();
+  let gmAP = autoP;
   // functionRegistry.initialize();
 
   // Example call where missing parameters will be populated from your globals
@@ -1276,36 +1251,529 @@ AutoParams.prototype.gMain = function() {
 
 class FunctionHandle {
   constructor(e) {
-    this.e = e
+    this.e = e;
+    this.executed = 0;
+    this.funchAP = autoP;
+    this.rndE = "";
+    this.mapArr = {};
+
+    // Logging
+    if (!this.e) {
+      this.tempObj = autoP;
+      this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+      if (this.tempObj?.searchResult?.parameters) {
+        this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.searchResult?.parameters] || [this.tempObj.func]).mapKeys;
+      }
+      else {
+        this.rndE = new IsMapped(this.mapArr, []).mapKeys;
+      }
+      console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
+    }
+    else {
+      if (this.e && !this.e.parameter) {
+        this.tempObj = new ResolveParameters(this.e);
+        this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+        if (this.tempObj?.searchResult?.parameters) {
+          this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.searchResult?.parameters] || [this.tempObj.func]).mapKeys;
+        }
+        else {
+          this.rndE = new IsMapped(this.mapArr, []).mapKeys;
+        }
+        console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
+      }
+      else {
+        if (this.e && this.e.parameter) {
+          this.objData = Object.keys(this.e.parameter);
+          console.log("objData = " + this.e.parameter[this.objData[0]], this.objData);
+          if (this.objData.length === 0) {
+            this.tempObj = autoP;
+            this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+            if (this.tempObj?.searchResult?.parameters) {
+            }
+            else {
+            }
+            this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.searchResult?.parameters] || [this.tempObj.func]).mapKeys;
+            console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
+            if (typeof this.rndE === "string") {
+              this.e = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", this.rndE],
+                  ],
+                ],
+                this.funchAP.functionRegistry.time,
+              );
+            }
+            else {
+              if (typeof this.rndE === "object" && this.rndE !== null) {
+                this.rndEAP = Object.values(this.rndE);
+                if (this.rrndEAP && this.rndEAP.length > 0) {
+                  this.e = objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", Object.keys(this.rrndEAP)[0]],
+                        ["args", Object.values(this.rrndEAP)[0]],
+                      ],
+                    ],
+                    this.funchAP.functionRegistry.time,
+                  );
+                } 
+                else {
+                  this.e = objectOfS(
+                    ["parameter"],
+                    [
+                      [
+                        ["func", Object.keys(this.rrndEAP)[0]],
+                      ],
+                    ],
+                    this.funchAP.functionRegistry.time,
+                  );
+                }
+              }
+              else {
+                console.log("Unexpected rndE type: ", this.rndE);
+                this.e = objectOfS(
+                  ["parameter"],
+                  [
+                    [
+                      ["func", "aVar"],
+                      ["args", "varA"],
+                    ],
+                  ],
+                  this.funchAP.functionRegistry.time,
+                );
+              }
+            }
+            console.log(JSON.stringify(this.e));
+          }
+          else {
+            if (this.objData.length > 0) {
+              if (this.e.parameter["file"]) {
+                console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(this.e));
+                console.log(
+                  "Determined that funcTres execution is requested! \n" +
+                    this.e.parameter["file"],
+                );
+                this.funcTres = this.e?.parameter["file"];
+                try {
+                  this.htmlArray = this.funchAP.functionRegistry.getHtmlList();
+                  this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
+                  this.rndPage = this.htmlArray[this.rndHtmlIndex];
+                  this.htmlTresArg; // = rndPage; // Default value
+                  console.log("htmlArray = " + this.htmlArray, this.executed++);
+                  if (this.funcTres) {
+                    if (Array.isArray(this.funcTres)) {
+                      this.firstArg = this.funcTres[0];
+                      if (this.htmlArray.includes(this.firstArg)) {
+                        this.funcTres0Index = this.htmlArray.findIndex(function (element) {
+                          return element === this.firstArg;
+                        });
+                        this.htmlTresArg = this.htmlArray[this.funcTres0Index];
+                      }
+                    } 
+                    else {
+                      if (this.htmlArray.includes(this.funcTres)) {
+                        this.funcTresIndex = this.htmlArray.findIndex(function (element) {
+                          return element === this.funcTres;
+                        });
+                        this.htmlTresArg = this.htmlArray[this.funcTresIndex];
+                      }
+                    }
+                  }
+                  if (!this.htmlTresArg) {
+                    try{
+                      this.payLoad = {};
+                      this.payLoad["type"] = "url";
+                      this.payLoad["data"] = {};
+                      if (this.funcTres === "undefined") {
+                        return getScriptUrl() + "?file=" + this.rndPage;
+                      } 
+                      else {
+                        this.fT = fileBrowser(null, this.funcTres);
+                        this.payLoad.data["url"] = this.fT?.url
+                        if (!this.fT?.url) {
+                          this.payLoad.data["url"] = driveManager(this.funcTres);
+                        }
+                        let options = {
+                          muteHttpExceptions: true,
+                        };
+                        this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
+                        this.hTAml = RenderTemplate.templateRender(
+                          this.payLoad.data["app"]?.app,
+                          {
+                            pL: this.payLoad,
+                          },
+                          isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                        );
+                        // return hTAml
+                      }
+                    }
+                    catch (error) {
+                      console.log("Requested template Out of Order", error.stack);
+                    }
+                  }
+                  else { 
+                    if (this.htmlTresArg) {
+                      try {
+                        this.driveA = 
+                          {
+                            fileParam: this.funcTres,
+                          }
+                        this.noLhtml = RenderFile.fileRender(
+                          this.funcTres,
+                          this.driveA,
+                          isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                        );
+                        // return noLhtml
+                      } 
+                      catch (error) {
+                        Logger.log("Requested! HTML Out of Order", error.stack);
+                      }
+                    }
+                  }
+                } 
+                catch (error) {
+                  console.error(
+                    `Error in "RENDER" exec:`,
+                    error.stack,
+                  );
+                  throw new Error(
+                    "Error executing function: " +
+                      error.toString() +
+                      "\n" +
+                      error.stack,
+                  );
+                }
+              }
+              else {
+                if (!this.e.parameter["func"] && !this.e.parameter["args"]) {
+                  if (typeof globalThis[this.e.parameter[this.objData[0]]] !== "function") {
+                    this.argsEd = null;
+                    if (this.e.parameter[this.objData[0]].indexOf(",") > -1) {
+                        this.argsEd = this.e.parameter[this.objData[0]]
+                    }
+                    else {
+                      this.tempObj = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
+                      this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+                      if (this.tempObj?.searchResult) {
+                        this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
+                      }
+                      else {
+                        this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
+                      }
+                    }
+                    console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
+                    if (typeof this.argsEd === "string") {
+                      this.e = objectOfS(
+                        ["parameter"],
+                        [[["func", this.argsEd]]],
+                        this.funchAP.functionRegistry.time,
+                      );
+                      console.log("e = " + JSON.stringify(this.e), this.executed++);
+                    } 
+                    else {
+                      if (typeof this.argsEd === "object" && this.argsEd !== null) {
+                        this.argsAP = Object.values(this.argsEd);
+                        if (this.argsAP && this.argsAP.length > 0) {
+                          this.e = objectOfS(
+                            ["parameter"],
+                            [
+                              [
+                                ["func", Object.keys(this.argsEd)[0]],
+                                ["args", [...Object.values(this.argsEd)[0]]],
+                              ],
+                            ],
+                            this.funchAP.functionRegistry.time,
+                          );
+                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                        } 
+                        else {
+                          this.e = objectOfS(
+                            ["parameter"],
+                            [[["func", Object.keys(this.argsEd)[0]]]],
+                            this.funchAP.functionRegistry.time,
+                          );
+                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                        }
+                      } 
+                      else {
+                        console.log("Unexpected argsEd type: ", this.argsEd);
+                        this.argsedObj = [];
+                        this.aOKeys = Object.keys(this.argsEd);
+                        if (this.aOKeys.length > 0) {
+                          this.aOKeys.forEach((key) => {
+                            this.argsedObj.push(this.argsEd[key]);
+                          });
+                          this.e = objectOfS(
+                            ["parameter"],
+                            [
+                              [
+                                ["func", this.aOKeys],
+                                ["args", this.argsedObj],
+                              ],
+                            ],
+                            this.funchAP.functionRegistry.time,
+                          );
+                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                        } 
+                        else {
+                          this.e = objectOfS(
+                            ["parameter"],
+                            [
+                              [
+                                ["func", "aVar"],
+                                ["args", "varA"],
+                              ],
+                            ],
+                            this.funchAP.functionRegistry.time,
+                          );
+                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                        }
+                      }
+                    }
+                  }
+                  else {
+                    if (typeof globalThis[this.e.parameter[this.objData[0]]] === "function") {
+                      this.tempObj = new ResolveParameters(this.e.parameter[this.objData[0]]);
+                      this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+                      if (this.tempObj.searchResult?.parameters) {
+                        this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.searchResult?.parameters]).mapKeys;
+                      }
+                      else {
+                        this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
+                      }
+                      console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
+                      if (typeof this.argsEd === "string") {
+                        this.e = objectOfS(
+                          ["parameter"],
+                          [[["func", this.argsEd]]],
+                          this.funchAP.functionRegistry.time,
+                        );
+                        console.log("e = " + JSON.stringify(this.e), this.executed++);
+                      } 
+                      else {
+                        if (typeof this.argsEd === "object" && this.argsEd !== null) {
+                          this.argsAP = Object.values(this.argsEd);
+                          if (this.argsAP && this.argsAP.length > 0) {
+                            this.e = objectOfS(
+                              ["parameter"],
+                              [
+                                [
+                                  ["func", Object.keys(this.argsEd)[0]],
+                                  ["args", [...Object.values(this.argsEd)[0]]],
+                                ],
+                              ],
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          } 
+                          else {
+                            this.e = objectOfS(
+                              ["parameter"],
+                              [[["func", Object.keys(this.argsEd)[0]]]],
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          }
+                        } 
+                        else {
+                          console.log("Unexpected argsEd type: ", this.argsEd);
+                          this.argsedObj = [];
+                          this.aOKeys = Object.keys(this.argsEd);
+                          if (this.aOKeys.length > 0) {
+                            this.aOKeys.forEach((key) => {
+                              this.argsedObj.push(this.argsEd[key]);
+                            });
+                            this.e = objectOfS(
+                              ["parameter"],
+                              [
+                                [
+                                  ["func", this.aOKeys],
+                                  ["args", this.argsedObj],
+                                ],
+                              ],
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          } 
+                          else {
+                            this.e = objectOfS(
+                              ["parameter"],
+                              [
+                                [
+                                  ["func", "aVar"],
+                                  ["args", "varA"],
+                                ],
+                              ],
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          }
+                        }
+                      }
+                      console.log(JSON.stringify(this.e));
+                    }
+                    else {
+                      console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(this.e));
+                      console.log(
+                        "Determined that funcTres execution is requested! \n" +
+                          this.e.parameter[this.objData[0]],
+                      );
+                      this.funcTres = this.e.parameter[this.objData[0]];
+                      try {
+                        this.htmlArray = this.funchAP.functionRegistry.getHtmlList();
+                        this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
+                        this.rndPage = this.htmlArray[this.rndHtmlIndex];
+                        this.htmlTresArg; // = rndPage; // Default value
+                        console.log("htmlArray = " + this.htmlArray, this.executed++);
+                        if (this.funcTres) {
+                          if (Array.isArray(this.funcTres)) {
+                            this.firstArg = this.funcTres[0];
+                            if (this.htmlArray.includes(this.firstArg)) {
+                              this.funcTres0Index = this.htmlArray.findIndex(function (element) {
+                                return element === this.firstArg;
+                              });
+                              this.htmlTresArg = this.htmlArray[this.funcTres0Index];
+                            }
+                          } 
+                          else {
+                            if (this.htmlArray.includes(this.funcTres)) {
+                              this.funcTresIndex = this.htmlArray.findIndex(function (element) {
+                                return element === this.funcTres;
+                              });
+                              this.htmlTresArg = this.htmlArray[this.funcTresIndex];
+                            }
+                          }
+                        }
+                        if (!this.htmlTresArg) {
+                          try{
+                            this.payLoad = {};
+                            this.payLoad["type"] = "url";
+                            this.payLoad["data"] = {};
+                            if (this.funcTres === "undefined") {
+                              return getScriptUrl() + "?file=" + this.rndPage;
+                            } 
+                            else {
+                              this.fT = fileBrowser(null, this.funcTres);
+                              this.payLoad.data["url"] = this.fT?.url
+                              if (!this.fT?.url) {
+                                this.payLoad.data["url"] = driveManager(this.funcTres);
+                              }
+                              let options = {
+                                muteHttpExceptions: true,
+                              };
+                              this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
+                              this.hTAmla = RenderTemplate.templateRender(
+                                this.payLoad.data["app"]?.app,
+                                {
+                                  pL: this.payLoad,
+                                },
+                                isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              );
+                              // return hTAmla
+                            }
+                          }
+                          catch (error) {
+                            console.log("Requested template Out of Order", error.stack);
+                          }
+                        }
+                        else { 
+                          if (this.htmlTresArg) {
+                            try {
+                              this.driveA = 
+                                {
+                                  fileParam: this.funcTres,
+                                }
+                              this.noLhtmlb = RenderFile.fileRender(
+                                this.funcTres,
+                                this.driveA,
+                                isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              );
+                              // return noLhtmlb
+                            } 
+                            catch (error) {
+                              Logger.log("Requested! HTML Out of Order", error.stack);
+                            }
+                          }
+                        }
+                      } 
+                      catch (error) {
+                        console.error(
+                          `Error in "RENDER" exec:`,
+                          error.stack,
+                        );
+                        throw new Error(
+                          "Error executing function: " +
+                            error.toString() +
+                            "\n" +
+                            error.stack,
+                        );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } 
+    if (this.e && this.e.parameter && (this.e.parameter["func"] && this.e.parameter["args"])) {
+    this.funcUno = this.e.parameter["func"];
+    this.funcDos = this.e.parameter["args"];
+    }
+    else {
+      if (this.e && this.e.parameter && (this.e.parameter["func"] && !this.e.parameter["args"])) {
+        this.funcUno = this.e.parameter["func"];
+        this.funcDos = null;
+      } 
+      else {
+        if (this.e && this.e.parameter && (!this.e.parameter["func"] && this.e.parameter["args"])) {
+          this.funcUno = null;
+          this.funcDos = this.e.parameter["args"];
+        }  
+        else {
+          this.funcUno = Object.keys(this.rndE);
+          this.funcDos = Object.values(this.rndE);
+        }
+      } 
+    }
+    console.log("exec and args\n" + [this.funcUno, this.funcDos]);
+    // return {
+    //   exec: funcUno,
+    //   args: funcDos,
+    // };
   }
   static handleFunction(e) {
     var executed = 0;
-    let funchAP = new AutoParams()
+    let funchAP = autoP;
     let rndE = "";
     let mapArr = {};
 
     // Logging
     if (!e) {
-      let tempObj = new ResolveParameters();
+      let tempObj = autoP;
       mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
-      rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
+      rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
       console.log("rndE = " + JSON.stringify(rndE), executed++);
     } 
     else { 
       if (e && !e.parameter) {
         let tempObj = new ResolveParameters(e);
         mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
-        rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
+        rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
         console.log("rndE = " + JSON.stringify(rndE), executed++);
       } 
       else {
         if (e && e.parameter) {
         let objData = Object.keys(e.parameter);
-        console.log("" + e.parameter[objData[0]], objData);
+        console.log("objData = " + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
-          let tempObj = new ResolveParameters();
+          let tempObj = autoP;
           mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
-          rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
+          rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
           console.log("rndE = " + JSON.stringify(rndE), executed++);
           if (typeof rndE === "string") {
             e = objectOfS(
@@ -1360,7 +1828,7 @@ class FunctionHandle {
             }
           }
           console.log(JSON.stringify(e));
-        } 
+        }
         else { 
           if (objData.length > 0) {
             if (e.parameter["file"]) {
@@ -1470,7 +1938,7 @@ class FunctionHandle {
                   else {
                     let tempObj = new ResolveParameters(e.parameter[objData[0]])  ;
                     mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
-                    argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
+                    argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
                   }
                   console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                   if (typeof argsEd === "string") {
@@ -1546,7 +2014,7 @@ class FunctionHandle {
                     if (typeof globalThis[e.parameter[objData[0]]] === "function") {
                       let tempObj = new ResolveParameters(e.parameter[objData[0]]);
                       mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
-                      let argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters || tempObj.func]).mapKeys;
+                      let argsEd = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
                       console.log("argsEd = " + JSON.stringify(argsEd), executed++);
                       if (typeof argsEd === "string") {
                         e = objectOfS(
@@ -1871,6 +2339,7 @@ class FunctionHandle {
     return this.fhRes
   }
 }
+let handlerP = new FunctionHandle()
 
 function funcHandle(e) {
   let data = FunctionHandle.handleFunction(e);

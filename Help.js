@@ -81,7 +81,7 @@ function crmT(func) {
 class RelatedFunctions {
   constructor(func) {
     this.func = func;
-    let appList = new ProjectFUnctionNames();
+    let appList = projectP;
     var lowCapApp = appList.fileList.map(function (item) {
       return item.toLowerCase();
     });
@@ -99,7 +99,7 @@ class RelatedFunctions {
     }
     this.funFirst = funFirst;
   }
-}
+};
 
 var gsFiles = function() {
   // console.log(
@@ -163,10 +163,50 @@ function isValidUrl(text) {
   }
   var urlRegex =
     /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-  var matches = text.match(urlRegex);
-  allMatches = matches ? [...matches] : [];
+  let matches = null;
+  let rndRes = [];
+  matches = text.match(urlRegex);
+  console.log("matches = " + matches);
+  if (!matches) {
+    let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+    searchLinkDrive?.dataTree?.forEach((fileUrl) => {
+      if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
+        autoP.functionRegistry.vidTree();
+        let vidSheetVals = autoP.functionRegistry.getVideoList();
+        let vidData = [];
+        let vidVals = Object.values(vidSheetVals);
+        vidVals.forEach((val) => {
+          let inVVals = Object.values(val);
+          inVVals.forEach((inV) => {
+            let truInv = autoP.trueVfalse(inV);
+            if (truInv) {
+              vidData.push(inV);
+            } 
+            else {
+              return;
+            }
+          });
+        });
+        if (vidData?.indexOf(fileUrl) !== -1) {
+          return;
+        } 
+        else {
+          updateQuote(
+            JSON.stringify({
+              name: "videoSheet",
+              number: parseInt("001", 8),
+              videoid: fileUrl,
+              videodescription: text,
+            }),
+          );
+        }
+        rndRes.push(fileUrl);
+      }
+    });
+  }
+  allMatches = matches ? [...matches] : [...rndRes];
   console.log(`allMatches = matches ? [...${allMatches}]`);
-  if (allMatches) {
+  if (allMatches.length > 0) {
     let currentProtocol = "";
     let currentHostname = "";
     let currentPathname = "";
@@ -176,6 +216,43 @@ function isValidUrl(text) {
       if (protocolEnd !== -1) {
         currentProtocol = url.substring(0, protocolEnd + 3);
         url = url.substring(protocolEnd + 3);
+      }
+      else {
+        let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+        searchLinkDrive?.dataTree?.forEach((fileUrl) => {
+          if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
+            autoP.functionRegistry.vidTree();
+            let vidSheetVals = autoP.functionRegistry.getVideoList();
+            let vidData = [];
+            let vidVals = Object.values(vidSheetVals);
+            vidVals.forEach((val) => {
+              let inVVals = Object.values(val);
+              inVVals.forEach((inV) => {
+                let truInv = autoP.trueVfalse(inV);
+                if (truInv) {
+                  vidData.push(inV);
+                } 
+                else {
+                  return;
+                }
+              });
+            });
+            if (vidData?.indexOf(fileUrl) !== -1) {
+              return;
+            } 
+            else {
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fileUrl,
+                  videodescription: text,
+                }),
+              );
+            }
+            rndRes.push(fileUrl);
+          }
+        });
       }
       var hostnameEnd = url.indexOf("/");
       if (hostnameEnd !== -1) {
@@ -226,7 +303,7 @@ function mis(text, maxRetries = 3) {
       ")\n ",
   );
   var executed = 0;
-  let misAuto = new ResolveParameters();
+  let misAuto = autoP;
   if (text?.indexOf(",") === -1) {
     var validUrl = isValidUrl(text);
     executed++;
@@ -1730,7 +1807,7 @@ function misSt(func, someArgs) {
       arguments.callee.caller.name,
   );
   var executed = 0;
-  let misStAuto = new ResolveParameters();
+  let misStAuto = autoP;
 
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
@@ -2777,9 +2854,8 @@ function resolveParams(func, someArgs) {
       ")\n " +
       arguments.callee.caller.name,
   );
-  let rpAuto = new ResolveParameters();
-  var trueFunc = rpAuto.trueVfalse(func);
-  var trueSomeArgs = rpAuto.trueVfalse(someArgs);
+  var trueFunc = auotP.trueVfalse(func);
+  var trueSomeArgs = auotP.trueVfalse(someArgs);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : autoP.functionRegistry.paramsList;
@@ -2790,7 +2866,7 @@ function resolveParams(func, someArgs) {
     var argsX = [];
     var content = [];
     var arrUno = Array.isArray(func);
-    var arrDos = rpAuto.trueVfalse(someArgs);
+    var arrDos = auotP.trueVfalse(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -2804,12 +2880,12 @@ function resolveParams(func, someArgs) {
       let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = rpAuto.trueVfalse(Array.isArray(pro));
+      let keysArrArr = auotP.trueVfalse(Array.isArray(pro));
       if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
-          realItem = rpAuto.trueVfalse(subParam);
+          realItem = auotP.trueVfalse(subParam);
           if (realItem) {
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
@@ -2836,7 +2912,7 @@ function resolveParams(func, someArgs) {
           content.push(paramLimit);
         }
       } else {
-        realItem = rpAuto.trueVfalse(pro);
+        realItem = auotP.trueVfalse(pro);
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
@@ -2855,7 +2931,7 @@ function resolveParams(func, someArgs) {
         }
       }
     });
-    if (argsX) {
+    if (argsX && argsX.length > 0) {
       var allErrors = {};
       var allResolutions = {};
       var fParams = autoP.functionRegistry.paramsList; //gsFParams();
@@ -2893,14 +2969,14 @@ function resolveParams(func, someArgs) {
           let realItem;
           declaredParams.forEach((declaredParam, declaredParamIndex) => {
             // content.forEach((item) => {
-            let declaredParamArrArr = rpAuto.trueVfalse(Array.isArray(declaredParam));
+            let declaredParamArrArr = auotP.trueVfalse(Array.isArray(declaredParam));
             if (declaredParamArrArr) {
               let paramLimit = 0;
               declaredParam.forEach((subParam, subParamIndex) => {
                 //item.forEach((subItem) => {
                 contentLimit.forEach((item, currentDeclaredIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  realItem = rpAuto.trueVfalse(subItem);
+                  realItem = auotP.trueVfalse(subItem);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2920,10 +2996,10 @@ function resolveParams(func, someArgs) {
               if (Array.isArray(contentLimit)) {
                 contentLimit.forEach((item, contentLimitIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  let contentLimitArrArr = rpAuto.trueVfalse(Array.isArray(item));
+                  let contentLimitArrArr = auotP.trueVfalse(Array.isArray(item));
                   if (contentLimitArrArr) {
                     item.forEach((subItem, mapItemIndex) => {
-                      realItem = rpAuto.trueVfalse(subItem);
+                      realItem = auotP.trueVfalse(subItem);
                       if (realItem) {
                         // if (subItem === declaredParam) {
                         // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2941,7 +3017,7 @@ function resolveParams(func, someArgs) {
                       }
                     });
                   } else {
-                    realItem = rpAuto.trueVfalse(item);
+                    realItem = auotP.trueVfalse(item);
                     if (realItem) {
                       // if (subItem === declaredParam) {
                       // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2960,10 +3036,10 @@ function resolveParams(func, someArgs) {
                   }
                 });
               } else {
-                let contentArrArr = rpAuto.trueVfalse(Array.isArray(contentLimit));
+                let contentArrArr = auotP.trueVfalse(Array.isArray(contentLimit));
                 if (contentArrArr) {
                 } else {
-                  realItem = rpAuto.trueVfalse(contentLimit);
+                  realItem = auotP.trueVfalse(contentLimit);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3388,7 +3464,7 @@ function resolveParams(func, someArgs) {
 };
 
 var testClassResolve = function() {
-  let newRes = new ResolveParameters()
+  let newRes = autoP
   console.log("return = " + JSON.stringify(newRes));
 }
 
@@ -3555,7 +3631,6 @@ function seoCapital(url) {
 }
 
 function seoPastTime(searchString, time) {
-  let autoP = new ResolveParameters()
   console.log(
     "boilerplate Help: line 2\nseoPastTime(searchString: " +
       searchString +
@@ -3793,7 +3868,6 @@ function seoYoutube(searchString, time) {
   //     ", = " +
   //     time,
   // );
-  let autoP = new ResolveParameters();
   let executed = 0;
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
@@ -3909,7 +3983,7 @@ function vidFactor(data, time) {
 }
 
 function vidPlaylist(tunPlay) {
-  let vpAuto = new ResolveParameters();
+  let vpAuto = autoP;
   var randomPlaylist = [];
   if (!tunPlay) {
     autoP.functionRegistry.vidTree();

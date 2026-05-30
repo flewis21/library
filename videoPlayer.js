@@ -60,7 +60,6 @@ function iframeC() {
 }
 
 function needPastTime(searchString) {
-  let autoP = new ResolveParameters();
   autoP.functionRegistry.vidTree();
   var vidSheetVals = autoP.functionRegistry.getVideoList();
   var vidData = [];
@@ -84,18 +83,43 @@ function needPastTime(searchString) {
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     const options = { muteHTTPExceptions: true };
-    const data = getUrlResponse(searchLink, options);
-    const videoSearch = data.app;
+    let retries = 0;
+    let maxRetries = 0;
+    let delay = 1000;
+    let data = null;
+    try {
+      retries++;
+      delay += 3002;
+      Utilities.sleep(delay + Math.random() * 2000);
+      Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+      while (retries < maxRetries) {
+        try {
+          data = getUrlResponse(searchLink, options);
+        }
+        catch (error) {
+          Logger.log("Error fetching data: " + error);
+          retries++;
+          delay += 2;
+          Utilities.sleep(delay);
+        }
+      }
+      Logger.log("Max retries reached, failed to fetch data.");
+    }
+    catch (error) {
+      Logger.log("Error response received: " + l.stack);
+      console.log("Error response received,", l.stack);
+    }
+    const videoSearch = data?.app;
     const vidsSearched = [];
     const vidValues = [];
     const sorFndOrd = [];
     [videoSearch].map((videoId) => {
       const idArray = videoId
-        .slice(videoId.indexOf(`v=`))
-        .toString()
-        .split(`v=`);
-      for (var i = 1; i < idArray.length; i++) {
-        const playId = idArray[i].toString().substring(0, 11);
+        ?.slice(videoId.indexOf(`v=`))
+        ?.toString()
+        ?.split(`v=`);
+      for (var i = 1; i < idArray?.length; i++) {
+        const playId = idArray[i]?.toString()?.substring(0, 11);
         vidsSearched.push(playId);
         vidValues.push(playId.valueOf());
       }
@@ -223,28 +247,6 @@ function needPastTime(searchString) {
           }
         }
       });
-      if (rndRes.length === 0) {
-        // this.rndRes = [];
-        let searchLinkDrive = new DriveFiles(searchString, autoP.functionRegistry.time);
-        searchLinkDrive?.dataTree?.forEach((fileUrl) => {
-          if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-            if (vidData.indexOf(fileUrl) !== -1) {
-              return;
-            } 
-            else {
-              updateQuote(
-                JSON.stringify({
-                  name: "videoSheet",
-                  number: 001,
-                  videoid: fileUrl,
-                  videodescription: searchString,
-                }),
-              );
-            }
-            rndRes.push(fileUrl);
-          }
-        });
-      }
       if (rndRes.length > 0) {
         autoP.functionRegistry.vidTree();
         vidSheetVals = autoP.functionRegistry.getVideoList();

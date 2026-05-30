@@ -1486,7 +1486,6 @@ var acceptQuote = function (formDataJson) {
  * @return {string} A confirmation message or URL.
  */
 var updateQuote = function (formDataJson) {
-  let autoP = new ResolveParameters();
   let autoPFN = new ProjectFUnctionNames();
   let formData;
   try {

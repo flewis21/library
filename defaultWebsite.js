@@ -71,7 +71,6 @@ function appSort(numIndex, time) {
 
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
-  let autoP =new ResolveParameters();
   let rawFuncResult = null;
   let truUno = autoP.trueVfalse(funcUno);
   let truDos = autoP.trueVfalse(funcDos);
@@ -2646,7 +2645,6 @@ var getUrl = function (appInterface) {
 };
 
 var getUrlResponse = function (url, options) {
-  let autoP = new ResolveParameters();
   var validUrl = isValidUrl(url);
   if (validUrl.hostname) {
     let response;
@@ -2654,7 +2652,7 @@ var getUrlResponse = function (url, options) {
     let htmlData;
     let supUrl;
     let retries = 0;
-    let maxRetries = 1;
+    let maxRetries = 0;
     let delay = 1000;
     try {
       response = UrlFetchApp.fetch(url, options);

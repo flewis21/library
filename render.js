@@ -993,7 +993,7 @@ class RenderFile {
       if (file) {
         let htmlList = autoP.functionRegistry.getHtmlList();
         if (htmlList.indexOf(file) !== -1) { 
-          console.log("argsObject before tmp processing", argsObject);
+          console.log("argsObject before htmlList & tmp processing", argsObject);
           const tmp = HtmlService.createTemplateFromFile(file);
           if (argsObject) {
             const keys = Object.keys(argsObject);
@@ -1001,7 +1001,7 @@ class RenderFile {
               tmp[key] = argsObject[key];
             });
           }
-          console.log("argsObject before tmp processing", argsObject);
+          console.log("argsObject after tmp processing", argsObject);
 
           // tmp["list"] = htmlListArray;
           // END IF
@@ -1263,7 +1263,7 @@ class RenderTemplate {
     );
     let executed = 0;
     console.log(autoP.functionRegistry.time);
-    console.log("argsObject before tmp processing", argsObject);
+    console.log("argsObject before blob & tmp processing", argsObject);
     const tmp = HtmlService.createTemplate(blob);
     if (argsObject) {
       try {

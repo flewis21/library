@@ -43,7 +43,7 @@ const desktopContainer = HtmlService.createHtmlOutput(
   `@media (min-width: 901px) {.desktop-container {width: 85%;margin: 0 auto;};.responsive-section {width: 85%;margin: 20 auto;}}`,
 );
 const mobileSection = HtmlService.createHtmlOutput(
-  `@media (max-width: 900px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px;} .menu-icon {display: none;} .sidebar {display: none;} .container .large-container {padding-left: 5%;padding-right: 5%;} .nav-right img {display: none;} .nav-right .user-icon  {display: block;width: 30px;} .nav-middle .search-box input {width: 100px;} .nav-middle .mic-icon {display: none;} .logo {width: 90px;}}`,
+  `@media (max-width: 900px) {.mobile-section {padding: 10px};.responsive-section {padding: 10px;} .menu-icon {display: none;} .sidebar {display: none;} .container .large-container {padding-left: 5%;padding-right: 5%;} .nav-right img {display: none;} .nav-right .user-icon  {display: block;width: 30px;} .nav-middle .search-box input {width: 85%;} .nav-middle .mic-icon {display: none;} .logo {width: 90px;}}`,
 );
 const article = HtmlService.createHtmlOutput(
   `article {background-color: white;margin-top: 5px;padding: 10px 15px;color: black;}`,
@@ -236,7 +236,7 @@ const nav_middle_search_box_img = HtmlService.createHtmlOutput(
   `.nav-middle .search-box img {width: 15px;}`,
 );
 const nav_middle_search_box_input = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box input {width: 85%;border: 0;outline: 0;background: transparent;}`,
+  `.nav-middle .search-box input {width: 100%;border: 0;outline: 0;background: transparent;}`,
 );
 const nav_right_img = HtmlService.createHtmlOutput(
   `.nav-right img {width: 25px;margin-right: 25px;}`,
@@ -1768,7 +1768,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
               // Access the actual array from the response
               if (response && typeof response === "object") {
-                fullList = null;
+                fullList = [];
                 for (var key in response) {
                   // alert(JSON.stringify(response[key]));
                   let i = 0;
@@ -2169,7 +2169,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
           setLoop();
         } else if (event.data == YT.PlayerState.UNSTARTED) {
           changeBorderColor(event.data);
-          setTimeout(2000, playvideo)
+          setTimeout(2000, playVideo)
           event.target.playVideo();
         } else if (event.data == YT.PlayerState.ENDED) {
           changeBorderColor(event.data);

@@ -1179,7 +1179,7 @@ function rndWinner(infinitum) {
 var rndWord = function () {
   let ciar = trial();
   let meri = randNum([JSON.stringify(ciar)].join(" "));
-  let allFiles = globalThis.uniqueCoArray()[meri]["title"];
+  let allFiles = autoP.uniqueCoArray()[meri]["title"];
   let randomWord = [allInvestors(allFiles).title]
     .join("")
     .split("")

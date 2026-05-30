@@ -2,12 +2,41 @@ class Script{};
 // Script.prototype. = function () {
 // };
 
+class ProjectFUnctionNames {
+  constructor() {
+    this.fileList = [];
+    this.paramsList = [];
+      for (const key in globalThis) {
+        if (typeof globalThis[key] == "function") {
+          this.fileList.push(key);
+          try {
+            const funcString = globalThis[key].toString();
+            const params = funcString
+              .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
+              .split(",")
+              .map((param) => param.trim())
+              .filter((param) => param !== "");
+            this.paramsList.push({ name: key, parameters: params });
+          } 
+          catch (e) {
+            Logger.log(`Error processing function: ${key}. Error: ${e}`);
+            this.paramsList.push({
+              name: key,
+              parameters: ["(Unable to parse)"],
+            });
+          }
+        }
+      }
+  }  
+}
+let projectP = new ProjectFUnctionNames();
+
 class IsValidKeys {
   constructor(v) {
     this.v = v
   }
   keysValid() {
-    let ivkAuto = new ResolveParameters();
+    let ivkAuto = autoP;
     var isExcludeValue = ivkAuto.omitIt(this.v, "1");
     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "2");
     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "3");
@@ -92,7 +121,7 @@ class IsMapped extends IsExclude {
     this.t = t;
     this.v = v;
     this.mapKeys = {};
-    for (var key in this.t) {
+    for (let key in this.t) {
       this.mapKeys[key] = this.v || typeof this.t[key];
     }
   }
@@ -296,9 +325,9 @@ class AutoParams extends IsTypeScript {
 class Presidential extends AutoParams {
   constructor() {
     super();
-    this.timeLeft = formatTime(this.functionRegistry.timeLeftToExecute)
   }
   spirit() {
+    this.timeLeft = formatTime(this.functionRegistry.timeLeftToExecute);
     console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
   }
 };
@@ -315,98 +344,104 @@ class ResolveParameters extends Presidential {
         this.someArgs +
         ") ",
     );
-    let trueFunc = this.trueVfalse(this.func);
-    let trueSomeArgs = this.trueVfalse(this.someArgs);
-    let funcUno = trueFunc
+    this.trueFunc = this.trueVfalse(this.func);
+    this.trueSomeArgs = this.trueVfalse(this.someArgs);
+    this.funcUno = this.trueFunc
       ? decodeURIComponent(this.func)
-      : new ProjectFUnctionNames().paramsList;
-    let funcDos = trueSomeArgs ? decodeURIComponent(this.someArgs) : trueSomeArgs;
-    let numVarRnd = Math.floor(Math.random() * funcUno.length);
-    let arrDRnd = null;
-    if (funcUno || funcDos) {
+      : projectP.paramsList;
+    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
+    this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
+    this.arrDRnd = null;
+    if (this.funcUno || this.funcDos) {
       this.argsX = [];
       this.content = [];
-      let arrUno = Array.isArray(this.func);
-      let arrDos = this.trueVfalse(this.someArgs);
-      if (arrUno && arrDos) {
+      this.arrUno = Array.isArray(this.func);
+      this.arrDos = this.trueVfalse(this.someArgs);
+      if (this.arrUno && this.arrDos) {
         this.keys = Object.values(this.func).concat(this.someArgs);
       } 
       else {
-        if (arrUno && !arrDos) {
+        if (this.arrUno && !this.arrDos) {
           this.keys = Object.values(this.func);
         }
         else {
-          if (!arrUno && arrDos) {
+          if (!this.arrUno && this.arrDos) {
             this.keys = [this.func].concat(this.someArgs);
           } 
           else {
-            if (!arrUno && !arrDos && trueFunc) {
+            if (!this.arrUno && !this.arrDos && this.trueFunc) {
               this.keys = [this.func];
             }
             else {
-              if (!trueFunc) {
-                this.keys = Object.values(funcUno[numVarRnd])
+              if (!this.trueFunc) {
+                this.keys = Object.values(this.funcUno[this.numVarRnd])
               }
             }
           }
         }
       }
       this.keys.forEach((pro) => {
-        let keyPro
+        this.keyPro
         if (typeof pro === "object" || Array.isArray(pro)) {
-          keyPro = pro;
+          this.keyPro = pro;
         }
         else {
-          keyPro = [pro];
+          this.keyPro = [pro];
         }
-        let keyProParams;
-        let realItem;
-        let keysArrArr = this.trueVfalse(Array.isArray(pro));
-        if (keysArrArr) {
-          let funcLimit = [];
-          let paramLimit = [];
+        this.keyProParams;
+        this.realItem;
+        this.keysArrArr = this.trueVfalse(Array.isArray(pro));
+        if (this.keysArrArr) {
+          this.funcLimit = [];
+          this.paramLimit = [];
           pro.forEach((subParam, proIndex) => {
-            realItem = this.trueVfalse(subParam);
-            if (realItem) {
-              let keyProParams;
+            this.realItem = this.trueVfalse(subParam);
+            if (this.realItem) {
+              this.keyProParams;
               if (typeof subParam === "object" || Array.isArray(subParam)) {
-                keyProParams = new RelatedFunctions(subParam[proIndex]);
+                this.keyProParams = new RelatedFunctions(subParam[proIndex]);
               }
               else {
-                keyProParams = new RelatedFunctions(subParam);
+                this.keyProParams = new RelatedFunctions(subParam);
               }
-              if (keyProParams.funFirst >= 0) {
-                funcLimit.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
-              } else {
+              if (this.keyProParams.funFirst >= 0) {
+                this.funcLimit.push(projectP.fileList[this.keyProParams.funFirst]);
+              } 
+              else {
                 if (typeof subParam === "object") {
-                  paramLimit.push(subParam);
-                } else if (Array.isArray(subParam)) {
-                  paramLimit.push(subParam[proIndex]);
-                } else {
-                  paramLimit.push(subParam);
+                  this.paramLimit.push(subParam);
+                } 
+                else {
+                  if (Array.isArray(subParam)) {
+                    this.paramLimit.push(subParam[proIndex]);
+                  }
+                  else {
+                    this.paramLimit.push(subParam);
+                  }
                 }
               }
             }
           });
-          if (funcLimit.length > 0) {
-            this.argsX.push(funcLimit);
+          if (this.funcLimit.length > 0) {
+            this.argsX.push(this.funcLimit);
           }
-          if (paramLimit.length > 0) {
-            this.content.push(paramLimit);
+          if (this.paramLimit.length > 0) {
+            this.content.push(this.paramLimit);
           }
-        } else {
-          realItem = this.trueVfalse(pro);
-          if (realItem) {
-            for (var key in keyPro) {
-              let keyProParams;
+        } 
+        else {
+          this.realItem = this.trueVfalse(pro);
+          if (this.realItem) {
+            for (var key in this.keyPro) {
+              this.keyProParams;
               if (typeof pro === "object" || Array.isArray(pro)) {
-                keyProParams = new RelatedFunctions(pro[key]);
+                this.keyProParams = new RelatedFunctions(pro[key]);
               }
               else {
-                keyProParams = new RelatedFunctions(pro);
+                this.keyProParams = new RelatedFunctions(pro);
               }
-              if (keyProParams.funFirst >= 0) {
-                this.argsX.push(new ProjectFUnctionNames().fileList[keyProParams.funFirst]);
+              if (this.keyProParams.funFirst >= 0) {
+                this.argsX.push(projectP.fileList[this.keyProParams.funFirst]);
               } else {
                 if (typeof pro === "object" || Array.isArray(pro)) {
                   this.content.push(pro[key]);
@@ -419,18 +454,18 @@ class ResolveParameters extends Presidential {
           }
         }
       });
-      if (this.argsX) {
+      if (this.argsX && this.argsX.length > 0) {
         this.allErrors = {};
         this.allResolutions = {};
-        var fParams = new ProjectFUnctionNames(); //gsFParams();
-        var resCount = 0;
+        this.fParams = projectP; //gsFParams();
+        this.resCount = 0;
         this.argsX.forEach((result, argsXIndex) => {
-          console.log("argsX result " + resCount + ": " + result);
+          console.log("argsX result " + this.resCount + ": " + result);
           this.args = {};
           this.resolvedArgs = [];
           this.missingParams = [];
           this.contentLimit = this.content[argsXIndex];
-          this.searchResult = fParams.paramsList.find((rndS) => {
+          this.searchResult = this.fParams.paramsList.find((rndS) => {
             return rndS.name === result;
           });
           this.orderedContent = [];
@@ -450,69 +485,73 @@ class ResolveParameters extends Presidential {
               );
             }
             this.contentMap = {};
-            let realItem;
+            this.realItem;
             this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
-              let declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
-              if (declaredParamArrArr) {
-                let paramLimit = 0;
+              this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
+              if (this.declaredParamArrArr) {
+                this.paramLimit = 0;
                 declaredParam.forEach((subParam, subParamIndex) => {
                   this.contentLimit.forEach((item, currentDeclaredIndex) => {
-                    realItem = this.trueVfalse(subItem);
-                    if (realItem) {
-                      let currentDeclared = this.contentMap[declaredParam];
-                      let currentSub = subItem;
-                      currentDeclared = currentSub;
-                      paramLimit++;
+                    this.realItem = this.trueVfalse(subItem);
+                    if (this.realItem) {
+                      this.currentDeclared = this.contentMap[declaredParam];
+                      this.currentSub = subItem;
+                      this.currentDeclared = this.currentSub;
+                      this.paramLimit++;
                       if (this.contentMap.length === this.declaredParams.length) {
                         return;
                       }
                     }
                   });
                 });
-              } else {
+              } 
+              else {
                 if (Array.isArray(this.contentLimit)) {
                   this.contentLimit.forEach((item, contentLimitIndex) => {
-                    let contentLimitArrArr = this.trueVfalse(Array.isArray(item));
-                    if (contentLimitArrArr) {
+                    this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
+                    if (this.contentLimitArrArr) {
                       item.forEach((subItem, mapItemIndex) => {
-                        realItem = this.trueVfalse(subItem);
-                        if (realItem) {
-                          let paramDKey = this.declaredParams[mapItemIndex];
+                        this.realItem = this.trueVfalse(subItem);
+                        if (this.realItem) {
+                          this.paramDKey = this.declaredParams[mapItemIndex];
                           if (!this.contentMap[paramDKey]) {
-                            this.contentMap[paramDKey] = subItem;
+                            this.contentMap[this.paramDKey] = subItem;
                           }
-                          if (this.contentMap[paramDKey] === subItem) {
-                            return;
-                          }
+                          // if (this.contentMap[this.paramDKey] === subItem) {
+                          //   return;
+                          // }
                         }
                       });
-                    } else {
-                      realItem = this.trueVfalse(item);
-                      if (realItem) {
-                        let paramDKey = this.declaredParams[contentLimitIndex];
-                        if (!this.contentMap[paramDKey]) {
-                          this.contentMap[paramDKey] = item;
+                    } 
+                    else {
+                      this.realItem = this.trueVfalse(item);
+                      if (this.realItem) {
+                        this.paramDKey = this.declaredParams[contentLimitIndex];
+                        if (!this.contentMap[this.paramDKey]) {
+                          this.contentMap[this.paramDKey] = item;
                         }
-                        if (this.contentMap[paramDKey] === item) {
-                          return;
-                        }
+                        // if (this.contentMap[this.paramDKey] === item) {
+                        //   return;
+                        // }
                       }
                     }
                   });
-                } else {
-                  let contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
-                  if (contentArrArr) {
-                  } else {
-                    realItem = this.trueVfalse(this.contentLimit);
-                    if (realItem) {
+                } 
+                else {
+                  this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
+                  if (this.contentArrArr) {
+                  } 
+                  else {
+                    this.realItem = this.trueVfalse(this.contentLimit);
+                    if (this.realItem) {
                       for (var key in this.declaredParams) {
-                        let paramDKey = this.declaredParams[key];
+                        this.paramDKey = this.declaredParams[key];
                         if (!this.contentMap[paramDKey]) {
-                          this.contentMap[paramDKey] = this.contentLimit;
+                          this.contentMap[this.paramDKey] = this.contentLimit;
                         }
-                        if (this.contentMap[paramDKey] === this.contentLimit) {
-                          return;
-                        }
+                        // if (this.contentMap[paramDKey] === this.contentLimit) {
+                        //   return;
+                        // }
                       }
                     }
                   }
@@ -527,18 +566,48 @@ class ResolveParameters extends Presidential {
               }
             });
           }
-          this.result = this.resolvedArgs
+          if (this.orderedContent) {
+            if (this.missingParams.length === 0) {
+              // orderedContent = resolvedArgs;
+              this.allResolutions[result] = this.resolvedArgs;
+              // console.error(allErrors[result]);
+              console.log(this.allResolutions[result]);
+            } 
+            else {
+              this.allErrors[result] =
+                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
+              console.error(this.allErrors[result]);
+              console.log(this.allErrors[result]);
+            }
+          }
+          if (Object.keys(this.args).length > 0) {
+            console.log("Resolved arguments:", this.args);
+          }
+          if (this.resolvedArgs.length > 0) {
+            console.log("Resolved parameters Array:", this.resolvedArgs);
+          }
+          this.resCount++;
+          // this.result = this.resolvedArgs
         })
+        let errorKeys = Object.keys(this.allErrors);
+        // if (errorKeys.length > 0) {
+        //   return allErrors;
+        // }
+      }
+      else {
+        console.log("No matching function found for:", this.func);
       }
     }
   }
   resParams() {
   }
 };
+let autoP = new ResolveParameters();
 
 var geneicType = function (e) {
-  let executed = 0;
-  let genAP = new ResolveParameters();
+  let executed = handlerP.executed;
+  let handles;
+  let base;
   let exampleObjectType = {
     a: "string",
     b: 123,
@@ -552,19 +621,55 @@ var geneicType = function (e) {
       if (!e) {
         eQueryObject = {
           parameter: {
-            q: genAP.argsX[0]
+            q: autoP.argsX[0]
           }
         };
+        eQueryObject = {parameter: {q:"http://instagram.com"}}
+        let tempObj = new FunctionHandle(eQueryObject);
+        handles =  tempObj
+        console.log("handles = " + handles, executed++);
+        if (!handles.funcUno && !handles.funcDos) {
+          base = handles
+        }
+        else {
+          let funcU = handles.funcUno;
+          let funcD = handles.funcDos;
+          base = createFunctionResult(funcU, funcD);
+        }
+        if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+          let dataOR = globalHandleGetData(base);
+          return dataOR
+        }
+        else {
+          return {payload: base}
+        }
       }
       else {
-        eQueryObject = e
-      }
-      if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
-        return handleRequest(eQueryObject);
-      }
-      else {
-        if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
-          return wwwDe(eQueryObject);
+        if (e && e.parameter && e.parameter.action && e.parameter.action === "getData") {
+          return handleRequest(e);
+        }
+        else {
+          if (e && e.parameter && e.parameter.action && e.parameter.action === "getDe") {
+            return wwwDe(e);
+          }
+        }
+        let tempObj = new FunctionHandle(e);
+        handles =  tempObj.
+        console.log("handles = " + handles, executed++);
+        if (!handles.funcUno && !handles.funcDos) {
+          base = handles
+        }
+        else {
+          let funcU = handles.funcUno;
+          let funcD = handles.funcDos;
+          base = createFunctionResult(funcU, funcD);
+        }
+        if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+          let dataOR = globalHandleGetData(base);
+          return dataOR
+        }
+        else {
+          return {payload: base}
         }
       }
     }
@@ -576,37 +681,94 @@ var geneicType = function (e) {
               action:"getData"
             }
           };
+          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
+            return handleRequest(eQueryObject);
+          }
         }
         else {
-          eQueryObject = e
-        }
-        if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
-          return handleRequest(eQueryObject);
-        }
-        else {
-          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
-            return wwwDe(eQueryObject);
+          if (e && e.parameter && e.parameter.action && e.parameter.action === "getData") {
+            return handleRequest(e);
+          }
+          else {
+            if (e && e.parameter && e.parameter.action && e.parameter.action === "getDe") {
+              return wwwDe(e);
+            }
+          }
+          let tempObj = new FunctionHandle(e);
+          handles =  tempObj.
+          console.log("handles = " + handles, executed++);
+          if (!handles.funcUno && !handles.funcDos) {
+            base = handles
+          }
+          else {
+            let funcU = handles.funcUno;
+            let funcD = handles.funcDos;
+            base = createFunctionResult(funcU, funcD);
+          }
+          if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+            let dataOR = globalHandleGetData(base);
+            return dataOR
+          }
+          else {
+            return {payload: base}
           }
         }
       }
       else {
         if (i > .6) {
           if (!e) {
-              eQueryObject = {
-                parameter: {
-                  file: genAP.functionRegistry.htmlArray[Math.floor(Math.random() * genAP.functionRegistry.htmlArray.length)]
-                }
-              };
+            eQueryObject = {
+              parameter: {
+                file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
+              }
+            };
+            eQueryObject = {parameter: {q:"http://instagram.com"}}
+            let tempObj = new FunctionHandle(eQueryObject);
+            handles =  tempObj.
+            console.log("handles = " + handles, executed++);
+            if (!handles.funcUno && !handles.funcDos) {
+              base = handles
             }
             else {
-              eQueryObject = e
+              let funcU = handles.funcUno;
+              let funcD = handles.funcDos;
+              base = createFunctionResult(funcU, funcD);
             }
-          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
-            return handleRequest(eQueryObject);
+            if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+              let dataOR = globalHandleGetData(base);
+              return dataOR
+            }
+            else {
+              return {payload: base}
+            }
           }
           else {
-            if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getDe") {
-              return wwwDe(eQueryObject);
+            if (e && e.parameter && e.parameter.action && e.parameter.action === "getData") {
+              return handleRequest(e);
+            }
+            else {
+              if (e && e.parameter && e.parameter.action && e.parameter.action === "getDe") {
+                return wwwDe(e);
+              }
+            }
+            let tempObj = new FunctionHandle(e);
+            handles =  tempObj.
+            console.log("handles = " + handles, executed++);
+            let base
+            if (!handles.funcUno && !handles.funcDos) {
+              base = handles
+            }
+            else {
+              let funcU = handles.funcUno;
+              let funcD = handles.funcDos;
+              base = createFunctionResult(funcU, funcD);
+            }
+            if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+              let dataOR = globalHandleGetData(base);
+              return dataOR
+            }
+            else {
+              return {payload: base}
             }
           }
         }
@@ -616,8 +778,8 @@ var geneicType = function (e) {
   // let tempSc = new IsValidDoubleObject(eQueryObject);
   // let script = new IsValidDoubleObject(eQueryObject);
     // return script.objRes();
-    // console.log(Object.getOwnPropertyNames(genAP));
-    // console.log(Object.getPrototypeOf(genAP));
+    // console.log(Object.getOwnPropertyNames(autoP));
+    // console.log(Object.getPrototypeOf(autoP));
     // GameManager.setGameStart("Warrior");
     // let mmoRpgPlay = GameManager.setGameStart.instances[0];
     // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
@@ -625,18 +787,44 @@ var geneicType = function (e) {
     //   console.log(`${JSON.stringify(instance)}`)
     // })
     // var numVarRnd = Math.floor(Math.random() * 25);
-    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"IsMapped.mapout",["e","f"],"isPropertyOf","e","isKeyOf","e","genAP.trueVfalse","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
+    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"IsMapped.mapout",["e","f"],"isPropertyOf","e","isKeyOf","e","autoP.trueVfalse","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
     // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
     // let randomWord = rndWord();
-    // let tyFile = wsSIPOC(randonWord);
-    // console.log(tyFile);
+    // let tyFile = wsSIPOC(randomWord);
+    // console.log(tyFile.split(">")[1].split("<")[0]);
     // let arrDRnd = appSort(randNum(randomWord));
     // let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
     // let result = autoP.functionRegistry.paramsList.find((rndS) => {
     //   return rndS.name === searchResult;
     // });
     // let fileIndex = handleRequest({parameter: {action:"getData"}});
-    // let tempObj = FunctionHandle.handleFunction({parameter: {q:"getData"}});
+    // let handles
+    // if (e) {
+    //   let tempObj = FunctionHandle.handleFunction(e);
+    //   handles =  tempObj
+    //   console.log("handles = " + handles, executed++);
+    // }
+    // else {
+    //   let tempObj = FunctionHandle.handleFunction({parameter: {func:"vidPlylist",args:tyFile.split(">")[1].split("<")[0]}});
+    //   handles = tempObj;
+    //   console.log("handles = " + handles, executed++);
+    // }
+    // let base
+    // if (!handles["exec"] && !handles["args"]) {
+    //   base = handles
+    // }
+    // else {
+    //   let funcU = handles["exec"];
+    //   let funcD = handles["args"];
+    //   base = createFunctionResult(funcU, funcD);
+    // }
+    // if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+    //   let dataOR = globalHandleGetData(base);
+    //   return dataOR
+    // }
+    // else {
+    //   return {payload: base}
+    // }
     // autoP.functionRegistry.domainTree();
     // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
     // let fileParams = autoP.functionRegistry.paramsList[fileIndex];
@@ -658,37 +846,35 @@ var geneicType = function (e) {
     // var tee = isPropertyOf(teeValid1)
     // var kee = IsMapped.mapout(tee)
     // var noB = isValidKeys(forTruth);
-    console.log(typeof initForm);
-    let handles
-    if (e) {
-      let tempObj = FunctionHandle.handleFunction(e);
-      handles =  tempObj
-      console.log("handles = " + handles, executed++);
-    }
-    else {
-      let tempObj = FunctionHandle.handleFunction(eQueryObject);
-      handles = tempObj;
-      console.log("handles = " + handles, executed++);
-    }
-    let base
-    if (!handles["exec"] && !handles["args"]) {
-      base = handles
-    }
-    else {
-      let funcU = handles["exec"];
-      let funcD = handles["args"];
-      base = createFunctionResult(funcU, funcD);
-    }
-    if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-      let dataOR = globalHandleGetData(base);
-      return dataOR
-    }
-    else {
-      return {payload: base}
-    }
+    // console.log(typeof initForm);
+    // if (e) {
+    //   let tempObj = new FunctionHandle(eQueryObject);
+    //   handles =  tempObj.
+    //   console.log("handles = " + handles, executed++);
+    // }
+    // else {
+    //   handles = handlerP;
+    //   console.log("handles = " + handles, executed++);
+    // }
+    // let base
+    // if (!handles.funcUno && !handles.funcDos) {
+    //   base = handles
+    // }
+    // else {
+    //   let funcU = handles.funcUno;
+    //   let funcD = handles.funcDos;
+    //   base = createFunctionResult(funcU, funcD);
+    // }
+    // if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+    //   let dataOR = globalHandleGetData(base);
+    //   return dataOR
+    // }
+    // else {
+    //   return {payload: base}
+    // }
   
-  try {
-    let proScript = testPro.getOwnPropertyNames(script.prototype);
-  }
-  catch (proError) {}
+  // try {
+  //   let proScript = testPro.getOwnPropertyNames(script.prototype);
+  // }
+  // catch (proError) {}
 };
