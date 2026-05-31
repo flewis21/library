@@ -16,8 +16,8 @@
       \
     />
     <style>
-      <?!= styleHtml.oddChances.getContent() ?>
-      <?!= styleHtml.renderFile.getContent() ?>
+      <?!= new StyleHtml().oddChances.getContent() ?>
+      <?!= new StyleHtml().renderFile.getContent() ?>
     </style>
   </head>
   <body class="center container">
@@ -89,12 +89,12 @@
   </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<?!= new StyleHtml().runIt.getContent() ?>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // Show the search area
     divLZ.style.display = "block";
   });
-  <?!= styleHtml.runIt.getContent() ?>
 
   function debounce(func, delay) {
     let timeout = null;

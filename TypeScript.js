@@ -624,7 +624,7 @@ var geneicType = function (e) {
             q: autoP.argsX[0]
           }
         };
-        eQueryObject = {parameter: {q:"http://instagram.com"}}
+        // eQueryObject = {parameter: {q:"http://instagram.com"}}
         let tempObj = new FunctionHandle(eQueryObject);
         handles =  tempObj
         console.log("handles = " + handles, executed++);
@@ -654,7 +654,7 @@ var geneicType = function (e) {
           }
         }
         let tempObj = new FunctionHandle(e);
-        handles =  tempObj.
+        handles =  tempObj
         console.log("handles = " + handles, executed++);
         if (!handles.funcUno && !handles.funcDos) {
           base = handles
@@ -695,7 +695,7 @@ var geneicType = function (e) {
             }
           }
           let tempObj = new FunctionHandle(e);
-          handles =  tempObj.
+          handles =  tempObj
           console.log("handles = " + handles, executed++);
           if (!handles.funcUno && !handles.funcDos) {
             base = handles
@@ -722,9 +722,9 @@ var geneicType = function (e) {
                 file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
               }
             };
-            eQueryObject = {parameter: {q:"http://instagram.com"}}
+            eQueryObject = {parameter: {func:"vidPlaylist",args:"turing test process performance"}}
             let tempObj = new FunctionHandle(eQueryObject);
-            handles =  tempObj.
+            handles =  tempObj
             console.log("handles = " + handles, executed++);
             if (!handles.funcUno && !handles.funcDos) {
               base = handles
@@ -752,9 +752,8 @@ var geneicType = function (e) {
               }
             }
             let tempObj = new FunctionHandle(e);
-            handles =  tempObj.
+            handles =  tempObj
             console.log("handles = " + handles, executed++);
-            let base
             if (!handles.funcUno && !handles.funcDos) {
               base = handles
             }

@@ -1376,7 +1376,7 @@ class FunctionHandle {
                     else {
                       if (this.htmlArray.includes(this.funcTres)) {
                         this.funcTresIndex = this.htmlArray.findIndex(function (element) {
-                          return element === this.funcTres;
+                          return element === this?.funcTres;
                         });
                         this.htmlTresArg = this.htmlArray[this.funcTresIndex];
                       }

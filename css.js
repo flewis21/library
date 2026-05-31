@@ -1578,8 +1578,6 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         const nVid = document.querySelectorAll(".userClickedNext");
         const input = document.getElementById("artiicleIndex");
         const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
-        // const input = document.querySelectorAll(".getVideo");
-        // const suggestionsDiv = document.querySelectorAll(".autocomplete-suggestions");
         let fullList = [];
         let againCap = null;
 
@@ -1613,16 +1611,12 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                   fullList.push(tempObj);
                 }
               }
-              // fullList = response.data;
             } else {
               console.warn("Expected an array in response from getVI, received:", response);
               // Fallback to empty array if the structure is not as expected
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
-            // alert("vidIds = " + JSON.stringify(localSuggestionsCache["allMatches"]));
-            // window.location.href = JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]);
-            // window.open(JSON.stringify(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)]), "_top")
             $('a').click(function(event){
               if ($(this).attr('href') === "javascript:void(0)") {
                 let confirmation = window.confirm(
@@ -1638,6 +1632,45 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                   document.body.appendChild(linkFollow);
                   document.getElementById("linkFOLLOW").click();
                   document.getElementById("linkFOLLOW").remove();
+                  // If the user preses the "Enter" key on the keyboard. 
+                  // if (event.key === 'Enter')  {
+                  serverside("getVI", [])
+                  .then((response) => {
+                    // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                    // Access the actual array from the response
+                    if (response && typeof response === "object") {
+                      fullList = [];
+                      for (var key in response) {
+                        // alert(JSON.stringify(response[key]));
+                        let i = 0;
+                        let l = response[key].length;
+                        // alert(l);
+                        for (i,l;i<l;i++) {
+                          let tempObj = {};
+                          tempObj.description = response[key][i].description;
+                          if (String(response[key][i].videoId).indexOf("http") === -1) {
+                            let tData = response[key][i].videoId;
+                            let dLoc =  null;
+                            dLoc =  "https://www.youtube.com/watch?v=";
+                            tempObj.youtubeUrl = dLoc + tData;
+                          }
+                          else {
+                            tempObj.youtubeUrl = response[key][i].videoId;
+                          }
+                          fullList.push(tempObj);
+                        }
+                      }
+                    } 
+                    else {
+                      console.warn("Expected an array in response from getVI, received:", response);
+                      // Fallback to empty array if the structure is not as expected
+                      fullList = [];
+                    }
+                  })
+                  .catch(error => {
+                    console.error("Error fetching address suggestions for artiicleIndex :", error);
+                    suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                  });
                 }
               }
             });
@@ -1690,7 +1723,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               if (event.key === 'Enter') {
                 let confirmation;
                 suggestions?.forEach(suggestion => {
-                  console.log(suggestion)
+                  // console.log(suggestion)
                   if (suggestion && suggestion.description.includes(event.target.value)) {
                     confirmation = window.confirm(
                       suggestion.youtubeUrl,
@@ -1761,45 +1794,6 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         if (input && suggestionsDiv) {
           input.addEventListener('input', (event) => {
             fetchSuggestions(event.target.value);
-            // If the user preses the "Enter" key on the keyboard. 
-            // if (event.key === 'Enter')  {
-            serverside("getVI", [])
-            .then((response) => {
-              // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-              // Access the actual array from the response
-              if (response && typeof response === "object") {
-                fullList = [];
-                for (var key in response) {
-                  // alert(JSON.stringify(response[key]));
-                  let i = 0;
-                  let l = response[key].length;
-                  // alert(l);
-                  for (i,l;i<l;i++) {
-                    let tempObj = {};
-                    tempObj.description = response[key][i].description;
-                    if (String(response[key][i].videoId).indexOf("http") === -1) {
-                      let tData = response[key][i].videoId;
-                      let dLoc =  null;
-                      dLoc =  "https://www.youtube.com/watch?v=";
-                      tempObj.youtubeUrl = dLoc + tData;
-                    }
-                    else {
-                      tempObj.youtubeUrl = response[key][i].videoId;
-                    }
-                    fullList.push(tempObj);
-                  }
-                }
-              } 
-              else {
-                console.warn("Expected an array in response from getVI, received:", response);
-                // Fallback to empty array if the structure is not as expected
-                fullList = [];
-              }
-            })
-            .catch(error => {
-              console.error("Error fetching address suggestions for artiicleIndex :", error);
-              suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-            });
           });
 
           document.addEventListener('click', (event) => {

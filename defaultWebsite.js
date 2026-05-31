@@ -2645,8 +2645,8 @@ var getUrl = function (appInterface) {
 };
 
 var getUrlResponse = function (url, options) {
-  var validUrl = isValidUrl(url);
-  if (validUrl.hostname) {
+  // var validUrl = isValidUrl(url);
+  if (url) {
     let response;
     let location;
     let htmlData;
@@ -2668,7 +2668,7 @@ var getUrlResponse = function (url, options) {
               while (retries < maxRetries) {
                 try {
                   response = UrlFetchApp.fetch(
-                    supFunc && supFunc.args ? supFunc.args : validUrl?.hostname,
+                    supFunc && supFunc.args ? supFunc.args : url,
                     {
                       followRedirects: false, // Prevent automatic redirects
                       muteHttpExceptions: true,
@@ -2700,7 +2700,7 @@ var getUrlResponse = function (url, options) {
                 location = response.getContentText();
                 console.log("From response: Location = " + location);
                 htmlData = location;
-                supUrl = validUrl.hostname;
+                supUrl = url;
                 var responseObj = {
                   dataStr: vidFactor(location, autoP.functionRegistry.time).vidArray,
                 };
@@ -2716,14 +2716,14 @@ var getUrlResponse = function (url, options) {
       Logger.log("Error response received: " + l.stack);
       console.log("Error response received,", l.stack);
       var domainData = getDomainValues();
-      if (domainData.indexOf(validUrl.hostname) !== -1) {
+      if (domainData.indexOf(url) !== -1) {
         return;
       } else {
         var formData = {};
         let ciar = trial();
         let mera = randomEmail();
         let meri = randNum([JSON.stringify(ciar)].join(" "));
-        formData["domain"] = validUrl.hostname;
+        formData["domain"] = url;
         formData["price"] = meri;
         formData["email"] = mera;
         submitDomain(formData);
@@ -2732,8 +2732,8 @@ var getUrlResponse = function (url, options) {
     console.log("Final app:", htmlData);
     return { index: responseObj, app: htmlData, link: supUrl };
   } else {
-    Logger.log("Invalid input, " + JSON.stringify([validUrl.hostname, options]));
-    console.log("Invalid input, ", JSON.stringify([validUrl.hostname, options]));
+    Logger.log("Invalid input, " + JSON.stringify([url, options]));
+    console.log("Invalid input, ", JSON.stringify([url, options]));
     return null;
   }
 };

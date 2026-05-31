@@ -3983,7 +3983,6 @@ function vidFactor(data, time) {
 }
 
 function vidPlaylist(tunPlay) {
-  let vpAuto = autoP;
   var randomPlaylist = [];
   if (!tunPlay) {
     autoP.functionRegistry.vidTree();

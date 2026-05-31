@@ -88,22 +88,25 @@ function needPastTime(searchString) {
     let delay = 1000;
     let data = null;
     try {
-      retries++;
-      delay += 3002;
-      Utilities.sleep(delay + Math.random() * 2000);
-      Logger.log(`Rate limit hit, retrying in ${delay} ms`);
-      while (retries < maxRetries) {
-        try {
-          data = getUrlResponse(searchLink, options);
+      data = getUrlResponse(searchLink, options);
+      if (!data) {
+        retries++;
+        delay += 3002;
+        Utilities.sleep(delay + Math.random() * 2000);
+        Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+        while (retries < maxRetries) {
+          try {
+            data = getUrlResponse(searchLink, options);
+          }
+          catch (error) {
+            Logger.log("Error fetching data: " + error);
+            retries++;
+            delay += 2;
+            Utilities.sleep(delay);
+          }
         }
-        catch (error) {
-          Logger.log("Error fetching data: " + error);
-          retries++;
-          delay += 2;
-          Utilities.sleep(delay);
-        }
+        Logger.log("Max retries reached, failed to fetch data.");
       }
-      Logger.log("Max retries reached, failed to fetch data.");
     }
     catch (error) {
       Logger.log("Error response received: " + l.stack);
@@ -197,7 +200,7 @@ function needPastTime(searchString) {
     }
   }
 
-  if (fndOrd) {
+  if (fndOrd.length > 0) {
     var randomKey = 0;
     var rndRes = [];
     while (rndRes.length === 0) {
@@ -247,6 +250,10 @@ function needPastTime(searchString) {
           }
         }
       });
+      if (rndRes.length === 0) {
+        let isItValid = isValidUrl(searchString);
+        isItValid["matches"]
+      }
       if (rndRes.length > 0) {
         autoP.functionRegistry.vidTree();
         vidSheetVals = autoP.functionRegistry.getVideoList();
