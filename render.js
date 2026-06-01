@@ -1036,8 +1036,8 @@ class RenderFile {
                   <div class="nav-left flex-div">
                     <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
                   </div>
-                  <div class="nav-middle flex-div">
-                    <div class="search-box flex-div">
+                  <div class="nav-middle flex-div ">
+                    <div class="search-box flex-div logo menu-icon">
                       <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
                     </div>
                   </div>

@@ -2851,11 +2851,10 @@ function resolveParams(func, someArgs) {
       func +
       ", someArgs: " +
       someArgs +
-      ")\n " +
-      arguments.callee.caller.name,
+      ") ",
   );
-  var trueFunc = auotP.trueVfalse(func);
-  var trueSomeArgs = auotP.trueVfalse(someArgs);
+  var trueFunc = autoP.trueVfalse(func);
+  var trueSomeArgs = autoP.trueVfalse(someArgs);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
     : autoP.functionRegistry.paramsList;
@@ -2866,7 +2865,7 @@ function resolveParams(func, someArgs) {
     var argsX = [];
     var content = [];
     var arrUno = Array.isArray(func);
-    var arrDos = auotP.trueVfalse(someArgs);
+    var arrDos = autoP.trueVfalse(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -2880,12 +2879,12 @@ function resolveParams(func, someArgs) {
       let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = auotP.trueVfalse(Array.isArray(pro));
+      let keysArrArr = autoP.trueVfalse(Array.isArray(pro));
       if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
-          realItem = auotP.trueVfalse(subParam);
+          realItem = autoP.trueVfalse(subParam);
           if (realItem) {
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
@@ -2912,7 +2911,7 @@ function resolveParams(func, someArgs) {
           content.push(paramLimit);
         }
       } else {
-        realItem = auotP.trueVfalse(pro);
+        realItem = autoP.trueVfalse(pro);
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
@@ -2969,14 +2968,14 @@ function resolveParams(func, someArgs) {
           let realItem;
           declaredParams.forEach((declaredParam, declaredParamIndex) => {
             // content.forEach((item) => {
-            let declaredParamArrArr = auotP.trueVfalse(Array.isArray(declaredParam));
+            let declaredParamArrArr = autoP.trueVfalse(Array.isArray(declaredParam));
             if (declaredParamArrArr) {
               let paramLimit = 0;
               declaredParam.forEach((subParam, subParamIndex) => {
                 //item.forEach((subItem) => {
                 contentLimit.forEach((item, currentDeclaredIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  realItem = auotP.trueVfalse(subItem);
+                  realItem = autoP.trueVfalse(subItem);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -2996,10 +2995,10 @@ function resolveParams(func, someArgs) {
               if (Array.isArray(contentLimit)) {
                 contentLimit.forEach((item, contentLimitIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  let contentLimitArrArr = auotP.trueVfalse(Array.isArray(item));
+                  let contentLimitArrArr = autoP.trueVfalse(Array.isArray(item));
                   if (contentLimitArrArr) {
                     item.forEach((subItem, mapItemIndex) => {
-                      realItem = auotP.trueVfalse(subItem);
+                      realItem = autoP.trueVfalse(subItem);
                       if (realItem) {
                         // if (subItem === declaredParam) {
                         // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3017,7 +3016,7 @@ function resolveParams(func, someArgs) {
                       }
                     });
                   } else {
-                    realItem = auotP.trueVfalse(item);
+                    realItem = autoP.trueVfalse(item);
                     if (realItem) {
                       // if (subItem === declaredParam) {
                       // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3036,10 +3035,10 @@ function resolveParams(func, someArgs) {
                   }
                 });
               } else {
-                let contentArrArr = auotP.trueVfalse(Array.isArray(contentLimit));
+                let contentArrArr = autoP.trueVfalse(Array.isArray(contentLimit));
                 if (contentArrArr) {
                 } else {
-                  realItem = auotP.trueVfalse(contentLimit);
+                  realItem = autoP.trueVfalse(contentLimit);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
