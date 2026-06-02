@@ -169,40 +169,42 @@ function isValidUrl(text) {
   console.log("matches = " + matches);
   if (!matches) {
     let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-    searchLinkDrive?.dataTree?.forEach((fileUrl) => {
-      if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-        autoP.functionRegistry.vidTree();
-        let vidSheetVals = autoP.functionRegistry.getVideoList();
-        let vidData = [];
-        let vidVals = Object.values(vidSheetVals);
-        vidVals.forEach((val) => {
-          let inVVals = Object.values(val);
-          inVVals.forEach((inV) => {
-            let truInv = autoP.trueVfalse(inV);
-            if (truInv) {
-              vidData.push(inV);
-            } 
-            else {
-              return;
-            }
-          });
+    if (searchLinkDrive?.dataTree?.length > 0) {
+      autoP.functionRegistry.vidTree();
+      let vidSheetVals = autoP.functionRegistry.getVideoList();
+      let vidData = [];
+      let vidVals = Object.values(vidSheetVals);
+      vidVals.forEach((val) => {
+        let inVVals = Object.values(val);
+        inVVals.forEach((inV) => {
+          let truInv = autoP.trueVfalse(inV);
+          if (truInv) {
+            vidData.push(inV);
+          } 
+          else {
+            return;
+          }
         });
-        if (vidData?.indexOf(fileUrl) !== -1) {
-          return;
-        } 
-        else {
-          updateQuote(
-            JSON.stringify({
-              name: "videoSheet",
-              number: parseInt("001", 8),
-              videoid: fileUrl,
-              videodescription: text,
-            }),
-          );
+      });
+      searchLinkDrive?.dataTree?.forEach((fileUrl) => {
+        if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
+          if (vidData?.indexOf(fileUrl) !== -1) {
+            return;
+          } 
+          else {
+            updateQuote(
+              JSON.stringify({
+                name: "videoSheet",
+                number: parseInt("001", 8),
+                videoid: fileUrl,
+                videodescription: text,
+              }),
+            );
+          }
+          rndRes.push(fileUrl);
         }
-        rndRes.push(fileUrl);
-      }
-    });
+      });
+    }
   }
   allMatches = matches ? [...matches] : [...rndRes];
   console.log(`allMatches = matches ? [...${allMatches}]`);
@@ -219,7 +221,7 @@ function isValidUrl(text) {
       }
       else {
         let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-        searchLinkDrive?.dataTree?.forEach((fileUrl) => {
+        [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
           if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
             autoP.functionRegistry.vidTree();
             let vidSheetVals = autoP.functionRegistry.getVideoList();
@@ -3997,11 +3999,11 @@ function vidPlaylist(tunPlay) {
     let nptVideo = needPastTime(tunPlay);
     var nptUrl = nptVideo.hardUrl;
     let listObj = nptVideo.playList;
-    listObj.forEach((itemList) => {
-      if (itemList) {
-        randomPlaylist.push(itemList);
-      }
-    });
+    if (listObj && listObj.length > 0) {
+      listObj.forEach((itemList) => {
+          randomPlaylist.push(itemList);
+      });
+    }
   }
   var randomVidKey = Math.floor(
     Math.random() * Math.floor(randomPlaylist.length),

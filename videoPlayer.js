@@ -60,6 +60,7 @@ function iframeC() {
 }
 
 function needPastTime(searchString) {
+  let fndOrdObj = {};
   autoP.functionRegistry.vidTree();
   var vidSheetVals = autoP.functionRegistry.getVideoList();
   var vidData = [];
@@ -76,12 +77,13 @@ function needPastTime(searchString) {
       }
     });
   });
-  while (typeof fndOrd !== "object") {
+  // while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
       var noSearch = autoP.searchResult?.parameters;
       var searchString = noSearch;
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    fndOrdObj.hardUrl = searchLink;
     const options = { muteHTTPExceptions: true };
     let retries = 0;
     let maxRetries = 0;
@@ -195,12 +197,13 @@ function needPastTime(searchString) {
         }
       });
     }
-    if (typeof fndOrd === "object") {
-      break;
-    }
-  }
+    // if (typeof fndOrd === "object") {
+    //   break;
+    // }
+  // }
 
-  if (fndOrd.length > 0) {
+
+  if (fndOrd?.length > 0) {
     var randomKey = 0;
     var rndRes = [];
     while (rndRes.length === 0) {
@@ -309,9 +312,10 @@ function needPastTime(searchString) {
           }
         });
       });
-      return { playList: playVid, hardUrl: searchLink };
+      fndOrdObj.playList = playVid;
     }
   }
+  return fndOrdObj
 }
 
 function pastTime(url) {

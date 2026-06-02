@@ -284,12 +284,12 @@ function createFormFunction(searchString) {
     // );
   }
   gridItem.setRows([
-    "aBlackR",
+    "8",
     "aBlackRO-O-O",
-    "aBlackPawn",
-    "aWhitePawn",
+    "7",
+    "2",
     "aWhiteRO-O-O",
-    "aWhiteR",
+    "1",
     "bBlackN",
     "bBlackPawn",
     "bWhitePawn",
@@ -328,10 +328,10 @@ function createFormFunction(searchString) {
   gridItem.setColumns([
     "4",
     "3",
-    "2",
-    "1",
-    "8",
-    "7",
+    "aWhitePawn",
+    "aWhiteR",
+    "aBlackR",
+    "aBlackPawn",
     "6",
     "5",
     "x",
