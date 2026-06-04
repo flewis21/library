@@ -683,7 +683,7 @@ function jFund(fx) {
 
 // Server-side (Code.gs)
 // Helper function for fetching data (using Promises for async handling)
-function fetchData(url, options) {
+var fetchData = function(url, options) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +
@@ -711,7 +711,7 @@ function fetchData(url, options) {
 }
 
 // Function to fetch news articles from News API
-function getNewsArticles(query, apiKey, pageSize = 10, page = 1) {
+var getNewsArticles = function(query, apiKey, pageSize = 10, page = 1) {
   // console.log(
   //   JSON.stringify(this["start"]) +
   //     "\n" +
@@ -743,7 +743,7 @@ function getTopHeadlines(country, category, apiKey, pageSize = 10, page = 1) {
 }
 
 // Function to summarize text using a hypothetical summarization API (replace with a real API)
-function summarizeText(text, summarizationApiKey) {
+var summarizeText = function(text, summarizationApiKey) {
   console.log(
     JSON.stringify(this["start"]) +
       "\n" +

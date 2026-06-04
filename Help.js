@@ -81,8 +81,8 @@ function crmT(func) {
 class RelatedFunctions {
   constructor(func) {
     this.func = func;
-    let appList = projectP;
-    var lowCapApp = appList.fileList.map(function (item) {
+    let appList = Object.keys(autoGlobe.globalThis);
+    var lowCapApp = appList.map(function (item) {
       return item.toLowerCase();
     });
     let lowCapFunc;
@@ -167,9 +167,9 @@ function isValidUrl(text) {
   let rndRes = [];
   matches = text.match(urlRegex);
   console.log("matches = " + matches);
-  if (!matches) {
+  if (!matches || matches === null) {
     let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-    if (searchLinkDrive?.dataTree?.length > 0) {
+    if (searchLinkDrive?.filedMain) {
       autoP.functionRegistry.vidTree();
       let vidSheetVals = autoP.functionRegistry.getVideoList();
       let vidData = [];
@@ -186,12 +186,14 @@ function isValidUrl(text) {
           }
         });
       });
-      searchLinkDrive?.dataTree?.forEach((fileUrl) => {
+      [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
         if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
           if (vidData?.indexOf(fileUrl) !== -1) {
+            rndRes.push(fileUrl);
             return;
           } 
           else {
+            rndRes.push(fileUrl);
             updateQuote(
               JSON.stringify({
                 name: "videoSheet",
@@ -201,14 +203,14 @@ function isValidUrl(text) {
               }),
             );
           }
-          rndRes.push(fileUrl);
         }
       });
     }
   }
-  allMatches = matches ? [...matches] : [...rndRes];
+  console.log("rndRes = " + rndRes);
+  allMatches = matches !== null ? [...matches] : [...rndRes];
   console.log(`allMatches = matches ? [...${allMatches}]`);
-  if (allMatches.length > 0) {
+  if (allMatches?.length > 0) {
     let currentProtocol = "";
     let currentHostname = "";
     let currentPathname = "";
@@ -220,41 +222,46 @@ function isValidUrl(text) {
         url = url.substring(protocolEnd + 3);
       }
       else {
-        let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-        [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
-          if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-            autoP.functionRegistry.vidTree();
-            let vidSheetVals = autoP.functionRegistry.getVideoList();
-            let vidData = [];
-            let vidVals = Object.values(vidSheetVals);
-            vidVals.forEach((val) => {
-              let inVVals = Object.values(val);
-              inVVals.forEach((inV) => {
-                let truInv = autoP.trueVfalse(inV);
-                if (truInv) {
-                  vidData.push(inV);
+        if (rndRes.length === 0) {
+          let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+          if (searchLinkDrive?.filedMain) {
+            [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
+              if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
+                autoP.functionRegistry.vidTree();
+                let vidSheetVals = autoP.functionRegistry.getVideoList();
+                let vidData = [];
+                let vidVals = Object.values(vidSheetVals);
+                vidVals.forEach((val) => {
+                  let inVVals = Object.values(val);
+                  inVVals.forEach((inV) => {
+                    let truInv = autoP.trueVfalse(inV);
+                    if (truInv) {
+                      vidData.push(inV);
+                    } 
+                    else {
+                      return;
+                    }
+                  });
+                });
+                if (vidData?.indexOf(fileUrl) !== -1) {
+                  rndRes.push(fileUrl);
+                  return;
                 } 
                 else {
-                  return;
+                  rndRes.push(fileUrl);
+                  updateQuote(
+                    JSON.stringify({
+                      name: "videoSheet",
+                      number: parseInt("001", 8),
+                      videoid: fileUrl,
+                      videodescription: text,
+                    }),
+                  );
                 }
-              });
+              }
             });
-            if (vidData?.indexOf(fileUrl) !== -1) {
-              return;
-            } 
-            else {
-              updateQuote(
-                JSON.stringify({
-                  name: "videoSheet",
-                  number: parseInt("001", 8),
-                  videoid: fileUrl,
-                  videodescription: text,
-                }),
-              );
-            }
-            rndRes.push(fileUrl);
           }
-        });
+        }
       }
       var hostnameEnd = url.indexOf("/");
       if (hostnameEnd !== -1) {

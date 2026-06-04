@@ -2,15 +2,24 @@ class Script{};
 // Script.prototype. = function () {
 // };
 
+class RawFuncResult {
+  constructor() {
+    this.globalThis = globalThis
+    // console.log(this.globalThis)
+  }
+}
+let autoGlobe = new RawFuncResult()
+// console.log(autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content));
+
 class ProjectFUnctionNames {
   constructor() {
     this.fileList = [];
     this.paramsList = [];
-      for (const key in globalThis) {
-        if (typeof globalThis[key] == "function") {
+      for (const key in autoGlobe.globalThis) {
+        if (typeof autoGlobe.globalThis[key] == "function") {
           this.fileList.push(key);
           try {
-            const funcString = globalThis[key].toString();
+            const funcString = autoGlobe.globalThis[key].toString();
             const params = funcString
               .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
               .split(",")
@@ -53,8 +62,9 @@ class IsValidKeys {
   }
 };
 
-class IsOmit {
+class IsOmit extends RawFuncResult {
   constructor(t, k) {
+    super();
     this.t = t;
     this.k = k;
   }
@@ -348,7 +358,7 @@ class ResolveParameters extends Presidential {
     this.trueSomeArgs = this.trueVfalse(this.someArgs);
     this.funcUno = this.trueFunc
       ? decodeURIComponent(this.func)
-      : projectP.paramsList;
+      : Object.keys(autoGlobe.globalThis);
     this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
     this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
     this.arrDRnd = null;
@@ -365,7 +375,7 @@ class ResolveParameters extends Presidential {
           this.keys = Object.values(this.func);
         }
         else {
-          if (!this.arrUno && this.arrDos) {
+          if (!this.arrUno && this.arrDos && this.trueFunc) {
             this.keys = [this.func].concat(this.someArgs);
           } 
           else {
@@ -373,8 +383,8 @@ class ResolveParameters extends Presidential {
               this.keys = [this.func];
             }
             else {
-              if (!this.trueFunc) {
-                this.keys = Object.values(this.funcUno[this.numVarRnd])
+              if (!this.arrUno && !this.arrDos && !this.trueFunc) {
+                this.keys = [this.funcUno[this.numVarRnd]];
               }
             }
           }
@@ -384,9 +394,11 @@ class ResolveParameters extends Presidential {
         this.keyPro
         if (typeof pro === "object" || Array.isArray(pro)) {
           this.keyPro = pro;
+          console.log("this.keyPro = " + this.keyPro);
         }
         else {
           this.keyPro = [pro];
+          console.log("this.[keyPro] = " + this.keyPro);
         }
         this.keyProParams;
         this.realItem;
@@ -405,7 +417,7 @@ class ResolveParameters extends Presidential {
                 this.keyProParams = new RelatedFunctions(subParam);
               }
               if (this.keyProParams.funFirst >= 0) {
-                this.funcLimit.push(projectP.fileList[this.keyProParams.funFirst]);
+                this.funcLimit.push(this.funcUno[this.keyProParams.funFirst]);
               } 
               else {
                 if (typeof subParam === "object") {
@@ -436,12 +448,15 @@ class ResolveParameters extends Presidential {
               this.keyProParams;
               if (typeof pro === "object" || Array.isArray(pro)) {
                 this.keyProParams = new RelatedFunctions(pro[key]);
+                console.log("keyProParams = " + JSON.stringify(this.keyProParams));
               }
               else {
                 this.keyProParams = new RelatedFunctions(pro);
+                console.log("keyProParams = " + JSON.stringify(this.keyProParams));
               }
               if (this.keyProParams.funFirst >= 0) {
-                this.argsX.push(projectP.fileList[this.keyProParams.funFirst]);
+                this.argsX.push(this.funcUno[this.keyProParams.funFirst]);
+                console.log("this.funcUno[this.keyProParams.funFirst] = " + this.funcUno[this.keyProParams.funFirst])
               } else {
                 if (typeof pro === "object" || Array.isArray(pro)) {
                   this.content.push(pro[key]);
@@ -457,7 +472,12 @@ class ResolveParameters extends Presidential {
       if (this.argsX && this.argsX.length > 0) {
         this.allErrors = {};
         this.allResolutions = {};
-        this.fParams = projectP; //gsFParams();
+        this.funcString = autoGlobe.globalThis[this.funcUno[this.numVarRnd]]?.toString();
+        this.fParams = this.funcString
+          ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
+          ?.split(",")
+          ?.map((param) => param?.trim())
+          ?.filter((param) => param !== "");; //gsFParams();
         this.resCount = 0;
         this.argsX.forEach((result, argsXIndex) => {
           console.log("argsX result " + this.resCount + ": " + result);
@@ -465,9 +485,10 @@ class ResolveParameters extends Presidential {
           this.resolvedArgs = [];
           this.missingParams = [];
           this.contentLimit = this.content[argsXIndex];
-          this.searchResult = this.fParams.paramsList.find((rndS) => {
-            return rndS.name === result;
-          });
+          this.searchResult = this.fParams 
+          //this.fParams.find((rndS) => {
+            // return rndS.name === result;
+          // });
           this.orderedContent = [];
           if (
             this.searchResult &&

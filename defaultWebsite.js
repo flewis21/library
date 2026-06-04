@@ -82,14 +82,15 @@ var createFunctionResult = function (funcUno, funcDos) {
     let objVal = funcDos?.toString();
     let truVal = autoP.trueVfalse(objVal);
     console.log("truVal and objVal\n" + [truVal, objVal]);
-    let rawUrlResult;
+    let rawUrlResult = null;
+    let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
-      let isObjValUrl = isValidUrl(objVal);
-      rawUrlResult = autoP.trueVfalse(isObjValUrl.hostname);
+      isObjValUrl = isValidUrl(objVal);
+      rawUrlResult = autoP.trueVfalse(isObjValUrl.matches[0]);
       console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
     // executed++
-    if (!rawUrlResult?.t === true) {
+    if (!rawUrlResult) {
       let parsedFuncArgs = [];
       let keyObject;
       if (typeof funcDos === "object" && funcDos !== null) {
@@ -123,7 +124,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
         }
       }
-      console.log("" + [funcUno, parsedFuncArgs]);
+      console.log("Parsed funtion and arguments = " + [funcUno, parsedFuncArgs]);
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
         console.log("This execution is trying to process without funcDos. funcDos is  " , funcDos);
         try {
@@ -183,7 +184,7 @@ var createFunctionResult = function (funcUno, funcDos) {
                 [funcUno, parsedFuncArgs]
             );
             try {
-              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
+              rawFuncResult = autoGlobe.globalThis[funcUno].apply(this, parsedFuncArgs);
             } 
             catch (error) {
               console.log("But, it is failing.");
@@ -196,7 +197,7 @@ var createFunctionResult = function (funcUno, funcDos) {
       }
     }  
     else {
-      rawFuncResult = objVal;
+      rawFuncResult = isObjValUrl.matches[0];
       console.log("Happens everytime createFunctionResult returns the form url as the objects value", rawFuncResult);
     }
   }

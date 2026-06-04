@@ -471,9 +471,9 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    const handles = FunctionHandle.handleFunction();
-    let funcU = handles["exec"];
-    let funcD = handles["args"];
+    const handles = new FunctionHandle();
+    let funcU = handles.funcUno;
+    let funcD = handles.funcDos;
     let base = createFunctionResult(funcU, funcD);
     const data = globalHandleGetData(base);
     return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
