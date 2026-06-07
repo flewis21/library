@@ -86,7 +86,12 @@ var createFunctionResult = function (funcUno, funcDos) {
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
       isObjValUrl = isValidUrl(objVal);
-      rawUrlResult = autoP.trueVfalse(isObjValUrl.matches[0]);
+      if (Array.isArray(isObjValUrl?.matches)) {
+        rawUrlResult = autoP.trueVfalse(isObjValUrl?.matches[0]);
+      }
+      else {
+        rawUrlResult = autoP.trueVfalse(isObjValUrl?.matches);
+      }
       console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
     // executed++
@@ -2646,14 +2651,15 @@ var getUrl = function (appInterface) {
 };
 
 var getUrlResponse = function (url, options) {
-  // var validUrl = isValidUrl(url);
-  if (url) {
+  let gURObj = {};
+  var validUrl = isValidUrl(url);
+  if (validUrl.hostname) {
     let response;
     let location;
     let htmlData;
     let supUrl;
     let retries = 0;
-    let maxRetries = 0;
+    let maxRetries = 1;
     let delay = 1000;
     try {
       response = UrlFetchApp.fetch(url, options);
@@ -2692,19 +2698,25 @@ var getUrlResponse = function (url, options) {
                   followRedirects: true,
                   muteHttpExceptions: true,
                 }).getContentText();
+                gURObj.app = htmlData;
                 supUrl = location;
+                gURObj.link = supUrl;
                 var responseObj = {
                   dataStr: vidFactor(htmlData, autoP.functionRegistry.time).vidArray,
                 };
+                gURObj.index = responseObj;
               }
               else {
                 location = response.getContentText();
                 console.log("From response: Location = " + location);
                 htmlData = location;
+                gURObj.app = htmlData;
                 supUrl = url;
+                gURObj.link = supUrl;
                 var responseObj = {
                   dataStr: vidFactor(location, autoP.functionRegistry.time).vidArray,
                 };
+                gURObj.index = responseObj;
               }
             }
           }
@@ -2713,13 +2725,15 @@ var getUrlResponse = function (url, options) {
         Logger.log("Error resolving TinyURL: " + e.toString());
         console.error("Error resolving TinyURL: ", e.toString());
       }
-    } catch (l) {
+    } 
+    catch (l) {
       Logger.log("Error response received: " + l.stack);
       console.log("Error response received,", l.stack);
       var domainData = getDomainValues();
       if (domainData.indexOf(url) !== -1) {
         return;
-      } else {
+      } 
+      else {
         var formData = {};
         let ciar = trial();
         let mera = randomEmail();
@@ -2730,9 +2744,10 @@ var getUrlResponse = function (url, options) {
         submitDomain(formData);
       }
     }
-    console.log("Final app:", htmlData);
-    return { index: responseObj, app: htmlData, link: supUrl };
-  } else {
+    console.log("Final app:", gURObj.app);
+    return gURObj;
+  } 
+  else {
     Logger.log("Invalid input, " + JSON.stringify([url, options]));
     console.log("Invalid input, ", JSON.stringify([url, options]));
     return null;

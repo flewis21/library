@@ -152,23 +152,29 @@ function isValidUrl(text) {
       typeof text +
       ")",
   );
-  // var protocol = "";
-  // var hostname = "";
-  var pathname = "";
-  // var query = "";
-  var validUrlResult = { protocol: "", hostname: "", pathname: "", query: "" };
+  let validUrlResult = {};
+  let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+  validUrlResult.protocol = "";
+  validUrlResult.hostname = "";
+  validUrlResult.pathname = "";
+  validUrlResult.query=  "";
+  if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
+    validUrlResult.matches = searchLinkDrive?.dataTree;
+  }
+  else {
+    validUrlResult.matches = [];
+  }
+  console.log("matches to return = " + validUrlResult.matches);
+  let rndRes = [];
   var allMatches = [];
-  if (typeof text !== "string" || text.length === 0) {
-    return { protocol: "", hostname: "", pathname: "", query: "" };
+  if (typeof text !== "string" || text?.length === 0) {
+    return validUrlResult;
   }
   var urlRegex =
     /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-  let matches = null;
-  let rndRes = [];
-  matches = text.match(urlRegex);
-  console.log("matches = " + matches);
-  if (!matches || matches === null) {
-    let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+  validUrlResult.matches = text.match(urlRegex);
+  console.log("matches = " + validUrlResult.matches);
+  if (!validUrlResult.matches) {
     if (searchLinkDrive?.filedMain) {
       autoP.functionRegistry.vidTree();
       let vidSheetVals = autoP.functionRegistry.getVideoList();
@@ -208,22 +214,22 @@ function isValidUrl(text) {
     }
   }
   console.log("rndRes = " + rndRes);
-  allMatches = matches !== null ? [...matches] : [...rndRes];
+  allMatches = validUrlResult.matches ? [...validUrlResult.matches] : [...rndRes];
   console.log(`allMatches = matches ? [...${allMatches}]`);
   if (allMatches?.length > 0) {
-    let currentProtocol = "";
-    let currentHostname = "";
-    let currentPathname = "";
-    let currentQuery = "";
+    let tempUrlResult = {};
+    tempUrlResult.currentProtocol = "";
+    tempUrlResult.currentHostname = "";
+    tempUrlResult.currentPathname = "";
+    tempUrlResult.currentQuery = "";
     allMatches.forEach((url) => {
-      var protocolEnd = url.indexOf("://");
+      let protocolEnd = url.indexOf("://");
       if (protocolEnd !== -1) {
-        currentProtocol = url.substring(0, protocolEnd + 3);
+        tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
         url = url.substring(protocolEnd + 3);
       }
       else {
         if (rndRes.length === 0) {
-          let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
           if (searchLinkDrive?.filedMain) {
             [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
               if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
@@ -260,42 +266,53 @@ function isValidUrl(text) {
                 }
               }
             });
+            validUrlResult.matches = searchLinkDrive?.dataTree
+            tempUrlResult.currentProtocol = filedMain.substring(0, protocolEnd + 3);
+            url = filedMain.substring(protocolEnd + 3);
+          }
+          else {
+            if (!searchLinkDrive?.filedMain) {
+              tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
+              url = url.substring(protocolEnd + 3);
+            }
+          }
+        }
+        else {
+          if (rndRes.length > 0) {
+            tempUrlResult.currentProtocol = rndRes[0].substring(0, protocolEnd + 3);
+            url = rndRes[0].substring(protocolEnd + 3);
           }
         }
       }
-      var hostnameEnd = url.indexOf("/");
+      let hostnameEnd = url.indexOf("/");
       if (hostnameEnd !== -1) {
-        currentHostname = url.substring(0, hostnameEnd);
-        currentPathname = url.substring(hostnameEnd);
+        tempUrlResult.currentHostname = url.substring(0, hostnameEnd);
+        tempUrlResult.currentPathname = url.substring(hostnameEnd);
       } else {
-        currentHostname = url;
+        tempUrlResult.currentHostname = url;
       }
-      var queryStart = pathname.indexOf("?");
+      let queryStart = validUrlResult.pathname.indexOf("?");
       if (queryStart !== -1) {
-        currentQuery = pathname.substring(queryStart);
-        currentPathname = pathname.substring(0, queryStart);
+        currentQuery = validUrlResult.pathname.substring(queryStart);
+        currentPathname = validUrlResult.pathname.substring(0, queryStart);
       }
-      var hostnameRegex =
+      let hostnameRegex =
         /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-      if (currentHostname && hostnameRegex.test(currentHostname)) {
-        if (currentProtocol && currentHostname) {
-          validUrlResult = {
-            protocol: currentProtocol,
-            hostname: currentHostname,
-            pathname: currentPathname,
-            query: currentQuery,
-            url:
-              currentProtocol +
-              currentHostname +
-              currentPathname +
-              currentQuery,
-          };
-          return validUrlResult;
+      if (tempUrlResult.currentHostname && hostnameRegex.test(tempUrlResult.currentHostname)) {
+        if (tempUrlResult.currentProtocol && tempUrlResult.currentHostname) {
+          validUrlResult.protocol = tempUrlResult.currentProtocol;
+          validUrlResult.hostname = tempUrlResult.currentHostname;
+          validUrlResult.pathname = tempUrlResult.currentPathname;
+          validUrlResult.query = tempUrlResult.currentQuery;
+          validUrlResult.url =
+            tempUrlResult.currentProtocol +
+            tempUrlResult.currentHostname +
+            tempUrlResult.currentPathname +
+            tempUrlResult.currentQuery;
         }
       }
     });
   }
-  validUrlResult.matches = allMatches;
   return validUrlResult;
 }
 
@@ -3926,7 +3943,7 @@ function testlt() {
   // var numVarRnd = randNum;
   // var arrNum = numVarRnd
   // var arrDRnd = appSort(arrNum);
-  // var searchString = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
+  // var searchString = randomSubstance(0, arrDRnd?.length, arrDRnd).myNewArr;
   var ssearchString = autoP.searchString().myNewArr;
   var fParams = autoP.functionRegistry.paramsList;
   var result = fParams.find((rndS) => {
@@ -3981,7 +3998,7 @@ function vidFactor(data, time) {
         }
       })
     : null;
-  for (var i = 0, l = dataArray.length; i < l; i++) {
+  for (var i = 0, l = dataArray?.length; i < l; i++) {
     var idValue = dataArray[i].substring(0, 11);
     if (idValue) {
       idArray.push(idValue);
@@ -3991,6 +4008,7 @@ function vidFactor(data, time) {
 }
 
 function vidPlaylist(tunPlay) {
+  let vidResObj = {};
   var randomPlaylist = [];
   if (!tunPlay) {
     autoP.functionRegistry.vidTree();
@@ -4005,20 +4023,22 @@ function vidPlaylist(tunPlay) {
   else {
     let nptVideo = needPastTime(tunPlay);
     var nptUrl = nptVideo.hardUrl;
+    vidResObj.hardUrl = nptUrl;
     let listObj = nptVideo.playList;
-    if (listObj && listObj.length > 0) {
+    if (listObj && listObj?.length > 0) {
       listObj.forEach((itemList) => {
           randomPlaylist.push(itemList);
       });
     }
   }
   var randomVidKey = Math.floor(
-    Math.random() * Math.floor(randomPlaylist.length),
+    Math.random() * Math.floor(randomPlaylist?.length),
   );
   var playListSorted = randomPlaylist.sort((a, b) => a - b);
+  vidResObj.playlistArr = playListSorted;
   var videoObject = covObjects(playListSorted, ["youtubeID"]);
   if (
-    videoObject.length > 0 &&
+    videoObject?.length > 0 &&
     typeof videoObject[randomVidKey]["youtubeID"] !== "undefined"
   ) {
     var uniqueVidKey = [videoObject].entries().next().value;
@@ -4027,8 +4047,9 @@ function vidPlaylist(tunPlay) {
     var randomVideo =
       rVideo ||
       playListSorted[
-        Math.floor(Math.random() * Math.floor(playListSorted.length))
+        Math.floor(Math.random() * Math.floor(playListSorted?.length))
       ];
+      vidResObj.videoItem = randomVideo;
   }
   let youtubeUrl = null;
   let itHasHttp = String(randomVideo).indexOf("http");
@@ -4038,12 +4059,8 @@ function vidPlaylist(tunPlay) {
   else {
     youtubeUrl = randomVideo;
   }
-  return {
-    videoItem: randomVideo,
-    videoItemUrl: youtubeUrl,
-    playlistArr: playListSorted,
-    hardUrl: nptUrl,
-  };
+  vidResObj.videoItemUrl = youtubeUrl;
+  return vidResObj;
 }
 
 function wwAccess(rName, rFunc, rArgs) {

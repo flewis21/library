@@ -80,13 +80,13 @@ function needPastTime(searchString) {
   // while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
       var noSearch = autoP.searchResult?.parameters;
-      var searchString = noSearch;
+      var searchString = noSearch || new SearchStrings().myNewArr;
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     fndOrdObj.hardUrl = searchLink;
     const options = { muteHTTPExceptions: true };
     let retries = 0;
-    let maxRetries = 0;
+    let maxRetries = 1;
     let delay = 1000;
     let data = null;
     try {
@@ -172,18 +172,18 @@ function needPastTime(searchString) {
       });
     });
     var i = 0;
-    var l = sorFndOrd.length;
+    var l = sorFndOrd?.length;
     for (i, l; i < l; i++) {
       var fndOrd = [];
-      sorFndOrd.sort((a, b) => {
-        if (a !== b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
+      sorFndOrd?.sort((a, b) => {
+        if (a !== b && fndOrd?.indexOf(a) === -1) {
+          if (fndOrd?.indexOf(a) > -1) {
             return;
           }
 
-          fndOrd.push(a);
-        } else if (a === b && fndOrd.indexOf(a) === -1) {
-          if (fndOrd.indexOf(a) > -1) {
+          fndOrd?.push(a);
+        } else if (a === b && fndOrd?.indexOf(a) === -1) {
+          if (fndOrd?.indexOf(a) > -1) {
             return;
           }
 
@@ -193,7 +193,7 @@ function needPastTime(searchString) {
             return;
           }
 
-          fndOrd.push(b);
+          fndOrd?.push(b);
         }
       });
     }
@@ -206,8 +206,8 @@ function needPastTime(searchString) {
   if (fndOrd?.length > 0) {
     var randomKey = 0;
     var rndRes = [];
-    while (rndRes.length === 0) {
-      randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length)); // Math.floor(Math.random());
+    while (rndRes?.length === 0) {
+      randomKey = Math.floor(Math.random() * Math.floor(fndOrd?.length)); // Math.floor(Math.random());
       fndOrd.forEach((test) => {
         var elaspeTime = autoP.functionRegistry.time;
         var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
@@ -253,38 +253,40 @@ function needPastTime(searchString) {
           }
         }
       });
-      if (rndRes.length === 0) {
+      if (rndRes && rndRes?.length === 0) {
         let isItValid = isValidUrl(searchString);
-        isItValid["matches"]
+        rndRes =  isItValid.matches;
       }
-      if (rndRes.length > 0) {
-        autoP.functionRegistry.vidTree();
-        vidSheetVals = autoP.functionRegistry.getVideoList();
-        vidData = [];
-        vidVals = Object.values(vidSheetVals);
-        vidVals.forEach((val) => {
-          let inValsKeys = Object.keys(val);
-          let inVVals = Object.values(val);
-          inVVals.forEach((inV) => {
-            let truInv = autoP.trueVfalse(inV);
-            if (truInv) {
-              vidData.push(inV);
-            } else {
-              return;
-            }
+      else {
+        if (rndRes && rndRes?.length > 0) {
+          autoP.functionRegistry.vidTree();
+          vidSheetVals = autoP.functionRegistry.getVideoList();
+          vidData = [];
+          vidVals = Object.values(vidSheetVals);
+          vidVals.forEach((val) => {
+            let inValsKeys = Object.keys(val);
+            let inVVals = Object.values(val);
+            inVVals.forEach((inV) => {
+              let truInv = autoP.trueVfalse(inV);
+              if (truInv) {
+                vidData.push(inV);
+              } else {
+                return;
+              }
+            });
           });
-        });
-        var rndSort = [];
-        for (var i = 0, l = rndRes.length; i < l; i++) {
-          let sorRes = rndRes.filter((o) => {
-            return o !== rndRes[i];
-          });
-          rndSort.push(sorRes);
+          var rndSort = [];
+          for (var i = 0, l = rndRes?.length; i < l; i++) {
+            let sorRes = rndRes.filter((o) => {
+              return o !== rndRes[i];
+            });
+            rndSort.push(sorRes);
+          }
+          var sorKind = rndSort.toString().split(" ");
+          var revKind = sorKind.reverse();
+          var popKind = revKind.pop();
+          var rndKind = popKind.split(",");
         }
-        var sorKind = rndSort.toString().split(" ");
-        var revKind = sorKind.reverse();
-        var popKind = revKind.pop();
-        var rndKind = popKind.split(",");
       }
 
       var playVid = [];

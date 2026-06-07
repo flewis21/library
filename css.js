@@ -1557,7 +1557,12 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         return new Promise((resolve, reject) => {
           google.script.run
           .withSuccessHandler(result => {
-              resolve(result)})
+            try {
+              resolve(result)
+            }
+            catch (error) {
+              console.log("Success error: " + error.stack)
+            }})
           .withFailureHandler(error => {
               reject(error)})
           .runBoilerplate(func, args)
@@ -1565,11 +1570,16 @@ const next_clicked_video = HtmlService.createHtmlOutput(
       }
       function debounce(func, delay) {
         let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
+        try {
+          return function(...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), delay);
+          };
+        }
+        catch (error) {
+          console.log("Timeout error: " + error.stack)
+        }
       }
 
       document.addEventListener("DOMContentLoaded", function() {
@@ -1586,99 +1596,99 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           return;
         }
 
-        serverside("getVI", [])
-          .then((response) => {
-            // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the response
-            if (response && typeof response === "object") {
-              for (var key in response) {
-                // alert(JSON.stringify(response[key]));
-                let i = 0;
-                let l = response[key].length;
-                // alert(l);
-                for (i,l;i<l;i++) {
-                  let tempObj = {};
-                  tempObj.description = response[key][i].description;
-                  if (String(response[key][i].videoId).indexOf("http") === -1) {
-                    let tData = response[key][i].videoId;
-                    let dLoc =  null;
-                    dLoc =  "https://www.youtube.com/watch?v=";
-                    tempObj.youtubeUrl = dLoc + tData;
-                  }
-                  else {
-                    tempObj.youtubeUrl = response[key][i].videoId;
-                  }
-                  fullList.push(tempObj);
-                }
-              }
-            } else {
-              console.warn("Expected an array in response from getVI, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = [];
-            }
-            localSuggestionsCache["allMatches"] = fullList;
-            $('a').click(function(event){
-              if ($(this).attr('href') === "javascript:void(0)") {
-                let confirmation = window.confirm(
-                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                );
-                if (confirmation) {
-                  event.preventDefault();
-                  var linkFollow = document.createElement("a");
-                  linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl;
-                  linkFollow.id = "linkFOLLOW";
-                  linkFollow.target = "_blank";
-                  linkFollow.rel = "noopener noreferrer";
-                  document.body.appendChild(linkFollow);
-                  document.getElementById("linkFOLLOW").click();
-                  document.getElementById("linkFOLLOW").remove();
-                  // If the user preses the "Enter" key on the keyboard. 
-                  // if (event.key === 'Enter')  {
-                  serverside("getVI", [])
-                  .then((response) => {
-                    // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                    // Access the actual array from the response
-                    if (response && typeof response === "object") {
-                      fullList = [];
-                      for (var key in response) {
-                        // alert(JSON.stringify(response[key]));
-                        let i = 0;
-                        let l = response[key].length;
-                        // alert(l);
-                        for (i,l;i<l;i++) {
-                          let tempObj = {};
-                          tempObj.description = response[key][i].description;
-                          if (String(response[key][i].videoId).indexOf("http") === -1) {
-                            let tData = response[key][i].videoId;
-                            let dLoc =  null;
-                            dLoc =  "https://www.youtube.com/watch?v=";
-                            tempObj.youtubeUrl = dLoc + tData;
-                          }
-                          else {
-                            tempObj.youtubeUrl = response[key][i].videoId;
-                          }
-                          fullList.push(tempObj);
-                        }
-                      }
-                    } 
-                    else {
-                      console.warn("Expected an array in response from getVI, received:", response);
-                      // Fallback to empty array if the structure is not as expected
-                      fullList = [];
-                    }
-                  })
-                  .catch(error => {
-                    console.error("Error fetching address suggestions for artiicleIndex :", error);
-                    suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                  });
-                }
-              }
-            });
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for artiicleIndex :", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
+        // serverside("getVI", [])
+        //   .then((response) => {
+        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+        //     // Access the actual array from the response
+        //     if (response && typeof response === "object") {
+        //       for (var key in response) {
+        //         // alert(JSON.stringify(response[key]));
+        //         let i = 0;
+        //         let l = response[key].length;
+        //         // alert(l);
+        //         for (i,l;i<l;i++) {
+        //           let tempObj = {};
+        //           tempObj.description = response[key][i].description;
+        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+        //             let tData = response[key][i].videoId;
+        //             let dLoc =  null;
+        //             dLoc =  "https://www.youtube.com/watch?v=";
+        //             tempObj.youtubeUrl = dLoc + tData;
+        //           }
+        //           else {
+        //             tempObj.youtubeUrl = response[key][i].videoId;
+        //           }
+        //           fullList.push(tempObj);
+        //         }
+        //       }
+        //     } else {
+        //       console.warn("Expected an array in response from getVI, received:", response);
+        //       // Fallback to empty array if the structure is not as expected
+        //       fullList = [];
+        //     }
+        //     localSuggestionsCache["allMatches"] = fullList;
+        //     $('a').click(function(event){
+        //       if ($(this).attr('href') === "javascript:void(0)") {
+        //         let confirmation = window.confirm(
+        //           "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+        //         );
+        //         if (confirmation) {
+        //           event.preventDefault();
+        //           var linkFollow = document.createElement("a");
+        //           linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+        //           linkFollow.id = "linkFOLLOW";
+        //           linkFollow.target = "_blank";
+        //           linkFollow.rel = "noopener noreferrer";
+        //           document.body.appendChild(linkFollow);
+        //           document.getElementById("linkFOLLOW").click();
+        //           document.getElementById("linkFOLLOW").remove();
+        //           // If the user preses the "Enter" key on the keyboard. 
+        //           // if (event.key === 'Enter')  {
+        //           serverside("getVI", [])
+        //           .then((response) => {
+        //             // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+        //             // Access the actual array from the response
+        //             if (response && typeof response === "object") {
+        //               fullList = [];
+        //               for (var key in response) {
+        //                 // alert(JSON.stringify(response[key]));
+        //                 let i = 0;
+        //                 let l = response[key].length;
+        //                 // alert(l);
+        //                 for (i,l;i<l;i++) {
+        //                   let tempObj = {};
+        //                   tempObj.description = response[key][i].description;
+        //                   if (String(response[key][i].videoId).indexOf("http") === -1) {
+        //                     let tData = response[key][i].videoId;
+        //                     let dLoc =  null;
+        //                     dLoc =  "https://www.youtube.com/watch?v=";
+        //                     tempObj.youtubeUrl = dLoc + tData;
+        //                   }
+        //                   else {
+        //                     tempObj.youtubeUrl = response[key][i].videoId;
+        //                   }
+        //                   fullList.push(tempObj);
+        //                 }
+        //               }
+        //             } 
+        //             else {
+        //               console.warn("Expected an array in response from getVI, received:", response);
+        //               // Fallback to empty array if the structure is not as expected
+        //               fullList = [];
+        //             }
+        //           })
+        //           .catch(error => {
+        //             console.error("Error fetching address suggestions for artiicleIndex :", error);
+        //             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+        //           });
+        //         }
+        //       }
+        //     });
+        //   })
+        //   .catch(error => {
+        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+        //   });
           
         const fetchSuggestions = debounce((query) => {
           if (query.length < 3) {
@@ -1700,7 +1710,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           );
           
           suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
+          if (suggestions && suggestions?.length > 0) {
             window.scrollTo(0,0);
             suggestions.forEach(suggestion => {
               // console.log(suggestion)
@@ -1724,13 +1734,13 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 let confirmation;
                 suggestions?.forEach(suggestion => {
                   // console.log(suggestion)
-                  if (suggestion && suggestion.description.includes(event.target.value)) {
+                  if (suggestion && suggestion?.description.includes(String(event.target.value))) {
                     confirmation = window.confirm(
-                      suggestion.youtubeUrl,
+                      suggestion?.youtubeUrl,
                     );
                   }
                   if (confirmation) {
-                    window.open(suggestion.youtubeUrl);
+                    window.open(suggestion?.youtubeUrl);
                     suggestionsDiv.innerHTML = '';
                   }
                   else {
@@ -1746,43 +1756,67 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
                 input.blur();
-                localStorage.setItem("gsSearch", event.target.value);
+                localStorage.setItem("gsSearch", String(event.target.value));
                 againCap = localStorage.getItem("gsSearch");
                 input.value = againCap
-                serverside("vidPlaylist", [event.target.value])
+                serverside("vidPlaylist", [String(input.value) || String(event.target.value)])
                   .then((done) => {
-                    // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
-                    // Access the actual array from the done
-                    if (done && typeof done === "object") {
-                      for (var key in done) {
-                        // alert(JSON.stringify(done[key]));
-                        let i = 0;
-                        let l = done[key].length;
-                        // alert(l);
-                        for (i,l;i<l;i++) {
-                          let tempObj = {};
-                          tempObj.description = done[key][i].description;
-                          if (String(done[key][i].videoId).indexOf("http") === -1) {
-                            let tData = done[key][i].videoId;
+                    try {
+                      // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
+                      // Access the actual array from the done
+                      if (done && typeof done === "object") {
+                        // alert(JSON.stringify(done.data["playlistArr"]));
+                        // alert(done.data["playlistArr"].length);
+                        for (var key in done) {
+                          let i = 0;
+                          let l = done[key]["playlistArr"]?.length;
+                          // alert(l);
+                          for (i,l;i<l;i++) {
+                            let tempObj = {};
+                            // tempObj.description = done[key][i].description;
+                            let tData = done[key]["playlistArr"][i];
                             let dLoc =  null;
-                            // alert(tData + " index of http = " + [tData].indexOf("http"));
-                            dLoc =  "https://www.youtube.com/watch?v=";
-                            tempObj.youtubeUrl = dLoc + tData;
+                            if (String(tData).indexOf("http") === -1) {
+                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                              dLoc =  "https://www.youtube.com/watch?v=";
+                              tempObj.youtubeUrl = String(dLoc + tData);
+                            }
+                            else {
+                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                              tempObj.youtubeUrl = String(tData);
+                            }
+                            fullList.push(tempObj);
                           }
-                          else {
-                            alert(" index of http = " + [done[key][i].videoId].indexOf("http"));
-                            tempObj.youtubeUrl = done[key][i].videoId;
-                          }
-                          fullList.push(tempObj);
                         }
+                        localSuggestionsCache["allMatches"] = fullList;
+                        $('a').click(function(event){
+                          if ($(this).attr('href') === "javascript:void(0)") {
+                            let confirmation = window.confirm(
+                              "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                            );
+                            if (confirmation) {
+                              event.preventDefault();
+                              var linkFollow = document.createElement("a");
+                              linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+                              linkFollow.id = "linkFOLLOW";
+                              linkFollow.target = "_blank";
+                              linkFollow.rel = "noopener noreferrer";
+                              document.body.appendChild(linkFollow);
+                              document.getElementById("linkFOLLOW").click();
+                              document.getElementById("linkFOLLOW").remove();
+                            }
+                          }
+                        });
+                        input.focus();
+                      } 
+                      else {
+                        console.warn("Expected an array in done from getVI, received:", done);
+                        // Fallback to empty array if the structure is not as expected
+                        fullList = [];
                       }
-                      localSuggestionsCache["allMatches"] = fullList;
-                      input.focus();
-                    } 
-                    else {
-                      console.warn("Expected an array in done from getVI, received:", done);
-                      // Fallback to empty array if the structure is not as expected
-                      fullList = [];
+                    }
+                    catch (error) {
+                      console.log("Error in script call: " + error.stack)
                     }
                   });
               }
@@ -1794,7 +1828,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         
         if (input && suggestionsDiv) {
           input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
+            fetchSuggestions(String(event.target.value));
           });
 
           document.addEventListener('click', (event) => {

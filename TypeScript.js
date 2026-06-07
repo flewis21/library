@@ -743,7 +743,7 @@ var geneicType = function (e) {
                 file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
               }
             };
-            eQueryObject = {parameter: {func:"vidPlaylist",args:"turing test process performance"}}
+            eQueryObject = {parameter: {func:"vidPlaylist",args:[rndWord()]}}
             let tempObj = new FunctionHandle(eQueryObject);
             handles =  tempObj
             console.log("handles = " + handles, executed++);

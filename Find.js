@@ -336,63 +336,68 @@ class DriveFiles {
         this.filedMain = filedMain;
       } 
       else {
-        console.warn(
-          "DriveFiles: No matching files found after DriveApp search. Returning null.",
-        );
-        let options = { muteHttpExceptions: true };
-        let data;
-        try {}
-        catch(fromResponse) {}
-        data = getUrlResponse(mainStr, options)?.app;
-        console.log("data = " + data, executed++);
-        if (!data) {
-          // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
-          // Construct the search query. 'title contains' searches file names.
-          // Use the exact targetFile for the query.
-          let searchQuery = 'title contains "' + mainStr + '"';
-          console.log(
-            "DriveFiles: Performing DriveApp search with query:",
-            searchQuery,
+        if (this.dataTree.length === 0) {
+          console.warn(
+            "DriveFiles: No matching files found after DriveApp search. Returning null.",
           );
-          try {
-            let files = DriveApp.searchFiles(searchQuery);
-
-            while (files.hasNext()) {
-              let file = files.next();
-              let fiTitle = file.getName();
-              let fileUrl = file.getUrl();
-              this.dataTree.push(fileUrl);
-            }
-          } catch (e) {
-            console.error("driveManager: Error during DriveApp search:", e);
-            this,filedMain = null; // Handle search errors gracefully
-          }
-          console.log(
-            "driveManager: Final dataTree length after search:",
-            this.dataTree.length,
-          );
-          if (this.dataTree.length > 0) {
-            let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
-            let filedMain = this.dataTree[rndFiledMain];
+          return null;
+          this.options = { muteHttpExceptions: true };
+          this.data = null;
+          // try {}
+          // catch(fromResponse) {}
+          this.data = getUrlResponse(mainStr, this.options)?.app;
+          console.log("data = " + this.data, executed++);
+          if (!this.data) {
+            // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
+            // Construct the search query. 'title contains' searches file names.
+            // Use the exact targetFile for the query.
+            let searchQuery = 'title contains "' + mainStr + '"';
             console.log(
-              "driveManager: Returning a random found file URL:",
-              filedMain,
+              "DriveFiles: Performing DriveApp search with query:",
+              searchQuery,
             );
-            this.filedMain = filedMain;
+            try {
+              let files = DriveApp.searchFiles(searchQuery);
+
+              while (files.hasNext()) {
+                let file = files.next();
+                let fiTitle = file.getName();
+                let fileUrl = file.getUrl();
+                this.dataTree.push(fileUrl);
+              }
+            } catch (e) {
+              console.error("driveManager: Error during DriveApp search:", e);
+              this.filedMain = null; // Handle search errors gracefully
+            }
+            console.log(
+              "driveManager: Final dataTree length after search:",
+              this.dataTree.length,
+            );
+            if (this.dataTree.length > 0) {
+              let rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
+              let filedMain = this.dataTree[rndFiledMain];
+              console.log(
+                "driveManager: Returning a random found file URL:",
+                filedMain,
+              );
+              this.filedMain = filedMain;
+            }
+            else {
+              if (this.dataTree.length === 0) {
+                executed++;
+                let filedSide = createFormFunction(mainStr);
+                let funcKeys = Object.keys(filedSide);
+                let funcUrl;
+                funcKeys.forEach((key) => {
+                  let funcObj = filedSide[key];
+                  funcUrl = funcObj[0];
+                });
+              }
+            }
           }
           else {
-            executed++;
-            let filedSide = createFormFunction(mainStr);
-            let funcKeys = Object.keys(filedSide);
-            let funcUrl;
-            funcKeys.forEach((key) => {
-              let funcObj = filedSide[key];
-              funcUrl = funcObj[0];
-            });
+            this.filedMain = mainStr;
           }
-        }
-        else {
-          this.filedMain = mainStr;
         }
       }
     }
