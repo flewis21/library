@@ -202,7 +202,7 @@ var createFunctionResult = function (funcUno, funcDos) {
       }
     }  
     else {
-      rawFuncResult = isObjValUrl.matches[0];
+      rawFuncResult = isObjValUrl?.url;
       console.log("Happens everytime createFunctionResult returns the form url as the objects value", rawFuncResult);
     }
   }
@@ -2652,7 +2652,7 @@ var getUrl = function (appInterface) {
 
 var getUrlResponse = function (url, options) {
   let gURObj = {};
-  var validUrl = isValidUrl(url);
+  let validUrl = isValidUrl(url);
   if (validUrl.hostname) {
     let response;
     let location;
@@ -2662,7 +2662,7 @@ var getUrlResponse = function (url, options) {
     let maxRetries = 1;
     let delay = 1000;
     try {
-      response = UrlFetchApp.fetch(url, options);
+      response = UrlFetchApp.fetch(validUrl.url, options);
       try {
         if (response) {
           var res = response.getResponseCode();
@@ -2701,7 +2701,7 @@ var getUrlResponse = function (url, options) {
                 gURObj.app = htmlData;
                 supUrl = location;
                 gURObj.link = supUrl;
-                var responseObj = {
+                let responseObj = {
                   dataStr: vidFactor(htmlData, autoP.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
@@ -2713,7 +2713,7 @@ var getUrlResponse = function (url, options) {
                 gURObj.app = htmlData;
                 supUrl = url;
                 gURObj.link = supUrl;
-                var responseObj = {
+                let responseObj = {
                   dataStr: vidFactor(location, autoP.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
@@ -2727,18 +2727,24 @@ var getUrlResponse = function (url, options) {
       }
     } 
     catch (l) {
+      gURObj.app = l;
+      let responseObj = {
+        dataStr: vidFactor(l, autoP.functionRegistry.time).vidArray,
+      };
+      gURObj.index = responseObj;
       Logger.log("Error response received: " + l.stack);
       console.log("Error response received,", l.stack);
-      var domainData = getDomainValues();
+      let domainData = getDomainValues();
       if (domainData.indexOf(url) !== -1) {
         return;
       } 
       else {
-        var formData = {};
+        let formData = {};
         let ciar = trial();
         let mera = randomEmail();
         let meri = randNum([JSON.stringify(ciar)].join(" "));
         formData["domain"] = url;
+        gURObj.link = formData["domain"];
         formData["price"] = meri;
         formData["email"] = mera;
         submitDomain(formData);
@@ -2750,7 +2756,13 @@ var getUrlResponse = function (url, options) {
   else {
     Logger.log("Invalid input, " + JSON.stringify([url, options]));
     console.log("Invalid input, ", JSON.stringify([url, options]));
-    return null;
+    gURObj.app = "Invalid input, " + JSON.stringify([url, options]);
+    let responseObj = {
+      dataStr: vidFactor("Invalid input, " + JSON.stringify([url, options]), autoP.functionRegistry.time).vidArray,
+    };
+    gURObj.index = responseObj;
+    gURObj.link = url;
+    return gURObj;
   }
 };
 

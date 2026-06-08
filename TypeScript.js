@@ -640,22 +640,27 @@ var geneicType = function (e) {
   for (i,l;i<l;i++) {
     if (i < .4) {
       if (!e) {
-        eQueryObject = {
-          parameter: {
-            q: autoP.argsX[0]
-          }
-        };
-        // eQueryObject = {parameter: {q:"http://instagram.com"}}
-        let tempObj = new FunctionHandle(eQueryObject);
-        handles =  tempObj
-        console.log("handles = " + handles, executed++);
-        if (!handles.funcUno && !handles.funcDos) {
-          base = handles
+        if (i < .2) {
+          base = autoGlobe.globalThis["vidPlaylist"].apply(this, [rndWord()]);
         }
         else {
-          let funcU = handles.funcUno;
-          let funcD = handles.funcDos;
-          base = createFunctionResult(funcU, funcD);
+          eQueryObject = {
+            parameter: {
+              q: autoP.argsX[0]
+            }
+          };
+          // eQueryObject = {parameter: {q:"http://instagram.com"}}
+          let tempObj = new FunctionHandle(eQueryObject);
+          handles =  tempObj
+          console.log("handles = " + handles, executed++);
+          if (!handles.funcUno && !handles.funcDos) {
+            base = handles
+          }
+          else {
+            let funcU = handles.funcUno;
+            let funcD = handles.funcDos;
+            base = createFunctionResult(funcU, funcD);
+          }
         }
         if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
           let dataOR = globalHandleGetData(base);
@@ -697,13 +702,18 @@ var geneicType = function (e) {
     else {
       if (i > .3 && i < .7) {
         if (!e) {
-          eQueryObject = {
-            parameter: {
-              action:"getData"
+          if (i > .4 && i < .6) {
+            return autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content);
+          }
+          else {
+            eQueryObject = {
+              parameter: {
+                action:"getData"
+              }
+            };
+            if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
+              return handleRequest(eQueryObject);
             }
-          };
-          if (eQueryObject && eQueryObject.parameter && eQueryObject.parameter.action === "getData") {
-            return handleRequest(eQueryObject);
           }
         }
         else {
@@ -738,22 +748,26 @@ var geneicType = function (e) {
       else {
         if (i > .6) {
           if (!e) {
-            eQueryObject = {
-              parameter: {
-                file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
-              }
-            };
-            eQueryObject = {parameter: {func:"vidPlaylist",args:[rndWord()]}}
-            let tempObj = new FunctionHandle(eQueryObject);
-            handles =  tempObj
-            console.log("handles = " + handles, executed++);
-            if (!handles.funcUno && !handles.funcDos) {
-              base = handles
+            if (i > .8) {
+              base = autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content);
             }
             else {
-              let funcU = handles.funcUno;
-              let funcD = handles.funcDos;
-              base = createFunctionResult(funcU, funcD);
+              eQueryObject = {
+                parameter: {
+                  file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
+                }
+              };
+              let tempObj = new FunctionHandle(eQueryObject);
+              handles =  tempObj
+              console.log("handles = " + handles, executed++);
+              if (!handles.funcUno && !handles.funcDos) {
+                base = handles
+              }
+              else {
+                let funcU = handles.funcUno;
+                let funcD = handles.funcDos;
+                base = createFunctionResult(funcU, funcD);
+              }
             }
             if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
               let dataOR = globalHandleGetData(base);

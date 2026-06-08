@@ -1596,99 +1596,130 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           return;
         }
 
-        // serverside("getVI", [])
-        //   .then((response) => {
-        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-        //     // Access the actual array from the response
-        //     if (response && typeof response === "object") {
-        //       for (var key in response) {
-        //         // alert(JSON.stringify(response[key]));
-        //         let i = 0;
-        //         let l = response[key].length;
-        //         // alert(l);
-        //         for (i,l;i<l;i++) {
-        //           let tempObj = {};
-        //           tempObj.description = response[key][i].description;
-        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-        //             let tData = response[key][i].videoId;
-        //             let dLoc =  null;
-        //             dLoc =  "https://www.youtube.com/watch?v=";
-        //             tempObj.youtubeUrl = dLoc + tData;
-        //           }
-        //           else {
-        //             tempObj.youtubeUrl = response[key][i].videoId;
-        //           }
-        //           fullList.push(tempObj);
-        //         }
-        //       }
-        //     } else {
-        //       console.warn("Expected an array in response from getVI, received:", response);
-        //       // Fallback to empty array if the structure is not as expected
-        //       fullList = [];
-        //     }
-        //     localSuggestionsCache["allMatches"] = fullList;
-        //     $('a').click(function(event){
-        //       if ($(this).attr('href') === "javascript:void(0)") {
-        //         let confirmation = window.confirm(
-        //           "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-        //         );
-        //         if (confirmation) {
-        //           event.preventDefault();
-        //           var linkFollow = document.createElement("a");
-        //           linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-        //           linkFollow.id = "linkFOLLOW";
-        //           linkFollow.target = "_blank";
-        //           linkFollow.rel = "noopener noreferrer";
-        //           document.body.appendChild(linkFollow);
-        //           document.getElementById("linkFOLLOW").click();
-        //           document.getElementById("linkFOLLOW").remove();
-        //           // If the user preses the "Enter" key on the keyboard. 
-        //           // if (event.key === 'Enter')  {
-        //           serverside("getVI", [])
-        //           .then((response) => {
-        //             // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-        //             // Access the actual array from the response
-        //             if (response && typeof response === "object") {
-        //               fullList = [];
-        //               for (var key in response) {
-        //                 // alert(JSON.stringify(response[key]));
-        //                 let i = 0;
-        //                 let l = response[key].length;
-        //                 // alert(l);
-        //                 for (i,l;i<l;i++) {
-        //                   let tempObj = {};
-        //                   tempObj.description = response[key][i].description;
-        //                   if (String(response[key][i].videoId).indexOf("http") === -1) {
-        //                     let tData = response[key][i].videoId;
-        //                     let dLoc =  null;
-        //                     dLoc =  "https://www.youtube.com/watch?v=";
-        //                     tempObj.youtubeUrl = dLoc + tData;
-        //                   }
-        //                   else {
-        //                     tempObj.youtubeUrl = response[key][i].videoId;
-        //                   }
-        //                   fullList.push(tempObj);
-        //                 }
-        //               }
-        //             } 
-        //             else {
-        //               console.warn("Expected an array in response from getVI, received:", response);
-        //               // Fallback to empty array if the structure is not as expected
-        //               fullList = [];
-        //             }
-        //           })
-        //           .catch(error => {
-        //             console.error("Error fetching address suggestions for artiicleIndex :", error);
-        //             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-        //           });
-        //         }
-        //       }
-        //     });
-        //   })
-        //   .catch(error => {
-        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-        //   });
+        serverside("getVI", [])
+          .then((response) => {
+            // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+            // Access the actual array from the response
+            if (response && typeof response === "object") {
+              for (var key in response) {
+                // alert(JSON.stringify(response[key]));
+                let i = 0;
+                let l = response[key].length;
+                // alert(l);
+                for (i,l;i<l;i++) {
+                  let tempObj = {};
+                  tempObj.description = response[key][i].description;
+                  if (String(response[key][i].videoId).indexOf("http") === -1) {
+                    let tData = response[key][i].videoId;
+                    let dLoc =  null;
+                    dLoc =  "https://www.youtube.com/watch?v=";
+                    tempObj.youtubeUrl = dLoc + tData;
+                  }
+                  else {
+                    tempObj.youtubeUrl = response[key][i].videoId;
+                  }
+                  fullList.push(tempObj);
+                }
+              }
+            } else {
+              console.warn("Expected an array in response from getVI, received:", response);
+              // Fallback to empty array if the structure is not as expected
+              fullList = [];
+            }
+            localSuggestionsCache["allMatches"] = fullList;
+            $('a').click(function(event){
+              if ($(this).attr('href') === "javascript:void(0)") {
+                let confirmation = window.confirm(
+                  "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  event.preventDefault();
+                  var linkFollow = document.createElement("a");
+                  if (againCap) {
+                    localSuggestionsCache["allMatches"].sort((a,b) => {
+                      let i = Math.random()
+                      let tSorted = a;
+                      let zSorted = b;
+                      if (i < .3) {
+                        return zSorted - tSorted
+                      }
+                      else {
+                        if (i > .3 && 1 < .5 ) {
+                          return tSorted - zSorted
+                        }
+                        else {
+                          if (i > .5 && i < .8) {
+                            return zSorted
+                          }
+                          else {
+                            if (i > .8) {
+                              return tSorted
+                            }
+                          }
+                        }
+                      }
+                    }).map((val) => {
+                      if (String(val.description).indexOf(againCap) > -1) {
+                        linkFollow.href = val.youtubeUrl;
+                      }
+                    });
+                  }
+                  else {
+                    linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                  }
+                  linkFollow.id = "linkFOLLOW";
+                  linkFollow.target = "_blank";
+                  linkFollow.rel = "noopener noreferrer";
+                  document.body.appendChild(linkFollow);
+                  document.getElementById("linkFOLLOW").click();
+                  document.getElementById("linkFOLLOW").remove();
+                  // If the user preses the "Enter" key on the keyboard. 
+                  // if (event.key === 'Enter')  {
+                  // serverside("getVI", [])
+                  // .then((response) => {
+                    // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                    // Access the actual array from the response
+                    // if (response && typeof response === "object") {
+                    //   fullList = [];
+                    //   for (var key in response) {
+                        // alert(JSON.stringify(response[key]));
+                        // let i = 0;
+                        // let l = response[key].length;
+                        // alert(l);
+                    //     for (i,l;i<l;i++) {
+                    //       let tempObj = {};
+                    //       tempObj.description = response[key][i].description;
+                    //       if (String(response[key][i].videoId).indexOf("http") === -1) {
+                    //         let tData = response[key][i].videoId;
+                    //         let dLoc =  null;
+                    //         dLoc =  "https://www.youtube.com/watch?v=";
+                    //         tempObj.youtubeUrl = dLoc + tData;
+                    //       }
+                    //       else {
+                    //         tempObj.youtubeUrl = response[key][i].videoId;
+                    //       }
+                    //       fullList.push(tempObj);
+                    //     }
+                    //   }
+                    // } 
+                    // else {
+                    //   console.warn("Expected an array in response from getVI, received:", response);
+                      // Fallback to empty array if the structure is not as expected
+                  //     fullList = [];
+                  //   }
+                  // })
+                  // .catch(error => {
+                  //   console.error("Error fetching address suggestions for artiicleIndex :", error);
+                  //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                  // });
+                }
+              }
+            });
+          })
+          .catch(error => {
+            console.error("Error fetching address suggestions for artiicleIndex :", error);
+            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+          });
           
         const fetchSuggestions = debounce((query) => {
           if (query.length < 3) {
@@ -1696,6 +1727,10 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             window.scrollTo(0,0);
             input.blur();
             return;
+          }
+          againCap = localStorage.getItem("gsSearch");
+          if (String(againCap).indexOf(query) > -1) {
+            input.value = againCap;
           }
 
           input.addEventListener('click', (event) => {
@@ -1734,7 +1769,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 let confirmation;
                 suggestions?.forEach(suggestion => {
                   // console.log(suggestion)
-                  if (suggestion && suggestion?.description.includes(String(event.target.value))) {
+                  if (suggestion && suggestion?.description.includes(event.target.value)) {
                     confirmation = window.confirm(
                       suggestion?.youtubeUrl,
                     );
@@ -1756,61 +1791,79 @@ const next_clicked_video = HtmlService.createHtmlOutput(
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
                 input.blur();
-                localStorage.setItem("gsSearch", String(event.target.value));
-                againCap = localStorage.getItem("gsSearch");
-                input.value = againCap
-                serverside("vidPlaylist", [String(input.value) || String(event.target.value)])
+                input.disabled = true
+                localStorage.setItem("gsSearch", event.target.value);
+                if (event.target.value) {
+                  let confirmation = window.confirm(
+                    "Opening a NEW page with a search result. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  );
+                  if (confirmation) {
+                    if (event.target.value) {
+                      localSuggestionsCache["allMatches"].map((val) => {
+                        if (String(val.description).indexOf(event.target.value) > -1) {
+                          window.open(val.youtubeUrl);
+                        }
+                      });
+                    }
+                    // else {
+                    //   window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl);
+                    // }
+                  }
+                }
+                serverside("vidPlaylist", [event.target.value])
                   .then((done) => {
                     try {
                       // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                       // Access the actual array from the done
                       if (done && typeof done === "object") {
-                        // alert(JSON.stringify(done.data["playlistArr"]));
-                        // alert(done.data["playlistArr"].length);
-                        for (var key in done) {
+                        // fullList = [];
+                        // alert(JSON.stringify(done.data));
+                        // alert(Object.keys(done.data).length);
+                        for (var key in done.data) {
                           let i = 0;
-                          let l = done[key]["playlistArr"]?.length;
+                          let l = done[key]?.length;
                           // alert(l);
                           for (i,l;i<l;i++) {
                             let tempObj = {};
-                            // tempObj.description = done[key][i].description;
-                            let tData = done[key]["playlistArr"][i];
+                            tempObj.description = done[key][i].description;
+                            let tData = done[key][i];
                             let dLoc =  null;
                             if (String(tData).indexOf("http") === -1) {
                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                               dLoc =  "https://www.youtube.com/watch?v=";
-                              tempObj.youtubeUrl = String(dLoc + tData);
+                              tempObj.youtubeUrl = dLoc + tData;
                             }
                             else {
                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                              tempObj.youtubeUrl = String(tData);
+                              tempObj.youtubeUrl = tData;
                             }
                             fullList.push(tempObj);
                           }
                         }
                         localSuggestionsCache["allMatches"] = fullList;
-                        $('a').click(function(event){
-                          if ($(this).attr('href') === "javascript:void(0)") {
-                            let confirmation = window.confirm(
-                              "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                            );
-                            if (confirmation) {
-                              event.preventDefault();
-                              var linkFollow = document.createElement("a");
-                              linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
-                              linkFollow.id = "linkFOLLOW";
-                              linkFollow.target = "_blank";
-                              linkFollow.rel = "noopener noreferrer";
-                              document.body.appendChild(linkFollow);
-                              document.getElementById("linkFOLLOW").click();
-                              document.getElementById("linkFOLLOW").remove();
-                            }
-                          }
-                        });
+                        // $('a').click(function(event){
+                        //   if ($(this).attr('href') === "javascript:void(0)") {
+                        //     let confirmation = window.confirm(
+                        //       "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                        //     );
+                        //     if (confirmation) {
+                        //       event.preventDefault();
+                        //       var linkFollow = document.createElement("a");
+                        //       linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+                        //       linkFollow.id = "linkFOLLOW";
+                        //       linkFollow.target = "_blank";
+                        //       linkFollow.rel = "noopener noreferrer";
+                        //       document.body.appendChild(linkFollow);
+                        //       document.getElementById("linkFOLLOW").click();
+                        //       document.getElementById("linkFOLLOW").remove();
+                        //     }
+                        //   }
+                        // });
+                        input.disabled = false
                         input.focus();
                       } 
                       else {
-                        console.warn("Expected an array in done from getVI, received:", done);
+                        console.warn("Expected an array in done from vidPlaylist, received:", done);
                         // Fallback to empty array if the structure is not as expected
                         fullList = [];
                       }
@@ -1828,10 +1881,11 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         
         if (input && suggestionsDiv) {
           input.addEventListener('input', (event) => {
-            fetchSuggestions(String(event.target.value));
+            fetchSuggestions(event.target.value);
           });
 
           document.addEventListener('click', (event) => {
+            input.disabled = false;
             if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
               suggestionsDiv.innerHTML = '';
             }

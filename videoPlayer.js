@@ -82,7 +82,19 @@ function needPastTime(searchString) {
       var noSearch = autoP.searchResult?.parameters;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
-    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var searchLink = `http://www.bing.com/search?q=(${String(searchString)})%20intitle%3A%20-%20YouTube+AND+${String(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    if (vidData.indexOf(searchLink) !== -1) {
+      return;
+    } else {
+      updateQuote(
+        JSON.stringify({
+          name: "videoSheet",
+          number: 001,
+          videoid: searchLink,
+          videodescription: searchString,
+        }),
+      );
+    }
     fndOrdObj.hardUrl = searchLink;
     const options = { muteHTTPExceptions: true };
     let retries = 0;
@@ -206,115 +218,121 @@ function needPastTime(searchString) {
   if (fndOrd?.length > 0) {
     var randomKey = 0;
     var rndRes = [];
-    while (rndRes?.length === 0) {
-      randomKey = Math.floor(Math.random() * Math.floor(fndOrd?.length)); // Math.floor(Math.random());
-      fndOrd.forEach((test) => {
-        var elaspeTime = autoP.functionRegistry.time;
-        var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
-        for (var i = 0, l = randomKey; i < l; i++) {
-          if (
-            test.indexOf("false") === -1 &&
-            test.indexOf("var") === -1 &&
-            test.indexOf("=") === -1 &&
-            test.indexOf(".") === -1 &&
-            test.indexOf("(") === -1 &&
-            test.indexOf(")") === -1 &&
-            test.indexOf("_") === -1 &&
-            test.indexOf(";") === -1 &&
-            test.indexOf('"') === -1 &&
-            test.indexOf("Error") === -1 &&
-            test.indexOf("error") === -1 &&
-            test.indexOf("Codes") === -1 &&
-            test.indexOf("siz23") === -1 &&
-            test.indexOf(":") === -1 &&
-            test.indexOf("{}") === -1 &&
-            test.indexOf("}") === -1 &&
-            test.indexOf("<") === -1 &&
-            test.indexOf(">") === -1 &&
-            test.indexOf("r[1]+r[3],a") === -1 &&
-            test.indexOf("EdgeWorksp") === -1 &&
-            test.indexOf("new XMLHttp") === -1
-          ) {
-            if (test && rndRes.indexOf(test) === -1) {
-              if (vidData.indexOf(test) !== -1) {
-                return;
-              } else {
-                updateQuote(
-                  JSON.stringify({
-                    name: "videoSheet",
-                    number: 001,
-                    videoid: test,
-                    videodescription: searchString,
-                  }),
-                );
-              }
+    randomKey = Math.floor(Math.random() * Math.floor(fndOrd?.length)); // Math.floor(Math.random());
+    fndOrd.forEach((test) => {
+      var elaspeTime = autoP.functionRegistry.time;
+      var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+      for (var i = 0, l = randomKey; i < l; i++) {
+        if (
+          test.indexOf("false") === -1 &&
+          test.indexOf("var") === -1 &&
+          test.indexOf("=") === -1 &&
+          test.indexOf(".") === -1 &&
+          test.indexOf("(") === -1 &&
+          test.indexOf(")") === -1 &&
+          test.indexOf("_") === -1 &&
+          test.indexOf(";") === -1 &&
+          test.indexOf('"') === -1 &&
+          test.indexOf("Error") === -1 &&
+          test.indexOf("error") === -1 &&
+          test.indexOf("Codes") === -1 &&
+          test.indexOf("siz23") === -1 &&
+          test.indexOf(":") === -1 &&
+          test.indexOf("{}") === -1 &&
+          test.indexOf("}") === -1 &&
+          test.indexOf("<") === -1 &&
+          test.indexOf(">") === -1 &&
+          test.indexOf("r[1]+r[3],a") === -1 &&
+          test.indexOf("EdgeWorksp") === -1 &&
+          test.indexOf("new XMLHttp") === -1
+        ) {
+          if (test && rndRes.indexOf(test) === -1) {
+            if (vidData.indexOf(test) !== -1) {
               rndRes.push(test);
+              return;
+            } else {
+              rndRes.push(test);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: 001,
+                  videoid: test,
+                  videodescription: searchString,
+                }),
+              );
             }
           }
         }
-      });
-      if (rndRes && rndRes?.length === 0) {
-        let isItValid = isValidUrl(searchString);
-        rndRes =  isItValid.matches;
       }
-      else {
-        if (rndRes && rndRes?.length > 0) {
-          autoP.functionRegistry.vidTree();
-          vidSheetVals = autoP.functionRegistry.getVideoList();
-          vidData = [];
-          vidVals = Object.values(vidSheetVals);
-          vidVals.forEach((val) => {
-            let inValsKeys = Object.keys(val);
-            let inVVals = Object.values(val);
-            inVVals.forEach((inV) => {
-              let truInv = autoP.trueVfalse(inV);
-              if (truInv) {
-                vidData.push(inV);
-              } else {
-                return;
-              }
-            });
-          });
-          var rndSort = [];
-          for (var i = 0, l = rndRes?.length; i < l; i++) {
-            let sorRes = rndRes.filter((o) => {
-              return o !== rndRes[i];
-            });
-            rndSort.push(sorRes);
-          }
-          var sorKind = rndSort.toString().split(" ");
-          var revKind = sorKind.reverse();
-          var popKind = revKind.pop();
-          var rndKind = popKind.split(",");
-        }
+    });
+    if (rndRes && rndRes?.length === 0) {
+      return fndOrdObj
+      let isItValid = isValidUrl(searchString);
+      if (isItValid && isItValid.url) {
+        rndRes =  isItValid.url;
       }
-
-      var playVid = [];
-      var vidKeys = Object.keys(vidSheetVals);
-      vidKeys.forEach((key) => {
-        let vidObj = vidSheetVals[key];
-        let videoId = vidObj["Video"];
-        let matchKeys = Object.keys(vidObj);
-        matchKeys.forEach((match) => {
-          let vidMatch = vidObj[match];
-          let truMatch = autoP.trueVfalse(vidMatch);
-          if (truMatch && typeof vidMatch !== "number") {
-            let searchMatch = vidMatch.indexOf(searchString) > -1;
-            let matchSearch = searchString.indexOf(vidMatch) > -1;
-            if (searchMatch || matchSearch) {
-              playVid.push(videoId);
-            }
-          }
-          else if (truMatch && typeof vidMatch === "number") {
-            let matchSearch = searchString.indexOf(vidMatch) > -1;
-            if (matchSearch) {
-              playVid.push(videoId);
-            }
-
-          }
+    }
+    
+    if (rndRes && rndRes?.length > 0) {
+      var rndSort = [];
+      for (var i = 0, l = rndRes?.length; i < l; i++) {
+        let sorRes = rndRes.filter((o) => {
+          return o !== rndRes[i];
         });
-      });
-      fndOrdObj.playList = playVid;
+        rndSort.push(sorRes);
+      }
+      var sorKind = rndSort.toString().split(" ");
+      var revKind = sorKind.reverse();
+      var popKind = revKind.pop();
+      var rndKind = popKind.split(",");
+      fndOrdObj.playList = rndKind
+    }
+    else {
+      if (rndRes && rndRes?.length === 0) {
+        autoP.functionRegistry.vidTree();
+        vidSheetVals = autoP.functionRegistry.getVideoList();
+        vidData = [];
+        vidVals = Object.values(vidSheetVals);
+        vidVals.forEach((val) => {
+          let inValsKeys = Object.keys(val);
+          let inVVals = Object.values(val);
+          inVVals.forEach((inV) => {
+            let truInv = autoP.trueVfalse(inV);
+            if (truInv) {
+              vidData.push(inV);
+            } else {
+              return;
+            }
+          });
+        });
+
+        var playVid = [];
+        var vidKeys = Object.keys(vidSheetVals);
+        vidKeys.forEach((key) => {
+          let vidObj = vidSheetVals[key];
+          let videoId = vidObj["Video"];
+          let matchKeys = Object.keys(vidObj);
+          matchKeys.forEach((match) => {
+            let vidMatch = vidObj[match];
+            let truMatch = autoP.trueVfalse(vidMatch);
+            if (truMatch && typeof vidMatch !== "number") {
+              let searchMatch = String(vidMatch).search(searchString) > -1;
+              let matchSearch = String(searchString).search(vidMatch) > -1;
+              if (searchMatch || matchSearch) {
+                playVid.push(videoId);
+              }
+            }
+            else if (truMatch && typeof vidMatch === "number") {
+              let matchSearch = String(searchString).search(vidMatch) > -1;
+              if (matchSearch) {
+                playVid.push(videoId);
+              }
+
+            }
+          });
+        });
+        fndOrdObj.playList = playVid;
+      }
     }
   }
   return fndOrdObj

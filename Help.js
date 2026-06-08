@@ -153,18 +153,10 @@ function isValidUrl(text) {
       ")",
   );
   let validUrlResult = {};
-  let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
   validUrlResult.protocol = "";
   validUrlResult.hostname = "";
   validUrlResult.pathname = "";
   validUrlResult.query=  "";
-  if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
-    validUrlResult.matches = searchLinkDrive?.dataTree;
-  }
-  else {
-    validUrlResult.matches = [];
-  }
-  console.log("matches to return = " + validUrlResult.matches);
   let rndRes = [];
   var allMatches = [];
   if (typeof text !== "string" || text?.length === 0) {
@@ -175,6 +167,14 @@ function isValidUrl(text) {
   validUrlResult.matches = text.match(urlRegex);
   console.log("matches = " + validUrlResult.matches);
   if (!validUrlResult.matches) {
+    let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+    if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
+      validUrlResult.matches = searchLinkDrive?.dataTree;
+    }
+    else {
+      validUrlResult.matches = [];
+    }
+    console.log("matches to return = " + validUrlResult.matches);
     if (searchLinkDrive?.filedMain) {
       autoP.functionRegistry.vidTree();
       let vidSheetVals = autoP.functionRegistry.getVideoList();
@@ -212,6 +212,7 @@ function isValidUrl(text) {
         }
       });
     }
+    return validUrlResult
   }
   console.log("rndRes = " + rndRes);
   allMatches = validUrlResult.matches ? [...validUrlResult.matches] : [...rndRes];
@@ -229,7 +230,16 @@ function isValidUrl(text) {
         url = url.substring(protocolEnd + 3);
       }
       else {
+        return validUrlResult
         if (rndRes.length === 0) {
+          let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
+          if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
+            validUrlResult.matches = searchLinkDrive?.dataTree;
+          }
+          else {
+            validUrlResult.matches = [];
+          }
+          console.log("matches to return = " + validUrlResult.matches);
           if (searchLinkDrive?.filedMain) {
             [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
               if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
@@ -279,6 +289,7 @@ function isValidUrl(text) {
         }
         else {
           if (rndRes.length > 0) {
+            return validUrlResult
             tempUrlResult.currentProtocol = rndRes[0].substring(0, protocolEnd + 3);
             url = rndRes[0].substring(protocolEnd + 3);
           }

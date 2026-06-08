@@ -251,11 +251,11 @@ class DriveFiles {
     let mainStr = this.strNw || testStrNw;
     console.log("DriveFiles: mainStr (strNw || testStrNw):", mainStr);
 
-    let arn = [mainStr].toString().toLowerCase();
+    let arn = String(mainStr).toLowerCase();
     let iam;
     try {
       iam = JSON.parse(
-        convertToObjects([[mainStr]], ["file"], autoP.functionRegistry.time),
+        convertToObjects([[String(mainStr)]], ["file"], autoP.functionRegistry.time),
       );
       console.log("iam = " + iam, executed++);
       console.log("DriveFiles: iam successfully parsed:", iam);
@@ -340,35 +340,36 @@ class DriveFiles {
           console.warn(
             "DriveFiles: No matching files found after DriveApp search. Returning null.",
           );
-          return null;
-          this.options = { muteHttpExceptions: true };
-          this.data = null;
+          // this.dataTree = [];
+          // return
+          // this.options = { muteHttpExceptions: true };
+          // this.data = null;
           // try {}
           // catch(fromResponse) {}
-          this.data = getUrlResponse(mainStr, this.options)?.app;
-          console.log("data = " + this.data, executed++);
-          if (!this.data) {
+          // this.data = getUrlResponse(mainStr, this.options)?.app;
+          // console.log("data = " + this.data, executed++);
+          // if (!this.data) {
             // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
             // Construct the search query. 'title contains' searches file names.
             // Use the exact targetFile for the query.
-            let searchQuery = 'title contains "' + mainStr + '"';
-            console.log(
-              "DriveFiles: Performing DriveApp search with query:",
-              searchQuery,
-            );
-            try {
-              let files = DriveApp.searchFiles(searchQuery);
+            // let searchQuery = 'title contains "' + mainStr + '"';
+            // console.log(
+            //   "DriveFiles: Performing DriveApp search with query:",
+            //   searchQuery,
+            // );
+            // try {
+            //   let files = DriveApp.searchFiles(searchQuery);
 
-              while (files.hasNext()) {
-                let file = files.next();
-                let fiTitle = file.getName();
-                let fileUrl = file.getUrl();
-                this.dataTree.push(fileUrl);
-              }
-            } catch (e) {
-              console.error("driveManager: Error during DriveApp search:", e);
-              this.filedMain = null; // Handle search errors gracefully
-            }
+            //   while (files.hasNext()) {
+            //     let file = files.next();
+            //     let fiTitle = file.getName();
+            //     let fileUrl = file.getUrl();
+            //     this.dataTree.push(fileUrl);
+            //   }
+            // } catch (e) {
+            //   console.error("driveManager: Error during DriveApp search:", e);
+            //   this.filedMain = null; // Handle search errors gracefully
+            // }
             console.log(
               "driveManager: Final dataTree length after search:",
               this.dataTree.length,
@@ -382,22 +383,22 @@ class DriveFiles {
               );
               this.filedMain = filedMain;
             }
-            else {
-              if (this.dataTree.length === 0) {
-                executed++;
-                let filedSide = createFormFunction(mainStr);
-                let funcKeys = Object.keys(filedSide);
-                let funcUrl;
-                funcKeys.forEach((key) => {
-                  let funcObj = filedSide[key];
-                  funcUrl = funcObj[0];
-                });
-              }
-            }
-          }
-          else {
-            this.filedMain = mainStr;
-          }
+            // else {
+              // if (this.dataTree.length === 0) {
+                // executed++;
+                // this.filedSide = createFormFunction(strNw);
+                // let funcKeys = Object.keys([this.filedSide]);
+                // this.funcUrl = null;
+                // funcKeys.forEach((key) => {
+                //   let funcObj = [this.filedSide][key];
+                //   this.funcUrl = funcObj[0];
+                // });
+              // }
+            // }
+          // }
+          // else {
+            // this.filedMain = mainStr;
+          // }
         }
       }
     }
