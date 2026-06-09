@@ -630,10 +630,39 @@ var geneicType = function (e) {
   let handles;
   let base;
   let exampleObjectType = {
-    a: "string",
-    b: 123,
-    c: ["string"],
+    a: autoP?.fParams[0] || "String",
+    b: autoP?.fParams[1] || 123,
+    c: autoP?.fParams[3] || ["String"],
   };
+  let chopSort = autoP
+  ?.fParams?.sort((a,b) => {
+      let i = Math.random()
+      let tSorted = a;
+      let zSorted = b;
+      if (i < .3) {
+        return zSorted - tSorted
+      }
+      else {
+        if (i > .3 && i < .5 ) {
+          return tSorted - zSorted
+        }
+        else {
+          if (i > .5 && i < .8) {
+            return zSorted
+          }
+          else {
+            if (i > .8) {
+              return tSorted
+            }
+          }
+        }
+      }
+    }).filter((val) => {
+        if (String(val).indexOf(exampleObjectType.a) > -1) {
+          return val === exampleObjectType.a
+          // exampleObjectType.a = val;
+        }
+      });
   let eQueryObject = exampleObjectType;
   let i = Math.random();
   let l = 1;

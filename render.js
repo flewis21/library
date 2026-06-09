@@ -1045,7 +1045,7 @@ class RenderFile {
                     <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
                   </div>
                 </nav>
-                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
+                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
                   <header class="banner card-panel transparent static-fix">
                     <div id="iframePlayer" class="row card-panel transparent"></div>
                     <h1>Blog</h1>
@@ -1348,7 +1348,7 @@ class RenderTemplate {
                 <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
               </div>
             </nav>
-            <div id="artiicleIndexSuggestions" class="autocomplete-suggestions"></div>
+            <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
             <main class="responsive-section float-left">
               <header class="transparent banner responsive-section">
                 <div id="player1" class="row card-panel transparent list-container grid"></div>

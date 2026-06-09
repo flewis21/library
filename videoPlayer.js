@@ -82,7 +82,7 @@ function needPastTime(searchString) {
       var noSearch = autoP.searchResult?.parameters;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
-    var searchLink = `http://www.bing.com/search?q=(${String(searchString)})%20intitle%3A%20-%20YouTube+AND+${String(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     if (vidData.indexOf(searchLink) !== -1) {
       return;
     } else {

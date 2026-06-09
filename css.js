@@ -94,7 +94,7 @@ const main = HtmlService.createHtmlOutput(
   `main {height: 92%;margin-top: 10px;width: 100%;margin-bottom: 10px;}`,
 );
 const nav = HtmlService.createHtmlOutput(
-  `nav {background-color: #20416c;padding: 10px 2%;justify-content: space-between;margin-top: 1px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);background: #fff;position: stactic;top: 0;z-index: 10;}`,
+  `nav,#artiicleIndexSuggestions {background-color: #20416c;padding: 10px 2%;justify-content: space-between;margin-top: 1px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);background: #fff;position: stactic;top: 0;z-index: 10;}`,
 );
 const nav_oddchances = HtmlService.createHtmlOutput(`nav {font-size: 30px;}`);
 const section = HtmlService.createHtmlOutput(
@@ -1636,7 +1636,20 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                   event.preventDefault();
                   var linkFollow = document.createElement("a");
                   if (againCap) {
-                    localSuggestionsCache["allMatches"].sort((a,b) => {
+                    let matchesToReturn = localSuggestionsCache["allMatches"].map((val, index) => {
+                      if (String(val.description).indexOf(againCap) > -1) {
+                        console.log("result description: " + val.description);
+                        console.log("result index: " + index);
+                        let tubeUrl = val.youtubeUrl
+                        if (tubeUrl && tubeUrl !== null) {
+                          return tubeUrl
+                        }
+                      }
+                    }).filter((mapResult) => {
+                      return mapResult != null
+                    });
+                    // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                    let allMatchesAvailable = matchesToReturn.sort((a,b) => {
                       let i = Math.random()
                       let tSorted = a;
                       let zSorted = b;
@@ -1644,7 +1657,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                         return zSorted - tSorted
                       }
                       else {
-                        if (i > .3 && 1 < .5 ) {
+                        if (i > .3 && i < .5 ) {
                           return tSorted - zSorted
                         }
                         else {
@@ -1658,15 +1671,21 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                           }
                         }
                       }
-                    }).map((val) => {
-                      if (String(val.description).indexOf(againCap) > -1) {
-                        linkFollow.href = val.youtubeUrl;
-                      }
                     });
+                    if (matchesToReturn.length > 0) {
+                      // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+                      linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+                    }
+                    else {
+                      if (matchesToReturn.length === 0) {
+                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                      }
+                    }
                   }
                   else {
                     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
                   }
+                  console.log("the match: " + linkFollow.href);
                   linkFollow.id = "linkFOLLOW";
                   linkFollow.target = "_blank";
                   linkFollow.rel = "noopener noreferrer";
