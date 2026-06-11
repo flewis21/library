@@ -1461,14 +1461,14 @@ class FunctionHandle {
                         this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
                       }
                       else {
-                        this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
+                        this.argsEd = this.tempObj.func;
                       }
                     }
                     console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
                     if (typeof this.argsEd === "string") {
                       this.e = objectOfS(
                         ["parameter"],
-                        [[["func", this.argsEd]]],
+                        [[["args", this.argsEd]]],
                         this.funchAP.functionRegistry.time,
                       );
                       console.log("e = " + JSON.stringify(this.e), this.executed++);

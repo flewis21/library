@@ -3,7 +3,7 @@ function dtlsPro(searchDTLS) {
   if (typeof searchDTLS === "undefined") {
     searchDTLS
       ? (cokey = searchDTLS)
-      : (cokey = autoP.functionRegistry.getParamsList()[crmT(arguments.callee.name)]);
+      : (cokey = autoP.func);
   } else {
     cokey = searchDTLS;
   }

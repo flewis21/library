@@ -79,9 +79,10 @@ var createFunctionResult = function (funcUno, funcDos) {
   // --- BEGIN Refactored payLoad processing ---
 
   try {
-    let objVal = funcDos?.toString();
+    let objVal = truDos? funcDos?.toString(): false;
+    console.log("objVal\n" + [objVal]);
     let truVal = autoP.trueVfalse(objVal);
-    console.log("truVal and objVal\n" + [truVal, objVal]);
+    console.log("truVal\n" + [truVal]);
     let rawUrlResult = null;
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
@@ -158,8 +159,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
           console.log("This execution is trying to process with funcDos. funcDos is  " , funcDos);
           try {
-            return
-            // rawFuncResult = mis(funcUno.concat(parsedFuncArgs).join(""));
+            rawFuncResult = mis(funcUno.concat(parsedFuncArgs));
           } 
           catch (error) {
             console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
@@ -178,8 +178,7 @@ var createFunctionResult = function (funcUno, funcDos) {
               }
             }
             else {
-              return
-              // rawFuncResult = mis([parsedFuncArgs]);
+              rawFuncResult = mis(parsedFuncArgs);
             }
             console.log("rawFuncResult = " + rawFuncResult, executed++);
           } 

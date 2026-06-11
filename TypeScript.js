@@ -630,9 +630,9 @@ var geneicType = function (e) {
   let handles;
   let base;
   let exampleObjectType = {
-    a: autoP?.fParams[0] || "String",
-    b: autoP?.fParams[1] || 123,
-    c: autoP?.fParams[3] || ["String"],
+    a: Array.isArray(autoP?.fParams)? autoP?.fParams[0] : "String",
+    b: Array.isArray(autoP?.fParams)? autoP?.fParams[1] : 123,
+    c: Array.isArray(autoP?.fParams)? autoP?.fParams[3] : ["String"],
   };
   let chopSort = autoP
   ?.fParams?.sort((a,b) => {
@@ -675,10 +675,10 @@ var geneicType = function (e) {
         else {
           eQueryObject = {
             parameter: {
-              q: autoP.argsX[0]
+              q: autoP.spirit()
             }
           };
-          // eQueryObject = {parameter: {q:"http://instagram.com"}}
+          eQueryObject = {parameter: {q:"http://instagram.com"}}
           let tempObj = new FunctionHandle(eQueryObject);
           handles =  tempObj
           console.log("handles = " + handles, executed++);

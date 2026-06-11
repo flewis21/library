@@ -1590,6 +1590,9 @@ const next_clicked_video = HtmlService.createHtmlOutput(
         const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
         let fullList = [];
         let againCap = null;
+        let matchesToReturn = null;
+        let allMatchesAvailable = [];
+        let searchIntent = null;
 
         if (!input || !suggestionsDiv) {
           console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
@@ -1627,6 +1630,66 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
+            searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
+            matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+              if (!againCap) {
+                localStorage.setItem("gsSearch", searchIntent);
+                againCap = localStorage.getItem("gsSearch");
+              }
+              if (String(val.description).indexOf(againCap) > -1) {
+                // console.log(againCap + ": result description: " + val.description);
+                // console.log("result index: " + index);
+                let tubeUrl = val.youtubeUrl
+                if (tubeUrl && tubeUrl !== null) {
+                  console.log("local storage all results: " + againCap);
+                  return tubeUrl
+                }
+              }
+            }).filter((mapResult) => {
+              return mapResult != null
+            });
+            // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+            console.log("all matches length greater than intents: " + allMatchesAvailable.length < matchesToReturn.length)
+            while (allMatchesAvailable.length < matchesToReturn.length) {
+              allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                let i = Math.random()
+                let tSorted = a;
+                // console.log(againCap + ": tSorted = " + tSorted);
+                let zSorted = b;
+                // console.log(againCap + ": zSorted = " + zSorted);
+                if (i < .3) {
+                  let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                  if (matchA > -1) {
+                    // console.log(againCap + ": matchA = " + matchA);
+                    return zSorted;
+                  }
+                }
+                else {
+                  if (i > .3 && i < .5 ) {
+                    let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                    if (matchB === -1) {
+                      // console.log(againCap + ": matchB = " + matchB);
+                      return tSorted;
+                    }
+                  }
+                  else {
+                    if (i > .5 && i < .8) {
+                      // console.log(againCap + ": matchC = " + zSorted);
+                      return zSorted;
+                    }
+                    else {
+                      if (i > .8) {
+                        // console.log(againCap + ": matchD = " + tSorted);
+                        return tSorted;
+                      }
+                    }
+                  }
+                }
+              });
+              if (matchesToReturn === null || matchesToReturn.length === 0) {
+                break
+              }
+            }
             $('a').click(function(event){
               if ($(this).attr('href') === "javascript:void(0)") {
                 let confirmation = window.confirm(
@@ -1635,56 +1698,15 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 if (confirmation) {
                   event.preventDefault();
                   var linkFollow = document.createElement("a");
-                  if (againCap) {
-                    let matchesToReturn = localSuggestionsCache["allMatches"].map((val, index) => {
-                      if (String(val.description).indexOf(againCap) > -1) {
-                        console.log("result description: " + val.description);
-                        console.log("result index: " + index);
-                        let tubeUrl = val.youtubeUrl
-                        if (tubeUrl && tubeUrl !== null) {
-                          return tubeUrl
-                        }
-                      }
-                    }).filter((mapResult) => {
-                      return mapResult != null
-                    });
-                    // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                    let allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                      let i = Math.random()
-                      let tSorted = a;
-                      let zSorted = b;
-                      if (i < .3) {
-                        return zSorted - tSorted
-                      }
-                      else {
-                        if (i > .3 && i < .5 ) {
-                          return tSorted - zSorted
-                        }
-                        else {
-                          if (i > .5 && i < .8) {
-                            return zSorted
-                          }
-                          else {
-                            if (i > .8) {
-                              return tSorted
-                            }
-                          }
-                        }
-                      }
-                    });
-                    if (matchesToReturn.length > 0) {
-                      // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
-                      linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                    }
-                    else {
-                      if (matchesToReturn.length === 0) {
-                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                      }
-                    }
-                  }
-                  else {
-                    linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                  }
+                  linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+                  // if (matchesToReturn.length > 0) {
+                  //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+                  // }
+                  // else {
+                  //   if (matchesToReturn.length === 0) {
+                  //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                  //   }
+                  // }
                   console.log("the match: " + linkFollow.href);
                   linkFollow.id = "linkFOLLOW";
                   linkFollow.target = "_blank";
@@ -1751,10 +1773,67 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           if (String(againCap).indexOf(query) > -1) {
             input.value = againCap;
           }
-
-          input.addEventListener('click', (event) => {
-            localStorage.setItem("gsSearch", event.target.value);
-          })
+          else {
+            if (String(againCap).indexOf(query) === -1) {
+              input.addEventListener('click', (event) => {
+                localStorage.setItem("gsSearch", event.target.value);
+                searchIntent = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable?.length)].description;
+                matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                  // if (!againCap) {
+                  //   localStorage.setItem("gsSearch", searchIntent);
+                    againCap = localStorage.getItem("gsSearch");
+                  // }
+                  if (String(val.description).indexOf(againCap) > -1) {
+                    // console.log(againCap + ": result description: " + val.description);
+                    // console.log("result index: " + index);
+                    let tubeUrl = val.youtubeUrl
+                    if (tubeUrl && tubeUrl !== null) {
+                      // console.log("local storage all results: " + againCap);
+                      return tubeUrl
+                    }
+                  }
+                }).filter((mapResult) => {
+                  return mapResult != null
+                });
+                // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                  let i = Math.random()
+                  let tSorted = a;
+                  // console.log(againCap + ": tSorted = " + tSorted);
+                  let zSorted = b;
+                  // console.log(againCap + ": zSorted = " + zSorted);
+                  if (i < .3) {
+                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                    if (matchA > -1) {
+                      // console.log(againCap + ": matchA = " + matchA);
+                      return zSorted;
+                    }
+                  }
+                  else {
+                    if (i > .3 && i < .5 ) {
+                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                      if (matchB === -1) {
+                        // console.log(againCap + ": matchB = " + matchB);
+                        return tSorted;
+                      }
+                    }
+                    else {
+                      if (i > .5 && i < .8) {
+                        // console.log(againCap + ": matchC = " + zSorted);
+                        return zSorted;
+                      }
+                      else {
+                        if (i > .8) {
+                          // console.log(againCap + ": matchD = " + tSorted);
+                          return tSorted;
+                        }
+                      }
+                    }
+                  }
+                });
+              })
+            }
+          }
           
           // Filter the local list instead of making a server call
           const localList = localSuggestionsCache["allMatches"] || [];
@@ -1812,12 +1891,12 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 input.blur();
                 input.disabled = true
                 localStorage.setItem("gsSearch", event.target.value);
-                if (event.target.value) {
+                if (event.target.value && suggestions && suggestions?.length > 0) {
                   let confirmation = window.confirm(
                     "Opening a NEW page with a search result. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
                   if (confirmation) {
-                    if (event.target.value) {
+                    if (event.target.value && suggestions) {
                       localSuggestionsCache["allMatches"].map((val) => {
                         if (String(val.description).indexOf(event.target.value) > -1) {
                           window.open(val.youtubeUrl);
@@ -1829,68 +1908,72 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                     // }
                   }
                 }
-                serverside("vidPlaylist", [event.target.value])
-                  .then((done) => {
-                    try {
-                      // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
-                      // Access the actual array from the done
-                      if (done && typeof done === "object") {
-                        // fullList = [];
-                        // alert(JSON.stringify(done.data));
-                        // alert(Object.keys(done.data).length);
-                        for (var key in done.data) {
-                          let i = 0;
-                          let l = done[key]?.length;
-                          // alert(l);
-                          for (i,l;i<l;i++) {
-                            let tempObj = {};
-                            tempObj.description = done[key][i].description;
-                            let tData = done[key][i];
-                            let dLoc =  null;
-                            if (String(tData).indexOf("http") === -1) {
-                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                              dLoc =  "https://www.youtube.com/watch?v=";
-                              tempObj.youtubeUrl = dLoc + tData;
+                else {
+                  if (event.target.value && suggestions && suggestions?.length === 0) {
+                    serverside("vidPlaylist", [event.target.value])
+                    .then((done) => {
+                      try {
+                        // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
+                        // Access the actual array from the done
+                        if (done && typeof done === "object") {
+                          // fullList = [];
+                          // alert(JSON.stringify(done.data));
+                          // alert(Object.keys(done.data).length);
+                          for (var key in done.data) {
+                            let i = 0;
+                            let l = done[key]?.length;
+                            // alert(l);
+                            for (i,l;i<l;i++) {
+                              let tempObj = {};
+                              tempObj.description = done[key][i].description;
+                              let tData = done[key][i];
+                              let dLoc =  null;
+                              if (String(tData).indexOf("http") === -1) {
+                                // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                dLoc =  "https://www.youtube.com/watch?v=";
+                                tempObj.youtubeUrl = dLoc + tData;
+                              }
+                              else {
+                                // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                tempObj.youtubeUrl = tData;
+                              }
+                              fullList.push(tempObj);
                             }
-                            else {
-                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                              tempObj.youtubeUrl = tData;
-                            }
-                            fullList.push(tempObj);
                           }
+                          localSuggestionsCache["allMatches"] = fullList;
+                          // $('a').click(function(event){
+                          //   if ($(this).attr('href') === "javascript:void(0)") {
+                          //     let confirmation = window.confirm(
+                          //       "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                          //     );
+                          //     if (confirmation) {
+                          //       event.preventDefault();
+                          //       var linkFollow = document.createElement("a");
+                          //       linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+                          //       linkFollow.id = "linkFOLLOW";
+                          //       linkFollow.target = "_blank";
+                          //       linkFollow.rel = "noopener noreferrer";
+                          //       document.body.appendChild(linkFollow);
+                          //       document.getElementById("linkFOLLOW").click();
+                          //       document.getElementById("linkFOLLOW").remove();
+                          //     }
+                          //   }
+                          // });
+                          input.disabled = false
+                          input.focus();
+                        } 
+                        else {
+                          console.warn("Expected an array in done from vidPlaylist, received:", done);
+                          // Fallback to empty array if the structure is not as expected
+                          fullList = [];
                         }
-                        localSuggestionsCache["allMatches"] = fullList;
-                        // $('a').click(function(event){
-                        //   if ($(this).attr('href') === "javascript:void(0)") {
-                        //     let confirmation = window.confirm(
-                        //       "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                        //     );
-                        //     if (confirmation) {
-                        //       event.preventDefault();
-                        //       var linkFollow = document.createElement("a");
-                        //       linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
-                        //       linkFollow.id = "linkFOLLOW";
-                        //       linkFollow.target = "_blank";
-                        //       linkFollow.rel = "noopener noreferrer";
-                        //       document.body.appendChild(linkFollow);
-                        //       document.getElementById("linkFOLLOW").click();
-                        //       document.getElementById("linkFOLLOW").remove();
-                        //     }
-                        //   }
-                        // });
-                        input.disabled = false
-                        input.focus();
-                      } 
-                      else {
-                        console.warn("Expected an array in done from vidPlaylist, received:", done);
-                        // Fallback to empty array if the structure is not as expected
-                        fullList = [];
                       }
-                    }
-                    catch (error) {
-                      console.log("Error in script call: " + error.stack)
-                    }
-                  });
+                      catch (error) {
+                        console.log("Error in script call: " + error.stack)
+                      }
+                    });
+                  }
+                }
               }
             });
             return
