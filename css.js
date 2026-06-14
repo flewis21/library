@@ -230,13 +230,13 @@ const nav_middle_mic_ico = HtmlService.createHtmlOutput(
   `.nav-middle .mic-icon {width: 16px;}`,
 );
 const nav_middle_search_box = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box {border: 1px solid #ccc;margin-right: 15px;padding: 8px 12px;border-radius: 25px;}`,
+  `.nav-middle .search-box {border: 1px solid #ccc;margin-right: 15px;padding: 8px 12px;border-radius: 25px;width: 85%}`,
 );
 const nav_middle_search_box_img = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box img {width: 15px;}`,
+  `.nav-middle .search-box img {width: 85%;}`,
 );
 const nav_middle_search_box_input = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box input {width: 100%;border: 0;outline: 0;background: transparent;}`,
+  `.nav-middle .search-box input {width: 90%;font-weight: 600;font-size: 2.25rem;line-height:.5;border: 0;outline: 0;background: transparent;}`,
 );
 const nav_right_img = HtmlService.createHtmlOutput(
   `.nav-right img {width: 25px;margin-right: 25px;}`,
@@ -359,6 +359,7 @@ const indexbeta_color_boxshadow = HtmlService.createHtmlOutput(
 const indexbeta_color = HtmlService.createHtmlOutput(
   `#indexBeta,#jsonInput,#player1,#player2:placeholder {color: #616e7f;}`,
 );
+const nav_middle_Nav = HtmlService.createHtmlOutput(`#navMiddle {width: 50%}`);
 const seperator2 = HtmlService.createHtmlOutput(
   `/* ----------------------------Menu-Payment-------------------------- */`,
 );
@@ -1649,7 +1650,8 @@ const next_clicked_video = HtmlService.createHtmlOutput(
               return mapResult != null
             });
             // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-            console.log("all matches length greater than intents: " + allMatchesAvailable.length < matchesToReturn.length)
+            console.log("all matches length greater than intents: ");
+            console.log(allMatchesAvailable.length < matchesToReturn.length);
             while (allMatchesAvailable.length < matchesToReturn.length) {
               allMatchesAvailable = matchesToReturn.sort((a,b) => {
                 let i = Math.random()
@@ -1690,6 +1692,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                 break
               }
             }
+            input.value = againCap;
             $('a').click(function(event){
               if ($(this).attr('href') === "javascript:void(0)") {
                 let confirmation = window.confirm(
@@ -1972,7 +1975,104 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                         console.log("Error in script call: " + error.stack)
                       }
                     });
-                  }
+                    // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
+                      if (event.target.value && suggestions && suggestions?.length === 0 ) {
+                        serverside("getVI", [])
+                        .then((response) => {
+                          // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                          // Access the actual array from the response
+                          if (response && typeof response === "object") {
+                            for (var key in response) {
+                              // alert(JSON.stringify(response[key]));
+                              let i = 0;
+                              let l = response[key].length;
+                              // alert(l);
+                              for (i,l;i<l;i++) {
+                                let tempObj = {};
+                                tempObj.description = response[key][i]?.description;
+                                if (String(response[key][i].videoId).indexOf("http") === -1) {
+                                  let tData = response[key][i].videoId;
+                                  let dLoc =  null;
+                                  dLoc =  "https://www.youtube.com/watch?v=";
+                                  tempObj.youtubeUrl = dLoc + tData;
+                                }
+                                else {
+                                  tempObj.youtubeUrl = response[key][i].videoId;
+                                }
+                                fullList.push(tempObj);
+                              }
+                            }
+                          } else {
+                            console.warn("Expected an array in response from getVI, received:", response);
+                            // Fallback to empty array if the structure is not as expected
+                            fullList = [];
+                          }
+                          localSuggestionsCache["allMatches"] = fullList;
+                          matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                            if (!againCap === event.target.value) {
+                              localStorage.setItem("gsSearch", event.target.value);
+                              againCap = localStorage.getItem("gsSearch");
+                            }
+                            if (String(val.description).indexOf(againCap) > -1) {
+                              // console.log(againCap + ": result description: " + val?.description);
+                              // console.log("result index: " + index);
+                              let tubeUrl = val.youtubeUrl
+                              if (tubeUrl && tubeUrl !== null) {
+                                console.log("local storage all results: " + againCap);
+                                return tubeUrl
+                              }
+                            }
+                          }).filter((mapResult) => {
+                            return mapResult != null
+                          });
+                          // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                          console.log("all matches length greater than intents: ");
+                          console.log(allMatchesAvailable.length < matchesToReturn.length);
+                          while (allMatchesAvailable.length < matchesToReturn.length) {
+                            allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                              let i = Math.random()
+                              let tSorted = a;
+                              // console.log(againCap + ": tSorted = " + tSorted);
+                              let zSorted = b;
+                              // console.log(againCap + ": zSorted = " + zSorted);
+                              if (i < .3) {
+                                let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                                if (matchA > -1) {
+                                  // console.log(againCap + ": matchA = " + matchA);
+                                  return zSorted;
+                                }
+                              }
+                              else {
+                                if (i > .3 && i < .5 ) {
+                                  let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                                  if (matchB === -1) {
+                                    // console.log(againCap + ": matchB = " + matchB);
+                                    return tSorted;
+                                  }
+                                }
+                                else {
+                                  if (i > .5 && i < .8) {
+                                    // console.log(againCap + ": matchC = " + zSorted);
+                                    return zSorted;
+                                  }
+                                  else {
+                                    if (i > .8) {
+                                      // console.log(againCap + ": matchD = " + tSorted);
+                                      return tSorted;
+                                    }
+                                  }
+                                }
+                              }
+                            });
+                            if (matchesToReturn === null || matchesToReturn.length === 0) {
+                              break
+                            }
+                          }
+                          input.value = againCap;
+                        });
+                      }
+                    }
+                  // }
                 }
               }
             });
@@ -2303,6 +2403,12 @@ const warrior_clicks = HtmlService.createHtmlOutput(
 const yTPlayer = HtmlService.createHtmlOutput(
   `
   <script>
+    let fullList = [];
+    let againCap = null;
+    let matchesToReturn = null;
+    let allMatchesAvailable = [];
+    let searchIntent = null;
+    const localSuggestionsCache = {};
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName("script")[0];
@@ -2310,41 +2416,108 @@ const yTPlayer = HtmlService.createHtmlOutput(
     let rndList = ["UU6DOFpA9UCTgNwJiVX1IOpQ","PL-KQSIBx-Icaao3EaHRz0m2P39PwypbnH","PL-KQSIBx-IcaSkA9AdvIwkVVLl6F52LP-","PL-KQSIBx-IcauCgXsM-DWDzGFXgJmZiSS","PL-KQSIBx-Icb3a7aA78VNtQs8f2YBpTY6","PL-KQSIBx-Icb63tQzYzMvbrLXrAvF4Z2b",
     "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
     "PL-KQSIBx-IcYIitriWRZ2caFI8ST-0Oil","PL-KQSIBx-IcYddyYBPVasGjqtLLSHqlUX","PL-KQSIBx-IcYFwEWIQAbL8YPrDnBv7wTU","PL-KQSIBx-IcZaVi2VJ5TYwAOC4VYfKPrE","PL-KQSIBx-IcZlVBWBx9Vm7k7aT9fLZDbH","PL-KQSIBx-IcZh-CSTeWs-iRF4XrvzQwDh","PL-KQSIBx-IcZHEQcLV7u4dK0_e93q8XZg","PL-KQSIBx-IcZJqfk_sAI3FRSK60chqPSq","PL-KQSIBx-IcZFVRDV9sQ_7Y-Scmyh7YG2","PL-KQSIBx-IcZyrPGYJGEndWryKDTzxkaU","PL-KQSIBx-IcZUxla8KuKBn5JJh9L9RDwu","PL-KQSIBx-IcZZ07SBW_YiHMmvlned1cwG",];
+    localSuggestionsCache["allMatches"] = rndList;
+    searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * rndList.length)];
+    matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+      if (!againCap) {
+        localStorage.setItem("ytSearch", searchIntent);
+        againCap = localStorage.getItem("ytSearch");
+      }
+      if (String(val).indexOf(againCap) > -1) {
+        // console.log(againCap + ": result: " + val);
+        // console.log("result index: " + index);
+        let tubeList = val
+        if (tubeList && tubeList !== null) {
+          console.log("local storage all results: " + againCap);
+          return tubeList
+        }
+      }
+    }).filter((mapResult) => {
+      return mapResult != null
+    });
+    // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+    console.log("all matches length greater than intents: ");
+    console.log(allMatchesAvailable.length < localSuggestionsCache["allMatches"].length);
+    while (allMatchesAvailable.length < localSuggestionsCache["allMatches"].length) {
+      allMatchesAvailable = localSuggestionsCache["allMatches"].sort((a,b) => {
+        let i = Math.random()
+        let tSorted = a;
+        // console.log(againCap + ": tSorted = " + tSorted);
+        let zSorted = b;
+        // console.log(againCap + ": zSorted = " + zSorted);
+        if (i < .3) {
+          let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+          if (matchA > -1) {
+            // console.log(againCap + ": matchA = " + matchA);
+            return zSorted;
+          }
+        }
+        else {
+          if (i > .3 && i < .5 ) {
+            let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+            if (matchB === -1) {
+              // console.log(againCap + ": matchB = " + matchB);
+              return tSorted;
+            }
+          }
+          else {
+            if (i > .5 && i < .8) {
+              // console.log(againCap + ": matchC = " + zSorted);
+              return zSorted;
+            }
+            else {
+              if (i > .8) {
+                // console.log(againCap + ": matchD = " + tSorted);
+                return tSorted;
+              }
+            }
+          }
+        }
+      });
+      if (matchesToReturn === null || matchesToReturn.length === 0) {
+        break
+      }
+    }
     let ctr = 0;
     let iframePlayer;
     let duration = 0;
     let lastVolume = 100;
     let seekBar, volumeSlider;
     function onYouTubeIframeAPIReady() {
-      iframePlayer = new YT.Player("iframePlayer", {
-        height: "1405",
-        width: "2105",
-        //  videoId: 'OTeQee-gxa4',
-        playerVars: {
-          autoplay: 1,
-          loop: 1,
-          controls: 0,
-          showinfo: 0,
-          rel: 0,
-          autohide: 1,
-          playsinline: 1,
-          enablejsapi: 1,
-          mute: 0,
-          vq: "hd1080",
-          iv_load_policy: 3,
-          cc_load_policy: 1,
-          listType: "playlist",
-          list: rndList[Math.floor(Math.random() * 20)],
-        },
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange,
-          onError: onPlayerError,
-        },
-      });
+        let confirmation = window.confirm(
+          "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
+        );
+        if (confirmation) {
+          iframePlayer = new YT.Player("iframePlayer", {
+            height: "1405",
+            width: "2105",
+            //  videoId: 'OTeQee-gxa4',
+            playerVars: {
+              autoplay: 1,
+              loop: 1,
+              controls: 0,
+              showinfo: 0,
+              rel: 0,
+              autohide: 1,
+              playsinline: 1,
+              enablejsapi: 1,
+              mute: 0,
+              vq: "hd1080",
+              iv_load_policy: 3,
+              cc_load_policy: 1,
+              listType: "playlist",
+              list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
+            },
+            events: {
+              onReady: onPlayerReady,
+              onStateChange: onPlayerStateChange,
+              onError: onPlayerError,
+            },
+          });
+        }
       function onPlayerReady(event) {
         setShuffle();
-        event.target.nextVideo();
+          event.target.nextVideo();
       }
 
       // 5. The API calls this function when the player's state changes.
@@ -2541,7 +2714,7 @@ var rePlay = function(classType) {
 class StyleHtml {
   constructor() {
     this.renderFile = HtmlService.createHtmlOutput(
-      `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
+      `${desktopContainer.getContent() + mobileSection.getContent() + responsiveSection.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + footer.getContent() + socials.getContent() + aside.getContent() + main.getContent() + article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + img.getContent() + nav.getContent() + section.getContent() + body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
     );
     this.surveyPlayer = HtmlService.createHtmlOutput(
       `${body_survey_player.getContent()}`,
