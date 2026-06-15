@@ -2411,7 +2411,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
     const localSuggestionsCache = {};
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
+    let firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     let rndList = ["UU6DOFpA9UCTgNwJiVX1IOpQ","PL-KQSIBx-Icaao3EaHRz0m2P39PwypbnH","PL-KQSIBx-IcaSkA9AdvIwkVVLl6F52LP-","PL-KQSIBx-IcauCgXsM-DWDzGFXgJmZiSS","PL-KQSIBx-Icb3a7aA78VNtQs8f2YBpTY6","PL-KQSIBx-Icb63tQzYzMvbrLXrAvF4Z2b",
     "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
@@ -2484,10 +2484,6 @@ const yTPlayer = HtmlService.createHtmlOutput(
     let lastVolume = 100;
     let seekBar, volumeSlider;
     function onYouTubeIframeAPIReady() {
-        let confirmation = window.confirm(
-          "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
-        );
-        if (confirmation) {
           iframePlayer = new YT.Player("iframePlayer", {
             height: "1405",
             width: "2105",
@@ -2514,11 +2510,32 @@ const yTPlayer = HtmlService.createHtmlOutput(
               onError: onPlayerError,
             },
           });
-        }
       function onPlayerReady(event) {
-        setShuffle();
-          event.target.nextVideo();
+          playVideo();
       }
+    $('.user-icon').click(function(event){
+      // if ($(event.target).attr('src') === 'https://flewis21.github.io/foobar/images/user.jpg') {
+        let confirmation = window.confirm(
+          "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
+        );
+        if (confirmation) {
+          // $('iframe)[0] {
+          //   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+          // })
+          setShuffle();
+          nextVideo();
+          playVideo();
+        }
+        else {
+          // setTimeout(function(){
+          //   $('iframe')[0].remove();
+          // }, 1000);
+          localStorage.setItem("ytSearch", allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]);
+          againCap = localStorage.getItem("ytSearch");
+          stopVideo()
+        }
+      // }
+    });
 
       // 5. The API calls this function when the player's state changes.
       //    The function indicates that when playing a video (state=1),
@@ -2531,15 +2548,17 @@ const yTPlayer = HtmlService.createHtmlOutput(
         } else if (event.data == YT.PlayerState.UNSTARTED) {
           changeBorderColor(event.data);
           setTimeout(2000, playVideo)
-          event.target.playVideo();
+          playVideo();
         } else if (event.data == YT.PlayerState.ENDED) {
           changeBorderColor(event.data);
-          setShuffle();
-          setTimeout(2000, playVideo);
-          // event.target.playVideo();
-          setShuffle();
+          iframePlayer.loadPlaylist(againCap, ctr);
+          ctr++
+          // setShuffle();
+          // playVideo();
+          // setShuffle();
+          // nextVideo();
           setTimeout(2000, nextVideo);
-          // event.target.nextVideo();
+          setTimeout(2000, playVideo);
         } else if (event.data == YT.PlayerState.PAUSED) {
           changeBorderColor(event.data);
         } else if (event.data == YT.PlayerState.BUFFERING) {
