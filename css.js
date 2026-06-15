@@ -2417,28 +2417,24 @@ const yTPlayer = HtmlService.createHtmlOutput(
     "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
     "PL-KQSIBx-IcYIitriWRZ2caFI8ST-0Oil","PL-KQSIBx-IcYddyYBPVasGjqtLLSHqlUX","PL-KQSIBx-IcYFwEWIQAbL8YPrDnBv7wTU","PL-KQSIBx-IcZaVi2VJ5TYwAOC4VYfKPrE","PL-KQSIBx-IcZlVBWBx9Vm7k7aT9fLZDbH","PL-KQSIBx-IcZh-CSTeWs-iRF4XrvzQwDh","PL-KQSIBx-IcZHEQcLV7u4dK0_e93q8XZg","PL-KQSIBx-IcZJqfk_sAI3FRSK60chqPSq","PL-KQSIBx-IcZFVRDV9sQ_7Y-Scmyh7YG2","PL-KQSIBx-IcZyrPGYJGEndWryKDTzxkaU","PL-KQSIBx-IcZUxla8KuKBn5JJh9L9RDwu","PL-KQSIBx-IcZZ07SBW_YiHMmvlned1cwG",];
     localSuggestionsCache["allMatches"] = rndList;
-    searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * rndList.length)];
-    matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-      if (!againCap) {
-        localStorage.setItem("ytSearch", searchIntent);
-        againCap = localStorage.getItem("ytSearch");
-      }
-      if (String(val).indexOf(againCap) > -1) {
-        // console.log(againCap + ": result: " + val);
-        // console.log("result index: " + index);
-        let tubeList = val
-        if (tubeList && tubeList !== null) {
-          console.log("local storage all results: " + againCap);
-          return tubeList
-        }
-      }
-    }).filter((mapResult) => {
-      return mapResult != null
-    });
+    // searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * rndList.length)];
+    // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+    //   if (String(val).indexOf(againCap) > -1) {
+    //     // console.log(againCap + ": result: " + val);
+    //     // console.log("result index: " + index);
+    //     let tubeList = val
+    //     if (tubeList && tubeList !== null) {
+    //       console.log("local storage all results: " + againCap);
+    //       return tubeList
+    //     }
+    //   }
+    // }).filter((mapResult) => {
+    //   return mapResult != null
+    // });
     // console.log("matches to return: " + JSON.stringify(matchesToReturn));
     console.log("all matches length greater than intents: ");
     console.log(allMatchesAvailable.length < localSuggestionsCache["allMatches"].length);
-    while (allMatchesAvailable.length < localSuggestionsCache["allMatches"].length) {
+    while (allMatchesAvailable.length !== localSuggestionsCache["allMatches"].length) {
       allMatchesAvailable = localSuggestionsCache["allMatches"].sort((a,b) => {
         let i = Math.random()
         let tSorted = a;
@@ -2474,9 +2470,19 @@ const yTPlayer = HtmlService.createHtmlOutput(
           }
         }
       });
-      if (matchesToReturn === null || matchesToReturn.length === 0) {
-        break
-      }
+      // if (localSuggestionsCache["allMatches"].length === 0) {
+      //   break
+      // }
+    }
+    // function nRndNum = 
+    function myPlay() {
+      let list = null;
+      list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]
+      return list
+    }
+    if (!againCap) {
+      localStorage.setItem("ytSearch", myPlay())
+      againCap = localStorage.getItem("ytSearch");
     }
     let ctr = 0;
     let iframePlayer;
@@ -2502,7 +2508,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
               iv_load_policy: 3,
               cc_load_policy: 1,
               listType: "playlist",
-              list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
+              list: againCap,
             },
             events: {
               onReady: onPlayerReady,
@@ -2514,25 +2520,25 @@ const yTPlayer = HtmlService.createHtmlOutput(
           playVideo();
       }
     $('.user-icon').click(function(event){
+      onPlayerError();
+      let newPlayList = myPlay()
+      localStorage.setItem("ytSearch", newPlayList);
       // if ($(event.target).attr('src') === 'https://flewis21.github.io/foobar/images/user.jpg') {
         let confirmation = window.confirm(
           "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
         );
         if (confirmation) {
-          // $('iframe)[0] {
-          //   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-          // })
+          // setTimeout(function(){
+          //   $('iframe')[0].remove();
+          // }, 1000);
+          againCap = localStorage.getItem("ytSearch");
           setShuffle();
           nextVideo();
           playVideo();
         }
         else {
-          // setTimeout(function(){
-          //   $('iframe')[0].remove();
-          // }, 1000);
-          localStorage.setItem("ytSearch", allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]);
-          againCap = localStorage.getItem("ytSearch");
-          stopVideo()
+          $('iframe')[0].attr('style').display = 'none';
+          stopVideo();
         }
       // }
     });
@@ -2545,13 +2551,15 @@ const yTPlayer = HtmlService.createHtmlOutput(
         if (event.data == YT.PlayerState.PLAYING) {
           changeBorderColor(event.data);
           setLoop();
+        } else if (event.data == YT.PlayerState.STOPPED) {
+          changeBorderColor(event.data);
+          iframePlayer.loadPlaylist(againCap, ctr);
         } else if (event.data == YT.PlayerState.UNSTARTED) {
           changeBorderColor(event.data);
           setTimeout(2000, playVideo)
-          playVideo();
+          // playVideo();
         } else if (event.data == YT.PlayerState.ENDED) {
           changeBorderColor(event.data);
-          iframePlayer.loadPlaylist(againCap, ctr);
           ctr++
           // setShuffle();
           // playVideo();
@@ -2598,8 +2606,10 @@ const yTPlayer = HtmlService.createHtmlOutput(
       }
 
       function onPlayerError() {
-        iframePlayer.destroy;
-        onYouTubeIframeAPIReady();
+        if (iframePlayer && iframePlayer.destroy) {
+          iframePlayer.destroy;
+          // onYouTubeIframeAPIReady();
+        }
       }
       function stopVideo() {
         if (iframePlayer && iframePlayer.stopVideo) {
