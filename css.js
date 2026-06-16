@@ -2402,7 +2402,9 @@ const warrior_clicks = HtmlService.createHtmlOutput(
 `);
 const yTPlayer = HtmlService.createHtmlOutput(
   `
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    let iframeHTML = null;
     let fullList = [];
     let againCap = null;
     let matchesToReturn = null;
@@ -2417,21 +2419,6 @@ const yTPlayer = HtmlService.createHtmlOutput(
     "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
     "PL-KQSIBx-IcYIitriWRZ2caFI8ST-0Oil","PL-KQSIBx-IcYddyYBPVasGjqtLLSHqlUX","PL-KQSIBx-IcYFwEWIQAbL8YPrDnBv7wTU","PL-KQSIBx-IcZaVi2VJ5TYwAOC4VYfKPrE","PL-KQSIBx-IcZlVBWBx9Vm7k7aT9fLZDbH","PL-KQSIBx-IcZh-CSTeWs-iRF4XrvzQwDh","PL-KQSIBx-IcZHEQcLV7u4dK0_e93q8XZg","PL-KQSIBx-IcZJqfk_sAI3FRSK60chqPSq","PL-KQSIBx-IcZFVRDV9sQ_7Y-Scmyh7YG2","PL-KQSIBx-IcZyrPGYJGEndWryKDTzxkaU","PL-KQSIBx-IcZUxla8KuKBn5JJh9L9RDwu","PL-KQSIBx-IcZZ07SBW_YiHMmvlned1cwG",];
     localSuggestionsCache["allMatches"] = rndList;
-    // searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * rndList.length)];
-    // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-    //   if (String(val).indexOf(againCap) > -1) {
-    //     // console.log(againCap + ": result: " + val);
-    //     // console.log("result index: " + index);
-    //     let tubeList = val
-    //     if (tubeList && tubeList !== null) {
-    //       console.log("local storage all results: " + againCap);
-    //       return tubeList
-    //     }
-    //   }
-    // }).filter((mapResult) => {
-    //   return mapResult != null
-    // });
-    // console.log("matches to return: " + JSON.stringify(matchesToReturn));
     console.log("all matches length greater than intents: ");
     console.log(allMatchesAvailable.length < localSuggestionsCache["allMatches"].length);
     while (allMatchesAvailable.length !== localSuggestionsCache["allMatches"].length) {
@@ -2470,11 +2457,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
           }
         }
       });
-      // if (localSuggestionsCache["allMatches"].length === 0) {
-      //   break
-      // }
     }
-    // function nRndNum = 
     function myPlay() {
       let list = null;
       list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]
@@ -2520,27 +2503,27 @@ const yTPlayer = HtmlService.createHtmlOutput(
           playVideo();
       }
     $('.user-icon').click(function(event){
-      onPlayerError();
-      let newPlayList = myPlay()
-      localStorage.setItem("ytSearch", newPlayList);
-      // if ($(event.target).attr('src') === 'https://flewis21.github.io/foobar/images/user.jpg') {
         let confirmation = window.confirm(
           "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
         );
+        let ifPlayerDisplay = document.getElementById('iframePlayer');
         if (confirmation) {
-          // setTimeout(function(){
-          //   $('iframe')[0].remove();
-          // }, 1000);
-          againCap = localStorage.getItem("ytSearch");
-          setShuffle();
-          nextVideo();
-          playVideo();
+          if (ifPlayerDisplay.style.display === 'none') {
+            ifPlayerDisplay.style.display = 'block'
+            playVideo();
+          }
+          else {
+            loadPlaylist();
+            setShuffle();
+            nextVideo();
+            playVideo();
+          }
         }
         else {
-          $('iframe')[0].attr('style').display = 'none';
           stopVideo();
+          console.log(ifPlayerDisplay)
+          ifPlayerDisplay.style.display = 'none';
         }
-      // }
     });
 
       // 5. The API calls this function when the player's state changes.
@@ -2571,7 +2554,7 @@ const yTPlayer = HtmlService.createHtmlOutput(
           changeBorderColor(event.data);
         } else if (event.data == YT.PlayerState.BUFFERING) {
           changeBorderColor(event.data);
-          setShuffle();
+          // setShuffle();
         } else if (event.data == YT.PlayerState.VIDEO_CUED) {
           changeBorderColor(event.data);
         }
@@ -2660,10 +2643,19 @@ const yTPlayer = HtmlService.createHtmlOutput(
           iframePlayer.setVolume(vol);
         }
       }
-
       function pauseVideo() {
         if (iframePlayer && iframePlayer.pauseVideo) {
           iframePlayer.pauseVideo();
+        }
+      }
+      function loadPlaylist() {
+        if (iframePlayer && iframePlayer.loadPlaylist) {
+          iframePlayer.loadPlaylist({
+            listType: 'playlist',
+            list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
+            index: 0,
+            startSeconds: 0
+          });
         }
       }
     }

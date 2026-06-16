@@ -1047,7 +1047,7 @@ class RenderFile {
                 </nav>
                 <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
                   <header class="banner card-panel transparent static-fix">
-                    <div id="iframePlayer" class="row card-panel transparent"></div>
+                    <div id="iframePlayer" class="row card-panel transparent" style="display: 'block'"></div>
                     <h1>Blog</h1>
                     <label id="loadingLab">
                       <strong>
