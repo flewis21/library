@@ -19,3 +19,23 @@ function postFromSpreadsheet(column, rowOff, colOff, discord) {
   if (currentMessage == "") return;
   postToDiscord(currentMessage);
 }
+
+
+/**
+ * Saves a file to Google Drive
+ * @param {string} fileName
+ * @param {string} base64Data
+ */
+function postToDrive(fileName, base64Data) {
+  try {
+    const contentType = "video/webm";
+    const bytes = Utilities.base64Decode(base64Data)
+    const blob = Utilities.newBlob(bytes, contentType, fileName);
+    const file = DriveApp.createFile(blob);
+    let isVUrl = isValidUrl(file.getUrl()) 
+    return { success: true, url: isVUrl.url };
+  }
+  catch (err) {
+    return { success: false, error: err.message };
+  }
+}

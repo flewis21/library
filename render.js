@@ -1188,6 +1188,13 @@ class RenderFile {
                                   </section>
                                 </div>
                                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                                <div class="transparent" style="display: none;">
+                                  <button id="startShare">Start Screen Capture</button>
+                                  <button id="stopShare">Stop Screen Capture</button>
+                                  <div class="transparent">
+                                    <video id="videoPlayer" controls></video>
+                                  </div>
+                                </div>
                                 <header class="banner transparent responsive-section">
                                   <div id="loadingSurvey">
                                     <a id="rfif" href="javascript:void(0)">
