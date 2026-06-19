@@ -943,8 +943,8 @@ const customStreamPlayer = HtmlService.createHtmlOutput(
             this.recorder.onstop = saveRecording;
             this.recorder.start();
 
-            this.startSHare.disabled = true;
-            this.stopShare.disabled = false;
+            event.target.disabled = true;
+            // event.target.disabled = false;
 
             /** Handle when user stops sharing */
             this.stopShare.addEventListener('click', () => {
@@ -954,8 +954,8 @@ const customStreamPlayer = HtmlService.createHtmlOutput(
                 alert("Screen sharing stopped.");
                 this.videoElement.srcObject = null;
               });
-              this.startShare.disabled = false;
-              this.stopShare.disabled = true;
+              // this.startShare.disabled = false;
+              event.target.disabled = true;
             });
 
             function saveRecording() {
@@ -1967,9 +1967,11 @@ const next_clicked_video = HtmlService.createHtmlOutput(
           // Filter the local list instead of making a server call
           const localList = localSuggestionsCache["allMatches"] || [];
           // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          const suggestions = localList.filter(item => 
-            String(item.description).toLowerCase().includes(query.toLowerCase())
-          );
+          const suggestions = localList.filter((item) => {
+            if (String(item.youtubeURL).indexOf("http") === -1) {
+              String(item.description).toLowerCase().includes(query.toLowerCase())
+            }
+          });
           
           suggestionsDiv.innerHTML = '';
           if (suggestions && suggestions?.length > 0) {
