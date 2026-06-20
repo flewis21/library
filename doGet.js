@@ -1987,7 +1987,6 @@ var globalHandleGetData = function (rawFuncResult) {
   // --- END Refactored payLoad processing ---
   data["message"] = {
     content:
-      (payLoad.type === "text" || payLoad.type === "url") &&
       isValidUrl(payLoad.data).hostname &&
       isValidUrl(iframeSrc).hostname
         ? driveManager(iframeSrc)
