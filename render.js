@@ -287,6 +287,11 @@ class ContentApp {
     return this.tmp
   };
 }
+
+var tentApp = function(blob, argsObject) {
+  let html = ContentApp.appContent(blob, argsObject)
+  return html;
+}
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
 // if (argsObject) {
