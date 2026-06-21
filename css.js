@@ -2032,7 +2032,7 @@ const next_clicked_video = HtmlService.createHtmlOutput(
                       }
                       else {
                         if (suggestion.webAddressUrl) {
-                          window.open(suggestion?.youtubeUrl);
+                          window.open(suggestion?.webAddressUrl);
                         }
                       }
                       suggestionsDiv.innerHTML = '';
