@@ -406,7 +406,7 @@ class ContentCDN {
             {
               drivemC: contentMessage,
             }
-          let html = ContentApp.appContent(tmp.append(new StyleHtml().cCDNRunIt.getContent()).getContent(),locObj);
+          let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
             .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
@@ -423,7 +423,7 @@ class ContentCDN {
             {
               drivemC: infoMessage,
             }
-          let html = ContentApp.appContent(tmp.append(new StyleHtml().cCDNRunIt.getContent()).getContent(),locObj);
+          let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
             .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
@@ -1020,9 +1020,9 @@ class RenderFile {
             <html lang="en">
               <head>
                 <base target="_self" />
-                <?!= new StyleHtml().abcIt.getContent() ?>
+                <?!= stylesSleep.abcIt.getContent() ?>
                 <style>
-                  <?!= new StyleHtml().renderFile.getContent() ?>
+                  <?!= stylesSleep.renderFile.getContent() ?>
                   <!--[if lt IE 9]>
                   <script>
                     document.createElement("article");
@@ -1219,7 +1219,7 @@ class RenderFile {
                       </tr>
                     </tbody>
                   </table></div></div></div></div></div>
-                <?!= new StyleHtml().runIt.getContent() ?>
+                <?!= stylesSleep.runIt.getContent() ?>
                 <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
               </body>
             </html>`,
@@ -1330,9 +1330,9 @@ class RenderTemplate {
           `
         <html id="renderTemplate">
           <head>
-            <?!= new StyleHtml().abcIt.getContent() ?>
+            <?!= stylesSleep.abcIt.getContent() ?>
             <style>
-              <?!= new StyleHtml().renderFile.getContent() ?>
+              <?!= stylesSleep.renderFile.getContent() ?>
               <!--[if lt IE 9]>
               <script>
                 document.createElement("article");
@@ -1600,7 +1600,7 @@ class RenderTemplate {
                 </aside>
               </div>
             </footer>
-            <?!= new StyleHtml().runIt.getContent() ?>
+            <?!= stylesSleep.runIt.getContent() ?>
             <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
             <div id="result"></div>
             <div id="successMessage"></div>
