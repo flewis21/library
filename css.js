@@ -138,85 +138,110 @@ const global_section = HtmlService.createHtmlOutputFromFile("globalSection");
 // (
 //   `section {background-color: #bbbbbb;margin-top: 10px;padding: 5px;}`,
 // );
-const table_display = HtmlService.createHtmlOutput(
-  `table {width: 100% !important; /* Example: set table width */border-collapse: separate !important; /* Override default collapse if present */border-spacing: 0 !important; /* Remove spacing between cells */}`,
-);
-const table_display_unset = HtmlService.createHtmlOutput(
-  `table, thead, tbody, tr, th, td {all: unset !important; /* This is a powerful reset, removing all inherited and default styles */display: block !important; /* Treat all table elements as block-level to remove table-specific layout */}`,
-);
-const tableSummary_table = HtmlService.createHtmlOutput(
-  `table.summary-table {text-align: right;}`,
-);
-const tbodySummary_table_tdNth_child1 = HtmlService.createHtmlOutput(
-  `tbody.summary-table td:nth-child(1) {width: 277px;}`,
-);
-const tbodySummary_table_tdNth_child2 = HtmlService.createHtmlOutput(
-  `tbody.summary-table td:nth-child(2) {width: 75px;}`,
-);
-const tbodySummary_table_tdNth_child3 = HtmlService.createHtmlOutput(
-  `tbody.summary-table td:nth-child(3) {width: 25px;}`,
-);
-const td_display = HtmlService.createHtmlOutput(
-  `vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;`,
-);
-const th_description = HtmlService.createHtmlOutput(
-  `th.description {width: 180px;text-align: left;}`,
-);
-const th_price = HtmlService.createHtmlOutput(`th.price {width: 75px;}`);
-const tr_display = HtmlService.createHtmlOutput(
-  `tr {display: flex; /* Use flexbox for rows for more control */width: 100%;justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;margin: auto;}`,
-);
-const website = HtmlService.createHtmlOutput(
-  `* {box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;}`,
-);
-const banner_page_header = HtmlService.createHtmlOutput(
-  `.banner {background-color: #11233b;color: white;padding: 10px 20px;width: 100%;}`,
-);
-const banner_img = HtmlService.createHtmlOutput(
-  `.banner img {width: 100%;border-radius: 8px;}`,
-);
-const boiler_footer = HtmlService.createHtmlOutput(
-  `.boiler-footer {clear: none;margin-top: 10px;height: 92%;}`,
-);
-const company_info = HtmlService.createHtmlOutput(
-  `.company-info {margin-top: 5px;}`,
-);
-const container = HtmlService.createHtmlOutput(
-  `.container {background: #f9f9f9;padding-left: 17%;padding-right: 2%;padding-top: 20px;padding-bottom: 20px;}`,
-);
-const contentSection = HtmlService.createHtmlOutput(
-  `.content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}`,
-);
-const datepicker_day = HtmlService.createHtmlOutput(
-  `.datepicker-day-button {color: #424242 !important; /* A dark gray. Using !important ensures it overrides Materialize defaults and your other styles. */}`,
-);
-const datepicker_table_td_istoday = HtmlService.createHtmlOutput(
-  `.datepicker-table td.is-today .datepicker-day-button {color: #ff9800 !important; /* Example: orange for today's date */}`,
-);
-const datepicker_table_td_isselected = HtmlService.createHtmlOutput(
-  `.datepicker-table td.is-selected .datepicker-day-button {color: white !important; /* Keep white if the selected background is dark */}`,
-);
-const datepicker_display_table = HtmlService.createHtmlOutput(
-  `.datepicker-container table {/* Re-establish standard table display */display: table !important;width: 100% !important; /* Ensure it takes full width of its container */border-collapse: collapse !important; /* Standard table styling */}`,
-);
-const datepicker_display_thead = HtmlService.createHtmlOutput(
-  `.datepicker-container thead {display: table-header-group !important;}`,
-);
-const datepicker_display_tbody = HtmlService.createHtmlOutput(
-  `.datepicker-container tbody {display: table-row-group !important;}`,
-);
-const datepicker_display_tr = HtmlService.createHtmlOutput(
-  `.datepicker-container tr {display: table-row !important;}`,
-);
-const datepicker_color =
-  HtmlService.createHtmlOutput(`.datepicker-container .datepicker-day-button {color: #424242 !important;
- }`);
-const datepicker_display = HtmlService.createHtmlOutput(
-  `.datepicker-container th,.datepicker-container td {/* Re-establish table cell display */display: table-cell !important;/* Undo flex and reset padding/margin/border that your global rules removed */flex: none !important; /* Crucial to undo flex: 1 */padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */margin: 0 !important;border: none !important;vertical-align: middle !important; /* Standard for cells */text-align: center !important; /* Days of week and numbers are typically centered */}`,
-);
-const dotted_border = HtmlService.createHtmlOutput(
-  `.dotted-border {border-bottom: dotted 2px;}`,
-);
+const table_display = HtmlService.createHtmlOutputFromFile("tableDisplay");
+// (
+//   `table {width: 100% !important; /* Example: set table width */border-collapse: separate !important; /* Override default collapse if present */border-spacing: 0 !important; /* Remove spacing between cells */}`,
+// );
+const table_display_unset = HtmlService.createHtmlOutputFromFile("tableDisplayUnset");
+// (
+//   `table, thead, tbody, tr, th, td {all: unset !important; /* This is a powerful reset, removing all inherited and default styles */display: block !important; /* Treat all table elements as block-level to remove table-specific layout */}`,
+// );
+const table_summary_table = HtmlService.createHtmlOutputFromFile("tableSummaryTable");
+// (
+//   `table.summary-table {text-align: right;}`,
+// );
+const tbody_summary_table_tdNth_child1 = HtmlService.createHtmlOutputFromFile("tbodySummaryTableTDNthChild1");
+// (
+//   `tbody.summary-table td:nth-child(1) {width: 277px;}`,
+// );
+const tbody_summary_table_tdNth_child2 = HtmlService.createHtmlOutputFromFile("tbodySummaryTableTDNthChild2");
+// (
+//   `tbody.summary-table td:nth-child(2) {width: 75px;}`,
+// );
+const tbody_summary_table_tdNth_child3 = HtmlService.createHtmlOutputFromFile("tbodySummaryTableTDNthChild3");
+// (
+//   `tbody.summary-table td:nth-child(3) {width: 25px;}`,
+// );
+const td_display = HtmlService.createHtmlOutputFromFile("tdDisplay");
+// (
+//   `td {vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;overflow: auto;}`,
+// );
+const th_description = HtmlService.createHtmlOutputFromFile("thDescription");
+// (
+//   `th.description {width: 180px;text-align: left;}`,
+// );
+const th_price = HtmlService.createHtmlOutputFromFile("thPrice");
+// (`th.price {width: 75px;}`);
+const tr_display = HtmlService.createHtmlOutputFromFile("trDisplay");
+// (
+//   `tr {display: flex; /* Use flexbox for rows for more control */width: 100%;justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;margin: auto;}`,
+// );
+const global_website = HtmlService.createHtmlOutputFromFile("globalWebsite");
+// (
+//   `* {box-sizing: border-box;margin: 0;padding: 0;font-family: "Roboto", sans-serif;}`,
+// );
+const banner_page_header = HtmlService.createHtmlOutputFromFile("bannerPageHeader");
+// (
+//   `.banner {background-color: #11233b;color: white;padding: 10px 20px;width: 100%;}`,
+// );
+const banner_img = HtmlService.createHtmlOutputFromFile("bannerImg");
+// (
+//   `.banner img {width: 100%;border-radius: 8px;}`,
+// );
+const boiler_footer = HtmlService.createHtmlOutputFromFile("boilerFooter");
+// (
+//   `.boiler-footer {clear: none;margin-top: 10px;height: 92%;}`,
+// );
+const company_info = HtmlService.createHtmlOutputFromFile("companyInfo");
+// (
+//   `.company-info {margin-top: 5px;}`,
+// );
+const global_container = HtmlService.createHtmlOutputFromFile("globalContainer");
+// (
+//   `.container {background: #f9f9f9;padding-left: 17%;padding-right: 2%;padding-top: 20px;padding-bottom: 20px;}`,
+// );
+const content_section = HtmlService.createHtmlOutputFromFile("contentSection");
+// (
+//   `.content-section {padding: 20px;border: 1px solid #eee;margin-bottom: 20px}`,
+// );
+const date_picker_day = HtmlService.createHtmlOutputFromFile("datePickerDay");
+// (
+//   `.datepicker-day-button {color: #424242 !important; /* A dark gray. Using !important ensures it overrides Materialize defaults and your other styles. */}`,
+// );
+const date_picker_table_td_is_today = HtmlService.createHtmlOutputFromFile("datePickerTableTDIsToday");
+// (
+//   `.datepicker-table td.is-today .datepicker-day-button {color: #ff9800 !important; /* Example: orange for today's date */}`,
+// );
+const date_picker_table_td_is_selected = HtmlService.createHtmlOutputFromFile("datePickerTableTDIsSelected");
+// (
+//   `.datepicker-table td.is-selected .datepicker-day-button {color: white !important; /* Keep white if the selected background is dark */}`,
+// );
+const date_picker_display_table = HtmlService.createHtmlOutputFromFile("datePickerDisplayTable");
+// (
+//   `.datepicker-container table {/* Re-establish standard table display */display: table !important;width: 100% !important; /* Ensure it takes full width of its container */border-collapse: collapse !important; /* Standard table styling */}`,
+// );
+const date_picker_display_thead = HtmlService.createHtmlOutputFromFile("datePickerDisplayThead");
+// (
+//   `.datepicker-container thead {display: table-header-group !important;}`,
+// );
+const date_picker_display_tbody = HtmlService.createHtmlOutputFromFile("datePickerDisplayTbody");
+// (
+//   `.datepicker-container tbody {display: table-row-group !important;}`,
+// );
+const datePickerDisplayTR = HtmlService.createHtmlOutputFromFile("datePickerDisplayTR");
+// (
+//   `.datepicker-container tr {display: table-row !important;}`,
+// );
+const date_picker_color = HtmlService.createHtmlOutputFromFile("datePickerColor");
+// (`.datepicker-container .datepicker-day-button {color: #424242 !important;}`);
+const date_picker_display = HtmlService.createHtmlOutputFromFile("datePickerDisplay");
+// (
+//   `.datepicker-container th,.datepicker-container td {/* Re-establish table cell display */display: table-cell !important;/* Undo flex and reset padding/margin/border that your global rules removed */flex: none !important; /* Crucial to undo flex: 1 */padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */margin: 0 !important;border: none !important;vertical-align: middle !important; /* Standard for cells */text-align: center !important; /* Days of week and numbers are typically centered */}`,
+// );
+const dotted_border = HtmlService.createHtmlOutputFromFile("dottedBorder")
+// (
+//   `.dotted-border {border-bottom: dotted 2px;}`,
+// );
 const fa_trash_canHover = HtmlService.createHtmlOutput(
   `.fa-trash-can:hover {transform: scale(1.2);}`,
 );
@@ -833,192 +858,195 @@ const body_query = HtmlService.createHtmlOutput(
       >document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
     </script>
 `);
-const busy_calendar = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverSide(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler(result => {
-              resolve(result)})
-          .withFailureHandler(error => {
-              console.log(document.getElementById("test").innerHTML);
-              reject(error)})
-          .runBoilerplate(func, args)
-        });
-      }
-      document.addEventListener("DOMContentLoaded", function() {
-        // mod the array
-        let timePicker = document.querySelectorAll(".prefTime");
-        M.Timepicker.init(timePicker, { 
-          defaultTime: "now" ,
-        });
-        serverSide("busyDates", [])
-          .then((response) => { 
-            // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let disabledDays = [];
-            if (response && response.type === "object" && Array.isArray(response.data)) {
-              disabledDays = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              disabledDays = [];
-            }
-            let datePicker = document.querySelectorAll(".prefDate");
-            M.Datepicker.init(datePicker, {
-              defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
-              setDefaultDate: true,
-              minDate: new Date(),
-              disableDayFn: 
-                function (day) {
-                  return disabledDays.indexOf(day.valueOf()) > -1;
-                },
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    </script>
-`);
-const collapse_menu = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var menuIcon = document.querySelector(".menu-icon");
-    var sidebar = document.querySelector(".sidebar");
-    var container = document.querySelector(".container");
-    menuIcon.onclick = function () {
-      sidebar.classList.toggle("small-sidebar");
-      container.classList.toggle("large-container");
-    }
-  </script>
-`);
-const customStreamPlayer = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            console.log(document.getElementById("test").innerHTML);
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    /**
-     * VideoStreamer class
-     * Streams video from a given source URL using MediaSource API
-     */
+const busy_calendar = HtmlService.createHtmlOutputFromFile("busyCalendar");
+// (
+//   `
+//     <script>
+//       function serverSide(func, args) {
+//         return new Promise((resolve, reject) => {
+//           google.script.run
+//           .withSuccessHandler(result => {
+//               resolve(result)})
+//           .withFailureHandler(error => {
+//               console.log(document.getElementById("test").innerHTML);
+//               reject(error)})
+//           .runBoilerplate(func, args)
+//         });
+//       }
+//       document.addEventListener("DOMContentLoaded", function() {
+//         // mod the array
+//         let timePicker = document.querySelectorAll(".prefTime");
+//         M.Timepicker.init(timePicker, { 
+//           defaultTime: "now" ,
+//         });
+//         serverSide("busyDates", [])
+//           .then((response) => { 
+//             // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+//             // Access the actual array from the 'data' property
+//             let disabledDays = [];
+//             if (response && response.type === "object" && Array.isArray(response.data)) {
+//               disabledDays = response.data;
+//             } else {
+//               console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+//               // Fallback to empty array if the structure is not as expected
+//               disabledDays = [];
+//             }
+//             let datePicker = document.querySelectorAll(".prefDate");
+//             M.Datepicker.init(datePicker, {
+//               defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
+//               setDefaultDate: true,
+//               minDate: new Date(),
+//               disableDayFn: 
+//                 function (day) {
+//                   return disabledDays.indexOf(day.valueOf()) > -1;
+//                 },
+//             });
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//           });
+//       });
+//     </script>
+// `);
+const collapse_menu = HtmlService.createHtmlOutputFromFile("collapseMenu");
+// (
+//   `
+//   <script>
+//     var menuIcon = document.querySelector(".menu-icon");
+//     var sidebar = document.querySelector(".sidebar");
+//     var container = document.querySelector(".container");
+//     menuIcon.onclick = function () {
+//       sidebar.classList.toggle("small-sidebar");
+//       container.classList.toggle("large-container");
+//     }
+//   </script>
+// `);
+const custom_stream_player = HtmlService.createHtmlOutputFromFile("customStreamPlayer");
+// (
+//   `
+//   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//   <script>
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             console.log(document.getElementById("test").innerHTML);
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     /**
+//      * VideoStreamer class
+//      * Streams video from a given source URL using MediaSource API
+//      */
     
-    class VideoStreamer {
-      constructor(videoElementId, startShareId, stopShareId) {
-        this.videoElement = document.getElementById(videoElementId);
-        this.startShare = document.getElementById(startShareId);
-        this.stopShare = document.getElementById(stopShareId);
-        try {
-          if (!(this.videoElement instanceof HTMLVideoElement)) {
-            throw new Error("Invalid video element ID");
-          }
-          this.mediaSource = new MediaSource();
-          this.reader - null;
-          this.recorder = null;
-          this.sourceBuffer = null;
-          this.blob = null;
-          this.chunks = [];
-        }
-        catch (noVideo) {
-          console.error("Error processing request:", noVideo);
-        }
-      }
+//     class VideoStreamer {
+//       constructor(videoElementId, startShareId, stopShareId) {
+//         this.videoElement = document.getElementById(videoElementId);
+//         this.startShare = document.getElementById(startShareId);
+//         this.stopShare = document.getElementById(stopShareId);
+//         try {
+//           if (!(this.videoElement instanceof HTMLVideoElement)) {
+//             throw new Error("Invalid video element ID");
+//           }
+//           this.mediaSource = new MediaSource();
+//           this.reader - null;
+//           this.recorder = null;
+//           this.sourceBuffer = null;
+//           this.blob = null;
+//           this.chunks = [];
+//         }
+//         catch (noVideo) {
+//           console.error("Error processing request:", noVideo);
+//         }
+//       }
 
-      async startStream(sourceUrl, mimeType = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"') {
-        if (!('MediaSource' in window)) {
-          console.error("MediaSource API not supported in this browser.");
-          return;
-        }
+//       async startStream(sourceUrl, mimeType = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"') {
+//         if (!('MediaSource' in window)) {
+//           console.error("MediaSource API not supported in this browser.");
+//           return;
+//         }
 
-        this.videoElement.src = URL.createObjectURL(this.mediaSource);
-        this.videoElement.srcObject = 
+//         this.videoElement.src = URL.createObjectURL(this.mediaSource);
+//         this.videoElement.srcObject = 
 
-        this.mediaSource.addEventListener('sourceopen', async () => {
-          try {
-            this.sourceBuffer = this.mediaSource.addSourceBuffer(mimeType);
-            const options = { muteHttpExceptions: true, };
-            const response = await fetch(sourceUrl, options);
+//         this.mediaSource.addEventListener('sourceopen', async () => {
+//           try {
+//             this.sourceBuffer = this.mediaSource.addSourceBuffer(mimeType);
+//             const options = { muteHttpExceptions: true, };
+//             const response = await fetch(sourceUrl, options);
 
-            if (!response.ok) throw new Error('HTTP error! Status: ' + response.status);
-            const videoData = await response.arrayBuffer();
+//             if (!response.ok) throw new Error('HTTP error! Status: ' + response.status);
+//             const videoData = await response.arrayBuffer();
 
-            this.sourceBuffer.addEventListener('updated', () => {
-              this.mediaSource.endOfStream();
-              this.videoElement.play().catch(err => console.error("Playback error:", err));
-            });
+//             this.sourceBuffer.addEventListener('updated', () => {
+//               this.mediaSource.endOfStream();
+//               this.videoElement.play().catch(err => console.error("Playback error:", err));
+//             });
 
-            this.sourceBuffer.appendBuffer(videoData);
-          }
-          catch (err) {
-            console.error("Streaming error:", err);
-          }
-        });
-        this.startShare.addEventListener('click', async () => {
-          try {
-            /** Request permission to capture the screen */
-            const stream = await navigator.mediaDevices.getDisplayMedia({
-              video: { cursor: "always" },
-              audio: true // Optional: capture system audio
-            });
+//             this.sourceBuffer.appendBuffer(videoData);
+//           }
+//           catch (err) {
+//             console.error("Streaming error:", err);
+//           }
+//         });
+//         this.startShare.addEventListener('click', async () => {
+//           try {
+//             /** Request permission to capture the screen */
+//             const stream = await navigator.mediaDevices.getDisplayMedia({
+//               video: { cursor: "always" },
+//               audio: true // Optional: capture system audio
+//             });
 
-            /** Display the captured screen in the video element */
-            this.videoElement.srcObject = stream;
+//             /** Display the captured screen in the video element */
+//             this.videoElement.srcObject = stream;
 
-            // Start recording
-            this.recorder = new MediaRecorder(stream);
-            this.recorder.ondataavailable = e => this.chunks.push(e.data);
-            this.recorder.onstop = saveRecording;
-            this.recorder.start();
+//             // Start recording
+//             this.recorder = new MediaRecorder(stream);
+//             this.recorder.ondataavailable = e => this.chunks.push(e.data);
+//             this.recorder.onstop = saveRecording;
+//             this.recorder.start();
 
-            event.target.disabled = true;
-            // event.target.disabled = false;
+//             event.target.disabled = true;
+//             // event.target.disabled = false;
 
-            /** Handle when user stops sharing */
-            this.stopShare.addEventListener('click', () => {
-              this.recorder.stop();
-              stream.getTracks().forEach(track => track.stop());
-              stream.getVideoTracks()[0].addEventListener('ended', () => {
-                alert("Screen sharing stopped.");
-                this.videoElement.srcObject = null;
-              });
-              // this.startShare.disabled = false;
-              event.target.disabled = true;
-            });
+//             /** Handle when user stops sharing */
+//             this.stopShare.addEventListener('click', () => {
+//               this.recorder.stop();
+//               stream.getTracks().forEach(track => track.stop());
+//               stream.getVideoTracks()[0].addEventListener('ended', () => {
+//                 alert("Screen sharing stopped.");
+//                 this.videoElement.srcObject = null;
+//               });
+//               // this.startShare.disabled = false;
+//               event.target.disabled = true;
+//             });
 
-            function saveRecording() {
-              this.blob = new Blob(this.chunks, { type: 'video/webm' });
-              this.chunks = [];
+//             function saveRecording() {
+//               this.blob = new Blob(this.chunks, { type: 'video/webm' });
+//               this.chunks = [];
 
-              this.reader = new FileReader();
-              this.reader.onloadend = () => {
-                const base64Data = this.reader.result.split(',')[1];
-                serverSide('postToDrive', ['screen_share.webm', base64Data]).data;
-              }
-              this.reader.readAsDataURL(blob)
-            }
-          }
-          catch (err) {
-            console.error("Error starting screen share:", err);
-            alert("Screen share failed: " + err.message);
-          }
-        })
-      }
-    }
-    const streamer = new VideoStreamer('videoPlayer', 'startShare', 'stopShare');
-    streamer.startStream()
-  </script>
-`);
+//               this.reader = new FileReader();
+//               this.reader.onloadend = () => {
+//                 const base64Data = this.reader.result.split(',')[1];
+//                 serverSide('postToDrive', ['screen_share.webm', base64Data]).data;
+//               }
+//               this.reader.readAsDataURL(blob)
+//             }
+//           }
+//           catch (err) {
+//             console.error("Error starting screen share:", err);
+//             alert("Screen share failed: " + err.message);
+//           }
+//         })
+//       }
+//     }
+//     const streamer = new VideoStreamer('videoPlayer', 'startShare', 'stopShare');
+//     streamer.startStream()
+//   </script>
+// `);
 
 const div_query = HtmlService.createHtmlOutput(
   `
@@ -2363,212 +2391,213 @@ const rouge_clicks = HtmlService.createHtmlOutput(
       });
     </script>
 `);
-const spyTPlayer = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result)
-            })
-            .withFailureHandler((error) => {
-              reject(error)
-            })
-            .runBoilerplate(func, args)
-          })
-        };
-        serverside("vidPlaylist", [])
-        .then((myPlayList) => {
-          // 1. Load the IFrame Player API code asynchronously.
-          const tag = document.createElement("script");
-          tag.src = "https://www.youtube.com/iframe_api"; // *** FIX THIS URL ***
-          const firstScriptTag = document.getElementsByTagName("script")[0];
-          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
+// (
+//   `
+//     <script>
+//       document.addEventListener("DOMContentLoaded", function() {
+//         function serverside(func, args) {
+//           return new Promise((resolve, reject) => {
+//             google.script.run
+//             .withSuccessHandler((result) => {
+//               resolve(result)
+//             })
+//             .withFailureHandler((error) => {
+//               reject(error)
+//             })
+//             .runBoilerplate(func, args)
+//           })
+//         };
+//         serverside("vidPlaylist", [])
+//         .then((myPlayList) => {
+//           // 1. Load the IFrame Player API code asynchronously.
+//           const tag = document.createElement("script");
+//           tag.src = "https://www.youtube.com/iframe_api"; // *** FIX THIS URL ***
+//           const firstScriptTag = document.getElementsByTagName("script")[0];
+//           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-          let player1; // Declare player1 once globally or within appropriate scope
-          let ctr = 0;
+//           let player1; // Declare player1 once globally or within appropriate scope
+//           let ctr = 0;
 
-          // This global function will be called by the YouTube API once it's loaded
-          function onYouTubeIframeAPIReady() {
-            try {
-              const loadingSurveyElement = document.getElementById('loadingSurvey');
-              const player1Div = document.getElementById('player1');
+//           // This global function will be called by the YouTube API once it's loaded
+//           function onYouTubeIframeAPIReady() {
+//             try {
+//               const loadingSurveyElement = document.getElementById('loadingSurvey');
+//               const player1Div = document.getElementById('player1');
 
-              if (!player1Div) {
-                console.log("Error: The 'player1' div element was not found in the DOM.");
-                return; // Stop execution if player div is missing
-              }
+//               if (!player1Div) {
+//                 console.log("Error: The 'player1' div element was not found in the DOM.");
+//                 return; // Stop execution if player div is missing
+//               }
               
-              if (!loadingSurveyElement) {
-                loadingSurveyElement.style.display = 'none'; // Hide loading if element missing
-              }
+//               if (!loadingSurveyElement) {
+//                 loadingSurveyElement.style.display = 'none'; // Hide loading if element missing
+//               }
 
-              // Show the loading indicator *after* player1Div is confirmed to exist
-              if (loadingSurveyElement) {
-                loadingSurveyElement.style.display = 'block';
-              }
-            } 
-            catch (error) {
-              console.error("Error creating YouTube player:", error);
-              if (loadingSurveyElement) {
-                  loadingSurveyElement.style.display = 'none'; // Hide loading indicator on player creation error
-              }
-            }
-            console.log("youtube API ready");
+//               // Show the loading indicator *after* player1Div is confirmed to exist
+//               if (loadingSurveyElement) {
+//                 loadingSurveyElement.style.display = 'block';
+//               }
+//             } 
+//             catch (error) {
+//               console.error("Error creating YouTube player:", error);
+//               if (loadingSurveyElement) {
+//                   loadingSurveyElement.style.display = 'none'; // Hide loading indicator on player creation error
+//               }
+//             }
+//             console.log("youtube API ready");
 
-              player1 = new YT.Player("player1", {
-                height: "360",
-                width: "535",
-                // videoId: "OTeQee-gxa4",
-                playerVars: {
-                  autoplay: 1,
-                  loop: 1,
-                  controls: 0,
-                  rel: 0,
-                  autohide: 1,
-                  playsinline: 0,
-                  mute: 0,
-                  vq: "hd1080",
-                  iv_load_policy: 3,
-                  cc_load_policy: 1,
-                  listType: "playlist",
-                  list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
-                },
-                events: {
-                  onReady: onPlayerReady,
-                  onStateChange: onPlayerStateChange,
-                  onError: onPlayerError,
-                },
-              });
-            console.log("YT.Player initialization attempted for player1.");
-          }
+//               player1 = new YT.Player("player1", {
+//                 height: "360",
+//                 width: "535",
+//                 // videoId: "OTeQee-gxa4",
+//                 playerVars: {
+//                   autoplay: 1,
+//                   loop: 1,
+//                   controls: 0,
+//                   rel: 0,
+//                   autohide: 1,
+//                   playsinline: 0,
+//                   mute: 0,
+//                   vq: "hd1080",
+//                   iv_load_policy: 3,
+//                   cc_load_policy: 1,
+//                   listType: "playlist",
+//                   list: "UU6DOFpA9UCTgNwJiVX1IOpQ",
+//                 },
+//                 events: {
+//                   onReady: onPlayerReady,
+//                   onStateChange: onPlayerStateChange,
+//                   onError: onPlayerError,
+//                 },
+//               });
+//             console.log("YT.Player initialization attempted for player1.");
+//           }
 
-          function onPlayerReady(event) {
-            console.log("Player ready, loading playlist.");
-            // event.target.loadPlaylist(myPlayList, ctr);
-            // ctr++;
-            setShuffle();
-            setLoop();
-            event.target.playVideo();
+//           function onPlayerReady(event) {
+//             console.log("Player ready, loading playlist.");
+//             // event.target.loadPlaylist(myPlayList, ctr);
+//             // ctr++;
+//             setShuffle();
+//             setLoop();
+//             event.target.playVideo();
 
-            // Hide the loading indicator once the player is ready and playing
-            // const loadingSurveyElement = document.getElementById('loadingSurvey');
-            if (loadingSurveyElement) {
-              loadingSurveyElement.style.display = 'none';
-            }
-          }
+//             // Hide the loading indicator once the player is ready and playing
+//             // const loadingSurveyElement = document.getElementById('loadingSurvey');
+//             if (loadingSurveyElement) {
+//               loadingSurveyElement.style.display = 'none';
+//             }
+//           }
 
           
-          // 5. The API calls this function when the player's state changes.The function indicates that when playing a video (state=1),the player should play for six seconds and then stop.
-          let done = false;
+//           // 5. The API calls this function when the player's state changes.The function indicates that when playing a video (state=1),the player should play for six seconds and then stop.
+//           let done = false;
 
-          function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.UNSTARTED) {
-              var youtubeID = event.target.getVideoUrl();
-              setTimeout(2000, playVideo);
-              changeBorderColor(event.data);
-            }
-            else if (event.data == YT.PlayerState.ENDED) {
-              //console.log("load another video");
-              player1.loadPlaylist(myPlayList, ctr);
-              ctr++
-              // setTimeout(player1.loadVideoById());
-              setTimeout(2000, nextVideo);
-              changeBorderColor(event.data);
-            }
-            else if (event.data == YT.PlayerState.PAUSED) {
-              setTimeout(2000, pauseVideo);
-              changeBorderColor(event.data)
-            }
-            else if (event.data == YT.PlayerState.BUFFERING) {
-              setTimeout(2000, playVideo);
-              changeBorderColor(event.data)
-            }
-            else if (event.data == YT.PlayerState.VIDEO_CUED) {
-              setTimeout(2000, playVideo);
-              changeBorderColor(event.data)
-            };
-            done = true;
-          };
+//           function onPlayerStateChange(event) {
+//             if (event.data == YT.PlayerState.UNSTARTED) {
+//               var youtubeID = event.target.getVideoUrl();
+//               setTimeout(2000, playVideo);
+//               changeBorderColor(event.data);
+//             }
+//             else if (event.data == YT.PlayerState.ENDED) {
+//               //console.log("load another video");
+//               player1.loadPlaylist(myPlayList, ctr);
+//               ctr++
+//               // setTimeout(player1.loadVideoById());
+//               setTimeout(2000, nextVideo);
+//               changeBorderColor(event.data);
+//             }
+//             else if (event.data == YT.PlayerState.PAUSED) {
+//               setTimeout(2000, pauseVideo);
+//               changeBorderColor(event.data)
+//             }
+//             else if (event.data == YT.PlayerState.BUFFERING) {
+//               setTimeout(2000, playVideo);
+//               changeBorderColor(event.data)
+//             }
+//             else if (event.data == YT.PlayerState.VIDEO_CUED) {
+//               setTimeout(2000, playVideo);
+//               changeBorderColor(event.data)
+//             };
+//             done = true;
+//           };
 
-          function changeBorderColor(playerStatus) {
-            let color;
+//           function changeBorderColor(playerStatus) {
+//             let color;
             
-            if (playerStatus == -1) {
-              color = "#37474F"
-            } // unstarted = gray
-            else if (playerStatus == 0) {
-              color = "#FFFF00"
-            } // ended = yellow
-            else if (playerStatus == 1) {
-              color = "#33691E"
-            } // playing = green
-            else if (playerStatus == 2) {
-              color = "#DD2C00"
-            } // paused = red
-            else if (playerStatus == 3) {
-              color = "#AA00FF"
-            } // buffering = purple
-            else if (playerStatus == 5) {
-              color = "#FF6DOO"
-            }; // video cued = orange
-            if (color) {
-              document.getElementById('player1').style.borderColor = color;
-            };
-          };
+//             if (playerStatus == -1) {
+//               color = "#37474F"
+//             } // unstarted = gray
+//             else if (playerStatus == 0) {
+//               color = "#FFFF00"
+//             } // ended = yellow
+//             else if (playerStatus == 1) {
+//               color = "#33691E"
+//             } // playing = green
+//             else if (playerStatus == 2) {
+//               color = "#DD2C00"
+//             } // paused = red
+//             else if (playerStatus == 3) {
+//               color = "#AA00FF"
+//             } // buffering = purple
+//             else if (playerStatus == 5) {
+//               color = "#FF6DOO"
+//             }; // video cued = orange
+//             if (color) {
+//               document.getElementById('player1').style.borderColor = color;
+//             };
+//           };
           
-          function onPlayerError(event) {
-            console.log("YouTube Player Error (Code:", event.data, "):", event);
-            // const loadingSurveyElement = document.getElementById('loadingSurvey');
-            if (loadingSurveyElement) {
-              loadingSurveyElement.style.display = 'none'; // Hide loading indicator
-            }
+//           function onPlayerError(event) {
+//             console.log("YouTube Player Error (Code:", event.data, "):", event);
+//             // const loadingSurveyElement = document.getElementById('loadingSurvey');
+//             if (loadingSurveyElement) {
+//               loadingSurveyElement.style.display = 'none'; // Hide loading indicator
+//             }
 
-            if (player1) {
-              player1.destroy(); // Properly destroy the player instance
-              player1 = null; // Clear the reference to the destroyed player
-            }
-            // Do NOT call onYouTubeIframeAPIReady() here.
-            // Depending on the error code, you might:
-            // - Display a user-friendly error message.
-            // - Attempt to load a different video if the current one is broken.
-            // - Log the error to a server for monitoring.
-          }
+//             if (player1) {
+//               player1.destroy(); // Properly destroy the player instance
+//               player1 = null; // Clear the reference to the destroyed player
+//             }
+//             // Do NOT call onYouTubeIframeAPIReady() here.
+//             // Depending on the error code, you might:
+//             // - Display a user-friendly error message.
+//             // - Attempt to load a different video if the current one is broken.
+//             // - Log the error to a server for monitoring.
+//           }
 
           
-          function stopVideo() {
-            player1.stopVideo();
-          };
+//           function stopVideo() {
+//             player1.stopVideo();
+//           };
 
-          function getVideoUrl() {
-            player1.getVideoUrl();
-          };
+//           function getVideoUrl() {
+//             player1.getVideoUrl();
+//           };
 
-          function setLoop() {
-            player1.setLoop(true);
-          };
+//           function setLoop() {
+//             player1.setLoop(true);
+//           };
 
-          function setShuffle() {
-            player1.setShuffle(true);
-          };
+//           function setShuffle() {
+//             player1.setShuffle(true);
+//           };
 
-          function playVideo() {
-            player1.playVideo();
-          };
+//           function playVideo() {
+//             player1.playVideo();
+//           };
 
-          function nextVideo() {
-            player1.nextVideo();
-          };
+//           function nextVideo() {
+//             player1.nextVideo();
+//           };
 
-          function pauseVideo() {
-            player1.pauseVideo();
-          };
-        })
+//           function pauseVideo() {
+//             player1.pauseVideo();
+//           };
+//         })
       
-    </script>
-`);
+//     </script>
+// `);
 
 const warrior_clicks = HtmlService.createHtmlOutput(
   `
@@ -2580,267 +2609,268 @@ const warrior_clicks = HtmlService.createHtmlOutput(
       });
     </script>
 `);
-const yTPlayer = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    let iframeHTML = null;
-    let fullList = [];
-    let againCap = null;
-    let matchesToReturn = null;
-    let allMatchesAvailable = [];
-    let searchIntent = null;
-    const localSuggestionsCache = {};
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    let firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    let rndList = ["UU6DOFpA9UCTgNwJiVX1IOpQ","PL-KQSIBx-Icaao3EaHRz0m2P39PwypbnH","PL-KQSIBx-IcaSkA9AdvIwkVVLl6F52LP-","PL-KQSIBx-IcauCgXsM-DWDzGFXgJmZiSS","PL-KQSIBx-Icb3a7aA78VNtQs8f2YBpTY6","PL-KQSIBx-Icb63tQzYzMvbrLXrAvF4Z2b",
-    "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
-    "PL-KQSIBx-IcYIitriWRZ2caFI8ST-0Oil","PL-KQSIBx-IcYddyYBPVasGjqtLLSHqlUX","PL-KQSIBx-IcYFwEWIQAbL8YPrDnBv7wTU","PL-KQSIBx-IcZaVi2VJ5TYwAOC4VYfKPrE","PL-KQSIBx-IcZlVBWBx9Vm7k7aT9fLZDbH","PL-KQSIBx-IcZh-CSTeWs-iRF4XrvzQwDh","PL-KQSIBx-IcZHEQcLV7u4dK0_e93q8XZg","PL-KQSIBx-IcZJqfk_sAI3FRSK60chqPSq","PL-KQSIBx-IcZFVRDV9sQ_7Y-Scmyh7YG2","PL-KQSIBx-IcZyrPGYJGEndWryKDTzxkaU","PL-KQSIBx-IcZUxla8KuKBn5JJh9L9RDwu","PL-KQSIBx-IcZZ07SBW_YiHMmvlned1cwG",];
-    localSuggestionsCache["allMatches"] = rndList;
-    console.log("all matches length greater than intents: ");
-    console.log(allMatchesAvailable.length < localSuggestionsCache["allMatches"].length);
-    while (allMatchesAvailable.length !== localSuggestionsCache["allMatches"].length) {
-      allMatchesAvailable = localSuggestionsCache["allMatches"].sort((a,b) => {
-        let i = Math.random()
-        let tSorted = a;
-        // console.log(againCap + ": tSorted = " + tSorted);
-        let zSorted = b;
-        // console.log(againCap + ": zSorted = " + zSorted);
-        if (i < .3) {
-          let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-          if (matchA > -1) {
-            // console.log(againCap + ": matchA = " + matchA);
-            return zSorted;
-          }
-        }
-        else {
-          if (i > .3 && i < .5 ) {
-            let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-            if (matchB === -1) {
-              // console.log(againCap + ": matchB = " + matchB);
-              return tSorted;
-            }
-          }
-          else {
-            if (i > .5 && i < .8) {
-              // console.log(againCap + ": matchC = " + zSorted);
-              return zSorted;
-            }
-            else {
-              if (i > .8) {
-                // console.log(againCap + ": matchD = " + tSorted);
-                return tSorted;
-              }
-            }
-          }
-        }
-      });
-    }
-    function myPlay() {
-      let list = null;
-      list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]
-      return list
-    }
-    if (!againCap) {
-      localStorage.setItem("ytSearch", myPlay())
-      againCap = localStorage.getItem("ytSearch");
-    }
-    let ctr = 0;
-    let iframePlayer;
-    let duration = 0;
-    let lastVolume = 100;
-    let seekBar, volumeSlider;
-    function onYouTubeIframeAPIReady() {
-          iframePlayer = new YT.Player("iframePlayer", {
-            height: "1405",
-            width: "2105",
-            //  videoId: 'OTeQee-gxa4',
-            playerVars: {
-              autoplay: 1,
-              loop: 1,
-              controls: 0,
-              showinfo: 0,
-              rel: 0,
-              autohide: 1,
-              playsinline: 1,
-              enablejsapi: 1,
-              mute: 0,
-              vq: "hd1080",
-              iv_load_policy: 3,
-              cc_load_policy: 1,
-              listType: "playlist",
-              list: againCap,
-            },
-            events: {
-              onReady: onPlayerReady,
-              onStateChange: onPlayerStateChange,
-              onError: onPlayerError,
-            },
-          });
-      function onPlayerReady(event) {
-          playVideo();
-      }
-    $('.user-icon').click(function(event){
-        let confirmation = window.confirm(
-          "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
-        );
-        let ifPlayerDisplay = document.getElementById('iframePlayer');
-        if (confirmation) {
-          if (ifPlayerDisplay.style.display === 'none') {
-            ifPlayerDisplay.style.display = 'block'
-            playVideo();
-          }
-          else {
-            loadPlaylist();
-            setShuffle();
-            nextVideo();
-            playVideo();
-          }
-        }
-        else {
-          // stopVideo();
-          console.log(ifPlayerDisplay)
-          ifPlayerDisplay.style.display = 'none';
-        }
-    });
+const y_t_player = HtmlService.createHtmlOutputFromFile("yTPlayer");
+// (
+//   `
+//   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//   <script>
+//     let iframeHTML = null;
+//     let fullList = [];
+//     let againCap = null;
+//     let matchesToReturn = null;
+//     let allMatchesAvailable = [];
+//     let searchIntent = null;
+//     const localSuggestionsCache = {};
+//     const tag = document.createElement("script");
+//     tag.src = "https://www.youtube.com/iframe_api";
+//     let firstScriptTag = document.getElementsByTagName("script")[0];
+//     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+//     let rndList = ["UU6DOFpA9UCTgNwJiVX1IOpQ","PL-KQSIBx-Icaao3EaHRz0m2P39PwypbnH","PL-KQSIBx-IcaSkA9AdvIwkVVLl6F52LP-","PL-KQSIBx-IcauCgXsM-DWDzGFXgJmZiSS","PL-KQSIBx-Icb3a7aA78VNtQs8f2YBpTY6","PL-KQSIBx-Icb63tQzYzMvbrLXrAvF4Z2b",
+//     "PL-KQSIBx-IcbI8gQVdlA6IFckuJ1fnkgM","PL-KQSIBx-IcY1MxHJ6O_CCK5Nche7UBVd",
+//     "PL-KQSIBx-IcYIitriWRZ2caFI8ST-0Oil","PL-KQSIBx-IcYddyYBPVasGjqtLLSHqlUX","PL-KQSIBx-IcYFwEWIQAbL8YPrDnBv7wTU","PL-KQSIBx-IcZaVi2VJ5TYwAOC4VYfKPrE","PL-KQSIBx-IcZlVBWBx9Vm7k7aT9fLZDbH","PL-KQSIBx-IcZh-CSTeWs-iRF4XrvzQwDh","PL-KQSIBx-IcZHEQcLV7u4dK0_e93q8XZg","PL-KQSIBx-IcZJqfk_sAI3FRSK60chqPSq","PL-KQSIBx-IcZFVRDV9sQ_7Y-Scmyh7YG2","PL-KQSIBx-IcZyrPGYJGEndWryKDTzxkaU","PL-KQSIBx-IcZUxla8KuKBn5JJh9L9RDwu","PL-KQSIBx-IcZZ07SBW_YiHMmvlned1cwG",];
+//     localSuggestionsCache["allMatches"] = rndList;
+//     console.log("all matches length greater than intents: ");
+//     console.log(allMatchesAvailable.length < localSuggestionsCache["allMatches"].length);
+//     while (allMatchesAvailable.length !== localSuggestionsCache["allMatches"].length) {
+//       allMatchesAvailable = localSuggestionsCache["allMatches"].sort((a,b) => {
+//         let i = Math.random()
+//         let tSorted = a;
+//         // console.log(againCap + ": tSorted = " + tSorted);
+//         let zSorted = b;
+//         // console.log(againCap + ": zSorted = " + zSorted);
+//         if (i < .3) {
+//           let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+//           if (matchA > -1) {
+//             // console.log(againCap + ": matchA = " + matchA);
+//             return zSorted;
+//           }
+//         }
+//         else {
+//           if (i > .3 && i < .5 ) {
+//             let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+//             if (matchB === -1) {
+//               // console.log(againCap + ": matchB = " + matchB);
+//               return tSorted;
+//             }
+//           }
+//           else {
+//             if (i > .5 && i < .8) {
+//               // console.log(againCap + ": matchC = " + zSorted);
+//               return zSorted;
+//             }
+//             else {
+//               if (i > .8) {
+//                 // console.log(againCap + ": matchD = " + tSorted);
+//                 return tSorted;
+//               }
+//             }
+//           }
+//         }
+//       });
+//     }
+//     function myPlay() {
+//       let list = null;
+//       list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]
+//       return list
+//     }
+//     if (!againCap) {
+//       localStorage.setItem("ytSearch", myPlay())
+//       againCap = localStorage.getItem("ytSearch");
+//     }
+//     let ctr = 0;
+//     let iframePlayer;
+//     let duration = 0;
+//     let lastVolume = 100;
+//     let seekBar, volumeSlider;
+//     function onYouTubeIframeAPIReady() {
+//           iframePlayer = new YT.Player("iframePlayer", {
+//             height: "1405",
+//             width: "2105",
+//             //  videoId: 'OTeQee-gxa4',
+//             playerVars: {
+//               autoplay: 1,
+//               loop: 1,
+//               controls: 0,
+//               showinfo: 0,
+//               rel: 0,
+//               autohide: 1,
+//               playsinline: 1,
+//               enablejsapi: 1,
+//               mute: 0,
+//               vq: "hd1080",
+//               iv_load_policy: 3,
+//               cc_load_policy: 1,
+//               listType: "playlist",
+//               list: againCap,
+//             },
+//             events: {
+//               onReady: onPlayerReady,
+//               onStateChange: onPlayerStateChange,
+//               onError: onPlayerError,
+//             },
+//           });
+//       function onPlayerReady(event) {
+//           playVideo();
+//       }
+//     $('.user-icon').click(function(event){
+//         let confirmation = window.confirm(
+//           "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
+//         );
+//         let ifPlayerDisplay = document.getElementById('iframePlayer');
+//         if (confirmation) {
+//           if (ifPlayerDisplay.style.display === 'none') {
+//             ifPlayerDisplay.style.display = 'block'
+//             playVideo();
+//           }
+//           else {
+//             loadPlaylist();
+//             setShuffle();
+//             nextVideo();
+//             playVideo();
+//           }
+//         }
+//         else {
+//           // stopVideo();
+//           console.log(ifPlayerDisplay)
+//           ifPlayerDisplay.style.display = 'none';
+//         }
+//     });
 
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      let done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-          changeBorderColor(event.data);
-          setLoop();
-        } else if (event.data == YT.PlayerState.STOPPED) {
-          changeBorderColor(event.data);
-          iframePlayer.loadPlaylist(againCap, ctr);
-        } else if (event.data == YT.PlayerState.UNSTARTED) {
-          changeBorderColor(event.data);
-          setTimeout(2000, playVideo)
-          // playVideo();
-        } else if (event.data == YT.PlayerState.ENDED) {
-          changeBorderColor(event.data);
-          ctr++
-          // setShuffle();
-          // playVideo();
-          // setShuffle();
-          // nextVideo();
-          setTimeout(2000, nextVideo);
-          setTimeout(2000, playVideo);
-        } else if (event.data == YT.PlayerState.PAUSED) {
-          changeBorderColor(event.data);
-        } else if (event.data == YT.PlayerState.BUFFERING) {
-          changeBorderColor(event.data);
-          // setShuffle();
-        } else if (event.data == YT.PlayerState.VIDEO_CUED) {
-          changeBorderColor(event.data);
-        }
-        done = true;
-      }
+//       // 5. The API calls this function when the player's state changes.
+//       //    The function indicates that when playing a video (state=1),
+//       //    the player should play for six seconds and then stop.
+//       let done = false;
+//       function onPlayerStateChange(event) {
+//         if (event.data == YT.PlayerState.PLAYING) {
+//           changeBorderColor(event.data);
+//           setLoop();
+//         } else if (event.data == YT.PlayerState.STOPPED) {
+//           changeBorderColor(event.data);
+//           iframePlayer.loadPlaylist(againCap, ctr);
+//         } else if (event.data == YT.PlayerState.UNSTARTED) {
+//           changeBorderColor(event.data);
+//           setTimeout(2000, playVideo)
+//           // playVideo();
+//         } else if (event.data == YT.PlayerState.ENDED) {
+//           changeBorderColor(event.data);
+//           ctr++
+//           // setShuffle();
+//           // playVideo();
+//           // setShuffle();
+//           // nextVideo();
+//           setTimeout(2000, nextVideo);
+//           setTimeout(2000, playVideo);
+//         } else if (event.data == YT.PlayerState.PAUSED) {
+//           changeBorderColor(event.data);
+//         } else if (event.data == YT.PlayerState.BUFFERING) {
+//           changeBorderColor(event.data);
+//           // setShuffle();
+//         } else if (event.data == YT.PlayerState.VIDEO_CUED) {
+//           changeBorderColor(event.data);
+//         }
+//         done = true;
+//       }
 
-      function changeBorderColor(playerStatus) {
-        let color;
+//       function changeBorderColor(playerStatus) {
+//         let color;
 
-        if (playerStatus == -1) {
-          color = "#37474F";
-        } // unstarted = gray
-        else if (playerStatus == 0) {
-          color = "#FFFF00";
-        } // ended = yellow
-        else if (playerStatus == 1) {
-          color = "#33691E";
-        } // playing = green
-        else if (playerStatus == 2) {
-          color = "#DD2C00";
-        } // paused = red
-        else if (playerStatus == 3) {
-          color = "#AA00FF";
-        } // buffering = purple
-        else if (playerStatus == 5) {
-          color = "#FF6DOO";
-        } // video cued = orange
+//         if (playerStatus == -1) {
+//           color = "#37474F";
+//         } // unstarted = gray
+//         else if (playerStatus == 0) {
+//           color = "#FFFF00";
+//         } // ended = yellow
+//         else if (playerStatus == 1) {
+//           color = "#33691E";
+//         } // playing = green
+//         else if (playerStatus == 2) {
+//           color = "#DD2C00";
+//         } // paused = red
+//         else if (playerStatus == 3) {
+//           color = "#AA00FF";
+//         } // buffering = purple
+//         else if (playerStatus == 5) {
+//           color = "#FF6DOO";
+//         } // video cued = orange
 
-        if (color) {
-          document.getElementById("iframePlayer").style.borderColor = color;
-        }
-      }
+//         if (color) {
+//           document.getElementById("iframePlayer").style.borderColor = color;
+//         }
+//       }
 
-      function onPlayerError() {
-        if (iframePlayer && iframePlayer.destroy) {
-          iframePlayer.destroy;
-          // onYouTubeIframeAPIReady();
-        }
-      }
-      function stopVideo() {
-        if (iframePlayer && iframePlayer.stopVideo) {
-          iframePlayer.stopVideo();
-        }
-      }
+//       function onPlayerError() {
+//         if (iframePlayer && iframePlayer.destroy) {
+//           iframePlayer.destroy;
+//           // onYouTubeIframeAPIReady();
+//         }
+//       }
+//       function stopVideo() {
+//         if (iframePlayer && iframePlayer.stopVideo) {
+//           iframePlayer.stopVideo();
+//         }
+//       }
 
-      function getVideoUrl() {
-        if (iframePlayer && iframePlayer.getVideoUrl) {
-          iframePlayer.getVideoUrl();
-        }
-      }
+//       function getVideoUrl() {
+//         if (iframePlayer && iframePlayer.getVideoUrl) {
+//           iframePlayer.getVideoUrl();
+//         }
+//       }
 
-      function setLoop() {
-        if (iframePlayer && iframePlayer.setLoop) {
-          iframePlayer.setLoop(true);
-        }
-      }
+//       function setLoop() {
+//         if (iframePlayer && iframePlayer.setLoop) {
+//           iframePlayer.setLoop(true);
+//         }
+//       }
 
-      function setShuffle() {
-        if (iframePlayer && iframePlayer.setShuffle) {
-          iframePlayer.setShuffle(true);
-        }
-      }
+//       function setShuffle() {
+//         if (iframePlayer && iframePlayer.setShuffle) {
+//           iframePlayer.setShuffle(true);
+//         }
+//       }
 
-      function playVideo() {
-        if (iframePlayer && iframePlayer.playVideo) {
-          iframePlayer.playVideo();
-        }
-      }
-      function nextVideo() {
-        if (iframePlayer && iframePlayer.nextVideo) {
-          iframePlayer.nextVideo();
-        }
-      }
-      function muteVideo() {
-        if (iframePlayer && iframePlayer.mute) {
-          iframePlayer.mute();
-        }
-      }
-      function unmuteVideo() {
-        if (iframePlayer && iframePlayer.unMute) {
-          iframePlayer.unMute();
-        }
-      }
-      function setVolume(vol) {
-        if (iframePlayer && iframePlayer.setVolume) {
-          iframePlayer.setVolume(vol);
-        }
-      }
-      function pauseVideo() {
-        if (iframePlayer && iframePlayer.pauseVideo) {
-          iframePlayer.pauseVideo();
-        }
-      }
-      function loadPlaylist() {
-        if (iframePlayer && iframePlayer.loadPlaylist) {
-          iframePlayer.loadPlaylist({
-            listType: 'playlist',
-            list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
-            index: 0,
-            startSeconds: 0
-          });
-        }
-      }
-    }
-  </script>
-`);
+//       function playVideo() {
+//         if (iframePlayer && iframePlayer.playVideo) {
+//           iframePlayer.playVideo();
+//         }
+//       }
+//       function nextVideo() {
+//         if (iframePlayer && iframePlayer.nextVideo) {
+//           iframePlayer.nextVideo();
+//         }
+//       }
+//       function muteVideo() {
+//         if (iframePlayer && iframePlayer.mute) {
+//           iframePlayer.mute();
+//         }
+//       }
+//       function unmuteVideo() {
+//         if (iframePlayer && iframePlayer.unMute) {
+//           iframePlayer.unMute();
+//         }
+//       }
+//       function setVolume(vol) {
+//         if (iframePlayer && iframePlayer.setVolume) {
+//           iframePlayer.setVolume(vol);
+//         }
+//       }
+//       function pauseVideo() {
+//         if (iframePlayer && iframePlayer.pauseVideo) {
+//           iframePlayer.pauseVideo();
+//         }
+//       }
+//       function loadPlaylist() {
+//         if (iframePlayer && iframePlayer.loadPlaylist) {
+//           iframePlayer.loadPlaylist({
+//             listType: 'playlist',
+//             list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
+//             index: 0,
+//             startSeconds: 0
+//           });
+//         }
+//       }
+//     }
+//   </script>
+// `);
 
 let enemy;
 const GameManager = {
@@ -2915,7 +2945,7 @@ var rePlay = function(classType) {
 class StyleHtml {
   constructor() {
     this.renderFile = HtmlService.createHtmlOutput(
-      `${desktop_container.getContent() + mobile_section.getContent() + responsiveSection.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
+      `${desktop_container.getContent() + mobile_section.getContent() + responsiveSection.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + global_website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + global_container.getContent() + list_container.getContent() + grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
     );
     this.surveyPlayer = HtmlService.createHtmlOutput(
       `${body_survey_player.getContent()}`,
@@ -2924,7 +2954,7 @@ class StyleHtml {
       `${link_visited.getContent() + link_active.getContent()}`,
     );
     this.runIt = HtmlService.createHtmlOutput(
-      `${yTPlayer.getContent() + customStreamPlayer.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+      `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
     );
     this.abcIt = HtmlService.createHtmlOutput(
       `
@@ -2932,7 +2962,7 @@ class StyleHtml {
     `);
     this.spRunIt = HtmlService.createHtmlOutput(
       `
-        ${spyTPlayer.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
+        ${sp_y_t_player.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
     `);
     this.mgfRunIt = HtmlService.createHtmlOutput(
       `
@@ -2971,9 +3001,9 @@ var builtStyling = function (e) {
       <style>
         ${content.desktop_container}
         ${content.mobile_section}
-        ${content.contentSection}
+        ${content.content_section}
         ${content.responsiveSection}
-        ${content.website}
+        ${content.global_website}
         ${content.global_html}
         ${content.global_main}
         ${content.global_body}
@@ -2996,10 +3026,10 @@ var builtStyling = function (e) {
         ${content.receipt_details}
         ${content.dotted_border}
         ${content.fa_trash_canHover}
-        ${content.tableSummary_table}
-        ${content.tbodySummary_table_tdNth_child1}
-        ${content.tbodySummary_table_tdNth_child2}
-        ${content.tbodySummary_table_tdNth_child3}
+        ${content.table_summary_table}
+        ${content.tbody_summary_table_tdNth_child1}
+        ${content.tbody_summary_table_tdNth_child2}
+        ${content.tbody_summary_table_tdNth_child3}
         ${content.receipt_footer}
         ${content.barcode}
         ${content.toolbar}

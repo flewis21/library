@@ -1,0 +1,11 @@
+.datepicker-container th,.datepicker-container td 
+  {
+    /* Re-establish table cell display */
+    display: table-cell !important;/* Undo flex and reset padding/margin/border that your global rules removed */
+    flex: none !important; /* Crucial to undo flex: 1 */
+    padding: 0 !important; /* Materialize has its own padding for day buttons, often 0 for cell and padding on button */
+    margin: 0 !important;
+    border: none !important;
+    vertical-align: middle !important; /* Standard for cells */
+    text-align: center !important; /* Days of week and numbers are typically centered */
+  }

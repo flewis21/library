@@ -1,0 +1,46 @@
+<script>
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+          resolve(result)})
+      .withFailureHandler(error => {
+          console.log(document.getElementById("test").innerHTML);
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    // mod the array
+    let timePicker = document.querySelectorAll(".prefTime");
+    M.Timepicker.init(timePicker, { 
+      defaultTime: "now" ,
+    });
+    serverSide("busyDates", [])
+      .then((response) => { 
+        // Rename 'disabledDays' to 'response' or 'payload' to avoid confusion
+        // Access the actual array from the 'data' property
+        let disabledDays = [];
+        if (response && response.type === "object" && Array.isArray(response.data)) {
+          disabledDays = response.data;
+        } else {
+          console.warn("Expected an object with an array in 'data' from busyDates, received:", response);
+          // Fallback to empty array if the structure is not as expected
+          disabledDays = [];
+        }
+        let datePicker = document.querySelectorAll(".prefDate");
+        M.Datepicker.init(datePicker, {
+          defaultDate: new Date() - new Date(new Date()).toLocaleDateString(),
+          setDefaultDate: true,
+          minDate: new Date(),
+          disableDayFn: 
+            function (day) {
+              return disabledDays.indexOf(day.valueOf()) > -1;
+            },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+</script>

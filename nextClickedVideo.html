@@ -224,64 +224,64 @@
           }
           againCap = localStorage.getItem("gsSearch");
           if (String(againCap).indexOf(query) > -1) {
-            input.value = againCap;
-          }
-          else {
-            if (String(againCap).indexOf(query) === -1) {
-              input.addEventListener('click', (event) => {
-                localStorage.setItem("gsSearch", event.target.value);
-                againCap = localStorage.getItem("gsSearch");
-                searchIntent = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable?.length)].description;
-                matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                  if (String(val.description).indexOf(againCap) > -1) {
-                    // console.log(againCap + ": result description: " + val.description);
-                    // console.log("result index: " + index);
-                    let tubeUrl = val.youtubeUrl
-                    if (tubeUrl && tubeUrl !== null) {
-                      console.log("local storage all results: " + againCap);
-                      return tubeUrl
-                    }
+            input.addEventListener('click', (event) => {
+              localStorage.setItem("gsSearch", event.target.value);
+              againCap = localStorage.getItem("gsSearch");
+              matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                if (String(val.description).indexOf(againCap) > -1) {
+                  // console.log(againCap + ": result description: " + val.description);
+                  // console.log("result index: " + index);
+                  let tubeUrl = val.youtubeUrl
+                  if (tubeUrl && tubeUrl !== null) {
+                    console.log("local storage all results: " + againCap);
+                    return tubeUrl
                   }
-                }).filter((mapResult) => {
-                  return mapResult != null
-                });
-                // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                  let i = Math.random()
-                  let tSorted = a;
-                  // console.log(againCap + ": tSorted = " + tSorted);
-                  let zSorted = b;
-                  // console.log(againCap + ": zSorted = " + zSorted);
-                  if (i < .3) {
-                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                    if (matchA > -1) {
-                      // console.log(againCap + ": matchA = " + matchA);
-                      return zSorted;
+                }
+              }).filter((mapResult) => {
+                return mapResult != null
+              });
+              // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+              allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                let i = Math.random()
+                let tSorted = a;
+                // console.log(againCap + ": tSorted = " + tSorted);
+                let zSorted = b;
+                // console.log(againCap + ": zSorted = " + zSorted);
+                if (i < .3) {
+                  let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                  if (matchA > -1) {
+                    // console.log(againCap + ": matchA = " + matchA);
+                    return zSorted;
+                  }
+                }
+                else {
+                  if (i > .3 && i < .5 ) {
+                    let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                    if (matchB === -1) {
+                      // console.log(againCap + ": matchB = " + matchB);
+                      return tSorted;
                     }
                   }
                   else {
-                    if (i > .3 && i < .5 ) {
-                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                      if (matchB === -1) {
-                        // console.log(againCap + ": matchB = " + matchB);
+                    if (i > .5 && i < .8) {
+                      // console.log(againCap + ": matchC = " + zSorted);
+                      return zSorted;
+                    }
+                    else {
+                      if (i > .8) {
+                        // console.log(againCap + ": matchD = " + tSorted);
                         return tSorted;
                       }
                     }
-                    else {
-                      if (i > .5 && i < .8) {
-                        // console.log(againCap + ": matchC = " + zSorted);
-                        return zSorted;
-                      }
-                      else {
-                        if (i > .8) {
-                          // console.log(againCap + ": matchD = " + tSorted);
-                          return tSorted;
-                        }
-                      }
-                    }
                   }
-                });
-              })
+                }
+              });
+            })
+            // input.value = againCap;
+          }
+          else {
+            if (String(againCap).indexOf(query) === -1) {
+              return
             }
           }
           
@@ -321,7 +321,7 @@
                   }
                   else {
                     if (suggestion.webAddressUrl) {
-                      window.open(suggestion.webAddressUrl);
+                      document.location.href = suggestion.webAddressUrl;
                     }
                   }
                 }
@@ -349,11 +349,11 @@
                     }
                     if (confirmation) {
                       if (suggestion.youtubeURL) {
-                        window.open(suggestion?.youtubeUrl);
+                        window.open(suggestion.youtubeUrl);
                       }
                       else {
                         if (suggestion.webAddressUrl) {
-                          window.open(suggestion?.webAddressUrl);
+                          document.location.href = suggestion.webAddressUrl;
                         }
                       }
                       suggestionsDiv.innerHTML = '';
