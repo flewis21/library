@@ -1036,10 +1036,10 @@ class RenderFile {
                   <![endif]-->
                 </style>
               </head>
-              <body id="rendFile" clas="flex-div" background-image="<?!= logo.getContent() ?>">
+              <body id="rendFile" clas="flex-div" background-image="<?!= global_logo.getContent() ?>">
                 <nav class="flex-div card-panel transparent static-fix">
                   <div class="nav-left flex-div">
-                    <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
+                    <img src="<?!= global_logo.getContent() ?>" class="logo menu-icon" />
                   </div>
                   <div id="navMiddle" class="nav-middle flex-div ">
                     <div class="search-box flex-div logo menu-icon">
@@ -1047,7 +1047,7 @@ class RenderFile {
                     </div>
                   </div>
                   <div class="nav-right flex-div">
-                    <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+                    <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                   </div>
                 </nav>
                 <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
@@ -1085,10 +1085,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="tro" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
                                           </div>
@@ -1101,10 +1101,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="lti" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <header class="transparent">
                                               <h3><a href="">Legal Title:</a></h3>
@@ -1120,10 +1120,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="rpc" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <header class="transparent">
                                               <h3><a href="">Rights of Possession and Control:</a></h3>
@@ -1139,10 +1139,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="rdi" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <header class="transparent">
                                               <h3><a href="">Right of Disposal:</a></h3>
@@ -1158,10 +1158,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="ccm" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <header class="transparent">
                                               <h3><a href="">Freedom from Competing Claims:</a></h3>
@@ -1177,10 +1177,10 @@ class RenderFile {
                                           </div>
                                         </article>
                                         <a id="beb" href="javascript:void(0)">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="thumbnail transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
                                         </a>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= seaIcn.getContent() ?>" class="transparent" />
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
                                             <header class="transparent">
                                               <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
@@ -1210,7 +1210,7 @@ class RenderFile {
                                 <hr>
                                 <div class="subscribed-list">
                                   <h3>SUBSCRIBED</h3>
-                                  <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                                  <a href=""><img src="<?!= global_sea_icn.getContent() ?>"><p>Jack Nicholson</p></a>
                                 </div>
                               </td>
                             </tbody>
@@ -1349,7 +1349,7 @@ class RenderTemplate {
           <body>
             <nav class="flex-div responsive-section transparent static-fix">
               <div class="nav-left flex-div responsive-section">
-                <img src="<?!= logo.getContent() ?>" class="logo menu-icon" />
+                <img src="<?!= global_logo.getContent() ?>" class="logo menu-icon" />
               </div>
               <div id="navMiddle" class="nav-middle flex-div responsive-section">
                 <div class="search-box flex-div">
@@ -1357,7 +1357,7 @@ class RenderTemplate {
                 </div>
               </div>
               <div class="nav-right flex-div responsive-section">
-                <img src="<?!= seaIcn.getContent() ?>" class="user-icon" />
+                <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
               </div>
             </nav>
             <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
@@ -1397,10 +1397,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="dmi" href="<?= drivemI ?>">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <p>
                                           <i>   
@@ -1418,10 +1418,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="del" href="<?!= driveL ?>">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <?!= drivedD ?>
                                         <header class="responsive-section">
@@ -1438,10 +1438,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="qua" href="javascript:void(0)">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <?!= driveT ?>
                                         <header class="responsive-section">
@@ -1458,10 +1458,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ddi" href="<?!= drivedI ?>">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <?!= drivedI ?>
                                         <header class="responsive-section">
@@ -1478,10 +1478,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ama" href="javascript:void(0)">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <i>
                                           However, there are some aspects that can be measured or assessed to some degree:
@@ -1496,10 +1496,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="vsd" href="javascript:void(0)">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <header class="responsive-section">
                                           <h3><a href="javascript:void(0)">Visible Demonstrations:</a></h3>
@@ -1515,10 +1515,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ccc" href="javascript:void(0)">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <header class="responsive-section">
                                           <h3><a href="javascript:void(0)">Compliance and Obedience:</a></h3>
@@ -1534,10 +1534,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="sli" href="javascript:void(0)">
-                                      <img src="<?!= seaIcn.getContent() ?>" class="thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <header class="responsive-section">
                                           <h3><a href="javascript:void(0)">Social Influence:</a></h3>
@@ -1553,10 +1553,10 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="drd" href="<?!= driveD ?>">
-                                      <img src="<?!= seaIcn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
-                                      <img src="<?!= seaIcn.getContent() ?>" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
                                         <header class="responsive-section">
                                           <h3><a href="javascript:void(0)">In conclusion:</a></h3>
@@ -1594,7 +1594,7 @@ class RenderTemplate {
                     <hr>
                     <div class="subscribed-list">
                       <h3>SUBSCRIBED</h3>
-                      <a href=""><img src="<?!= seaIcn.getContent() ?>"><p>Jack Nicholson</p></a>
+                      <a href=""><img src="<?!= global_sea_icn.getContent() ?>"><p>Jack Nicholson</p></a>
                     </div>
                   </p>
                 </aside>

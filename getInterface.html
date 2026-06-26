@@ -1,0 +1,23 @@
+<script>
+  function serverside(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler((result) => {
+        resolve(result)
+      })
+      .withFailureHandler((error) => {
+        reject(error)
+      })
+      .runBoilerplate(func, args)
+    })
+  };
+    document.querySelectorAll("delAddr").addEventListener("select", function(event) {
+      serverside("rePlay", [event.target.value])
+        .then((gPl) => {
+          let gamB = gPl.gamer;
+          let eneB = gPl.enemy;
+          let getInterface = document.querySelector(".interface");
+          getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
+        })
+    });
+</script>

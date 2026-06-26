@@ -1,0 +1,36 @@
+<script>
+  var busa = document.getElementById("artiicleIndex");
+  var busx = document.getElementById("loadingLab");
+  var busc = document.getElementById("contentDiv");
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+          resolve(result)})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  busa.addEventListener('keypress', function(event) {
+    // If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {
+      const strValue = busa.value;
+      busx.innerText = "... waiting for " + strValue;
+      const confirmation = window.confirm(
+        "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+      );
+      if (confirmation) {
+        if (strValue) {
+          localSuggestionsCache["allMatches"].map((val) => {
+            if (val.description.indexOf(strValue) > -1) {
+              window.open(val.youtubeUrl);
+            }
+          });
+        }
+        else {
+          window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
+        }
+      }
+      busa.value = ""}})
+</script> 

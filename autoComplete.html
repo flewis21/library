@@ -1,0 +1,97 @@
+<script>
+  function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
+
+  function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+
+    // Client-side code
+    const localSuggestionsCache = {};
+    const input = document.getElementById(inputId);
+    const suggestionsDiv = document.getElementById(suggestionsDivId);
+
+    if (!input || !suggestionsDiv) {
+      console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+      return;
+    }
+    
+    serverside('chaseFunction', [columnName])
+      .then((response) => { 
+        // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+        // Access the actual array from the 'data' property
+        let fullList = {};
+        if (response && response.type === "object") {
+          fullList = response.data;
+        } else {
+          console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+          // Fallback to empty array if the structure is not as expected
+          fullList = {};
+        }
+        localSuggestionsCache[columnName] = fullList
+        // console.log('Successfully fetched full list for', columnName);
+        // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+      })
+      .catch(error => {
+        console.error("Error fetching address suggestions for " + inputId + ":", error);
+        suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+      });
+      
+    const fetchSuggestions = debounce((query) => {
+      if (query.length < 3) {
+        suggestionsDiv.innerHTML = '';
+        return;
+      }
+      
+      // Filter the local list instead of making a server call
+      const localList = localSuggestionsCache[columnName] || [];
+      // console.log("localSuggestionsCache[columnName] || [] ", localList)
+      const suggestions = localList.filter(item => 
+        String(item).toLowerCase().includes(query.toLowerCase())
+      );
+      
+      suggestionsDiv.innerHTML = '';
+      if (suggestions && suggestions.length > 0) {
+        suggestions.forEach(suggestion => {
+          // console.log(suggestion)
+          const div = document.createElement('div');
+          div.textContent = suggestion;
+          div.addEventListener('click', () => {
+            input.value = suggestion;
+            suggestionsDiv.innerHTML = '';
+          });
+          suggestionsDiv.appendChild(div);
+        });
+      }
+
+    }, 300);
+    
+    if (input && suggestionsDiv) {
+      input.addEventListener('input', (event) => {
+        fetchSuggestions(event.target.value);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+          suggestionsDiv.innerHTML = '';
+        }
+      });
+
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            suggestionsDiv.innerHTML = '';
+            input.blur();
+        }
+      });
+
+    } else {
+        console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+    }
+  }
+  // Setup Autocomplete
+  setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+</script>

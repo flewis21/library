@@ -475,448 +475,464 @@ const index_beta = HtmlService.createHtmlOutputFromFile("indexBeta");
 // (
 //   `#indexBeta,#player1,#player2,#artiicleIndexSuggestions {/* Basic layout and appearance */width: auto;height: auto; /* Or whatever height you need */font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */margin:10px auto;white-space:pre-wrap;text-align:left;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border: 1px solid #333;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Hide default textarea scrollbar (optional, but common for custom scrollbars) *//* If you hide this, you'd need to implement custom scrollbars with JavaScript *//* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices *//* &::-webkit-scrollbar { display: none; } *//* & { -ms-overflow-style: none; scrollbar-width: none; } *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
 // );
-const indexbeta_color_boxshadow = HtmlService.createHtmlOutput(
-  `#indexBeta,#jsonInput,#player1,#player2:focus {box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */}`,
-);
-const indexbeta_color = HtmlService.createHtmlOutput(
-  `#indexBeta,#jsonInput,#player1,#player2:placeholder {color: #616e7f;}`,
-);
-const nav_middle_Nav = HtmlService.createHtmlOutput(`#navMiddle {width: 50%}`);
-const seperator2 = HtmlService.createHtmlOutput(
-  `/* ----------------------------Menu-Payment-------------------------- */`,
-);
-const seperator1 = HtmlService.createHtmlOutput(
-  `/* -----------------------------------ORDER--------------------------- */`,
-);
-const logo = HtmlService.createHtmlOutput(
-  `https://flewis21.github.io/foobar/images/logo.jpg`,
-);
-const seaIcn = HtmlService.createHtmlOutput(
-  `https://flewis21.github.io/foobar/images/user.jpg`,
-);
-const jsQuery = HtmlService.createHtmlOutput(
-  `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
-);
-const luxonJs = HtmlService.createHtmlOutput(
-  `<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`,
-);
-const materializeJs = HtmlService.createHtmlOutput(
-  `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
-);
-const tabulatorJs = HtmlService.createHtmlOutput(
-  `<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>`,
-);
-const again_clicked = HtmlService.createHtmlOutput(
-  `
-  <script>
-    function serverside(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    document
-      .getElementById("userClickedAgain")
-      .addEventListener("click", againFunc);
-    function againFunc() {
-      againCap = localStorage.getItem("gsSearch");
-      document.getElementById("template").innerHTML =
-        "waiting for againFunc: " + againCap + "...";
-      serverside(againCap)
-        .then((droplet) => {
-          document.getElementById("template").innerHTML =
-            arguments.callee.name + "\n" + againCap + "(" + droplet + ")";
-          // alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
-          document.getElementById("template").innerHTML =
-            arguments.callee.name + "\ndroplet.length = " + droplet.length;
-          // alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
-          if (
-            droplet.length === 99 ||
-            droplet.length === 101 ||
-            droplet.length === 112 ||
-            droplet.length === 86
-          ) {
-            serverside("seoCapital", droplet).then((myFile) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + againCap + "(" + myFile + ")";
-              // alert(
-              //   arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
-              // );
-              document.getElementById("template").innerHTML =
-                JSON.stringify(myFile);
-            });
-          } else {
-            document.getElementById("template").innerHTML =
-              arguments.callee.name +
-                "\n" +
-                droplet.length +
-                " is not the required length";
-            // alert(
-            //   arguments.callee.name +
-            //     "\n" +
-            //     droplet.length +
-            //     " is not the required length",
-            // );
-            serverside("getScriptUrl")
-              .then((cChange) => {
-                console.log(
-                  arguments.callee.name +
-                    "\n" +
-                    typeof cChange +
-                    " with length = " +
-                    cChange.length,
-                );
-                if (cChange.length === 112 || cChange.length === 86) {
-                  // console.log(cChange)
-                  const confirmation = window.confirm(
-                    "Click OK to continue to the destination.",
-                  );
-                  if (confirmation) {
-                    var linkFollow = document.createElement("a");
-                    linkFollow.href = cChange + "?func=" + againCap;
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                  }
-                } else {
-                  var docWnd = document.getElementById("template");
-                  docWnd.innerHTML = cChange;
-                }
-              })
-              .catch((er) => {
-                document.getElementById("template").innerHTML =
-                  arguments.callee.name +
-                    "\n" +
-                    againCap +
-                    " error(" +
-                    er +
-                    ")";
-                // alert(
-                //   arguments.callee.name +
-                //     "\n" +
-                //     againCap +
-                //     " error(" +
-                //     er +
-                //     ")",
-                // );
-                console.log(arguments.callee.name + "\n" + er);
-                document.getElementById("template").innerHTML =
-                  JSON.stringify(er);
-              });
-          }
-        })
-        .catch((er) => {
-          document.getElementById("template").innerHTML =
-            arguments.callee.name + "\n" + againCap + " error(" + er + ")";
-          // alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
-          serverside("getScriptUrl")
-            .then((cChange) => {
-              console.log(
-                arguments.callee.name +
-                  "\n" +
-                  typeof cChange +
-                  " with length = " +
-                  cChange.length,
-              );
-              if (droplet.length === 86 || cChange.length === 112) {
-                // console.log(cChange)
-                const confirmation = window.confirm(
-                  "Click OK to continue to the destination.",
-                );
-                if (confirmation) {
-                  var linkFollow = document.createElement("a");
-                  linkFollow.href = cChange + "?func=" + againCap;
-                  linkFollow.id = "linkFOLLOW";
-                  linkFollow.target = "_blank";
-                  linkFollow.rel = "noopener noreferrer";
-                  document.body.appendChild(linkFollow);
-                  document.getElementById("linkFOLLOW").click();
-                  document.getElementById("linkFOLLOW").remove();
-                }
-              } else {
-                var docWnd = document.getElementById("template");
-                docWnd.innerHTML = cChange;
-              }
-            })
-            .catch((er) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + againCap + " error(" + er + ")";
-              // alert(
-              //   arguments.callee.name + "\n" + againCap + " error(" + er + ")",
-              // );
-              console.log(arguments.callee.name + "\n" + er);
-              document.getElementById("template").innerHTML =
-                JSON.stringify(er);
-            });
-        });
-    }
-  </script>
-`);
-const args_clicked = HtmlService.createHtmlOutput(
-  `
-  <script>
-    document.getElementById('args').addEventListener('change', argsClicked)
-    function argsClicked() {
-      //console.log(document.getElementById("test").innerHTML)
-      // Init a timeout variable to be used below
-      let timeout = null;
-      (() => {
-        // Clear the timeout if it has already been set.
-        // This will prevent the previous task from executing
-        // if it has been less than <MILLISECONDS>
-        // clearTimeout(timeout);
-        // Make a new timeout set to go off in 1000ms (1 second)
-        // timeout = setTimeout
-        // (function  ()
-        // {console.log('Input Value:', textInput.value);}, 5000)();
-        if (typeof url === "undefined") {
-          var urlData = document.getElementById("url").value;
-          var url = urlData.toString();
-        }
-        var func = document.getElementById("func").value;
-        var args = document.getElementById("args").value;
-        if (typeof func !== "undefined") {
-          var linkFollow = document.createElement("a");
-          linkFollow.href =
-            url +
-            "?func=" +
-            encodeURIComponent(func) +
-            "&args=" +
-            encodeURIComponent(args);
-          linkFollow.id = "linkFOLLOW";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkFOLLOW").remove();
-        }
-      })();
-    }
-  </script>
-`);
-const auto_complete = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
-      }
+const index_beta_color_box_shadow = HtmlService.createHtmlOutputFromFile("indexBetaColorBoxShadow");
+// (
+//   `#indexBeta,#jsonInput,#player1,#player2:focus {box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */}`,
+// );
+const index_beta_color = HtmlService.createHtmlOutputFromFile("indexBetaColor");
+// (
+//   `#indexBeta,#jsonInput,#player1,#player2:placeholder {color: #616e7f;}`,
+// );
+const nav_middle_nav = HtmlService.createHtmlOutputFromFile("navMiddleNav");
+// (`#navMiddle {width: 50%}`);
+const global_seperator2 = HtmlService.createHtmlOutputFromFile("globalSeperator2");
+// (
+//   `/* ----------------------------Menu-Payment-------------------------- */`,
+// );
+const global_seperator1 = HtmlService.createHtmlOutputFromFile("globalSeperator1");
+// (
+//   `/* -----------------------------------ORDER--------------------------- */`,
+// );
+const global_logo = HtmlService.createHtmlOutputFromFile("globalLogo");
+// (
+//   `https://flewis21.github.io/foobar/images/logo.jpg`,
+// );
+const global_sea_icn = HtmlService.createHtmlOutputFromFile("globalSeaIcn");
+// (
+//   `https://flewis21.github.io/foobar/images/user.jpg`,
+// );
+const js_query = HtmlService.createHtmlOutputFromFile("jsQuery");
+// (
+//   `<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>`,
+// );
+const luxon_js = HtmlService.createHtmlOutputFromFile("luxonJs");
+// (
+//   `<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.0.1/luxon.min.js" integrity="sha512-6ZJuab/UnRq1muTChgrVxJhSgygmL2GMLVmSJN7pcBEqJ1dWPbqN9CiZ6U3HrcApTIJsLnMgXYBYgtVkJ8fWiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>`,
+// );
+const materialize_js = HtmlService.createHtmlOutputFromFile("materializeJs");
+// (
+//   `<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>`,
+// );
+const tabulator_js = HtmlService.createHtmlOutputFromFile("tabulatorJs");
+// (
+//   `<script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>`,
+// );
+const again_clicked = HtmlService.createHtmlOutputFromFile("againClicked");
+// (
+//   `
+//   <script>
+//     function serverside(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     document
+//       .getElementById("userClickedAgain")
+//       .addEventListener("click", againFunc);
+//     function againFunc() {
+//       againCap = localStorage.getItem("gsSearch");
+//       document.getElementById("template").innerHTML =
+//         "waiting for againFunc: " + againCap + "...";
+//       serverside(againCap)
+//         .then((droplet) => {
+//           document.getElementById("template").innerHTML =
+//             arguments.callee.name + "\n" + againCap + "(" + droplet + ")";
+//           // alert(arguments.callee.name + "\n" + againCap + "(" + droplet + ")");
+//           document.getElementById("template").innerHTML =
+//             arguments.callee.name + "\ndroplet.length = " + droplet.length;
+//           // alert(arguments.callee.name + "\ndroplet.length = " + droplet.length);
+//           if (
+//             droplet.length === 99 ||
+//             droplet.length === 101 ||
+//             droplet.length === 112 ||
+//             droplet.length === 86
+//           ) {
+//             serverside("seoCapital", droplet).then((myFile) => {
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name + "\n" + againCap + "(" + myFile + ")";
+//               // alert(
+//               //   arguments.callee.name + "\n" + againCap + "(" + myFile + ")",
+//               // );
+//               document.getElementById("template").innerHTML =
+//                 JSON.stringify(myFile);
+//             });
+//           } else {
+//             document.getElementById("template").innerHTML =
+//               arguments.callee.name +
+//                 "\n" +
+//                 droplet.length +
+//                 " is not the required length";
+//             // alert(
+//             //   arguments.callee.name +
+//             //     "\n" +
+//             //     droplet.length +
+//             //     " is not the required length",
+//             // );
+//             serverside("getScriptUrl")
+//               .then((cChange) => {
+//                 console.log(
+//                   arguments.callee.name +
+//                     "\n" +
+//                     typeof cChange +
+//                     " with length = " +
+//                     cChange.length,
+//                 );
+//                 if (cChange.length === 112 || cChange.length === 86) {
+//                   // console.log(cChange)
+//                   const confirmation = window.confirm(
+//                     "Click OK to continue to the destination.",
+//                   );
+//                   if (confirmation) {
+//                     var linkFollow = document.createElement("a");
+//                     linkFollow.href = cChange + "?func=" + againCap;
+//                     linkFollow.id = "linkFOLLOW";
+//                     linkFollow.target = "_blank";
+//                     linkFollow.rel = "noopener noreferrer";
+//                     document.body.appendChild(linkFollow);
+//                     document.getElementById("linkFOLLOW").click();
+//                     document.getElementById("linkFOLLOW").remove();
+//                   }
+//                 } else {
+//                   var docWnd = document.getElementById("template");
+//                   docWnd.innerHTML = cChange;
+//                 }
+//               })
+//               .catch((er) => {
+//                 document.getElementById("template").innerHTML =
+//                   arguments.callee.name +
+//                     "\n" +
+//                     againCap +
+//                     " error(" +
+//                     er +
+//                     ")";
+//                 // alert(
+//                 //   arguments.callee.name +
+//                 //     "\n" +
+//                 //     againCap +
+//                 //     " error(" +
+//                 //     er +
+//                 //     ")",
+//                 // );
+//                 console.log(arguments.callee.name + "\n" + er);
+//                 document.getElementById("template").innerHTML =
+//                   JSON.stringify(er);
+//               });
+//           }
+//         })
+//         .catch((er) => {
+//           document.getElementById("template").innerHTML =
+//             arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+//           // alert(arguments.callee.name + "\n" + againCap + " error(" + er + ")");
+//           serverside("getScriptUrl")
+//             .then((cChange) => {
+//               console.log(
+//                 arguments.callee.name +
+//                   "\n" +
+//                   typeof cChange +
+//                   " with length = " +
+//                   cChange.length,
+//               );
+//               if (droplet.length === 86 || cChange.length === 112) {
+//                 // console.log(cChange)
+//                 const confirmation = window.confirm(
+//                   "Click OK to continue to the destination.",
+//                 );
+//                 if (confirmation) {
+//                   var linkFollow = document.createElement("a");
+//                   linkFollow.href = cChange + "?func=" + againCap;
+//                   linkFollow.id = "linkFOLLOW";
+//                   linkFollow.target = "_blank";
+//                   linkFollow.rel = "noopener noreferrer";
+//                   document.body.appendChild(linkFollow);
+//                   document.getElementById("linkFOLLOW").click();
+//                   document.getElementById("linkFOLLOW").remove();
+//                 }
+//               } else {
+//                 var docWnd = document.getElementById("template");
+//                 docWnd.innerHTML = cChange;
+//               }
+//             })
+//             .catch((er) => {
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name + "\n" + againCap + " error(" + er + ")";
+//               // alert(
+//               //   arguments.callee.name + "\n" + againCap + " error(" + er + ")",
+//               // );
+//               console.log(arguments.callee.name + "\n" + er);
+//               document.getElementById("template").innerHTML =
+//                 JSON.stringify(er);
+//             });
+//         });
+//     }
+//   </script>
+// `);
+const args_clicked = HtmlService.createHtmlOutputFromFile("argsClicked");
+// (
+//   `
+//   <script>
+//     document.getElementById('args').addEventListener('change', argsClicked)
+//     function argsClicked() {
+//       //console.log(document.getElementById("test").innerHTML)
+//       // Init a timeout variable to be used below
+//       let timeout = null;
+//       (() => {
+//         // Clear the timeout if it has already been set.
+//         // This will prevent the previous task from executing
+//         // if it has been less than <MILLISECONDS>
+//         // clearTimeout(timeout);
+//         // Make a new timeout set to go off in 1000ms (1 second)
+//         // timeout = setTimeout
+//         // (function  ()
+//         // {console.log('Input Value:', textInput.value);}, 5000)();
+//         if (typeof url === "undefined") {
+//           var urlData = document.getElementById("url").value;
+//           var url = urlData.toString();
+//         }
+//         var func = document.getElementById("func").value;
+//         var args = document.getElementById("args").value;
+//         if (typeof func !== "undefined") {
+//           var linkFollow = document.createElement("a");
+//           linkFollow.href =
+//             url +
+//             "?func=" +
+//             encodeURIComponent(func) +
+//             "&args=" +
+//             encodeURIComponent(args);
+//           linkFollow.id = "linkFOLLOW";
+//           linkFollow.target = "_top";
+//           document.body.appendChild(linkFollow);
+//           document.getElementById("linkFOLLOW").click();
+//           document.getElementById("linkFOLLOW").remove();
+//         }
+//       })();
+//     }
+//   </script>
+// `);
+const auto_complete = HtmlService.createHtmlOutputFromFile("autoComplete");
+// (
+//   `
+//     <script>
+//       function debounce(func, delay) {
+//         let timeout;
+//         return function(...args) {
+//           const context = this;
+//           clearTimeout(timeout);
+//           timeout = setTimeout(() => func.apply(context, args), delay);
+//         };
+//       }
 
-      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+//       function setupAutocomplete(inputId, suggestionsDivId, columnName) {
 
-        // Client-side code
-        const localSuggestionsCache = {};
-        const input = document.getElementById(inputId);
-        const suggestionsDiv = document.getElementById(suggestionsDivId);
+//         // Client-side code
+//         const localSuggestionsCache = {};
+//         const input = document.getElementById(inputId);
+//         const suggestionsDiv = document.getElementById(suggestionsDivId);
 
-        if (!input || !suggestionsDiv) {
-          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
-          return;
-        }
+//         if (!input || !suggestionsDiv) {
+//           console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+//           return;
+//         }
         
-        serverside('chaseFunction', [columnName])
-          .then((response) => { 
-            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let fullList = {};
-            if (response && response.type === "object") {
-              fullList = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = {};
-            }
-            localSuggestionsCache[columnName] = fullList
-            // console.log('Successfully fetched full list for', columnName);
-            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for " + inputId + ":", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
+//         serverside('chaseFunction', [columnName])
+//           .then((response) => { 
+//             // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+//             // Access the actual array from the 'data' property
+//             let fullList = {};
+//             if (response && response.type === "object") {
+//               fullList = response.data;
+//             } else {
+//               console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+//               // Fallback to empty array if the structure is not as expected
+//               fullList = {};
+//             }
+//             localSuggestionsCache[columnName] = fullList
+//             // console.log('Successfully fetched full list for', columnName);
+//             // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+//           })
+//           .catch(error => {
+//             console.error("Error fetching address suggestions for " + inputId + ":", error);
+//             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+//           });
           
-        const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
-            suggestionsDiv.innerHTML = '';
-            return;
-          }
+//         const fetchSuggestions = debounce((query) => {
+//           if (query.length < 3) {
+//             suggestionsDiv.innerHTML = '';
+//             return;
+//           }
           
-          // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache[columnName] || [];
-          // console.log("localSuggestionsCache[columnName] || [] ", localList)
-          const suggestions = localList.filter(item => 
-            String(item).toLowerCase().includes(query.toLowerCase())
-          );
+//           // Filter the local list instead of making a server call
+//           const localList = localSuggestionsCache[columnName] || [];
+//           // console.log("localSuggestionsCache[columnName] || [] ", localList)
+//           const suggestions = localList.filter(item => 
+//             String(item).toLowerCase().includes(query.toLowerCase())
+//           );
           
-          suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
-            suggestions.forEach(suggestion => {
-              // console.log(suggestion)
-              const div = document.createElement('div');
-              div.textContent = suggestion;
-              div.addEventListener('click', () => {
-                input.value = suggestion;
-                suggestionsDiv.innerHTML = '';
-              });
-              suggestionsDiv.appendChild(div);
-            });
-          }
+//           suggestionsDiv.innerHTML = '';
+//           if (suggestions && suggestions.length > 0) {
+//             suggestions.forEach(suggestion => {
+//               // console.log(suggestion)
+//               const div = document.createElement('div');
+//               div.textContent = suggestion;
+//               div.addEventListener('click', () => {
+//                 input.value = suggestion;
+//                 suggestionsDiv.innerHTML = '';
+//               });
+//               suggestionsDiv.appendChild(div);
+//             });
+//           }
 
-        }, 300);
+//         }, 300);
         
-        if (input && suggestionsDiv) {
-          input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
-          });
+//         if (input && suggestionsDiv) {
+//           input.addEventListener('input', (event) => {
+//             fetchSuggestions(event.target.value);
+//           });
 
-          document.addEventListener('click', (event) => {
-            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
-              suggestionsDiv.innerHTML = '';
-            }
-          });
+//           document.addEventListener('click', (event) => {
+//             if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+//               suggestionsDiv.innerHTML = '';
+//             }
+//           });
 
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-          });
+//           input.addEventListener('keydown', (event) => {
+//             if (event.key === 'Escape') {
+//                 suggestionsDiv.innerHTML = '';
+//                 input.blur();
+//             }
+//           });
 
-        } else {
-            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
-        }
-      }
-      // Setup Autocomplete
-      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
-    </script>
-`);
-const auto_video = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler((result) => {
-              resolve(result)})
-          .withFailureHandler((error) => {
-            alert("Error handling: ")
-              // console.log(error)
-              reject(error)})
-          .runBoilerplate(func, args)})};
+//         } else {
+//             console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+//         }
+//       }
+//       // Setup Autocomplete
+//       setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+//     </script>
+// `);
+const auto_video = HtmlService.createHtmlOutputFromFile("autoVideo");
+// (
+//   `
+//     <script>
+//       function serverside(func, args) {
+//         return new Promise((resolve, reject) => {
+//           google.script.run
+//           .withSuccessHandler((result) => {
+//               resolve(result)})
+//           .withFailureHandler((error) => {
+//             alert("Error handling: ")
+//               // console.log(error)
+//               reject(error)})
+//           .runBoilerplate(func, args)})};
 
-      function debounce(func, delay) {
-        let timeout;
-        return function(...args) {
-          const context = this;
-          clearTimeout(timeout);
-          timeout = setTimeout(() => func.apply(context, args), delay);
-        };
-      }
+//       function debounce(func, delay) {
+//         let timeout;
+//         return function(...args) {
+//           const context = this;
+//           clearTimeout(timeout);
+//           timeout = setTimeout(() => func.apply(context, args), delay);
+//         };
+//       }
 
-      function setupAutocomplete(inputId, suggestionsDivId, columnName) {
+//       function setupAutocomplete(inputId, suggestionsDivId, columnName) {
 
-        // Client-side code
-        const localSuggestionsCache = {};
-        const input = document.getElementById(inputId);
-        const suggestionsDiv = document.getElementById(suggestionsDivId);
+//         // Client-side code
+//         const localSuggestionsCache = {};
+//         const input = document.getElementById(inputId);
+//         const suggestionsDiv = document.getElementById(suggestionsDivId);
 
-        if (!input || !suggestionsDiv) {
-          console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
-          return;
-        }
+//         if (!input || !suggestionsDiv) {
+//           console.error("Input element " + inputId + " or suggestions div " + suggestionsDivId + " not found for autocomplete setup.");
+//           return;
+//         }
         
-        serverside('getVI', [])
-          .then((response) => { 
-            // Rename 'fullList' to 'response' or 'payload' to avoid confusion
-            // Access the actual array from the 'data' property
-            let fullList = {};
-            if (response && response.type === "object") {
-              fullList = response.data;
-            } else {
-              console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
-              // Fallback to empty array if the structure is not as expected
-              fullList = {};
-            }
-            localSuggestionsCache[columnName] = fullList
-            // console.log('Successfully fetched full list for', columnName);
-            // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
-          })
-          .catch(error => {
-            console.error("Error fetching address suggestions for " + inputId + ":", error);
-            suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-          });
+//         serverside('getVI', [])
+//           .then((response) => { 
+//             // Rename 'fullList' to 'response' or 'payload' to avoid confusion
+//             // Access the actual array from the 'data' property
+//             let fullList = {};
+//             if (response && response.type === "object") {
+//               fullList = response.data;
+//             } else {
+//               console.warn("Expected an object with an array in 'data' from chaseFunction, received:", response);
+//               // Fallback to empty array if the structure is not as expected
+//               fullList = {};
+//             }
+//             localSuggestionsCache[columnName] = fullList
+//             // console.log('Successfully fetched full list for', columnName);
+//             // console.log('chaseFunction, [' + columnName + ']:' + JSON.stringify(localSuggestionsCache[columnName][0]))
+//           })
+//           .catch(error => {
+//             console.error("Error fetching address suggestions for " + inputId + ":", error);
+//             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+//           });
           
-        const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
-            suggestionsDiv.innerHTML = '';
-            return;
-          }
+//         const fetchSuggestions = debounce((query) => {
+//           if (query.length < 3) {
+//             suggestionsDiv.innerHTML = '';
+//             return;
+//           }
           
-          // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache[columnName] || [];
-          // console.log("localSuggestionsCache[columnName] || [] ", localList)
-          const suggestions = localList.filter(item => 
-            String(item).toLowerCase().includes(query.toLowerCase())
-          );
+//           // Filter the local list instead of making a server call
+//           const localList = localSuggestionsCache[columnName] || [];
+//           // console.log("localSuggestionsCache[columnName] || [] ", localList)
+//           const suggestions = localList.filter(item => 
+//             String(item).toLowerCase().includes(query.toLowerCase())
+//           );
           
-          suggestionsDiv.innerHTML = '';
-          if (suggestions && suggestions.length > 0) {
-            suggestions.forEach(suggestion => {
-              // console.log(suggestion)
-              const div = document.createElement('div');
-              div.textContent = suggestion;
-              div.addEventListener('click', () => {
-                input.value = suggestion;
-                suggestionsDiv.innerHTML = '';
-              });
-              suggestionsDiv.appendChild(div);
-            });
-          }
+//           suggestionsDiv.innerHTML = '';
+//           if (suggestions && suggestions.length > 0) {
+//             suggestions.forEach(suggestion => {
+//               // console.log(suggestion)
+//               const div = document.createElement('div');
+//               div.textContent = suggestion;
+//               div.addEventListener('click', () => {
+//                 input.value = suggestion;
+//                 suggestionsDiv.innerHTML = '';
+//               });
+//               suggestionsDiv.appendChild(div);
+//             });
+//           }
 
-        }, 300);
+//         }, 300);
         
-        if (input && suggestionsDiv) {
-          input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
-          });
+//         if (input && suggestionsDiv) {
+//           input.addEventListener('input', (event) => {
+//             fetchSuggestions(event.target.value);
+//           });
 
-          document.addEventListener('click', (event) => {
-            if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
-              suggestionsDiv.innerHTML = '';
-            }
-          });
+//           document.addEventListener('click', (event) => {
+//             if (!input.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+//               suggestionsDiv.innerHTML = '';
+//             }
+//           });
 
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-          });
+//           input.addEventListener('keydown', (event) => {
+//             if (event.key === 'Escape') {
+//                 suggestionsDiv.innerHTML = '';
+//                 input.blur();
+//             }
+//           });
 
-        } else {
-            console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
-        }
-      }
-      // Setup Autocomplete
-      setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
-    </script>
-`);
-const body_query = HtmlService.createHtmlOutput(
-  `
-    <script
-      >document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
-    </script>
-`);
+//         } else {
+//             console.error("Input element '" + inputId + "' or suggestions div '" + suggestionsDivId + "' not found for autocomplete setup.");
+//         }
+//       }
+//       // Setup Autocomplete
+//       setupAutocomplete('delAddr', 'delAddrSuggestions', "Delivery Address");
+//     </script>
+// `);
+const body_query = HtmlService.createHtmlOutputFromFile("bodyQuery");
+// (
+//   `
+//     <script
+//       >document.querySelector("body").setAttribute("style", "background-color: amber;background: 282828;");
+//     </script>
+// `);
 const busy_calendar = HtmlService.createHtmlOutputFromFile("busyCalendar");
 // (
 //   `
@@ -1107,509 +1123,524 @@ const custom_stream_player = HtmlService.createHtmlOutputFromFile("customStreamP
 //   </script>
 // `);
 
-const div_query = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
-    </script>
-`);
-const document_ready_select = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    $(document).ready(function() {
-      $('select').formSelect();
+const div_query = HtmlService.createHtmlOutputFromFile("divQuery");
+// (
+//   `
+//     <script>
+//       document.querySelector("div").setAttribute("style", "color: blue; text-align: center;");
+//     </script>
+// `);
+const document_ready_select = HtmlService.createHtmlOutputFromFile("documentReadySelect");
+// (
+//   `
+//   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//   <script>
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     $(document).ready(function() {
+//       $('select').formSelect();
 
-      $('#templateSelect').change(function() {
-        var selectedTemplateUrl 
-          = $(this).val();
-          if (selectedTemplateUrl) {
-            $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
-            $("#myForm").show(); // Show the form only after template is loaded.
-            $("#myForm").empty(); // Clear previous form fields.
-            // 2. Dynamically create form fields based on template placeholders (requires server-side)
-            serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
-              placeholders.forEach(function(placeholder) {
-                var fieldName 
-                  = placeholder.replace(/{{|}}/g, ''); // Extract field name
-                $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
-                $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
-              });
-              $("#myForm").append("<button type='submit'>Submit</button>");
+//       $('#templateSelect').change(function() {
+//         var selectedTemplateUrl 
+//           = $(this).val();
+//           if (selectedTemplateUrl) {
+//             $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+//             $("#myForm").show(); // Show the form only after template is loaded.
+//             $("#myForm").empty(); // Clear previous form fields.
+//             // 2. Dynamically create form fields based on template placeholders (requires server-side)
+//             serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+//               placeholders.forEach(function(placeholder) {
+//                 var fieldName 
+//                   = placeholder.replace(/{{|}}/g, ''); // Extract field name
+//                 $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+//                 $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+//               });
+//               $("#myForm").append("<button type='submit'>Submit</button>");
 
 
-              $("#myForm").submit(function(event) {
-                event.preventDefault();
+//               $("#myForm").submit(function(event) {
+//                 event.preventDefault();
 
-                var formData 
-                  = $(this).serializeObject();
-                serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
-                  $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
-                }).catch((error)=>{
-                  console.error("Error:", error);
-                  $("#result").html("<p>Error creating document. Please check the logs.</p>");
-                })
+//                 var formData 
+//                   = $(this).serializeObject();
+//                 serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+//                   $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+//                 }).catch((error)=>{
+//                   console.error("Error:", error);
+//                   $("#result").html("<p>Error creating document. Please check the logs.</p>");
+//                 })
 
-              });
+//               });
 
-            }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
-          $("#editorFrame").prop("src", "");
-          $("#myForm").hide();}
-      });
+//             }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+//           $("#editorFrame").prop("src", "");
+//           $("#myForm").hide();}
+//       });
 
-      $.fn.serializeObject = function() { // jQuery plugin for serializing form data
-        var o 
-          = {};
-        var a 
-          = this.serializeArray();
-        $.each(a, function() {
-          if (o[this.name] !== undefined) {
-            if (!o[this.name].push) {
-              o[this.name] = [o[this.name]];
-            }
-            o[this.name].push(this.value || '');
-          } else {
-            o[this.name] = this.value || '';
-          }
-        });
-        return o;
-      };
-    });
-  </script>
-`);
-const domain_lookup = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    function lookupDomain(searchTerm) {
-      serverSide("lookupDomain", [searchTerm])
-        .then(results => {
-          console.log("Lookup results:", results);
-          displaySearchResults(results); // Display results
-        })
-        .catch(error => {
-          console.error("Error looking up domain:", error);
-          $("#errorMessage").text(error); // Display error message
-        });
-    }
+//       $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+//         var o 
+//           = {};
+//         var a 
+//           = this.serializeArray();
+//         $.each(a, function() {
+//           if (o[this.name] !== undefined) {
+//             if (!o[this.name].push) {
+//               o[this.name] = [o[this.name]];
+//             }
+//             o[this.name].push(this.value || '');
+//           } else {
+//             o[this.name] = this.value || '';
+//           }
+//         });
+//         return o;
+//       };
+//     });
+//   </script>
+// `);
+const domain_lookup = HtmlService.createHtmlOutputFromFile("domainLookup");
+// (
+//   `
+//   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//   <script>
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     function lookupDomain(searchTerm) {
+//       serverSide("lookupDomain", [searchTerm])
+//         .then(results => {
+//           console.log("Lookup results:", results);
+//           displaySearchResults(results); // Display results
+//         })
+//         .catch(error => {
+//           console.error("Error looking up domain:", error);
+//           $("#errorMessage").text(error); // Display error message
+//         });
+//     }
 
-    $("#lookupButton").click(function() {
-      const searchTerm = $("#searchTerm").val();
-      lookupDomain(searchTerm);
-    });
-  </script>
-`);
-const domain_submit = HtmlService.createHtmlOutput(
-  `
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    function submitDomain(formData) {
-      serverSide("submitDomain", [formData])
-        .then(result => {
-          console.log("Server response:", result);
-          $("#successMessage").text(result); // Display success message
-        })
-        .catch(error => {
-          console.error("Error submitting domain:", error);
-          $("#errorMessage").text(error); // Display error message
-        });
-    }
+//     $("#lookupButton").click(function() {
+//       const searchTerm = $("#searchTerm").val();
+//       lookupDomain(searchTerm);
+//     });
+//   </script>
+// `);
+const domain_submit = HtmlService.createHtmlOutputFromFile("domainSubmit");
+// (
+//   `
+//   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//   <script>
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     function submitDomain(formData) {
+//       serverSide("submitDomain", [formData])
+//         .then(result => {
+//           console.log("Server response:", result);
+//           $("#successMessage").text(result); // Display success message
+//         })
+//         .catch(error => {
+//           console.error("Error submitting domain:", error);
+//           $("#errorMessage").text(error); // Display error message
+//         });
+//     }
 
-    $("#domainForm").submit(function(event) {
-      event.preventDefault();
-      const formData = $(this).serializeObject();
-      submitDomain(formData); // Call the function
-    });
-  </script>
-`);
-const enter_key_event_listener = HtmlService.createHtmlOutput(
-  `
-  <script>
+//     $("#domainForm").submit(function(event) {
+//       event.preventDefault();
+//       const formData = $(this).serializeObject();
+//       submitDomain(formData); // Call the function
+//     });
+//   </script>
+// `);
+const enter_key_event_listener = HtmlService.createHtmlOutputFromFile("enterKeyEventListener");
+// (
+//   `
+//   <script>
 
-    document.addEventListener("DOMContentLoaded", function() {
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler((result) => {
-            resolve(result)
-          })
-          .withFailureHandler((error) => {
-            reject(error)
-          })
-          .runBoilerplate(func, args)
-        })
-      };
+//     document.addEventListener("DOMContentLoaded", function() {
+//       function serverside(func, args) {
+//         return new Promise((resolve, reject) => {
+//           google.script.run
+//           .withSuccessHandler((result) => {
+//             resolve(result)
+//           })
+//           .withFailureHandler((error) => {
+//             reject(error)
+//           })
+//           .runBoilerplate(func, args)
+//         })
+//       };
 
-      var eventG = document.getElementById("linkload01");
-      var eventH = document.getElementById("spSearch");
-      var eventL = document.getElementById("spLab");
-      var eventV = document.getElementById("player2");
-      var vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+//       var eventG = document.getElementById("linkload01");
+//       var eventH = document.getElementById("spSearch");
+//       var eventL = document.getElementById("spLab");
+//       var eventV = document.getElementById("player2");
+//       var vLen = [83, 94, 97, 99, 101, 103, 136, 132];
 
-      eventH.addEventListener("keypress", function(event) {
-        // If the user preses the "Enter" key on the keyboard. 
-        if (event.key === "Enter")  {
-          let parsedE;
+//       eventH.addEventListener("keypress", function(event) {
+//         // If the user preses the "Enter" key on the keyboard. 
+//         if (event.key === "Enter")  {
+//           let parsedE;
 
-          try {
-            // Parse the user's input as the new 'args' value
-            // Allow direct strings or JSON arrays/objects
-            try {
-              parsedE = JSON.parse(eventH.value);
-            } 
-            catch (jsonError) {
-              // If it's not valid JSON, treat it as a plain string
-              parsedE = eventH.value;
-            }
-          } 
-          catch(error) {
-            alert("Error parsing JSON. Please ensure the input is valid JSON.");
-            console.error("JSON parsing error:", error);
-          };
+//           try {
+//             // Parse the user's input as the new 'args' value
+//             // Allow direct strings or JSON arrays/objects
+//             try {
+//               parsedE = JSON.parse(eventH.value);
+//             } 
+//             catch (jsonError) {
+//               // If it's not valid JSON, treat it as a plain string
+//               parsedE = eventH.value;
+//             }
+//           } 
+//           catch(error) {
+//             alert("Error parsing JSON. Please ensure the input is valid JSON.");
+//             console.error("JSON parsing error:", error);
+//           };
 
-          var strValue = parsedE;
+//           var strValue = parsedE;
 
-          serverside("substanceVegas", [null,null,null,1,1,5])
-            .then((sub) => {
-              var hosts = sub.substHost;
-              var rndHost = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];
-              eventH.value = rndHost;
-            });
+//           serverside("substanceVegas", [null,null,null,1,1,5])
+//             .then((sub) => {
+//               var hosts = sub.substHost;
+//               var rndHost = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];
+//               eventH.value = rndHost;
+//             });
 
-          if (!strValue) {
-            eventL.innerText = "... Loading";
+//           if (!strValue) {
+//             eventL.innerText = "... Loading";
 
-            serverside("mis")
-              .then((retn) => {
-                var stream = retn.index;
+//             serverside("mis")
+//               .then((retn) => {
+//                 var stream = retn.index;
 
-                if (stream) {
-                  if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
-                    eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';
-                    document.getElementById("eventRes01").src = stream;
-                    eventG.href = stream;
-                    eventL.innerText = "Research"
-                  } 
-                  else {
-                    let data;
-                    // 1. Handle UrlFetchApp.HTTPResponse
+//                 if (stream) {
+//                   if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+//                     eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';
+//                     document.getElementById("eventRes01").src = stream;
+//                     eventG.href = stream;
+//                     eventL.innerText = "Research"
+//                   } 
+//                   else {
+//                     let data;
+//                     // 1. Handle UrlFetchApp.HTTPResponse
 
-                    if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
-                      const contentType = stream.getHeaders()["Content-Type"] || "";
-                      const responseText = stream.getContentText();
+//                     if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+//                       const contentType = stream.getHeaders()["Content-Type"] || "";
+//                       const responseText = stream.getContentText();
 
-                      if (contentType.includes("application/json")) {
-                        try {
-                          data = JSON.parse(responseText);
-                        } 
-                        catch (e) {
-                          data = "Error parsing JSON from URL fetch: " + responseText
-                        }
-                      } 
-                      else if (contentType.includes("text/html")) {
-                        data = responseText;
-                      } 
-                      else {
-                        data = responseText;
-                      }
-                    };
+//                       if (contentType.includes("application/json")) {
+//                         try {
+//                           data = JSON.parse(responseText);
+//                         } 
+//                         catch (e) {
+//                           data = "Error parsing JSON from URL fetch: " + responseText
+//                         }
+//                       } 
+//                       else if (contentType.includes("text/html")) {
+//                         data = responseText;
+//                       } 
+//                       else {
+//                         data = responseText;
+//                       }
+//                     };
 
-                    eventV.innerHTML = JSON.stringify(stream);
-                    eventG.href = stream;
-                    eventL.innerText = "Research"
-                  }
-                }
-              })
-              .catch((er) => {
-                eventL.innerText = er.stack;
-              })
-          } 
-          else {
-            document.getElementById("spSearch").value = "";
-            eventL.innerText = "... Loading " + strValue;
+//                     eventV.innerHTML = JSON.stringify(stream);
+//                     eventG.href = stream;
+//                     eventL.innerText = "Research"
+//                   }
+//                 }
+//               })
+//               .catch((er) => {
+//                 eventL.innerText = er.stack;
+//               })
+//           } 
+//           else {
+//             document.getElementById("spSearch").value = "";
+//             eventL.innerText = "... Loading " + strValue;
 
-            serverside("mis", [strValue])
-              .then((retn) => {
-                var stream = retn.index; 
+//             serverside("mis", [strValue])
+//               .then((retn) => {
+//                 var stream = retn.index; 
 
-                if (stream) {
-                  if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
-                    eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src = stream;
-                    eventG.href = stream;
-                    eventL.innerText = "Research"
-                  } 
-                  else {
-                    let data;
-                    // 1. Handle UrlFetchApp.HTTPResponse
+//                 if (stream) {
+//                   if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+//                     eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src = stream;
+//                     eventG.href = stream;
+//                     eventL.innerText = "Research"
+//                   } 
+//                   else {
+//                     let data;
+//                     // 1. Handle UrlFetchApp.HTTPResponse
 
-                    if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
-                      const contentType = stream.getHeaders()["Content-Type"] || "";
-                      const responseText = stream.getContentText();
+//                     if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+//                       const contentType = stream.getHeaders()["Content-Type"] || "";
+//                       const responseText = stream.getContentText();
 
-                      if (contentType.includes("application/json")) {
-                        try {
-                          data = JSON.parse(responseText);
-                        } 
-                        catch (e) {
-                          data = "Error parsing JSON from URL fetch: " + responseText
-                        }
-                      } 
-                      else if (contentType.includes("text/html")) {
-                        data = responseText;
-                      } 
-                      else {
-                        data = responseText;
-                      }
-                    };
+//                       if (contentType.includes("application/json")) {
+//                         try {
+//                           data = JSON.parse(responseText);
+//                         } 
+//                         catch (e) {
+//                           data = "Error parsing JSON from URL fetch: " + responseText
+//                         }
+//                       } 
+//                       else if (contentType.includes("text/html")) {
+//                         data = responseText;
+//                       } 
+//                       else {
+//                         data = responseText;
+//                       }
+//                     };
 
-                    eventV.innerHTML = JSON.stringify(stream);
-                    eventG.href = stream;
-                    eventL.innerText = "Research"
-                  }
-                }
-              })
-              .catch((er) => {
-                eventL.innerText = er
-              })
-          }
-        }
-      })
-    })
-  </script>
-`);
-const func_clicked = HtmlService.createHtmlOutput(
-  ` 
-  <script>
-    document.getElementById('func').addEventListener('change', funcClicked)
-    function funcClicked() {
-      //console.log(document.getElementById("test").innerHTML)
-      // Init a timeout variable to be used below
-      let timeout = null;
-      (() => {
-        // Clear the timeout if it has already been set.
-        // This will prevent the previous task from executing
-        // if it has been less than <MILLISECONDS>
-        // clearTimeout(timeout);
-        // Make a new timeout set to go off in 1000ms (1 second)
-        // timeout = setTimeout
-        // (function  ()
-        // {console.log('Input Value:', textInput.value);}, 5000)();
-        if (typeof url === "undefined") {
-          var urlData = document.getElementById("url").value;
-          var url = urlData.toString();
-        }
-        var func = document.getElementById("func").value;
-        var args = document.getElementById("args").value;
-        if (typeof args !== "undefined") {
-          var linkFollow = document.createElement("a");
-          linkFollow.href =
-            url +
-            "?func=" +
-            encodeURIComponent(func) +
-            "&args=" +
-            encodeURIComponent(args);
-          linkFollow.id = "linkFOLLOW";
-          linkFollow.target = "_top";
-          document.body.appendChild(linkFollow);
-          document.getElementById("linkFOLLOW").click();
-          document.getElementById("linkFOLLOW").remove();
-        }
-      })();
-    }
-  </script>
-`);
+//                     eventV.innerHTML = JSON.stringify(stream);
+//                     eventG.href = stream;
+//                     eventL.innerText = "Research"
+//                   }
+//                 }
+//               })
+//               .catch((er) => {
+//                 eventL.innerText = er
+//               })
+//           }
+//         }
+//       })
+//     })
+//   </script>
+// `);
+const func_clicked = HtmlService.createHtmlOutputFromFile("funcClicked");
+// (
+//   ` 
+//   <script>
+//     document.getElementById('func').addEventListener('change', funcClicked)
+//     function funcClicked() {
+//       //console.log(document.getElementById("test").innerHTML)
+//       // Init a timeout variable to be used below
+//       let timeout = null;
+//       (() => {
+//         // Clear the timeout if it has already been set.
+//         // This will prevent the previous task from executing
+//         // if it has been less than <MILLISECONDS>
+//         // clearTimeout(timeout);
+//         // Make a new timeout set to go off in 1000ms (1 second)
+//         // timeout = setTimeout
+//         // (function  ()
+//         // {console.log('Input Value:', textInput.value);}, 5000)();
+//         if (typeof url === "undefined") {
+//           var urlData = document.getElementById("url").value;
+//           var url = urlData.toString();
+//         }
+//         var func = document.getElementById("func").value;
+//         var args = document.getElementById("args").value;
+//         if (typeof args !== "undefined") {
+//           var linkFollow = document.createElement("a");
+//           linkFollow.href =
+//             url +
+//             "?func=" +
+//             encodeURIComponent(func) +
+//             "&args=" +
+//             encodeURIComponent(args);
+//           linkFollow.id = "linkFOLLOW";
+//           linkFollow.target = "_top";
+//           document.body.appendChild(linkFollow);
+//           document.getElementById("linkFOLLOW").click();
+//           document.getElementById("linkFOLLOW").remove();
+//         }
+//       })();
+//     }
+//   </script>
+// `);
 
-const game_hunter = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("hne").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Hunter") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
+const game_hunter = HtmlService.createHtmlOutputFromFile("gameHunter");
+// (
+//   `
+//     <script>
+//       document.getElementById("hne").addEventListener("click", function() {
+//         <?!= GameManager.setGameStart("Hunter") ?>
+//         return <?!= gamer ?>
+//       })
+//     </script>
+// `);
 
-const game_mage = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("mge").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Mage") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
+const game_mage = HtmlService.createHtmlOutputFromFile("gameMage");
+// (
+//   `
+//     <script>
+//       document.getElementById("mge").addEventListener("click", function() {
+//         <?!= GameManager.setGameStart("Mage") ?>
+//         return <?!= gamer ?>
+//       })
+//     </script>
+// `);
 
-const game_rouge = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.getElementById("roe").addEventListener("click", function() {
-        <?!= GameManager.setGameStart("Rouge") ?>
-        return <?!= gamer ?>
-      })
-    </script>
-`);
+const game_rouge = HtmlService.createHtmlOutputFromFile("gameRouge");
+// (
+//   `
+//     <script>
+//       document.getElementById("roe").addEventListener("click", function() {
+//         <?!= GameManager.setGameStart("Rouge") ?>
+//         return <?!= gamer ?>
+//       })
+//     </script>
+// `);
 
-const get_interface = HtmlService.createHtmlOutput(
-    `
-      <script>
-        function serverside(func, args) {
-          return new Promise((resolve, reject) => {
-            google.script.run
-            .withSuccessHandler((result) => {
-              resolve(result)
-            })
-            .withFailureHandler((error) => {
-              reject(error)
-            })
-            .runBoilerplate(func, args)
-          })
-        };
-          document.querySelectorAll("delAddr").addEventListener("select", function(event) {
-            serverside("rePlay", [event.target.value])
-              .then((gPl) => {
-                let gamB = gPl.gamer;
-                let eneB = gPl.enemy;
-                let getInterface = document.querySelector(".interface");
-                getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
-              })
-          });
-      </script>
-    `
-);
-const google_script_run_promise = HtmlService.createHtmlOutput(
-  `
-  <script>
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-  </script>
-`);
+const get_interface = HtmlService.createHtmlOutputFromFile("getInterface");
+// (
+//     `
+//       <script>
+//         function serverside(func, args) {
+//           return new Promise((resolve, reject) => {
+//             google.script.run
+//             .withSuccessHandler((result) => {
+//               resolve(result)
+//             })
+//             .withFailureHandler((error) => {
+//               reject(error)
+//             })
+//             .runBoilerplate(func, args)
+//           })
+//         };
+//           document.querySelectorAll("delAddr").addEventListener("select", function(event) {
+//             serverside("rePlay", [event.target.value])
+//               .then((gPl) => {
+//                 let gamB = gPl.gamer;
+//                 let eneB = gPl.enemy;
+//                 let getInterface = document.querySelector(".interface");
+//                 getInterface.innerHTML = "img src="" class="img-avatar"><div><h3>" + event.target.value + "</h3><p>Health: " + gamB.health + "</p></div>"
+//               })
+//           });
+//       </script>
+//     `
+// );
+const google_script_run_promise = HtmlService.createHtmlOutputFromFile("googleScriptRunPromise");
+// (
+//   `
+//   <script>
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//   </script>
+// `);
 
-const hunter_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("hne")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-const iframe_query = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");
-    </script>
-`);
-const key_press = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var busa = document.getElementById("artiicleIndex");
-    var busx = document.getElementById("loadingLab");
-    var busc = document.getElementById("contentDiv");
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    busa.addEventListener('keypress', function(event) {
-      // If the user preses the "Enter" key on the keyboard. 
-      if (event.key === "Enter")  {
-        const strValue = busa.value;
-        busx.innerText = "... waiting for " + strValue;
-        serverSide("jFund", strValue)
-        .then((article) => {
-          if (article) {
-            // User clicked "No" or X in the title bar.
-            busx.innerText = ""
-            busc.innerHTML = article;}})
-        .catch((er) => {
-          console.log(er)
-          busx.innerText = JSON.stringify(er)})
-        busa.value = ""}})
-  </script>  
-`);
-const key_press_video = HtmlService.createHtmlOutput(
-  `
-  <script>
-    var busa = document.getElementById("artiicleIndex");
-    var busx = document.getElementById("loadingLab");
-    var busc = document.getElementById("contentDiv");
-    function serverSide(func, args) {
-      return new Promise((resolve, reject) => {
-        google.script.run
-        .withSuccessHandler(result => {
-            resolve(result)})
-        .withFailureHandler(error => {
-            reject(error)})
-        .runBoilerplate(func, args)
-      });
-    }
-    busa.addEventListener('keypress', function(event) {
-      // If the user preses the "Enter" key on the keyboard. 
-      if (event.key === "Enter")  {
-        const strValue = busa.value;
-        busx.innerText = "... waiting for " + strValue;
-        const confirmation = window.confirm(
-          "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-        );
-        if (confirmation) {
-          if (strValue) {
-            localSuggestionsCache["allMatches"].map((val) => {
-              if (val.description.indexOf(strValue) > -1) {
-                window.open(val.youtubeUrl);
-              }
-            });
-          }
-          else {
-            window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
-          }
-        }
-        busa.value = ""}})
-  </script>  
-`);
+const hunter_clicks = HtmlService.createHtmlOutputFromFile("hunterClicks");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("hne")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
+const iframe_query = HtmlService.createHtmlOutputFromFile("iframeQuery");
+// (
+//   `
+//     <script>
+//       document.querySelector("iframe").setAttribute("style", "color: blue; text-align: center;");
+//     </script>
+// `);
+const key_press = HtmlService.createHtmlOutputFromFile("keyPress");
+// (
+//   `
+//   <script>
+//     var busa = document.getElementById("artiicleIndex");
+//     var busx = document.getElementById("loadingLab");
+//     var busc = document.getElementById("contentDiv");
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     busa.addEventListener('keypress', function(event) {
+//       // If the user preses the "Enter" key on the keyboard. 
+//       if (event.key === "Enter")  {
+//         const strValue = busa.value;
+//         busx.innerText = "... waiting for " + strValue;
+//         serverSide("jFund", strValue)
+//         .then((article) => {
+//           if (article) {
+//             // User clicked "No" or X in the title bar.
+//             busx.innerText = ""
+//             busc.innerHTML = article;}})
+//         .catch((er) => {
+//           console.log(er)
+//           busx.innerText = JSON.stringify(er)})
+//         busa.value = ""}})
+//   </script>  
+// `);
+const key_press_video = HtmlService.createHtmlOutputFromFile("keyPressVideo");
+// (
+//   `
+//   <script>
+//     var busa = document.getElementById("artiicleIndex");
+//     var busx = document.getElementById("loadingLab");
+//     var busc = document.getElementById("contentDiv");
+//     function serverSide(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     busa.addEventListener('keypress', function(event) {
+//       // If the user preses the "Enter" key on the keyboard. 
+//       if (event.key === "Enter")  {
+//         const strValue = busa.value;
+//         busx.innerText = "... waiting for " + strValue;
+//         const confirmation = window.confirm(
+//           "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+//         );
+//         if (confirmation) {
+//           if (strValue) {
+//             localSuggestionsCache["allMatches"].map((val) => {
+//               if (val.description.indexOf(strValue) > -1) {
+//                 window.open(val.youtubeUrl);
+//               }
+//             });
+//           }
+//           else {
+//             window.open(localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].youtubeUrl);
+//           }
+//         }
+//         busa.value = ""}})
+//   </script>  
+// `);
 const location_url = HtmlService.createHtmlOutputFromFile("locationUrl");
 // (
 //   `
@@ -1621,187 +1652,189 @@ const location_url = HtmlService.createHtmlOutputFromFile("locationUrl");
 //   </script>
 // `);
 
-const mage_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("mge")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-const next_clicked = HtmlService.createHtmlOutput(
-  `
-    <script>
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler(result => {
-              resolve(result)})
-          .withFailureHandler(error => {
-              reject(error)})
-          .runBoilerplate(func, args)
-        });
-      }
-      document
-        .querySelectorall("userClickedNext")
-        .addEventListener("click", nextFunc);
-      function nextFunc() {
-        serverside("getVI").then((drop) => {
-          var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
-          var rndFunc = drop[rndNumDrop];
-          localStorage.setItem("gsSearch", rndFunc);
-          console.log(rndFunc + "...");
-          document.getElementById("template").innerHTML =
-            "waiting for nextFunc: " + rndFunc + "...";
-          serverside(rndFunc)
-            .then((droplet) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
-              // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\ndroplet.length = " + droplet.length;
-              // alert(
-              //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
-              // );
-              if (droplet.length === 99) {
-                serverside("seoCapital", droplet).then((myFile) => {
-                  document.getElementById("template").innerHTML =
-                    rndFunc + "(" + myFile + ")";
-                  // alert(rndFunc + "(" + myFile + ")");
-                  if (
-                    myFile.length === 99 ||
-                    myFile.length === 86 ||
-                    myFile.length === 101 ||
-                    myFile.length === 112
-                  ) {
-                    // console.log(cChange)
-                    var linkFollow = document.createElement("a");
-                    linkFollow.href = myFile + "?func=" + rndFunc;
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                  } else {
-                    document.getElementById("template").innerHTML =
-                      JSON.stringify(myFile);
-                  }
-                });
-              } else {
-                document.getElementById("template").innerHTML =
-                  arguments.callee.name +
-                    "\n" +
-                    droplet.length +
-                    " is not the required length",;
-                // alert(
-                //   arguments.callee.name +
-                //     "\n" +
-                //     droplet.length +
-                //     " is not the required length",
-                // );
-                serverside("getScriptUrl")
-                  .then((cChange) => {
-                    console.log(
-                      arguments.callee.name +
-                        "\n" +
-                        typeof cChange +
-                        " with length = " +
-                        cChange.length,
-                    );
-                    if (cChange.length === 112 || cChange.length === 86) {
-                      // console.log(cChange)
-                      const confirmation = window.confirm(
-                        "Click OK to continue to the destination.",
-                      );
-                      if (confirmation) {
-                        var linkFollow = document.createElement("a");
-                        linkFollow.href = cChange + "?func=" + rndFunc;
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                      }
-                    } else {
-                      var docWnd = document.getElementById("template");
-                      docWnd.innerHTML = cChange;
-                    }
-                  })
-                  .catch((er) => {
-                    document.getElementById("template").innerHTML =
-                      arguments.callee.name +
-                        "\n" +
-                        rndFunc +
-                        " error(" +
-                        er +
-                        ")";
-                    // alert(
-                    //   arguments.callee.name +
-                    //     "\n" +
-                    //     rndFunc +
-                    //     " error(" +
-                    //     er +
-                    //     ")",
-                    // );
-                    console.log(arguments.callee.name + "\n" + er);
-                    document.getElementById("template").innerHTML =
-                      JSON.stringify(er);
-                  });
-              }
-            })
-            .catch((er) => {
-              document.getElementById("template").innerHTML =
-                arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
-              // alert(
-              //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-              // );
-              serverside("getScriptUrl")
-                .then((cChange) => {
-                  console.log(
-                    arguments.callee.name +
-                      "\n" +
-                      typeof cChange +
-                      " with length = " +
-                      cChange.length,
-                  );
-                  if (cChange.length === 112 || cChange.length === 86) {
-                    // console.log(cChange)
-                    const confirmation = window.confirm(
-                      "Click OK to continue to the destination.",
-                    );
-                    if (confirmation) {
-                      var linkFollow = document.createElement("a");
-                      linkFollow.href = cChange + "?func=" + rndFunc;
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_blank";
-                      linkFollow.rel = "noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove();
-                    }
-                  } else {
-                    var docWnd = document.getElementById("template");
-                    docWnd.innerHTML = cChange;
-                  }
-                })
-                .catch((er) => {
-                  document.getElementById("template").innerHTML =
-                    arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
-                  // alert(
-                  //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
-                  // );
-                  console.log(arguments.callee.name + "\n" + er);
-                  document.getElementById("template").innerHTML =
-                    JSON.stringify(er);
-                });
-            });
-        });
-      }
-    </script>
-`);
+const mage_clicks = HtmlService.createHtmlOutputFromFile("mageClicks");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("mge")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
+const next_clicked = HtmlService.createHtmlOutputFromFile("nextClicked");
+// (
+//   `
+//     <script>
+//       function serverside(func, args) {
+//         return new Promise((resolve, reject) => {
+//           google.script.run
+//           .withSuccessHandler(result => {
+//               resolve(result)})
+//           .withFailureHandler(error => {
+//               reject(error)})
+//           .runBoilerplate(func, args)
+//         });
+//       }
+//       document
+//         .querySelectorall("userClickedNext")
+//         .addEventListener("click", nextFunc);
+//       function nextFunc() {
+//         serverside("getVI").then((drop) => {
+//           var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+//           var rndFunc = drop[rndNumDrop];
+//           localStorage.setItem("gsSearch", rndFunc);
+//           console.log(rndFunc + "...");
+//           document.getElementById("template").innerHTML =
+//             "waiting for nextFunc: " + rndFunc + "...";
+//           serverside(rndFunc)
+//             .then((droplet) => {
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+//               // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name + "\ndroplet.length = " + droplet.length;
+//               // alert(
+//               //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+//               // );
+//               if (droplet.length === 99) {
+//                 serverside("seoCapital", droplet).then((myFile) => {
+//                   document.getElementById("template").innerHTML =
+//                     rndFunc + "(" + myFile + ")";
+//                   // alert(rndFunc + "(" + myFile + ")");
+//                   if (
+//                     myFile.length === 99 ||
+//                     myFile.length === 86 ||
+//                     myFile.length === 101 ||
+//                     myFile.length === 112
+//                   ) {
+//                     // console.log(cChange)
+//                     var linkFollow = document.createElement("a");
+//                     linkFollow.href = myFile + "?func=" + rndFunc;
+//                     linkFollow.id = "linkFOLLOW";
+//                     linkFollow.target = "_blank";
+//                     document.body.appendChild(linkFollow);
+//                     document.getElementById("linkFOLLOW").click();
+//                     document.getElementById("linkFOLLOW").remove();
+//                   } else {
+//                     document.getElementById("template").innerHTML =
+//                       JSON.stringify(myFile);
+//                   }
+//                 });
+//               } else {
+//                 document.getElementById("template").innerHTML =
+//                   arguments.callee.name +
+//                     "\n" +
+//                     droplet.length +
+//                     " is not the required length",;
+//                 // alert(
+//                 //   arguments.callee.name +
+//                 //     "\n" +
+//                 //     droplet.length +
+//                 //     " is not the required length",
+//                 // );
+//                 serverside("getScriptUrl")
+//                   .then((cChange) => {
+//                     console.log(
+//                       arguments.callee.name +
+//                         "\n" +
+//                         typeof cChange +
+//                         " with length = " +
+//                         cChange.length,
+//                     );
+//                     if (cChange.length === 112 || cChange.length === 86) {
+//                       // console.log(cChange)
+//                       const confirmation = window.confirm(
+//                         "Click OK to continue to the destination.",
+//                       );
+//                       if (confirmation) {
+//                         var linkFollow = document.createElement("a");
+//                         linkFollow.href = cChange + "?func=" + rndFunc;
+//                         linkFollow.id = "linkFOLLOW";
+//                         linkFollow.target = "_blank";
+//                         linkFollow.rel = "noopener noreferrer";
+//                         document.body.appendChild(linkFollow);
+//                         document.getElementById("linkFOLLOW").click();
+//                         document.getElementById("linkFOLLOW").remove();
+//                       }
+//                     } else {
+//                       var docWnd = document.getElementById("template");
+//                       docWnd.innerHTML = cChange;
+//                     }
+//                   })
+//                   .catch((er) => {
+//                     document.getElementById("template").innerHTML =
+//                       arguments.callee.name +
+//                         "\n" +
+//                         rndFunc +
+//                         " error(" +
+//                         er +
+//                         ")";
+//                     // alert(
+//                     //   arguments.callee.name +
+//                     //     "\n" +
+//                     //     rndFunc +
+//                     //     " error(" +
+//                     //     er +
+//                     //     ")",
+//                     // );
+//                     console.log(arguments.callee.name + "\n" + er);
+//                     document.getElementById("template").innerHTML =
+//                       JSON.stringify(er);
+//                   });
+//               }
+//             })
+//             .catch((er) => {
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+//               // alert(
+//               //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+//               // );
+//               serverside("getScriptUrl")
+//                 .then((cChange) => {
+//                   console.log(
+//                     arguments.callee.name +
+//                       "\n" +
+//                       typeof cChange +
+//                       " with length = " +
+//                       cChange.length,
+//                   );
+//                   if (cChange.length === 112 || cChange.length === 86) {
+//                     // console.log(cChange)
+//                     const confirmation = window.confirm(
+//                       "Click OK to continue to the destination.",
+//                     );
+//                     if (confirmation) {
+//                       var linkFollow = document.createElement("a");
+//                       linkFollow.href = cChange + "?func=" + rndFunc;
+//                       linkFollow.id = "linkFOLLOW";
+//                       linkFollow.target = "_blank";
+//                       linkFollow.rel = "noopener noreferrer";
+//                       document.body.appendChild(linkFollow);
+//                       document.getElementById("linkFOLLOW").click();
+//                       document.getElementById("linkFOLLOW").remove();
+//                     }
+//                   } else {
+//                     var docWnd = document.getElementById("template");
+//                     docWnd.innerHTML = cChange;
+//                   }
+//                 })
+//                 .catch((er) => {
+//                   document.getElementById("template").innerHTML =
+//                     arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+//                   // alert(
+//                   //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+//                   // );
+//                   console.log(arguments.callee.name + "\n" + er);
+//                   document.getElementById("template").innerHTML =
+//                     JSON.stringify(er);
+//                 });
+//             });
+//         });
+//       }
+//     </script>
+// `);
 const next_clicked_video = HtmlService.createHtmlOutputFromFile("nextClickedVideo");
 // (
 //   `
@@ -2375,81 +2408,86 @@ const next_clicked_video = HtmlService.createHtmlOutputFromFile("nextClickedVide
 //       });
 //     </script>
 // `);
-const player2 = HtmlService.createHtmlOutput(
-  `
-  <script>
+const global_player2 = HtmlService.createHtmlOutputFromFile("globalPlayer2");
+// (
+//   `
+//   <script>
 
-    document.addEventListener("DOMContentLoaded", function() {
-      function serverside(func, args) {
-        return new Promise((resolve, reject) => {
-          google.script.run
-          .withSuccessHandler((result) => {
-            resolve(result)
-          })
-          .withFailureHandler((error) => {
-            reject(error)
-          })
-          .runBoilerplate(func, args)
-        })
-      };
+//     document.addEventListener("DOMContentLoaded", function() {
+//       function serverside(func, args) {
+//         return new Promise((resolve, reject) => {
+//           google.script.run
+//           .withSuccessHandler((result) => {
+//             resolve(result)
+//           })
+//           .withFailureHandler((error) => {
+//             reject(error)
+//           })
+//           .runBoilerplate(func, args)
+//         })
+//       };
 
-      var eventV = document.getElementById("player2");
-      serverside("mis", link)
-      .then((misHome) => {
-        var emPlay = document.getElementById("player2");
-        if (emPlay.innerHTML === "") {
-          emplay.innerHTML = misHome;
-        }
-      })
-      .catch((er) => {
-        eventL.innerText = er.stack;
-      })
-    });
-  </script>
-`);
-const remove_iframe = HtmlService.createHtmlOutput(
-  `
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      $('a').click(function(){
-          $('iframe')[0].contentWindow.location.reload();
-          setTimeout(function(){
-            $('iframe').remove();
-          }, 1000);
-      });
-    </script>
-`);
-const remove_iframe_clicks_rf = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("rfif")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
-const remove_iframe_clicks_rt = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("rtif")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
+//       var eventV = document.getElementById("player2");
+//       serverside("mis", link)
+//       .then((misHome) => {
+//         var emPlay = document.getElementById("player2");
+//         if (emPlay.innerHTML === "") {
+//           emplay.innerHTML = misHome;
+//         }
+//       })
+//       .catch((er) => {
+//         eventL.innerText = er.stack;
+//       })
+//     });
+//   </script>
+// `);
+const remove_iframe = HtmlService.createHtmlOutputFromFile("removeIframe");
+// (
+//   `
+//     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+//     <script>
+//       $('a').click(function(){
+//           $('iframe')[0].contentWindow.location.reload();
+//           setTimeout(function(){
+//             $('iframe').remove();
+//           }, 1000);
+//       });
+//     </script>
+// `);
+const remove_iframe_clicks_rf = HtmlService.createHtmlOutputFromFile("removeIframeClicksRf");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("rfif")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
+const remove_iframe_clicks_rt = HtmlService.createHtmlOutputFromFile("removeIframeClicksRt");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("rtif")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
 
-const rouge_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("roe")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
+const rouge_clicks = HtmlService.createHtmlOutputFromFile("rougeClicks");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("roe")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
 const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
 // (
 //   `
@@ -2658,16 +2696,17 @@ const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
 //     </script>
 // `);
 
-const warrior_clicks = HtmlService.createHtmlOutput(
-  `
-    <script>
-      document
-        .getElementById("wro")
-        .addEventListener("click", function(event) {
-        event.preventDefault();
-      });
-    </script>
-`);
+const warrior_clicks = HtmlService.createHtmlOutputFromFile("warriorClicks");
+// (
+//   `
+//     <script>
+//       document
+//         .getElementById("wro")
+//         .addEventListener("click", function(event) {
+//         event.preventDefault();
+//       });
+//     </script>
+// `);
 const y_t_player = HtmlService.createHtmlOutputFromFile("yTPlayer");
 // (
 //   `
@@ -3004,7 +3043,7 @@ var rePlay = function(classType) {
 class StyleHtml {
   constructor() {
     this.renderFile = HtmlService.createHtmlOutput(
-      `${desktop_container.getContent() + mobile_section.getContent() + responsive_section.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + global_socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + global_website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + global_receipt.getContent() + boiler_footer.getContent() + global_sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + global_container.getContent() + list_container.getContent() + global_grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + global_menu.getContent() + global_order.getContent() + large_container.getContent() + index_beta.getContent()}`,
+      `${desktop_container.getContent() + mobile_section.getContent() + responsive_section.getContent() + nav_middle_nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + global_socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + global_website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + global_receipt.getContent() + boiler_footer.getContent() + global_sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + global_container.getContent() + list_container.getContent() + global_grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + global_menu.getContent() + global_order.getContent() + large_container.getContent() + index_beta.getContent()}`,
     );
     this.surveyPlayer = HtmlService.createHtmlOutput(
       `${body_survey_player.getContent()}`,
@@ -3013,7 +3052,7 @@ class StyleHtml {
       `${link_visited.getContent() + link_active.getContent()}`,
     );
     this.runIt = HtmlService.createHtmlOutput(
-      `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + jsQuery.getContent() + materializeJs.getContent() + luxonJs.getContent() + tabulatorJs.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+      `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + js_query.getContent() + materialize_js.getContent() + luxon_js.getContent() + tabulator_js.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
     );
     this.abcIt = HtmlService.createHtmlOutput(
       `
@@ -3021,7 +3060,7 @@ class StyleHtml {
     `);
     this.spRunIt = HtmlService.createHtmlOutput(
       `
-        ${sp_y_t_player.getContent() + player2.getContent() + enter_key_event_listener.getContent()};
+        ${sp_y_t_player.getContent() + global_player2.getContent() + enter_key_event_listener.getContent()};
     `);
     this.mgfRunIt = HtmlService.createHtmlOutput(
       `
@@ -3054,7 +3093,7 @@ var builtStyling = function (e) {
       ${content.google_apis_css}
       ${content.font_awesome}
       ${content.materialize_css}
-      ${content.jsQuery}
+      ${content.js_query}
       ${content.tabulator_css}
       ${content.g_static_pre_connect}
       <style>
@@ -3072,7 +3111,7 @@ var builtStyling = function (e) {
         ${content.flex_row}
         ${content.flex_column}
         ${content.order_menu_payment}
-        ${content.seperator1}
+        ${content.global_seperator1}
         ${content.global_order}
         ${content.global_receipt}
         ${content.receipt_company_info_receipt_footer}
@@ -3094,7 +3133,7 @@ var builtStyling = function (e) {
         ${content.global_toolbar}
         ${content.toolbar_icon}
         ${content.toolbar_icon_hover}
-        ${content.seperator2}
+        ${content.global_seperator2}
         ${content.menu_payment}
         ${content.global_menu}
         ${content.menu_item}
@@ -3106,9 +3145,9 @@ var builtStyling = function (e) {
     </head>
     <body>
     <div id="iframePlayer"></div>
-      ${content.materializeJs}
-      ${content.luxonJs}
-      ${content.tabulatorJs}
+      ${content.materialize_js}
+      ${content.luxon_js}
+      ${content.tabulator_js}
       <script>
         ${HtmlService.createTemplate(frame.iframePlayer).evaluate().getContent()}
       </script>

@@ -1,0 +1,71 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+          resolve(result)})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  $(document).ready(function() {
+    $('select').formSelect();
+
+    $('#templateSelect').change(function() {
+      var selectedTemplateUrl 
+        = $(this).val();
+        if (selectedTemplateUrl) {
+          $("#editorFrame").prop("src", selectedTemplateUrl); // Load template in iframe
+          $("#myForm").show(); // Show the form only after template is loaded.
+          $("#myForm").empty(); // Clear previous form fields.
+          // 2. Dynamically create form fields based on template placeholders (requires server-side)
+          serverside("getPlaceholders",[selectedTemplateUrl]).then((placeholders)=>{
+            placeholders.forEach(function(placeholder) {
+              var fieldName 
+                = placeholder.replace(/{{|}}/g, ''); // Extract field name
+              $("#myForm").append("<label for='" + fieldName + "'>" + fieldName + ":</label><br>");
+              $("#myForm").append("<input type='text' name='" + fieldName + "'><br>");
+            });
+            $("#myForm").append("<button type='submit'>Submit</button>");
+
+
+            $("#myForm").submit(function(event) {
+              event.preventDefault();
+
+              var formData 
+                = $(this).serializeObject();
+              serverside("processFormData",[formData, selectedTemplateUrl]).then((newDocUrl)=>{
+                $("#result").html("<p>Document created. <a href='" + newDocUrl + "' target='_blank'>Open Document</a></p>");
+              }).catch((error)=>{
+                console.error("Error:", error);
+                $("#result").html("<p>Error creating document. Please check the logs.</p>");
+              })
+
+            });
+
+          }).catch((er)=>{alert(er);console.error("Error:", er);return "Error" + er})}else {
+        $("#editorFrame").prop("src", "");
+        $("#myForm").hide();}
+    });
+
+    $.fn.serializeObject = function() { // jQuery plugin for serializing form data
+      var o 
+        = {};
+      var a 
+        = this.serializeArray();
+      $.each(a, function() {
+        if (o[this.name] !== undefined) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+        } else {
+          o[this.name] = this.value || '';
+        }
+      });
+      return o;
+    };
+  });
+</script>

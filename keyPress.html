@@ -1,0 +1,30 @@
+<script>
+  var busa = document.getElementById("artiicleIndex");
+  var busx = document.getElementById("loadingLab");
+  var busc = document.getElementById("contentDiv");
+  function serverSide(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+          resolve(result)})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  busa.addEventListener('keypress', function(event) {
+    // If the user preses the "Enter" key on the keyboard. 
+    if (event.key === "Enter")  {
+      const strValue = busa.value;
+      busx.innerText = "... waiting for " + strValue;
+      serverSide("jFund", strValue)
+      .then((article) => {
+        if (article) {
+          // User clicked "No" or X in the title bar.
+          busx.innerText = ""
+          busc.innerHTML = article;}})
+      .catch((er) => {
+        console.log(er)
+        busx.innerText = JSON.stringify(er)})
+      busa.value = ""}})
+</script>  

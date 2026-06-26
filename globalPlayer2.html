@@ -1,0 +1,29 @@
+<script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    function serverside(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler((result) => {
+          resolve(result)
+        })
+        .withFailureHandler((error) => {
+          reject(error)
+        })
+        .runBoilerplate(func, args)
+      })
+    };
+
+    var eventV = document.getElementById("player2");
+    serverside("mis", link)
+    .then((misHome) => {
+      var emPlay = document.getElementById("player2");
+      if (emPlay.innerHTML === "") {
+        emplay.innerHTML = misHome;
+      }
+    })
+    .catch((er) => {
+      eventL.innerText = er.stack;
+    })
+  });
+</script>

@@ -1,0 +1,152 @@
+<script>
+
+  document.addEventListener("DOMContentLoaded", function() {
+    function serverside(func, args) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+        .withSuccessHandler((result) => {
+          resolve(result)
+        })
+        .withFailureHandler((error) => {
+          reject(error)
+        })
+        .runBoilerplate(func, args)
+      })
+    };
+
+    var eventG = document.getElementById("linkload01");
+    var eventH = document.getElementById("spSearch");
+    var eventL = document.getElementById("spLab");
+    var eventV = document.getElementById("player2");
+    var vLen = [83, 94, 97, 99, 101, 103, 136, 132];
+
+    eventH.addEventListener("keypress", function(event) {
+      // If the user preses the "Enter" key on the keyboard. 
+      if (event.key === "Enter")  {
+        let parsedE;
+
+        try {
+          // Parse the user's input as the new 'args' value
+          // Allow direct strings or JSON arrays/objects
+          try {
+            parsedE = JSON.parse(eventH.value);
+          } 
+          catch (jsonError) {
+            // If it's not valid JSON, treat it as a plain string
+            parsedE = eventH.value;
+          }
+        } 
+        catch(error) {
+          alert("Error parsing JSON. Please ensure the input is valid JSON.");
+          console.error("JSON parsing error:", error);
+        };
+
+        var strValue = parsedE;
+
+        serverside("substanceVegas", [null,null,null,1,1,5])
+          .then((sub) => {
+            var hosts = sub.substHost;
+            var rndHost = hosts[Math.floor(Math.random() * (Math.floor(hosts.length)))];
+            eventH.value = rndHost;
+          });
+
+        if (!strValue) {
+          eventL.innerText = "... Loading";
+
+          serverside("mis")
+            .then((retn) => {
+              var stream = retn.index;
+
+              if (stream) {
+                if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+                  eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';
+                  document.getElementById("eventRes01").src = stream;
+                  eventG.href = stream;
+                  eventL.innerText = "Research"
+                } 
+                else {
+                  let data;
+                  // 1. Handle UrlFetchApp.HTTPResponse
+
+                  if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+                    const contentType = stream.getHeaders()["Content-Type"] || "";
+                    const responseText = stream.getContentText();
+
+                    if (contentType.includes("application/json")) {
+                      try {
+                        data = JSON.parse(responseText);
+                      } 
+                      catch (e) {
+                        data = "Error parsing JSON from URL fetch: " + responseText
+                      }
+                    } 
+                    else if (contentType.includes("text/html")) {
+                      data = responseText;
+                    } 
+                    else {
+                      data = responseText;
+                    }
+                  };
+
+                  eventV.innerHTML = JSON.stringify(stream);
+                  eventG.href = stream;
+                  eventL.innerText = "Research"
+                }
+              }
+            })
+            .catch((er) => {
+              eventL.innerText = er.stack;
+            })
+        } 
+        else {
+          document.getElementById("spSearch").value = "";
+          eventL.innerText = "... Loading " + strValue;
+
+          serverside("mis", [strValue])
+            .then((retn) => {
+              var stream = retn.index; 
+
+              if (stream) {
+                if (vLen.includes(stream.length) || [stream].indexOf("&entry") > -1) {
+                  eventV.innerHTML = '<iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe>';document.getElementById("eventRes01").src = stream;
+                  eventG.href = stream;
+                  eventL.innerText = "Research"
+                } 
+                else {
+                  let data;
+                  // 1. Handle UrlFetchApp.HTTPResponse
+
+                  if (typeof stream.getResponseCode === "function" && typeof stream.getContentText === "function") {
+                    const contentType = stream.getHeaders()["Content-Type"] || "";
+                    const responseText = stream.getContentText();
+
+                    if (contentType.includes("application/json")) {
+                      try {
+                        data = JSON.parse(responseText);
+                      } 
+                      catch (e) {
+                        data = "Error parsing JSON from URL fetch: " + responseText
+                      }
+                    } 
+                    else if (contentType.includes("text/html")) {
+                      data = responseText;
+                    } 
+                    else {
+                      data = responseText;
+                    }
+                  };
+
+                  eventV.innerHTML = JSON.stringify(stream);
+                  eventG.href = stream;
+                  eventL.innerText = "Research"
+                }
+              }
+            })
+            .catch((er) => {
+              eventL.innerText = er
+            })
+        }
+      }
+    })
+  })
+</script>
