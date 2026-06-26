@@ -60,7 +60,7 @@
                 for (i,l;i<l;i++) {
                   let tempObj = {};
                   tempObj.description = response[key][i].description;
-                  if (String(response[key][i].videoId).indexOf("http") === -1) {
+                  if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
                     let tData = response[key][i].videoId;
                     let dLoc =  null;
                     dLoc =  "https://www.youtube.com/watch?v=";
@@ -346,7 +346,7 @@
                             tempObj.description = done[key][i].description;
                             let tData = done[key][i];
                             let dLoc =  null;
-                            if (String(tData).indexOf("http") === -1) {
+                            if (String(tData) && String(tData).indexOf("http") === -1) {
                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                               dLoc =  "https://www.youtube.com/watch?v=";
                               tempObj.youtubeUrl = dLoc + tData;
@@ -405,7 +405,7 @@
                           for (i,l;i<l;i++) {
                             let tempObj = {};
                             tempObj.description = response[key][i]?.description;
-                            if (String(response[key][i].videoId).indexOf("http") === -1) {
+                            if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
                               let tData = response[key][i].videoId;
                               let dLoc =  null;
                               dLoc =  "https://www.youtube.com/watch?v=";
