@@ -139,7 +139,7 @@
                 break
               }
             }
-            input.value = againCap;
+            input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
             fetchSuggestions(input.value);
             $('a').click(function(event){
               if ($(this).attr('href') === "javascript:void(0)") {

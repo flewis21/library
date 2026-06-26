@@ -284,149 +284,197 @@ const menu_img = HtmlService.createHtmlOutputFromFile("menuImg");
 // (
 //   `.menu-img {border-radius: 50%;max-width: 100%;height: auto;display: block;margin: auto;}`,
 // );
-const menu_item = HtmlService.createHtmlOutput(
-  `.menu-item {flex-flow:column nowrap;flex-basis: auto;flex-shrink: 0;margin: 5px;background: rgba(255, 255, 255, .05);width: 150px;}`,
-);
-const menu_itemHover = HtmlService.createHtmlOutput(
-  `.menu-item:hover>.menu-img {transform: scale(1.03);}`,
-);
-const menu_payment = HtmlService.createHtmlOutput(
-  `.menu-payment {background: rgba(255, 255, 255, .05);flex-grow: 1;z-index: 0;}`,
-);
-const nav_left_menu_ico = HtmlService.createHtmlOutput(
-  `.nav-left .menu-icon {width: 22px;margin-right: 25px;}`,
-);
-const nav_left_logo = HtmlService.createHtmlOutput(
-  `.nav-left .logo {width: 30px;}`,
-);
-const nav_middle = HtmlService.createHtmlOutput(``);
-const nav_middle_mic_ico = HtmlService.createHtmlOutput(
-  `.nav-middle .mic-icon {width: 16px;}`,
-);
-const nav_middle_search_box = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box {border: 1px solid #ccc;margin-right: 15px;padding: 8px 12px;border-radius: 25px;width: 85%}`,
-);
-const nav_middle_search_box_img = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box img {width: 85%;}`,
-);
-const nav_middle_search_box_input = HtmlService.createHtmlOutput(
-  `.nav-middle .search-box input {width: 90%;font-weight: 600;font-size: 2.25rem;line-height:.5;border: 0;outline: 0;background: transparent;}`,
-);
-const nav_right_img = HtmlService.createHtmlOutput(
-  `.nav-right img {width: 25px;margin-right: 25px;}`,
-);
-const nav_right_user_ico = HtmlService.createHtmlOutput(
-  `.nav-right .user-icon {width: 35px;border-radius: 50%;margin-right: 0;}`,
-);
-const order = HtmlService.createHtmlOutput(
-  `.order {background-color: white;flex: 0 0 440px;overflow: auto;}`,
-);
-const order_menu_payment = HtmlService.createHtmlOutput(
-  `.order,.menu-payment {border: solid .5px;border-radius: 10px;margin: 0px 10px 5px 10px;height: 100%;max-height: 100%;}`,
-);
-const quantity_price_subtotal_delete = HtmlService.createHtmlOutput(
-  `.quantity,.price,.subtotal,.delete {text-align: right;}`,
-);
-const receipt = HtmlService.createHtmlOutput(
-  `.receipt {border: solid .5px;margin: 10px 15px 5px 15px;box-shadow: 3px 3px 2px rgb(3,3,3);user-select: none;flex-grow: 1;}`,
-);
-const receipt_company_info_receipt_footer = HtmlService.createHtmlOutput(
-  `.receipt,.company-info,.receipt-footer {align-items: center;}`,
-);
-const receipt_details = HtmlService.createHtmlOutput(
-  `.receipt-details {margin-top: 10px;flex-grow: 1;}`,
-);
-const receipt_footer = HtmlService.createHtmlOutput(
-  `.receipt-footer {padding-top: 20px;}`,
-);
-const receipt_blue_table_unset = HtmlService.createHtmlOutput(
-  `.receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {all: unset !important;display: block !important;}`,
-);
-const receipt_unset = HtmlService.createHtmlOutput(
-  `.receipt table.striped.centered.highlight.responsive-table.red.z-depth-5 table tr,.receipt table.striped.centered.highlight.responsive-table.blue.z-depth-5 table td {all: unset !important;display: block !important; /* Or display: flex for rows, display: block for cells */}`,
-);
-const responsiveSection = HtmlService.createHtmlOutput(
-  `.responsive-section .container {width: 100%;padding: 0px}`,
-);
-const shortcuts_links_a_img = HtmlService.createHtmlOutput(
-  `.shortcut-links a img {width: 20px;margin-right: 20px;}`,
-);
-const shortcuts_links_a = HtmlService.createHtmlOutput(
-  `.shortcut-links a {display: flex;align-items: center;margin-bottom; 20px; width: fit-content;flex-wrap: wrap;}`,
-);
-const shortcuts_links_a_first_child = HtmlService.createHtmlOutput(
-  `.shortcut-links a:first-child {color: #ed3833;}`,
-);
-const sidebar = HtmlService.createHtmlOutput(
-  `.sidebar {background: #fff;width: 100%;height: 100vh;position: fixed;top: 0;padding-left: 2%;padding-top: 80px}`,
-);
-const sidebar_hr = HtmlService.createHtmlOutput(
-  `.sidebar hr {border: 0;height: 1px;background: #ccc;width: 85%;}`,
-);
-const small_sidebar = HtmlService.createHtmlOutput(
-  `.small-sidebar {width: 5%;}`,
-);
-const small_sidebar_link_paragraph = HtmlService.createHtmlOutput(
-  `.small-sidebar a p {display: none;}`,
-);
-const small_sidebar_h3 = HtmlService.createHtmlOutput(
-  `.small-sidebar h3 {display: none;}`,
-);
-const small_sidebar_hr = HtmlService.createHtmlOutput(
-  `.small-sidebar hr {width: 50%;margin-bottom: 25px;}`,
-);
-const socials = HtmlService.createHtmlOutput(`.socials {width: 100%;}`);
-const static_fix = HtmlService.createHtmlOutput(
-  `.static-fix {position: sticky;}`,
-);
-const subscribed_list_h3 = HtmlService.createHtmlOutput(
-  `.subscribed-list h3 {font-size: 13px;margin: 20px 0;color: #5a5a5a;}`,
-);
-const subscribed_list_link = HtmlService.createHtmlOutput(
-  `.subscribed-list a {display: flex;align-items: center;margin-bottom: 20px;width: fit-content;flex-wrap: wrap;}`,
-);
-const subscribed_list_link_img = HtmlService.createHtmlOutput(
-  `.subscribed-list a img {width: 25px;border-radius: 50%;margin-right: 20px;}`,
-);
-const toolbar = HtmlService.createHtmlOutput(
-  `.toolbar {flex: 0 0 60px;justify-content: space-around;align-items: center;border: solid .5px;border-radius: 10px;margin: 0px 15px 5px 15px;}`,
-);
-const toolbar_icon = HtmlService.createHtmlOutput(
-  `.toolbar-icon {font-size: 2rem;}`,
-);
-const toolbar_iconHover = HtmlService.createHtmlOutput(
-  `.toolbar-icon:hover {transform: scale(1.2);}`,
-);
-const vid_info = HtmlService.createHtmlOutput(
-  `.vid-info {color: #5a5a5a;font-size: 13px;}`,
-);
-const vid_info_link = HtmlService.createHtmlOutput(
-  `.vid-info a {color: #000;font-weight: 600;display: block;margin-bottom: 5px;}`,
-);
-const vid_list_thumbnail = HtmlService.createHtmlOutput(
-  `.vid-list .thumbnail {width: 100%;border-radius: 5px;}`,
-);
-const vid_list_flex_div = HtmlService.createHtmlOutput(
-  `.vid-list .flex-div {align-items: flex-start;margin-top: 7px;}`,
-);
-const vid_list_flex_div_img = HtmlService.createHtmlOutput(
-  `.vid-list .flex-div img {width: 35px;margin-right: 10px;border-radius: 50%;}`,
-);
-const barcode = HtmlService.createHtmlOutput(
-  `#barcode {font-family: "Libre Barcode 128", cursive;font-size: 70px;margin-top: 10px;}`,
-);
-const company_name = HtmlService.createHtmlOutput(
-  `#company-name {font-size: 1.5rem;}`,
-);
-const company_phone = HtmlService.createHtmlOutput(
-  `#company-phone {font-size: 1.25rem;}`,
-);
-const jsoninput = HtmlService.createHtmlOutput(
-  `#jsonInput {display: none;width: 100%;height: 8vh; /* Or whatever height you need */margin:10px auto;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border:1px solid #ccc;font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */white-space:pre-wrap;text-align:left;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
-);
-const indexbeta = HtmlService.createHtmlOutput(
-  `#indexBeta,#player1,#player2,#artiicleIndexSuggestions {/* Basic layout and appearance */width: auto;height: auto; /* Or whatever height you need */font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */margin:10px auto;white-space:pre-wrap;text-align:left;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border: 1px solid #333;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Hide default textarea scrollbar (optional, but common for custom scrollbars) *//* If you hide this, you'd need to implement custom scrollbars with JavaScript *//* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices *//* &::-webkit-scrollbar { display: none; } *//* & { -ms-overflow-style: none; scrollbar-width: none; } *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
-);
+const menu_item = HtmlService.createHtmlOutputFromFile("menuItem");
+// (
+//   `.menu-item {flex-flow:column nowrap;flex-basis: auto;flex-shrink: 0;margin: 5px;background: rgba(255, 255, 255, .05);width: 150px;}`,
+// );
+const menu_item_hover = HtmlService.createHtmlOutputFromFile("menuItemHover");
+// (
+//   `.menu-item:hover.menu-img {transform: scale(1.03);}`,
+// );
+const menu_payment = HtmlService.createHtmlOutputFromFile("menuPayment");
+// (
+//   `.menu-payment {background: rgba(255, 255, 255, .05);flex-grow: 1;z-index: 0;}`,
+// );
+const nav_left_menu_ico = HtmlService.createHtmlOutputFromFile("navLeftMenuIco");
+// (
+//   `.nav-left .menu-icon {width: 22px;margin-right: 25px;}`,
+// );
+const nav_left_logo = HtmlService.createHtmlOutputFromFile("navLeftLogo");
+// (
+//   `.nav-left .logo {width: 30px;}`,
+// );
+const nav_middle = HtmlService.createHtmlOutputFromFile("navMiddle");
+const nav_middle_mic_ico = HtmlService.createHtmlOutputFromFile("navMiddleMicIco");
+// (
+//   `.nav-middle .mic-icon {width: 16px;}`,
+// );
+const nav_middle_search_box = HtmlService.createHtmlOutputFromFile("navMiddleSearchBox");
+// (
+//   `.nav-middle .search-box {border: 1px solid #ccc;margin-right: 15px;padding: 8px 12px;border-radius: 25px;width: 85%}`,
+// );
+const nav_middle_search_box_img = HtmlService.createHtmlOutputFromFile("navMiddleSearchBoxImg");
+// (
+//   `.nav-middle .search-box img {width: 85%;}`,
+// );
+const nav_middle_search_box_input = HtmlService.createHtmlOutputFromFile("navMiddleSearchBoxInput");
+// (
+//   `.nav-middle .search-box input {width: 90%;font-weight: 600;font-size: 2.25rem;line-height:.5;border: 0;outline: 0;background: transparent;}`,
+// );
+const nav_right_img = HtmlService.createHtmlOutputFromFile("navRightImg");
+// (
+//   `.nav-right img {width: 25px;margin-right: 25px;}`,
+// );
+const nav_right_user_ico = HtmlService.createHtmlOutputFromFile("navRightUserIco");
+// (
+//   `.nav-right .user-icon {width: 35px;border-radius: 50%;margin-right: 0;}`,
+// );
+const global_order = HtmlService.createHtmlOutputFromFile("globalOrder");
+// (
+//   `.order {background-color: white;flex: 0 0 440px;overflow: auto;}`,
+// );
+const order_menu_payment = HtmlService.createHtmlOutputFromFile("orderMenuPayment");
+// (
+//   `.order,.menu-payment {border: solid .5px;border-radius: 10px;margin: 0px 10px 5px 10px;height: 100%;max-height: 100%;}`,
+// );
+const quantity_price_subtotal_delete = HtmlService.createHtmlOutputFromFile("quantityPriceSubtotalDelete");
+// (
+//   `.quantity,.price,.subtotal,.delete {text-align: right;}`,
+// );
+const global_receipt = HtmlService.createHtmlOutputFromFile("globalReceipt");
+// (
+//   `.receipt {border: solid .5px;margin: 10px 15px 5px 15px;box-shadow: 3px 3px 2px rgb(3,3,3);user-select: none;flex-grow: 1;}`,
+// );
+const receipt_company_info_receipt_footer = HtmlService.createHtmlOutputFromFile("receiptCompanyInfoReceiptFooter");
+// (
+//   `.receipt,.company-info,.receipt-footer {align-items: center;}`,
+// );
+const receipt_details = HtmlService.createHtmlOutputFromFile("receiptDetails");
+// (
+//   `.receipt-details {margin-top: 10px;flex-grow: 1;}`,
+// );
+const receipt_footer = HtmlService.createHtmlOutputFromFile("receiptFooter");
+// (
+//   `.receipt-footer {padding-top: 20px;}`,
+// );
+const receipt_blue_table_unset = HtmlService.createHtmlOutputFromFile("receiptBlueTableUnset");
+// (
+//   `.receipt table.striped.centered.highlight.responsive-table.grey.z-depth-5 table {all: unset !important;display: block !important;}`,
+// );
+const receipt_unset = HtmlService.createHtmlOutputFromFile("receiptUnset");
+// (
+//   `.receipt table.striped.centered.highlight.responsive-table.red.z-depth-5 table tr,.receipt table.striped.centered.highlight.responsive-table.blue.z-depth-5 table td {all: unset !important;display: block !important; /* Or display: flex for rows, display: block for cells */}`,
+// );
+const responsive_section = HtmlService.createHtmlOutputFromFile("responsiveSection");
+// (
+//   `.responsive-section .container {width: 100%;padding: 0px}`,
+// );
+const shortcuts_links_a_img = HtmlService.createHtmlOutputFromFile("shortcutsLinksAImg");
+// (
+//   `.shortcut-links a img {width: 20px;margin-right: 20px;}`,
+// );
+const shortcuts_links_a = HtmlService.createHtmlOutputFromFile("shortcutsLinksA");
+// (
+//   `.shortcut-links a {display: flex;align-items: center;margin-bottom; 20px; width: fit-content;flex-wrap: wrap;}`,
+// );
+const shortcuts_links_a_first_child = HtmlService.createHtmlOutputFromFile("shortcutsLinksAFirstChild");
+// (
+//   `.shortcut-links a:first-child {color: #ed3833;}`,
+// );
+const global_sidebar = HtmlService.createHtmlOutputFromFile("globalSidebar");
+// (
+//   `.sidebar {background: #fff;width: 100%;height: 100vh;position: fixed;top: 0;padding-left: 2%;padding-top: 80px}`,
+// );
+const sidebar_hr = HtmlService.createHtmlOutputFromFile("sidebarHR");
+// (
+//   `.sidebar hr {border: 0;height: 1px;background: #ccc;width: 85%;}`,
+// );
+const small_sidebar = HtmlService.createHtmlOutputFromFile("smallSidebar");
+// (
+//   `.small-sidebar {width: 5%;}`,
+// );
+const small_sidebar_link_paragraph = HtmlService.createHtmlOutputFromFile("smallSidebarLinkParagraph");
+// (
+//   `.small-sidebar a p {display: none;}`,
+// );
+const small_sidebar_h3 = HtmlService.createHtmlOutputFromFile("smallSidebarH3");
+// (
+//   `.small-sidebar h3 {display: none;}`,
+// );
+const small_sidebar_hr = HtmlService.createHtmlOutputFromFile("smallSidebarHR");
+// (
+//   `.small-sidebar hr {width: 50%;margin-bottom: 25px;}`,
+// );
+const global_socials = HtmlService.createHtmlOutputFromFile("globalSocials");
+// (`.socials {width: 100%;}`);
+const static_fix = HtmlService.createHtmlOutputFromFile("staticFix");
+// (
+//   `.static-fix {position: sticky;}`,
+// );
+const subscribed_list_h3 = HtmlService.createHtmlOutputFromFile("subscribedListH3");
+// (
+//   `.subscribed-list h3 {font-size: 13px;margin: 20px 0;color: #5a5a5a;}`,
+// );
+const subscribed_list_link = HtmlService.createHtmlOutputFromFile("subscribedListLink");
+// (
+//   `.subscribed-list a {display: flex;align-items: center;margin-bottom: 20px;width: fit-content;flex-wrap: wrap;}`,
+// );
+const subscribed_list_link_img = HtmlService.createHtmlOutputFromFile("subscribedListLinkImg");
+// (
+//   `.subscribed-list a img {width: 25px;border-radius: 50%;margin-right: 20px;}`,
+// );
+const global_toolbar = HtmlService.createHtmlOutputFromFile("globalToolbar");
+// (
+//   `.toolbar {flex: 0 0 60px;justify-content: space-around;align-items: center;border: solid .5px;border-radius: 10px;margin: 0px 15px 5px 15px;}`,
+// );
+const toolbar_icon = HtmlService.createHtmlOutputFromFile("toolbarIcon");
+// (
+//   `.toolbar-icon {font-size: 2rem;}`,
+// );
+const toolbar_icon_hover = HtmlService.createHtmlOutputFromFile("toolbarIconHover");
+// (
+//   `.toolbar-icon:hover {transform: scale(1.2);}`,
+// );
+const vid_info = HtmlService.createHtmlOutputFromFile("vidInfo");
+// (
+//   `.vid-info {color: #5a5a5a;font-size: 13px;}`,
+// );
+const vid_info_link = HtmlService.createHtmlOutputFromFile("vidInfoLink");
+// (
+//   `.vid-info a {color: #000;font-weight: 600;display: block;margin-bottom: 5px;}`,
+// );
+const vid_list_thumbnail = HtmlService.createHtmlOutputFromFile("vidListThumbnail");
+// (
+//   `.vid-list .thumbnail {width: 100%;border-radius: 5px;}`,
+// );
+const vid_list_flex_div = HtmlService.createHtmlOutputFromFile("vidListFlexDiv");
+// (
+//   `.vid-list .flex-div {align-items: flex-start;margin-top: 7px;}`,
+// );
+const vid_list_flex_div_img = HtmlService.createHtmlOutputFromFile("vidListFlexDivImg");
+// (
+//   `.vid-list .flex-div img {width: 35px;margin-right: 10px;border-radius: 50%;}`,
+// );
+const global_barcode = HtmlService.createHtmlOutputFromFile("globalBarcode");
+// (
+//   `#barcode {font-family: "Libre Barcode 128", cursive;font-size: 70px;margin-top: 10px;}`,
+// );
+const company_name = HtmlService.createHtmlOutputFromFile("companyName");
+// (
+//   `#company-name {font-size: 1.5rem;}`,
+// );
+const company_phone = HtmlService.createHtmlOutputFromFile("companyPhone");
+// (
+//   `#company-phone {font-size: 1.25rem;}`,
+// );
+const json_input = HtmlService.createHtmlOutputFromFile("jsonInput");
+// (
+//   `#jsonInput {display: none;width: 100%;height: 8vh; /* Or whatever height you need */margin:10px auto;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border:1px solid #ccc;font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */white-space:pre-wrap;text-align:left;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
+// );
+const index_beta = HtmlService.createHtmlOutputFromFile("indexBeta");
+// (
+//   `#indexBeta,#player1,#player2,#artiicleIndexSuggestions {/* Basic layout and appearance */width: auto;height: auto; /* Or whatever height you need */font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'monospace'; /* Monospaced font is crucial */font-size: 14px;line-height: 1.5; /* Good for readability */margin:10px auto;white-space:pre-wrap;text-align:left;padding: 0px;box-sizing: border-box; /* Include padding in width/height */border: 1px solid #333;background-color: #282c34; /* Dark background common for code editors */color: #abb2bf; /* Light text color for contrast */resize: vertical; /* Allow vertical resizing, or 'none' to disable */overflow: auto; /* Enable scrolling if content exceeds height *//* Hide default textarea scrollbar (optional, but common for custom scrollbars) *//* If you hide this, you'd need to implement custom scrollbars with JavaScript *//* -webkit-overflow-scrolling: touch; */ /* For smooth scrolling on touch devices *//* &::-webkit-scrollbar { display: none; } *//* & { -ms-overflow-style: none; scrollbar-width: none; } *//* Focus state */outline: none; /* Remove default blue outline on focus */box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.5); /* Custom focus highlight */transition: box-shadow 0.2s ease-in-out;}`,
+// );
 const indexbeta_color_boxshadow = HtmlService.createHtmlOutput(
   `#indexBeta,#jsonInput,#player1,#player2:focus {box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.8); /* More prominent on focus */}`,
 );
@@ -2956,7 +3004,7 @@ var rePlay = function(classType) {
 class StyleHtml {
   constructor() {
     this.renderFile = HtmlService.createHtmlOutput(
-      `${desktop_container.getContent() + mobile_section.getContent() + responsiveSection.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + global_website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + receipt.getContent() + boiler_footer.getContent() + sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + global_container.getContent() + list_container.getContent() + global_grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + global_menu.getContent() + order.getContent() + large_container.getContent() + indexbeta.getContent()}`,
+      `${desktop_container.getContent() + mobile_section.getContent() + responsive_section.getContent() + nav_middle_Nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + global_footer.getContent() + global_socials.getContent() + global_aside.getContent() + global_main.getContent() + global_article.getContent() + global_website.getContent() + banner_page_header.getContent() + banner_img.getContent() + global_img.getContent() + global_nav.getContent() + global_section.getContent() + global_body.getContent() + block_display.getContent() + receipt_footer.getContent() + global_receipt.getContent() + boiler_footer.getContent() + global_sidebar.getContent() + small_sidebar.getContent() + static_fix.getContent() + float_left.getContent() + float_right.getContent() + sidebar_hr.getContent() + small_sidebar_h3.getContent() + small_sidebar_hr.getContent() + small_sidebar_link_paragraph.getContent() + subscribed_list_h3.getContent() + subscribed_list_link.getContent() + subscribed_list_link_img.getContent() + global_container.getContent() + list_container.getContent() + global_grid.getContent() + vid_list_thumbnail.getContent() + vid_list_flex_div.getContent() + vid_list_flex_div_img.getContent() + vid_info.getContent() + vid_info_link.getContent() + global_menu.getContent() + global_order.getContent() + large_container.getContent() + index_beta.getContent()}`,
     );
     this.surveyPlayer = HtmlService.createHtmlOutput(
       `${body_survey_player.getContent()}`,
@@ -3013,7 +3061,7 @@ var builtStyling = function (e) {
         ${content.desktop_container}
         ${content.mobile_section}
         ${content.content_section}
-        ${content.responsiveSection}
+        ${content.responsive_section}
         ${content.global_website}
         ${content.global_html}
         ${content.global_main}
@@ -3025,8 +3073,8 @@ var builtStyling = function (e) {
         ${content.flex_column}
         ${content.order_menu_payment}
         ${content.seperator1}
-        ${content.order}
-        ${content.receipt}
+        ${content.global_order}
+        ${content.global_receipt}
         ${content.receipt_company_info_receipt_footer}
         ${content.company_info}
         ${content.company_name}
@@ -3042,17 +3090,17 @@ var builtStyling = function (e) {
         ${content.tbody_summary_table_tdNth_child2}
         ${content.tbody_summary_table_tdNth_child3}
         ${content.receipt_footer}
-        ${content.barcode}
-        ${content.toolbar}
+        ${content.global_barcode}
+        ${content.global_toolbar}
         ${content.toolbar_icon}
-        ${content.toolbar_iconHover}
+        ${content.toolbar_icon_hover}
         ${content.seperator2}
         ${content.menu_payment}
         ${content.global_menu}
         ${content.menu_item}
         ${content.menu_img}
         ${content.fig_caption}
-        ${content.menu_itemHover}
+        ${content.menu_item_hover}
         ${content.global_img}
       </style>
     </head>
