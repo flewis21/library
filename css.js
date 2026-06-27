@@ -2696,6 +2696,170 @@ const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
 //     </script>
 // `);
 
+const update_func = HtmlService.createHtmlOutputFromFile("updateFunc");
+// (
+//   `
+//     <script>
+//     function serverside(func, args) {
+//       return new Promise((resolve, reject) => {
+//         google.script.run
+//         .withSuccessHandler(result => {
+//             resolve(result)})
+//         .withFailureHandler(error => {
+//             reject(error)})
+//         .runBoilerplate(func, args)
+//       });
+//     }
+//     function updateFunc() {
+//       serverside("gsFParams").then((drop) => {
+//         var rndNumDrop = Math.floor(Math.random() * Math.floor(drop.length));
+//         var rndFunc = drop[rndNumDrop];
+//         localStorage.setItem("gsSearch", rndFunc);
+//         console.log(arguments.callee.name + "\n" + rndFunc + "...");
+//         document.getElementById("template").innerHTML =
+//           "waiting for upDateFunc: " + rndFunc + "...";
+//         serverside(rndFunc)
+//           .then((droplet) => {
+//             document.getElementById("template").innerHTML =
+//               arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")";
+//             // alert(arguments.callee.name + "\n" + rndFunc + "(" + droplet + ")");
+//             document.getElementById("template").innerHTML =
+//               arguments.callee.name + "\ndroplet.length = " + droplet.length;
+//             // alert(
+//             //   arguments.callee.name + "\ndroplet.length = " + droplet.length,
+//             // );
+//             if (typeof droplet === null) {
+//               return;
+//             }
+//             if (
+//               droplet.length === 99 ||
+//               droplet.length === 86 ||
+//               droplet.length === 101 ||
+//               droplet.length === 112
+//             ) {
+//               serverside("seoCapital", droplet).then((myFile) => {
+//                 document.getElementById("template").innerHTML =
+//                   arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")";
+//                 // alert(
+//                 //   arguments.callee.name + "\n" + rndFunc + "(" + myFile + ")",
+//                 // );
+//                 document.getElementById("template").innerHTML =
+//                   JSON.stringify(myFile);
+//               });
+//             } else {
+//               document.getElementById("template").innerHTML =
+//                 arguments.callee.name +
+//                   "\n" +
+//                   droplet.length +
+//                   " is not the required length";
+//               // alert(
+//               //   arguments.callee.name +
+//               //     "\n" +
+//               //     droplet.length +
+//               //     " is not the required length",
+//               // );
+//               serverside("getScriptUrl")
+//                 .then((cChange) => {
+//                   console.log(
+//                     arguments.callee.name +
+//                       "\n" +
+//                       typeof cChange +
+//                       " with length = " +
+//                       cChange.length,
+//                   );
+//                   if (cChange.length === 112 || cChange.length === 86) {
+//                     // console.log(cChange)
+//                     const confirmation = window.confirm(
+//                       "Click OK to continue to the destination.",
+//                     );
+//                     if (confirmation) {
+//                       var linkFollow = document.createElement("a");
+//                       linkFollow.href = cChange + "?func=" + rndFunc;
+//                       linkFollow.id = "linkFOLLOW";
+//                       linkFollow.target = "_blank";
+//                       linkFollow.rel = "noopener noreferrer";
+//                       document.body.appendChild(linkFollow);
+//                       document.getElementById("linkFOLLOW").click();
+//                       document.getElementById("linkFOLLOW").remove();
+//                     }
+//                   } else {
+//                     var docWnd = document.getElementById("template");
+//                     docWnd.innerHTML = cChange;
+//                   }
+//                 })
+//                 .catch((er) => {
+//                   document.getElementById("template").innerHTML =
+//                     arguments.callee.name +
+//                       "\n" +
+//                       rndFunc +
+//                       " error(" +
+//                       er +
+//                       ")";
+//                   // alert(
+//                   //   arguments.callee.name +
+//                   //     "\n" +
+//                   //     rndFunc +
+//                   //     " error(" +
+//                   //     er +
+//                   //     ")",
+//                   // );
+//                   console.log(arguments.callee.name + "\n" + er);
+//                   document.getElementById("template").innerHTML =
+//                     JSON.stringify(er);
+//                 });
+//             }
+//           })
+//           .catch((er) => {
+//             document.getElementById("template").innerHTML =
+//               arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+//             // alert(
+//             //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+//             // );
+//             serverside("getScriptUrl")
+//               .then((cChange) => {
+//                 console.log(
+//                   arguments.callee.name +
+//                     "\n" +
+//                     typeof cChange +
+//                     " with length = " +
+//                     cChange.length,
+//                 );
+//                 if (cChange.length === 112 || cChange.length === 86) {
+//                   // console.log(cChange)
+//                   const confirmation = window.confirm(
+//                     "Click OK to continue to the destination.",
+//                   );
+//                   if (confirmation) {
+//                     var linkFollow = document.createElement("a");
+//                     linkFollow.href = cChange + "?func=" + rndFunc;
+//                     linkFollow.id = "linkFOLLOW";
+//                     linkFollow.target = "_blank";
+//                     linkFollow.rel = "noopener noreferrer";
+//                     document.body.appendChild(linkFollow);
+//                     document.getElementById("linkFOLLOW").click();
+//                     document.getElementById("linkFOLLOW").remove();
+//                   }
+//                 } else {
+//                   var docWnd = document.getElementById("template");
+//                   docWnd.innerHTML = cChange;
+//                 }
+//               })
+//               .catch((er) => {
+//                 document.getElementById("template").innerHTML =
+//                   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")";
+//                 // alert(
+//                 //   arguments.callee.name + "\n" + rndFunc + " error(" + er + ")",
+//                 // );
+//                 console.log(arguments.callee.name + "\n" + er);
+//                 document.getElementById("template").innerHTML =
+//                   JSON.stringify(er);
+//               });
+//           });
+//       });
+//     }
+//   </script>
+// `);
+
 const warrior_clicks = HtmlService.createHtmlOutputFromFile("warriorClicks");
 // (
 //   `
@@ -3051,6 +3215,9 @@ class StyleHtml {
     this.oddChances = HtmlService.createHtmlOutput(
       `${link_visited.getContent() + link_active.getContent()}`,
     );
+    this.myGNUFreeJS = HtmlService.createHtmlOutput(
+      `${link_visited.getContent() + link_active.getContent()}`,
+    );
     this.runIt = HtmlService.createHtmlOutput(
       `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + js_query.getContent() + materialize_js.getContent() + luxon_js.getContent() + tabulator_js.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
     );
@@ -3064,7 +3231,7 @@ class StyleHtml {
     `);
     this.mgfRunIt = HtmlService.createHtmlOutput(
       `
-        ${next_clicked_video.getContent() + busy_calendar.getContent()}
+        ${next_clicked_video.getContent() + busy_calendar.getContent() + again_clicked.getContent() + next_clicked.getContent() + update_func.getContent()}
     `);
     this.cCDNRunIt = HtmlService.createHtmlOutput(
       `
