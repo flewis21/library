@@ -1805,6 +1805,7 @@ var geneicType = function (e) {
   let executed = funcHandle.executed;
   let handles;
   let base;
+  let dataOR;
   let exampleObjectType = {
     a: Array.isArray(autoP?.fParams)? autoP?.fParams[0] : "String",
     b: Array.isArray(autoP?.fParams)? autoP?.fParams[1] : 123,
@@ -1857,10 +1858,10 @@ var geneicType = function (e) {
               q: autoP.spirit()
             }
           };
-          eQueryObject = {parameter: {file: "uiAccess"}}
+          eQueryObject = {parameter: {q: exampleObjectType.a}}
           let tempObj = funcHandle(eQueryObject);
           handles =  tempObj
-          console.log("handles = " + handles, executed++);
+          console.log("handles = " + JSON.stringify(handles), executed++);
           if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
             base = handles;
           }
@@ -1871,7 +1872,7 @@ var geneicType = function (e) {
           }
         }
         if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-          let dataOR = globalHandleGetData(base);
+          dataOR = globalHandleGetData(base);
           return dataOR
         }
         else {
@@ -1889,7 +1890,7 @@ var geneicType = function (e) {
         }
         let tempObj = funcHandle(e);
         handles =  tempObj
-        console.log("handles = " + handles, executed++);
+        console.log("handles = " + JSON.stringify(handles), executed++);
         if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
           base = handles;
         }
@@ -1899,7 +1900,7 @@ var geneicType = function (e) {
           base = createFunctionResult(funcU, funcD);
         }
         if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-          let dataOR = globalHandleGetData(base);
+          dataOR = globalHandleGetData(base);
           return dataOR
         }
         else {
@@ -1945,7 +1946,7 @@ var geneicType = function (e) {
             base = createFunctionResult(funcU, funcD);
           }
           if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-            let dataOR = globalHandleGetData(base);
+            dataOR = globalHandleGetData(base);
             return dataOR
           }
           else {
@@ -1978,7 +1979,7 @@ var geneicType = function (e) {
               }
             }
             if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-              let dataOR = globalHandleGetData(base);
+              dataOR = globalHandleGetData(base);
               return dataOR
             }
             else {
@@ -2006,7 +2007,7 @@ var geneicType = function (e) {
               base = createFunctionResult(funcU, funcD);
             }
             if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-              let dataOR = globalHandleGetData(base);
+              dataOR = globalHandleGetData(base);
               return dataOR
             }
             else {
@@ -2061,7 +2062,7 @@ var geneicType = function (e) {
     //   base = createFunctionResult(funcU, funcD);
     // }
     // if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-    //   let dataOR = globalHandleGetData(base);
+    //   dataOR = globalHandleGetData(base);
     //   return dataOR
     // }
     // else {
@@ -2108,7 +2109,7 @@ var geneicType = function (e) {
     //   base = createFunctionResult(funcU, funcD);
     // }
     // if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-    //   let dataOR = globalHandleGetData(base);
+    //   dataOR = globalHandleGetData(base);
     //   return dataOR
     // }
     // else {

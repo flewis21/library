@@ -217,7 +217,7 @@ class FunctionHandle {
                       this.payLoad["data"] = null;
                       if (!this.funcTres) {
                         this.htAml = getScriptUrl() + "?file=" + this.rndPage;
-                        return this.htAml;
+                        // return this.htAml;
                       } 
                       else {
                         this.fT = fileBrowser(null, this.funcTres);
@@ -525,7 +525,7 @@ class FunctionHandle {
                             this.payLoad["data"] = null;
                             if (this.funcTres === "undefined") {
                               this.hTAml = getScriptUrl() + "?file=" + this.rndPage;
-                              return this.htAml;
+                              // return this.htAml;
                             } 
                             else {
                               this.fT = fileBrowser(null, this.funcTres);
@@ -635,22 +635,22 @@ class FunctionHandle {
       }
     } 
     if (this.e && this.e.parameter && (this.e.parameter["func"] && this.e.parameter["args"])) {
-    this.funcUno = this.e.parameter["func"];
-    this.funcDos = this.e.parameter["args"];
+    this.funcUno = Array(this.e.parameter["func"]);
+    this.funcDos = Array(this.e.parameter["args"]);
     }
     else {
       if (this.e && this.e.parameter && (this.e.parameter["func"] && !this.e.parameter["args"])) {
-        this.funcUno = this.e.parameter["func"];
-        this.funcDos = null;
+        this.funcUno = Array(this.e.parameter["func"]);
+        this.funcDos = Array(null);
       } 
       else {
         if (this.e && this.e.parameter && (!this.e.parameter["func"] && this.e.parameter["args"])) {
-          this.funcUno = null;
-          this.funcDos = this.e.parameter["args"];
+          this.funcUno = Array(null);
+          this.funcDos = Array(this.e.parameter["args"]);
         }  
         else {
-          this.funcUno = Object.keys(this.rndE);
-          this.funcDos = Object.values(this.rndE);
+          this.funcUno = Array(Object.keys(this.rndE));
+          this.funcDos = Array(Object.values(this.rndE));
         }
       } 
     }
