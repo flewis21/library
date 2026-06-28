@@ -1857,12 +1857,12 @@ var geneicType = function (e) {
               q: autoP.spirit()
             }
           };
-          eQueryObject = {parameter: {file:""}}
+          eQueryObject = {parameter: {file: "uiAccess"}}
           let tempObj = funcHandle(eQueryObject);
           handles =  tempObj
           console.log("handles = " + handles, executed++);
-          if (!handles.funcUno && !handles.funcDos) {
-            base = handles
+          if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+            base = handles;
           }
           else {
             let funcU = handles.funcUno;
@@ -1890,8 +1890,8 @@ var geneicType = function (e) {
         let tempObj = funcHandle(e);
         handles =  tempObj
         console.log("handles = " + handles, executed++);
-        if (!handles.funcUno && !handles.funcDos) {
-          base = handles
+        if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+          base = handles;
         }
         else {
           let funcU = handles.funcUno;
@@ -1936,8 +1936,8 @@ var geneicType = function (e) {
           let tempObj = funcHandle(e);
           handles =  tempObj
           console.log("handles = " + handles, executed++);
-          if (!handles.funcUno && !handles.funcDos) {
-            base = handles
+          if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+            base = handles;
           }
           else {
             let funcU = handles.funcUno;
@@ -1968,8 +1968,8 @@ var geneicType = function (e) {
               let tempObj = funcHandle(eQueryObject);
               handles =  tempObj
               console.log("handles = " + handles, executed++);
-              if (!handles.funcUno && !handles.funcDos) {
-                base = handles
+              if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+                base = handles;
               }
               else {
                 let funcU = handles.funcUno;
@@ -1997,8 +1997,8 @@ var geneicType = function (e) {
             let tempObj = funcHandle(e);
             handles =  tempObj
             console.log("handles = " + handles, executed++);
-            if (!handles.funcUno && !handles.funcDos) {
-              base = handles
+            if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+              base = handles;
             }
             else {
               let funcU = handles.funcUno;
@@ -2052,8 +2052,8 @@ var geneicType = function (e) {
     //   console.log("handles = " + handles, executed++);
     // }
     // let base
-    // if (!handles["exec"] && !handles["args"]) {
-    //   base = handles
+    // if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+    //   base = handles;
     // }
     // else {
     //   let funcU = handles["exec"];
@@ -2099,8 +2099,8 @@ var geneicType = function (e) {
     //   console.log("handles = " + handles, executed++);
     // }
     // let base
-    // if (!handles.funcUno && !handles.funcDos) {
-    //   base = handles
+    // if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
+    //   base = handles;
     // }
     // else {
     //   let funcU = handles.funcUno;

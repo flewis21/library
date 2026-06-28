@@ -375,7 +375,7 @@ class ContentCDN {
   static cdnData(url, argsObject) {
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
-      console.log("argsObject before tmp processing", argsObject);
+      console.log("cdnData argsObject before tmp processing", argsObject);
       const tmp = HtmlService.createHtmlOutputFromFile("cors")
       if (argsObject) {
         try {
@@ -388,7 +388,7 @@ class ContentCDN {
           throw new Error("Error in contentCDN tmp" + error);
         }
       }
-      console.log("argsObject after tmp processing", tmp);
+      console.log("cdnData argsObject after tmp processing", tmp);
       // console.log(
       //   "boilerplate render: line 359\ncontentCDN(tmp: " +
       //     JSON.stringify(tmp) +

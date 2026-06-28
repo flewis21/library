@@ -214,27 +214,70 @@ class FunctionHandle {
                     try{
                       this.payLoad = {};
                       this.payLoad["type"] = "url";
-                      this.payLoad["data"] = {};
+                      this.payLoad["data"] = null;
                       if (!this.funcTres) {
-                        return getScriptUrl() + "?file=" + this.rndPage;
+                        this.htAml = getScriptUrl() + "?file=" + this.rndPage;
+                        return this.htAml;
                       } 
                       else {
                         this.fT = fileBrowser(null, this.funcTres);
-                        this.payLoad.data["url"] = this.fT?.url
+                        this.payLoad.data = this.fT?.url
                         if (!this.fT?.url) {
-                          this.payLoad.data["url"] = driveManager(this.funcTres);
+                          this.dT = driveManager(this.funcTres)
+                          this.payLoad.data = this.dT;
                         }
                         let options = {
                           muteHttpExceptions: true,
                         };
-                        this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
-                        this.hTAml = RenderTemplate.templateRender(
-                          this.payLoad.data["app"]?.app,
+                        this.driveA = 
                           {
-                            pL: this.payLoad,
-                          },
-                          isValidUrl(getScriptUrl()).pathname.split("/")[3],
-                        );
+                            payL: 
+                              {
+                                pL: this.payLoad,
+                              },
+                          };
+                        // this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
+                        if (this.fT?.url) {
+                          this.htAml = contCDN(this.fT.url, this.driveA);
+                          return this.htAml
+                        }
+                        else {
+                          if (this.dT) {
+                            this.htAml = contCDN(this.dT, this.driveA);
+                            return this.htAml;
+                            // payLoad.data["app"] = getUrlResponse(dT, options);
+                            // let hTAml = rendTemplate(
+                            //   payLoad.data["app"]?.app,
+                            //   {
+                            //     pL: payLoad,
+                            //   },
+                            //   JSON.stringify(fT?.name || funcTres),
+                            // );
+                            // return hTAml
+                          }
+                          else {
+                            if (!this.dT) {
+                              this.htAml = contCDN(getScriptUrl(), this.driveA);
+                              return this.htAml;
+                            // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
+                            // let hTAml = rendTemplate(
+                            //   payLoad.data["app"]?.app,
+                            //   {
+                            //     pL: payLoad,
+                            //   },
+                            //   JSON.stringify(fT?.name || funcTres),
+                            // );
+                            // return hTAml
+                            }
+                          }
+                        }
+                        // this.hTAml = RenderTemplate.templateRender(
+                        //   this.payLoad.data["app"]?.app,
+                        //   {
+                        //     pL: this.payLoad,
+                        //   },
+                        //   isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                        // );
                         // return hTAml
                       }
                     }
@@ -249,12 +292,12 @@ class FunctionHandle {
                           {
                             fileParam: this.funcTres,
                           }
-                        this.noLhtml = RenderFile.fileRender(
+                        this.htAml = rendFile(
                           this.funcTres,
                           this.driveA,
                           isValidUrl(getScriptUrl()).pathname.split("/")[3],
                         );
-                        // return noLhtml
+                        return this.htAml;
                       } 
                       catch (error) {
                         Logger.log("Requested! HTML Out of Order", error.stack);
@@ -479,27 +522,70 @@ class FunctionHandle {
                           try{
                             this.payLoad = {};
                             this.payLoad["type"] = "url";
-                            this.payLoad["data"] = {};
+                            this.payLoad["data"] = null;
                             if (this.funcTres === "undefined") {
-                              return getScriptUrl() + "?file=" + this.rndPage;
+                              this.hTAml = getScriptUrl() + "?file=" + this.rndPage;
+                              return this.htAml;
                             } 
                             else {
                               this.fT = fileBrowser(null, this.funcTres);
-                              this.payLoad.data["url"] = this.fT?.url
+                              this.payLoad.data = this.fT?.url
                               if (!this.fT?.url) {
-                                this.payLoad.data["url"] = driveManager(this.funcTres);
+                                this.dT = driveManager(this.funcTres);
+                                this.payLoad.data = this.dT;
                               }
                               let options = {
                                 muteHttpExceptions: true,
                               };
-                              this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
-                              this.hTAmla = RenderTemplate.templateRender(
-                                this.payLoad.data["app"]?.app,
+                              this.driveA = 
                                 {
-                                  pL: this.payLoad,
-                                },
-                                isValidUrl(getScriptUrl()).pathname.split("/")[3],
-                              );
+                                  payL: 
+                                    {
+                                      pL: this.payLoad,
+                                    },
+                                };
+                              if (this.fT?.url) {
+                                this.htAml = contCDN(this.fT.url, this.driveA);
+                                return this.htAml
+                              }
+                              else {
+                                if (this.dT) {
+                                  this.htAml = contCDN(this.dT, this.driveA);
+                                  return this.htAml;
+                                  // payLoad.data["app"] = getUrlResponse(dT, options);
+                                  // let hTAml = rendTemplate(
+                                  //   payLoad.data["app"]?.app,
+                                  //   {
+                                  //     pL: payLoad,
+                                  //   },
+                                  //   JSON.stringify(fT?.name || funcTres),
+                                  // );
+                                  // return hTAml
+                                }
+                                else {
+                                  if (!this.dT) {
+                                    this.htAml = contCDN(getScriptUrl(), this.driveA);
+                                    return this.htAml;
+                                  // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
+                                  // let hTAml = rendTemplate(
+                                  //   payLoad.data["app"]?.app,
+                                  //   {
+                                  //     pL: payLoad,
+                                  //   },
+                                  //   JSON.stringify(fT?.name || funcTres),
+                                  // );
+                                  // return hTAml
+                                  }
+                                }
+                              }
+                              // this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
+                              // this.hTAml = RenderTemplate.templateRender(
+                              //   this.payLoad.data["app"]?.app,
+                              //   {
+                              //     pL: this.payLoad,
+                              //   },
+                              //   isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              // );
                               // return hTAmla
                             }
                           }
@@ -514,12 +600,12 @@ class FunctionHandle {
                                 {
                                   fileParam: this.funcTres,
                                 }
-                              this.noLhtmlb = RenderFile.fileRender(
+                              this.htAml = rendFile(
                                 this.funcTres,
                                 this.driveA,
                                 isValidUrl(getScriptUrl()).pathname.split("/")[3],
                               );
-                              // return noLhtmlb
+                              return this.htAml
                             } 
                             catch (error) {
                               Logger.log("Requested! HTML Out of Order", error.stack);
@@ -659,7 +745,7 @@ class FunctionHandle {
         }
         else { 
           if (objData.length > 0) {
-            if (this.objData.indexOf("file") > -1) {
+            if (objData.indexOf("file") > -1) {
               console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
               console.log(
                 "Determined that funcTres execution is requested! \n" +
@@ -703,20 +789,43 @@ class FunctionHandle {
                       var fT = fileBrowser(null, funcTres);
                       payLoad.data["url"] = fT?.url
                       if (!fT?.url) {
-                        payLoad.data["url"] = driveManager(funcTres);
+                        var dT = driveManager(funcTres);
+                        payLoad.data["url"] = dT;
                       }
                       let options = {
                         muteHttpExceptions: true,
                       };
-                      payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                      let hTAml = RenderTemplate.templateRender(
-                        payLoad.data["app"]?.app,
-                        {
-                          pL: payLoad,
-                        },
-                        JSON.stringify(fT?.name || funcTres),
-                      );
-                      return hTAml
+                      if (fT?.url) {
+                        return contCDN(fT.url, payLoad);
+                      }
+                      else {
+                        if (dT) {
+                          return contCDN(dT, payLoad);
+                          // payLoad.data["app"] = getUrlResponse(dT, options);
+                          // let hTAml = rendTemplate(
+                          //   payLoad.data["app"]?.app,
+                          //   {
+                          //     pL: payLoad,
+                          //   },
+                          //   JSON.stringify(fT?.name || funcTres),
+                          // );
+                          // return hTAml
+                        }
+                        else {
+                          if (!dT) {
+                            return contCDN(getScriptUrl(), payLoad);
+                          // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
+                          // let hTAml = rendTemplate(
+                          //   payLoad.data["app"]?.app,
+                          //   {
+                          //     pL: payLoad,
+                          //   },
+                          //   JSON.stringify(fT?.name || funcTres),
+                          // );
+                          // return hTAml
+                          }
+                        }
+                      }
                     }
                   }
                   catch (error) {
@@ -958,20 +1067,52 @@ class FunctionHandle {
                               var fT = fileBrowser(null, funcTres);
                               payLoad.data["url"] = fT?.url
                               if (!fT?.url) {
-                                payLoad.data["url"] = driveManager(funcTres);
+                                var dT = driveManager(funcTres);
+                                payLoad.data["url"] = dT;;
                               }
                               let options = {
                                 muteHttpExceptions: true,
                               };
-                              payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
-                              let hTAmla = RenderTemplate.templateRender(
-                                payLoad.data["app"]?.app,
-                                {
-                                  pL: payLoad,
-                                },
-                                JSON.stringify(fT?.name || funcTres),
-                              );
-                              return hTAmla
+                              // payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
+                              if (fT?.url) {
+                                return contCDN(fT.url, payLoad);
+                              }
+                              else {
+                                if (dT) {
+                                  return contCDN(dT, payLoad);
+                                  // payLoad.data["app"] = getUrlResponse(dT, options);
+                                  // let hTAml = rendTemplate(
+                                  //   payLoad.data["app"]?.app,
+                                  //   {
+                                  //     pL: payLoad,
+                                  //   },
+                                  //   JSON.stringify(fT?.name || funcTres),
+                                  // );
+                                  // return hTAml
+                                }
+                                else {
+                                  if (!dT) {
+                                    return contCDN(getScriptUrl(), payLoad);
+                                  // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
+                                  // let hTAml = rendTemplate(
+                                  //   payLoad.data["app"]?.app,
+                                  //   {
+                                  //     pL: payLoad,
+                                  //   },
+                                  //   JSON.stringify(fT?.name || funcTres),
+                                  // );
+                                  // return hTAml
+                                  }
+                                }
+                              }
+                              // let hTAmla = RenderTemplate.templateRender(
+                              //   payLoad.data["app"]?.app,
+                              //   {
+                              //     pL: payLoad,
+                              //   },
+                              //   JSON.stringify(fT?.name || funcTres),
+                              // );
+                              // return hTAmla
                             }
                           }
                           catch (error) {
