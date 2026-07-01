@@ -1855,10 +1855,10 @@ var geneicType = function (e) {
         else {
           eQueryObject = {
             parameter: {
-              q: autoP.spirit()
+              q: autoP.argsX[0] + "," + autoP.fParams,
             }
           };
-          eQueryObject = {parameter: {q: exampleObjectType.a}}
+          // eQueryObject = {parameter: {q: ""}}
           let tempObj = funcHandle(eQueryObject);
           handles =  tempObj
           console.log("handles = " + JSON.stringify(handles), executed++);

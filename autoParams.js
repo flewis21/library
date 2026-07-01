@@ -322,17 +322,19 @@ class FunctionHandle {
                 if (!this.e.parameter["func"] && !this.e.parameter["args"]) {
                   if (typeof globalThis[this.e.parameter[this.objData[0]]] !== "function") {
                     this.argsEd = null;
-                    if (this.e.parameter[this.objData[0]].indexOf(",") > -1) {
+                    if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") > -1) {
                         this.argsEd = this.e.parameter[this.objData[0]]
                     }
                     else {
-                      this.tempObj = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
-                      this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
-                      if (this.tempObj?.searchResult) {
-                        this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
-                      }
-                      else {
-                        this.argsEd = this.tempObj.func;
+                      if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") === -1) {
+                        this.tempObj = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
+                        this.mapArr[this.tempObj?.searchResult?.name || this.tempObj.func] = [];
+                        if (this.tempObj?.searchResult) {
+                          this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
+                        }
+                        else {
+                          this.argsEd = this.tempObj.func;
+                        }
                       }
                     }
                     console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
@@ -372,35 +374,40 @@ class FunctionHandle {
                       else {
                         console.log("Unexpected argsEd type: ", this.argsEd);
                         this.argsedObj = [];
-                        this.aOKeys = Object.keys(this.argsEd);
-                        if (this.aOKeys.length > 0) {
-                          this.aOKeys.forEach((key) => {
-                            this.argsedObj.push(this.argsEd[key]);
-                          });
-                          this.e = objectOfS(
-                            ["parameter"],
-                            [
+                        try {
+                          this.aOKeys = Object?.keys(this.argsEd);
+                          if (this.aOKeys.length > 0) {
+                            this.aOKeys.forEach((key) => {
+                              this.argsedObj.push(this.argsEd[key]);
+                            });
+                            this.e = objectOfS(
+                              ["parameter"],
                               [
-                                ["func", this.aOKeys],
-                                ["args", this.argsedObj],
+                                [
+                                  ["func", this.aOKeys],
+                                  ["args", this.argsedObj],
+                                ],
                               ],
-                            ],
-                            this.funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(this.e), this.executed++);
-                        } 
-                        else {
-                          this.e = objectOfS(
-                            ["parameter"],
-                            [
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          } 
+                          else {
+                            this.e = objectOfS(
+                              ["parameter"],
                               [
-                                ["func", "aVar"],
-                                ["args", "varA"],
+                                [
+                                  ["func", "aVar"],
+                                  ["args", "varA"],
+                                ],
                               ],
-                            ],
-                            this.funchAP.functionRegistry.time,
-                          );
-                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                              this.funchAP.functionRegistry.time,
+                            );
+                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          }
+                        }
+                        catch (error) {
+                          console.log("Error stack:\n", error.stack)
                         }
                       }
                     }
