@@ -1363,7 +1363,8 @@ class RenderTemplate {
             <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
             <main class="responsive-section float-left">
               <header class="transparent banner responsive-section">
-                <div id="player1" class="row card-panel transparent list-container grid"></div>
+                <div id="player1" class="row card-panel transparent list-container grid" style="display: none"></div>
+                <div id="iframePlayer" class="row card-panel transparent" style="display: none"></div>
                 <h4><?!= drivedD?.split("{")[0] ?></h4>
                 <label id="loadingLab">
                   <strong>
@@ -1396,7 +1397,7 @@ class RenderTemplate {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <a id="dmi" href="<?= drivemI ?>">
+                                    <a id="dmi" href="<?!= drivemI ?>" target="_blank">
                                       <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
@@ -1417,7 +1418,7 @@ class RenderTemplate {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <a id="del" href="<?!= driveL ?>">
+                                    <a id="del" href="<?!= driveL ?>" target="_blank">
                                       <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
@@ -1457,7 +1458,7 @@ class RenderTemplate {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <a id="ddi" href="<?!= drivedI ?>">
+                                    <a id="ddi" href="<?!= drivedI ?>" target="_blank">
                                       <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
@@ -1552,7 +1553,7 @@ class RenderTemplate {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <a id="drd" href="<?!= driveD ?>">
+                                    <a id="drd" href="<?!= driveD ?>" target="_blank">
                                       <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
                                     </a>
                                     <div class="flex-div">
