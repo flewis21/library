@@ -72,8 +72,8 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = autoP.trueVfalse(funcUno);
-  let truDos = autoP.trueVfalse(funcDos);
+  let truUno = autoP.truUno;
+  let truDos = autoP.truDos;
   console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
@@ -98,18 +98,22 @@ var createFunctionResult = function (funcUno, funcDos) {
     // executed++
     if (!rawUrlResult) {
       let parsedFuncArgs = [];
-      let keyObject;
+      let keyObject = null;
       if (typeof funcDos === "object" && funcDos !== null) {
         keyObject = Object.keys(funcDos);
         if (keyObject && keyObject.length > 0) {
-          console.log("This execution is trying to JSON Parse a(n) " , typeof funcDos);
+          console.log("This execution is initiating JSON Parse on a(n) " , typeof funcDos);
           try {
             if (!objVal) {
-              parsedFuncArgs = JSON.parse(funcDos);
+              try {
+                parsedFuncArgs = JSON.parse(funcDos);
+              }
+              catch (error) {
+                console.log("But, it is failing. \n", error.stack);
+              }
             } 
             else {
               if (objVal && funcDos.length > 0) {
-                console.log("But, it is failing. \n");
                 parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
               }
             }
@@ -132,7 +136,7 @@ var createFunctionResult = function (funcUno, funcDos) {
       }
       console.log("Parsed funtion and arguments = " + [funcUno, parsedFuncArgs]);
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
-        console.log("This execution is trying to process without funcDos. funcDos is  " , funcDos);
+        console.log("This execution is initiating without funcDos. funcDos is  " , funcDos);
         try {
           let funcAFunc = crmT(funcUno);
           console.log("funcAFunc = " + funcAFunc, executed++);
@@ -157,7 +161,7 @@ var createFunctionResult = function (funcUno, funcDos) {
       } 
       else {
         if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
-          console.log("This execution is trying to process with funcDos. funcDos is  " , funcDos);
+          console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
           try {
             rawFuncResult = mis(funcUno.concat(parsedFuncArgs));
           } 
@@ -168,7 +172,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         } 
         else { 
           if (!funcUno && funcDos) {
-            console.log("This execution is trying to process without funcUno.", !funcUno);
+            console.log("This execution is initiating without funcUno.", !funcUno);
             if (typeof globalThis[funcDos] === "function") {
               try {
                 rawFuncResult = globalThis[parsedFuncArgs]();
@@ -184,11 +188,11 @@ var createFunctionResult = function (funcUno, funcDos) {
           } 
           else {
             console.log(
-              "This execution is trying to process all input \n",
+              "This execution is initiating with all parameters \n",
                 [funcUno, parsedFuncArgs]
             );
             try {
-              rawFuncResult = autoGlobe.globalThis[funcUno].apply(this, parsedFuncArgs);
+              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
             } 
             catch (error) {
               console.log("But, it is failing.");

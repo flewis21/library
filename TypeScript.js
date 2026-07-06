@@ -4,7 +4,7 @@ class Script{};
 
 class RawFuncResult {
   constructor() {
-    this.globalThis = globalThis
+    // this.globalThis = globalThis
     // console.log(this.globalThis)
   }
 }
@@ -15,11 +15,11 @@ class ProjectFUnctionNames {
   constructor() {
     this.fileList = [];
     this.paramsList = [];
-      for (const key in autoGlobe.globalThis) {
-        if (typeof autoGlobe.globalThis[key] == "function") {
+      for (const key in globalThis) {
+        if (typeof globalThis[key] == "function") {
           this.fileList.push(key);
           try {
-            const funcString = autoGlobe.globalThis[key].toString();
+            const funcString = globalThis[key].toString();
             const params = funcString
               .substring(funcString.indexOf("(") + 1, funcString.indexOf(")"))
               .split(",")
@@ -1534,7 +1534,7 @@ class ResolveParameters extends Presidential {
     this.trueSomeArgs = this.trueVfalse(this.someArgs);
     this.funcUno = this.trueFunc
       ? decodeURIComponent(this.func)
-      : Object.keys(autoGlobe.globalThis);
+      : this.functionRegistry.fileList;
     this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
     this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
     this.arrDRnd = null;
@@ -1544,11 +1544,11 @@ class ResolveParameters extends Presidential {
       this.arrUno = Array.isArray(this.func);
       this.arrDos = this.trueVfalse(this.someArgs);
       if (this.arrUno && this.arrDos) {
-        this.keys = Object.values(this.func).concat(this.someArgs);
+        this.keys = this.func.concat(this.someArgs);
       } 
       else {
         if (this.arrUno && !this.arrDos) {
-          this.keys = Object.values(this.func);
+          this.keys = this.func;
         }
         else {
           if (!this.arrUno && this.arrDos && this.trueFunc) {
@@ -1648,15 +1648,17 @@ class ResolveParameters extends Presidential {
       if (this.argsX && this.argsX.length > 0) {
         this.allErrors = {};
         this.allResolutions = {};
-        this.funcString = autoGlobe.globalThis[this.funcUno[this.numVarRnd]]?.toString();
+        this.funcString = globalThis[this.funcUno[this.numVarRnd]]?.toString();
         this.fParams = this.funcString
           ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
           ?.split(",")
           ?.map((param) => param?.trim())
           ?.filter((param) => param !== "");; //gsFParams();
+        this.truDos = this.trueVfalse(this.fParams)
         this.resCount = 0;
         this.argsX.forEach((result, argsXIndex) => {
           console.log("argsX result " + this.resCount + ": " + result);
+          this.truUno = this.trueVfalse(result);
           this.args = {};
           this.resolvedArgs = [];
           this.missingParams = [];
@@ -1763,7 +1765,7 @@ class ResolveParameters extends Presidential {
               }
             });
           }
-          if (this.orderedContent) {
+          if (this.orderedContent.length > 0) {
             if (this.missingParams.length === 0) {
               // orderedContent = resolvedArgs;
               this.allResolutions[result] = this.resolvedArgs;
@@ -1802,17 +1804,26 @@ class ResolveParameters extends Presidential {
 let autoP = new ResolveParameters();
 
 var geneicType = function (e) {
-  let executed = funcHandle.executed;
-  let handles;
-  let base;
-  let dataOR;
+  let data = null;
+  let executed = null;
+  if (e) {
+    data = funcHandle(e);
+    executed = data.executed;
+  }
+  else {
+    data = funcHandle();
+    executed = data.executed;
+  }
+  let handles = null; 
+  let base = null;
+  let dataOR = null;
   let exampleObjectType = {
-    a: Array.isArray(autoP?.fParams)? autoP?.fParams[0] : "String",
-    b: Array.isArray(autoP?.fParams)? autoP?.fParams[1] : 123,
-    c: Array.isArray(autoP?.fParams)? autoP?.fParams[3] : ["String"],
+    a: Array.isArray(data?.funcDos)? data?.funcDos[0] : "String",
+    b: Array.isArray(data?.funcDos)? data?.funcDos[1] : 123,
+    c: Array.isArray(data?.funcDos)? data?.funcDos[3] : ["String"],
   };
-  let chopSort = autoP
-  ?.fParams?.sort((a,b) => {
+  let chopSort = data
+  ?.funcDos?.sort((a,b) => {
       let i = Math.random()
       let tSorted = a;
       let zSorted = b;
@@ -1850,28 +1861,28 @@ var geneicType = function (e) {
     if (i < .4) {
       if (!e) {
         if (i < .2) {
-          base = autoGlobe.globalThis["vidPlaylist"].apply(this, [rndWord()]);
+          base = autoP?.globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
         }
         else {
           eQueryObject = {
             parameter: {
-              q: autoP.argsX[0] + "," + autoP.fParams,
+              q: data?.funcUno + "," + data?.funcDos,
             }
           };
           // eQueryObject = {parameter: {q: ""}}
-          let tempObj = funcHandle(eQueryObject);
-          handles =  tempObj
-          console.log("handles = " + JSON.stringify(handles), executed++);
-          if (handles.funcUno.length === 0 && handles.funcDos.length === 0) {
-            base = handles;
+          // let tempObj = funcHandle(eQueryObject);
+          // handles =  tempObj
+          console.log("data = " + JSON.stringify(data), executed++);
+          if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
+            base = data;
           }
           else {
-            let funcU = handles.funcUno;
-            let funcD = handles.funcDos;
+            let funcU = data.funcUno;
+            let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
             base = createFunctionResult(funcU, funcD);
           }
         }
-        if (base && !base?.myVar || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
+        if (base && !(base?.myVar || base?.myNewArr) || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
           dataOR = globalHandleGetData(base);
           return dataOR
         }
@@ -1912,7 +1923,7 @@ var geneicType = function (e) {
       if (i > .3 && i < .7) {
         if (!e) {
           if (i > .4 && i < .6) {
-            return autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content);
+            return globalThis[autoP.argsX[0]].apply(this, autoP.content);
           }
           else {
             eQueryObject = {
@@ -1958,7 +1969,7 @@ var geneicType = function (e) {
         if (i > .6) {
           if (!e) {
             if (i > .8) {
-              base = autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content);
+              base = globalThis[autoP.argsX[0]].apply(this, autoP.content);
             }
             else {
               eQueryObject = {

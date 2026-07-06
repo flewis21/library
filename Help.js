@@ -81,23 +81,22 @@ function crmT(func) {
 class RelatedFunctions {
   constructor(func) {
     this.func = func;
-    let appList = Object.keys(autoGlobe.globalThis);
-    var lowCapApp = appList.map(function (item) {
+    this.appList = freqP.functionRegistry.fileList;
+    this.lowCapApp = this.appList.map(function (item) {
       return item.toLowerCase();
     });
-    let lowCapFunc;
+    this.lowCapFunc = null;
     if (Array.isArray(this.func)) {
-      lowCapFunc = this.func.join("").toLowerCase().split(",");
+      this.lowCapFunc = this.func.join("").toLowerCase().split(",");
     } else if (typeof this.func === "string" && this.func) {
-      lowCapFunc = this.func.toLowerCase();
+      this.lowCapFunc = this.func.toLowerCase();
     }
-    let funFirst;
-    if (Array.isArray(lowCapFunc)) {
-      funFirst = lowCapApp.indexOf(lowCapFunc[0]);
-    } else if (typeof lowCapFunc === "string" && lowCapFunc) {
-      funFirst = lowCapApp.indexOf(lowCapFunc);
+    this.funFirst = null;
+    if (Array.isArray(this.lowCapFunc)) {
+      this.funFirst = this.lowCapApp.indexOf(this.lowCapFunc[0]);
+    } else if (typeof this.lowCapFunc === "string" && this.lowCapFunc) {
+      this.funFirst = this.lowCapApp.indexOf(this.lowCapFunc);
     }
-    this.funFirst = funFirst;
   }
 };
 
