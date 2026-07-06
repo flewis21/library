@@ -20,7 +20,7 @@ function crmCalc(func) {
     lowCapFunc = func.toLowerCase();
   }
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(freqP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nlowCapFunc is !" +
@@ -44,7 +44,7 @@ function crmT(func) {
   //     ")\n " +
   //     arguments.callee.caller.name,
   // );
-  var appList = autoP.functionRegistry.fileList;
+  var appList = freqP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     appList.push(key);
@@ -60,7 +60,7 @@ function crmT(func) {
     lowCapFunc = func.toLowerCase();
   }
   // console.log(
-  //   autoP.functionRegistry.time +
+  //   freqP.functionRegistry.time +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nlowCapFunc is !" +
@@ -81,7 +81,7 @@ function crmT(func) {
 class RelatedFunctions {
   constructor(func) {
     this.func = func;
-    this.appList = freqP.functionRegistry.fileList;
+    this.appList = Object.keys(globalThis);
     this.lowCapApp = this.appList.map(function (item) {
       return item.toLowerCase();
     });
@@ -104,7 +104,7 @@ var gsFiles = function() {
   // console.log(
   //   "boilerplate Help: line 84\ngsFiles(: )\n " + arguments.callee.caller.name,
   // );
-  var gsFileList = autoP.functionRegistry.fileList;
+  var gsFileList = freqP.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     gsFileList.push(key);
@@ -156,174 +156,172 @@ function isValidUrl(text) {
   validUrlResult.hostname = "";
   validUrlResult.pathname = "";
   validUrlResult.query=  "";
-  let rndRes = [];
-  var allMatches = [];
+  validUrlResult.rndRes = [];
+  validUrlResult.matches = [];
+  validUrlResult.allMatches = [];
   if (typeof text !== "string" || text?.length === 0) {
+    console.log("No url string or string length is 0!\nreturning: ",validUrlResult)
     return validUrlResult;
   }
-  var urlRegex =
-    /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-  validUrlResult.matches = text.match(urlRegex);
-  console.log("matches = " + validUrlResult.matches);
-  if (!validUrlResult.matches) {
-    let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-    if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
-      validUrlResult.matches = searchLinkDrive?.dataTree;
-    }
-    else {
-      validUrlResult.matches = [];
-    }
-    console.log("matches to return = " + validUrlResult.matches);
-    if (searchLinkDrive?.filedMain) {
-      autoP.functionRegistry.vidTree();
-      let vidSheetVals = autoP.functionRegistry.getVideoList();
-      let vidData = [];
-      let vidVals = Object.values(vidSheetVals);
-      vidVals.forEach((val) => {
-        let inVVals = Object.values(val);
-        inVVals.forEach((inV) => {
-          let truInv = autoP.trueVfalse(inV);
-          if (truInv) {
-            vidData.push(inV);
-          } 
-          else {
-            return;
+  else {
+    let urlRegex =
+      /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
+    validUrlResult.matches.push(text.match(urlRegex));
+    console.log("matches = " + validUrlResult.matches);
+    if (validUrlResult.matches.length === 0) {
+      let searchLinkDrive = new DriveFiles(text, freqP.functionRegistry.time);
+      if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
+        validUrlResult.matches = searchLinkDrive?.dataTree;
+      }
+      console.log("matches to return = " + validUrlResult.matches);
+      if (searchLinkDrive?.filedMain) {
+        freqP.functionRegistry.vidTree();
+        let vidSheetVals = freqP.functionRegistry.getVideoList();
+        let vidData = [];
+        let vidVals = Object.values(vidSheetVals);
+        vidVals.forEach((val) => {
+          let inVVals = Object.values(val);
+          inVVals.forEach((inV) => {
+            let truInv = freqP.trueVfalse(inV);
+            if (truInv) {
+              vidData.push(inV);
+            } 
+            else {
+              return;
+            }
+          });
+        });
+        [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
+          if (fileUrl && validUrlResult.rndRes.indexOf(fileUrl) === -1) {
+            if (vidData?.indexOf(fileUrl) !== -1) {
+              validUrlResult.rndRes.push(fileUrl);
+              return;
+            } 
+            else {
+              validUrlResult.rndRes.push(fileUrl);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fileUrl,
+                  videodescription: text,
+                }),
+              );
+            }
           }
         });
-      });
-      [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
-        if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-          if (vidData?.indexOf(fileUrl) !== -1) {
-            rndRes.push(fileUrl);
-            return;
-          } 
-          else {
-            rndRes.push(fileUrl);
-            updateQuote(
-              JSON.stringify({
-                name: "videoSheet",
-                number: parseInt("001", 8),
-                videoid: fileUrl,
-                videodescription: text,
-              }),
-            );
-          }
-        }
-      });
-    }
-    return validUrlResult
-  }
-  console.log("rndRes = " + rndRes);
-  allMatches = validUrlResult.matches ? [...validUrlResult.matches] : [...rndRes];
-  console.log(`allMatches = matches ? [...${allMatches}]`);
-  if (allMatches?.length > 0) {
-    let tempUrlResult = {};
-    tempUrlResult.currentProtocol = "";
-    tempUrlResult.currentHostname = "";
-    tempUrlResult.currentPathname = "";
-    tempUrlResult.currentQuery = "";
-    allMatches.forEach((url) => {
-      let protocolEnd = url.indexOf("://");
-      if (protocolEnd !== -1) {
-        tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
-        url = url.substring(protocolEnd + 3);
       }
-      else {
-        return validUrlResult
-        if (rndRes.length === 0) {
-          let searchLinkDrive = new DriveFiles(text, autoP.functionRegistry.time);
-          if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
-            validUrlResult.matches = searchLinkDrive?.dataTree;
-          }
-          else {
-            validUrlResult.matches = [];
-          }
-          console.log("matches to return = " + validUrlResult.matches);
-          if (searchLinkDrive?.filedMain) {
-            [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
-              if (fileUrl && rndRes.indexOf(fileUrl) === -1) {
-                autoP.functionRegistry.vidTree();
-                let vidSheetVals = autoP.functionRegistry.getVideoList();
-                let vidData = [];
-                let vidVals = Object.values(vidSheetVals);
-                vidVals.forEach((val) => {
-                  let inVVals = Object.values(val);
-                  inVVals.forEach((inV) => {
-                    let truInv = autoP.trueVfalse(inV);
-                    if (truInv) {
-                      vidData.push(inV);
-                    } 
-                    else {
-                      return;
-                    }
+      return validUrlResult
+    }
+    console.log("rndRes = " + validUrlResult.rndRes);
+    validUrlResult.allMatches = validUrlResult.matches ? validUrlResult.matches : validUrlResult.rndRes;
+    console.log(`allMatches = matches ? [...${validUrlResult.allMatches}]`);
+    if (validUrlResult.allMatches?.length > 0) {
+      let tempUrlResult = {};
+      tempUrlResult.currentProtocol = "";
+      tempUrlResult.currentHostname = "";
+      tempUrlResult.currentPathname = "";
+      tempUrlResult.currentQuery = "";
+      validUrlResult.allMatches.forEach((url) => {
+        let protocolEnd = url.indexOf("://");
+        if (protocolEnd !== -1) {
+          tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
+          url = url.substring(protocolEnd + 3);
+        }
+        else {
+          return validUrlResult
+          if (validUrlResult.rndRes.length === 0) {
+            let searchLinkDrive = new DriveFiles(text, freqP.functionRegistry.time);
+            if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
+              validUrlResult.matches = searchLinkDrive?.dataTree;
+            }
+            console.log("matches to return = " + validUrlResult.matches);
+            if (searchLinkDrive?.filedMain) {
+              [searchLinkDrive?.filedMain]?.forEach((fileUrl) => {
+                if (fileUrl && validUrlResult.rndRes.indexOf(fileUrl) === -1) {
+                  freqP.functionRegistry.vidTree();
+                  let vidSheetVals = freqP.functionRegistry.getVideoList();
+                  let vidData = [];
+                  let vidVals = Object.values(vidSheetVals);
+                  vidVals.forEach((val) => {
+                    let inVVals = Object.values(val);
+                    inVVals.forEach((inV) => {
+                      let truInv = freqP.trueVfalse(inV);
+                      if (truInv) {
+                        vidData.push(inV);
+                      } 
+                      else {
+                        return;
+                      }
+                    });
                   });
-                });
-                if (vidData?.indexOf(fileUrl) !== -1) {
-                  rndRes.push(fileUrl);
-                  return;
-                } 
-                else {
-                  rndRes.push(fileUrl);
-                  updateQuote(
-                    JSON.stringify({
-                      name: "videoSheet",
-                      number: parseInt("001", 8),
-                      videoid: fileUrl,
-                      videodescription: text,
-                    }),
-                  );
+                  if (vidData?.indexOf(fileUrl) !== -1) {
+                    validUrlResult.rndRes.push(fileUrl);
+                    return;
+                  } 
+                  else {
+                    validUrlResult.rndRes.push(fileUrl);
+                    updateQuote(
+                      JSON.stringify({
+                        name: "videoSheet",
+                        number: parseInt("001", 8),
+                        videoid: fileUrl,
+                        videodescription: text,
+                      }),
+                    );
+                  }
                 }
+              });
+              validUrlResult.matches = searchLinkDrive?.dataTree
+              tempUrlResult.currentProtocol = filedMain.substring(0, protocolEnd + 3);
+              url = filedMain.substring(protocolEnd + 3);
+            }
+            else {
+              if (!searchLinkDrive?.filedMain) {
+                tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
+                url = url.substring(protocolEnd + 3);
               }
-            });
-            validUrlResult.matches = searchLinkDrive?.dataTree
-            tempUrlResult.currentProtocol = filedMain.substring(0, protocolEnd + 3);
-            url = filedMain.substring(protocolEnd + 3);
+            }
           }
           else {
-            if (!searchLinkDrive?.filedMain) {
-              tempUrlResult.currentProtocol = url.substring(0, protocolEnd + 3);
-              url = url.substring(protocolEnd + 3);
+            if (validUrlResult.rndRes.length > 0) {
+              return validUrlResult
+              tempUrlResult.currentProtocol = validUrlResult.rndRes[0].substring(0, protocolEnd + 3);
+              url = validUrlResult.rndRes[0].substring(protocolEnd + 3);
             }
           }
         }
-        else {
-          if (rndRes.length > 0) {
-            return validUrlResult
-            tempUrlResult.currentProtocol = rndRes[0].substring(0, protocolEnd + 3);
-            url = rndRes[0].substring(protocolEnd + 3);
+        let hostnameEnd = url.indexOf("/");
+        if (hostnameEnd !== -1) {
+          tempUrlResult.currentHostname = url.substring(0, hostnameEnd);
+          tempUrlResult.currentPathname = url.substring(hostnameEnd);
+        } else {
+          tempUrlResult.currentHostname = url;
+        }
+        let queryStart = validUrlResult.pathname.indexOf("?");
+        if (queryStart !== -1) {
+          currentQuery = validUrlResult.pathname.substring(queryStart);
+          currentPathname = validUrlResult.pathname.substring(0, queryStart);
+        }
+        let hostnameRegex =
+          /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
+        if (tempUrlResult.currentHostname && hostnameRegex.test(tempUrlResult.currentHostname)) {
+          if (tempUrlResult.currentProtocol && tempUrlResult.currentHostname) {
+            validUrlResult.protocol = tempUrlResult.currentProtocol;
+            validUrlResult.hostname = tempUrlResult.currentHostname;
+            validUrlResult.pathname = tempUrlResult.currentPathname;
+            validUrlResult.query = tempUrlResult.currentQuery;
+            validUrlResult.url =
+              tempUrlResult.currentProtocol +
+              tempUrlResult.currentHostname +
+              tempUrlResult.currentPathname +
+              tempUrlResult.currentQuery;
           }
         }
-      }
-      let hostnameEnd = url.indexOf("/");
-      if (hostnameEnd !== -1) {
-        tempUrlResult.currentHostname = url.substring(0, hostnameEnd);
-        tempUrlResult.currentPathname = url.substring(hostnameEnd);
-      } else {
-        tempUrlResult.currentHostname = url;
-      }
-      let queryStart = validUrlResult.pathname.indexOf("?");
-      if (queryStart !== -1) {
-        currentQuery = validUrlResult.pathname.substring(queryStart);
-        currentPathname = validUrlResult.pathname.substring(0, queryStart);
-      }
-      let hostnameRegex =
-        /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-      if (tempUrlResult.currentHostname && hostnameRegex.test(tempUrlResult.currentHostname)) {
-        if (tempUrlResult.currentProtocol && tempUrlResult.currentHostname) {
-          validUrlResult.protocol = tempUrlResult.currentProtocol;
-          validUrlResult.hostname = tempUrlResult.currentHostname;
-          validUrlResult.pathname = tempUrlResult.currentPathname;
-          validUrlResult.query = tempUrlResult.currentQuery;
-          validUrlResult.url =
-            tempUrlResult.currentProtocol +
-            tempUrlResult.currentHostname +
-            tempUrlResult.currentPathname +
-            tempUrlResult.currentQuery;
-        }
-      }
-    });
+      });
+    }
+    return validUrlResult;
   }
-  return validUrlResult;
 }
 
 // const videoSearch = [urlDataSource(url || getUrl(ScriptApp), null, {muteHttpExceptions:true, mode:"no-cors"})];
@@ -339,7 +337,7 @@ function mis(text, maxRetries = 3) {
       ")\n ",
   );
   var executed = 0;
-  let misAuto = autoP;
+  let misAuto = freqP;
   if (text?.indexOf(",") === -1) {
     var validUrl = isValidUrl(text);
     executed++;
@@ -358,7 +356,7 @@ function mis(text, maxRetries = 3) {
       if (truSup) {
         Logger.log("function - " + supFunc.func);
       }
-      var funcSup = autoP.functionRegistry.fileList;
+      var funcSup = freqP.functionRegistry.fileList;
       executed++;
       var rndSup =
         funcSup[Math.floor(Math.random() * Math.floor(funcSup.length))];
@@ -386,7 +384,7 @@ function mis(text, maxRetries = 3) {
           formMaker(
             [text].join("").toUpperCase(),
             "misForms",
-            autoP.functionRegistry.time,
+            freqP.functionRegistry.time,
           );
         executed++;
         if (typeof form === "object") {
@@ -438,7 +436,7 @@ function mis(text, maxRetries = 3) {
     // if (supFunc.func) {
     // if (supFunc.args) {
     //     var html =
-    //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: "100%"; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+    //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: "100%"; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
     // = document.getElementById("breakUrl");</script>`);
     //     html.url =
     //       getScriptUrl().toString() + "?func=" + fx + "&args=" + payLoad;
@@ -448,14 +446,14 @@ function mis(text, maxRetries = 3) {
     // } else if (!supFunc.args) {
     // const fx = supFunc.func;
     //     var html =
-    //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+    //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
     // = document.getElementById("breakUrl");</script>`);
     //     html.url = getScriptUrl().toString() + "?func=" + fx;
     // html.nav = fx;
     //     return html.evaluate().getContent();
     // }
 
-    let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+    let htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
     = document.getElementById("breakUrl");</script>`;
     let html = HtmlService.createTemplate(htmlContent);
     html.formUrl =
@@ -509,7 +507,7 @@ function mis(text, maxRetries = 3) {
     } catch (balance) {
       var form =
         driveManager([formattedPayload][0] || payLoad) ||
-        formMaker(payT, "misForms", autoP.functionRegistry.time);
+        formMaker(payT, "misForms", freqP.functionRegistry.time);
       executed++;
 
       if (typeof form === "object") {
@@ -607,7 +605,7 @@ function mis(text, maxRetries = 3) {
           formMaker(
             [JSON.stringify(text)].join("").toUpperCase(),
             "misForms",
-            autoP.functionRegistry.time,
+            freqP.functionRegistry.time,
           );
         executed++;
 
@@ -769,7 +767,7 @@ function mis(text, maxRetries = 3) {
                   formMaker(
                     [JSON.stringify(text)].join("").toUpperCase(),
                     "misForms",
-                    autoP.functionRegistry.time,
+                    freqP.functionRegistry.time,
                   );
                 executed++;
 
@@ -922,7 +920,7 @@ function mis(text, maxRetries = 3) {
                   formMaker(
                     [JSON.stringify(text)].join("").toUpperCase(),
                     "misForms",
-                    autoP.functionRegistry.time,
+                    freqP.functionRegistry.time,
                   );
                 executed++;
 
@@ -1092,7 +1090,7 @@ function mis(text, maxRetries = 3) {
 //   keys.forEach((pro) => {
 //     var bPro = crmT(pro);
 //     if (bPro >= 0) {
-//       argsX.push(autoP.functionRegistry.fileList[bPro]);
+//       argsX.push(freqP.functionRegistry.fileList[bPro]);
 //     } else {
 //       content.push(pro);
 //     }
@@ -1154,7 +1152,7 @@ function mis(text, maxRetries = 3) {
 //         ]
 //           .toString()
 //           .split(" ");
-//         var allFolders = autoP.functionRegistry.getFolderList();
+//         var allFolders = freqP.functionRegistry.getFolderList();
 //         content.forEach((item) => {
 //           console.log('Value of "item" at start of this iteration:', item); // <-- This will show the problem.
 //           declaredParams.forEach((declaredParam) => {
@@ -1181,7 +1179,7 @@ function mis(text, maxRetries = 3) {
 //         ]
 //           .toString()
 //           .split(" ");
-//         var allFolders = autoP.functionRegistry.getFolderList();
+//         var allFolders = freqP.functionRegistry.getFolderList();
 //         content.forEach((paramName, index) => {
 //           var declaredParamName = declaredParams[index]; // The actual declared parameter name (e.g., "e", "time", "url")
 //           var userProvidedValue = orderedArgs[index]; // This is the value that came from the user, or null if not mapped initially
@@ -1203,7 +1201,7 @@ function mis(text, maxRetries = 3) {
 //                         ["file", "uiAccess"],
 //                       ],
 //                     ],
-//                     autoP.functionRegistry.time,
+//                     freqP.functionRegistry.time,
 //                   );
 //             resolvedArgs.push(JSON.stringify(args["e"]));
 //           } else if (
@@ -1213,7 +1211,7 @@ function mis(text, maxRetries = 3) {
 //             args["time"] =
 //               userProvidedValue !== null && userProvidedValue !== undefined
 //                 ? userProvidedValue
-//                 : autoP.functionRegistry.time;
+//                 : freqP.functionRegistry.time;
 //             resolvedArgs.push(args["time"]);
 //           } else if (
 //             paramName === "data" ||
@@ -1236,7 +1234,7 @@ function mis(text, maxRetries = 3) {
 //                     ["args", [result, ...content]],
 //                   ],
 //                 ],
-//                 autoP.functionRegistry.time,
+//                 freqP.functionRegistry.time,
 //               );
 //               var funcUno = rndE.parameter["func"];
 //               var funcDos = rndE.parameter["args"];
@@ -1563,8 +1561,8 @@ function mis(text, maxRetries = 3) {
 //                 args["companyNameUrl"] = userProvidedValue;
 //               }
 //             } else {
-//               autoP.functionRegistry.gTree;
-//               var folder = autoP.functionRegistry.getFolderList()[numVarRnd];
+//               freqP.functionRegistry.gTree;
+//               var folder = freqP.functionRegistry.getFolderList()[numVarRnd];
 //               if (paramName === "url") {
 //                 args["url"] = fileBrowser(folder).url;
 //               } else if (paramName === "companyNameUrl") {
@@ -1604,7 +1602,7 @@ function mis(text, maxRetries = 3) {
 //             paramName === "fileX" ||
 //             (paramName === null && declaredParamName === "fileX")
 //           ) {
-//             var folderX = autoP.functionRegistry.getFolderList()[numVarRnd()];
+//             var folderX = freqP.functionRegistry.getFolderList()[numVarRnd()];
 //             var folderRoot = DriveApp.getFoldersByName(folderX);
 //             let fileXName = "undefined";
 //             if (folderRoot.hasNext) {
@@ -1843,7 +1841,7 @@ function misSt(func, someArgs) {
       arguments.callee.caller.name,
   );
   var executed = 0;
-  let misStAuto = autoP;
+  let misStAuto = freqP;
 
   // var funcUno = decodeURIComponent(func);
   // var funcDos = decodeURIComponent(someArgs);
@@ -1853,7 +1851,7 @@ function misSt(func, someArgs) {
   console.log("trueSomeArgs = " + trueSomeArgs, executed++);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
-    : autoP.functionRegistry.paramsList;
+    : freqP.functionRegistry.paramsList;
   console.log("funcUno = " + funcUno, executed++);
   var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = randNum(funcUno.toString()); // Assuming randNum is globally accessible
@@ -1926,7 +1924,7 @@ function misSt(func, someArgs) {
                   : crmT(subA);
               console.log("keyProParams = " + keyProParams, executed++);
               if (keyProParams >= 0) {
-                argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+                argsX.push(freqP.functionRegistry.fileList[keyProParams]);
                 console.log("argsX = " + argsX, executed++);
               } 
               else {
@@ -1970,7 +1968,7 @@ function misSt(func, someArgs) {
                 : crmT(subParam);
             console.log("keyProParams = " + keyProParams, executed++);
             if (keyProParams >= 0) {
-              argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+              argsX.push(freqP.functionRegistry.fileList[keyProParams]);
               console.log("argsX = " + argsX, executed++);
             } 
             else {
@@ -2010,7 +2008,7 @@ function misSt(func, someArgs) {
                 : crmT(pro);
             console.log("keyProParams = " + keyProParams, executed++);
             if (keyProParams >= 0) {
-              argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+              argsX.push(freqP.functionRegistry.fileList[keyProParams]);
               console.log("argsX = " + argsX, executed++);
             } 
             else {
@@ -2031,7 +2029,7 @@ function misSt(func, someArgs) {
       // Check if there are functions to process
       var allErrors = {};
       let arrDRnd = null;
-      var fParams = autoP.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
+      var fParams = freqP.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
       console.log("fParams = " + fParams.slice(0, 1), executed++);
       console.log("global functions list length:", Object.keys(fParams).length);
       var resCount = 0;
@@ -2081,7 +2079,7 @@ function misSt(func, someArgs) {
 
           // First, populate contentMap with any named matches (if initialContent is not just positional)
           // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-          var htmlArray = autoP.functionRegistry.getHtmlList();
+          var htmlArray = freqP.functionRegistry.getHtmlList();
           // [
           //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
           // ]
@@ -2098,7 +2096,7 @@ function misSt(func, someArgs) {
                   ["args", [...initialContent]],
                 ],
               ],
-              autoP.functionRegistry.time,
+              freqP.functionRegistry.time,
             );
             console.log("rndE = " + rndE, executed++);
             var funcUnoMis = rndE.parameter["func"];
@@ -2241,7 +2239,7 @@ function misSt(func, someArgs) {
                         ["file", "uiAccess"],
                       ],
                     ],
-                    autoP.functionRegistry.time,
+                    freqP.functionRegistry.time,
                   );
                 } 
                 else {
@@ -2263,7 +2261,7 @@ function misSt(func, someArgs) {
                           ["file", "uiAccess"],
                         ],
                       ],
-                      autoP.functionRegistry.time,
+                      freqP.functionRegistry.time,
                     );
                   } 
                   else {
@@ -2277,7 +2275,7 @@ function misSt(func, someArgs) {
                             ["file", "uiAccess"],
                           ],
                         ],
-                        autoP.functionRegistry.time,
+                        freqP.functionRegistry.time,
                       );
                     }
                   }
@@ -2291,7 +2289,7 @@ function misSt(func, someArgs) {
                     // userProvidedValue !== null && userProvidedValue !== undefined
                     //   ? userProvidedValue
                     //   :
-                    autoP.functionRegistry.time;
+                    freqP.functionRegistry.time;
                   console.log("args[declaredParamName] = " + args[declaredParamName], executed++);
                   resolvedArgs.push(args[declaredParamName]);
                 } 
@@ -2312,7 +2310,7 @@ function misSt(func, someArgs) {
                     //       ["args", [result, ...initialContent]],
                     //     ],
                     //   ],
-                    //   autoP.functionRegistry.time,
+                    //   freqP.functionRegistry.time,
                     // );
                     // var funcUnoMis = rndE.parameter["func"];
                     // var funcDosMis = rndE.parameter["args"];
@@ -2533,8 +2531,8 @@ function misSt(func, someArgs) {
                             // ) {
                             //   args[declaredParamName] = userProvidedValue;
                             // } else {
-                            // Assuming autoP.functionRegistry.gTree and fileBrowser are accessible
-                            var folder = autoP.functionRegistry.getFolderList()[numVarRnd];
+                            // Assuming freqP.functionRegistry.gTree and fileBrowser are accessible
+                            var folder = freqP.functionRegistry.getFolderList()[numVarRnd];
                             console.log("folder = " + folder, executed++);
                             args[declaredParamName] = fileBrowser(folder).url;
                             console.log("args[declaredParamName] = " + args[declaredParamName], executed++);
@@ -2568,7 +2566,7 @@ function misSt(func, someArgs) {
                               } 
                               else {
                                 if (declaredParamName === "fileX") {
-                                  var folderX = autoP.functionRegistry.getFolderList()[numVarRnd()];
+                                  var folderX = freqP.functionRegistry.getFolderList()[numVarRnd()];
                                   console.log("folderX = " + folderX, executed++);
                                   var folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
                                   let fileXName = "undefined";
@@ -2602,7 +2600,7 @@ function misSt(func, someArgs) {
                                       // userProvidedValue !== null && userProvidedValue !== undefined
                                       //   ? userProvidedValue
                                       //   :
-                                      allFolders = autoP.functionRegistry.getFolderList();
+                                      allFolders = freqP.functionRegistry.getFolderList();
                                     console.log("allFolders = " + allFolders, executed++);
                                     allFolders[numVarRnd]; // allFolders should be defined or passed
                                     resolvedArgs.push(args[declaredParamName]);
@@ -2889,11 +2887,11 @@ function resolveParams(func, someArgs) {
       someArgs +
       ") ",
   );
-  var trueFunc = autoP.trueVfalse(func);
-  var trueSomeArgs = autoP.trueVfalse(someArgs);
+  var trueFunc = freqP.trueVfalse(func);
+  var trueSomeArgs = freqP.trueVfalse(someArgs);
   var funcUno = trueFunc
     ? decodeURIComponent(func)
-    : autoP.functionRegistry.paramsList;
+    : freqP.functionRegistry.paramsList;
   var funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
   var numVarRnd = Math.floor(Math.random() * 25);
   let arrDRnd = null;
@@ -2901,7 +2899,7 @@ function resolveParams(func, someArgs) {
     var argsX = [];
     var content = [];
     var arrUno = Array.isArray(func);
-    var arrDos = autoP.trueVfalse(someArgs);
+    var arrDos = freqP.trueVfalse(someArgs);
     if (arrUno && arrDos) {
       var keys = Object.values(func).concat(someArgs);
     } else if (arrUno && !arrDos) {
@@ -2915,19 +2913,19 @@ function resolveParams(func, someArgs) {
       let keyPro = typeof pro === "object" || Array.isArray(pro) ? pro : [pro];
       let keyProParams;
       let realItem;
-      let keysArrArr = autoP.trueVfalse(Array.isArray(pro));
+      let keysArrArr = freqP.trueVfalse(Array.isArray(pro));
       if (keysArrArr) {
         let funcLimit = [];
         let paramLimit = [];
         pro.forEach((subParam, proIndex) => {
-          realItem = autoP.trueVfalse(subParam);
+          realItem = freqP.trueVfalse(subParam);
           if (realItem) {
             keyProParams =
               typeof subParam === "object" || Array.isArray(subParam)
                 ? crmT(subParam[proIndex])
                 : crmT(subParam);
             if (keyProParams >= 0) {
-              funcLimit.push(autoP.functionRegistry.fileList[keyProParams]);
+              funcLimit.push(freqP.functionRegistry.fileList[keyProParams]);
             } else {
               // keyProParams = ;
               if (typeof subParam === "object") {
@@ -2947,7 +2945,7 @@ function resolveParams(func, someArgs) {
           content.push(paramLimit);
         }
       } else {
-        realItem = autoP.trueVfalse(pro);
+        realItem = freqP.trueVfalse(pro);
         if (realItem) {
           for (var key in keyPro) {
             keyProParams =
@@ -2955,7 +2953,7 @@ function resolveParams(func, someArgs) {
                 ? crmT(pro[key])
                 : crmT(pro);
             if (keyProParams >= 0) {
-              argsX.push(autoP.functionRegistry.fileList[keyProParams]);
+              argsX.push(freqP.functionRegistry.fileList[keyProParams]);
             } else {
               // keyProParams = ;
               content.push(
@@ -2969,7 +2967,7 @@ function resolveParams(func, someArgs) {
     if (argsX && argsX.length > 0) {
       var allErrors = {};
       var allResolutions = {};
-      var fParams = autoP.functionRegistry.paramsList; //gsFParams();
+      var fParams = freqP.functionRegistry.paramsList; //gsFParams();
       var resCount = 0;
       argsX.forEach((result, argsXIndex) => {
         console.log("argsX result " + resCount + ": " + result);
@@ -3004,14 +3002,14 @@ function resolveParams(func, someArgs) {
           let realItem;
           declaredParams.forEach((declaredParam, declaredParamIndex) => {
             // content.forEach((item) => {
-            let declaredParamArrArr = autoP.trueVfalse(Array.isArray(declaredParam));
+            let declaredParamArrArr = freqP.trueVfalse(Array.isArray(declaredParam));
             if (declaredParamArrArr) {
               let paramLimit = 0;
               declaredParam.forEach((subParam, subParamIndex) => {
                 //item.forEach((subItem) => {
                 contentLimit.forEach((item, currentDeclaredIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  realItem = autoP.trueVfalse(subItem);
+                  realItem = freqP.trueVfalse(subItem);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3031,10 +3029,10 @@ function resolveParams(func, someArgs) {
               if (Array.isArray(contentLimit)) {
                 contentLimit.forEach((item, contentLimitIndex) => {
                   // declaredParams.forEach((declaredParam) => {
-                  let contentLimitArrArr = autoP.trueVfalse(Array.isArray(item));
+                  let contentLimitArrArr = freqP.trueVfalse(Array.isArray(item));
                   if (contentLimitArrArr) {
                     item.forEach((subItem, mapItemIndex) => {
-                      realItem = autoP.trueVfalse(subItem);
+                      realItem = freqP.trueVfalse(subItem);
                       if (realItem) {
                         // if (subItem === declaredParam) {
                         // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3052,7 +3050,7 @@ function resolveParams(func, someArgs) {
                       }
                     });
                   } else {
-                    realItem = autoP.trueVfalse(item);
+                    realItem = freqP.trueVfalse(item);
                     if (realItem) {
                       // if (subItem === declaredParam) {
                       // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3071,10 +3069,10 @@ function resolveParams(func, someArgs) {
                   }
                 });
               } else {
-                let contentArrArr = autoP.trueVfalse(Array.isArray(contentLimit));
+                let contentArrArr = freqP.trueVfalse(Array.isArray(contentLimit));
                 if (contentArrArr) {
                 } else {
-                  realItem = autoP.trueVfalse(contentLimit);
+                  realItem = freqP.trueVfalse(contentLimit);
                   if (realItem) {
                     // if (subItem === declaredParam) {
                     // // || item.toLowerCase().includes(declaredParam.toLowerCase()) || declaredParam.toLowerCase().includes(item.toLowerCase())) {
@@ -3134,7 +3132,7 @@ function resolveParams(func, someArgs) {
                       ["file", "uiAccess"],
                     ],
                   ],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
               } else if (
                 typeof result === "object" &&
@@ -3151,7 +3149,7 @@ function resolveParams(func, someArgs) {
                       ["file", "uiAccess"],
                     ],
                   ],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
               } else if (result !== null && result && result.name) {
                 args[declaredParamName] = objectOfS(
@@ -3163,7 +3161,7 @@ function resolveParams(func, someArgs) {
                       ["file", "uiAccess"],
                     ],
                   ],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
               }
               resolvedArgs.push(args[declaredParamName]);
@@ -3171,7 +3169,7 @@ function resolveParams(func, someArgs) {
               paramName === "time" ||
               (paramName === null && declaredParamName === "time")
             ) {
-              args[declaredParamName] = autoP.functionRegistry.time;
+              args[declaredParamName] = freqP.functionRegistry.time;
               resolvedArgs.push(args[declaredParamName]);
             } else if (
               paramName === "data" ||
@@ -3192,7 +3190,7 @@ function resolveParams(func, someArgs) {
                 var rndE = objectOfS(
                   ["parameter"],
                   [[["func", result]]],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
                 var funcUno = rndE.parameter["func"];
                 if (funcUno !== "resolvedParams") {
@@ -3215,7 +3213,7 @@ function resolveParams(func, someArgs) {
                       ["args", [...(orderedContent || result.parameters)]],
                     ],
                   ],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
                 var funcUno = rndE.parameter["func"];
                 var funcDos = rndE.parameter["args"];
@@ -3230,7 +3228,7 @@ function resolveParams(func, someArgs) {
                 var rndE = objectOfS(
                   ["parameter"],
                   [[["func", result.name]]],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
                 var funcUno = rndE.parameter["func"];
                 if (funcUno !== "resolvedParams") {
@@ -3318,8 +3316,8 @@ function resolveParams(func, someArgs) {
                 (declaredParamName === "url" ||
                   declaredParamName === "companyNameUrl"))
             ) {
-              autoP.functionRegistry.gTree;
-              var folder = autoP.functionRegistry.getFolderList()[numVarRnd];
+              freqP.functionRegistry.gTree;
+              var folder = freqP.functionRegistry.getFolderList()[numVarRnd];
               args[declaredParamName] =
                 fileBrowser(folder)?.url || driveManager();
               resolvedArgs.push(args[declaredParamName]);
@@ -3499,7 +3497,7 @@ function resolveParams(func, someArgs) {
 };
 
 var testClassResolve = function() {
-  let newRes = autoP
+  let newRes = freqP
   console.log("return = " + JSON.stringify(newRes));
 }
 
@@ -3570,7 +3568,7 @@ function seoCapital(url) {
                               <thead></thead>
                               <tbody>
                                 <tr style="justify-content: space-around;overflow: auto;border-radius: 3%;max-width: 100%;height: auto;display: block;margin: auto;">
-                                              <iframe src='${url}' id="w3Res" style="width: 100%;height: 100vh" allow="autoplay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></tr></tbody></table></div></div></div></div></div></div></div></div>
+                                              <iframe src='${url}' id="w3Res" style="width: 100%;height: 100vh" allow="freqPlay,encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen=true ></iframe></tr></tbody></table></div></div></div></div></div></div></div></div>
           <input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" />
           <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         </body>
@@ -3675,7 +3673,7 @@ function seoPastTime(searchString, time) {
       arguments.callee.caller.name,
   );
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(freqP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -3707,14 +3705,14 @@ function seoPastTime(searchString, time) {
     .join("")
     .replace(/,/g, ""); // .searchString().myNewArr;
   console.log("searchString = " + searchString, executed++);
-  var uniqueVid = seoYoutube(searchString, autoP.functionRegistry.time)?.myIdArr;
+  var uniqueVid = seoYoutube(searchString, freqP.functionRegistry.time)?.myIdArr;
   console.log("uniqueVid = " + uniqueVid, executed++);
   let fndOrd = [];
   while (fndOrd.length === 0) {
     var sorFndOrd = uniqueVid?.filter((vidObject) => {
-      var elaspeTime = autoP.functionRegistry.time;
+      var elaspeTime = freqP.functionRegistry.time;
       console.log("elaspeTime = " + elaspeTime, executed++);
-      var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+      var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
       console.log("timeToExecute = " + timeToExecute, executed++);
       if (
         vidObject.length === 11 &&
@@ -3821,16 +3819,16 @@ function seoPastTime(searchString, time) {
           .join("")
           .replace(/,/g, "") +
         ".com";
-      uniqueVid = seoYoutube(searchString, autoP.functionRegistry.time).myIdArr;
+      uniqueVid = seoYoutube(searchString, freqP.functionRegistry.time).myIdArr;
       console.log("uniqueVid = " + uniqueVid, executed++);
     }
   }
   if (fndOrd) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
-      var elaspeTime = autoP.functionRegistry.time;
+      var elaspeTime = freqP.functionRegistry.time;
       console.log("elaspeTime = " + elaspeTime, executed++);
-      var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+      var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
       console.log("timeToExecute = " + timeToExecute, executed++);
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
@@ -3891,7 +3889,7 @@ function seoYoutube(searchString, time) {
   //     arguments.callee.caller.name,
   // );
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nsearchString is !" +
@@ -3954,8 +3952,8 @@ function testlt() {
   // var arrNum = numVarRnd
   // var arrDRnd = appSort(arrNum);
   // var searchString = randomSubstance(0, arrDRnd?.length, arrDRnd).myNewArr;
-  var ssearchString = autoP.searchString().myNewArr;
-  var fParams = autoP.functionRegistry.paramsList;
+  var ssearchString = freqP.searchString().myNewArr;
+  var fParams = freqP.functionRegistry.paramsList;
   var result = fParams.find((rndS) => {
     return rndS.name === ssearchString;
   });
@@ -4021,8 +4019,8 @@ function vidPlaylist(tunPlay) {
   let vidResObj = {};
   var randomPlaylist = [];
   if (!tunPlay) {
-    autoP.functionRegistry.vidTree();
-    var vidSheetVals = autoP.functionRegistry.getVideoList();
+    freqP.functionRegistry.vidTree();
+    var vidSheetVals = freqP.functionRegistry.getVideoList();
     var vidKeys = Object.keys(vidSheetVals);
     vidKeys.forEach((key) => {
       let vidObj = vidSheetVals[key];

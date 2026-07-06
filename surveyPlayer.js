@@ -8,7 +8,7 @@ function surveyPlayer(searchString, joinString) {
       arguments.callee.caller.name,
   );
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nsearchString is !" +
@@ -29,7 +29,7 @@ function surveyPlayer(searchString, joinString) {
   // var eFolder = DriveApp.getFoldersByName(rndFol).next();
   // var folderFile = eFolder.getFilesByName("Code Editor");
 
-  var rndStr = autoP.uniqueItemArray();
+  var rndStr = freqP.uniqueItemArray();
 
   var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
 
@@ -46,7 +46,7 @@ function surveyPlayer(searchString, joinString) {
   var listGen = objectOfS(
     ["parameter"],
     [[["func", testGen]]],
-    autoP.functionRegistry.time,
+    freqP.functionRegistry.time,
   ).parameter["func"];
 
   var noList = [];

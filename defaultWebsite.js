@@ -14,7 +14,7 @@
 
 function appSort(numIndex, time) {
   // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
-  var titleArray = autoP.functionRegistry.getFileList();
+  var titleArray = freqP.functionRegistry.getFileList();
   // for (var key in globalThis) {
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelapsedTime: " + elapsedTime)
   //   if (typeof globalThis[key] == "function") {
@@ -72,8 +72,8 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = autoP.truUno;
-  let truDos = autoP.truDos;
+  let truUno = freqP.truUno;
+  let truDos = freqP.truDos;
   console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
@@ -81,17 +81,17 @@ var createFunctionResult = function (funcUno, funcDos) {
   try {
     let objVal = truDos? funcDos?.toString(): false;
     console.log("objVal\n" + [objVal]);
-    let truVal = autoP.trueVfalse(objVal);
+    let truVal = freqP.trueVfalse(objVal);
     console.log("truVal\n" + [truVal]);
     let rawUrlResult = null;
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
       isObjValUrl = isValidUrl(objVal);
       if (Array.isArray(isObjValUrl?.matches)) {
-        rawUrlResult = autoP.trueVfalse(isObjValUrl?.matches[0]);
+        rawUrlResult = freqP.trueVfalse(isObjValUrl?.matches[0]);
       }
       else {
-        rawUrlResult = autoP.trueVfalse(isObjValUrl?.matches);
+        rawUrlResult = freqP.trueVfalse(isObjValUrl?.matches);
       }
       console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
@@ -231,7 +231,7 @@ function createRandomFunction(searchString) {
   var executed = 0;
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
-    : autoP.functionRegistry.fileList;
+    : freqP.functionRegistry.fileList;
   // --- Create the script ---
   console.log("SCRIPT_TITLES",executed++);
   const scriptTitle =
@@ -243,7 +243,7 @@ function createRandomFunction(searchString) {
   console.log("isRequired",executed++);
 
   let fileIndex; //= crmT(scriptTitle)
-  let fileParams; //= autoP.functionRegistry.paramsList[fileIndex]
+  let fileParams; //= freqP.functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
   if (isRequired) {
@@ -256,10 +256,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, autoP.functionRegistry.time],
+          [scriptTitle, freqP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -279,7 +279,7 @@ function createRandomFunction(searchString) {
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = autoP.functionRegistry.paramsList[fileIndex];
+      fileParams = freqP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams.parameters]])[scriptTitle];
       console.log("tempObj",executed++);
@@ -294,10 +294,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, autoP.functionRegistry.time],
+          [scriptTitle, freqP.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -306,7 +306,7 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        // let funcX = driveManager(scriptTitle, autoP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -317,7 +317,7 @@ function createRandomFunction(searchString) {
       // console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = autoP.functionRegistry.paramsList[fileIndex];
+      fileParams = freqP.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
       let tempObj = IsMapped.mapout(mapArr, [...fileParams.parameters]);
@@ -669,7 +669,7 @@ var funcCalc = function() {
 
 function functionFlex(e) {
   let executed = 0;
-  let genAP = new AutoParams();
+  let genAP = new freqParams();
   let exampleObjectType = {
     a: "string",
     b: 123,
@@ -723,7 +723,7 @@ function functionFlex(e) {
     let funcUno = handles["exec"];
     let funcDos = handles["args"];
     // if (e && typeof e !== "object") {
-    //   e = objectOfS(["parameter"], [[["func", e]]], autoP.functionRegistry.time);
+    //   e = objectOfS(["parameter"], [[["func", e]]], freqP.functionRegistry.time);
     // }
     // Determine funcTres
     if (e && e.parameter["file"]) {
@@ -751,7 +751,7 @@ function functionFlex(e) {
     //   //           // ["args", argsEd],
     //   //         ],
     //   //       ],
-    //   //       autoP.functionRegistry.time,
+    //   //       freqP.functionRegistry.time,
     //   //     );
     //   //   } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
     //   //     if (argsEd.parameters && argsEd.parameters.length > 0) {
@@ -763,7 +763,7 @@ function functionFlex(e) {
     //   //             ["args", [...argsEd.parameters]],
     //   //           ],
     //   //         ],
-    //   //         autoP.functionRegistry.time,
+    //   //         freqP.functionRegistry.time,
     //   //       );
     //   //     } else {
     //   //       e = objectOfS(
@@ -774,7 +774,7 @@ function functionFlex(e) {
     //   //             // ["args", argsEd.name],
     //   //           ],
     //   //         ],
-    //   //         autoP.functionRegistry.time,
+    //   //         freqP.functionRegistry.time,
     //   //       );
     //   //     }
     //   //   } else {
@@ -787,7 +787,7 @@ function functionFlex(e) {
     //   //           ["args", "Invalid Entry"],
     //   //         ],
     //   //       ],
-    //   //       autoP.functionRegistry.time,
+    //   //       freqP.functionRegistry.time,
     //   //     );
     //   //   }
     //   //   Logger.log(">>> [LIBRARY] LIBRARY WEB APP's FINAL e: " + JSON.stringify(e));
@@ -796,7 +796,7 @@ function functionFlex(e) {
     // }
     // Logger.log(
     //   ">>> [LIBRARY] LIBRARY WEB APP's ELAPSED TIME: " +
-    //     autoP.functionRegistry.time +
+    //     freqP.functionRegistry.time +
     //     "\n" +
     //     arguments.callee.name +
     //     "\ne is !" +
@@ -846,7 +846,7 @@ function functionFlex(e) {
     var libFunc = funcUno || "rendFile";
     var foobarr = funcDos || funcTres || ""; // Redundant variable
 
-    var htmlArray = AutoParams.prototype.functionRegistry.htmlArray;
+    var htmlArray = freqParams.prototype.functionRegistry.htmlArray;
     // [`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
     // ]
     //   .toString()
@@ -1145,7 +1145,7 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
                                 document.close();
 
                               }
@@ -1562,13 +1562,13 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
                                 document.close();
 
                                 // const iframe = document.createElement("iframe");
                                 // iframe.id = "eventRes01";
                                 // iframe.title = "Dontime Life Website";
-                                // iframe.allow = "autoplay; encrypted-media";
+                                // iframe.allow = "freqPlay; encrypted-media";
                                 // iframe.allowFullscreen = true;
                                 // iframe.style.width = "100%";
                                 // iframe.style.height = "100%";
@@ -1870,7 +1870,7 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
                                 document.close();
 
                               }
@@ -2287,13 +2287,13 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoplay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
                                 document.close();
 
                                 // const iframe = document.createElement("iframe");
                                 // iframe.id = "eventRes01";
                                 // iframe.title = "Dontime Life Website";
-                                // iframe.allow = "autoplay; encrypted-media";
+                                // iframe.allow = "freqPlay; encrypted-media";
                                 // iframe.allowFullscreen = true;
                                 // iframe.style.width = "100%";
                                 // iframe.style.height = "100%";
@@ -2705,7 +2705,7 @@ var getUrlResponse = function (url, options) {
                 supUrl = location;
                 gURObj.link = supUrl;
                 let responseObj = {
-                  dataStr: vidFactor(htmlData, autoP.functionRegistry.time).vidArray,
+                  dataStr: vidFactor(htmlData, freqP.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
               }
@@ -2717,7 +2717,7 @@ var getUrlResponse = function (url, options) {
                 supUrl = url;
                 gURObj.link = supUrl;
                 let responseObj = {
-                  dataStr: vidFactor(location, autoP.functionRegistry.time).vidArray,
+                  dataStr: vidFactor(location, freqP.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
               }
@@ -2732,7 +2732,7 @@ var getUrlResponse = function (url, options) {
     catch (l) {
       gURObj.app = l;
       let responseObj = {
-        dataStr: vidFactor(l, autoP.functionRegistry.time).vidArray,
+        dataStr: vidFactor(l, freqP.functionRegistry.time).vidArray,
       };
       gURObj.index = responseObj;
       Logger.log("Error response received: " + l.stack);
@@ -2761,7 +2761,7 @@ var getUrlResponse = function (url, options) {
     console.log("Invalid input, ", JSON.stringify([url, options]));
     gURObj.app = "Invalid input, " + JSON.stringify([url, options]);
     let responseObj = {
-      dataStr: vidFactor("Invalid input, " + JSON.stringify([url, options]), autoP.functionRegistry.time).vidArray,
+      dataStr: vidFactor("Invalid input, " + JSON.stringify([url, options]), freqP.functionRegistry.time).vidArray,
     };
     gURObj.index = responseObj;
     gURObj.link = url;

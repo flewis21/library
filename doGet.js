@@ -65,7 +65,7 @@ function doGet(e) {
           ["action", "getData"],
         ],
       ],
-      autoP.functionRegistry.time,
+      freqP.functionRegistry.time,
     );
   }
   // var noEmptyE = Object?.keys(e).length;
@@ -73,7 +73,7 @@ function doGet(e) {
   // var nonPopulatedE = Object?.values(e).length;
   // console.log("Object?.values(e).length", Object?.values(e));
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(freqP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -95,13 +95,13 @@ function doGet(e) {
   //   } 
   //   else {
   //     if (e && typeof e !== "object") {
-  //       e = objectOfS(["parameter"], [[["q", e]]], autoP.functionRegistry.time);
+  //       e = objectOfS(["parameter"], [[["q", e]]], freqP.functionRegistry.time);
   //       console.log("e not an object - redefined: e = " + e, executed++ );
   //       return functionFlex(e);
   //     }
   //   }
   // }
-  let titleArray = autoP.functionRegistry.getFileList();
+  let titleArray = freqP.functionRegistry.getFileList();
   if (e && typeof e === "object" && e.parameter && e.parameter["args"]) {
     console.log("Executed " + e.parameter["args"], [e && typeof e === "object" && e.parameter && e.parameter["args"]]);
     var content = e.parameter["args"];
@@ -112,7 +112,7 @@ function doGet(e) {
   //     titleArray.push(key);
   //   }
   // }
-  var lowCapApp = [AutoParams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
+  var lowCapApp = [freqParams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {
@@ -122,7 +122,7 @@ function doGet(e) {
   };
   if (fx && typeof globalThis[fx] === "function") {
     console.log("Executed " + fx, [fx && typeof globalThis[fx] === "function"]);
-    var rndStr = autoP.searchString().myNewArr;
+    var rndStr = freqP.searchString().myNewArr;
     return functionFlex(e);
   } 
   else {
@@ -370,7 +370,7 @@ function doGet(e) {
                               } 
                               else {
                                 let libFunc = "rendFile";
-                                let htmlArray = AutoParams.prototype.functionRegistry.htmlArray
+                                let htmlArray = freqParams.prototype.functionRegistry.htmlArray
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
                                 let renF = RenderFile.fileRender(args,{payL: payload},args)
@@ -492,7 +492,7 @@ function handleRequest(e) {
 function handleGetData(e) {
   var executed = 0;
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
-  var htmlList = autoP.functionRegistry.getHtmlList();
+  var htmlList = freqP.functionRegistry.getHtmlList();
   executed++;
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
@@ -585,7 +585,7 @@ function handleGetData(e) {
   //         ["action", "getData"],
   //       ],
   //     ],
-  //     autoP.functionRegistry.time,
+  //     freqP.functionRegistry.time,
   //   );
   //   console.log(JSON.stringify(rndE));
   // }
@@ -630,7 +630,7 @@ function handleGetData(e) {
               `previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `,
               executed,
             );
-            var htmlArray = autoP.functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
+            var htmlArray = freqP.functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
             executed++;
             if (funcTres) {
               if (Array.isArray(funcTres)) {
@@ -726,7 +726,7 @@ function handleGetData(e) {
                   // ["args", argsEd],
                 ],
               ],
-              autoP.functionRegistry.time,
+              freqP.functionRegistry.time,
             );
             executed++;
           } else if (typeof argsEd === "object" && argsEd !== null) {
@@ -744,7 +744,7 @@ function handleGetData(e) {
                     ["args", [...Object.values(argsEd)[0]]],
                   ],
                 ],
-                autoP.functionRegistry.time,
+                freqP.functionRegistry.time,
               );
               executed++;
             } else {
@@ -761,7 +761,7 @@ function handleGetData(e) {
                     // ["args", argsEd.name],
                   ],
                 ],
-                autoP.functionRegistry.time,
+                freqP.functionRegistry.time,
               );
               executed++;
             }
@@ -787,7 +787,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                autoP.functionRegistry.time,
+                freqP.functionRegistry.time,
               );
               executed++;
             } else {
@@ -805,7 +805,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                autoP.functionRegistry.time,
+                freqP.functionRegistry.time,
               );
               executed++;
             }
@@ -825,7 +825,7 @@ function handleGetData(e) {
     }
   }
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\ne is !" +
@@ -881,7 +881,7 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = autoP.trueVfalse(isObjValUrl);
+    let rawUrlResult = freqP.trueVfalse(isObjValUrl);
     executed++;
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
@@ -910,7 +910,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && autoP.trueVfalse(funcDos)) {
+      } else if (typeof funcDos !== "object" && freqP.trueVfalse(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
@@ -1522,13 +1522,20 @@ function handleGetData(e) {
 var globalHandleGetData = function (rawFuncResult) {
   var payLoad = {}; // Initialize payload
   var executed = 0;
-  var htmlList = autoP.functionRegistry.getHtmlList();
+  var htmlList = freqP.functionRegistry.getHtmlList();
   // --- BEGIN Refactored payLoad processing ---
   let appL = "";
   let iframeSrc =
     "https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"; // Default iframe src
   let feed = "";
   let data = {};
+  data["message"] = {};
+  data.message["content"] = null;
+  data.message["info"] = null;
+  data.message["link"] = null;
+  data["timestamp"] = new Date();
+  data["pL"] = payLoad;
+  data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
   executed++;
   try {
     // Helper function to process any value (rawFuncResult or a nested property like .app)
@@ -1907,33 +1914,33 @@ var globalHandleGetData = function (rawFuncResult) {
     // Now, use the structured 'payLoad' to set the final content variables
     // (This part needs adjustments to handle the new "url" type)
     if (payLoad.type === "html") {
-      iframeSrc = payLoad.dataIndex? payLoad.data:iframeSrc; // Assign iframeSrc
-      appL = payLoad.dataIndex? payLoad.dataIndex:payLoad.data;
-      feed = `${payLoad.link}`;
+      data.message["content"] = payLoad.dataIndex? payLoad.data:iframeSrc; // Assign iframeSrc
+      data.message["info"] = payLoad.dataIndex? payLoad.dataIndex:payLoad.data;
+      data.message["link"] = `${payLoad.link}`;
       // var seoHtml = seoCapital(iframeSrc);
       executed++;
       // return RenderTemplate.templateRender(rawFuncResult, { payL: payLoad }, payLoad.type);
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
-      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
-      appL = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
-      feed = payLoad.link;
+      data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
+      data.message["info"] = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
+      data.message["link"] = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
       //   return RenderTemplate.templateRender(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
     } else if (payLoad.type === "jsonData") {
-      iframeSrc = payLoad.data || iframeSrc; // Assign iframeSrc
-      appL = JSON.stringify(payLoad.dataIndex, null, 2);
-      feed = payLoad.link;
+      data.message["content"] = payLoad.data || iframeSrc; // Assign iframeSrc
+      data.message["info"] = JSON.stringify(payLoad.dataIndex, null, 2);
+      data.message["link"] = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
       //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
     //iframeSrc in tenary
     else if (payLoad.type === "text") {
-      iframeSrc = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
-      appL = payLoad.data || payLoad.dataData;
-      feed = payLoad.link;
+      data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
+      data.message["info"] = payLoad.data || payLoad.dataData;
+      data.message["link"] = payLoad.link;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
       //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
@@ -1941,66 +1948,66 @@ var globalHandleGetData = function (rawFuncResult) {
       // Here, if payLoad.data is an object, you need to decide how to display it.
       // It could contain sub-properties you want to render.
       if (payLoad.data.html || payLoad.data.app) {
-        appL =
+        data.message["info"] =
           payLoad.data.html ||
           payLoad.data.app ||
           payLoad.data ||
           payLoad.dataData;
         // If the object itself contains a URL, use it for iframeSrc
-        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+        data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
         //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       } else if (payLoad.data.url) {
         // If the object explicitly has a 'url' property
-        iframeSrc = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-        appL = `URL provided: ${payLoad.data || payLoad.dataData}`;
-        feed = `URL provided: ${payLoad.link}`;
+        data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+        data.message["info"] = `URL provided: ${payLoad.data || payLoad.dataData}`;
+        data.message["link"] = `URL provided: ${payLoad.link}`;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
         //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
       } else {
         // Default way to display a generic object: stringify it
-        iframeSrc = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
-        appL = payLoad?.dataData?.concat(
+        data.message["content"] = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
+        data.message["info"] = payLoad?.dataData?.concat(
           "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
         );
-        feed = payLoad.link;
+        data.message["link"] = payLoad.link;
         //   var seoHtml = seoCapital(iframeSrc);
         executed++
         //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
       }
     } else if (payLoad.type === "unknown" || payLoad.type === "error") {
-      feed = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
+      data.message["link"] = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
       //   var seoHtml = seoCapital(iframeSrc);
       executed++
       //   return RenderTemplate.templateRender(feed, {payL: payLoad}, JSON.stringify(rndE));
     }
   } catch (error) {
     console.error(`Error during payload processing:`, error);
-    appL = `Critical Error: ${error.stack}`;
+    data.message["info"] = `Critical Error: ${error.stack}`;
     // iframeSrc = ""; // Clear iframe on critical error
     //   var seoHtml = seoCapital(iframeSrc);
     executed++
     //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
   }
   // --- END Refactored payLoad processing ---
-  data["message"] = {
-    content:
-      isValidUrl(payLoad.data).hostname &&
-      isValidUrl(iframeSrc).hostname
-        ? driveManager(iframeSrc)
-        : driveManager(getScriptUrl() +
-          "?file=" +
-          htmlList.sort((a, b) => {
-            return a - b;
-          })[Math.floor(Math.random() * Math.floor(htmlList.length))]),
-    info: appL,
-    link: feed, // Clear iframe on critical error
-  };
-  data["timestamp"] = new Date();
-  data["pL"] = payLoad;
-  data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
+  // data["message"] = {
+  //   content:
+  //     isValidUrl(payLoad.data).hostname &&
+  //     isValidUrl(iframeSrc).hostname
+  //       ? driveManager(iframeSrc)
+  //       : driveManager(getScriptUrl() +
+  //         "?file=" +
+  //         htmlList.sort((a, b) => {
+  //           return a - b;
+  //         })[Math.floor(Math.random() * Math.floor(htmlList.length))]),
+  //   info: appL,
+  //   link: feed, // Clear iframe on critical error
+  // };
+  // data["timestamp"] = new Date();
+  // data["pL"] = payLoad;
+  // data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
 
   return data;
 };
@@ -2117,7 +2124,7 @@ var createJsonResponse = function (success, message) {
 
 function misBing(e, time) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -2286,7 +2293,7 @@ function userClicked() {
   return ContentApp.appContent(
     `<script>
     
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(freqP.functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
   let timeout = null;
@@ -2641,7 +2648,7 @@ function userClicked() {
 
 // var runBoilerplate = function (func, someargs) {
 //   console.log(
-//     autoP.functionRegistry.time +
+//     freqP.functionRegistry.time +
 //       "\n" +
 //       arguments.callee.name +
 //       "\nfunc is !" +
@@ -2671,10 +2678,10 @@ var runBoilerplate = function (func, args, callCount = 0) {
   var libName = "foo";
   // Check if maxTime exists as a global variable
   const timeRemaining =
-    typeof autoP.functionRegistry.maxTime !== "undefined" &&
-    autoP.functionRegistry.maxTime instanceof Date
+    typeof freqP.functionRegistry.maxTime !== "undefined" &&
+    freqP.functionRegistry.maxTime instanceof Date
       ? Math.floor(
-          (autoP.functionRegistry.maxTime.getTime() -
+          (freqP.functionRegistry.maxTime.getTime() -
             (new Date().getTime() % (1000 * 60))) /
             1000,
         ) // Use .getTime() for Date objects

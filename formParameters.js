@@ -1,6 +1,6 @@
 var formMaker = function (fileName, folderX, time) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -34,7 +34,7 @@ var formMaker = function (fileName, folderX, time) {
 
 function formsUrlsGlobal(fileX, time) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -42,23 +42,23 @@ function formsUrlsGlobal(fileX, time) {
       ", = " +
       fileX +
       "\ntime is !" +
-      !autoP.functionRegistry.time +
+      !freqP.functionRegistry.time +
       ", = " +
-      autoP.functionRegistry.time,
+      freqP.functionRegistry.time,
   );
   if (!fileX && !time) {
     var numVarRnd = randNum(arguments.callee.name);
     var arrDRnd = appSort(numVarRnd);
     var fileX = randomSubstance(0, 6, arrDRnd).myNewArr;
-    var time = autoP.functionRegistry.time;
+    var time = freqP.functionRegistry.time;
   }
   if (!time) {
-    var time = autoP.functionRegistry.time;
+    var time = freqP.functionRegistry.time;
   }
   var treeRoot = DriveApp.getRootFolder().getFiles();
   while (treeRoot.hasNext()) {
-    var elaspeTime = new Date() - autoP.functionRegistry.time;
-    var timeToExecute = autoP.functionRegistry.maxTime - elaspeTime;
+    var elaspeTime = new Date() - freqP.functionRegistry.time;
+    var timeToExecute = freqP.functionRegistry.maxTime - elaspeTime;
     var trueName = treeRoot.next();
     if (trueName.getName() === fileX) {
       // console.log("trueName: " + trueName.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
@@ -68,8 +68,8 @@ function formsUrlsGlobal(fileX, time) {
   var dataTree = [];
   var tree = DriveApp.getFolders();
   while (tree.hasNext()) {
-    var elaspeTime = new Date() - autoP.functionRegistry.time;
-    var timeToExecute = autoP.functionRegistry.maxTime - elaspeTime;
+    var elaspeTime = new Date() - freqP.functionRegistry.time;
+    var timeToExecute = freqP.functionRegistry.maxTime - elaspeTime;
     var myTree = tree.next();
     dataTree.push(myTree.getId());
     // console.log("myTree: " + myTree.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
@@ -77,8 +77,8 @@ function formsUrlsGlobal(fileX, time) {
   for (i = 0, l = dataTree.length; i < l; i++) {
     var numFolder = DriveApp.getFolderById(dataTree[i]).getFiles();
     while (numFolder.hasNext()) {
-      var elaspeTime = new Date() - autoP.functionRegistry.time;
-      var timeToExecute = autoP.functionRegistry.maxTime - elaspeTime;
+      var elaspeTime = new Date() - freqP.functionRegistry.time;
+      var timeToExecute = freqP.functionRegistry.maxTime - elaspeTime;
       var trueNumName = numFolder.next();
       // console.log("trueNumName: " + trueNumName.getName() + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
       if (trueNumName.getName() === fileX) {
@@ -90,7 +90,7 @@ function formsUrlsGlobal(fileX, time) {
 
 function searchUrlsGlobal(fileX) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -116,7 +116,7 @@ function searchUrlsGlobal(fileX) {
 
 function searchUrlsRoot(fileX) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -136,7 +136,7 @@ function searchUrlsRoot(fileX) {
 }
 
 function searchUrlsRandom() {
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(freqP.functionRegistry.time + "\n" + arguments.callee.name);
 
   var fileTree = [];
   var fileData = [];
@@ -164,7 +164,7 @@ function searchUrlsRandom() {
 
 function searchTreeRoot(fileX) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -183,7 +183,7 @@ function searchTreeRoot(fileX) {
 
 function searchDataTree(fileX) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +

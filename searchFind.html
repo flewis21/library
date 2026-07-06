@@ -1,0 +1,28 @@
+<script>
+
+  function serverside(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+        try {
+          resolve(result)
+        }
+        catch (error) {
+          console.log("Success error: " + error.stack)
+        }})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  document
+    .getElementById("search")
+    .addEventListener("change", searchForMe);
+  function searchForMe() {
+    let findMe = document.getElementById("search").value;
+    serverside("userSearch", [findMe])
+    .then((recordsFound) =>{
+        document.getElementById("dynList").innerHTML = res;
+      });
+  }
+</script>

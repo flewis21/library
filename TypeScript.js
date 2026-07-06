@@ -9,7 +9,7 @@ class RawFuncResult {
   }
 }
 let autoGlobe = new RawFuncResult()
-// console.log(autoGlobe.globalThis[autoP.argsX[0]].apply(this, autoP.content));
+// console.log(autoGlobe.globalThis[freqP.argsX[0]].apply(this, freqP.content));
 
 class ProjectFUnctionNames {
   constructor() {
@@ -45,7 +45,7 @@ class IsValidKeys {
     this.v = v
   }
   keysValid() {
-    let ivkAuto = autoP;
+    let ivkAuto = freqP;
     var isExcludeValue = ivkAuto.omitIt(this.v, "1");
     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "2");
     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "3");
@@ -64,6 +64,7 @@ class IsValidKeys {
 
 class IsOmit extends RawFuncResult {
   constructor(t, k) {
+    console.log("Hello from IsOmit");
     super();
     this.t = t;
     this.k = k;
@@ -79,6 +80,7 @@ class IsOmit extends RawFuncResult {
 
 class IsPick extends IsOmit {
   constructor (t, k) {
+    console.log("Hello from IsPick");
     super(t, k);
     this.t = t;
     this.k = k;
@@ -100,6 +102,7 @@ class IsPick extends IsOmit {
 
 class IsExclude extends IsPick {
   constructor (t, k) {
+    console.log("Hello from IsExclude");
     super(t, k);
     this.t = t;
     this.k = k;
@@ -127,6 +130,7 @@ class IsExclude extends IsPick {
 
 class IsMapped extends IsExclude {
   constructor (t, v) {
+    console.log("Hello from IsMapped");
     super(t, v);
     this.t = t;
     this.v = v;
@@ -149,6 +153,7 @@ class IsMapped extends IsExclude {
 
 class IsValidDoubleObject extends IsMapped {
   constructor(t) {
+    console.log("Hello from IsValidDoubleObject");
     super(t);
     this.t = t
     for (let key in this.t) {
@@ -238,6 +243,7 @@ class IsValidDoubleObject extends IsMapped {
 
 class IsTruthy extends IsValidDoubleObject {
   constructor (t) {
+    console.log("Hello from IsTruthy");
     super(t);
     this.t = t;
     if (
@@ -280,6 +286,7 @@ class IsTruthy extends IsValidDoubleObject {
 
 class IsKeyOf extends IsTruthy {
   constructor (t) {
+    console.log("Hello from IsKeyOf");
     super(t);
     this.t = t;
   }
@@ -297,6 +304,7 @@ class IsKeyOf extends IsTruthy {
 
 class IsPropertyOf extends IsKeyOf {
   constructor (t) {
+    console.log("Hello from IsPropertyOf");
     super(t);
     this.t = t;
   }
@@ -311,6 +319,7 @@ class IsPropertyOf extends IsKeyOf {
 
 class IsTypeScript extends IsPropertyOf {
   constructor(typePassedIn) {
+    console.log("Hello from IsTypeScript");
     super(typePassedIn);
     this.typePassedIn = typePassedIn
   }
@@ -326,8 +335,335 @@ class IsTypeScript extends IsPropertyOf {
   }
 };
 
-class AutoParams extends IsTypeScript {
+class Presidential extends IsTypeScript {
   constructor() {
+    console.log("Hello from Presidential");
+    super();
+  }
+  spirit() {
+    this.timeLeft = formatTime(freqP.functionRegistry.timeLeftToExecute);
+    console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
+  }
+};
+
+class ResolveParameters extends Presidential {
+  constructor(func, someArgs) {
+    console.log("Hello from ResolveParameters");
+    super();
+    this.func = func;
+    this.someArgs = someArgs;
+    console.log(
+      "boilerplate TypeScript: line 1527\nResolveParams(func: " +
+        this.func +
+        ", someArgs: " +
+        this.someArgs +
+        ") ",
+    );
+    this.trueFunc = this.trueVfalse(this.func);
+    this.trueSomeArgs = this.trueVfalse(this.someArgs);
+    this.funcUno = this.trueFunc
+      ? decodeURIComponent(this.func)
+      : Object.keys(globalThis);
+    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
+    this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
+    this.arrDRnd = null;
+    if (this.funcUno || this.funcDos) {
+      this.argsX = [];
+      this.content = [];
+      this.arrUno = Array.isArray(this.func);
+      this.arrDos = this.trueVfalse(this.someArgs);
+      if (this.arrUno && this.arrDos) {
+        this.keys = this.func.concat(this.someArgs);
+      } 
+      else {
+        if (this.arrUno && !this.arrDos) {
+          this.keys = this.func;
+        }
+        else {
+          if (!this.arrUno && this.arrDos && this.trueFunc) {
+            this.keys = [this.func].concat(this.someArgs);
+          } 
+          else {
+            if (!this.arrUno && !this.arrDos && this.trueFunc) {
+              this.keys = [this.func];
+            }
+            else {
+              if (!this.arrUno && !this.arrDos && !this.trueFunc) {
+                this.keys = [this.funcUno[this.numVarRnd]];
+              }
+            }
+          }
+        }
+      }
+      this.keys.forEach((pro) => {
+        this.keyPro
+        if (typeof pro === "object" || Array.isArray(pro)) {
+          this.keyPro = pro;
+          console.log("this.keyPro = " + this.keyPro);
+        }
+        else {
+          this.keyPro = [pro];
+          console.log("this.[keyPro] = " + this.keyPro);
+        }
+        this.keyProParams;
+        this.realItem;
+        this.keysArrArr = this.trueVfalse(Array.isArray(pro));
+        if (this.keysArrArr) {
+          this.funcLimit = [];
+          this.paramLimit = [];
+          pro.forEach((subParam, proIndex) => {
+            this.realItem = this.trueVfalse(subParam);
+            if (this.realItem) {
+              this.keyProParams;
+              if (typeof subParam === "object" || Array.isArray(subParam)) {
+                this.keyProParams = new RelatedFunctions(subParam[proIndex]);
+              }
+              else {
+                this.keyProParams = new RelatedFunctions(subParam);
+              }
+              if (this.keyProParams.funFirst >= 0) {
+                this.funcLimit.push(this.funcUno[this.keyProParams.funFirst]);
+              } 
+              else {
+                if (typeof subParam === "object") {
+                  this.paramLimit.push(subParam);
+                } 
+                else {
+                  if (Array.isArray(subParam)) {
+                    this.paramLimit.push(subParam[proIndex]);
+                  }
+                  else {
+                    this.paramLimit.push(subParam);
+                  }
+                }
+              }
+            }
+          });
+          if (this.funcLimit.length > 0) {
+            this.argsX.push(this.funcLimit);
+          }
+          if (this.paramLimit.length > 0) {
+            this.content.push(this.paramLimit);
+          }
+        } 
+        else {
+          this.realItem = this.trueVfalse(pro);
+          if (this.realItem) {
+            for (var key in this.keyPro) {
+              this.keyProParams = null;
+              if (typeof pro === "object" || Array.isArray(pro)) {
+                this.keyProParams = new RelatedFunctions(pro[key]);
+                console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
+              }
+              else {
+                this.keyProParams = new RelatedFunctions(pro);
+                console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
+              }
+              if (this.keyProParams.funFirst >= 0) {
+                this.argsX.push(this.funcUno[this.keyProParams.funFirst]);
+                console.log("this.funcUno[this.keyProParams.funFirst] = " + this.funcUno[this.keyProParams.funFirst])
+              } else {
+                if (typeof pro === "object" || Array.isArray(pro)) {
+                  this.content.push(pro[key]);
+                }
+                else {
+                  this.content.push(pro);
+                }
+              }
+            }
+          }
+        }
+      });
+      if (this.argsX && this.argsX.length > 0) {
+        this.allErrors = {};
+        this.allResolutions = {};
+        this.funcString = globalThis[this.funcUno[this.numVarRnd]]?.toString();
+        this.fParams = this.funcString
+          ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
+          ?.split(",")
+          ?.map((param) => param?.trim())
+          ?.filter((param) => param !== "");; //gsFParams();
+        this.truDos = this.trueVfalse(this.fParams)
+        this.resCount = 0;
+        this.argsX.forEach((result, argsXIndex) => {
+          console.log("argsX result " + this.resCount + ": " + result);
+          this.truUno = this.trueVfalse(result);
+          this.args = {};
+          this.resolvedArgs = [];
+          this.missingParams = [];
+          this.contentLimit = this.content[argsXIndex];
+          this.searchResult = this.fParams 
+          //this.fParams.find((rndS) => {
+            // return rndS.name === result;
+          // });
+          this.orderedContent = [];
+          if (
+            this.searchResult &&
+            this.searchResult !== "undefined" &&
+            this.searchResult !== null &&
+            this.searchResult.parameters
+          ) {
+            this.declaredParams = this.searchResult.parameters;
+            if (this.contentLimit?.length > 0) {
+              console.log(
+                "Current content: " +
+                  this.contentLimit +
+                  "\nDeclared parameters: " +
+                  this.declaredParams,
+              );
+            }
+            this.contentMap = {};
+            this.realItem;
+            this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
+              this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
+              if (this.declaredParamArrArr) {
+                this.paramLimit = 0;
+                declaredParam.forEach((subParam, subParamIndex) => {
+                  this.contentLimit.forEach((item, currentDeclaredIndex) => {
+                    this.realItem = this.trueVfalse(subItem);
+                    if (this.realItem) {
+                      this.currentDeclared = this.contentMap[declaredParam];
+                      this.currentSub = subItem;
+                      this.currentDeclared = this.currentSub;
+                      this.paramLimit++;
+                      if (this.contentMap.length === this.declaredParams.length) {
+                        return;
+                      }
+                    }
+                  });
+                });
+              } 
+              else {
+                if (Array.isArray(this.contentLimit)) {
+                  this.contentLimit.forEach((item, contentLimitIndex) => {
+                    this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
+                    if (this.contentLimitArrArr) {
+                      item.forEach((subItem, mapItemIndex) => {
+                        this.realItem = this.trueVfalse(subItem);
+                        if (this.realItem) {
+                          this.paramDKey = this.declaredParams[mapItemIndex];
+                          if (!this.contentMap[paramDKey]) {
+                            this.contentMap[this.paramDKey] = subItem;
+                          }
+                          // if (this.contentMap[this.paramDKey] === subItem) {
+                          //   return;
+                          // }
+                        }
+                      });
+                    } 
+                    else {
+                      this.realItem = this.trueVfalse(item);
+                      if (this.realItem) {
+                        this.paramDKey = this.declaredParams[contentLimitIndex];
+                        if (!this.contentMap[this.paramDKey]) {
+                          this.contentMap[this.paramDKey] = item;
+                        }
+                        // if (this.contentMap[this.paramDKey] === item) {
+                        //   return;
+                        // }
+                      }
+                    }
+                  });
+                } 
+                else {
+                  this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
+                  if (this.contentArrArr) {
+                  } 
+                  else {
+                    this.realItem = this.trueVfalse(this.contentLimit);
+                    if (this.realItem) {
+                      for (var key in this.declaredParams) {
+                        this.paramDKey = this.declaredParams[key];
+                        if (!this.contentMap[paramDKey]) {
+                          this.contentMap[this.paramDKey] = this.contentLimit;
+                        }
+                        // if (this.contentMap[paramDKey] === this.contentLimit) {
+                        //   return;
+                        // }
+                      }
+                    }
+                  }
+                }
+              }
+            });
+            this.declaredParams.forEach((paramName) => {
+              if (this.contentMap.hasOwnProperty(paramName)) {
+                this.orderedContent.push(this.contentMap[paramName]);
+              } else {
+                this.orderedContent.push(null);
+              }
+            });
+          }
+          if (this.orderedContent.length > 0) {
+            if (this.missingParams.length === 0) {
+              // orderedContent = resolvedArgs;
+              this.allResolutions[result] = this.resolvedArgs;
+              // console.error(allErrors[result]);
+              console.log(this.allResolutions[result]);
+            } 
+            else {
+              this.allErrors[result] =
+                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
+              console.error(this.allErrors[result]);
+              console.log(this.allErrors[result]);
+            }
+          }
+          if (Object.keys(this.args).length > 0) {
+            console.log("Resolved arguments:", this.args);
+          }
+          if (this.resolvedArgs.length > 0) {
+            console.log("Resolved parameters Array:", this.resolvedArgs);
+          }
+          this.resCount++;
+          // this.result = this.resolvedArgs
+        })
+        let errorKeys = Object.keys(this.allErrors);
+        // if (errorKeys.length > 0) {
+        //   return allErrors;
+        // }
+      }
+      else {
+        console.log("No matching function found for:", this.func);
+      }
+    }
+  }
+  resParams() {
+  }
+};
+// let autoP = new ResolveParameters();
+
+class RandomArray extends ResolveParameters {
+  constructor() {
+    super();
+    let titleArray = projectP;
+    let arrData = Object.keys(globalThis);
+    let numLen = [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21, 22, 23, 24, 25,
+    ]; // Assuming numVarRnd isn't global yet or needs handling
+    var rndNumLen = numLen[Math.floor(Math.random() * numLen.length)]; // Pick a random index
+
+    var targetLetter = arrData[rndNumLen]; // The letter we're looking for functions starting with
+
+    var freqArray = [];
+    // Correct way to filter or iterate and build freqArray
+    for (let i = 0; i < titleArray.fileList.length; i++) {
+      const funcName = titleArray.fileList[i];
+      if (funcName[0] && funcName[0].toLowerCase() === targetLetter) {
+        if (freqArray.indexOf(funcName) === -1) {
+          // Check if not already added
+          freqArray.push(funcName);
+        }
+      }
+    }
+    this.freqArray = freqArray
+  }
+}
+// let rndArrayP = new RandomArray();
+
+class AutoParams extends RandomArray {
+  constructor() {
+    console.log("Hello from freqParams");
     super()
 
     this.functionRegistry = {
@@ -450,7 +786,7 @@ class AutoParams extends IsTypeScript {
 
       folderTree: [],
       gTree: function () {
-        let gtAP = autoP
+        let gtAP = freqP
         var tree = DriveApp.getFolders(); // Iterator for folders
         // Corrected while loop: Call next() only once per iteration
         while (tree.hasNext()) {
@@ -610,9 +946,9 @@ class AutoParams extends IsTypeScript {
     };
 
         // Set some global variables
-    console.log("boilerplate autoParams: line 272");
+    console.log("boilerplate TypeScript: line 613");
     this.functionRegistry.initialize();
-    console.log("boilerplate autoParams: line 274");
+    console.log("boilerplate TypeScript: line 615");
     this.functionRegistry.startProcessTimer();
 
     // A hypothetical frequency-based order for the Zulu alphabet
@@ -921,7 +1257,7 @@ class AutoParams extends IsTypeScript {
       return rndArrVals;
     };
     this.uniqueVideoItemArray = function () {
-      let vidIA = autoP;
+      let vidIA = freqP;
       vidIA.functionRegistry.vidTree();
       var arrVals = vidIA.functionRegistry.getVideoList();
       var rndArrVals = [];
@@ -933,7 +1269,7 @@ class AutoParams extends IsTypeScript {
       return rndArrVals;
     };
     this.uniqueImageItemArray = function () {
-      let imgIA = autoP;
+      let imgIA = freqP;
       imgIA.functionRegistry.imgTree();
       var arrVals = imgIA.functionRegistry.getImageList();
       var rndArrVals = [];
@@ -945,7 +1281,7 @@ class AutoParams extends IsTypeScript {
       return rndArrVals;
     };
     this.arrD = function () {
-      let arrDAP = autoP;
+      let arrDAP = freqP;
       var titleArray = arrDAP.functionRegistry.fileList;
       // for (var key in globalThis) {
       //   if (typeof globalThis[key] == "function") {
@@ -1000,7 +1336,7 @@ class AutoParams extends IsTypeScript {
     //     return freqArray
     // })();
     this.arrDRnd = function () {
-      let arrnDAP = autoP;
+      let arrnDAP = freqP;
       var titleArray = arrnDAP.functionRegistry.fileList;
       // for (var key in globalThis) {
       //   if (typeof globalThis[key] == "function") {
@@ -1056,10 +1392,10 @@ class AutoParams extends IsTypeScript {
     //     return freqArray
     // })();
     this.searchString = function () {
-      let secStAP = autoP;
+      let secStAP = freqP;
       console.log(
         formatTime(secStAP.functionRegistry.time) +
-          "\nBoilerplate autoParams line 654\nsearchString()\n" +
+          "\nBoilerplate freqParams line 654\nsearchString()\n" +
           arguments.callee.caller.name,
       );
       var arrDRnd = secStAP.functionRegistry.getFileList();
@@ -1106,7 +1442,7 @@ class AutoParams extends IsTypeScript {
           // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
         }
       }
-      console.log("boilerplate autoParams: line 455");
+      console.log("boilerplate freqParams: line 455");
       // console.log(
       //   "randomSubstance: \n( \0: " +
       //     0 +
@@ -1166,7 +1502,7 @@ class AutoParams extends IsTypeScript {
     //       timestamp: new Date(),
     //     };
     // globalThis.func = result;
-    //   //   autoP.searchString = substanceVegas(
+    //   //   freqP.searchString = substanceVegas(
     //   //     0,
     //   //     [
     //   //       objectOfS(
@@ -1432,7 +1768,7 @@ class AutoParams extends IsTypeScript {
     // result.parameters
 
     this.resolveFunctionArgs = function(funcName, providedArgs = {}) {
-      let resFAP = autoP;
+      let resFAP = freqP;
       const funcParamsInfo = resFAP.functionRegistry
         .getParamsList()
         .find((item) => item.name === funcName);
@@ -1494,7 +1830,7 @@ class AutoParams extends IsTypeScript {
     }
 
     this.gMain = function() {
-      let gmAP = autoP;
+      let gmAP = freqP;
       // this.functionRegistry.initialize();
 
       // Example call where missing parameters will be populated from your globals
@@ -1507,301 +1843,6 @@ class AutoParams extends IsTypeScript {
   }
 };
 let freqP = new AutoParams();
-
-class Presidential extends AutoParams {
-  constructor() {
-    super();
-  }
-  spirit() {
-    this.timeLeft = formatTime(this.functionRegistry.timeLeftToExecute);
-    console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
-  }
-};
-
-class ResolveParameters extends Presidential {
-  constructor(func, someArgs) {
-    super();
-    this.func = func;
-    this.someArgs = someArgs;
-    console.log(
-      "boilerplate Help: line 2284\nresolveParams(func: " +
-        this.func +
-        ", someArgs: " +
-        this.someArgs +
-        ") ",
-    );
-    this.trueFunc = this.trueVfalse(this.func);
-    this.trueSomeArgs = this.trueVfalse(this.someArgs);
-    this.funcUno = this.trueFunc
-      ? decodeURIComponent(this.func)
-      : this.functionRegistry.fileList;
-    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
-    this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
-    this.arrDRnd = null;
-    if (this.funcUno || this.funcDos) {
-      this.argsX = [];
-      this.content = [];
-      this.arrUno = Array.isArray(this.func);
-      this.arrDos = this.trueVfalse(this.someArgs);
-      if (this.arrUno && this.arrDos) {
-        this.keys = this.func.concat(this.someArgs);
-      } 
-      else {
-        if (this.arrUno && !this.arrDos) {
-          this.keys = this.func;
-        }
-        else {
-          if (!this.arrUno && this.arrDos && this.trueFunc) {
-            this.keys = [this.func].concat(this.someArgs);
-          } 
-          else {
-            if (!this.arrUno && !this.arrDos && this.trueFunc) {
-              this.keys = [this.func];
-            }
-            else {
-              if (!this.arrUno && !this.arrDos && !this.trueFunc) {
-                this.keys = [this.funcUno[this.numVarRnd]];
-              }
-            }
-          }
-        }
-      }
-      this.keys.forEach((pro) => {
-        this.keyPro
-        if (typeof pro === "object" || Array.isArray(pro)) {
-          this.keyPro = pro;
-          console.log("this.keyPro = " + this.keyPro);
-        }
-        else {
-          this.keyPro = [pro];
-          console.log("this.[keyPro] = " + this.keyPro);
-        }
-        this.keyProParams;
-        this.realItem;
-        this.keysArrArr = this.trueVfalse(Array.isArray(pro));
-        if (this.keysArrArr) {
-          this.funcLimit = [];
-          this.paramLimit = [];
-          pro.forEach((subParam, proIndex) => {
-            this.realItem = this.trueVfalse(subParam);
-            if (this.realItem) {
-              this.keyProParams;
-              if (typeof subParam === "object" || Array.isArray(subParam)) {
-                this.keyProParams = new RelatedFunctions(subParam[proIndex]);
-              }
-              else {
-                this.keyProParams = new RelatedFunctions(subParam);
-              }
-              if (this.keyProParams.funFirst >= 0) {
-                this.funcLimit.push(this.funcUno[this.keyProParams.funFirst]);
-              } 
-              else {
-                if (typeof subParam === "object") {
-                  this.paramLimit.push(subParam);
-                } 
-                else {
-                  if (Array.isArray(subParam)) {
-                    this.paramLimit.push(subParam[proIndex]);
-                  }
-                  else {
-                    this.paramLimit.push(subParam);
-                  }
-                }
-              }
-            }
-          });
-          if (this.funcLimit.length > 0) {
-            this.argsX.push(this.funcLimit);
-          }
-          if (this.paramLimit.length > 0) {
-            this.content.push(this.paramLimit);
-          }
-        } 
-        else {
-          this.realItem = this.trueVfalse(pro);
-          if (this.realItem) {
-            for (var key in this.keyPro) {
-              this.keyProParams;
-              if (typeof pro === "object" || Array.isArray(pro)) {
-                this.keyProParams = new RelatedFunctions(pro[key]);
-                console.log("keyProParams = " + JSON.stringify(this.keyProParams));
-              }
-              else {
-                this.keyProParams = new RelatedFunctions(pro);
-                console.log("keyProParams = " + JSON.stringify(this.keyProParams));
-              }
-              if (this.keyProParams.funFirst >= 0) {
-                this.argsX.push(this.funcUno[this.keyProParams.funFirst]);
-                console.log("this.funcUno[this.keyProParams.funFirst] = " + this.funcUno[this.keyProParams.funFirst])
-              } else {
-                if (typeof pro === "object" || Array.isArray(pro)) {
-                  this.content.push(pro[key]);
-                }
-                else {
-                  this.content.push(pro);
-                }
-              }
-            }
-          }
-        }
-      });
-      if (this.argsX && this.argsX.length > 0) {
-        this.allErrors = {};
-        this.allResolutions = {};
-        this.funcString = globalThis[this.funcUno[this.numVarRnd]]?.toString();
-        this.fParams = this.funcString
-          ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
-          ?.split(",")
-          ?.map((param) => param?.trim())
-          ?.filter((param) => param !== "");; //gsFParams();
-        this.truDos = this.trueVfalse(this.fParams)
-        this.resCount = 0;
-        this.argsX.forEach((result, argsXIndex) => {
-          console.log("argsX result " + this.resCount + ": " + result);
-          this.truUno = this.trueVfalse(result);
-          this.args = {};
-          this.resolvedArgs = [];
-          this.missingParams = [];
-          this.contentLimit = this.content[argsXIndex];
-          this.searchResult = this.fParams 
-          //this.fParams.find((rndS) => {
-            // return rndS.name === result;
-          // });
-          this.orderedContent = [];
-          if (
-            this.searchResult &&
-            this.searchResult !== "undefined" &&
-            this.searchResult !== null &&
-            this.searchResult.parameters
-          ) {
-            this.declaredParams = this.searchResult.parameters;
-            if (this.contentLimit?.length > 0) {
-              console.log(
-                "Current content: " +
-                  this.contentLimit +
-                  "\nDeclared parameters: " +
-                  this.declaredParams,
-              );
-            }
-            this.contentMap = {};
-            this.realItem;
-            this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
-              this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
-              if (this.declaredParamArrArr) {
-                this.paramLimit = 0;
-                declaredParam.forEach((subParam, subParamIndex) => {
-                  this.contentLimit.forEach((item, currentDeclaredIndex) => {
-                    this.realItem = this.trueVfalse(subItem);
-                    if (this.realItem) {
-                      this.currentDeclared = this.contentMap[declaredParam];
-                      this.currentSub = subItem;
-                      this.currentDeclared = this.currentSub;
-                      this.paramLimit++;
-                      if (this.contentMap.length === this.declaredParams.length) {
-                        return;
-                      }
-                    }
-                  });
-                });
-              } 
-              else {
-                if (Array.isArray(this.contentLimit)) {
-                  this.contentLimit.forEach((item, contentLimitIndex) => {
-                    this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
-                    if (this.contentLimitArrArr) {
-                      item.forEach((subItem, mapItemIndex) => {
-                        this.realItem = this.trueVfalse(subItem);
-                        if (this.realItem) {
-                          this.paramDKey = this.declaredParams[mapItemIndex];
-                          if (!this.contentMap[paramDKey]) {
-                            this.contentMap[this.paramDKey] = subItem;
-                          }
-                          // if (this.contentMap[this.paramDKey] === subItem) {
-                          //   return;
-                          // }
-                        }
-                      });
-                    } 
-                    else {
-                      this.realItem = this.trueVfalse(item);
-                      if (this.realItem) {
-                        this.paramDKey = this.declaredParams[contentLimitIndex];
-                        if (!this.contentMap[this.paramDKey]) {
-                          this.contentMap[this.paramDKey] = item;
-                        }
-                        // if (this.contentMap[this.paramDKey] === item) {
-                        //   return;
-                        // }
-                      }
-                    }
-                  });
-                } 
-                else {
-                  this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
-                  if (this.contentArrArr) {
-                  } 
-                  else {
-                    this.realItem = this.trueVfalse(this.contentLimit);
-                    if (this.realItem) {
-                      for (var key in this.declaredParams) {
-                        this.paramDKey = this.declaredParams[key];
-                        if (!this.contentMap[paramDKey]) {
-                          this.contentMap[this.paramDKey] = this.contentLimit;
-                        }
-                        // if (this.contentMap[paramDKey] === this.contentLimit) {
-                        //   return;
-                        // }
-                      }
-                    }
-                  }
-                }
-              }
-            });
-            this.declaredParams.forEach((paramName) => {
-              if (this.contentMap.hasOwnProperty(paramName)) {
-                this.orderedContent.push(this.contentMap[paramName]);
-              } else {
-                this.orderedContent.push(null);
-              }
-            });
-          }
-          if (this.orderedContent.length > 0) {
-            if (this.missingParams.length === 0) {
-              // orderedContent = resolvedArgs;
-              this.allResolutions[result] = this.resolvedArgs;
-              // console.error(allErrors[result]);
-              console.log(this.allResolutions[result]);
-            } 
-            else {
-              this.allErrors[result] =
-                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
-              console.error(this.allErrors[result]);
-              console.log(this.allErrors[result]);
-            }
-          }
-          if (Object.keys(this.args).length > 0) {
-            console.log("Resolved arguments:", this.args);
-          }
-          if (this.resolvedArgs.length > 0) {
-            console.log("Resolved parameters Array:", this.resolvedArgs);
-          }
-          this.resCount++;
-          // this.result = this.resolvedArgs
-        })
-        let errorKeys = Object.keys(this.allErrors);
-        // if (errorKeys.length > 0) {
-        //   return allErrors;
-        // }
-      }
-      else {
-        console.log("No matching function found for:", this.func);
-      }
-    }
-  }
-  resParams() {
-  }
-};
-let autoP = new ResolveParameters();
 
 var geneicType = function (e) {
   let data = null;
@@ -1861,7 +1902,7 @@ var geneicType = function (e) {
     if (i < .4) {
       if (!e) {
         if (i < .2) {
-          base = autoP?.globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
+          base = freqP?.globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
         }
         else {
           eQueryObject = {
@@ -1878,7 +1919,7 @@ var geneicType = function (e) {
           }
           else {
             let funcU = data.funcUno;
-            let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
+            let funcD = freqP.resolvedArgs.length > 0?  freqP.resolvedArgs:data.funcDos;
             base = createFunctionResult(funcU, funcD);
           }
         }
@@ -1923,7 +1964,7 @@ var geneicType = function (e) {
       if (i > .3 && i < .7) {
         if (!e) {
           if (i > .4 && i < .6) {
-            return globalThis[autoP.argsX[0]].apply(this, autoP.content);
+            return globalThis[freqP.argsX[0]].apply(this, freqP.content);
           }
           else {
             eQueryObject = {
@@ -1969,12 +2010,12 @@ var geneicType = function (e) {
         if (i > .6) {
           if (!e) {
             if (i > .8) {
-              base = globalThis[autoP.argsX[0]].apply(this, autoP.content);
+              base = globalThis[freqP.argsX[0]].apply(this, freqP.content);
             }
             else {
               eQueryObject = {
                 parameter: {
-                  file: autoP.functionRegistry.htmlArray[Math.floor(Math.random() * autoP.functionRegistry.htmlArray.length)]
+                  file: freqP.functionRegistry.htmlArray[Math.floor(Math.random() * freqP.functionRegistry.htmlArray.length)]
                 }
               };
               let tempObj = funcHandle(eQueryObject);
@@ -2032,8 +2073,8 @@ var geneicType = function (e) {
   // let tempSc = new IsValidDoubleObject(eQueryObject);
   // let script = new IsValidDoubleObject(eQueryObject);
     // return script.objRes();
-    // console.log(Object.getOwnPropertyNames(autoP));
-    // console.log(Object.getPrototypeOf(autoP));
+    // console.log(Object.getOwnPropertyNames(freqP));
+    // console.log(Object.getPrototypeOf(freqP));
     // GameManager.setGameStart("Warrior");
     // let mmoRpgPlay = GameManager.setGameStart.instances[0];
     // let mmoRpgEnemy = GameManager.setGameStart.instances[1];
@@ -2041,14 +2082,14 @@ var geneicType = function (e) {
     //   console.log(`${JSON.stringify(instance)}`)
     // })
     // var numVarRnd = Math.floor(Math.random() * 25);
-    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"IsMapped.mapout",["e","f"],"isPropertyOf","e","isKeyOf","e","autoP.trueVfalse","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
+    // var functionObjectType = resolveParams(["isOmit",["e","b"],"isPick",["e","a"],"isExclude",["e","c"],"IsMapped.mapout",["e","f"],"isPropertyOf","e","isKeyOf","e","freqP.trueVfalse","e",,"isTypeScript","e","isValidDoubleObject",{a:"e",b:"e"}]);
     // var functionObjectType = resolveParams(["dtlsPro","bounty","portBing","hunter"]);
     // let randomWord = rndWord();
     // let tyFile = wsSIPOC(randomWord);
     // console.log(tyFile.split(">")[1].split("<")[0]);
     // let arrDRnd = appSort(randNum(randomWord));
     // let searchResult = randomSubstance(0, 1, ["kVar", "kiloPoint"]).myNewArr;
-    // let result = autoP.functionRegistry.paramsList.find((rndS) => {
+    // let result = freqP.functionRegistry.paramsList.find((rndS) => {
     //   return rndS.name === searchResult;
     // });
     // let fileIndex = handleRequest({parameter: {action:"getData"}});
@@ -2079,9 +2120,9 @@ var geneicType = function (e) {
     // else {
     //   return {payload: base}
     // }
-    // autoP.functionRegistry.domainTree();
+    // freqP.functionRegistry.domainTree();
     // let kilo = contentCDN(dataOR.message.content, {payL: dataOR})
-    // let fileParams = autoP.functionRegistry.paramsList[fileIndex];
+    // let fileParams = freqP.functionRegistry.paramsList[fileIndex];
     // exampleObjectType[randonWord] = [];
     // let bex = isOmit(exampleObjectType, "b");
     // bex = isOmit(bex, "c");

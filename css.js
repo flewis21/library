@@ -983,6 +983,7 @@ const busy_calendar = HtmlService.createHtmlOutputFromFile("busyCalendar");
 //       });
 //     </script>
 // `);
+const canvas_snap = HtmlService.createHtmlOutputFromFile("canvasSnap");
 const collapse_menu = HtmlService.createHtmlOutputFromFile("collapseMenu");
 // (
 //   `
@@ -2488,6 +2489,7 @@ const rouge_clicks = HtmlService.createHtmlOutputFromFile("rougeClicks");
 //       });
 //     </script>
 // `);
+const search_find = HtmlService.createHtmlOutputFromFile("searchFind");
 const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
 // (
 //   `
@@ -2859,6 +2861,8 @@ const update_func = HtmlService.createHtmlOutputFromFile("updateFunc");
 //     }
 //   </script>
 // `);
+
+const user_run = HtmlService.createHtmlOutputFromFile(`userRun`);
 
 const warrior_clicks = HtmlService.createHtmlOutputFromFile("warriorClicks");
 // (
@@ -3241,6 +3245,10 @@ class StyleHtml {
       `
         ${warrior_clicks.getContent() + rouge_clicks.getContent() + mage_clicks.getContent() + hunter_clicks.getContent() + get_interface.getContent()}
     `);
+    this.wDERunIt = HtmlService.createHtmlOutput( 
+      `
+        ${search_find.getContent() + user_run.getContent() + canvas_snap.getContent()}
+    `)
   }
 };
 let stylesSleep = new StyleHtml();

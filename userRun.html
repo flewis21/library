@@ -1,0 +1,43 @@
+<script>
+
+  function serverside(func, args) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+      .withSuccessHandler(result => {
+        try {
+          resolve(result)
+        }
+        catch (error) {
+          console.log("Success error: " + error.stack)
+        }})
+      .withFailureHandler(error => {
+          reject(error)})
+      .runBoilerplate(func, args)
+    });
+  }
+  document
+    .getElementById("btn")
+    .addEventListener("click", userRunForMe);
+  function userRunForMe() {
+    let findMe = document.getElementById("search").value;
+    serverside("userSearch", [findMe])
+    .then((doStuff) =>{
+        console.log("Do stuff returned: \n",res);
+        document.getElementById("id").value = result[0];
+        document.getElementById("search").value = search;
+        document.getElementById("date").value = date;
+        document.getElementById("car").value = car;
+        document.getElementById("jobType").value = jobType;
+        document.getElementById("vin").value = vin;
+        document.getElementById("toAddress").value = toAddress;
+        document.getElementById("lab").value = lab;
+        document.getElementById("fromAddress").value = fromAddress;
+        document.getElementById("gas").value = gas;
+        document.getElementById("duration").value = duration;
+        document.getElementById("grandTotal").value = grandTotal;
+      })
+  }
+  document.getElementById("search").value = "";
+  document.getElementById("dynList").innerHTML = "";
+
+</script>

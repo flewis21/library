@@ -1,36 +1,7 @@
-class RandomArray extends AutoParams {
-  constructor() {
-    super();
-    let titleArray = projectP;
-    let arrData = freqP.customOrder;
-    let numLen = [
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-      21, 22, 23, 24, 25,
-    ]; // Assuming numVarRnd isn't global yet or needs handling
-    var rndNumLen = numLen[Math.floor(Math.random() * numLen.length)]; // Pick a random index
-
-    var targetLetter = arrData[rndNumLen]; // The letter we're looking for functions starting with
-
-    var freqArray = [];
-    // Correct way to filter or iterate and build freqArray
-    for (let i = 0; i < titleArray.fileList.length; i++) {
-      const funcName = titleArray.fileList[i];
-      if (funcName[0] && funcName[0].toLowerCase() === targetLetter) {
-        if (freqArray.indexOf(funcName) === -1) {
-          // Check if not already added
-          freqArray.push(funcName);
-        }
-      }
-    }
-    this.freqArray = freqArray
-  }
-}
-let rndArrayP = new RandomArray();
-
 class SearchStrings {
   constructor() {
-    let arrDRnd = rndArrayP;
-    let arrD = rndArrayP;
+    let arrDRnd = freqP.arrDRnd;
+    let arrD = freqP.arrD;
     let newArr = [];
     let i = 0 || 0;
     let l = 6 || 1;
@@ -86,14 +57,14 @@ class FunctionHandle {
 
     // Logging
     if (!this.e) {
-      this.mapArr[autoP?.argsX] = [];
-      console.log("The existance of autoP fParams is ", autoP.fParams? true:false);
-      // autoP.fParams
-      //   ? this.rndE = new IsMapped(this.mapArr, [...autoP?.fParams]).mapKeys
+      this.mapArr[freqP?.argsX] = [];
+      console.log("The existance of freqP fParams is ", freqP.fParams? true:false);
+      // freqP.fParams
+      //   ? this.rndE = new IsMapped(this.mapArr, [...freqP?.fParams]).mapKeys
       //     :
       //     this.rndE = new IsMapped(this.mapArr, []).mapKeys
-      if (autoP?.fParams && autoP?.fParams?.length > 0) {
-        this.rndE = new IsMapped(this.mapArr, [...autoP?.fParams]).mapKeys;
+      if (freqP?.fParams && freqP?.fParams?.length > 0) {
+        this.rndE = new IsMapped(this.mapArr, [...freqP?.fParams]).mapKeys;
       }
       else {
         this.rndE = new IsMapped(this.mapArr, []).mapKeys;
@@ -102,10 +73,10 @@ class FunctionHandle {
     }
     else {
       if (this.e && !this.e.parameter) {
-        autoP = new ResolveParameters(this.e);
-        this.mapArr[autoP?.searchResult?.name || autoP.func] = [];
-        if (autoP?.searchResult?.parameters) {
-          this.rndE = new IsMapped(this.mapArr, [...autoP?.searchResult?.parameters] || [autoP.func]).mapKeys;
+        freqP = new ResolveParameters(this.e);
+        this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
+        if (freqP?.searchResult?.parameters) {
+          this.rndE = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters] || [freqP.func]).mapKeys;
         }
         else {
           this.rndE = new IsMapped(this.mapArr, []).mapKeys;
@@ -117,13 +88,13 @@ class FunctionHandle {
           this.objData = Object.keys(this.e.parameter);
           console.log("objData = " + this.e.parameter[this.objData[0]], this.objData);
           if (this.objData.length === 0) {
-            autoP = autoP;
-            this.mapArr[autoP?.searchResult?.name || autoP.func] = [];
-            if (autoP?.searchResult?.parameters) {
+            freqP = freqP;
+            this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
+            if (freqP?.searchResult?.parameters) {
             }
             else {
             }
-            this.rndE = new IsMapped(this.mapArr, [...autoP?.searchResult?.parameters] || [autoP.func]).mapKeys;
+            this.rndE = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters] || [freqP.func]).mapKeys;
             console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
             if (typeof this.rndE === "string") {
               this.e = objectOfS(
@@ -133,7 +104,7 @@ class FunctionHandle {
                     ["func", this.rndE],
                   ],
                 ],
-                autoP.functionRegistry.time,
+                freqP.functionRegistry.time,
               );
             }
             else {
@@ -148,7 +119,7 @@ class FunctionHandle {
                         ["args", Object.values(this.rrndEAP)[0]],
                       ],
                     ],
-                    autoP.functionRegistry.time,
+                    freqP.functionRegistry.time,
                   );
                 } 
                 else {
@@ -159,7 +130,7 @@ class FunctionHandle {
                         ["func", Object.keys(this.rrndEAP)[0]],
                       ],
                     ],
-                    autoP.functionRegistry.time,
+                    freqP.functionRegistry.time,
                   );
                 }
               }
@@ -173,7 +144,7 @@ class FunctionHandle {
                       ["args", "varA"],
                     ],
                   ],
-                  autoP.functionRegistry.time,
+                  freqP.functionRegistry.time,
                 );
               }
             }
@@ -189,7 +160,7 @@ class FunctionHandle {
                 );
                 this.funcTres = this.e?.parameter["file"];
                 try {
-                  this.htmlArray = autoP.functionRegistry.getHtmlList();
+                  this.htmlArray = freqP.functionRegistry.getHtmlList();
                   this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
                   this.rndPage = this.htmlArray[this.rndHtmlIndex];
                   this.htmlTresArg = null; // = rndPage; // Default value
@@ -330,13 +301,13 @@ class FunctionHandle {
                     }
                     else {
                       if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") === -1) {
-                        autoP = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
-                        this.mapArr[autoP?.searchResult?.name || autoP.func] = [];
-                        if (autoP?.searchResult) {
+                        freqP = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
+                        this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
+                        if (freqP?.searchResult) {
                           this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
                         }
                         else {
-                          this.argsEd = autoP.func;
+                          this.argsEd = freqP.func;
                         }
                       }
                     }
@@ -345,7 +316,7 @@ class FunctionHandle {
                       this.e = objectOfS(
                         ["parameter"],
                         [[["args", this.argsEd]]],
-                        autoP.functionRegistry.time,
+                        freqP.functionRegistry.time,
                       );
                       console.log("e = " + JSON.stringify(this.e), this.executed++);
                     } 
@@ -361,7 +332,7 @@ class FunctionHandle {
                                 ["args", [...Object.values(this.argsEd)[0]]],
                               ],
                             ],
-                            autoP.functionRegistry.time,
+                            freqP.functionRegistry.time,
                           );
                           console.log("e = " + JSON.stringify(this.e), this.executed++);
                         } 
@@ -369,7 +340,7 @@ class FunctionHandle {
                           this.e = objectOfS(
                             ["parameter"],
                             [[["func", Object.keys(this.argsEd)[0]]]],
-                            autoP.functionRegistry.time,
+                            freqP.functionRegistry.time,
                           );
                           console.log("e = " + JSON.stringify(this.e), this.executed++);
                         }
@@ -391,7 +362,7 @@ class FunctionHandle {
                                   ["args", this.argsedObj],
                                 ],
                               ],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -404,7 +375,7 @@ class FunctionHandle {
                                   ["args", "varA"],
                                 ],
                               ],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -417,10 +388,10 @@ class FunctionHandle {
                   }
                   else {
                     if (typeof globalThis[this.e.parameter[this.objData[0]]] === "function") {
-                      autoP = new ResolveParameters(this.e.parameter[this.objData[0]]);
-                      this.mapArr[autoP?.searchResult?.name || autoP.func] = [];
-                      if (autoP.searchResult?.parameters) {
-                        this.argsEd = new IsMapped(this.mapArr, [...autoP?.searchResult?.parameters]).mapKeys;
+                      freqP = new ResolveParameters(this.e.parameter[this.objData[0]]);
+                      this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
+                      if (freqP.searchResult?.parameters) {
+                        this.argsEd = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters]).mapKeys;
                       }
                       else {
                         this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
@@ -430,7 +401,7 @@ class FunctionHandle {
                         this.e = objectOfS(
                           ["parameter"],
                           [[["func", this.argsEd]]],
-                          autoP.functionRegistry.time,
+                          freqP.functionRegistry.time,
                         );
                         console.log("e = " + JSON.stringify(this.e), this.executed++);
                       } 
@@ -446,7 +417,7 @@ class FunctionHandle {
                                   ["args", [...Object.values(this.argsEd)[0]]],
                                 ],
                               ],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -454,7 +425,7 @@ class FunctionHandle {
                             this.e = objectOfS(
                               ["parameter"],
                               [[["func", Object.keys(this.argsEd)[0]]]],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -475,7 +446,7 @@ class FunctionHandle {
                                   ["args", this.argsedObj],
                                 ],
                               ],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -488,7 +459,7 @@ class FunctionHandle {
                                   ["args", "varA"],
                                 ],
                               ],
-                              autoP.functionRegistry.time,
+                              freqP.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -504,7 +475,7 @@ class FunctionHandle {
                       );
                       this.funcTres = this.e.parameter[this.objData[0]];
                       try {
-                        this.htmlArray = autoP.functionRegistry.getHtmlList();
+                        this.htmlArray = freqP.functionRegistry.getHtmlList();
                         this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
                         this.rndPage = this.htmlArray[this.rndHtmlIndex];
                         this.htmlTresArg; // = rndPage; // Default value
@@ -672,13 +643,13 @@ class FunctionHandle {
   }
   static handleFunction(e) {
     var executed = 0;
-    let funchAP = autoP;
+    let funchAP = freqP;
     let rndE = "";
     let mapArr = {};
 
     // Logging
     if (!e) {
-      let tempObj = autoP;
+      let tempObj = freqP;
       mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
       rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
       console.log("rndE = " + JSON.stringify(rndE), executed++);
@@ -695,7 +666,7 @@ class FunctionHandle {
         let objData = Object.keys(e.parameter);
         console.log("objData = " + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
-          let tempObj = autoP;
+          let tempObj = freqP;
           mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
           rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
           console.log("rndE = " + JSON.stringify(rndE), executed++);
@@ -1207,7 +1178,7 @@ class FunctionHandle {
     // executed++
     //   }
     // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
-    //   let rawUrlResult = autoP.trueVfalse(isObjValUrl);
+    //   let rawUrlResult = freqP.trueVfalse(isObjValUrl);
     // executed++
     //   if (!rawUrlResult) {
     //     let parsedFuncArgs = [];
@@ -1228,7 +1199,7 @@ class FunctionHandle {
     //         }
     //       }
     //     }
-    //     else if (typeof funcDos !== "object" && autoP.trueVfalse(funcDos)) {
+    //     else if (typeof funcDos !== "object" && freqP.trueVfalse(funcDos)) {
     //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
     //     }
     //     else {

@@ -1,6 +1,6 @@
 function allTime(rndKey, arrD, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -18,7 +18,7 @@ function allTime(rndKey, arrD, time) {
   // );
   let executed = 0;
   if (typeof time === "undefined") {
-    var time = autoP.functionRegistry.time;
+    var time = freqP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof rndKey === "undefined" || typeof rndKey === null) {
@@ -128,7 +128,7 @@ function allTime(rndKey, arrD, time) {
 
 function covArrays(object, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nobject is !" +
@@ -142,7 +142,7 @@ function covArrays(object, time) {
   // );
   const dataArray = [];
   for (var obj in object) {
-    var elaspeTime = new Date() - autoP.functionRegistry.time;
+    var elaspeTime = new Date() - freqP.functionRegistry.time;
     dataArray.push([object[obj]]);
   }
   return dataArray;
@@ -154,7 +154,7 @@ function covArrays(object, time) {
 
 var covObjects = function(rows, headings, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nrows is !" +
@@ -210,7 +210,7 @@ var itemCalc = function() {
 
 function needUtility(rndClient, arrD, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n!" +
@@ -228,7 +228,7 @@ function needUtility(rndClient, arrD, time) {
   // );
   let executed = 0;
   if (typeof rndClient === "undefined") {
-    var rndClient = autoP.searchString().myNewArr;
+    var rndClient = freqP.searchString().myNewArr;
     console.log("rndClient = " + rndClient, executed++);
   }
   var client = rndClient;
@@ -348,7 +348,7 @@ function needUtility(rndClient, arrD, time) {
 
 function randomSubstance(index, loopLength, importedData, arrD, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nindex is !" +
@@ -432,7 +432,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
   //     "\nArray Data: " +
   //     [arrD].toString().substring(0, 20) +
   //     "\nTime: " +
-  //     formatTime(autoP.functionRegistry.time) +
+  //     formatTime(freqP.functionRegistry.time) +
   //     " )",
   // );
   if (newArr) {
@@ -460,11 +460,11 @@ function seoSheet(searchString, time) {
   let executed = 0;
   let elaspeTime;
   if (typeof time === "undefined") {
-    var time = autoP.functionRegistry.time;
+    var time = freqP.functionRegistry.time;
     console.log("time = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
-    var searchString = autoP.searchString().myNewArr;
+    var searchString = freqP.searchString().myNewArr;
     console.log("searchString = " + searchString, executed++);
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
@@ -473,7 +473,7 @@ function seoSheet(searchString, time) {
     .join("")
     .split(" ")
     .filter((p) => {
-      elaspeTime = autoP.functionRegistry.time;
+      elaspeTime = freqP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       if (p.length > 3 && p.length < 18) {
         return p[0] !== "<";
@@ -652,13 +652,13 @@ function seoSheet(searchString, time) {
   if (lowerCaseS.indexOf(testString) === -1) {
     var stringUI = [testString].join("").split(",");
     stringUI.map((increase) => {
-      elaspeTime = autoP.functionRegistry.time;
+      elaspeTime = freqP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
     });
   }
   if (reSearch) {
     reSearch.map((seo) => {
-      elaspeTime = autoP.functionRegistry.time;
+      elaspeTime = freqP.functionRegistry.time;
       console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
@@ -667,7 +667,7 @@ function seoSheet(searchString, time) {
             lowerCaseS[i][lowerCaseS[i].length - 1].toLowerCase();
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             if (lowerCaseS.indexOf(seo) === -1) {
-              elaspeTime = autoP.functionRegistry.time;
+              elaspeTime = freqP.functionRegistry.time;
               console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
               lowerCaseS.push(seo);
             }

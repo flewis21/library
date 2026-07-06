@@ -1,6 +1,6 @@
 function driveManager(strNw, time) {
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(freqP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nstrNw is !" +
@@ -44,7 +44,7 @@ function driveManager(strNw, time) {
   var iam;
   try {
     iam = JSON.parse(
-      convertToObjects([[mainStr]], ["file"], autoP.functionRegistry.time),
+      convertToObjects([[mainStr]], ["file"], freqP.functionRegistry.time),
     );
     console.log("iam = " + iam, executed++);
     console.log("driveManager: iam successfully parsed:", iam);
@@ -214,7 +214,7 @@ class DriveFiles {
     this.strNw = strNw;
     this.time = time;
     console.log(
-      formatTime(autoP.functionRegistry.time) +
+      formatTime(freqP.functionRegistry.time) +
         "\nstrNw is !" +
         !this.strNw +
         ", = " +
@@ -255,7 +255,7 @@ class DriveFiles {
     let iam;
     try {
       iam = JSON.parse(
-        convertToObjects([[String(mainStr)]], ["file"], autoP.functionRegistry.time),
+        convertToObjects([[String(mainStr)]], ["file"], freqP.functionRegistry.time),
       );
       console.log("iam = " + iam, executed++);
       console.log("DriveFiles: iam successfully parsed:", iam);
@@ -533,7 +533,7 @@ var fileTypeManager = function (fileType) {
 
 function folderManager(folderX, time) {
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nfolderX is !" +
@@ -545,8 +545,8 @@ function folderManager(folderX, time) {
   //     ", = " +
   //     time,
   // );
-  autoP.functionRegistry.gTree();
-  var folderTree = autoP.functionRegistry.folderTree;
+  freqP.functionRegistry.gTree();
+  var folderTree = freqP.functionRegistry.folderTree;
   // var tree = DriveApp.getFolders(); // Iterator for folders
 
   // // Corrected while loop: Call next() only once per iteration
@@ -561,7 +561,7 @@ function folderManager(folderX, time) {
 
   if (folderX) {
     // console.log(
-    //   formatTime(autoP.functionRegistry.time) +
+    //   formatTime(freqP.functionRegistry.time) +
     //     "\n" +
     //     arguments.callee.name +
     //     ":\nDeclaring match = folderMatch(" +
@@ -581,7 +581,7 @@ function folderManager(folderX, time) {
 
 function formsUrls(fileX, folderX, time) {
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(freqP.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\nfileX is !" +
@@ -599,7 +599,7 @@ function formsUrls(fileX, folderX, time) {
   );
   if ([fileX].join("").length > 0) {
     console.log(
-      formatTime(autoP.functionRegistry.time) +
+      formatTime(freqP.functionRegistry.time) +
         "\nformUrls: \nDeclaring search = [" +
         fileX +
         "].join(" +
@@ -616,7 +616,7 @@ function formsUrls(fileX, folderX, time) {
     try {
       var dataTree = [];
       console.log(
-        formatTime(autoP.functionRegistry.time) +
+        formatTime(freqP.functionRegistry.time) +
           "\nformUrls: \nDeclaring eFolder = DriveApp.getFoldersByName(" +
           folderX +
           ").next()",
@@ -647,7 +647,7 @@ function formsUrls(fileX, folderX, time) {
       return filed;
     } catch (err) {
       console.log(
-        formatTime(autoP.functionRegistry.time) +
+        formatTime(freqP.functionRegistry.time) +
           "\n" +
           arguments.callee.name +
           "\nerr is !" +
@@ -663,7 +663,7 @@ function formsUrls(fileX, folderX, time) {
 function matchManager(folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
   // console.log(
-  //   formatTime(autoP.functionRegistry.time) +
+  //   formatTime(freqP.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nfolderX is !" +
@@ -679,7 +679,7 @@ function matchManager(folderX, narrow, time) {
   //     ", = " +
   //     time,
   // );
-  var arn = [narrow || autoP.searchString().myNewArr]
+  var arn = [narrow || freqP.searchString().myNewArr]
     .toString()
     .toLowerCase();
   var xFolder = [];
@@ -703,7 +703,7 @@ function matchManager(folderX, narrow, time) {
       return a - b;
     })[Math.floor(Math.random() * Math.floor(allFolders.length))];
     // console.log(
-    //   formatTime(autoP.functionRegistry.time) +
+    //   formatTime(freqP.functionRegistry.time) +
     //     "\n" +
     //     arguments.callee.name +
     //     "\nfolderX is !" +
@@ -874,7 +874,7 @@ function matchManager(folderX, narrow, time) {
 
 function searchUrlsTree(fileX) {
   console.log(
-    autoP.functionRegistry.time +
+    freqP.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
