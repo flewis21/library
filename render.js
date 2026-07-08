@@ -399,45 +399,45 @@ class ContentCDN {
       console.log("tmp payL pL type\n" + tmp.payL?.pL?.type, tmp.payL?.pL);
       if (tmp.payL?.pL?.type !== "url" && tmp.payL?.pL?.type !== "text") {
         if (tmp.payL?.message?.content) {
-          let contentMessage = driveManager(tmp.payL?.message?.content);
-          console.log("From driveManager: contentMessage = " + contentMessage);
+          let contentMessage = new DriveFiles(tmp.payL?.message?.content);
+          console.log("From DriveFiles: contentMessage = " + contentMessage.filedMain);
           console.log("tmp payL message content\n" + tmp.payL?.message?.content, tmp.payL?.message);
           let locObj = 
             {
-              drivemC: contentMessage,
+              drivemC: contentMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
-            .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
+            .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3])
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
       else {
         if (tmp.payL?.message?.info) {
-          let infoMessage = driveManager(tmp.payL?.message?.info);
-          console.log("From driveManager: infoMessage = " + infoMessage);
+          let infoMessage = new DriveFiles(tmp.payL?.message?.info);
+          console.log("From DriveFiles: infoMessage = " + infoMessage.filedMain);
           console.log("tmp payL message info\n" + tmp.payL?.message?.info, tmp.payL?.message);
           let locObj = 
             {
-              drivemC: infoMessage,
+              drivemC: infoMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
           return HtmlService.createTemplate(html)
             .evaluate()
-            .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3])
+            .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3])
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
-      let urlCDN = driveManager(url);
-      console.log("From driveManager: urlCDN = " + urlCDN);
+      let urlCDN = new DriveFiles(url);
+      console.log("From DriveFiles: urlCDN = " + urlCDN.filedMain);
       return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setContent(seoCapital(urlCDN))
-        .setTitle(isValidUrl(getScriptUrl()).pathname.split("/")[3]);
+        .setContent(seoCapital(urlCDN.filedMain))
+        .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3]);
     }
     catch (erR) {
       console.log("error in contentCDN: " + erR);

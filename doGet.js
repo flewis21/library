@@ -1520,9 +1520,9 @@ function handleGetData(e) {
 }
 
 var globalHandleGetData = function (rawFuncResult) {
-  var payLoad = {}; // Initialize payload
-  var executed = 0;
-  var htmlList = autoGlobe.functionRegistry.getHtmlList();
+  let payLoad = {}; // Initialize payload
+  let executed = autoGlobe.executed;
+  let htmlList = autoGlobe.functionRegistry.getHtmlList();
   // --- BEGIN Refactored payLoad processing ---
   let appL = "";
   let iframeSrc =
@@ -1533,9 +1533,6 @@ var globalHandleGetData = function (rawFuncResult) {
   data.message["content"] = null;
   data.message["info"] = null;
   data.message["link"] = null;
-  data["timestamp"] = new Date();
-  data["pL"] = payLoad;
-  data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
   executed++;
   try {
     // Helper function to process any value (rawFuncResult or a nested property like .app)
@@ -2005,9 +2002,9 @@ var globalHandleGetData = function (rawFuncResult) {
   //   info: appL,
   //   link: feed, // Clear iframe on critical error
   // };
-  // data["timestamp"] = new Date();
-  // data["pL"] = payLoad;
-  // data["title"] = isValidUrl(getScriptUrl()).pathname.split("/")[3];
+  data["timestamp"] = new Date();
+  data["pL"] = payLoad;
+  data["title"] = new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3];
 
   return data;
 };

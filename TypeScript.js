@@ -2148,14 +2148,14 @@ class DriveFiles extends RawFuncResult {
             //   this.filedMain = null; // Handle search errors gracefully
             // }
             console.log(
-              "driveManager: Final dataTree length after search:",
+              "DriveFiles: Final dataTree length after search:",
               this.dataTree.length,
             );
             if (this.dataTree.length > 0) {
               this.rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
               this.filedMain = this.dataTree[this.rndFiledMain];
               console.log(
-                "driveManager: Returning a random found file URL:",
+                "DriveFiles: Returning a random found file URL:",
                 this.filedMain,
               );
             }
@@ -2352,7 +2352,7 @@ class ValidUrlResult extends ObjectConvertor {
             });
           });
           // String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
-          String(this?.filedMain)?.forEach((fileUrl) => {
+          Array(this?.filedMain)?.forEach((fileUrl) => {
             if (fileUrl && this.validUrlResult.rndRes.indexOf(fileUrl) === -1) {
               if (this.vidData?.indexOf(fileUrl) !== -1) {
                 this.validUrlResult.rndRes.push(fileUrl);
@@ -2374,7 +2374,7 @@ class ValidUrlResult extends ObjectConvertor {
       }
       console.log("rndRes = " + this.validUrlResult.rndRes);
       this.validUrlResult.allMatches = this.validUrlResult.matches ? this.validUrlResult.matches : this.validUrlResult.rndRes;
-      console.log(`allMatches = matches ? [...${validUrlResult.allMatches}]`);
+      console.log(`allMatches = matches ? [...${this.validUrlResult.allMatches}]`);
       if (this.validUrlResult.allMatches?.length > 0) {
         this.tempUrlResult = {};
         this.tempUrlResult.currentProtocol = "";
@@ -2523,10 +2523,13 @@ var geneicType = function (e) {
             return {payload: base}
           }
         }
+        else {
+          data = funcHandle();
+        }
       }
     }
   }
-  let executed = data.executed;;
+  let executed = data.executed;
   let handles = null; 
   let exampleObjectType = {
     a: Array.isArray(data?.funcDos)? data?.funcDos[0] : "String",
