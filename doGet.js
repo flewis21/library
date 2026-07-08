@@ -65,7 +65,7 @@ function doGet(e) {
           ["action", "getData"],
         ],
       ],
-      freqP.functionRegistry.time,
+      autoGlobe.functionRegistry.time,
     );
   }
   // var noEmptyE = Object?.keys(e).length;
@@ -73,7 +73,7 @@ function doGet(e) {
   // var nonPopulatedE = Object?.values(e).length;
   // console.log("Object?.values(e).length", Object?.values(e));
   console.log(
-    formatTime(freqP.functionRegistry.time) +
+    formatTime(autoGlobe.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\ne is !" +
@@ -95,13 +95,13 @@ function doGet(e) {
   //   } 
   //   else {
   //     if (e && typeof e !== "object") {
-  //       e = objectOfS(["parameter"], [[["q", e]]], freqP.functionRegistry.time);
+  //       e = objectOfS(["parameter"], [[["q", e]]], autoGlobe.functionRegistry.time);
   //       console.log("e not an object - redefined: e = " + e, executed++ );
   //       return functionFlex(e);
   //     }
   //   }
   // }
-  let titleArray = freqP.functionRegistry.getFileList();
+  let titleArray = autoGlobe.functionRegistry.getFileList();
   if (e && typeof e === "object" && e.parameter && e.parameter["args"]) {
     console.log("Executed " + e.parameter["args"], [e && typeof e === "object" && e.parameter && e.parameter["args"]]);
     var content = e.parameter["args"];
@@ -112,7 +112,7 @@ function doGet(e) {
   //     titleArray.push(key);
   //   }
   // }
-  var lowCapApp = [freqParams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
+  var lowCapApp = [autoGlobearams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {
@@ -122,7 +122,7 @@ function doGet(e) {
   };
   if (fx && typeof globalThis[fx] === "function") {
     console.log("Executed " + fx, [fx && typeof globalThis[fx] === "function"]);
-    var rndStr = freqP.searchString().myNewArr;
+    var rndStr = autoGlobe.searchString().myNewArr;
     return functionFlex(e);
   } 
   else {
@@ -370,7 +370,7 @@ function doGet(e) {
                               } 
                               else {
                                 let libFunc = "rendFile";
-                                let htmlArray = freqParams.prototype.functionRegistry.htmlArray
+                                let htmlArray = autoGlobearams.prototype.functionRegistry.htmlArray
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
                                 let renF = RenderFile.fileRender(args,{payL: payload},args)
@@ -492,7 +492,7 @@ function handleRequest(e) {
 function handleGetData(e) {
   var executed = 0;
   console.info(`previously exec count - \nhandleGetData(${e}) - `, executed);
-  var htmlList = freqP.functionRegistry.getHtmlList();
+  var htmlList = autoGlobe.functionRegistry.getHtmlList();
   executed++;
   // var payLoad = globalThis[funcUno].apply(this, [funcDos]);
   // var pIndex = payLoad.index;
@@ -585,7 +585,7 @@ function handleGetData(e) {
   //         ["action", "getData"],
   //       ],
   //     ],
-  //     freqP.functionRegistry.time,
+  //     autoGlobe.functionRegistry.time,
   //   );
   //   console.log(JSON.stringify(rndE));
   // }
@@ -630,7 +630,7 @@ function handleGetData(e) {
               `previously exec count - \nhandleGetData(${JSON.stringify(rndE)}) - `,
               executed,
             );
-            var htmlArray = freqP.functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
+            var htmlArray = autoGlobe.functionRegistry.getHtmlList(); //[`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,].toString().split(" ");
             executed++;
             if (funcTres) {
               if (Array.isArray(funcTres)) {
@@ -726,7 +726,7 @@ function handleGetData(e) {
                   // ["args", argsEd],
                 ],
               ],
-              freqP.functionRegistry.time,
+              autoGlobe.functionRegistry.time,
             );
             executed++;
           } else if (typeof argsEd === "object" && argsEd !== null) {
@@ -744,7 +744,7 @@ function handleGetData(e) {
                     ["args", [...Object.values(argsEd)[0]]],
                   ],
                 ],
-                freqP.functionRegistry.time,
+                autoGlobe.functionRegistry.time,
               );
               executed++;
             } else {
@@ -761,7 +761,7 @@ function handleGetData(e) {
                     // ["args", argsEd.name],
                   ],
                 ],
-                freqP.functionRegistry.time,
+                autoGlobe.functionRegistry.time,
               );
               executed++;
             }
@@ -787,7 +787,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                freqP.functionRegistry.time,
+                autoGlobe.functionRegistry.time,
               );
               executed++;
             } else {
@@ -805,7 +805,7 @@ function handleGetData(e) {
                     // ["args", "Invalid Entry"],
                   ],
                 ],
-                freqP.functionRegistry.time,
+                autoGlobe.functionRegistry.time,
               );
               executed++;
             }
@@ -825,7 +825,7 @@ function handleGetData(e) {
     }
   }
   // console.log(
-  //   formatTime(freqP.functionRegistry.time) +
+  //   formatTime(autoGlobe.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\ne is !" +
@@ -881,7 +881,7 @@ function handleGetData(e) {
       `previously exec count - \nhandleGetData(${[funcUno, funcDos]}) - `,
       executed,
     );
-    let rawUrlResult = freqP.trueVfalse(isObjValUrl);
+    let rawUrlResult = autoGlobe.trueVfalse(isObjValUrl);
     executed++;
     if (!rawUrlResult) {
       // if (typeof globalThis[funcUno] === "function" || (typeof globalThis[funcUno] !== "function" && funcDos)) {
@@ -910,7 +910,7 @@ function handleGetData(e) {
             }
           }
         }
-      } else if (typeof funcDos !== "object" && freqP.trueVfalse(funcDos)) {
+      } else if (typeof funcDos !== "object" && autoGlobe.trueVfalse(funcDos)) {
         parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
       } else {
         parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
@@ -1522,7 +1522,7 @@ function handleGetData(e) {
 var globalHandleGetData = function (rawFuncResult) {
   var payLoad = {}; // Initialize payload
   var executed = 0;
-  var htmlList = freqP.functionRegistry.getHtmlList();
+  var htmlList = autoGlobe.functionRegistry.getHtmlList();
   // --- BEGIN Refactored payLoad processing ---
   let appL = "";
   let iframeSrc =
@@ -2124,7 +2124,7 @@ var createJsonResponse = function (success, message) {
 
 function misBing(e, time) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -2293,7 +2293,7 @@ function userClicked() {
   return ContentApp.appContent(
     `<script>
     
-  console.log(freqP.functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
   //console.log(document.getElementById("test").innerHTML)
   // Init a timeout variable to be used below
   let timeout = null;
@@ -2648,7 +2648,7 @@ function userClicked() {
 
 // var runBoilerplate = function (func, someargs) {
 //   console.log(
-//     freqP.functionRegistry.time +
+//     autoGlobe.functionRegistry.time +
 //       "\n" +
 //       arguments.callee.name +
 //       "\nfunc is !" +
@@ -2678,10 +2678,10 @@ var runBoilerplate = function (func, args, callCount = 0) {
   var libName = "foo";
   // Check if maxTime exists as a global variable
   const timeRemaining =
-    typeof freqP.functionRegistry.maxTime !== "undefined" &&
-    freqP.functionRegistry.maxTime instanceof Date
+    typeof autoGlobe.functionRegistry.maxTime !== "undefined" &&
+    autoGlobe.functionRegistry.maxTime instanceof Date
       ? Math.floor(
-          (freqP.functionRegistry.maxTime.getTime() -
+          (autoGlobe.functionRegistry.maxTime.getTime() -
             (new Date().getTime() % (1000 * 60))) /
             1000,
         ) // Use .getTime() for Date objects

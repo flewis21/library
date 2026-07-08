@@ -3,7 +3,7 @@ class AppList {
     this.appTemplate = appTemplate;
   }
   static listapps () {
-    console.log(freqP.functionRegistry.time);
+    console.log(autoGlobe.functionRegistry.time);
     appTemplate =  HtmlService.createTemplate(
       `<html id="appList"><head><base target="_top"><meta charset="utf-8"><meta name="appList" content="Boilerplate Function List"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           a:link, a:visited {color:black !important;}
@@ -220,7 +220,7 @@ class ContentApp {
         ")",
     );
     console.log(
-      freqP.functionRegistry.time +
+      autoGlobe.functionRegistry.time +
         "\nBlob is !" +
         !blob +
         " = " +
@@ -608,7 +608,7 @@ function defSBD(e) {
 var eTest = function () {
   console.log(
     Math.floor(
-      freqP.functionRegistry.timeLeftToExecute - freqP.functionRegistry.time / 1000,
+      autoGlobe.functionRegistry.timeLeftToExecute - autoGlobe.functionRegistry.time / 1000,
     ),
   );
 };
@@ -980,7 +980,7 @@ class RenderFile {
   }
   static fileRender (file, argsObject, title) {
     console.log(
-      freqP.functionRegistry.time +
+      autoGlobe.functionRegistry.time +
         "\nfile is !" +
         !file +
         " = " +
@@ -996,7 +996,7 @@ class RenderFile {
     );
     try {
       if (file) {
-        let htmlList = freqP.functionRegistry.getHtmlList();
+        let htmlList = autoGlobe.functionRegistry.getHtmlList();
         if (htmlList.indexOf(file) !== -1) { 
           console.log("argsObject before htmlList & tmp processing", argsObject);
           const tmp = HtmlService.createTemplateFromFile(file);
@@ -1274,7 +1274,7 @@ class RenderTemplate {
             ")",
     );
     let executed = 0;
-    console.log(freqP.functionRegistry.time);
+    console.log(autoGlobe.functionRegistry.time);
     console.log("argsObject before blob & tmp processing", argsObject);
     const tmp = HtmlService.createTemplate(blob);
     if (argsObject) {

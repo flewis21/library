@@ -14,7 +14,7 @@
 
 function appSort(numIndex, time) {
   // console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name + "\n!numIndex = " + !numIndex)
-  var titleArray = freqP.functionRegistry.getFileList();
+  var titleArray = autoGlobe.functionRegistry.getFileList();
   // for (var key in globalThis) {
     // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nkey: " +  uniqueKey[key]["title"] + "\nelapsedTime: " + elapsedTime)
   //   if (typeof globalThis[key] == "function") {
@@ -72,8 +72,8 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = 0;
   let rawFuncResult = null;
-  let truUno = freqP.truUno;
-  let truDos = freqP.truDos;
+  let truUno = autoGlobe.truUno;
+  let truDos = autoGlobe.truDos;
   console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
@@ -81,17 +81,17 @@ var createFunctionResult = function (funcUno, funcDos) {
   try {
     let objVal = truDos? funcDos?.toString(): false;
     console.log("objVal\n" + [objVal]);
-    let truVal = freqP.trueVfalse(objVal);
+    let truVal = autoGlobe.trueVfalse(objVal);
     console.log("truVal\n" + [truVal]);
     let rawUrlResult = null;
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
       isObjValUrl = isValidUrl(objVal);
       if (Array.isArray(isObjValUrl?.matches)) {
-        rawUrlResult = freqP.trueVfalse(isObjValUrl?.matches[0]);
+        rawUrlResult = autoGlobe.trueVfalse(isObjValUrl?.matches[0]);
       }
       else {
-        rawUrlResult = freqP.trueVfalse(isObjValUrl?.matches);
+        rawUrlResult = autoGlobe.trueVfalse(isObjValUrl?.matches);
       }
       console.log("rawUrlResult = " + rawUrlResult, executed++);
     }
@@ -136,16 +136,16 @@ var createFunctionResult = function (funcUno, funcDos) {
       }
       console.log("Parsed funtion and arguments = " + [funcUno, parsedFuncArgs]);
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
-        console.log("This execution is initiating without funcDos. funcDos is  " , funcDos);
+        console.log("This execution is initiating without funcDos. funcUno is  " , funcUno);
         try {
           let funcAFunc = crmT(funcUno);
-          console.log("funcAFunc = " + funcAFunc, executed++);
           if (funcAFunc === -1) {
             return
             // rawFuncResult = mis([funcUno]);
           }
           else {
             if (!funcAFunc === -1) {
+              console.log(funcUno + "'s function index is = " + funcAFunc, executed++);
               rawFuncResult = globalThis[funcUno]();
             }
             else {
@@ -231,7 +231,7 @@ function createRandomFunction(searchString) {
   var executed = 0;
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
-    : freqP.functionRegistry.fileList;
+    : autoGlobe.functionRegistry.fileList;
   // --- Create the script ---
   console.log("SCRIPT_TITLES",executed++);
   const scriptTitle =
@@ -243,7 +243,7 @@ function createRandomFunction(searchString) {
   console.log("isRequired",executed++);
 
   let fileIndex; //= crmT(scriptTitle)
-  let fileParams; //= freqP.functionRegistry.paramsList[fileIndex]
+  let fileParams; //= autoGlobe.functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
   if (isRequired) {
@@ -256,10 +256,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, freqP.functionRegistry.time],
+          [scriptTitle, autoGlobe.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -279,7 +279,7 @@ function createRandomFunction(searchString) {
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = freqP.functionRegistry.paramsList[fileIndex];
+      fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams.parameters]])[scriptTitle];
       console.log("tempObj",executed++);
@@ -294,10 +294,10 @@ function createRandomFunction(searchString) {
       if (!script) {
         console.log("!script",!script);
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, freqP.functionRegistry.time],
+          [scriptTitle, autoGlobe.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -306,7 +306,7 @@ function createRandomFunction(searchString) {
       } else {
         console.log("(script && script?.length === 0)",script?.length === 0);
         mapArr[scriptTitle] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         console.log("tempObj",executed++);
         Logger.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
@@ -317,7 +317,7 @@ function createRandomFunction(searchString) {
       // console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
       console.log("fileIndex",executed++);
-      fileParams = freqP.functionRegistry.paramsList[fileIndex];
+      fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
       let tempObj = IsMapped.mapout(mapArr, [...fileParams.parameters]);
@@ -669,7 +669,7 @@ var funcCalc = function() {
 
 function functionFlex(e) {
   let executed = 0;
-  let genAP = new freqParams();
+  let genAP = new autoGlobearams();
   let exampleObjectType = {
     a: "string",
     b: 123,
@@ -723,7 +723,7 @@ function functionFlex(e) {
     let funcUno = handles["exec"];
     let funcDos = handles["args"];
     // if (e && typeof e !== "object") {
-    //   e = objectOfS(["parameter"], [[["func", e]]], freqP.functionRegistry.time);
+    //   e = objectOfS(["parameter"], [[["func", e]]], autoGlobe.functionRegistry.time);
     // }
     // Determine funcTres
     if (e && e.parameter["file"]) {
@@ -751,7 +751,7 @@ function functionFlex(e) {
     //   //           // ["args", argsEd],
     //   //         ],
     //   //       ],
-    //   //       freqP.functionRegistry.time,
+    //   //       autoGlobe.functionRegistry.time,
     //   //     );
     //   //   } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
     //   //     if (argsEd.parameters && argsEd.parameters.length > 0) {
@@ -763,7 +763,7 @@ function functionFlex(e) {
     //   //             ["args", [...argsEd.parameters]],
     //   //           ],
     //   //         ],
-    //   //         freqP.functionRegistry.time,
+    //   //         autoGlobe.functionRegistry.time,
     //   //       );
     //   //     } else {
     //   //       e = objectOfS(
@@ -774,7 +774,7 @@ function functionFlex(e) {
     //   //             // ["args", argsEd.name],
     //   //           ],
     //   //         ],
-    //   //         freqP.functionRegistry.time,
+    //   //         autoGlobe.functionRegistry.time,
     //   //       );
     //   //     }
     //   //   } else {
@@ -787,7 +787,7 @@ function functionFlex(e) {
     //   //           ["args", "Invalid Entry"],
     //   //         ],
     //   //       ],
-    //   //       freqP.functionRegistry.time,
+    //   //       autoGlobe.functionRegistry.time,
     //   //     );
     //   //   }
     //   //   Logger.log(">>> [LIBRARY] LIBRARY WEB APP's FINAL e: " + JSON.stringify(e));
@@ -796,7 +796,7 @@ function functionFlex(e) {
     // }
     // Logger.log(
     //   ">>> [LIBRARY] LIBRARY WEB APP's ELAPSED TIME: " +
-    //     freqP.functionRegistry.time +
+    //     autoGlobe.functionRegistry.time +
     //     "\n" +
     //     arguments.callee.name +
     //     "\ne is !" +
@@ -846,7 +846,7 @@ function functionFlex(e) {
     var libFunc = funcUno || "rendFile";
     var foobarr = funcDos || funcTres || ""; // Redundant variable
 
-    var htmlArray = freqParams.prototype.functionRegistry.htmlArray;
+    var htmlArray = autoGlobearams.prototype.functionRegistry.htmlArray;
     // [`untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks uiAccess cGWI`,
     // ]
     //   .toString()
@@ -1145,7 +1145,7 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoGlobelay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
                                 document.close();
 
                               }
@@ -1562,13 +1562,13 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoGlobelay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
                                 document.close();
 
                                 // const iframe = document.createElement("iframe");
                                 // iframe.id = "eventRes01";
                                 // iframe.title = "Dontime Life Website";
-                                // iframe.allow = "freqPlay; encrypted-media";
+                                // iframe.allow = "autoGlobelay; encrypted-media";
                                 // iframe.allowFullscreen = true;
                                 // iframe.style.width = "100%";
                                 // iframe.style.height = "100%";
@@ -1870,7 +1870,7 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoGlobelay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + nApp + '</pre>');
                                 document.close();
 
                               }
@@ -2287,13 +2287,13 @@ function functionFlex(e) {
                                 // console.log(initialArgs.trim().startsWith("<") && initialArgs.trim().endsWith(">"));
 
                                 document.open();
-                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="freqPlay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
+                                document.write('<pre class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="autoGlobelay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen >' + initialArgs + '</pre>');
                                 document.close();
 
                                 // const iframe = document.createElement("iframe");
                                 // iframe.id = "eventRes01";
                                 // iframe.title = "Dontime Life Website";
-                                // iframe.allow = "freqPlay; encrypted-media";
+                                // iframe.allow = "autoGlobelay; encrypted-media";
                                 // iframe.allowFullscreen = true;
                                 // iframe.style.width = "100%";
                                 // iframe.style.height = "100%";
@@ -2705,7 +2705,7 @@ var getUrlResponse = function (url, options) {
                 supUrl = location;
                 gURObj.link = supUrl;
                 let responseObj = {
-                  dataStr: vidFactor(htmlData, freqP.functionRegistry.time).vidArray,
+                  dataStr: vidFactor(htmlData, autoGlobe.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
               }
@@ -2717,7 +2717,7 @@ var getUrlResponse = function (url, options) {
                 supUrl = url;
                 gURObj.link = supUrl;
                 let responseObj = {
-                  dataStr: vidFactor(location, freqP.functionRegistry.time).vidArray,
+                  dataStr: vidFactor(location, autoGlobe.functionRegistry.time).vidArray,
                 };
                 gURObj.index = responseObj;
               }
@@ -2732,7 +2732,7 @@ var getUrlResponse = function (url, options) {
     catch (l) {
       gURObj.app = l;
       let responseObj = {
-        dataStr: vidFactor(l, freqP.functionRegistry.time).vidArray,
+        dataStr: vidFactor(l, autoGlobe.functionRegistry.time).vidArray,
       };
       gURObj.index = responseObj;
       Logger.log("Error response received: " + l.stack);
@@ -2761,7 +2761,7 @@ var getUrlResponse = function (url, options) {
     console.log("Invalid input, ", JSON.stringify([url, options]));
     gURObj.app = "Invalid input, " + JSON.stringify([url, options]);
     let responseObj = {
-      dataStr: vidFactor("Invalid input, " + JSON.stringify([url, options]), freqP.functionRegistry.time).vidArray,
+      dataStr: vidFactor("Invalid input, " + JSON.stringify([url, options]), autoGlobe.functionRegistry.time).vidArray,
     };
     gURObj.index = responseObj;
     gURObj.link = url;

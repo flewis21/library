@@ -12,7 +12,7 @@ function createFormFunction(searchString) {
   // --- Configuration for randomness ---
   const SCRIPT_TITLES = searchString
     ? Array(searchString)
-    : freqP.functionRegistry.fileList;
+    : autoGlobe.functionRegistry.fileList;
   const SCRIPT_DESCRIPTIONS = [
     "A randomly generated script to gather insights.",
     "Please fill out this script at your leisure. Content is randomized.",
@@ -72,7 +72,7 @@ function createFormFunction(searchString) {
   const script = globalThis[scriptTitle]; //ScriptApp.newTrigger(scriptTitle).timeBased().everyHours(24).create();
   // const funcXName = script.name;
   // try {
-  //   let functionCheck = driveManager(script || scriptTitle, freqP.functionRegistry.time);
+  //   let functionCheck = driveManager(script || scriptTitle, autoGlobe.functionRegistry.time);
   // }
   Logger.log(`Random script: ${script?.toString()}`);
   Logger.log(`Script name: ${scriptTitle}`);
@@ -98,7 +98,7 @@ function createFormFunction(searchString) {
   const isRequired = reqChoice(); //Math.random() < 0.7; // 70% chance of being required
 
   let fileIndex; //= crmT(scriptTitle)
-  let fileParams; //= freqP.functionRegistry.paramsList[fileIndex]
+  let fileParams; //= autoGlobe.functionRegistry.paramsList[fileIndex]
   let scriptUrl; //= script()//.getPublishedUrl();
   let mapArr = {};
   let vidTubeTime = vidPlaylist(scriptTitle);
@@ -169,7 +169,7 @@ function createFormFunction(searchString) {
       }
     });
   }
-  const imgFile = seoPictTime(scriptTitle, freqP.functionRegistry.time)?.playList;
+  const imgFile = seoPictTime(scriptTitle, autoGlobe.functionRegistry.time)?.playList;
   let rndfileImage =
     imgFile[Math.floor(Math.random() * Math.floor(imgFile.length))];
   if (rndfileImage) {
@@ -215,8 +215,8 @@ function createFormFunction(searchString) {
           .split('"')[1];
       }
       if (piece.indexOf("http") > -1) {
-        var elaspeTime = freqP.functionRegistry.time;
-        var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
+        var elaspeTime = autoGlobe.functionRegistry.time;
+        var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
         if (srImgRes || svImgRes) {
           var imgUrl = srImgRes || svImgRes;
         }
@@ -370,10 +370,10 @@ function createFormFunction(searchString) {
       if (!script) {
         console.log("!script");
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, freqP.functionRegistry.time],
+          [scriptTitle, autoGlobe.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
@@ -386,7 +386,7 @@ function createFormFunction(searchString) {
       console.info("script\n", script?.toString() || scriptTitle);
       mapArr[scriptTitle] = [];
       fileIndex = crmT(scriptTitle);
-      fileParams = freqP.functionRegistry.paramsList[fileIndex];
+      fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams.parameters]])[
         scriptTitle
       ];
@@ -399,23 +399,23 @@ function createFormFunction(searchString) {
       if (!script) {
         console.log("!script");
         mapArr["driveManager"] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [
           "driveManager",
-          [scriptTitle, freqP.functionRegistry.time],
+          [scriptTitle, autoGlobe.functionRegistry.time],
         ])["driveManager"]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       } else {
         console.log("(script && script?.length === 0)");
         mapArr[scriptTitle] = [];
-        // let funcX = driveManager(scriptTitle, freqP.functionRegistry.time);
+        // let funcX = driveManager(scriptTitle, autoGlobe.functionRegistry.time);
         let tempObj = IsMapped.mapout(mapArr, [scriptTitle])[scriptTitle]; //userSubmit.getPublishedUrl()]);
         scriptUrl = resolveParams(tempObj);
       }
     } else {
       console.info("script\n", script?.toString() || scriptTitle);
       fileIndex = crmT(scriptTitle);
-      fileParams = freqP.functionRegistry.paramsList[fileIndex];
+      fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       mapArr[scriptTitle] = [];
       scriptUrl = IsMapped.mapout(mapArr, [...fileParams.parameters]);
     }
@@ -472,7 +472,7 @@ function createFormFunction(searchString) {
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
           //       IsMapped.mapout({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
@@ -487,7 +487,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
           //     scriptUrl = IsMapped.mapout(mapArr, [userText]);
           //   }
@@ -544,7 +544,7 @@ function createFormFunction(searchString) {
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
           //       IsMapped.mapout({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
@@ -559,7 +559,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
           //     scriptUrl = IsMapped.mapout(mapArr, [pChoice.getMimeType()]);
           //   }
@@ -659,7 +659,7 @@ function createFormFunction(searchString) {
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
           //       IsMapped.mapout({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
@@ -674,7 +674,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
           //     scriptUrl = IsMapped.mapout(mapArr, [cChoice.getMimeType()]);
           //   }
@@ -710,7 +710,7 @@ function createFormFunction(searchString) {
           //     );
           //   } else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     scriptUrl = resolveParams(
           //       IsMapped.mapout({ a: [...fileParams.parameters] }, [
           //         scriptTitle,
@@ -725,7 +725,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
           //     scriptUrl = IsMapped.mapout(mapArr, [new Date().getDate().toLocaleString()]);
           //   }
@@ -762,7 +762,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     // var tempObj =
           //     scriptUrl = resolveParams(
           //       IsMapped.mapout({ a: [...fileParams.parameters] }, [
@@ -779,7 +779,7 @@ function createFormFunction(searchString) {
           //   }
           //   else {
           //     fileIndex = crmT(scriptTitle);
-          //     fileParams = freqP.functionRegistry.paramsList[fileIndex];
+          //     fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
           //     mapArr[scriptTitle] = [...fileParams];
           //     scriptUrl = IsMapped.mapout(mapArr, [userEMail]);
           //   }
@@ -853,7 +853,7 @@ function createFormFunction(searchString) {
         //   videoItem.setAlignment(
         //     videoAlignments[Math.floor(Math.random() * videoAlignments.length)],
         //   );
-        //   let imgFile = seoPictTime(scriptTitle, freqP.functionRegistry.time).playList;
+        //   let imgFile = seoPictTime(scriptTitle, autoGlobe.functionRegistry.time).playList;
         //   let rndfileImage = imgFile[Math.floor(Math.random() * (Math.floor(imgFile.length)))];
         //   if (rndfileImage) {
         //     let deepFileDive = DriveApp.getFilesByName(rndfileImage);
@@ -891,8 +891,8 @@ function createFormFunction(searchString) {
         //           .split('"')[1];
         //       }
         //       if (piece.indexOf("http") > -1) {
-        //         var elaspeTime = freqP.functionRegistry.time;
-        //         var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
+        //         var elaspeTime = autoGlobe.functionRegistry.time;
+        //         var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
         //         userSubmit.addPageBreakItem().setTitle([questionTitle].join(""));
         //         userSubmit.addSectionHeaderItem().setTitle(piece);
         //         if (srImgRes || svImgRes) {
@@ -986,7 +986,7 @@ function createFormFunction(searchString) {
         //       );
         //     } else {
         //       fileIndex = crmT(scriptTitle);
-        //       fileParams = freqP.functionRegistry.paramsList[fileIndex];
+        //       fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
         //       // var tempObj =
         //       scriptUrl = resolveParams(
         //         IsMapped.mapout({ a: [...fileParams.parameters] }, [
@@ -1002,7 +1002,7 @@ function createFormFunction(searchString) {
         //     }
         //     else {
         //       fileIndex = crmT(scriptTitle);
-        //       fileParams = freqP.functionRegistry.paramsList[fileIndex];
+        //       fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
         //       mapArr[scriptTitle] = [...fileParams];
         //       scriptUrl = IsMapped.mapout(mapArr, [userSubmit.getPublishedUrl()]);
         //     }
@@ -1430,7 +1430,7 @@ function createRandomForm() {
 }
 
 function dtls(callFunc, time) {
-  var appList = freqP.functionRegistry.getFileList();
+  var appList = autoGlobe.functionRegistry.getFileList();
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     appList.push(key);
@@ -1474,7 +1474,7 @@ function dtls(callFunc, time) {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = freqP.functionRegistry.maxTime - elaspeTime;
+            var timeToExecute = autoGlobe.functionRegistry.maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([formName].join(""));
             // form.addSectionHeaderItm().setTitle([piece].join("").split('"'))
@@ -1565,7 +1565,7 @@ function dtls(callFunc, time) {
       src="${url}" 
       width="100%"
       height="100%"
-      allow="freqPlay"
+      allow="autoGlobelay"
       allow="encrypted-media"
       title="Dontime Life Website"
       frameborder="0"
@@ -1675,7 +1675,7 @@ function dtlsCalculator(e) {
       src="${url}" 
       width="100%"
       height="100%"
-      allow="freqPlay"
+      allow="autoGlobelay"
       allow="encrypted-media"
       title="Dontime Life Website"
       frameborder="0"
@@ -1722,7 +1722,7 @@ function dtlsEnvironment(e, time) {
       src=${formUrl}
       width="100%"
       height="100%"
-      allow="freqPlay"
+      allow="autoGlobelay"
       allow="encrypted-media"
       title="Dontime Life Website"
       frameborder="0"
@@ -1935,7 +1935,7 @@ function dtlsEnvironment(e, time) {
   //     src="${url}"
   //     width="100%"
   //     height="100%"
-  //     allow="freqPlay"
+  //     allow="autoGlobelay"
   //     allow="encrypted-media"
   //     title="Dontime Life Website"
   //     frameborder="0"
@@ -2028,7 +2028,7 @@ function dtlsInvestor(coKey, time) {
       //   src="${url}"
       //   width="100%"
       //   height="100%"
-      //   allow="freqPlay"
+      //   allow="autoGlobelay"
       //   allow="encrypted-media"
       //   title="Dontime Life Website"
       //   frameborder="0"
@@ -2049,10 +2049,10 @@ function dtlsResearchForm(topic) {
     : (cokey = objectOfS(
         ["parameter"],
         [[["func", arguments.callee.name]]],
-        freqP.functionRegistry.time,
+        autoGlobe.functionRegistry.time,
       ).parameter["func"]);
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -2083,8 +2083,8 @@ function dtlsResearchForm(topic) {
 }
 
 function dtlsSomeFunction(e) {
-  var time = freqP.functionRegistry.time;
-  var importedData = freqP.arrD();
+  var time = autoGlobe.functionRegistry.time;
+  var importedData = autoGlobe.arrD();
   var funcStr = randomSubstance(0, 4, importedData).myNewArr;
   // var uniqueKey = [funcStr];
   // var uniqueCoObjects = covObjects(uniqueKey, ["allTime"]);
@@ -2123,8 +2123,8 @@ function dtlsSomeFunction(e) {
     if (typeof form === "object") {
       covIdArray.map((d) => {
         while (d) {
-          var elapsedTime = freqP.functionRegistry.time;
-          var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
+          var elapsedTime = autoGlobe.functionRegistry.time;
+          var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form
             .addSectionHeaderItem()
@@ -2272,7 +2272,7 @@ function dtlsStore(itemName, time) {
                             id="busRes"
                             width="100%"
                             height="100%"
-                            allow="freqPlay"
+                            allow="autoGlobelay"
                             allow="encrypted-media"
                             title="Dontime Life Website"
                             frameborder="0"
@@ -2369,7 +2369,7 @@ function dtlsVegas(rndId) {
           src="${formUrl}" 
           width="100%"
           height="100%"
-          allow="freqPlay"
+          allow="autoGlobelay"
           allow="encrypted-media"
           title="Dontime Life Website"
           frameborder="0"
@@ -2411,7 +2411,7 @@ function filetypeBing(e) {
         if (piece) {
           if (piece.indexOf("https://") > -1) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = freqP.functionRegistry.maxTime - elaspeTime;
+            var timeToExecute = autoGlobe.functionRegistry.maxTime - elaspeTime;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([cokey].join(""));
             form.addSectionHeaderItem().setTitle(piece);
@@ -2570,7 +2570,7 @@ function generalWorkInvoice(clientName, time) {
         src="${formUrl}" 
         width="100%"
         height="100%"
-        allow="freqPlay"
+        allow="autoGlobelay"
         allow="encrypted-media"
         title="Dontime Life Website"
         frameborder="0"
@@ -2628,7 +2628,7 @@ function generalWorkInvoice(clientName, time) {
       src="${formUrl}" 
       width="100%"
       height="100%"
-      allow="freqPlay"
+      allow="autoGlobelay"
       allow="encrypted-media"
       title="Dontime Life Website"
       frameborder="0"
@@ -2679,7 +2679,7 @@ var overFlow = function () {
 
 function geneFrame(reference) {
   if (typeof reference === "undefined") {
-    var reference = freqP.functionRegistry.htmlFile;
+    var reference = autoGlobe.functionRegistry.htmlFile;
   }
   return HtmlService.createTemplate(
     ContentApp.appContent(
@@ -2711,7 +2711,7 @@ function geneFrame(reference) {
       src=<?= formUrl  ?>
       width="100%"
       height="100%"
-      allow="freqPlay"
+      allow="autoGlobelay"
       allow="encrypted-media"
       title="Dontime Life Website"
       frameborder="0"
@@ -2744,7 +2744,7 @@ function geneFrame(reference) {
     </script>`,
       {
         file: reference,
-        time: freqP.functionRegistry.time,
+        time: autoGlobe.functionRegistry.time,
         folder: furtFolder(),
       },
     ),
@@ -2785,7 +2785,7 @@ function mainMan(mainFile) {
         src=<?= url ?>
         width="100%"
         height="100%"
-        allow="freqPlay"
+        allow="autoGlobelay"
         allow="encrypted-media"
         title="Dontime Life Website"
         frameborder="0"
@@ -2804,7 +2804,7 @@ function mainMan(mainFile) {
 
 async function somMainFunc(e) {
   var elapsedTime = new Date() - start;
-  var timeToExecute = freqP.functionRegistry.maxTime - elapsedTime;
+  var timeToExecute = autoGlobe.functionRegistry.maxTime - elapsedTime;
   while (timeToExecute > 0.3 * 60 * 1000) {
     console.log(timeToExecute);
     dtlsSomeFunction("It's who you know");
@@ -2826,7 +2826,7 @@ async function somMainFunc(e) {
     if (elapsedTime == 5 * 60 * 1000) {
       console.log("One minute remainig");
     }
-    if (elapsedTime >= freqP.functionRegistry.maxTime) {
+    if (elapsedTime >= autoGlobe.functionRegistry.maxTime) {
       console.log("maximum execution time exceeded");
     }
   }

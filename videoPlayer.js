@@ -61,15 +61,15 @@ function iframeC() {
 
 function needPastTime(searchString) {
   let fndOrdObj = {};
-  freqP.functionRegistry.vidTree();
-  var vidSheetVals = freqP.functionRegistry.getVideoList();
+  autoGlobe.functionRegistry.vidTree();
+  var vidSheetVals = autoGlobe.functionRegistry.getVideoList();
   var vidData = [];
   var vidVals = Object.values(vidSheetVals);
   vidVals.forEach((val) => {
     var inValsKeys = Object.keys(val);
     var inVVals = Object.values(val);
     inVVals.forEach((inV) => {
-      let truInv = freqP.trueVfalse(inV);
+      let truInv = autoGlobe.trueVfalse(inV);
       if (truInv) {
         vidData.push(inV);
       } else {
@@ -79,7 +79,7 @@ function needPastTime(searchString) {
   });
   // while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var noSearch = freqP.searchResult?.parameters;
+      var noSearch = autoGlobe.searchResult?.parameters;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
     var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -220,8 +220,8 @@ function needPastTime(searchString) {
     var rndRes = [];
     randomKey = Math.floor(Math.random() * Math.floor(fndOrd?.length)); // Math.floor(Math.random());
     fndOrd.forEach((test) => {
-      var elaspeTime = freqP.functionRegistry.time;
-      var timeToExecute = freqP.functionRegistry.timeLeftToExecute;
+      var elaspeTime = autoGlobe.functionRegistry.time;
+      var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
           test.indexOf("false") === -1 &&
@@ -289,15 +289,15 @@ function needPastTime(searchString) {
     }
     else {
       if (rndRes && rndRes?.length === 0) {
-        freqP.functionRegistry.vidTree();
-        vidSheetVals = freqP.functionRegistry.getVideoList();
+        autoGlobe.functionRegistry.vidTree();
+        vidSheetVals = autoGlobe.functionRegistry.getVideoList();
         vidData = [];
         vidVals = Object.values(vidSheetVals);
         vidVals.forEach((val) => {
           let inValsKeys = Object.keys(val);
           let inVVals = Object.values(val);
           inVVals.forEach((inV) => {
-            let truInv = freqP.trueVfalse(inV);
+            let truInv = autoGlobe.trueVfalse(inV);
             if (truInv) {
               vidData.push(inV);
             } else {
@@ -314,7 +314,7 @@ function needPastTime(searchString) {
           let matchKeys = Object.keys(vidObj);
           matchKeys.forEach((match) => {
             let vidMatch = vidObj[match];
-            let truMatch = freqP.trueVfalse(vidMatch);
+            let truMatch = autoGlobe.trueVfalse(vidMatch);
             if (truMatch && typeof vidMatch !== "number") {
               let searchMatch = String(vidMatch).search(searchString) > -1;
               let matchSearch = String(searchString).search(vidMatch) > -1;
@@ -506,7 +506,7 @@ function videoPlayer(searchString) {
                             width: '585',
                             playerVars: 
                               {
-                                'freqPlay': 1,
+                                'autoGlobelay': 1,
                                 'loop': 1,
                                 'controls': 0,
                                 'rel': 0,

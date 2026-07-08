@@ -331,6 +331,16 @@ function rndChoice(game) {
 }
 
 function rndCoin() {
+  let paragraphPrompt = getVI();
+  let prompt = [];
+  for (let key in paragraphPrompt) {
+    if (String(paragraphPrompt[key].description).length > 0) {
+      let promptDescription = paragraphPrompt[key].description;
+      if (prompt.indexOf(promptDescription) === -1) {
+        prompt.push(promptDescription)
+      }
+    }
+  }
   // if ([0,1][Math.floor(Math.random() * (Math.floor([0,1].length)))] === 0)
   var trial = [];
   var judge = 0;
@@ -382,11 +392,13 @@ function rndCoin() {
       if (key === "heads") {
         form
           .addParagraphTextItem()
-          .setTitle(randomSubstance(0, 1, [key]).myNewArr);
+          .setTitle(randomSubstance(0, 1, [key]).myNewArr)
+          .setHelpText(prompt[Math.floor(Math.random() * Math.floor(prompt.length))]);
       } else {
         form
           .addParagraphTextItem()
-          .setTitle(randomSubstance(0, 1, [key]).myNewArr);
+          .setTitle(randomSubstance(0, 1, [key]).myNewArr)
+          .setHelpText(prompt[Math.floor(Math.random() * Math.floor(prompt.length))]);
       }
     }
   });
@@ -1187,10 +1199,10 @@ var rndWord = function () {
       let priorityA = 0;
       let priorityB = 0;
       if (Math.random() < 0.5) {
-        priorityA = getZuluFreqPriority(a);
+        priorityA = getZuluautoGloberiority(a);
       }
       if (Math.random() < 0.5) {
-        priorityB = freqPriority.get(b);
+        priorityB = autoGloberiority.get(b);
       }
       return priorityA - priorityB;
     })

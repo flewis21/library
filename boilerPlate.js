@@ -2,7 +2,7 @@
 
 function convertToJS(rndText) {
   console.log(
-    formatTime(freqP.functionRegistry.time) +
+    formatTime(autoGlobe.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -16,14 +16,14 @@ function convertToJS(rndText) {
     });
     var rndText = groceryList;
   } else if (rndText === "folders") {
-    var rndText = freqP.functionRegistry.getFolderList();
+    var rndText = autoGlobe.functionRegistry.getFolderList();
   } else if (
     typeof rndText !== "undefined" &&
     [rndText].includes("rndText") === -1
   ) {
-    rndText = freqP.functionRegistry.getHtmlList();
+    rndText = autoGlobe.functionRegistry.getHtmlList();
   } else {
-    var appList = freqP.functionRegistry.fileList;
+    var appList = autoGlobe.functionRegistry.fileList;
     // for (var key in globalThis) {
     //   if (typeof globalThis[key] == "function") {
     //     appList.push(key);
@@ -56,7 +56,7 @@ function convertToJS(rndText) {
 
 var convertToObjects = function (rows, headings, time) {
   // console.log(
-  //   formatTime(freqP.functionRegistry.time) +
+  //   formatTime(autoGlobe.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\nrows is !" +
@@ -76,14 +76,12 @@ var convertToObjects = function (rows, headings, time) {
     function (ctx, row) {
       ctx.objects.push(
         ctx.headings.reduce(function (item, heading, index) {
-          var elaspeTime = new Date() - freqP.functionRegistry.time;
           item[heading] = row[index];
           return item;
         }, {}),
       );
       var myObj = {};
       headings.forEach(function (heading, index) {
-        var elaspeTime = new Date() - freqP.functionRegistry.time;
         myObj[heading] = [row][index];
       });
       return ctx;
@@ -111,7 +109,7 @@ var convertToObjects = function (rows, headings, time) {
 
 var covertArr = function (objects, row, index) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -148,7 +146,7 @@ var covertArr = function (objects, row, index) {
 
 var covSheetArrays = function (myArray) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -169,7 +167,7 @@ var covSheetArrays = function (myArray) {
 
 var getEventValues = function (title, startTime, endTime, series) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -187,8 +185,8 @@ var getEventValues = function (title, startTime, endTime, series) {
 };
 
 var getDomainValues = function () {
-  freqP.functionRegistry.domainTree();
-  var domainSheetVals = freqP.functionRegistry.getDomainList();
+  autoGlobe.functionRegistry.domainTree();
+  var domainSheetVals = autoGlobe.functionRegistry.getDomainList();
   var domainData = [];
   var inValsKeys = Object.keys(domainSheetVals);
   inValsKeys.forEach((key) => {
@@ -200,12 +198,12 @@ var getDomainValues = function () {
 };
 
 var getFolderValues = function () {
-  return freqP.functionRegistry.getFolderList();
+  return autoGlobe.functionRegistry.getFolderList();
 };
 
 var getVI = function () {
-  freqP.functionRegistry.vidTree();
-  var videoSheetVals = freqP.functionRegistry.arrVidVals;
+  autoGlobe.functionRegistry.vidTree();
+  var videoSheetVals = autoGlobe.functionRegistry.arrVidVals;
   var videoData = [];
   var inValsKeys = Object.keys(videoSheetVals);
   inValsKeys.forEach((key) => {
@@ -229,7 +227,7 @@ var objectOfS = function (keys, values, time) {
    * @return {Object} An object of objects.
    */
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nkeys is !" +
@@ -280,7 +278,7 @@ var reqChoice = function () {
 
 var randNum = function (namedVar) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nnamedVar is !" +
@@ -306,7 +304,7 @@ var sliceValues = function (data, row) {
 
 var splitArr = function (rows, idx, query) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nrows is ! " +
@@ -321,7 +319,7 @@ var splitArr = function (rows, idx, query) {
 
 var splitArrHeadings = function (test) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -338,7 +336,7 @@ var splitArrHeadings = function (test) {
 
 var splitArrRange = function (test) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -364,7 +362,7 @@ var splitArrRange = function (test) {
 
 var splitNoX = function (json, pushIndex) {
   // console.log(
-  //   freqP.functionRegistry.time +
+  //   autoGlobe.functionRegistry.time +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n is ! " +
@@ -407,7 +405,7 @@ var splitNoX = function (json, pushIndex) {
 
 var splitX = function (splitXContent, splitXXpath, splitXDelimiter) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -449,7 +447,7 @@ function substanceVegas(
   maxLength,
 ) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +
@@ -567,7 +565,7 @@ function substanceVegas(
 
 function testArray(content) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -603,7 +601,7 @@ function testArray(content) {
 
 function testData(sourceData, time) {
   // console.log(
-  //   formatTime(freqP.functionRegistry.time) +
+  //   formatTime(autoGlobe.functionRegistry.time) +
   //     "\n" +
   //     arguments.callee.name +
   //     "\n is ! " +
@@ -616,7 +614,7 @@ function testData(sourceData, time) {
   //     time,
   // );
   if (typeof time === "undefined") {
-    var time = freqP.functionRegistry.time;
+    var time = autoGlobe.functionRegistry.time;
   }
   if (typeof sourceData === "undefined") {
     var sourceData = ["0", "1", "2", "3", "4", "5", "6", "7"]
@@ -626,7 +624,7 @@ function testData(sourceData, time) {
   var myArray = [];
   try {
     for (var row in sourceData) {
-      var elaspeTime = freqP.functionRegistry.time;
+      var elaspeTime = autoGlobe.functionRegistry.time;
       // console.log(
       //   "testData: \nsourceData: " +
       //     sourceData +
@@ -637,7 +635,7 @@ function testData(sourceData, time) {
       // );
       myArray.push([]);
       for (var col in sourceData[row]) {
-        // var elaspeTime = freqP.functionRegistry.time;
+        // var elaspeTime = autoGlobe.functionRegistry.time;
         // console.log(
         //   "testData: \nmyArray - " +
         //     myArray +
@@ -740,7 +738,7 @@ function trial() {
 
 function testObject(dataArray, fVarHeaders) {
   console.log(
-    freqP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n is ! " +

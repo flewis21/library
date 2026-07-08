@@ -1,35 +1,35 @@
 class SearchStrings {
   constructor() {
-    let arrDRnd = freqP.arrDRnd;
-    let arrD = freqP.arrD;
+    let arrDRnd = autoGlobe.arrDRnd;
+    let arrD = autoGlobe.arrD;
     let newArr = [];
     let i = 0 || 0;
     let l = 6 || 1;
-    if (arrDRnd.freqArray) {
+    if (arrDRnd) {
       for (i, l; i < l; i++) {
-        if (typeof arrDRnd.freqArray!== "undefined" && typeof arrDRnd.freqArray !== "string") {
-          let myImportData = arrDRnd.freqArray.sort((a, b) => a - b)[
-            Math.floor(Math.random() * arrDRnd.freqArray.length)
+        if (typeof arrDRnd !== "undefined" && typeof arrDRnd !== "string") {
+          let myImportData = arrDRnd.sort((a, b) => a - b)[
+            Math.floor(Math.random() * arrDRnd.length)
           ];
           newArr.push(myImportData);
         } 
         else {
-          if (typeof arrDRnd.freqArray !== "undefined" && typeof arrDRnd.freqArray !== "string") {
-            let myImportData = arrDRnd.freqArray.sort((a, b) => a - b)[
-              Math.floor(Math.random() * arrDRnd.freqArray.length)
+          if (typeof arrDRnd !== "undefined" && typeof arrDRnd !== "string") {
+            let myImportData = arrDRnd.sort((a, b) => a - b)[
+              Math.floor(Math.random() * arrDRnd.length)
             ];
             newArr.push(myImportData);
           } 
           else {
             if (
-              typeof arrDRnd.freqArray !== "undefined" &&
-              typeof arrDRnd.freqArray === "string"
+              typeof arrDRnd !== "undefined" &&
+              typeof arrDRnd === "string"
             ) {
-              let myImportData = [arrDRnd.freqArray].sort((a, b) => {
-                let pA = freqPriority.get(a);
-                let pB = freqPriority.get(b);
+              let myImportData = [arrDRnd].sort((a, b) => {
+                let pA = autoGloberiority.get(a);
+                let pB = autoGloberiority.get(b);
                 return pA - pB;
-              })[Math.floor(Math.random() * [arrDRnd.freqArray].length)];
+              })[Math.floor(Math.random() * [arrDRnd].length)];
               newArr.push(myImportData);
             }
           }
@@ -37,8 +37,8 @@ class SearchStrings {
       }
       if (newArr) {
         let sortNewArr = newArr.sort((a, b) => {
-          let pA = freqP.freqPriority.get(a);
-          let pB = freqP.freqPriority.get(b);
+          let pA = autoGlobe.autoGloberiority.get(a);
+          let pB = autoGlobe.autoGloberiority.get(b);
           return pA - pB;
         })[Math.floor(Math.random() * newArr.length)];
         this.myNewArr = sortNewArr;
@@ -57,14 +57,14 @@ class FunctionHandle {
 
     // Logging
     if (!this.e) {
-      this.mapArr[freqP?.argsX] = [];
-      console.log("The existance of freqP fParams is ", freqP.fParams? true:false);
-      // freqP.fParams
-      //   ? this.rndE = new IsMapped(this.mapArr, [...freqP?.fParams]).mapKeys
+      this.mapArr[autoGlobe?.argsX] = [];
+      console.log("The existance of autoGlobe fParams is ", autoGlobe.fParams? true:false);
+      // autoGlobe.fParams
+      //   ? this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.fParams]).mapKeys
       //     :
       //     this.rndE = new IsMapped(this.mapArr, []).mapKeys
-      if (freqP?.fParams && freqP?.fParams?.length > 0) {
-        this.rndE = new IsMapped(this.mapArr, [...freqP?.fParams]).mapKeys;
+      if (autoGlobe?.fParams && autoGlobe?.fParams?.length > 0) {
+        this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.fParams]).mapKeys;
       }
       else {
         this.rndE = new IsMapped(this.mapArr, []).mapKeys;
@@ -73,10 +73,10 @@ class FunctionHandle {
     }
     else {
       if (this.e && !this.e.parameter) {
-        freqP = new ResolveParameters(this.e);
-        this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
-        if (freqP?.searchResult?.parameters) {
-          this.rndE = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters] || [freqP.func]).mapKeys;
+        autoGlobe = new ResolveParameters(this.e);
+        this.mapArr[autoGlobe?.searchResult?.name || autoGlobe.func] = [];
+        if (autoGlobe?.searchResult?.parameters) {
+          this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.searchResult?.parameters] || [autoGlobe.func]).mapKeys;
         }
         else {
           this.rndE = new IsMapped(this.mapArr, []).mapKeys;
@@ -88,13 +88,13 @@ class FunctionHandle {
           this.objData = Object.keys(this.e.parameter);
           console.log("objData = " + this.e.parameter[this.objData[0]], this.objData);
           if (this.objData.length === 0) {
-            freqP = freqP;
-            this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
-            if (freqP?.searchResult?.parameters) {
+            autoGlobe = autoGlobe;
+            this.mapArr[autoGlobe?.searchResult?.name || autoGlobe.func] = [];
+            if (autoGlobe?.searchResult?.parameters) {
             }
             else {
             }
-            this.rndE = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters] || [freqP.func]).mapKeys;
+            this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.searchResult?.parameters] || [autoGlobe.func]).mapKeys;
             console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
             if (typeof this.rndE === "string") {
               this.e = objectOfS(
@@ -104,7 +104,7 @@ class FunctionHandle {
                     ["func", this.rndE],
                   ],
                 ],
-                freqP.functionRegistry.time,
+                autoGlobe.functionRegistry.time,
               );
             }
             else {
@@ -119,7 +119,7 @@ class FunctionHandle {
                         ["args", Object.values(this.rrndEAP)[0]],
                       ],
                     ],
-                    freqP.functionRegistry.time,
+                    autoGlobe.functionRegistry.time,
                   );
                 } 
                 else {
@@ -130,7 +130,7 @@ class FunctionHandle {
                         ["func", Object.keys(this.rrndEAP)[0]],
                       ],
                     ],
-                    freqP.functionRegistry.time,
+                    autoGlobe.functionRegistry.time,
                   );
                 }
               }
@@ -144,7 +144,7 @@ class FunctionHandle {
                       ["args", "varA"],
                     ],
                   ],
-                  freqP.functionRegistry.time,
+                  autoGlobe.functionRegistry.time,
                 );
               }
             }
@@ -160,7 +160,7 @@ class FunctionHandle {
                 );
                 this.funcTres = this.e?.parameter["file"];
                 try {
-                  this.htmlArray = freqP.functionRegistry.getHtmlList();
+                  this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
                   this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
                   this.rndPage = this.htmlArray[this.rndHtmlIndex];
                   this.htmlTresArg = null; // = rndPage; // Default value
@@ -301,13 +301,13 @@ class FunctionHandle {
                     }
                     else {
                       if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") === -1) {
-                        freqP = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
-                        this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
-                        if (freqP?.searchResult) {
+                        autoGlobe = new ResolveParameters(this.e.parameter[this.objData[0]])  ;
+                        this.mapArr[autoGlobe?.searchResult?.name || autoGlobe.func] = [];
+                        if (autoGlobe?.searchResult) {
                           this.argsEd = new IsMapped(this.mapArr, [...this?.tempObj?.searchResult?.parameters]).mapKeys;
                         }
                         else {
-                          this.argsEd = freqP.func;
+                          this.argsEd = autoGlobe.func;
                         }
                       }
                     }
@@ -316,7 +316,7 @@ class FunctionHandle {
                       this.e = objectOfS(
                         ["parameter"],
                         [[["args", this.argsEd]]],
-                        freqP.functionRegistry.time,
+                        autoGlobe.functionRegistry.time,
                       );
                       console.log("e = " + JSON.stringify(this.e), this.executed++);
                     } 
@@ -332,7 +332,7 @@ class FunctionHandle {
                                 ["args", [...Object.values(this.argsEd)[0]]],
                               ],
                             ],
-                            freqP.functionRegistry.time,
+                            autoGlobe.functionRegistry.time,
                           );
                           console.log("e = " + JSON.stringify(this.e), this.executed++);
                         } 
@@ -340,7 +340,7 @@ class FunctionHandle {
                           this.e = objectOfS(
                             ["parameter"],
                             [[["func", Object.keys(this.argsEd)[0]]]],
-                            freqP.functionRegistry.time,
+                            autoGlobe.functionRegistry.time,
                           );
                           console.log("e = " + JSON.stringify(this.e), this.executed++);
                         }
@@ -362,7 +362,7 @@ class FunctionHandle {
                                   ["args", this.argsedObj],
                                 ],
                               ],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -375,7 +375,7 @@ class FunctionHandle {
                                   ["args", "varA"],
                                 ],
                               ],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -388,10 +388,10 @@ class FunctionHandle {
                   }
                   else {
                     if (typeof globalThis[this.e.parameter[this.objData[0]]] === "function") {
-                      freqP = new ResolveParameters(this.e.parameter[this.objData[0]]);
-                      this.mapArr[freqP?.searchResult?.name || freqP.func] = [];
-                      if (freqP.searchResult?.parameters) {
-                        this.argsEd = new IsMapped(this.mapArr, [...freqP?.searchResult?.parameters]).mapKeys;
+                      autoGlobe = new ResolveParameters(this.e.parameter[this.objData[0]]);
+                      this.mapArr[autoGlobe?.searchResult?.name || autoGlobe.func] = [];
+                      if (autoGlobe.searchResult?.parameters) {
+                        this.argsEd = new IsMapped(this.mapArr, [...autoGlobe?.searchResult?.parameters]).mapKeys;
                       }
                       else {
                         this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
@@ -401,7 +401,7 @@ class FunctionHandle {
                         this.e = objectOfS(
                           ["parameter"],
                           [[["func", this.argsEd]]],
-                          freqP.functionRegistry.time,
+                          autoGlobe.functionRegistry.time,
                         );
                         console.log("e = " + JSON.stringify(this.e), this.executed++);
                       } 
@@ -417,7 +417,7 @@ class FunctionHandle {
                                   ["args", [...Object.values(this.argsEd)[0]]],
                                 ],
                               ],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -425,7 +425,7 @@ class FunctionHandle {
                             this.e = objectOfS(
                               ["parameter"],
                               [[["func", Object.keys(this.argsEd)[0]]]],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -446,7 +446,7 @@ class FunctionHandle {
                                   ["args", this.argsedObj],
                                 ],
                               ],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           } 
@@ -459,7 +459,7 @@ class FunctionHandle {
                                   ["args", "varA"],
                                 ],
                               ],
-                              freqP.functionRegistry.time,
+                              autoGlobe.functionRegistry.time,
                             );
                             console.log("e = " + JSON.stringify(this.e), this.executed++);
                           }
@@ -475,7 +475,7 @@ class FunctionHandle {
                       );
                       this.funcTres = this.e.parameter[this.objData[0]];
                       try {
-                        this.htmlArray = freqP.functionRegistry.getHtmlList();
+                        this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
                         this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
                         this.rndPage = this.htmlArray[this.rndHtmlIndex];
                         this.htmlTresArg; // = rndPage; // Default value
@@ -643,13 +643,13 @@ class FunctionHandle {
   }
   static handleFunction(e) {
     var executed = 0;
-    let funchAP = freqP;
+    let funchAP = autoGlobe;
     let rndE = "";
     let mapArr = {};
 
     // Logging
     if (!e) {
-      let tempObj = freqP;
+      let tempObj = autoGlobe;
       mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
       rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
       console.log("rndE = " + JSON.stringify(rndE), executed++);
@@ -666,7 +666,7 @@ class FunctionHandle {
         let objData = Object.keys(e.parameter);
         console.log("objData = " + e.parameter[objData[0]], objData);
         if (objData.length === 0) {
-          let tempObj = freqP;
+          let tempObj = autoGlobe;
           mapArr[tempObj?.searchResult?.name || tempObj.func] = [];
           rndE = new IsMapped(mapArr, [...tempObj?.searchResult?.parameters] || [tempObj.func]).mapKeys;
           console.log("rndE = " + JSON.stringify(rndE), executed++);
@@ -1178,7 +1178,7 @@ class FunctionHandle {
     // executed++
     //   }
     // console.info(`previously exec count - \nfunctionHandle(${[funcUno, funcDos]}) - `, executed);
-    //   let rawUrlResult = freqP.trueVfalse(isObjValUrl);
+    //   let rawUrlResult = autoGlobe.trueVfalse(isObjValUrl);
     // executed++
     //   if (!rawUrlResult) {
     //     let parsedFuncArgs = [];
@@ -1199,7 +1199,7 @@ class FunctionHandle {
     //         }
     //       }
     //     }
-    //     else if (typeof funcDos !== "object" && freqP.trueVfalse(funcDos)) {
+    //     else if (typeof funcDos !== "object" && autoGlobe.trueVfalse(funcDos)) {
     //       parsedFuncArgs = [funcDos]; // Treat as a single string argument if not valid JSON
     //     }
     //     else {
