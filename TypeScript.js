@@ -1,5 +1,3 @@
-
-
 class AutoParams {
   constructor() {
     console.log("Hello from AutoParams");
@@ -31,10 +29,10 @@ class AutoParams {
         }
       },
       getFileList: function () {
-        return fileList;
+        return this.fileList;
       },
       getParamsList: function () {
-        return paramsList;
+        return this.paramsList;
       },
       getHtmlList: function () {
         this.htmlArray = [
@@ -334,24 +332,24 @@ class AutoParams {
       "nt",
     ];
 
-    this.zuluautoGloberiority = new Map();
+    this.zuluFreqPriority = new Map();
     this.zuluFrequencyOrder.forEach((char, index) => {
-      this.zuluautoGloberiority.set(char, index);
+      this.zuluFreqPriority.set(char, index);
     });
     // Function to get the priority of the first letter/multigraph
-    this.getZuluautoGloberiority = (word) => {
+    this.getZuluFreqPriority = (word) => {
       const lowercaseWord = word.toLowerCase();
 
       // Check for multigraphs first, as they are longer
       for (const key of this.zuluFrequencyOrder) {
         if (lowercaseWord.startsWith(key)) {
-          return this.zuluautoGloberiority.get(key);
+          return this.zuluFreqPriority.get(key);
         }
       }
 
       // If no multigraph is found, check for single letters
       if (lowercaseWord.length > 0) {
-        return this.zuluautoGloberiority.get(lowercaseWord.charAt(0));
+        return this.zuluFreqPriority.get(lowercaseWord.charAt(0));
       }
 
       return Infinity; // For empty strings
@@ -626,7 +624,7 @@ class AutoParams {
       //   }
       // }
 
-      var arrData = customOrder;
+      var arrData = this.customOrder;
       var numLen = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25,
@@ -673,7 +671,6 @@ class AutoParams {
     //     return freqArray
     // })();
     this.arrDRnd = function () {
-      let arrnDAP = autoGlobe;
       var titleArray = this.functionRegistry.fileList;
       // for (var key in globalThis) {
       //   if (typeof globalThis[key] == "function") {
@@ -769,8 +766,8 @@ class AutoParams {
       } else if (typeof arrD !== "undefined") {
         for (i, l; i < l; i++) {
           var myArrData = arrD.sort((a, b) => {
-            let pA = freqPriority.get(a);
-            let pB = freqPriority.get(b);
+            let pA = autoGlobe.freqPriority.get(a);
+            let pB = autoGlobe.freqPriority.get(b);
             return pA - pB;
           })[Math.floor(Math.random() * arrD.length)];
           newArr.push(myArrData);
@@ -794,8 +791,8 @@ class AutoParams {
       // );
       if (newArr) {
         var sortNewArr = newArr.sort((a, b) => {
-          let pA = freqPriority.get(a);
-          let pB = freqPriority.get(b);
+          let pA = autoGlobe.freqPriority.get(a);
+          let pB = autoGlobe.freqPriority.get(b);
           return pA - pB;
         })[Math.floor(Math.random() * newArr.length)];
         // return console.log({myNewArr: sortNewArr});
@@ -1180,386 +1177,386 @@ class AutoParams {
 };
 // let freqP = new AutoParams();
 
-class RandomArray extends AutoParams {
-  constructor() {
-    super();
-    let titleArray = projectP;
-    let arrData = Object.keys(globalThis);
-    let numLen = [
-      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-      21, 22, 23, 24, 25,
-    ]; // Assuming numVarRnd isn't global yet or needs handling
-    var rndNumLen = numLen[Math.floor(Math.random() * numLen.length)]; // Pick a random index
+// class RandomArray extends AutoParams {
+//   constructor() {
+//     super();
+//     let titleArray = projectP;
+//     let arrData = Object.keys(globalThis);
+//     let numLen = [
+//       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+//       21, 22, 23, 24, 25,
+//     ]; // Assuming numVarRnd isn't global yet or needs handling
+//     var rndNumLen = numLen[Math.floor(Math.random() * numLen.length)]; // Pick a random index
 
-    var targetLetter = arrData[rndNumLen]; // The letter we're looking for functions starting with
+//     var targetLetter = arrData[rndNumLen]; // The letter we're looking for functions starting with
 
-    var freqArray = [];
-    // Correct way to filter or iterate and build freqArray
-    for (let i = 0; i < titleArray.fileList.length; i++) {
-      const funcName = titleArray.fileList[i];
-      if (funcName[0] && funcName[0].toLowerCase() === targetLetter) {
-        if (freqArray.indexOf(funcName) === -1) {
-          // Check if not already added
-          freqArray.push(funcName);
-        }
-      }
-    }
-    this.freqArray = freqArray
-  }
-}
-// let rndArrayP = new RandomArray();
+//     var freqArray = [];
+//     // Correct way to filter or iterate and build freqArray
+//     for (let i = 0; i < titleArray.fileList.length; i++) {
+//       const funcName = titleArray.fileList[i];
+//       if (funcName[0] && funcName[0].toLowerCase() === targetLetter) {
+//         if (freqArray.indexOf(funcName) === -1) {
+//           // Check if not already added
+//           freqArray.push(funcName);
+//         }
+//       }
+//     }
+//     this.freqArray = freqArray
+//   }
+// }
+// // let rndArrayP = new RandomArray();
 
-class ResolveParameters extends RandomArray {
-  constructor(func, someArgs) {
-    console.log("Hello from ResolveParameters");
-    super();
-    this.func = func;
-    this.someArgs = someArgs;
-    console.log(
-      "boilerplate TypeScript: line 1527\nResolveParams(func: " +
-        this.func +
-        ", someArgs: " +
-        this.someArgs +
-        ") ",
-    );
-    this.trueFunc = this.trueVfalse(this.func);
-    this.trueSomeArgs = this.trueVfalse(this.someArgs);
-    this.funcUno = this.trueFunc
-      ? decodeURIComponent(this.func)
-      : Object.keys(globalThis);
-    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
-    this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
-    this.arrDRnd = null;
-    if (this.funcUno || this.funcDos) {
-      this.argsX = [];
-      this.content = [];
-      this.arrUno = Array.isArray(this.func);
-      this.arrDos = this.trueVfalse(this.someArgs);
-      if (this.arrUno && this.arrDos) {
-        this.keys = this.func.concat(this.someArgs);
-      } 
-      else {
-        if (this.arrUno && !this.arrDos) {
-          this.keys = this.func;
-        }
-        else {
-          if (!this.arrUno && this.arrDos && this.trueFunc) {
-            this.keys = [this.func].concat(this.someArgs);
-          } 
-          else {
-            if (!this.arrUno && !this.arrDos && this.trueFunc) {
-              this.keys = [this.func];
-            }
-            else {
-              if (!this.arrUno && !this.arrDos && !this.trueFunc) {
-                this.keys = [this.funcUno[this.numVarRnd]];
-              }
-            }
-          }
-        }
-      }
-      this.keys.forEach((pro) => {
-        this.keyPro
-        if (typeof pro === "object" || Array.isArray(pro)) {
-          this.keyPro = pro;
-          console.log("this.keyPro = " + this.keyPro);
-        }
-        else {
-          this.keyPro = [pro];
-          console.log("this.[keyPro] = " + this.keyPro);
-        }
-        this.keyProParams;
-        this.realItem;
-        this.keysArrArr = this.trueVfalse(Array.isArray(pro));
-        if (this.keysArrArr) {
-          this.funcLimit = [];
-          this.paramLimit = [];
-          pro.forEach((subParam, proIndex) => {
-            this.realItem = this.trueVfalse(subParam);
-            if (this.realItem) {
-              this.keyProParams;
-              if (typeof subParam === "object" || Array.isArray(subParam)) {
-                this.keyProParams = new RelatedFunctions(subParam[proIndex]);
-              }
-              else {
-                this.keyProParams = new RelatedFunctions(subParam);
-              }
-              if (this.keyProParams.funFirst >= 0) {
-                this.funcLimit.push(this.funcUno[this.keyProParams.funFirst]);
-              } 
-              else {
-                if (typeof subParam === "object") {
-                  this.paramLimit.push(subParam);
-                } 
-                else {
-                  if (Array.isArray(subParam)) {
-                    this.paramLimit.push(subParam[proIndex]);
-                  }
-                  else {
-                    this.paramLimit.push(subParam);
-                  }
-                }
-              }
-            }
-          });
-          if (this.funcLimit.length > 0) {
-            this.argsX.push(this.funcLimit);
-          }
-          if (this.paramLimit.length > 0) {
-            this.content.push(this.paramLimit);
-          }
-        } 
-        else {
-          this.realItem = this.trueVfalse(pro);
-          if (this.realItem) {
-            for (var key in this.keyPro) {
-              this.keyProParams = null;
-              if (typeof pro === "object" || Array.isArray(pro)) {
-                this.keyProParams = new RelatedFunctions(pro[key]);
-                console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
-              }
-              else {
-                this.keyProParams = new RelatedFunctions(pro);
-                console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
-              }
-              if (this.keyProParams.funFirst >= 0) {
-                this.argsX.push(this.funcUno[this.keyProParams.funFirst]);
-                console.log("this.funcUno[this.keyProParams.funFirst] = " + this.funcUno[this.keyProParams.funFirst])
-              } else {
-                if (typeof pro === "object" || Array.isArray(pro)) {
-                  this.content.push(pro[key]);
-                }
-                else {
-                  this.content.push(pro);
-                }
-              }
-            }
-          }
-        }
-      });
-      if (this.argsX && this.argsX.length > 0) {
-        this.allErrors = {};
-        this.allResolutions = {};
-        this.funcString = globalThis[this.funcUno[this.numVarRnd]]?.toString();
-        this.fParams = this.funcString
-          ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
-          ?.split(",")
-          ?.map((param) => param?.trim())
-          ?.filter((param) => param !== "");; //gsFParams();
-        this.truDos = this.trueVfalse(this.fParams)
-        this.resCount = 0;
-        this.argsX.forEach((result, argsXIndex) => {
-          console.log("argsX result " + this.resCount + ": " + result);
-          this.truUno = this.trueVfalse(result);
-          this.args = {};
-          this.resolvedArgs = [];
-          this.missingParams = [];
-          this.contentLimit = this.content[argsXIndex];
-          this.searchResult = this.fParams 
-          //this.fParams.find((rndS) => {
-            // return rndS.name === result;
-          // });
-          this.orderedContent = [];
-          if (
-            this.searchResult &&
-            this.searchResult !== "undefined" &&
-            this.searchResult !== null &&
-            this.searchResult.parameters
-          ) {
-            this.declaredParams = this.searchResult.parameters;
-            if (this.contentLimit?.length > 0) {
-              console.log(
-                "Current content: " +
-                  this.contentLimit +
-                  "\nDeclared parameters: " +
-                  this.declaredParams,
-              );
-            }
-            this.contentMap = {};
-            this.realItem;
-            this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
-              this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
-              if (this.declaredParamArrArr) {
-                this.paramLimit = 0;
-                declaredParam.forEach((subParam, subParamIndex) => {
-                  this.contentLimit.forEach((item, currentDeclaredIndex) => {
-                    this.realItem = this.trueVfalse(subItem);
-                    if (this.realItem) {
-                      this.currentDeclared = this.contentMap[declaredParam];
-                      this.currentSub = subItem;
-                      this.currentDeclared = this.currentSub;
-                      this.paramLimit++;
-                      if (this.contentMap.length === this.declaredParams.length) {
-                        return;
-                      }
-                    }
-                  });
-                });
-              } 
-              else {
-                if (Array.isArray(this.contentLimit)) {
-                  this.contentLimit.forEach((item, contentLimitIndex) => {
-                    this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
-                    if (this.contentLimitArrArr) {
-                      item.forEach((subItem, mapItemIndex) => {
-                        this.realItem = this.trueVfalse(subItem);
-                        if (this.realItem) {
-                          this.paramDKey = this.declaredParams[mapItemIndex];
-                          if (!this.contentMap[paramDKey]) {
-                            this.contentMap[this.paramDKey] = subItem;
-                          }
-                          // if (this.contentMap[this.paramDKey] === subItem) {
-                          //   return;
-                          // }
-                        }
-                      });
-                    } 
-                    else {
-                      this.realItem = this.trueVfalse(item);
-                      if (this.realItem) {
-                        this.paramDKey = this.declaredParams[contentLimitIndex];
-                        if (!this.contentMap[this.paramDKey]) {
-                          this.contentMap[this.paramDKey] = item;
-                        }
-                        // if (this.contentMap[this.paramDKey] === item) {
-                        //   return;
-                        // }
-                      }
-                    }
-                  });
-                } 
-                else {
-                  this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
-                  if (this.contentArrArr) {
-                  } 
-                  else {
-                    this.realItem = this.trueVfalse(this.contentLimit);
-                    if (this.realItem) {
-                      for (var key in this.declaredParams) {
-                        this.paramDKey = this.declaredParams[key];
-                        if (!this.contentMap[paramDKey]) {
-                          this.contentMap[this.paramDKey] = this.contentLimit;
-                        }
-                        // if (this.contentMap[paramDKey] === this.contentLimit) {
-                        //   return;
-                        // }
-                      }
-                    }
-                  }
-                }
-              }
-            });
-            this.declaredParams.forEach((paramName) => {
-              if (this.contentMap.hasOwnProperty(paramName)) {
-                this.orderedContent.push(this.contentMap[paramName]);
-              } else {
-                this.orderedContent.push(null);
-              }
-            });
-          }
-          if (this.orderedContent.length > 0) {
-            if (this.missingParams.length === 0) {
-              // orderedContent = resolvedArgs;
-              this.allResolutions[result] = this.resolvedArgs;
-              // console.error(allErrors[result]);
-              console.log(this.allResolutions[result]);
-            } 
-            else {
-              this.allErrors[result] =
-                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
-              console.error(this.allErrors[result]);
-              console.log(this.allErrors[result]);
-            }
-          }
-          if (Object.keys(this.args).length > 0) {
-            console.log("Resolved arguments:", this.args);
-          }
-          if (this.resolvedArgs.length > 0) {
-            console.log("Resolved parameters Array:", this.resolvedArgs);
-          }
-          this.resCount++;
-          // this.result = this.resolvedArgs
-        })
-        let errorKeys = Object.keys(this.allErrors);
-        // if (errorKeys.length > 0) {
-        //   return allErrors;
-        // }
-      }
-      else {
-        console.log("No matching function found for:", this.func);
-      }
-    }
-  }
-  resParams() {
-  }
-};
-// let autoP = new ResolveParameters();
-
-class Presidential extends ResolveParameters {
-  constructor() {
-    console.log("Hello from Presidential");
-    super();
-  }
-  spirit() {
-    this.timeLeft = formatTime(autoGlobe.functionRegistry.timeLeftToExecute);
-    console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
-  }
-};
-
-class IsTypeScript extends Presidential {
-  constructor(typePassedIn) {
-    console.log("Hello from IsTypeScript");
-    super(typePassedIn);
-    this.typePassedIn = typePassedIn
-  }
-  passedType() {
-    var mapTypes = {};
-    for (var key in this.typePassedIn) {
-      mapTypes[key] = this.typePassedIn[key];
-    }
-    return mapTypes;
-  };
-  res() {
-    return this.mTypes()
-  }
-};
-
-class IsPropertyOf extends IsTypeScript {
-  constructor (t) {
-    console.log("Hello from IsPropertyOf");
-    super(t);
-    this.t = t;
-  }
-  propIt () {
-    let propertyList = IsMapped.mapout(t);
-    return propertyList;
-  };
-  res() {
-    return this.propList;
-  }
-};
-
-class IsKeyOf extends IsPropertyOf {
-  constructor (t) {
-    console.log("Hello from IsKeyOf");
-    super(t);
-    this.t = t;
-  }
-  keyIt () {
-    var keyList = {}; //Object.keys(t);
-    for (var key in this.t) {
-      keyList[key] = key;
-    }
-    return keyList;
-  };
-  res() {
-    return this.keyOf;
-  }
-};
-
-class Script{};
-// Script.prototype. = function () {
+// class ResolveParameters extends RandomArray {
+//   constructor(func, someArgs) {
+//     console.log("Hello from ResolveParameters");
+//     super();
+//     this.func = func;
+//     this.someArgs = someArgs;
+//     console.log(
+//       "boilerplate TypeScript: line 1527\nResolveParams(func: " +
+//         this.func +
+//         ", someArgs: " +
+//         this.someArgs +
+//         ") ",
+//     );
+//     this.trueFunc = this.trueVfalse(this.func);
+//     this.trueSomeArgs = this.trueVfalse(this.someArgs);
+//     this.funcUno = this.trueFunc
+//       ? decodeURIComponent(this.func)
+//       : Array("rndCoin");
+//     this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
+//     this.numVarRnd = Math.floor(Math.random() * this.funcUno.length);
+//     this.arrDRnd = null;
+//     if (this.funcUno || this.funcDos) {
+//       this.argsX = [];
+//       this.content = [];
+//       this.arrUno = Array.isArray(this.func);
+//       this.arrDos = this.trueVfalse(this.someArgs);
+//       if (this.arrUno && this.arrDos) {
+//         this.keys = this.func.concat(this.someArgs);
+//       } 
+//       else {
+//         if (this.arrUno && !this.arrDos) {
+//           this.keys = this.func;
+//         }
+//         else {
+//           if (!this.arrUno && this.arrDos && this.trueFunc) {
+//             this.keys = [this.func].concat(this.someArgs);
+//           } 
+//           else {
+//             if (!this.arrUno && !this.arrDos && this.trueFunc) {
+//               this.keys = [this.func];
+//             }
+//             else {
+//               if (!this.arrUno && !this.arrDos && !this.trueFunc) {
+//                 this.keys = [this.funcUno[this.numVarRnd]];
+//               }
+//             }
+//           }
+//         }
+//       }
+//       this.keys.forEach((pro) => {
+//         this.keyPro
+//         if (typeof pro === "object" || Array.isArray(pro)) {
+//           this.keyPro = pro;
+//           console.log("this.keyPro = " + this.keyPro);
+//         }
+//         else {
+//           this.keyPro = [pro];
+//           console.log("this.[keyPro] = " + this.keyPro);
+//         }
+//         this.keyProParams;
+//         this.realItem;
+//         this.keysArrArr = this.trueVfalse(Array.isArray(pro));
+//         if (this.keysArrArr) {
+//           this.funcLimit = [];
+//           this.paramLimit = [];
+//           pro.forEach((subParam, proIndex) => {
+//             this.realItem = this.trueVfalse(subParam);
+//             if (this.realItem) {
+//               this.keyProParams;
+//               if (typeof subParam === "object" || Array.isArray(subParam)) {
+//                 this.keyProParams = new RelatedFunctions(subParam[proIndex]);
+//               }
+//               else {
+//                 this.keyProParams = new RelatedFunctions(subParam);
+//               }
+//               if (this.keyProParams.funFirst >= 0) {
+//                 this.funcLimit.push(this.funcUno[this.keyProParams.funFirst]);
+//               } 
+//               else {
+//                 if (typeof subParam === "object") {
+//                   this.paramLimit.push(subParam);
+//                 } 
+//                 else {
+//                   if (Array.isArray(subParam)) {
+//                     this.paramLimit.push(subParam[proIndex]);
+//                   }
+//                   else {
+//                     this.paramLimit.push(subParam);
+//                   }
+//                 }
+//               }
+//             }
+//           });
+//           if (this.funcLimit.length > 0) {
+//             this.argsX.push(this.funcLimit);
+//           }
+//           if (this.paramLimit.length > 0) {
+//             this.content.push(this.paramLimit);
+//           }
+//         } 
+//         else {
+//           this.realItem = this.trueVfalse(pro);
+//           if (this.realItem) {
+//             for (var key in this.keyPro) {
+//               this.keyProParams = null;
+//               if (typeof pro === "object" || Array.isArray(pro)) {
+//                 this.keyProParams = new RelatedFunctions(pro[key]);
+//                 console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
+//               }
+//               else {
+//                 this.keyProParams = new RelatedFunctions(pro);
+//                 console.log("keyProParams = " + JSON.stringify(this.keyProParams.funFirst));
+//               }
+//               if (this.keyProParams.funFirst >= 0) {
+//                 this.argsX.push(this.funcUno[this.keyProParams.funFirst]);
+//                 console.log("this.funcUno[this.keyProParams.funFirst] = " + this.funcUno[this.keyProParams.funFirst])
+//               } else {
+//                 if (typeof pro === "object" || Array.isArray(pro)) {
+//                   this.content.push(pro[key]);
+//                 }
+//                 else {
+//                   this.content.push(pro);
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       });
+//       if (this.argsX && this.argsX.length > 0) {
+//         this.allErrors = {};
+//         this.allResolutions = {};
+//         this.funcString = globalThis[this.funcUno[this.numVarRnd]]?.toString();
+//         this.fParams = this.funcString
+//           ?.substring(this.funcString?.indexOf("(") + 1, this.funcString?.indexOf(")"))
+//           ?.split(",")
+//           ?.map((param) => param?.trim())
+//           ?.filter((param) => param !== "");; //gsFParams();
+//         this.truDos = this.trueVfalse(this.fParams)
+//         this.resCount = 0;
+//         this.argsX.forEach((result, argsXIndex) => {
+//           console.log("argsX result " + this.resCount + ": " + result);
+//           this.truUno = this.trueVfalse(result);
+//           this.args = {};
+//           this.resolvedArgs = [];
+//           this.missingParams = [];
+//           this.contentLimit = this.content[argsXIndex];
+//           this.searchResult = this.fParams 
+//           //this.fParams.find((rndS) => {
+//             // return rndS.name === result;
+//           // });
+//           this.orderedContent = [];
+//           if (
+//             this.searchResult &&
+//             this.searchResult !== "undefined" &&
+//             this.searchResult !== null &&
+//             this.searchResult.parameters
+//           ) {
+//             this.declaredParams = this.searchResult.parameters;
+//             if (this.contentLimit?.length > 0) {
+//               console.log(
+//                 "Current content: " +
+//                   this.contentLimit +
+//                   "\nDeclared parameters: " +
+//                   this.declaredParams,
+//               );
+//             }
+//             this.contentMap = {};
+//             this.realItem;
+//             this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
+//               this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
+//               if (this.declaredParamArrArr) {
+//                 this.paramLimit = 0;
+//                 declaredParam.forEach((subParam, subParamIndex) => {
+//                   this.contentLimit.forEach((item, currentDeclaredIndex) => {
+//                     this.realItem = this.trueVfalse(subItem);
+//                     if (this.realItem) {
+//                       this.currentDeclared = this.contentMap[declaredParam];
+//                       this.currentSub = subItem;
+//                       this.currentDeclared = this.currentSub;
+//                       this.paramLimit++;
+//                       if (this.contentMap.length === this.declaredParams.length) {
+//                         return;
+//                       }
+//                     }
+//                   });
+//                 });
+//               } 
+//               else {
+//                 if (Array.isArray(this.contentLimit)) {
+//                   this.contentLimit.forEach((item, contentLimitIndex) => {
+//                     this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
+//                     if (this.contentLimitArrArr) {
+//                       item.forEach((subItem, mapItemIndex) => {
+//                         this.realItem = this.trueVfalse(subItem);
+//                         if (this.realItem) {
+//                           this.paramDKey = this.declaredParams[mapItemIndex];
+//                           if (!this.contentMap[paramDKey]) {
+//                             this.contentMap[this.paramDKey] = subItem;
+//                           }
+//                           // if (this.contentMap[this.paramDKey] === subItem) {
+//                           //   return;
+//                           // }
+//                         }
+//                       });
+//                     } 
+//                     else {
+//                       this.realItem = this.trueVfalse(item);
+//                       if (this.realItem) {
+//                         this.paramDKey = this.declaredParams[contentLimitIndex];
+//                         if (!this.contentMap[this.paramDKey]) {
+//                           this.contentMap[this.paramDKey] = item;
+//                         }
+//                         // if (this.contentMap[this.paramDKey] === item) {
+//                         //   return;
+//                         // }
+//                       }
+//                     }
+//                   });
+//                 } 
+//                 else {
+//                   this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
+//                   if (this.contentArrArr) {
+//                   } 
+//                   else {
+//                     this.realItem = this.trueVfalse(this.contentLimit);
+//                     if (this.realItem) {
+//                       for (var key in this.declaredParams) {
+//                         this.paramDKey = this.declaredParams[key];
+//                         if (!this.contentMap[paramDKey]) {
+//                           this.contentMap[this.paramDKey] = this.contentLimit;
+//                         }
+//                         // if (this.contentMap[paramDKey] === this.contentLimit) {
+//                         //   return;
+//                         // }
+//                       }
+//                     }
+//                   }
+//                 }
+//               }
+//             });
+//             this.declaredParams.forEach((paramName) => {
+//               if (this.contentMap.hasOwnProperty(paramName)) {
+//                 this.orderedContent.push(this.contentMap[paramName]);
+//               } else {
+//                 this.orderedContent.push(null);
+//               }
+//             });
+//           }
+//           if (this.orderedContent.length > 0) {
+//             if (this.missingParams.length === 0) {
+//               // orderedContent = resolvedArgs;
+//               this.allResolutions[result] = this.resolvedArgs;
+//               // console.error(allErrors[result]);
+//               console.log(this.allResolutions[result]);
+//             } 
+//             else {
+//               this.allErrors[result] =
+//                 `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
+//               console.error(this.allErrors[result]);
+//               console.log(this.allErrors[result]);
+//             }
+//           }
+//           if (Object.keys(this.args).length > 0) {
+//             console.log("Resolved arguments:", this.args);
+//           }
+//           if (this.resolvedArgs.length > 0) {
+//             console.log("Resolved parameters Array:", this.resolvedArgs);
+//           }
+//           this.resCount++;
+//           // this.result = this.resolvedArgs
+//         })
+//         let errorKeys = Object.keys(this.allErrors);
+//         // if (errorKeys.length > 0) {
+//         //   return allErrors;
+//         // }
+//       }
+//       else {
+//         console.log("No matching function found for:", this.func);
+//       }
+//     }
+//   }
+//   resParams() {
+//   }
 // };
+// // let autoP = new ResolveParameters();
+
+// class Presidential extends ResolveParameters {
+//   constructor() {
+//     console.log("Hello from Presidential");
+//     super();
+//   }
+//   spirit() {
+//     this.timeLeft = formatTime(autoGlobe.functionRegistry.timeLeftToExecute);
+//     console.log(`You have ${this.timeLeft} left to convert. Tick Tock, time is wasting`);
+//   }
+// };
+
+// class IsTypeScript extends Presidential {
+//   constructor(typePassedIn) {
+//     console.log("Hello from IsTypeScript");
+//     super(typePassedIn);
+//     this.typePassedIn = typePassedIn
+//   }
+//   passedType() {
+//     var mapTypes = {};
+//     for (var key in this.typePassedIn) {
+//       mapTypes[key] = this.typePassedIn[key];
+//     }
+//     return mapTypes;
+//   };
+//   res() {
+//     return this.mTypes()
+//   }
+// };
+
+// class IsPropertyOf extends IsTypeScript {
+//   constructor (t) {
+//     console.log("Hello from IsPropertyOf");
+//     super(t);
+//     this.t = t;
+//   }
+//   propIt () {
+//     let propertyList = IsMapped.mapout(t);
+//     return propertyList;
+//   };
+//   res() {
+//     return this.propList;
+//   }
+// };
+
+// class IsKeyOf extends IsPropertyOf {
+//   constructor (t) {
+//     console.log("Hello from IsKeyOf");
+//     super(t);
+//     this.t = t;
+//   }
+//   keyIt () {
+//     var keyList = {}; //Object.keys(t);
+//     for (var key in this.t) {
+//       keyList[key] = key;
+//     }
+//     return keyList;
+//   };
+//   res() {
+//     return this.keyOf;
+//   }
+// };
+
+// class Script{};
+// // Script.prototype. = function () {
+// // };
 
 class ProjectFUnctionNames {
   constructor() {
@@ -1590,33 +1587,33 @@ class ProjectFUnctionNames {
 }
 let projectP = new ProjectFUnctionNames();
 
-class IsValidKeys {
-  constructor(v) {
-    this.v = v
-  }
-  keysValid() {
-    let ivkAuto = autoGlobe;
-    var isExcludeValue = ivkAuto.omitIt(this.v, "1");
-    isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "2");
-    isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "3");
-    var isValueOfTypePassedIn = IsValidDoubleObject.validObject(isExcludeValue.omitIt());
-    if (isValueOfTypePassedIn) {
-      var isInferredTruthy = ivkAuto.trueVfalse(isValueOfTypePassedIn.validObject());
-      if (isInferredTruthy) {
-        return isValueOfTypePassedIn.validObject();
-      }
-    }
-  }
-  res() {
-    return this.vLidKey
-  }
-};
+// class IsValidKeys {
+//   constructor(v) {
+//     this.v = v
+//   }
+//   keysValid() {
+//     let ivkAuto = autoGlobe;
+//     var isExcludeValue = ivkAuto.omitIt(this.v, "1");
+//     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "2");
+//     isExcludeValue = ivkAuto.omitIt(isExcludeValue.omitIt(), "3");
+//     var isValueOfTypePassedIn = IsValidDoubleObject.validObject(isExcludeValue.omitIt());
+//     if (isValueOfTypePassedIn) {
+//       var isInferredTruthy = ivkAuto.trueVfalse(isValueOfTypePassedIn.validObject());
+//       if (isInferredTruthy) {
+//         return isValueOfTypePassedIn.validObject();
+//       }
+//     }
+//   }
+//   res() {
+//     return this.vLidKey
+//   }
+// };
 
 
-class IsTruthy extends IsKeyOf {
+class IsTruthy extends AutoParams {
   constructor (t) {
     console.log("Hello from IsTruthy");
-    super(t);
+    super();
     this.t = t;
     if (
       typeof this.t === null ||
@@ -1656,100 +1653,100 @@ class IsTruthy extends IsKeyOf {
   }
 };
 
-class IsValidDoubleObject extends IsTruthy {
-  constructor(t) {
-    console.log("Hello from IsValidDoubleObject");
-    super(t);
-    this.t = t
-    for (let key in this.t) {
-      let tempV = this.t[key];
-      for (let tempVKey in tempV) {
-        let vKeyDouble = tempV[tempVKey];
-        let tempVDouble = [tempV[tempVKey]].sort((a,b) => {
-          let obj1 = a;
-          let obj2 = b;
-          if (obj1 === obj2) {
-            return
-          }
-        })
-      }
-      let tempDouble = [this.t[key]].sort((a,b) => {
-        let obj1 = a;
-        let obj2 = b;
-        if (obj1 === obj2) {
-          return
-        }
-      })
-      if (tempDouble) {
-        this.tempDouble = tempDouble
-      }
-    }
-    if (this.tempDouble && typeof this.tempDouble[0] !== typeof this.tempDouble[1]) {
-      this.tempDouble = this.t
-    }
-  }
-  static validObject(t) {
-    // var validKeys = IsMapped.mapout(t);
-    if (t) {
-      var validList = Object.values(t);
-      class Valid{
-        constructor(vList) {
-          this.vList = vList
-        }
-        static validateList(vList) {
-          for (let key in vList) {
-            let tempV = vList[key];
-            for (let tempVKey in tempV) {
-              let vKeyDouble = tempV[tempVKey];
-              let tempVDouble = [tempV[tempVKey]].sort((a,b) => {
-                let obj1 = a;
-                let obj2 = b;
-                if (obj1 === obj2) {
-                  return
-                }
-              })
-            }
-            let tempDouble = [vList[key]].sort((a,b) => {
-              let obj1 = a;
-              let obj2 = b;
-              if (obj1 === obj2) {
-                return
-              }
-            })
-            if (tempDouble) {
-              return tempDouble
-            }
-          }
-          // let validObj1 = validList[0];
-          // let validObj2 = validList[1];
-        }
-      }
-      let myValiObj = Valid.validateList(t);
-      let tempValid = myValiObj
-      if (typeof tempValid[0] === typeof tempValid[1]) {
-        return tempValid
-      }
-      else {
-        return t
-      }
-    }
-  };
-  static objRes(t) {
-    if (t) {
-      let func = Object?.keys(t);
-      let args = Object?.values(t);
-    }
-    return doGet(t);
-  }
-  res() {
-    return this.t
-  }
-};
+// class IsValidDoubleObject extends IsTruthy {
+//   constructor(t) {
+//     console.log("Hello from IsValidDoubleObject");
+//     super(t);
+//     this.t = t
+//     for (let key in this.t) {
+//       let tempV = this.t[key];
+//       for (let tempVKey in tempV) {
+//         let vKeyDouble = tempV[tempVKey];
+//         let tempVDouble = [tempV[tempVKey]].sort((a,b) => {
+//           let obj1 = a;
+//           let obj2 = b;
+//           if (obj1 === obj2) {
+//             return
+//           }
+//         })
+//       }
+//       let tempDouble = [this.t[key]].sort((a,b) => {
+//         let obj1 = a;
+//         let obj2 = b;
+//         if (obj1 === obj2) {
+//           return
+//         }
+//       })
+//       if (tempDouble) {
+//         this.tempDouble = tempDouble
+//       }
+//     }
+//     if (this.tempDouble && typeof this.tempDouble[0] !== typeof this.tempDouble[1]) {
+//       this.tempDouble = this.t
+//     }
+//   }
+//   static validObject(t) {
+//     // var validKeys = IsMapped.mapout(t);
+//     if (t) {
+//       var validList = Object.values(t);
+//       class Valid{
+//         constructor(vList) {
+//           this.vList = vList
+//         }
+//         static validateList(vList) {
+//           for (let key in vList) {
+//             let tempV = vList[key];
+//             for (let tempVKey in tempV) {
+//               let vKeyDouble = tempV[tempVKey];
+//               let tempVDouble = [tempV[tempVKey]].sort((a,b) => {
+//                 let obj1 = a;
+//                 let obj2 = b;
+//                 if (obj1 === obj2) {
+//                   return
+//                 }
+//               })
+//             }
+//             let tempDouble = [vList[key]].sort((a,b) => {
+//               let obj1 = a;
+//               let obj2 = b;
+//               if (obj1 === obj2) {
+//                 return
+//               }
+//             })
+//             if (tempDouble) {
+//               return tempDouble
+//             }
+//           }
+//           // let validObj1 = validList[0];
+//           // let validObj2 = validList[1];
+//         }
+//       }
+//       let myValiObj = Valid.validateList(t);
+//       let tempValid = myValiObj
+//       if (typeof tempValid[0] === typeof tempValid[1]) {
+//         return tempValid
+//       }
+//       else {
+//         return t
+//       }
+//     }
+//   };
+//   static objRes(t) {
+//     if (t) {
+//       let func = Object?.keys(t);
+//       let args = Object?.values(t);
+//     }
+//     return doGet(t);
+//   }
+//   res() {
+//     return this.t
+//   }
+// };
 
-class IsMapped extends IsValidDoubleObject {
+class IsMapped extends IsTruthy {
   constructor (t, v) {
     console.log("Hello from IsMapped");
-    super(t, v);
+    super(t);
     this.t = t;
     this.v = v;
     this.mapKeys = {};
@@ -1769,73 +1766,73 @@ class IsMapped extends IsValidDoubleObject {
   }
 };
 
-class IsExclude extends IsMapped {
-  constructor (t, k) {
-    console.log("Hello from IsExclude");
-    super(t, k);
-    this.t = t;
-    this.k = k;
-  }
-  excludeIt () {
-    var keyList = Object.keys(this.t);
-    var excludeList = [];
-    Array.isArray(keyList)
-      ? keyList.forEach((e, i) => {
-          if (!e.includes(this.k)) {
-            excludeList.push(e);
-          }
-        })
-      : Array(keyList).forEach((e, i) => {
-          if (!e.includes(this.k)) {
-            excludeList.push(e);
-          }
-        });
-    return excludeList;
-  };
-  res() {
-    return this.exList;
-  }
-};
+// class IsExclude extends IsMapped {
+//   constructor (t, k) {
+//     console.log("Hello from IsExclude");
+//     super(t, k);
+//     this.t = t;
+//     this.k = k;
+//   }
+//   excludeIt () {
+//     var keyList = Object.keys(this.t);
+//     var excludeList = [];
+//     Array.isArray(keyList)
+//       ? keyList.forEach((e, i) => {
+//           if (!e.includes(this.k)) {
+//             excludeList.push(e);
+//           }
+//         })
+//       : Array(keyList).forEach((e, i) => {
+//           if (!e.includes(this.k)) {
+//             excludeList.push(e);
+//           }
+//         });
+//     return excludeList;
+//   };
+//   res() {
+//     return this.exList;
+//   }
+// };
 
-class IsPick extends IsExclude {
-  constructor (t, k) {
-    console.log("Hello from IsPick");
-    super(t, k);
-    this.t = t;
-    this.k = k;
-  }
-  pickIt () {
-    var excludeList = this.excludeIt();
-    var valuesList = {};
-    for (var key in this.t) {
-      if (excludeList.includes(key)) {
-        valuesList[key] = this.t[key];
-      }
-    }
-    return valuesList;
-  };
-  res() {
-    return this.pipList;
-  }
-};
+// class IsPick extends IsExclude {
+//   constructor (t, k) {
+//     console.log("Hello from IsPick");
+//     super(t, k);
+//     this.t = t;
+//     this.k = k;
+//   }
+//   pickIt () {
+//     var excludeList = this.excludeIt();
+//     var valuesList = {};
+//     for (var key in this.t) {
+//       if (excludeList.includes(key)) {
+//         valuesList[key] = this.t[key];
+//       }
+//     }
+//     return valuesList;
+//   };
+//   res() {
+//     return this.pipList;
+//   }
+// };
 
-class IsOmit extends IsPick {
-  constructor(t, k) {
-    console.log("Hello from IsOmit");
-    super();
-    this.t = t;
-    this.k = k;
-  }
-  omitIt() {
-    let valuesList = this.pickIt();
-    return valuesList;
-  };
-  res() {
-    return this.omList;
-  }
-};
+// class IsOmit extends IsPick {
+//   constructor(t, k) {
+//     console.log("Hello from IsOmit");
+//     super(t, k);
+//     this.t = t;
+//     this.k = k;
+//   }
+//   omitIt() {
+//     let valuesList = this.pickIt();
+//     return valuesList;
+//   };
+//   res() {
+//     return this.omList;
+//   }
+// };
 
-class GetDomains extends IsOmit {
+class GetDomains extends IsMapped {
   constructor() {
     super();
     this.functionRegistry.domainTree();
@@ -1850,11 +1847,11 @@ class GetDomains extends IsOmit {
   };
 }
 
-class RawFuncResult extends GetDomains {
+class RawFuncResult {
   constructor(funcUno, funcDos) {
-    super();
-    this.funcUno = funcUno || this.argsX;
-    this.funcDos = funcDos || this.fParams;
+    // super();
+    this.funcUno = funcUno || "rndCoin";
+    this.funcDos = funcDos || "";
     // this.globalThis = globalThis
     // console.log(this.globalThis)
     this.rawFuncResult = null;
@@ -1865,17 +1862,17 @@ class RawFuncResult extends GetDomains {
     try {
       this.objVal = this.truDos? this.funcDos?.toString(): false;
       console.log("objVal\n" + [this.objVal]);
-      this.truVal = this.trueVfalse(this.objVal);
+      this.truVal = autoGlobe.trueVfalse(this.objVal);
       console.log("truVal\n" + [this.truVal]);
       this.rawUrlResult = null;
       this.isObjValUrl = null;
       if (this.truVal && this.objVal?.indexOf(",") === -1) {
         this.isObjValUrl = new ValidUrlResult(this.objVal);
         if (Array.isArray(this.isObjValUrl?.matches)) {
-          this.rawUrlResult = this.trueVfalse(this.isObjValUrl?.matches[0]);
+          this.rawUrlResult = autoGlobe.trueVfalse(this.isObjValUrl?.matches[0]);
         }
         else {
-          this.rawUrlResult = this.trueVfalse(this.isObjValUrl?.matches);
+          this.rawUrlResult = autoGlobe.trueVfalse(this.isObjValUrl?.matches);
         }
         console.log("rawUrlResult = " + this.rawUrlResult, this.executed++);
       }
@@ -1888,7 +1885,7 @@ class RawFuncResult extends GetDomains {
           if (this.keyObject && this.keyObject.length > 0) {
             console.log("This execution is initiating JSON Parse on a(n) " , typeof this.funcDos);
             try {
-              if (!this.objVal) {
+              if (!this.objVal && !Array.isArray(this.funcDos)) {
                 try {
                   this.parsedFuncArgs = JSON.parse(this.funcDos);
                 }
@@ -1937,7 +1934,7 @@ class RawFuncResult extends GetDomains {
           if (this.funcUno && typeof globalThis[this.funcUno] !== "function" && this.funcDos) { 
             console.log("This execution is initiating with funcDos. funcDos is  " , this.funcDos);
             try {
-              this.rawFuncResult = mis(this.funcUno.concat(this.parsedFuncArgs));
+              this.rawFuncResult = new MisCreator(this.funcUno.concat(this.parsedFuncArgs));
             } 
             catch (error) {
               console.log("But, it is failing. " + this.funcUno.concat(this.parsedFuncArgs).join(""), error.stack);
@@ -1956,7 +1953,7 @@ class RawFuncResult extends GetDomains {
                 }
               }
               else {
-                this.rawFuncResult = mis(this.parsedFuncArgs);
+                this.rawFuncResult = new MisCreator(this.parsedFuncArgs);
               }
               console.log("rawFuncResult = " + this.rawFuncResult, this.executed++);
             } 
@@ -1970,7 +1967,7 @@ class RawFuncResult extends GetDomains {
               } 
               catch (error) {
                 console.log("But, it is failing.");
-                // rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
+                // rawFuncResult = new MisCreator([funcUno, ...parsedFuncArgs]);
               }
               console.log("rawFuncResult = " + this.rawFuncResult, this.executed++);
             }
@@ -1989,11 +1986,1825 @@ class RawFuncResult extends GetDomains {
   }
 }
 
-class DriveFiles extends RawFuncResult {
+
+// class MisCreator extends RawFuncResult {
+//   constructor(text, maxRetries = 3) {
+//     super(text);
+//     this.text = text || [this.funcUno, this.parsedFuncArgs];
+//     this.maxRetries = maxRetries;
+//     console.log(
+//       "boilerplate Help: line 196\nMisCreator(text: " +
+//         this.text +
+//         ", maxRetries: " +
+//         this.maxRetries +
+//         ")\n ",
+//     );
+//     if (this.text?.indexOf(",") === -1) {
+//       this.validthis.url = new ValidUrlResult(this.text).validUrlResult;
+//       this.executed++;
+//     }
+//     if (!this.validUrl?.hostname) {
+//       this.supFunc = new MisStCreator(this.text).argsObject;
+//       this.executed++;
+//       this.truSup = this.trueVfalse(this.supFunc.func);
+//       this.executed++;
+//       if (this.truSup) {
+//         Logger.log("function - " + this.supFunc.func);
+//       }
+//       while (!this.supFunc.func) {
+//         this.truSup = this.trueVfalse(this.supFunc.func);
+//         this.executed++;
+//         if (this.truSup) {
+//           Logger.log("function - " + this.supFunc.func);
+//         }
+//         this.funcSup = this.functionRegistry.fileList;
+//         this.executed++;
+//         this.rndSup =
+//           this.funcSup[Math.floor(Math.random() * Math.floor(this.funcSup.length))];
+//         this.supFunc = new MisStCreator(this.rndSup).argsObject;
+//         this.executed++;
+//       }
+//       if (this.supFunc && typeof this.supFunc === "object") {
+//         this.isError = false;
+//         for (var key in this.supFunc) {
+//           if (
+//             typeof this.supFunc[key] === "string" &&
+//             this.supFunc[key].startsWith("Error:")
+//           ) {
+//             this.isError = true;
+//             break;
+//           }
+//         }
+//         if (this.isError) {
+//           Logger.log("Error(s) from misSt:", this.supFunc);
+//           console.error("Error(s) from misSt:", this.supFunc);
+//           this.earlyReturn = "misSt returned errors: " + JSON.stringify(this.supFunc);
+//           this.errorthis.url = this.text;
+//           this.form =
+//             new DriveFiles([this.text].join("").toUpperCase()).filedMain ||
+//             formMaker(
+//               [this.text].join("").toUpperCase(),
+//               "misForms",
+//               this.functionRegistry.time,
+//             );
+//           this.executed++;
+//           if (typeof this.form === "object") {
+//             // fileManager(coData.rndTitle, "this.forms")
+//             Logger.log(
+//               `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+//             );
+
+//             // --- Set Basic this.form Properties ---
+
+//             // Randomly decide to collect email or not
+//             this.form.setCollectEmail(Math.random() < 0.5);
+
+//             // Randomly decide to show progress bar for multi-section this.forms
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.setProgressBar(true);
+//             }
+
+//             // --- Add Sections and Questions ---
+
+//             this.form.addSectionHeaderItem().setTitle(this.earlyReturn);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Your Name").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form
+//                 .addParagraphtTextItem()
+//                 .setTitle("Your Message")
+//                 .setRequired(true);
+//             }
+//             this.form.setConfirmationMessage("Thanks for your feedback !!");
+//             this.url = seoPastTime(this.text) || this.form.getPublishedUrl() || this.form;
+//           }
+//           console.log("Final app:", this.earlyReturn);
+//           // return { index: url, app: this.earlyReturn, link: this.errorUrl };
+//         }
+//       }
+//       this.fx = this.supFunc?.func;
+//       this.payLoad = this.supFunc?.args;
+//       console.log("The 'e.parameter[args]' for url links, " + this.payLoad);
+//       console.log(
+//         "The 'e.parameter[args]' for url links after encoding, " +
+//           encodeURIComponent(this.payLoad),
+//       );
+//       this.executed++;
+//       // if (this.supFunc.func) {
+//       // if (this.supFunc.args) {
+//       //     this.html =
+//       //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: "100%"; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+//       // = document.getElementById("breakUrl");</script>`);
+//       //     this.html.this.url =
+//       //       getScriptUrl().toString() + "?func=" + this.fx + "&args=" + this.payLoad;
+//       // this.html.nav = this.fx;
+//       // this.html.action = this.payLoad;
+//       //     return this.html.evaluate().getContent();
+//       // } else if (!this.supFunc.args) {
+//       // const this.fx = this.supFunc.func;
+//       //     this.html =
+//       //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+//       // = document.getElementById("breakUrl");</script>`);
+//       //     this.html.this.url = getScriptUrl().toString() + "?func=" + this.fx;
+//       // this.html.nav = this.fx;
+//       //     return this.html.evaluate().getContent();
+//       // }
+
+//       this.htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+//       = document.getElementById("breakUrl");</script>`;
+//       this.html = HtmlService.createTemplate(this.htmlContent);
+//       this.html.formurl =
+//         getScriptUrl() + "?func=" + this.fx + (this.payLoad ? "&args=" + this.payLoad : "");
+//       this.html.nav = this.fx;
+//       this.html.action = this.payLoad;
+//       this.supUrl =
+//         getScriptUrl().toString() +
+//         "?func=" +
+//         this.fx +
+//         "&args=" +
+//         (this.payLoad ? encodeURIComponent(this.payLoad) : "");
+//       this.executed++;
+//       // this.form = formMaker();
+//       this.formattedPayLoad = "";
+//       if (this.payLoad && typeof this.payLoad === "object") {
+//         if (Array.isArray(this.payLoad)) {
+//           this.formattedPayLoad = this.payLoad
+//             .map((item) => {
+//               if (typeof item === "string") {
+//                 return item;
+//               }
+//               return JSON.stringify(item);
+//             })
+//             .join(", ");
+//         } else {
+//           this.values = Object.values(this.payLoad)
+//             .map((value) => {
+//               if (typeof value === "string") {
+//                 return value;
+//               }
+//               return JSON.stringify(value);
+//             })
+//             .join(", ");
+//           this.formattedPayLoad = this.values;
+//         }
+//       }
+//       this.payT = this.fx;
+//       if (this.formattedPayload) {
+//         this.payT += "(" + this.formattedPayload + ")";
+//       } else if (this.payLoad) {
+//         this.payT += "(" + this.payLoad + ")";
+//       }
+//       this.payT = this.payT.toUpperCase();
+//       try {
+//         this.form = new DriveFiles([this.formattedPayload][0] || this.payLoad).filedMain;
+//         this.webAppObj = {
+//           funcStr: globalThis[this.supFunc.func]?.toString(),
+//           url: this.form,
+//         };
+//       } catch (balance) {
+//         this.form =
+//           new DriveFiles([this.formattedPayload][0] || this.payLoad).filedMain ||
+//           formMaker(this.payT, "misForms", this.functionRegistry.time);
+//         this.executed++;
+
+//         if (typeof this.form === "object") {
+//           // fileManager(coData.rndTitle, "Forms")
+//           Logger.log(
+//             `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+//           );
+
+//           // --- Set Basic this.form Properties ---
+
+//           // Randomly decide to collect email or not
+//           this.form.setCollectEmail(Math.random() < 0.5);
+
+//           // Randomly decide to show progress bar for multi-section this.forms
+//           this.runChance = Math.random();
+//           if (this.runChance < 0.7) {
+//             this.form.setProgressBar(true);
+//           }
+
+//           // --- Add Sections and Questions ---
+
+//           if (this.fx) {
+//             this.form
+//               .addSectionHeaderItem()
+//               .setTitle(globalThis[this.supFunc.func].toString());
+//           } else {
+//             this.form.addSectionHeaderItem().setTitle("No Function Found");
+//           }
+//           if (this.supFunc && this.supFunc.res) {
+//             if (typeof this.supFunc.res === "object") {
+//               this.form.addSectionHeaderItem().setTitle(JSON.stringify(this.supFunc.res));
+//             } else {
+//               this.form.addSectionHeaderItem().setTitle(this.supFunc.res);
+//             }
+//           }
+//           this.runChance = Math.random();
+//           if (this.runChance < 0.7) {
+//             this.form.addTextItem().setTitle("Your Name").setRequired(true);
+//           }
+//           this.runChance = Math.random();
+//           if (this.runChance < 0.7) {
+//             this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+//           }
+//           this.runChance = Math.random();
+//           if (this.runChance < 0.7) {
+//             this.form
+//               .addParagraphtTextItem()
+//               .setTitle("Your Message")
+//               .setRequired(true);
+//           }
+//           this.form.setConfirmationMessage("Thanks for your feedback !!");
+//         }
+//         this.webAppObj = {
+//           funcStr: globalThis[this.supFunc.func]?.toString(),
+//           url: this.form.getPublishedUrl(),
+//         };
+//       }
+//       console.log("Final app:", this.supFunc.res);
+//       // return { index: this.webAppObj, app: this.supFunc.res, link: this.supUrl };
+//     } else {
+//       this.response;
+//       this.location;
+//       this.htmlData;
+//       this.supUrl;
+//       this.retries = 0;
+//       this.delay = 1000;
+//       try {
+//         // if (this.supFunc) {
+//         //   this.response = UrlFetchApp.fetch(this.supFunc.args, {
+//         //     followRedirects: false, // Prevent automatic redirects
+//         //   });
+//         // } else {
+//         //   this.response = UrlFetchApp.fetch(this.validUrl?.hostname, {
+//         //     followRedirects: false, // Prevent automatic redirects
+//         //   });
+//         // }
+//         this.response = UrlFetchApp.fetch(
+//           this.supFunc && this.supFunc.args ? this.supFunc.args : this.validUrl?.hostname,
+//           {
+//             followRedirects: false, // Prevent automatic redirects
+//             muteHttpExceptions: true,
+//           },
+//         );
+//       } catch (e) {
+//         Logger.log("Error fetching URL: ", e.toString());
+//         console.error("Error fetching URL: ", e.toString());
+//         this.htmlData = "Error fetching URL: " + e.toString();
+//         this.supUrl = this.validUrl?.hostname;
+//         try {
+//           this.form = new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain;
+//           this.responseObj = {
+//             dataStr: seoPastTime(this.validUrl?.hostname),
+//             url: this.form,
+//           };
+//         } catch (balance) {
+//           // var this.form = formMaker();
+//           this.form =
+//             new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+//             formMaker(
+//               [JSON.stringify(this.text)].join("").toUpperCase(),
+//               "misForms",
+//               this.functionRegistry.time,
+//             );
+//           this.executed++;
+
+//           if (typeof this.form === "object") {
+//             // fileManager(coData.rndTitle, "this.forms")
+//             Logger.log(
+//               `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+//             );
+
+//             // --- Set Basic this.form Properties ---
+
+//             // Randomly decide to collect email or not
+//             this.form.setCollectEmail(Math.random() < 0.5);
+
+//             // Randomly decide to show progress bar for multi-section this.forms
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.setProgressBar(true);
+//             }
+
+//             // --- Add Sections and Questions ---
+
+//             this.form.addSectionHeaderItem().setTitle(this.htmlData);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Industry").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Sector").setRequired(true);
+//             }
+//             this.form
+//               .addParagraphtTextItem()
+//               .setTitle("Industry/Market Corrections")
+//               .setRequired(false);
+//             this.form.addParagraphtTextItem().setTitle("News").setRequired(false);
+//             this.form
+//               .addParagraphtTextItem()
+//               .setTitle("Economic/Business Cycles")
+//               .setRequired(false);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Stock Price").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+//             }
+//             this.form
+//               .addTextItem()
+//               .setTitle("Annualized Net Income")
+//               .setRequired(false);
+//             this.form.addTextItem().setTitle("Total Equity").setRequired(false);
+//             this.form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form
+//                 .addTextItem()
+//                 .setTitle("Cash & Marketable Securities")
+//                 .setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form
+//                 .addTextItem()
+//                 .setTitle("Accounts Receivable")
+//                 .setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Inventories").setRequired(true);
+//             }
+//             this.form
+//               .addTextItem()
+//               .setTitle("Long-term Investments")
+//               .setRequired(false);
+//             this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form
+//                 .addTextItem()
+//                 .setTitle("Current Financial Liabilities")
+//                 .setRequired(true);
+//             }
+//             this.form
+//               .addTextItem()
+//               .setTitle("Long-term Interest-bearing Debts")
+//               .setRequired(false);
+//             this.form
+//               .addTextItem()
+//               .setTitle("Current Year Total Earnings")
+//               .setRequired(false);
+//             this.form
+//               .addTextItem()
+//               .setTitle("Base Year Total Earnings")
+//               .setRequired(false);
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addTextItem().setTitle("Your Name").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+//             }
+//             this.runChance = Math.random();
+//             if (this.runChance < 0.7) {
+//               this.form
+//                 .addParagraphtTextItem()
+//                 .setTitle("Your Message")
+//                 .setRequired(true);
+//             }
+//             this.form.setConfirmationMessage("Thanks for your feedback !!");
+//             this.responseObj = {
+//               dataStr: seoPastTime(this.validUrl?.hostname),
+//               url: this.form.getPublishedUrl(),
+//             };
+//             this.executed++;
+//           }
+//         }
+//       }
+//       try {
+//         if (this.response) {
+//           this.res = this.response.getResponseCode();
+//           if (this.res) {
+//             if (this.res === 429) {
+//               this.retries++;
+//               this.delay += 2;
+//               Utilities.sleep(this.delay + Math.random() * 500);
+//               Logger.log(`Rate limit hit, retrying in ${this.delay} ms`);
+//               while (this.retries < this.maxRetries) {
+//                 try {
+//                   this.response = UrlFetchApp.fetch(
+//                     this.supFunc && this.supFunc.args ? this.supFunc.args : this.validUrl?.hostname,
+//                     {
+//                       followRedirects: false, // Prevent automatic redirects
+//                       muteHttpExceptions: true,
+//                     },
+//                   );
+//                 } catch (error) {
+//                   Logger.log("Error fetching data: " + error);
+//                   this.retries++;
+//                   this.delay += 2;
+//                   Utilities.sleep(this.delay);
+//                 }
+//               }
+//               Logger.log("Max retries reached, failed to fetch data.");
+//             } else {
+//               if (this.res >= 300 && this.res < 400) {
+//                 // Redirect occurred
+//                 this.location = this.response.getHeaders().Location;
+//                 this.htmlData = UrlFetchApp.fetch(this.location, {
+//                   followRedirects: true,
+//                   muteHttpExceptions: true,
+//                 }).getContentText();
+//                 this.supUrl = this.location;
+//                 try {
+//                   this.form = new DriveFiles(
+//                     [JSON.stringify(this.text)].join("").toUpperCase(),
+//                   ).filedMain;
+//                   this.responseObj = {
+//                     dataStr: seoPastTime(new ValidUrlResult(this.location).validUrlResult.hostname),
+//                     url: this.form,
+//                   };
+//                 } catch (balance) {
+//                   // var this.form = formMaker();
+//                   this.form =
+//                     new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+//                     formMaker(
+//                       [JSON.stringify(this.text)].join("").toUpperCase(),
+//                       "misForms",
+//                       this.functionRegistry.time,
+//                     );
+//                   this.executed++;
+
+//                   if (typeof this.form === "object") {
+//                     // fileManager(coData.rndTitle, "this.forms")
+//                     Logger.log(
+//                       `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+//                     );
+
+//                     // --- Set Basic this.form Properties ---
+
+//                     // Randomly decide to collect email or not
+//                     this.form.setCollectEmail(Math.random() < 0.5);
+
+//                     // Randomly decide to show progress bar for multi-section this.forms
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.setProgressBar(true);
+//                     }
+
+//                     // --- Add Sections and Questions ---
+
+//                     this.form
+//                       .addSectionHeaderItem()
+//                       .setTitle("Redirect occurred\n" + this.htmlData);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Industry").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Industry").setRequired(true);
+//                     }
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("Industry/Market Corrections")
+//                       .setRequired(false);
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("News")
+//                       .setRequired(false);
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("Economic/Business Cycles")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Stock Price")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Outstanding Shares")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Quarterly Earnings")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Annualized Net Income")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Total Equity")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Retained Earnings")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Cash & Marketable Securities")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Accounts Receivable")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Inventories")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Long-term Investments")
+//                       .setRequired(false);
+//                     this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Current Financial Liabilities")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Long-term Interest-bearing Debts")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Current Year Total Earnings")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Base Year Total Earnings")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Your Name").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addParagraphtTextItem()
+//                         .setTitle("Your Message")
+//                         .setRequired(true);
+//                     }
+//                     this.form.setConfirmationMessage("Thanks for your feedback !!");
+//                     this.responseObj = {
+//                       dataStr: seoPastTime(new ValidUrlResult(this.location).validUrlResult.hostname),
+//                       url: this.form.getPublishedUrl(),
+//                     };
+//                   }
+//                 }
+//               } else {
+//                 // No redirect or other error
+//                 this.location = this.response.getContentText();
+//                 this.htmlData = this.location;
+//                 this.supUrl = this.validUrl.hostname;
+//                 try {
+//                   this.form = new DriveFiles(
+//                     [JSON.stringify(this.text)].join("").toUpperCase(),
+//                   ).filedMain;
+//                   this.responseObj = {
+//                     dataStr: seoPastTime(this.validUrl.hostname),
+//                     url: this.form,
+//                   };
+//                 } catch (balance) {
+//                   // var this.form = formMaker();
+//                   this.form =
+//                     new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+//                     formMaker(
+//                       [JSON.stringify(this.text)].join("").toUpperCase(),
+//                       "misForms",
+//                       this.functionRegistry.time,
+//                     );
+//                   this.executed++;
+
+//                   if (typeof this.form === "object") {
+//                     // fileManager(coData.rndTitle, "Forms")
+//                     Logger.log(
+//                       `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+//                     );
+
+//                     // --- Set Basic this.form Properties ---
+
+//                     // Randomly decide to collect email or not
+//                     this.form.setCollectEmail(Math.random() < 0.5);
+
+//                     // Randomly decide to show progress bar for multi-section this.forms
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.setProgressBar(true);
+//                     }
+
+//                     // --- Add Sections and Questions ---
+
+//                     this.form
+//                       .addSectionHeaderItem()
+//                       .setTitle("No redirect or other error\n" + this.htmlData);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Industry").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Sector").setRequired(true);
+//                     }
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("Industry/Market Corrections")
+//                       .setRequired(false);
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("News")
+//                       .setRequired(false);
+//                     this.form
+//                       .addParagraphtTextItem()
+//                       .setTitle("Economic/Business Cycles")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Stock Price")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Outstanding Shares")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Quarterly Earnings")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Annualized Net Income")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Total Equity")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Retained Earnings")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Cash & Marketable Securities")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Accounts Receivable")
+//                         .setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Inventories")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Long-term Investments")
+//                       .setRequired(false);
+//                     this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addTextItem()
+//                         .setTitle("Current Financial Liabilities")
+//                         .setRequired(true);
+//                     }
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Long-term Interest-bearing Debts")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Current Year Total Earnings")
+//                       .setRequired(false);
+//                     this.form
+//                       .addTextItem()
+//                       .setTitle("Base Year Total Earnings")
+//                       .setRequired(false);
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addTextItem().setTitle("Your Name").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+//                     }
+//                     this.runChance = Math.random();
+//                     if (this.runChance < 0.7) {
+//                       this.form
+//                         .addParagraphtTextItem()
+//                         .setTitle("Your Message")
+//                         .setRequired(true);
+//                     }
+//                     this.form.setConfirmationMessage("Thanks for your feedback !!");
+//                     this.responseObj = {
+//                       dataStr: seoPastTime(this.validUrl.hostname),
+//                       url: this.form.getPublishedUrl(),
+//                     };
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       } catch (e) {
+//         Logger.log("Error resolving TinyURL: " + e.toString());
+//         console.error("Error resolving TinyURL: ", e.toString());
+//       }
+//       console.log("Final app:", this.htmlData);
+//       // return { index: this.responseObj, app: this.htmlData, link: this.supUrl };
+//     }
+//   }
+// }
+
+class MisStCreator {
+  constructor(func, someArgs) {
+    // super(func, someArgs);
+    this.func = func;
+    this.someArgs = someArgs;
+    console.log(
+      "\nMisStCreator(func: " +
+        this.func +
+        ", someArgs: " +
+        this.someArgs +
+        ")\n ",
+    );
+
+    // this.funcUno = decodeURIComponent(this.func);
+    // this.funcDos = decodeURIComponent(this.someArgs);
+    this.trueFunc = autoGlobe.trueVfalse(this.func);
+    console.log("trueFunc = " + this.trueFunc, this.executed++);
+    this.trueSomeArgs = autoGlobe.trueVfalse(this.someArgs);
+    console.log("trueSomeArgs = " + this.trueSomeArgs, this.executed++);
+    this.funcUno = this.trueFunc
+      ? decodeURIComponent(this.func)
+      : autoGlobe.functionRegistry.paramsList;
+    console.log("funcUno = " + this.funcUno, this.executed++);
+    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
+    // this.numVarRnd = randNum(this.funcUno.toString()); 
+    // Assuming randNum is globally accessible
+    console.log("numVarRnd = " + this.numVarRnd, this.executed++);
+
+    if (this.funcUno || this.funcDos) {
+      this.argsX = []; // Holds function names found
+      this.initialContent = []; // Renamed to clearly indicate initial, raw arguments
+
+      // this.keys = [
+      //   this.funcDos !== "undefined" && this.funcDos !== null // More robust check for funcDos
+      //     ? [this.funcUno].concat(Object.values(this.funcDos)) // Object.values returns an array, avoid nesting it [[]]
+      //     : [this.funcUno],
+      // ]
+      //   .toString()
+      //   .split(",");
+      this.arrUno = Array.isArray(this.func);
+      this.arrDos = autoGlobe.trueVfalse(this.someArgs);
+      console.log("arrDos = " + this.arrDos, this.executed++);
+      if (this.arrUno && this.arrDos) {
+        this.keys = Object.values(this.func).toString().split(",").concat(this.someArgs);
+      } 
+      else {
+        if (this.arrUno && !this.arrDos) {
+          this.keys = Object.values(this.func).toString().split(",");
+        } 
+        else {
+          if (!this.arrUno && this.arrDos) {
+            this.keys = [this.func].concat(this.someArgs);
+          } 
+          else {
+            if (!this.arrUno && !this.arrDos) {
+              this.keys = [this.func];
+            }
+          }
+        }
+      }
+
+      this.keys.forEach((pro) => {
+        // this.proFact = autoGlobe.trueVfalse(pro)
+        this.keysArrArr;
+        if (typeof pro !== "string" && pro !== null) {
+          this.proValue = Object.keys(pro);
+          this.keysArrArr = this.proValue.length > 0;
+        } 
+        else {
+          this.keysArrArr = false;
+        }
+        this.keyPro = this.keysArrArr ? pro : [pro];
+        this.keyProParams;
+        this.realItem;
+        if (this.keyPro) {
+          this.funcLimit = [];
+          this.paramLimit = [];
+          this.keyPro.forEach((subParam, proIndex) => {
+            this.subArrArr;
+            if (typeof subParam !== "string" && subParam !== null) {
+              this.subValue = Object.values(subParam).toString().split(",");
+              this.subArrArr = this.subValue.length > 0;
+            } 
+            else {
+              this.subArrArr = false;
+            }
+            if (this.subArrArr && subParam.length >= 1) {
+              subParam.forEach((subA, subAIndex) => {
+                this.rtParamB = subA[subAIndex];
+                this.keyProParams =
+                  typeof subA === "object" || Array.isArray(subA)
+                    ? crmT(this.rtParamB)
+                    : crmT(subA);
+                console.log("keyProParams = " + this.keyProParams, this.executed++);
+                if (this.keyProParams >= 0) {
+                  this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
+                  console.log("argsX = " + this.argsX, this.executed++);
+                } 
+                else {
+                  // this.keyProParams = ;
+                  if (typeof subA === "object" && !Array.isArray(subA)) {
+                    this.theSP = subA;
+                    this.initialContent.push(subA);
+                  } 
+                  else { 
+                    if (Array.isArray(subA)) {
+                      this.theSP = subA;
+                      this.initialContent.push(this.rtParamB);
+                    } 
+                    else {
+                      this.theSP = subA;
+                      this.initialContent.push(subA);
+                    }
+                  }
+                }
+              });
+              // this.keyProParams = crmT(this.rtParamA);
+            } 
+            else {
+              // this.keyProParams = crmT(subParam);
+              this.realItem = autoGlobe.trueVfalse(subParam);
+              console.log("realItem = " + this.realItem, this.executed++);
+            }
+            // this.realItem;
+            // if (typeof subParam !== "string" && subParam !== null) {
+            //   this.subValue = Object.keys(subParam);
+            //   this.realItem = this.subValue.length > 0;
+            // }
+            // else {
+            //   this.realItem = false;
+            // }
+            if (this.realItem) {
+              this.rtParamA = subParam[proIndex];
+              this.keyProParams =
+                typeof subParam === "object" || Array.isArray(subParam)
+                  ? crmT(this.rtParamA)
+                  : crmT(subParam);
+              console.log("keyProParams = " + this.keyProParams, this.executed++);
+              if (this.keyProParams >= 0) {
+                this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
+                console.log("argsX = " + this.argsX, this.executed++);
+              } 
+              else {
+                // this.keyProParams = ;
+                if (typeof subParam === "object" && !Array.isArray(subParam)) {
+                  this.theSP = subParam;
+                  this.initialContent.push(subParam);
+                } 
+                else {
+                  if (Array.isArray(subParam)) {
+                    this.theSP = subParam;
+                    this.initialContent.push(this.rtParamA);
+                  } 
+                  else {
+                    this.theSP = subParam;
+                    this.initialContent.push(subParam);
+                  }
+                }
+              }
+            }
+          });
+          // if (this.funcLimit.length > 0) {
+          //   this.argsX.push(this.funcLimit);
+          // }
+          // if (paramLimit.length > 0) {
+          //   this.initialContent.push(paramLimit);
+          // }
+        } 
+        else {
+          this.realItem = autoGlobe.trueVfalse(pro);
+          console.log("realItem = " + this.realItem, this.executed++);
+          if (this.realItem) {
+            for (var key in this.keyPro) {
+              this.keyProParams =
+                typeof pro === "object" || Array.isArray(pro)
+                  ? crmT(pro[key])
+                  : crmT(pro);
+              console.log("keyProParams = " + this.keyProParams, this.executed++);
+              if (this.keyProParams >= 0) {
+                this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
+                console.log("argsX = " + this.argsX, this.executed++);
+              } 
+              else {
+                // this.keyProParams = ;
+                this.initialContent.push(
+                  typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
+                );
+              }
+            }
+          }
+        }
+      });
+
+      this.holdResolvedArgsX;
+
+      if (this.argsX.length > 0) {
+        console.log("Check if there are functions to process", this.argsX);
+        // Check if there are functions to process
+        this.allErrors = {};
+        this.arrDRnd = null;
+        this.fParams = autoGlobe.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
+        console.log("fParams = " + this.fParams.slice(0, 1), this.executed++);
+        console.log("global functions list length:", Object.keys(this.fParams).length);
+        this.resCount = 0;
+
+        this.argsX.forEach((result) => {
+          // 'result' is the function name (e.g., 'renderFile')
+          console.log(
+            "--- Inside argsX.forEach loop, BEFORE any other logic ---",
+          );
+          console.log('Current "result" (function name):', result);
+          console.log(
+            'Value of "initialContent" at start of this iteration:',
+            this.initialContent,
+          );
+
+          console.log("argsX result " + this.resCount + ": " + result);
+          this.args = {}; // Arguments for the current function call
+          this.resolvedArgs = []; // Resolved arguments array for the current function
+          this.missingParams = []; // Parameters that couldn't be resolved
+
+          this.searchString = this.fParams.find((fP) => {
+            this.dP = fP.name;
+            this.noDP = this.dP === result;
+            if (this.noDP) {
+              this.dP = fP;
+              return fP.name === result;
+            }
+          });
+          console.log(JSON.stringify(this.searchString));
+          this.declaredParams = []; // Initialize here for wider scope
+
+          if (this.searchString && this.searchString.parameters) {
+            this.declaredParams = this.searchString.parameters;
+            console.log(
+              "Current initialContent: " +
+                this.initialContent +
+                "\nDeclared parameters for " +
+                result +
+                ": " +
+                this.declaredParams,
+            );
+
+            // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
+            // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
+            this.orderedArgsForCurrentFunc = [];
+            this.contentMap = {}; // Reset contentMap for each function
+
+            // First, populate contentMap with any named matches (if initialContent is not just positional)
+            // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
+            this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
+            // [
+            //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
+            // ]
+            //   .toString()
+            //   .split(" ");
+            console.log("htmlArray = " + this.htmlArray, this.executed++);
+            this.allFolders;
+            function payLoadReg() {
+              this.rndE = objectOfS(
+                ["parameter"],
+                [
+                  [
+                    ["func", result],
+                    ["args", [...this.initialContent]],
+                  ],
+                ],
+                autoGlobe.functionRegistry.time,
+              );
+              console.log("rndE = " + this.rndE, this.executed++);
+              this.funcUnoMis = this.rndE.parameter["func"];
+              this.funcDosMis = this.rndE.parameter["args"];
+              this.payLoad = null; // Initialize payLoad
+
+              // Ensure globalThis[this.funcUnoMis] exists before calling
+              if (
+                this.funcUnoMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1 ||
+                this.funcDosMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1
+              ) {
+                // Prevent infinite recursion
+                console.warn(
+                  "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+                );
+                this.payLoad = "Recursive call prevented.";
+              } 
+              else {
+                if (typeof globalThis[this.funcUnoMis] === "function") {
+                  console.log(
+                    "DEBUG, Prevent infinite recursion: \nMisStCreator\globalThis[funcUnoMis]:",
+                    globalThis[this.funcUnoMis].toString(),
+                  );
+                  this.payLoad = globalThis[this.funcUnoMis].apply(this, this.funcDosMis);
+                  console.log("payLoad = " + this.payLoad, this.executed++);
+                } 
+                else {
+                  console.warn(
+                    "Function for 'data' parameter not found:",
+                    this.funcUnoMis,
+                  );
+                  this.payLoad = "Function not found for data generation.";
+                }
+              }
+            }
+
+            this.initialContent.forEach((item) => {
+              console.log(
+                "DEBUG: \nMisStCreator\norderedArgsForCurrentFunc:",
+                this.orderedArgsForCurrentFunc,
+              );
+              this.declaredParams.forEach((declaredParam) => {
+                // More precise matching for named arguments or specific values
+                if (item === declaredParam) {
+                  // Exact match for a declared parameter name
+                  this.contentMap[declaredParam] = item;
+                }
+                // If you also want to match if the item *contains* the declared param, be very careful:
+                // else if (typeof item === 'string' && item.includes(declaredParam)) {
+                //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
+                //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
+                //    this.contentMap[declaredParam] = item;
+                // }
+              });
+            });
+
+            // Then, build orderedArgsForCurrentFunc based on declaredParams order
+            // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
+            this.declaredParams.forEach((paramName, index) => {
+              console.log(
+                "DEBUG: boilerplate Help: line 1722\nmisSt\norderedArgsForCurrentFunc:",
+                this.orderedArgsForCurrentFunc,
+              );
+              // Try to get a positional argument first from initialContent
+              if (
+                this.initialContent[index] !== undefined &&
+                this.initialContent[index] !== null &&
+                paramName
+              ) {
+                this.orderedArgsForCurrentFunc.push(this.initialContent[index]);
+                console.log(
+                  "DEBUG, Try to get a positional argument first from initialContent: \nMisStCreator\norderedArgsForCurrentFunc:",
+                  this.orderedArgsForCurrentFunc,
+                );
+              }
+              // Fallback to contentMap if a named argument was found, and not already set positionally
+              else {
+                if (this.contentMap.hasOwnProperty(paramName)) {
+                  this.orderedArgsForCurrentFunc.push(this.contentMap[paramName]);
+                  console.log(
+                    "DEBUG, Fallback to contentMap if a named argument was found, and not already set positionally: \nMisStCreator\norderedArgsForCurrentFunc:",
+                    this.orderedArgsForCurrentFunc,
+                  );
+                }
+                // Otherwise, the parameter is missing for now
+                else {
+                  this.orderedArgsForCurrentFunc.push(null);
+                  console.log(
+                    "DEBUG, the parameter is missing for now: \nMisStCreator\norderedArgsForCurrentFunc:",
+                    this.orderedArgsForCurrentFunc,
+                  );
+                }
+              }
+            });
+
+            console.log(
+              "Ordered arguments for " +
+                result +
+                ": " +
+                this.orderedArgsForCurrentFunc,
+            );
+
+            // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
+            // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
+            this.declaredParams.forEach((declaredParamName, index) => {
+              console.log(
+                "DEBUG: \nMisStCreator\norderedArgsForCurrentFunc:",
+                this.orderedArgsForCurrentFunc,
+              );
+              this.userProvidedValue = this.orderedArgsForCurrentFunc[index]; // Get the mapped value
+
+              console.log(
+                'Value of "' + declaredParamName + '" (userProvidedValue):',
+                this.userProvidedValue,
+              );
+
+              // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
+              // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
+              if (this.userProvidedValue === null && this.userProvidedValue === undefined) {
+                if (declaredParamName === "e") {
+                  this.arrDRnd = appSort();
+                  this.searchResult = randomSubstance(0, this.arrDRnd.length, this.arrDRnd).myNewArr;
+                  result = this.fParams.find((rndS) => {
+                    return rndS.name === this.searchResult;
+                  });
+                  console.log("resolved e.parameter pre-result", result);
+                  try {
+                    JSON.parse(result.toString());
+                  } catch (check) {
+                    console.log("Check/Balance for " + result.toString());
+                  }
+                  if (typeof result === "string" && result !== "undefined") {
+                    this.args[declaredParamName] = objectOfS(
+                      ["parameter"],
+                      [
+                        [
+                          ["func", result],
+                          ["action", "getData"],
+                          ["file", "uiAccess"],
+                        ],
+                      ],
+                      autoGlobe.functionRegistry.time,
+                    );
+                  } 
+                  else {
+                    if (
+                      typeof result === "object" &&
+                      result !== null &&
+                      result.name
+                    ) {
+                      this.args[declaredParamName] = objectOfS(
+                        ["parameter"],
+                        [
+                          [
+                            ["func", result.name],
+                            [
+                              "args",
+                              JSON.stringify(this.orderedArgsForCurrentFunc) || result.parameters,
+                            ],
+                            ["action", "getData"],
+                            ["file", "uiAccess"],
+                          ],
+                        ],
+                        autoGlobe.functionRegistry.time,
+                      );
+                    } 
+                    else {
+                      if (result !== null && result && result.name) {
+                        this.args[declaredParamName] = objectOfS(
+                          ["parameter"],
+                          [
+                            [
+                              ["func", result.name],
+                              ["action", "getData"],
+                              ["file", "uiAccess"],
+                            ],
+                          ],
+                          autoGlobe.functionRegistry.time,
+                        );
+                      }
+                    }
+                  }
+                  console.log("args[declaredParamName] = " + this.args[declaredParamName], this.executed++);
+                  this.resolvedArgs.push(JSON.stringify(this.args[declaredParamName]));
+                } 
+                else {
+                  if (declaredParamName === "time") {
+                    this.args[declaredParamName] =
+                      // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                      //   ? this.userProvidedValue
+                      //   :
+                      autoGlobe.functionRegistry.time;
+                    console.log("args[declaredParamName] = " + this.args[declaredParamName], this.executed++);
+                    this.resolvedArgs.push(this.args[declaredParamName]);
+                  } 
+                  else {
+                    if (declaredParamName === "data") {
+                      // if (
+                      //   this.userProvidedValue !== null &&
+                      //   this.userProvidedValue !== undefined &&
+                      //   Array.isArray(this.userProvidedValue)
+                      // ) {
+                      //   this.args[declaredParamName] = this.userProvidedValue;
+                      // } else {
+                      // this.rndE = objectOfS(
+                      //   ["parameter"],
+                      //   [
+                      //     [
+                      //       ["func", "mis"],
+                      //       ["args", [result, ...this.initialContent]],
+                      //     ],
+                      //   ],
+                      //   autoGlobe.functionRegistry.time,
+                      // );
+                      // this.funcUnoMis = this.rndE.parameter["func"];
+                      // this.funcDosMis = this.rndE.parameter["this.args"];
+                      // this.payLoad = null; // Initialize payLoad
+
+                      // // Ensure globalThis[funcUnoMis] exists before calling
+                      // if (this.funcUnoMis === "misSt") {
+                      //   // Prevent infinite recursion
+                      //   console.warn(
+                      //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
+                      //   );
+                      //   this.payLoad = "Recursive call prevented.";
+                      // } else if (typeof globalThis[this.funcUnoMis] === "function") {
+                      //   this.payLoad = globalThis[this.funcUnoMis].apply(this, this.funcDosMis);
+                      // } else {
+                      //   console.warn(
+                      //     "Function for 'data' parameter not found:",
+                      //     this.funcUnoMis,
+                      //   );
+                      //   this.payLoad = "Function not found for data generation.";
+                      // }
+                      try {
+                        JSON.parse(result.toString());
+                      } catch (check) {
+                        console.log("Check/Balance for " + result.toString());
+                      }
+
+                      this.args[declaredParamName] = {
+                        message: payLoadReg(),
+                        timestamp: new Date(),
+                      };
+                      // }
+                      this.resolvedArgs.push(this.args[declaredParamName]);
+                    } 
+                    else {
+                      if (declaredParamName === "func") {
+                        try {
+                          JSON.parse(result.toString());
+                        } catch (check) {
+                          console.log("Check/Balance for " + result.toString());
+                        }
+                        this.args[declaredParamName] =
+                          // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                          //   ? this.userProvidedValue
+                          //   :
+                          result;
+                        this.resolvedArgs.push(this.args[declaredParamName]);
+                      } 
+                      else {
+                        if (declaredParamName === "varA") {
+                          try {
+                            JSON.parse(result.toString());
+                          } catch (check) {
+                            console.log("Check/Balance for " + result.toString());
+                          }
+                          console.log(
+                            "Declared parameter " +
+                              declaredParamName +
+                              " is not the user provided value " +
+                              this.userProvidedValue +
+                              ",",
+                            declaredParamName !== this.userProvidedValue,
+                          );
+                          // if (
+                          //   this.userProvidedValue !== null &&
+                          //   this.userProvidedValue !== undefined &&
+                          //   this.userProvidedValue !== declaredParamName
+                          // ) {
+                          //   this.args[declaredParamName] = this.userProvidedValue;
+                          //   console.log("Error: using ", this.userProvidedValue);
+                          // } else {
+                          // Simplified random function call logic
+                          this.randomFuncResult = null;
+                          this.randomFuncName =
+                            this.fParams[Math.floor(Math.random() * this.fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
+                          console.log("resolved varA pre-result", this.randomFuncName);
+                          if (
+                            typeof this.randomFuncName === "string" &&
+                            typeof globalThis[this.randomFuncName] === "function"
+                          ) {
+                            this.randomFuncResult = globalThis[this.randomFuncName]();
+                          console.log("randomFuncResult = " + this.randomFuncResult, this.executed++);
+                            console.log("Error: using ", this.randomFuncName);
+                          } 
+                          else {
+                            if (
+                              typeof this.randomFuncName === "object" &&
+                              this.randomFuncName !== null &&
+                              this.randomFuncName.name &&
+                              typeof globalThis[this.randomFuncName.name] === "function"
+                            ) {
+                              this.randomFuncResult = globalThis[this.randomFuncName.name].apply(
+                                this,
+                                this.randomFuncName.parameters || [],
+                              );
+                              console.log("randomFuncResult = " + this.randomFuncResult, this.executed++);
+                              console.log(
+                                "Error: using, " +
+                                  this.randomFuncName.name +
+                                  " with parameters " +
+                                  this.randomFuncName.parameters,
+                              );
+                            }
+                          }
+                          this.args[declaredParamName] = this.randomFuncResult;
+                          // }
+                          this.resolvedArgs.push(this.args[declaredParamName]);
+                        } 
+                        else {
+                          if (declaredParamName === "epaAUrl") {
+                            // if (this.userProvidedValue !== null && this.userProvidedValue !== undefined) {
+                            //   this.args[declaredParamName] = this.userProvidedValue;
+                            // } else {
+                            console.log("DEBUG: Generating epaAUrl...");
+                            this.data = coUtility(this.product)[0]; // Assuming 'product' is accessible
+                            console.log("data = " + this.data, this.executed++);
+                            console.log("DEBUG: data from coUtility:", this.data);
+
+                            this.generatedUrl = null;
+                            if (this.data && typeof this.data.rndTitle !== "undefined") {
+                              this.test = productNamePartial(
+                                [this.data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                                  Math.floor(
+                                    Math.random() *
+                                      Math.floor(
+                                        [this.data.rndTitle.replace(/,./g, "")]
+                                          .toString()
+                                          .split(" ").length,
+                                      ),
+                                  )
+                                ],
+                              );
+                              console.log("test = " + this.test, this.executed++);
+                              console.log("DEBUG: test from productNamePartial:", this.test);
+
+                              if (this.test && typeof this.test.eparegno !== "undefined") {
+                                this.test2 = productRegNo(this.test.eparegno);
+                                console.log("DEBUG: test2 from productRegNo:", this.test2);
+                                console.log("test2 = " + this.test2, this.executed++);
+
+                                if (
+                                  this.test2 &&
+                                  this.test2.hasOwnProperty("active_ingredients") &&
+                                  this.test2.active_ingredients.length > 0
+                                ) {
+                                  this.uniqueData = [];
+                                  this.test2.active_ingredients.forEach((ing) => {
+                                    if (ing.active_ing) {
+                                      this.pIName = productIngName(ing.active_ing);
+                                      console.log("pIName = " + this.pIName, this.executed++);
+                                      if (typeof this.pIName !== "undefined") {
+                                        this.uniqueData.push(
+                                          this.pIName["items"] || this.pIName["first"] || this.pIName,
+                                        );
+                                      }
+                                    }
+                                  });
+
+                                  if (this.uniqueData.length > 0) {
+                                    // Flatten uniqueData if it's an array of arrays
+                                    this.flatUniqueData = [];
+                                    this.uniqueData.forEach((arr) => {
+                                      if (Array.isArray(arr)) {
+                                        this.flatUniqueData.push(...arr);
+                                      } else {
+                                        this.flatUniqueData.push(arr);
+                                      }
+                                    });
+
+                                    this.matches = this.flatUniqueData.filter(
+                                      (ac) =>
+                                        ac &&
+                                        ac.eparegnumber &&
+                                        String(ac.eparegnumber)
+                                          .toLowerCase()
+                                          .includes(String(this.test2.eparegno).toLowerCase()),
+                                    );
+
+                                    if (this.matches.length > 0) {
+                                      this.randomKey = Math.floor(
+                                        Math.random() * this.matches.length,
+                                      );
+                                      this.isDataKey = this.matches[this.randomKey];
+                                      this.randomCasNumber = this.isDataKey["casnumber"];
+
+                                      console.log(
+                                        "DEBUG: randomCasNumber generated:",
+                                        this.randomCasNumber,
+                                      );
+                                      if (this.randomCasNumber) {
+                                        this.generatedUrl =
+                                          "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
+                                          this.randomCasNumber +
+                                          "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            this.args[declaredParamName] = this.generatedUrl; // Assign the generated URL (or null if not found)
+                            console.log(
+                              "DEBUG: Final epaAUrl for args:",
+                              this.args[declaredParamName],
+                            );
+                            // }
+                            this.resolvedArgs.push(this.args[declaredParamName]);
+                          } 
+                          else {
+                            if (
+                              declaredParamName === "url" ||
+                              declaredParamName === "companyNameUrl"
+                            ) {
+                              // if (
+                              //   this.userProvidedValue !== null &&
+                              //   this.userProvidedValue !== undefined &&
+                              //   isValidUrl(this.userProvidedValue).hostname
+                              // ) {
+                              //   this.args[declaredParamName] = this.userProvidedValue;
+                              // } else {
+                              // Assuming autoGlobe.functionRegistry.gTree and fileBrowser are accessible
+                              this.folder = autoGlobe.functionRegistry.getFolderList()[this.numVarRnd];
+                              console.log("folder = " + this.folder, this.executed++);
+                              this.args[declaredParamName] = fileBrowser(this.folder).url;
+                              console.log("args[declaredParamName] = " + this.args[declaredParamName], this.executed++);
+                              // }
+                              this.resolvedArgs.push(this.args[declaredParamName]);
+                            } 
+                            else {
+                              if (declaredParamName === "object") {
+                                this.args[declaredParamName] =
+                                  // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                  //   ? this.userProvidedValue
+                                  //   :
+                                  JSON.stringify({});
+                                this.resolvedArgs.push(this.args[declaredParamName]);
+                              } 
+                              else {
+                                if (declaredParamName === "file") {
+                                  this.rndPage =
+                                    this.htmlArray[Math.floor(Math.random() * this.htmlArray.length)];
+                                  this.args[declaredParamName] =
+                                    // this.userProvidedValue !== null &&
+                                    // this.userProvidedValue !== undefined &&
+                                    // typeof this.userProvidedValue === "string" &&
+                                    // /<[a-z][\s\S]*>/i.test(
+                                    //   this.userProvidedValue || this.userProvidedValue !== "file",
+                                    // )
+                                    //   ? this.userProvidedValue
+                                    //   :
+                                    this.rndPage;
+                                  this.resolvedArgs.push(this.args[declaredParamName]);
+                                } 
+                                else {
+                                  if (declaredParamName === "fileX") {
+                                    this.folderX = autoGlobe.functionRegistry.getFolderList()[this.numVarRnd()];
+                                    console.log("folderX = " + this.folderX, this.executed++);
+                                    this.folderRoot = DriveApp.getFoldersByName(this.folderX); // Assuming Google Apps Script DriveApp
+                                    this.fileXName = "undefined";
+                                    if (this.folderRoot.hasNext) {
+                                      this.fileBulk = this.folderRoot.next().getFiles();
+                                      this.fileNames = [];
+                                      if (this.fileBulk.hasNext()) {
+                                        while (this.fileBulk.hasNext()) {
+                                          this.fileUrl = this.fileBulk.next();
+                                          this.fileNames.push(fileUrl.getName());
+                                        }
+                                        if (this.fileNames.length > 0) {
+                                          this.fileXName =
+                                            this.fileNames[Math.floor(Math.random() * this.fileNames.length)];
+                                        }
+                                      }
+                                    }
+                                    this.args[declaredParamName] =
+                                      // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                      //   ? this.userProvidedValue
+                                      //   :
+                                      this.fileXName;
+                                    this.resolvedArgs.push(this.args[declaredParamName]);
+                                  } 
+                                  else {
+                                    if (
+                                      declaredParamName === "folderX" ||
+                                      declaredParamName === "folder"
+                                    ) {
+                                      this.args[declaredParamName] =
+                                        // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                        //   ? this.userProvidedValue
+                                        //   :
+                                        this.allFolders = autoGlobe.functionRegistry.getFolderList();
+                                      console.log("allFolders = " + this.allFolders, this.executed++);
+                                      this.allFolders[this.numVarRnd]; // allFolders should be defined or passed
+                                      this.resolvedArgs.push(this.args[declaredParamName]);
+                                    } 
+                                    else {
+                                      if (
+                                        declaredParamName === "numIndex" ||
+                                        declaredParamName === "infinitum"
+                                      ) {
+                                        this.args[declaredParamName] =
+                                          // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                          //   ? this.userProvidedValue
+                                          //   :
+                                          this.numVarRnd;
+                                        this.resolvedArgs.push(this.args[declaredParamName]);
+                                      } 
+                                      else {
+                                        if (declaredParamName === "itemName") {
+                                          this.rndItemIndex = Math.floor(
+                                            Math.random() *
+                                              Math.floor(globalThis.uniqueItemArray().length),
+                                          );
+                                          console.log("rndItemIndex = " + this.rndItemIndex, this.executed++);
+                                          this.args[declaredParamName] =
+                                            // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                            //   ? this.userProvidedValue
+                                            //   :
+                                            globalThis.uniqueItemArray()[this.rndItemIndex]["Description"];
+                                          console.log("args[declaredParamName] = " + this.args[declaredParamName], this.executed++);
+                                          this.resolvedArgs.push(this.args[declaredParamName]);
+                                        } 
+                                        else {
+                                          if (
+                                            ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName"].includes(
+                                              declaredParamName,
+                                            )
+                                          ) {
+                                            this.nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName"];
+                                            this.rndCoIndex = Math.floor(
+                                              Math.random() * Math.floor(globalThis.uniqueCoArray().length),
+                                            );
+                                            console.log("rndCoIndex = " + this.rndCoIndex, this.executed++);
+                                            this.tiParam = globalThis.uniqueCoArray()[this.rndCoIndex]["title"];
+                                            console.log("tiParam = " + this.tiParam, this.executed++);
+                                            this.args[this.nameArray[this.nameArray.indexOf(declaredParamName)]] =
+                                              // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                              //   ? this.userProvidedValue
+                                              //   :
+                                              this.tiParam;
+                                            this.resolvedArgs.push(
+                                              this.args[this.nameArray[this.nameArray.indexOf(declaredParamName)]],
+                                            );
+                                          } 
+                                          else {
+                                            if (declaredParamName === "stringArray") {
+                                              this.args[declaredParamName] =
+                                                // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                                //   ? this.userProvidedValue
+                                                //   :
+                                                appSort(this.numVarRnd); // Assuming appSort is accessible
+                                              this.resolvedArgs.push(this.args[declaredParamName]);
+                                            } 
+                                            else {
+                                              if (declaredParamName === "argsObject") {
+                                                try {
+                                                  JSON.parse(result.toString());
+                                                } catch (check) {
+                                                  console.log("Check/Balance for " + result.toString());
+                                                }
+                                                this.args[declaredParamName] =
+                                                  // this.userProvidedValue !== null &&
+                                                  // this.userProvidedValue !== undefined &&
+                                                  // Array.isArray(this.userProvidedValue)
+                                                  //   ? this.userProvidedValue
+                                                  //   :
+                                                  JSON.stringify({
+                                                    message: payLoadReg(),
+                                                    timestamp: new Date(),
+                                                  });
+                                                this.resolvedArgs.push(this.args[declaredParamName]);
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              } 
+              else {
+                // Generic handler for other declared parameters not covered by specific logic
+                if (
+                  this.userProvidedValue !== null &&
+                  this.userProvidedValue !== undefined
+                ) {
+                  this.args[declaredParamName] = this.userProvidedValue;
+                } else {
+                  this.missingParams.push(declaredParamName);
+                  this.args[declaredParamName] = null; // Assign null, but mark as missing
+                }
+                this.resolvedArgs.push(this.args[declaredParamName]);
+              }
+            }); // End of declaredParams.forEach
+
+            if (this.missingParams.length === 0) {
+              // No need to reassign 'content' here. It should remain the initial input.
+              // The 'args' and 'resolvedArgs' are the output for the current function.
+            } 
+            else {
+              this.allErrors[result] =
+                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
+              console.error(this.allErrors[result]);
+            }
+          } 
+          else {
+            console.warn("No declared parameters found for function:", result);
+          }
+
+          console.log("Resolved arguments for " + result + ":", this.args);
+          console.log(
+            "Resolved parameters Array for " + result + ":",
+            this.resolvedArgs,
+          );
+          this.resCount++;
+
+          this.holdResolvedArgsX = this.resolvedArgs;
+
+          // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
+          // For now, it's scoped to each iteration.
+        }); // End of argsX.forEach
+
+        this.errorKeys = Object.keys(this.allErrors);
+      } 
+      else {
+        console.log("No functions found to call in argsX.");
+      }
+      console.log(
+        "misSt returned :\nfunc = " +
+          this.argsX +
+          ":\nargs = " +
+          this.holdResolvedArgsX?.toString().replace(/,/g, " "),
+      );
+    }
+    // --- Final Execution and Return ---
+    // The previous structure was applying 'content' to the called functions.
+    // Now, 'initialContent' holds the original args, and 'resolvedArgs' (from the loop) holds the processed args per function.
+    // You need to decide how to pass arguments to the actual function call.
+    // If argsX has one function, you'd likely pass `resolvedArgs` from that iteration.
+    // If argsX has multiple functions, you'll need to store `resolvedArgs` for each function in an array.
+
+    // This section needs careful review based on how you intend to use `args` and `resolvedArgs`
+    // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
+
+    this.finalResultData = null; // To store the output of the function call(s)
+    if (this.argsX) {
+      if (this.argsX.length > 0) {
+        if (this.argsX.length === 1) {
+          this.funcToCall = this.argsX[0];
+          // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
+          // might not be correct if `argsX` has multiple functions.
+          // Best to save the resolved args from inside the loop to a map/array.
+          // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
+          // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
+          this.lastResolvedArgs = this.holdResolvedArgsX; // This assumes only one item in argsX for now
+
+          if (typeof globalThis[this.funcToCall] === "function") {
+            try {
+              this.finalResultData = globalThis[this.funcToCall].apply(
+                this,
+                this.lastResolvedArgs,
+              );
+              console.log("finalResultData = " + this.finalResultData, this.executed++);
+              console.log(
+                `typeof ${typeof this.finalResultData}: finalResultData: ${this.finalResultData} (from direct call)`,
+              );
+            } catch (e) {
+              console.error(
+                `Error calling ${this.funcToCall} with arguments ${JSON.stringify(this.lastResolvedArgs)}: ${e.toString()}`,
+              );
+              this.finalResultData = `Error calling function: ${e.toString()}`;
+            }
+          } 
+          else {
+            console.error("Function not found:", this.funcToCall);
+            this.finalResultData = `Function not found: ${this.funcToCall}`;
+          }
+        } 
+        else {
+          // Multiple functions in argsX
+          this.finalResultData = [];
+          this.argsX.forEach((funcName, index) => {
+            // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
+            // For now, this part assumes `resolvedArgs` would be globally available or stored.
+            // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
+            // For simplicity, let's assume if there are multiple, they all get the initialContent (or the last resolvedArgs).
+            // This is where a Map or Array of objects would be useful: `[{funcName: 'f1', args: ['a','b']}, {funcName: 'f2', args: ['c','d']}]`
+            // For this example, let's assume you intend to pass the *initial* raw arguments to all of them if multiple.
+            // You'll need to decide on the correct arguments to pass for each function in a multi-function scenario.
+
+            if (typeof globalThis[funcName] === "function") {
+              try {
+                // Pass initialContent or a specifically resolved arg for THIS funcName
+                this.resultForFunc = globalThis[funcName].apply(
+                  this,
+                  this.initialContent,
+                ); // Using initialContent for simplicity for now
+                console.log("resultForFunc = " + this.resultForFunc, this.executed++);
+                this.finalResultData.push({ [funcName]: this.resultForFunc });
+              } catch (e) {
+                console.error(
+                  `Error calling ${funcName} with arguments ${JSON.stringify(this.initialContent)}: ${e.toString()}`,
+                );
+                this.finalResultData.push({
+                  [funcName]: `Error calling function: ${e.toString()}`,
+                });
+              }
+            } 
+            else {
+              console.error("Function not found:", funcName);
+              this.finalResultData.push({
+                [funcName]: `Function not found: ${funcName}`,
+              });
+            }
+          });
+          console.log(
+            `typeof ${typeof this.finalResultData} finalResultData (array of results)`,
+          );
+        }
+      } 
+      else {
+        console.log(
+          "No function to call: Skipping .apply(" + this.initialContent + ")",
+        );
+        this.finalResultData = this.initialContent;
+        console.log(`typeof ${typeof this.finalResultData} finalResultData`);
+      }
+    }
+
+    this.argsObject = {
+      func: this.argsX.toString(), // Consider joining with something like ', ' for readability
+      args: this.initialContent, // .toString().replace(/,/g, " "), // This is the original raw args
+      res: this.finalResultData, // The actual result of the function call(s)
+    };
+  }
+}
+
+class DriveFiles {
   constructor(strNw, time) {
-    super();
-    this.strNw = strNw || this.truVal && this.objVal?.indexOf(",") === -1? this.objVal:"";
-    this.time = time || this.functionRegistry.time;
+    // super(strNw);
+    this.strNw = strNw || this.truVal && this.objVal?.indexOf(",") === -1? this.objVal:this.argsX;
+    this.time = time || autoGlobe.functionRegistry.time;
     console.log(
       "strNw is !" +
         !this.strNw +
@@ -2016,7 +3827,7 @@ class DriveFiles extends RawFuncResult {
     } else {
       console.log("DriveFiles: strNw is truthy. testlt() will NOT be called.");
     }
-    this.searArn = this.domainData[Math.floor(Math.random() * this.domainData.length)] 
+    this.searArn = autoGlobe.domainData[Math.floor(Math.random() * autoGlobe.domainData.length)] 
     if (this.searArn.indexOf("http") === -1) {
       this.searArn = "http://" + this.searArn
     }
@@ -2034,7 +3845,7 @@ class DriveFiles extends RawFuncResult {
     this.iam;
     try {
       this.iam = JSON.parse(
-        ObjectConvertor.newConvert([[String(this.mainStr)]], ["file"], this.functionRegistry.time),
+        ObjectConvertor.newConvert([[String(this.mainStr)]], ["file"], autoGlobe.functionRegistry.time),
       );
       console.log("iam = " + this.iam, this.executed++);
       console.log("DriveFiles: iam successfully parsed:", this.iam);
@@ -2181,14 +3992,14 @@ class DriveFiles extends RawFuncResult {
   }
 }
 
-class ObjectConvertor extends DriveFiles {
+class ObjectConvertor {
   constructor(rows, headings, time) {
-    super();
+    // super(rows, time);
     this.rows = rows || this.mainStr;
     this.headings = headings || ["file"];
-    this.time = time || this.functionRegistry.time;
+    this.time = time || autoGlobe.functionRegistry.time;
     // console.log(
-    //   formatTime(this.functionRegistry.time) +
+    //   formatTime(autoGlobe.functionRegistry.time) +
     //     "\nrows is !" +
     //     !this.rows +
     //     ", = " +
@@ -2300,10 +4111,10 @@ class ObjectConvertor extends DriveFiles {
   }
 }
 
-class ValidUrlResult extends ObjectConvertor {
+class ValidUrlResult {
   constructor(text) {
-    super()
-    this.text = text || this.strNw;
+    // super();
+    this.text = text;
     console.log(
       "\nValidUrlResult(text: " +
         this.text +
@@ -2331,21 +4142,21 @@ class ValidUrlResult extends ObjectConvertor {
       }
       console.log("matches = " + this.validUrlResult.matches);
       if (this.validUrlResult.matches.length === 0) {
-        // this.searchLinkDrive = new DriveFiles(this.text, this.functionRegistry.time);
+        // this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
         // if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
           this.validUrlResult.matches = this.dataTree  //this.searchLinkDrive?.dataTree;
         // }
         console.log("matches to return = " + this.validUrlResult.matches);
         // if (this.searchLinkDrive?.filedMain) {
         if (this?.filedMain) {
-          this.functionRegistry.vidTree();
-          this.vidSheetVals = this.functionRegistry.getVideoList();
+          autoGlobe.functionRegistry.vidTree();
+          this.vidSheetVals = autoGlobe.functionRegistry.getVideoList();
           this.vidData = [];
           this.vidVals = Object.values(this.vidSheetVals);
           this.vidVals.forEach((val) => {
             this.inVVals = Object.values(val);
             this.inVVals.forEach((inV) => {
-              this.truInv = this.trueVfalse(inV);
+              this.truInv = autoGlobe.trueVfalse(inV);
               if (this.truInv) {
                 this.vidData.push(inV);
               }
@@ -2389,7 +4200,7 @@ class ValidUrlResult extends ObjectConvertor {
           }
           // else {
           //   if (this.validUrlResult.rndRes.length === 0) {
-          //     this.searchLinkDrive = new DriveFiles(this.text, this.functionRegistry.time);
+          //     this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
           //     if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
           //       this.validUrlResult.matches = this.searchLinkDrive?.dataTree;
           //     }
@@ -2397,14 +4208,14 @@ class ValidUrlResult extends ObjectConvertor {
           //     if (this.searchLinkDrive?.filedMain) {
           //       String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
           //         if (fileUrl && this.validUrlResult.rndRes.indexOf(fileUrl) === -1) {
-          //           this.functionRegistry.vidTree();
-          //           this.vidSheetVals = this.functionRegistry.getVideoList();
+          //           autoGlobe.functionRegistry.vidTree();
+          //           this.vidSheetVals = autoGlobe.functionRegistry.getVideoList();
           //           this.vidData = [];
           //           this.vidVals = Object.values(this.vidSheetVals);
           //           this.vidVals.forEach((val) => {
           //             this.inVVals = Object.values(val);
           //             this.inVVals.forEach((inV) => {
-          //               this.truInv = this.trueVfalse(inV);
+          //               this.truInv = autoGlobe.trueVfalse(inV);
           //               if (this.truInv) {
           //                 this.vidData.push(inV);
           //               }
@@ -2476,7 +4287,7 @@ class ValidUrlResult extends ObjectConvertor {
     }
   }
 }
-let autoGlobe = new ValidUrlResult()
+let autoGlobe = new GetDomains()
 // console.log(autoGlobe.globalThis[autoGlobe.argsX[0]].apply(this, autoGlobe.content));
     // Set some global variables
 autoGlobe.functionRegistry.initialize();
@@ -2592,16 +4403,122 @@ var geneicType = function (e) {
           }
           else {
             let funcU = data.funcUno;
-            let funcD = autoGlobe.resolvedArgs.length > 0?  autoGlobe.resolvedArgs:data.funcDos;
-            base = createFunctionResult(funcU, funcD);
+            let autoP = new MisStCreator(Array(data.funcUno + "," + data.funcDos));
+            let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
+            base = new RawFuncResult(funcU, funcD).rawFuncResult;
           }
         }
-        if (base && !(base?.myVar || base?.myNewArr) || ((base && base[0]) && (!base[0]?.rndTitle || typeof base[0] !== "number")) || [base].length !== 0) {
-          dataOR = globalHandleGetData(base);
-          return dataOR
+        if (typeof base === "string") {
+          if (String(base).length > 0) {
+            dataOR = globalHandleGetData(base);
+            return dataOR
+          }
+          else {
+            return {payload: base}
+          }
         }
         else {
-          return {payload: base}
+          if (Array.isArray(base)) {
+            if (base.length !== 0) {
+              dataOR = globalHandleGetData(base);
+              return dataOR
+            }
+            else {
+              return {payload: base}
+            }
+          }
+          else {
+            if (typeof base === "object" && !Array.isArray(base)) {
+              if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+                dataOR = globalHandleGetData(base);
+                return dataOR
+              }
+              else {
+                return {payload: base}
+              }
+            }
+            else {
+              data = funcHandle(eQueryObject);
+              console.log("data = " + JSON.stringify(data), executed++);
+              if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
+                base = data;
+              }
+              else {
+                let funcU = data.funcUno;
+                let autoP = new MisStCreator(Array(data.funcUno + "," + data.funcDos));
+                let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
+                base = new RawFuncResult(funcU, funcD).rawFuncResult;
+              }
+              if (typeof base === "string") {
+                if (String(base).length > 0) {
+                  dataOR = globalHandleGetData(base);
+                  return dataOR
+                }
+                else {
+                  return {payload: base}
+                }
+              }
+              else {
+                if (Array.isArray(base)) {
+                  if (base.length !== 0) {
+                    dataOR = globalHandleGetData(base);
+                    return dataOR
+                  }
+                  else {
+                    return {payload: base}
+                  }
+                }
+                else {
+                  if (typeof base === "object" && !Array.isArray(base)) {
+                    if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+                      dataOR = globalHandleGetData(base);
+                      return dataOR
+                    }
+                    else {
+                      return {payload: base}
+                    }
+                  }
+                  else {
+                    base = globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
+                    if (typeof base === "string") {
+                      if (String(base).length > 0) {
+                        dataOR = globalHandleGetData(base);
+                        return dataOR
+                      }
+                      else {
+                        return {payload: base}
+                      }
+                    }
+                    else {
+                      if (Array.isArray(base)) {
+                        if (base.length !== 0) {
+                          dataOR = globalHandleGetData(base);
+                          return dataOR
+                        }
+                        else {
+                          return {payload: base}
+                        }
+                      }
+                      else {
+                        if (typeof base === "object" && !Array.isArray(base)) {
+                          if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+                            dataOR = globalHandleGetData(base);
+                            return dataOR
+                          }
+                          else {
+                            return {payload: base}
+                          }
+                        }
+                        else {
+                          data = funcHandle(eQueryObject);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
       else {

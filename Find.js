@@ -790,7 +790,7 @@ function validateFolders() {
       // If the folder has editors, it is considered a shared folder.
       if (editors.length > 0) {
         const folderName = folder.getName();
-        console.log(`Found shared folder: ${folderName}`);
+        // console.log(`Found shared folder: ${folderName}`);
 
         // Get the emails of all editors for this folder.
         const editorEmails = editors.map((editor) => editor.getEmail());
