@@ -1899,14 +1899,14 @@ var globalHandleGetData = function (rawFuncResult) {
       }
     }
 
-    console.log("This is rawFuncResult - ", rawFuncResult);
-    console.log("payLoad.type === ", payLoad.type);
-    console.log("payLoad.data === ", payLoad.data);
-    if (payLoad.data && typeof payLoad.data === "object") {
-      console.log("payLoad.data", JSON.stringify(payLoad.data));
-      console.log("payLoad.data keys", Object.keys(payLoad.data));
-      console.log("payLoad.data values", Object.values(payLoad.data));
-    }
+    // console.log("This is rawFuncResult - ", rawFuncResult);
+    // console.log("payLoad.type === ", payLoad.type);
+    // console.log("payLoad.data === ", payLoad.data);
+    // if (payLoad.data && typeof payLoad.data === "object") {
+    //   console.log("payLoad.data", JSON.stringify(payLoad.data));
+    //   console.log("payLoad.data keys", Object.keys(payLoad.data));
+    //   console.log("payLoad.data values", Object.values(payLoad.data));
+    // }
 
     // Now, use the structured 'payLoad' to set the final content variables
     // (This part needs adjustments to handle the new "url" type)

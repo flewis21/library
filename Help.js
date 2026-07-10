@@ -4079,8 +4079,7 @@ function wwAccess(rName, rFunc, rArgs) {
       rFunc +
       ", rArgs: " +
       rArgs +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")\n ",
   );
   const Route = {};
   Route.path = function (route, rFunction) {

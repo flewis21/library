@@ -57,9 +57,45 @@ class FunctionHandle {
 
     // Logging
     if (!this.e) {
-      this.tempObj = autoGlobe.functionRegistry?.paramsList[autoGlobe.numVarRnd]
+      this.rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
+      this.customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
+        if (String(customerWk1).indexOf(this.rndCustomer) === 0) {
+          return autoGlobe.functionRegistry.fileList.indexOf(customerWk1)
+        }
+      }).filter((isIn) => {
+        return isIn != null
+      });
+      // console.log("These is the customGroup",this.customGroup);
+      this.pSort = this.customGroup.sort((a,b) => {
+          let i = Math.random()
+          let tSorted = a;
+          let zSorted = b;
+          if (i < .3) {
+            return zSorted - tSorted
+          }
+          else {
+            i = Math.random()
+            if (i > .3 && i < .5 ) {
+              return tSorted - zSorted
+            }
+            else {
+              i = Math.random()
+              if (i > .5 && i < .8) {
+                return zSorted
+              }
+              else {
+                i = Math.random()
+                if (i > .8) {
+                  return tSorted
+                }
+              }
+            }
+          }
+        })
+      // console.log("These is the sorted customGroup",this.pSort);
+      this.tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(this.pSort.length))]
       this.mapArr[this.tempObj?.name] = [];
-      console.log("The existance of autoGlobe fParams is ", this.tempObj?.parameters? true:false);
+      // console.log("The existance of autoGlobe fParams is ", this.tempObj?.parameters? true:false);
       // autoGlobe.fParams
       //   ? this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.fParams]).mapKeys
       //     :
@@ -388,10 +424,10 @@ class FunctionHandle {
                   }
                   else {
                     if (typeof globalThis[this.e.parameter[this.objData[0]]] === "function") {
-                      autoGlobe = new ResolveParameters(this.e.parameter[this.objData[0]]);
-                      this.mapArr[this.tempObj?.name || autoGlobe.func] = [];
-                      if (this.tempObj?.parameters) {
-                        this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.parameters]).mapKeys;
+                      this.tempObj = new MisStCreator(this.e.parameter[this.objData[0]]);
+                      this.mapArr[this.tempObj?.argsObject?.func || autoGlobe.func] = [];
+                      if (this.tempObj?.argsObject?.args) {
+                        this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args]).mapKeys;
                       }
                       else {
                         this.argsEd = new IsMapped(this.mapArr, []).mapKeys;

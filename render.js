@@ -385,7 +385,7 @@ class ContentCDN {
           });
         } 
         catch (error) {
-          throw new Error("Error in contentCDN tmp" + error);
+          console.rror("Error in contentCDN tmp" + error);
         }
       }
       console.log("cdnData argsObject after tmp processing", tmp);
@@ -407,9 +407,10 @@ class ContentCDN {
               drivemC: contentMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
+          let waTitle = contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
           return HtmlService.createTemplate(html)
             .evaluate()
-            .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3])
+            .setTitle(waTitle)
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
@@ -424,24 +425,26 @@ class ContentCDN {
               drivemC: infoMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
+          let waTitle = infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
           return HtmlService.createTemplate(html)
             .evaluate()
-            .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3])
+            .setTitle(waTitle)
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
       let urlCDN = new DriveFiles(url);
+      let wATitle =  urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
       console.log("From DriveFiles: urlCDN = " + urlCDN.filedMain);
       return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setContent(seoCapital(urlCDN.filedMain))
-        .setTitle(new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3]);
+        .setContent(seoCapital(urlCDN.filedMain || urlCDN.searArn))
+        .setTitle(wATitle);
     }
     catch (erR) {
       console.log("error in contentCDN: " + erR);
-      throw new Error(
+      console.error(
         "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
       );
     }
@@ -1239,8 +1242,8 @@ class RenderFile {
         return handleRequest(argsObject);
       }
     } catch (error) {
-      console.log("error in renderTemplate: " + error);
-      throw new Error(
+      console.error("error in renderTemplate: " + error);
+      console.error(
         "Error in renderFile html: " + error.toString() + "\n" + error.stack,
       );
     }
@@ -1398,7 +1401,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="dmi" href="<?!= drivemI ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1419,7 +1422,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="del" href="<?!= driveL ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1439,7 +1442,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="qua" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1459,7 +1462,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ddi" href="<?!= drivedI ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1479,7 +1482,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ama" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1497,7 +1500,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="vsd" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1516,7 +1519,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="ccc" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1554,7 +1557,7 @@ class RenderTemplate {
                                       </div>
                                     </article>
                                     <a id="drd" href="<?!= driveD ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class=" thumbnail" />
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
                                     </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
@@ -1627,7 +1630,7 @@ class RenderTemplate {
       }
     } catch (error) {
       console.error("Error rendering template:", error, error.stack);
-      throw new Error(
+      console.error(
         "Error in rendertemplate html: " + blob + "\n" + error.stack,
       );
     }
