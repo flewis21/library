@@ -696,7 +696,7 @@ function searchUrlsTree(fileX) {
     var treeFolder = DriveApp.getFolderById(id);
     var numFolderFiles = treeFolder.getFiles();
     while (numFolderFiles.hasNext()) {
-      elapsedTime = new Date().valueOf() - start;
+      elapsedTime = new Date().valueOf() - autoGlobe.functionRegistry._startTime;
       var trueNum = numFolderFiles.next();
 
       if (trueNum.getName().includes(fileX)) {

@@ -112,7 +112,7 @@ function doGet(e) {
   //     titleArray.push(key);
   //   }
   // }
-  var lowCapApp = [autoGlobearams.prototype.functionRegistry.fileList].join("").toLowerCase().split(",");
+  var lowCapApp = [autoGlobe.functionRegistry.fileList].join("").toLowerCase().split(",");
   var lowCapFunc = [e].join("").toLowerCase().split(",");
   var funFirst = lowCapApp.indexOf(lowCapFunc[0]);
   var objMaster = {
@@ -370,7 +370,7 @@ function doGet(e) {
                               } 
                               else {
                                 let libFunc = "rendFile";
-                                let htmlArray = autoGlobearams.prototype.functionRegistry.htmlArray
+                                let htmlArray = autoGlobe.functionRegistry.htmlArray
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
                                 let renF = RenderFile.fileRender(args,{payL: payload},args)

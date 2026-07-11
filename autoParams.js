@@ -51,7 +51,7 @@ let strSearch = new SearchStrings();
 class FunctionHandle {
   constructor(e) {
     this.e = e;
-    this.executed = 0;
+    this.executed = autoGlobe.executed;
     this.rndE = "";
     this.mapArr = {};
 
@@ -93,7 +93,7 @@ class FunctionHandle {
           }
         })
       // console.log("These is the sorted customGroup",this.pSort);
-      this.tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(this.pSort.length))]
+      this.tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(this.pSort.length))];
       this.mapArr[this.tempObj?.name] = [];
       // console.log("The existance of autoGlobe fParams is ", this.tempObj?.parameters? true:false);
       // autoGlobe.fParams
@@ -110,10 +110,10 @@ class FunctionHandle {
     }
     else {
       if (this.e && !this.e.parameter) {
-        autoGlobe = new ResolveParameters(this.e);
-        this.mapArr[this.tempObj?.name || autoGlobe.func] = [];
-        if (this.tempObj?.parameters) {
-          this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.parameters] || [autoGlobe.func]).mapKeys;
+        this.tempObj = new MisStCreator(this.e);
+        this.mapArr[this.tempObj?.argsObject?.func || autoGlobe.func] = [];
+        if (this.tempObj?.argsObject?.args) {
+          this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args] || [autoGlobe.func]).mapKeys;
         }
         else {
           this.rndE = new IsMapped(this.mapArr, []).mapKeys;

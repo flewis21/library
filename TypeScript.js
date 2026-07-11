@@ -183,6 +183,15 @@ class AutoParams {
         return this.arrDomainVals;
       },
 
+      // Gets a cache that is common to all users of the script
+      sCache: CacheService.getScriptCache(),
+
+      start: new Date(0.1 * 1000).getMilliseconds(),
+
+      threeTime: 3 * 60 * 1000,
+
+      twoTime: 2 * 60 * 1000,
+
       maxTime: 6 * 60 * 1000, // This is a simple numerical value
       _startTime: null, // Private variable to store the timestamp when the process begins
 
@@ -2850,7 +2859,7 @@ class MisStCreator {
         if (this.keyPro) {
           this.funcLimit = [];
           this.paramLimit = [];
-          this.keyPro.forEach((subParam, proIndex) => {
+          this.keyPro?.forEach((subParam, proIndex) => {
             this.subArrArr;
             if (typeof subParam !== "string" && subParam !== null) {
               this.subValue = Object.values(subParam).toString().split(",");
@@ -4300,43 +4309,87 @@ var geneicType = function (e) {
     data = funcHandle(e);
   }
   else {
-    data = funcHandle();
-    base = new MisStCreator(Array(data.funcUno + "," + data.funcDos))?.argsObject.res;
-    console.log("What is type of base variable ", typeof base);
-    if (typeof base === "string") {
-      if (String(base).length > 0) {
-        dataOR = globalHandleGetData(base);
-        return dataOR
+    let rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
+    let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
+      if (String(customerWk1).indexOf(rndCustomer) === 0) {
+        return autoGlobe.functionRegistry.fileList.indexOf(customerWk1)
       }
-      else {
-        return {payload: base}
-      }
-    }
-    else {
-      if (Array.isArray(base)) {
-        if (base.length !== 0) {
-          dataOR = globalHandleGetData(base);
-          return dataOR
+    }).filter((isIn) => {
+      return isIn != null
+    });
+    // console.log("These is the customGroup", customGroup);
+    let pSort = customGroup.sort((a,b) => {
+        let i = Math.random()
+        let tSorted = a;
+        let zSorted = b;
+        if (i < .3) {
+          return zSorted - tSorted
         }
         else {
-          return {payload: base}
-        }
-      }
-      else {
-        if (typeof base === "object") {
-          if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
-            dataOR = globalHandleGetData(base);
-            return dataOR
+          i = Math.random()
+          if (i > .3 && i < .5 ) {
+            return tSorted - zSorted
           }
           else {
-            return {payload: base}
+            i = Math.random()
+            if (i > .5 && i < .8) {
+              return zSorted
+            }
+            else {
+              i = Math.random()
+              if (i > .8) {
+                return tSorted
+              }
+            }
           }
         }
-        else {
-          data = funcHandle();
-        }
-      }
-    }
+      })
+    // console.log("These is the sorted customGroup", pSort);
+    let tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(pSort.length))];
+    // let misStCallParameters = null
+    // if (tempObj?.parameters) {
+    //   misStCallParameters = Array(tempObj?.name,tempObj?.parameters)
+    // }
+    // else {
+    //   misStCallParameters = tempObj?.name
+    // }
+    data = new MisStCreator(Array(tempObj?.name,tempObj?.parameters));
+  //   base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
+  //   console.log("What is type of base variable ", typeof base);
+  //   if (typeof base === "string") {
+  //     if (String(base).length > 0) {
+  //       dataOR = globalHandleGetData(base);
+  //       return dataOR
+  //     }
+  //     else {
+  //       return {payload: base}
+  //     }
+  //   }
+  //   else {
+  //     if (Array.isArray(base)) {
+  //       if (base.length !== 0) {
+  //         dataOR = globalHandleGetData(base);
+  //         return dataOR
+  //       }
+  //       else {
+  //         return {payload: base}
+  //       }
+  //     }
+  //     else {
+  //       if (typeof base === "object") {
+  //         if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+  //           dataOR = globalHandleGetData(base);
+  //           return dataOR
+  //         }
+  //         else {
+  //           return {payload: base}
+  //         }
+  //       }
+  //       else {
+  //         data = funcHandle();
+  //       }
+  //     }
+  //   }
   }
   let handles = null; 
   let exampleObjectType = {
@@ -4345,7 +4398,7 @@ var geneicType = function (e) {
     c: Array.isArray(data?.funcDos)? data?.funcDos[3] : ["String"],
   };
   let chopSort = data
-  ?.funcDos?.sort((a,b) => {
+  ?.argsObject?.args?.sort((a,b) => {
       let i = Math.random()
       let tSorted = a;
       let zSorted = b;
@@ -4386,66 +4439,69 @@ var geneicType = function (e) {
           base = globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
         }
         else {
-          eQueryObject = {
-            parameter: {
-              q: data?.funcUno + "," + data?.funcDos,
-            }
-          };
-          eQueryObject = {parameter: {q: "sigma"}}
+          // eQueryObject = {
+          //   parameter: {
+          //     q: data?.argsObject?.func + "," + data?.argsObject?.args,
+          //   }
+          // };
+          // eQueryObject = {parameter: {q: "sigma"}}
           // let tempObj = funcHandle(eQueryObject);
           // handles =  tempObj
-          console.log("data = " + JSON.stringify(data), executed++);
-          if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
-            base = data;
+          console.log("data = " + JSON.stringify(data?.argsObject?.func), executed++);
+          if (data?.argsObject?.func?.length === 0 && data?.funcargsObject?.args?.length === 0) {
+            base = data?.argsObject?.res;
           }
           else {
             // let funcU = data.funcUno;
-            base = new MisStCreator(Array(data.funcUno + "," + data.funcDos))?.argsObject.res;
+            base = data?.argsObject.res;
             // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
             // base = new RawFuncResult(funcU, funcD).rawFuncResult;
           }
         }
-        if (typeof base === "string") {
-          if (String(base).length > 0) {
-            dataOR = globalHandleGetData(base);
-            return dataOR
-          }
-          else {
-            return {payload: base}
-          }
-        }
-        else {
-          if (Array.isArray(base)) {
-            if (base.length !== 0) {
-              dataOR = globalHandleGetData(base);
-              return dataOR
-            }
-            else {
-              return {payload: base}
-            }
-          }
-          else {
-            if (typeof base === "object" && !Array.isArray(base)) {
-              if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
-                dataOR = globalHandleGetData(base);
-                return dataOR
-              }
-              else {
-                return {payload: base}
-              }
-            }
-            else {
-              data = funcHandle(eQueryObject);
-              console.log("data = " + JSON.stringify(data), executed++);
-              if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
-                base = data;
-              }
-              else {
-                base = new MisStCreator(Array(data.funcUno + "," + data.funcDos))?.argsObject.res;
-              }
+        // if (typeof base === "string") {
+        //   if (String(base).length > 0) {
+        //     dataOR = globalHandleGetData(base);
+        //     return dataOR
+        //   }
+        //   else {
+        //     return {payload: base}
+        //   }
+        // }
+        // else {
+        //   if (Array.isArray(base)) {
+        //     if (base.length !== 0) {
+        //       dataOR = globalHandleGetData(base);
+        //       return dataOR
+        //     }
+        //     else {
+        //       return {payload: base}
+        //     }
+        //   }
+        //   else {
+        //     if (typeof base === "object" && !Array.isArray(base)) {
+        //       if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+        //         dataOR = globalHandleGetData(base);
+        //         return dataOR
+        //       }
+        //       else {
+        //         return {payload: base}
+        //       }
+        //     }
+            // else {
+              // eQueryObject = {parameter: {q: "sigma"}}
+              // data = funcHandle(eQueryObject);
+              // console.log("data = " + JSON.stringify(data), executed++);
+              // if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
+              //   base = data;
+              // }
+              // else {
+              //   base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
+              // }
               if (typeof base === "string") {
                 if (String(base).length > 0) {
                   dataOR = globalHandleGetData(base);
+                  // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+                  // let renderIt =
                   return dataOR
                 }
                 else {
@@ -4456,6 +4512,7 @@ var geneicType = function (e) {
                 if (Array.isArray(base)) {
                   if (base.length !== 0) {
                     dataOR = globalHandleGetData(base);
+                    // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                     return dataOR
                   }
                   else {
@@ -4466,6 +4523,7 @@ var geneicType = function (e) {
                   if (typeof base === "object" && !Array.isArray(base)) {
                     if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
                       dataOR = globalHandleGetData(base);
+                      // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                       return dataOR
                     }
                     else {
@@ -4477,6 +4535,7 @@ var geneicType = function (e) {
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);
+                        // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                         return dataOR
                       }
                       else {
@@ -4487,6 +4546,7 @@ var geneicType = function (e) {
                       if (Array.isArray(base)) {
                         if (base.length !== 0) {
                           dataOR = globalHandleGetData(base);
+                          // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                           return dataOR
                         }
                         else {
@@ -4497,6 +4557,7 @@ var geneicType = function (e) {
                         if (typeof base === "object" && !Array.isArray(base)) {
                           if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
                             dataOR = globalHandleGetData(base);
+                            // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                             return dataOR
                           }
                           else {
@@ -4511,9 +4572,9 @@ var geneicType = function (e) {
                   }
                 }
               }
-            }
-          }
-        }
+            // }
+          // }
+        // }
       }
       else {
         if (e && e.parameter && e.parameter.action && e.parameter.action === "getData") {
@@ -4532,7 +4593,7 @@ var geneicType = function (e) {
           base = data;
         }
         else {
-          base = new MisStCreator(Array(data.funcUno + "," + data.funcDos))?.argsObject.res;
+          base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
         }
         if (typeof base === "string") {
           if (String(base).length > 0) {
@@ -4570,7 +4631,7 @@ var geneicType = function (e) {
                 base = data;
               }
               else {
-                base = new MisStCreator(Array(data.funcUno + "," + data.funcDos))?.argsObject.res;
+                base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
               }
               if (typeof base === "string") {
                 if (String(base).length > 0) {

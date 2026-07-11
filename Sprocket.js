@@ -530,7 +530,7 @@ function allInvestors(rndKey, time) {
   //     time,
   // );
   if (typeof time === "undefined") {
-    time = start;
+    time = autoGlobe.functionRegistry._startTime;
   }
   var coArray = rndKey
     ? [rndKey]

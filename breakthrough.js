@@ -1,6 +1,6 @@
 function breakthrough(chance, time) {
   console.log(
-    formatTime(autoP.functionRegistry.time) +
+    formatTime(autoGlobe.functionRegistry.time) +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1191,7 +1191,7 @@ function rndWinner(infinitum) {
 var rndWord = function () {
   let ciar = trial();
   let meri = randNum([JSON.stringify(ciar)].join(" "));
-  let allFiles = autoP.uniqueCoArray()[meri]["title"];
+  let allFiles = autoGlobe.uniqueCoArray()[meri]? autoGlobe.uniqueCoArray()[meri]["title"]:null;
   let randomWord = [allInvestors(allFiles).title]
     .join("")
     .split("")
@@ -1199,10 +1199,10 @@ var rndWord = function () {
       let priorityA = 0;
       let priorityB = 0;
       if (Math.random() < 0.5) {
-        priorityA = getZuluautoGloberiority(a);
+        priorityA = autoGlobe.getZuluFreqPriority(a);
       }
       if (Math.random() < 0.5) {
-        priorityB = autoGloberiority.get(b);
+        priorityB = autoGlobe.freqPriority.get(b);
       }
       return priorityA - priorityB;
     })

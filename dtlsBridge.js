@@ -4,10 +4,10 @@ function dtlsPict(snap, time) {
     : (snap = objectOfS(
         ["parameter"],
         [[["func", arguments.callee.name]]],
-        autoP.functionRegistry.timeLeftToExecute,
+        autoGlobe.functionRegistry.timeLeftToExecute,
       ).parameter["func"]);
   console.log(
-    formatTime(autoP.functionRegistry.timeLeftToExecute) +
+    formatTime(autoGlobe.functionRegistry.timeLeftToExecute) +
       "\n" +
       arguments.callee.name +
       "\nsnap is !" +
@@ -20,7 +20,7 @@ function dtlsPict(snap, time) {
       time,
   );
   if (typeof time === "undefined") {
-    var time = autoP.functionRegistry.time;
+    var time = autoGlobe.functionRegistry.time;
   }
   var allTitleData = [];
   var atdCount = 0;
@@ -108,7 +108,7 @@ function dtlsPict(snap, time) {
     var formUrl = FormApp.openByUrl(isProduct).getPublishedUrl();
     return formUrl;
   }
-  var time = autoP.functionRegistry.timeLeftToExecute;
+  var time = autoGlobe.functionRegistry.timeLeftToExecute;
   var cokey = snap || utilNeed;
   if (cokey) {
     console.log("dtlsPict: \nvar boilerUrl = dtlsBridge(" + cokey, time + ")");
@@ -176,7 +176,7 @@ function dtlsPict(snap, time) {
         console.log("Receiving from join - " + pieceStr);
         if (pieceStr) {
           var elaspeTime = new Date() - time;
-          var timeToExecute = autoP.functionRegistry.timeLeftToExecute; // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
+          var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute; // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
           form.addPageBreakItem().setTitle([cokey].join("")); // form.addSectionHeaderItm().setTitle(pieceStr.split('"'))
           form.addDateItem().setHelpText("(DATE)");
           form
@@ -350,7 +350,7 @@ function portPro(e) {
         }
         if (piece.indexOf("http") > -1) {
           var elaspeTime = new Date() - time;
-          var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+          var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
           form.addPageBreakItem().setTitle([cokey].join(""));
           form.addSectionHeaderItem().setTitle(piece);
           if (srImgRes || svImgRes) {
@@ -512,7 +512,7 @@ function stockPro(e, time) {
           if (piece) {
             if (piece.indexOf("https://") > -1) {
               var elaspeTime = new Date() - time;
-              var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+              var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
               // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
               form.addPageBreakItem().setTitle([yahooNeed].join(""));
               form.addSectionHeaderItem().setTitle(piece);
@@ -847,7 +847,7 @@ function stockHistory(e) {
         while (piece) {
           if (piece) {
             var elaspeTime = new Date() - time;
-            var timeToExecute = autoP.functionRegistry.timeLeftToExecute;
+            var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
             // console.log("piece: " + piece + "\nelaspeTime: " + elaspeTime)
             form.addPageBreakItem().setTitle([cokey].join(""));
             form

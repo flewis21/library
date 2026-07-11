@@ -373,7 +373,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
   //     time,
   // );
   if (typeof time === "undefined") {
-    var time = start;
+    var time = autoGlobe.functionRegistry._startTime;
   }
   var newArr = [];
   var i = index || 0;

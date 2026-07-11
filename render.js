@@ -206,11 +206,123 @@ class AppList {
 //   </div>
 // </div>
 
-class ContentApp {
-  constructor(blob, argsObject) {
+class Renderer {
+  constructor (blob, argsObject, title) {
+    // super()
     this.blob = blob;
     this.argsObject = argsObject;
+    this.title = title;
+    if (Array.isArray(this.argsObject)) {
+      if (this.argsObject.length !== 0) {
+        this.blob = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], this.argsObject, this.title);
+        // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+      }
+    }
+    else {
+      if (typeof this.argsObject === "object" && !Array.isArray(this.argsObject)) {
+        if (this.argsObject !== null && Object.keys(this.argsObject).length > 0 && !this.argsObject?.myVar && !this.argsObject?.myNewArr && !Object.keys(this.argsObject)[0]?.rndTitle && typeof Object.keys(this.argsObject)[0] !== "number") {
+          this.blob = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], this.argsObject, this.title);
+          // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+        }
+      }
+      else {
+        if (typeof this.argsObject === "string") {
+          if (String(this.argsObject).length > 0) {
+            this.blob = this.argsObject;
+              // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+          }
+        }
+      }
+    }
   }
+}
+
+var startRenderer = function(blob, argsObject, title) {
+  let payload = new Renderer(blob, argsObject, title);
+  return payload
+}
+
+class ContentApp extends Renderer {
+  constructor(blob, argsObject) {
+    super();
+    this.blob = blob;
+    this.argsObject = argsObject;
+    console.log(
+      "boilerplate render: line 201\ncontentApp(blob: " +
+        this.blob?.slice(0, 130) +
+        "..., argsObject: " +
+        JSON.stringify(this.argsObject)?.slice(0, 130) +
+        ")",
+    );
+    console.log(
+      autoGlobe.functionRegistry.time +
+        "\nBlob is !" +
+        !this.blob +
+        " = " +
+        this.blob.substring(0, 130) +
+        "...\nargsObject is !" +
+        !this.argsObject +
+        " = " +
+        JSON.stringify(this.argsObject).slice(0, 130),
+    );
+    this.api = null;
+    try {
+      this.api = ContentService.createTextOutput(this.blob)
+        .setMimeType(ContentService.MimeType.JSON)
+        .getContent();
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      console.error(
+        "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
+      );
+    }
+
+    this.tmp;
+    try {
+      this.tmp = HtmlService.createTemplate(this.api);
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      console.error(
+        "Error in contentApp HTML template: " +
+          error.toString() +
+          "\n" +
+          error.stack,
+      );
+    }
+    try {
+      if (this.argsObject) {
+        this.keys = Object.keys(this.argsObject);
+        let shortTmp = this.tmp;
+        let shortObj = this.argsObject;
+        this.keys.forEach(function (key) {
+          shortTmp[key] = shortObj[key];
+        });
+        this.tmp = shortTmp;
+      }
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      console.error(
+        "Error in contentApp template: " + error.toString() + "\n" + error.stack,
+      );
+    }
+    try {
+      this.tmp
+          .evaluate()
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .getContent()
+    } catch (error) {
+      console.log("error in contentApp: " + error);
+      console.error(
+        "Error in contentApp evaluation: " +
+          error.toString() +
+          "\n" +
+          error.stack,
+      );
+    }
+  }
+
+
   static appContent (blob, argsObject) {
     console.log(
       "boilerplate render: line 201\ncontentApp(blob: " +
@@ -289,8 +401,8 @@ class ContentApp {
 }
 
 var tentApp = function(blob, argsObject) {
-  let html = ContentApp.appContent(blob, argsObject)
-  return html;
+  let renderStart = new Renderer(blob, argsObject);
+  return renderStart;
 }
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -367,11 +479,96 @@ class ContentTemplate {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-class ContentCDN {
-  constructor (url, argsObject) {
+class ContentCDN extends Renderer {
+  constructor (url) {
+    super();
     this.url = url;
-    this.argsObject = argsObject;
+    // this.argsObject = argsObject;
+    // console.log("contentCDN = function (this.url, this.argsObject) ", this.url, this.argsObject);
+    try {
+      console.log("cdnData argsObject before tmp processing", this.argsObject);
+      this.tmp = HtmlService.createHtmlOutputFromFile("cors")
+      if (this.argsObject) {
+        try {
+          this.keys = Object.keys(this.argsObject);
+          this.keys.forEach(function (key) {
+            this.tmp[key] = this.argsObject[key];
+          });
+        } 
+        catch (error) {
+          console.rror("Error in contentCDN tmp" + error);
+        }
+      }
+      console.log("cdnData argsObject after tmp processing", this.tmp);
+      // console.log(
+      //   "boilerplate render: line 359\ncontentCDN(this.tmp: " +
+      //     JSON.stringify(this.tmp) +
+      //     ")\n" +
+      //     arguments.callee.caller.name,
+      // );
+      //Early return
+      console.log("tmp payL pL type\n" + this.tmp.payL?.pL?.type, this.tmp.payL?.pL);
+      if (this.tmp.payL?.pL?.type !== "url" && this.tmp.payL?.pL?.type !== "text") {
+        if (this.tmp.payL?.message?.content) {
+          this.contentMessage = new DriveFiles(this.tmp.payL?.message?.content);
+          console.log("From DriveFiles: contentMessage = " + this.contentMessage.filedMain);
+          console.log("tmp payL message content\n" + this.tmp.payL?.message?.content, this.tmp.payL?.message);
+          this.locObj = 
+            {
+              drivemC: this.contentMessage.filedMain,
+            }
+          this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
+          this.wATitle = this.contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          this.cdnOutput = HtmlService.createTemplate(this.html)
+            .evaluate()
+            .setTitle(this.wATitle)
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+        }
+      }
+      else {
+        if (this.tmp.payL?.message?.info) {
+          this.infoMessage = new DriveFiles(this.tmp.payL?.message?.info);
+          console.log("From DriveFiles: infoMessage = " + this.infoMessage.filedMain);
+          console.log("tmp payL message info\n" + this.tmp.payL?.message?.info, this.tmp.payL?.message);
+          this.locObj = 
+            {
+              drivemC: this.infoMessage.filedMain,
+            }
+          this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
+          this.wATitle = this.infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          this.cdnOutput = HtmlService.createTemplate(this.html)
+            .evaluate()
+            .setTitle(this.wATitle)
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+        }
+      }
+      this.urlCDN = new DriveFiles(this.url);
+      this.wATitle =  this.urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+      console.log("From DriveFiles: urlCDN = " + this.urlCDN.filedMain);
+      this.tmp
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .setContent(seoCapital(this.urlCDN.filedMain || this.urlCDN.searArn))
+        .setTitle(this.wATitle);
+    }
+    catch (erR) {
+      console.log("error in contentCDN: " + erR);
+      console.error(
+        "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
+      );
+    }
+    // this.redirectURL = encodeURIComponent(
+    //   this.url +
+    //     "?" +
+    //     Object.keys(this.argsObject)
+    //       .map((key) => key + "=" + this.argsObject[key])
+    //       .join("&"),
+    // );
   }
+
+
   static cdnData(url, argsObject) {
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
@@ -975,11 +1172,264 @@ var myWebFunction = function (webApp, argsObject) {
 
 globalThis.oneTime = 59.9 * 1000;
 
-class RenderFile { 
+class RenderFile extends Renderer { 
   constructor(file, argsObject, title) {
+    super();
     this.file = file;
     this.argsObject = argsObject;
     this.title = title;
+    try {
+      if (this.file) {
+        this.htmlList = autoGlobe.functionRegistry.getHtmlList();
+        if (this.htmlList.indexOf(this.file) !== -1) { 
+          console.log("argsObject before htmlList & tmp processing", this.argsObject);
+          let tmp = HtmlService.createTemplateFromFile(this.file);
+          let tmpObj = this.argsObject;
+          if (this.argsObject) {
+            this.keys = Object.keys(this.argsObject);
+            this.keys.forEach(function (key) {
+              tmp[key] = tmpObj[key];
+            });
+          }
+          this.tmp = tmp;
+          console.log("argsObject after tmp processing", this.argsObject);
+
+          // this.tmp["list"] = htmlListArray;
+          // END IF
+          // Route[this.file] = this.argsObject
+          // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
+          // this.funcCheck = appList();
+          // this.schedule = dateTime(new Date());
+          this.html = new ContentApp(
+            `
+          <!doctype html>
+            <html lang="en">
+              <head>
+                <base target="_self" />
+                <?!= stylesSleep.abcIt.getContent() ?>
+                <style>
+                  <?!= stylesSleep.renderFile.getContent() ?>
+                  <!--[if lt IE 9]>
+                  <script>
+                    document.createElement("article");
+                    document.createElement("footer");
+                    document.createElement("header");
+                    document.createElement("nav");
+                    document.createElement("main");
+                    document.createElement("section");
+                    document.createElement("aside");
+                  </script>
+                  <![endif]-->
+                </style>
+              </head>
+              <body id="rendFile" clas="flex-div" background-image="<?!= global_logo.getContent() ?>">
+                <nav class="flex-div card-panel transparent static-fix">
+                  <div class="nav-left flex-div">
+                    <img src="<?!= global_logo.getContent() ?>" class="logo menu-icon" />
+                  </div>
+                  <div id="navMiddle" class="nav-middle flex-div ">
+                    <div class="search-box flex-div logo menu-icon">
+                      <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                    </div>
+                  </div>
+                  <div class="nav-right flex-div">
+                    <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
+                  </div>
+                </nav>
+                <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
+                  <header class="banner card-panel transparent static-fix">
+                    <div id="iframePlayer" class="row card-panel transparent" style="display: none"></div>
+                    <h1>Blog</h1>
+                    <label id="loadingLab">
+                      <strong>
+                        <p>Recent Applications</p>
+                      </strong>
+                    </label>
+                  </header>
+                  <div class="row responsive-section transparent">
+                  <div class="card-panel transparent responsive-section">
+                  <div class="responsive-section transparent">
+                  <div class="responsive-section transparent">
+                  <div class="receipt transparent responsive-section">
+                  <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                    <thead class="transparent">
+                    </thead>
+                    <tbody class="transparent">
+                      <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                        <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                          <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                            <tbody class="transparent">
+                              <td class="transparent">
+                                <div class="row transparent">
+                                  <section class="transparent">
+                                      <header class="card-panel transparent list-container grid">
+                                      <h2>Owe</h2>
+                                      <aside class="card-panel transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="tro" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                                          </div>
+                                        </div>
+                                      </aside>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="lti" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Legal Title:</a></h3>
+                                            </header>
+                                            <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="rpc" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Rights of Possession and Control:</a></h3>
+                                            </header>
+                                            <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="rdi" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Right of Disposal:</a></h3>
+                                            </header>
+                                            <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="ccm" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Freedom from Competing Claims:</a></h3>
+                                            </header>
+                                            <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                      <article class="transparent vid-list">
+                                        <article class="transparent">
+                                          <div class="row">
+                                            <?!= renTemp ?>
+                                          </div>
+                                        </article>
+                                        <a id="beb" href="javascript:void(0)">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
+                                        </a>
+                                        <div class="flex-div transparent">
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
+                                          <div class="vid-info">
+                                            <header class="transparent">
+                                              <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
+                                            </header>
+                                            <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                                          </div>
+                                        </div>
+                                      </article>
+                                    </header>
+                                  </section>
+                                </div>
+                                <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                                <div class="transparent" style="display: none;">
+                                  <button id="startShare">Start Screen Capture</button>
+                                  <button id="stopShare">Stop Screen Capture</button>
+                                  <div class="transparent">
+                                    <video id="videoPlayer" controls></video>
+                                  </div>
+                                </div>
+                                <header class="banner transparent responsive-section">
+                                  <div id="loadingSurvey">
+                                    <a id="rfif" href="javascript:void(0)">
+                                      <h5>Remove</h5>
+                                    </a>
+                                  </div>
+                                </header>
+                                <hr>
+                                <div class="subscribed-list">
+                                  <h3>SUBSCRIBED</h3>
+                                  <a href=""><img src="<?!= global_sea_icn.getContent() ?>"><p>Jack Nicholson</p></a>
+                                </div>
+                              </td>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table></div></div></div></div></div>
+                <?!= stylesSleep.runIt.getContent() ?>
+                <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+              </body>
+            </html>`,
+            {
+              renTemp: this.tmp.evaluate().getContent(),
+            },
+          );
+          // return renderTemplate.templateRender(this.html,this.argsObject,this.title)
+          this.fileOutput = HtmlService.createHtmlOutput(this.html) //this.tmp
+              // .evaluate()
+              .setTitle(this.title)
+              // .append(this.html)
+              // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+              .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+        }
+      } else {
+        this.fileOutput = handleRequest(this.argsObject);
+      }
+    } catch (error) {
+      console.error("error in renderTemplate: " + error);
+      console.error(
+        "Error in renderFile html: " + error.toString() + "\n" + error.stack,
+      );
+    }
   }
   static fileRender (file, argsObject, title) {
     console.log(
@@ -1258,11 +1708,395 @@ var rendFile = function(file, argsObject, title) {
   return html;
 }
 
-class RenderTemplate {
-  constructor (blob, argsObject, title) {
-    this.blob = blob;
-    this.argsObject = argsObject;
-    this.title = title;
+class RenderTemplate extends Renderer {
+  constructor () {
+    super();
+    // this.blob = blob;
+    // this.argsObject = argsObject;
+    // this.title = title;
+    console.log(
+      "boilerplate render: line 201\nrenderTemplate.templateRender(blob: " + this.blob &&
+        this.blob?.length > 9
+        ? this.blob?.substring(0, 130)
+        : "" +
+            "..., argsObject: " +
+            JSON.stringify(this.argsObject) +
+            ", title: " +
+            this.title +
+            ")",
+    );
+    this.executed = autoGlobe.executed;
+    console.log(autoGlobe.functionRegistry.time);
+    console.log("argsObject before blob & tmp processing", this.argsObject);
+    this.tmp = HtmlService.createTemplate(this.blob);
+    if (this.argsObject) {
+      try {
+        const keys = Object.keys(this.argsObject);
+        keys.forEach(function (key) {
+          this.tmp[key] = this.argsObject[key];
+        });
+      } catch (error) {
+        return "Error in renderTemplate tmp" + error;
+      }
+    }
+    console.log("argsObject after tmp processing", this.tmp);
+    // this.funcCheck = appList();
+    // this.css = builtStyling();
+    // this.schedule = dateTime(new Date());
+    // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+    this.html = null;
+    this.htmlPayL = null;
+    this.htmlPL = null;
+    try {
+      if (this.tmp.payL?.pL?.type === "html"  || this.tmp.payL?.type === "html") {
+        if (this.tmp.payL?.type === "html") {
+          this.htmlPayL = tentApp(this.tmp.payL?.data,
+            {
+              driveT: this.tmp.payL?.type,
+            },
+          );
+        }
+        else {
+          if (this.tmp.payL?.pL?.type === "html") {
+            this.htmlPL = tentApp(this.tmp.payL?.message?.info,
+              {
+                renTemp: this.tmp.evaluate().getContent(),
+                driveA: JSON.stringify(this.argsObject),
+                driveD: this.tmp.payL?.pL?.data,
+                drivedD: this.tmp.payL?.pL?.dataData,
+                drivemI: this.tmp.payL?.message?.info,
+                drivedI: this.tmp.payL?.pL?.dataIndex,
+                drivedU: this.tmp.payL?.message?.feed,
+                driveL: this.tmp.payL?.pL?.link,
+                driveM: this.tmp.payL?.message,
+                drivemC: this.tmp.payL?.message?.content,
+                driveP: this.tmp.payL?.pL,
+                driveT: this.tmp.payL?.pL?.type,
+              },
+            );
+          }
+        }
+      }
+      else {
+        this.html = tentApp(
+          `
+        <html id="renderTemplate">
+          <head>
+            <?!= stylesSleep.abcIt.getContent() ?>
+            <style>
+              <?!= stylesSleep.renderFile.getContent() ?>
+              <!--[if lt IE 9]>
+              <script>
+                document.createElement("article");
+                document.createElement("footer");
+                document.createElement("header");
+                document.createElement("nav");
+                document.createElement("main");
+                document.createElement("section");
+                document.createElement("aside");
+              </script>
+              <![endif]-->
+            </style>
+          </head>
+          <body>
+            <nav class="flex-div responsive-section transparent static-fix">
+              <div class="nav-left flex-div responsive-section">
+                <img src="<?!= global_logo.getContent() ?>" class="logo menu-icon" />
+              </div>
+              <div id="navMiddle" class="nav-middle flex-div responsive-section">
+                <div class="search-box flex-div">
+                  <input id="artiicleIndex" class="getVideo" type="text" placeholder="Search">
+                </div>
+              </div>
+              <div class="nav-right flex-div responsive-section">
+                <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
+              </div>
+            </nav>
+            <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
+            <main class="responsive-section float-left">
+              <header class="transparent banner responsive-section">
+                <div id="player1" class="row card-panel transparent list-container grid" style="display: none"></div>
+                <div id="iframePlayer" class="row card-panel transparent" style="display: none"></div>
+                <h4><?!= drivedD?.split("{")[0] ?></h4>
+                <label id="loadingLab">
+                  <strong>
+                    <p>Recent Applications</p>
+                  </strong>
+                </label>
+              </header>
+              <div class="row responsive-section">
+              <div class="card-panel transparent responsive-section">
+              <div class="responsive-section">
+              <div class="responsive-section">
+              <div class="receipt transparent responsive-section">
+              <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                <thead class="transparent" >
+                </thead>
+                <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                  <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
+                    <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                      <table class="striped centered highlight purple z-depth-5 responsive-section static-fix">
+                        <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
+                          <td class="transparent">
+                            <div class="transparent row responsive-section">
+                              <section class="transparent responsive-section static-fix">
+                                <header class="transparent responsive-section list-container grid">
+                                  <h2>Power</h2>
+                                  <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="dmi" href="<?!= drivemI ?>" target="_blank">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <p>
+                                          <i>   
+                                            No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
+                                            <?!= JSON.stringify(driveM) ?>
+                                          </i>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </aside>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="del" href="<?!= driveL ?>" target="_blank">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= drivedD ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Subjectivity in Definition:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="qua" href="javascript:void(0)">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= driveT ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Qualitative Aspects:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ddi" href="<?!= drivedI ?>" target="_blank">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <?!= drivedI ?>
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Contextual Dependence:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ama" href="javascript:void(0)">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <i>
+                                          However, there are some aspects that can be measured or assessed to some degree:
+                                        </i>
+                                      </div>
+                                    </div>
+                                  </aside>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="vsd" href="javascript:void(0)">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Visible Demonstrations:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="ccc" href="javascript:void(0)">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Compliance and Obedience:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <article class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="sli" href="javascript:void(0)">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">Social Influence:</a></h3>
+                                        </header>
+                                        <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <aside class="transparent responsive-section card-panel vid-list">
+                                    <article class="transparent responsive-section card-panel static-fix container">
+                                      <div class="row responsive-section static-fix">
+                                        <?!= renTemp ?>
+                                      </div>
+                                    </article>
+                                    <a id="drd" href="<?!= driveD ?>" target="_blank">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    </a>
+                                    <div class="flex-div">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                      <div class="vid-info">
+                                        <header class="responsive-section">
+                                          <h3><a href="javascript:void(0)">In conclusion:</a></h3>
+                                        </header>
+                                        <p style="text-align: left">
+                                        While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </aside>
+                                </header>
+                              </section>
+                            </div>
+                          </td>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div></div></div></div></div>
+            </main>
+            <footer class="transparent receipt-footer responsive-section card-panel float-right">
+              <div class="row responsive-section">
+                <aside class="pulse transparent sidebar float-right">
+                  <p>
+                    <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                    <header class="banner transparent responsive-section">
+                      <div id="loadingSurvey">
+                        <a id="rtif" href="javascript:void(0)">
+                          <h5>Remove</h5>
+                        </a>
+                      </div>
+                    </header>
+                    <hr>
+                    <div class="subscribed-list">
+                      <h3>SUBSCRIBED</h3>
+                      <a href=""><img src="<?!= global_sea_icn.getContent() ?>"><p>Jack Nicholson</p></a>
+                    </div>
+                  </p>
+                </aside>
+              </div>
+            </footer>
+            <?!= stylesSleep.runIt.getContent() ?>
+            <input type="hidden" value="<?= getUrl(ScriptApp) ?>" id="url" />
+            <div id="result"></div>
+            <div id="successMessage"></div>
+            <div id="errorMessage"></div>
+            <table id="resultsTable"></table>
+          </body>
+        </html>`,
+          {
+            renTemp: this.tmp.evaluate().getContent(),
+            driveA: JSON.stringify(this.argsObject),
+            driveD: this.tmp.payL?.pL?.data,
+            drivedD: this.tmp.payL?.pL?.dataData,
+            drivemI: this.tmp.payL?.message?.info,
+            drivedI: this.tmp.payL?.pL?.dataIndex,
+            drivedU: this.tmp.payL?.message?.feed,
+            driveL: this.tmp.payL?.pL?.link,
+            driveM: this.tmp.payL?.message,
+            drivemC: this.tmp.payL?.message?.content,
+            driveP: this.tmp.payL?.pL,
+            driveT: this.tmp.payL?.pL?.type,
+          },
+        );
+      }
+    } catch (error) {
+      console.error("Error rendering template:", error, error.stack);
+      console.error(
+        "Error in rendertemplate html: " + this.blob + "\n" + error.stack,
+      );
+    }
+    if(!this.htmlPayL || !this.htmlPL) {
+      this.templateOutput =  HtmlService.createHtmlOutput(this.html) //this.tmp
+          .setTitle(this.title)
+          // .append(this.html)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
+    else {
+      this.templateOutput = HtmlService.createHtmlOutput(this.htmlPayL || this.htmlPL) //this.tmp
+          .setTitle(this.title)
+          // .append(this.html)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
   }
   static templateRender (blob, argsObject, title) {
     console.log(
@@ -1659,20 +2493,11 @@ var rendTemplate = function(blob, argsObject, title) {
   return html
 }
 
-// Gets a cache that is common to all users of the script
-var sCache = CacheService.getScriptCache();
-
-var start = new Date(0.1 * 1000).getMilliseconds();
-
 var tagBuilder = function (content) {
   console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
   const htmlBody = ContentApp.appContent(content);
   return htmlBody;
 };
-
-globalThis.threeTime = 3 * 59.9 * 1000;
-
-globalThis.twoTime = 2 * 59.9 * 1000;
 
 function wildSBD(e) {
   try {
