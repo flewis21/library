@@ -79,10 +79,8 @@
             }
             localSuggestionsCache["allMatches"] = fullList;
             searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
-            if (!againCap) {
-              localStorage.setItem("gsSearch", searchIntent);
-              againCap = localStorage.getItem("gsSearch");
-            }
+            localStorage.setItem("gsSearch", searchIntent);
+            againCap = localStorage.getItem("gsSearch");
             matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againCap) > -1) {
                 // console.log(againCap + ": result description: " + val.description);
@@ -219,10 +217,12 @@
           if (query.length < 3) {
             suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
+            localStorage.setItem("gsSearch", input.value);
+            againCap = localStorage.getItem("gsSearch");
             input.blur();
             return;
           }
-          againCap = localStorage.getItem("gsSearch");
+          // againCap = localStorage.getItem("gsSearch");
           if (String(againCap).indexOf(query) > -1) {
             input.addEventListener('click', (event) => {
               input.disabled = false;
@@ -283,7 +283,7 @@
               suggestionsDiv.appendChild(div);
             });
             input.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter') {
+              if (event.key === 'Tab') {
                 let confirmation;
                 suggestions?.forEach(suggestion => {
                   // console.log(suggestion)
@@ -324,6 +324,7 @@
           else {
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
+                event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
                 if (event.target.value) { // && (!suggestions || suggestions?.length === 0)) {
                   input.blur();
                   input.disabled = true
@@ -501,8 +502,6 @@
           });
 
           document.addEventListener('click', (event) => {
-            localStorage.setItem("gsSearch", input.value);
-            againCap = localStorage.getItem("gsSearch");
             matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againCap) > -1) {
                 // console.log(againCap + ": result description: " + val.description);
