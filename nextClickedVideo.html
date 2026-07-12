@@ -94,6 +94,9 @@
             }).filter((mapResult) => {
               return mapResult != null
             });
+            if (matchesToReturn.length > 0) {
+              allMatchesAvailable = [];
+            }
             // console.log("matches to return: " + JSON.stringify(matchesToReturn));
             console.log("all matches length greater than intents: ");
             console.log(allMatchesAvailable.length < matchesToReturn.length);
@@ -138,7 +141,7 @@
               }
             }
             input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
-            fetchSuggestions(input.value);
+            // fetchSuggestions(input.value);
             $('a').click(function(event){
               if ($(this).attr('href') === "javascript:void(0)") {
                 if (allMatchesAvailable.length > 0) {
@@ -214,27 +217,29 @@
           });
           
         const fetchSuggestions = debounce((query) => {
-          if (query.length < 3) {
+          if (query.length < 1) {
             suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
-            againCap = localStorage.getItem("gsSearch");
-            input.blur();
+            // localStorage.setItem("gsSearch", input.value);
+            // againCap = localStorage.getItem("gsSearch");
+            // input.blur();
+            return;
           }
           // againCap = localStorage.getItem("gsSearch");
-          if (String(againCap).indexOf(query) > -1) {
-            input.addEventListener('click', (event) => {
-              input.disabled = false;
-              if (!input.contains(query) && !suggestionsDiv.contains(query)) {
-                suggestionsDiv.innerHTML = '';
-              }
-            })
-            // input.value = againCap;
-          }
-          else {
-            if (String(againCap).indexOf(query) === -1) {
-              return
-            }
-          }
+          // if (String(againCap).indexOf(query) > -1) {
+          //   input.addEventListener('input', (event) => {
+          //     input.disabled = false;
+          //     if (!String(againCap).contains(event.target.value) && !suggestionsDiv.contains(query)) {
+          //       suggestionsDiv.innerHTML = '';
+          //     }
+          //   })
+          //   // input.value = againCap;
+          // }
+          // else {
+          //   if (String(againCap).indexOf(query) === -1) {
+          //     suggestionsDiv.innerHTML = '';
+          //   }
+          // }
           
           // Filter the local list instead of making a server call
           const localList = localSuggestionsCache["allMatches"] || [];
@@ -322,79 +327,22 @@
           else {
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
-                if (input.value) { // && (!suggestions || suggestions?.length === 0)) {
+                event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                if (event.target.value) { // && (!suggestions || suggestions?.length === 0)) {
                   input.blur();
                   input.disabled = true
-                  localStorage.setItem("gsSearch", input.value);
-                  matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                    if (String(val.description).indexOf(input.value) > -1) {
-                      // console.log(input.value + ": result description: " + val.description);
-                      // console.log("result index: " + index);
-                      let tubeUrl = val.youtubeUrl
-                      if (tubeUrl && tubeUrl !== null) {
-                        console.log("local storage all results: " + input.value);
-                        return tubeUrl
-                      }
-                    }
-                  }).filter((mapResult) => {
-                    return mapResult != null
-                  });
-                  if (matchesToReturn.length > 0) {
-                    allMatchesAvailable = [];
-                  }
-                  // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                  console.log("all matches length greater than intents: ");
-                  console.log(allMatchesAvailable.length < matchesToReturn.length);
-                  while (allMatchesAvailable.length < matchesToReturn.length) {
-                    allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                      let i = Math.random()
-                      let tSorted = a;
-                      // console.log(againCap + ": tSorted = " + tSorted);
-                      let zSorted = b;
-                      // console.log(againCap + ": zSorted = " + zSorted);
-                      if (i < .3) {
-                        let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                        if (matchA > -1) {
-                          // console.log(againCap + ": matchA = " + matchA);
-                          return zSorted;
-                        }
-                      }
-                      else {
-                        if (i > .3 && i < .5 ) {
-                          let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                          if (matchB === -1) {
-                            // console.log(againCap + ": matchB = " + matchB);
-                            return tSorted;
-                          }
-                        }
-                        else {
-                          if (i > .5 && i < .8) {
-                            // console.log(againCap + ": matchC = " + zSorted);
-                            return zSorted;
-                          }
-                          else {
-                            if (i > .8) {
-                              // console.log(againCap + ": matchD = " + tSorted);
-                              return tSorted;
-                            }
-                          }
-                        }
-                      }
-                    });
-                    if (matchesToReturn === null || matchesToReturn.length === 0) {
-                      break
-                    }
-                  }
-                  input.value = String(input.value).slice(Math.floor(Math.random() * String(input.value).length)).slice(0,2);
+                  // localStorage.setItem("gsSearch", event.target.value);
                   serverside("vidPlaylist", [event.target.value])
                   .then((done) => {
                     try {
                       // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                       // Access the actual array from the done
                       if (done && typeof done === "object") {
-                        fullList = [];
                         // alert(JSON.stringify(done.data));
                         // alert(Object.keys(done.data).length);
+                        if (done.data && done.data.length > 0) {
+                          fullList = [];
+                        }
                         for (var key in done.data) {
                           let i = 0;
                           let l = done[key]?.length;
@@ -416,7 +364,7 @@
                             fullList.push(tempObj);
                           }
                         }
-                        if (fullList.length > 0) {
+                        if (Object.kwya(fullList.tempObj).length > 0) {
                           localSuggestionsCache["allMatches"] = fullList;
                         }
                         // $('a').click(function(event){
@@ -556,8 +504,17 @@
         }, 300);
         
         if (input && suggestionsDiv) {
+          input.disabled = false;
           input.addEventListener('input', (event) => {
-            fetchSuggestions(event.target.value);
+              if (!String(againCap).indexOf(event.target.value)) {
+                suggestionsDiv.innerHTML = '';
+              }
+              else {
+                if (String(againCap).indexOf(event.target.value)) {
+                  fetchSuggestions(event.target.value);
+                  // suggestionsDiv.innerHTML = '';
+                }
+              }
           });
 
           document.addEventListener('click', (event) => {
