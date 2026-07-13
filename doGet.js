@@ -370,7 +370,7 @@ function doGet(e) {
                               } 
                               else {
                                 let libFunc = "rendFile";
-                                let htmlArray = autoGlobe.functionRegistry.htmlArray
+                                let htmlArray = autoGlobe.functionRegistry.getHtmlList()
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
                                 let renF = RenderFile.fileRender(args,{payL: payload},args)

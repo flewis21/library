@@ -33,10 +33,12 @@
       document.addEventListener("DOMContentLoaded", function() {
         // Client-side code
         const localSuggestionsCache = {};
+        const remoteSuggestionsCache = {};
         const nVid = document.querySelectorAll(".userClickedNext");
         const input = document.getElementById("artiicleIndex");
         const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
         let fullList = [];
+        let personalizedList = [];
         let againCap = null;
         let matchesToReturn = null;
         let allMatchesAvailable = [];
@@ -88,6 +90,7 @@
                 let tubeUrl = val.youtubeUrl
                 if (tubeUrl && tubeUrl !== null) {
                   console.log("local storage all results: " + againCap);
+                  personalizedList.push(val);
                   return tubeUrl
                 }
               }
@@ -95,7 +98,10 @@
               return mapResult != null
             });
             if (matchesToReturn.length > 0) {
-              allMatchesAvailable = [];
+              remoteSuggestionsCache["allMatches"] = personalizedList;
+            }
+            else {
+              remoteSuggestionsCache["allMatches"] = [];
             }
             // console.log("matches to return: " + JSON.stringify(matchesToReturn));
             console.log("all matches length greater than intents: ");
@@ -242,7 +248,7 @@
           // }
           
           // Filter the local list instead of making a server call
-          const localList = localSuggestionsCache["allMatches"] || [];
+          const localList = remoteSuggestionsCache["allMatches"] || [];
           // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
           const suggestions = localList.filter(item => 
             String(item.description).toLowerCase().includes(query.toLowerCase())
@@ -341,7 +347,7 @@
                         // alert(JSON.stringify(done.data));
                         // alert(Object.keys(done.data).length);
                         if (done.data && done.data.length > 0) {
-                          fullList = [];
+                          personalizedList = [];
                         }
                         for (var key in done.data) {
                           let i = 0;
@@ -361,11 +367,11 @@
                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                               tempObj.webAddressUrl = tData;
                             }
-                            fullList.push(tempObj);
+                            personalizedList.push(tempObj);
                           }
                         }
-                        if (Object.kwya(fullList.tempObj).length > 0) {
-                          localSuggestionsCache["allMatches"] = fullList;
+                        if (Object.keys(personalizedList.tempObj).length > 0) {
+                          remoteSuggestionsCache["allMatches"] = personalizedList;
                         }
                         // $('a').click(function(event){
                         //   if ($(this).attr('href') === "javascript:void(0)") {
@@ -391,7 +397,7 @@
                       else {
                         console.warn("Expected an array in done from vidPlaylist, received:", done);
                         // Fallback to empty array if the structure is not as expected
-                        fullList = [];
+                        personalizedList = [];
                       }
                     }
                     catch (error) {
@@ -399,7 +405,7 @@
                     }
                   });
                   // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
-                  if (fullList.length === 0) {
+                  if (personalizedList.length === 0) {
                     serverside("getVI", [])
                     .then((response) => {
                       // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
@@ -422,16 +428,16 @@
                             else {
                               tempObj.webAddressUrl = response[key][i].videoId;
                             }
-                            fullList.push(tempObj);
+                            personalizedList.push(tempObj);
                           }
                         }
                       } else {
                         console.warn("Expected an array in response from getVI, received:", response);
                         // Fallback to empty array if the structure is not as expected
-                        fullList = [];
+                        personalizedList = [];
                       }
-                      localSuggestionsCache["allMatches"] = fullList;
-                      matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                      remoteSuggestionsCache["allMatches"] = personalizedList;
+                      matchesToReturn = remoteSuggestionsCache["allMatches"].map((val) => {   //, index) => {
                         if (!againCap === event.target.value) {
                           localStorage.setItem("gsSearch", event.target.value);
                           againCap = localStorage.getItem("gsSearch");
@@ -442,6 +448,7 @@
                           let tubeUrl = val.youtubeUrl
                           if (tubeUrl && tubeUrl !== null) {
                             console.log("local storage all results: " + againCap);
+                            personalizedList.push(val);
                             return tubeUrl
                           }
                         }
@@ -518,13 +525,14 @@
           });
 
           document.addEventListener('click', (event) => {
-            matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+            matchesToReturn = remoteSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againCap) > -1) {
                 // console.log(againCap + ": result description: " + val.description);
                 // console.log("result index: " + index);
                 let tubeUrl = val.youtubeUrl
                 if (tubeUrl && tubeUrl !== null) {
                   console.log("local storage all results: " + againCap);
+                  personalizedList.push(val);
                   return tubeUrl
                 }
               }
