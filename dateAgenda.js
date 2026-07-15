@@ -34,43 +34,6 @@ function addDays() {
   return uniqueDays;
 }
 
-function busyDates() {
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-  var calendars = CalendarApp.getAllCalendars();
-  var myCalendar;
-  while (!myCalendar) {
-    calendars?.map((calendar) => {
-      authLogic(calendar.isMyPrimaryCalendar())
-        ? (function () {
-            myCalendar = calendar.getId();
-            return myCalendar;
-          })()
-        : (function () {
-            return;
-          })();
-    });
-  }
-  var startDate = new Date();
-  var endDate = new Date(new Date().setYear(startDate.getFullYear() + 1));
-  var busyCalendar = CalendarApp.getCalendarsByName(myCalendar)[0];
-  var events = busyCalendar?.getEvents(startDate, endDate);
-  var daysBusy = [];
-  events?.map((event) => {
-    daysBusy.push(event.getStartTime().setHours(0, 0, 0, 0));
-  });
-  var uniqueBusy = [];
-  daysBusy.forEach((d) => {
-    authLogic(uniqueBusy.indexOf(d) === -1)
-      ? (function () {
-          uniqueBusy.push(d);
-        })()
-      : (function () {
-          return;
-        })();
-  });
-  return uniqueBusy;
-}
-
 var agendaDates = async function() {
   Date.UTC(1970, 0, 1);
   var ss = ssGetSheetBySpreadsheetUrl(
@@ -167,6 +130,43 @@ var agendaDates = async function() {
   return tempTitle;
 }
 
+function busyDates() {
+  console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
+  const calendars = CalendarApp.getAllCalendars();
+  let myCalendar = "";
+  while (!myCalendar) {
+    calendars?.map((calendar) => {
+      authLogic(calendar.isMyPrimaryCalendar())
+        ? (function () {
+            myCalendar = calendar.getId();
+            return myCalendar;
+          })()
+        : (function () {
+            return;
+          })();
+    });
+  }
+  const startDate = new Date();
+  const endDate = new Date(new Date().setYear(startDate.getFullYear() + 1));
+  const busyCalendar = CalendarApp.getCalendarsByName(myCalendar)[0];
+  const events = busyCalendar?.getEvents(startDate, endDate);
+  let daysBusy = [];
+  events?.map((event) => {
+    daysBusy.push(event.getStartTime().setHours(0, 0, 0, 0));
+  });
+  let uniqueBusy = [];
+  daysBusy.forEach((d) => {
+    authLogic(uniqueBusy.indexOf(d) === -1)
+      ? (function () {
+          uniqueBusy.push(d);
+        })()
+      : (function () {
+          return;
+        })();
+  });
+  return uniqueBusy;
+}
+
 var calCalendar = function () {
   var eCalId = CalendarApp.getDefaultCalendar();
   return eCalId;
@@ -178,7 +178,7 @@ var calRecurrence = function (series) {
 };
 
 function dateAgenda() {
-  console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
+  console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
   var sheetJSONSheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "Schedules",
@@ -214,7 +214,7 @@ function dateFunction(series) {
 
 function dateModel(days) {
   console.log(
-    autoP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ndays is !" +

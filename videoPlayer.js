@@ -82,7 +82,7 @@ function needPastTime(searchString) {
       var noSearch = autoGlobe.searchResult?.parameters;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
-    var searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    let searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     if (vidData.indexOf(searchLink) !== -1) {
       return;
     } else {
@@ -183,10 +183,10 @@ function needPastTime(searchString) {
         }
       });
     });
-    var i = 0;
-    var l = sorFndOrd?.length;
+    let i = 0;
+    let l = sorFndOrd?.length;
+    let fndOrd = [];
     for (i, l; i < l; i++) {
-      var fndOrd = [];
       sorFndOrd?.sort((a, b) => {
         if (a !== b && fndOrd?.indexOf(a) === -1) {
           if (fndOrd?.indexOf(a) > -1) {
@@ -275,7 +275,7 @@ function needPastTime(searchString) {
     
     if (rndRes && rndRes?.length > 0) {
       var rndSort = [];
-      for (var i = 0, l = rndRes?.length; i < l; i++) {
+      for (let i = 0, l = rndRes?.length; i < l; i++) {
         let sorRes = rndRes.filter((o) => {
           return o !== rndRes[i];
         });
@@ -334,8 +334,11 @@ function needPastTime(searchString) {
         fndOrdObj.playList = playVid;
       }
     }
+    return fndOrdObj;
   }
-  return fndOrdObj
+  else {
+    return fndOrdObj;
+  }
 }
 
 function pastTime(url) {

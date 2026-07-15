@@ -98,59 +98,62 @@
               return mapResult != null
             });
             if (matchesToReturn.length > 0) {
-              remoteSuggestionsCache["allMatches"] = personalizedList;
+              remoteSuggestionsCache[againCap] = personalizedList;
             }
             else {
-              remoteSuggestionsCache["allMatches"] = [];
+              remoteSuggestionsCache[againCap] = [];
             }
             // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-            console.log("all matches length greater than intents: ");
-            console.log(allMatchesAvailable.length < matchesToReturn.length);
-            while (allMatchesAvailable.length < matchesToReturn.length) {
-              allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                let i = Math.random()
-                let tSorted = a;
-                // console.log(againCap + ": tSorted = " + tSorted);
-                let zSorted = b;
-                // console.log(againCap + ": zSorted = " + zSorted);
-                if (i < .3) {
-                  let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                  if (matchA > -1) {
-                    // console.log(againCap + ": matchA = " + matchA);
-                    return zSorted;
-                  }
-                }
-                else {
-                  if (i > .3 && i < .5 ) {
-                    let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                    if (matchB === -1) {
-                      // console.log(againCap + ": matchB = " + matchB);
-                      return tSorted;
+            console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+            // console.log(allMatchesAvailable.length < matchesToReturn.length);
+            if (allMatchesAvailable.length < matchesToReturn.length) {
+              console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+              while (allMatchesAvailable.length < matchesToReturn.length) {
+                allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                  let i = Math.random()
+                  let tSorted = a;
+                  // console.log(againCap + ": tSorted = " + tSorted);
+                  let zSorted = b;
+                  // console.log(againCap + ": zSorted = " + zSorted);
+                  if (i < .3) {
+                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                    if (matchA > -1) {
+                      // console.log(againCap + ": matchA = " + matchA);
+                      return zSorted;
                     }
                   }
                   else {
-                    if (i > .5 && i < .8) {
-                      // console.log(againCap + ": matchC = " + zSorted);
-                      return zSorted;
-                    }
-                    else {
-                      if (i > .8) {
-                        // console.log(againCap + ": matchD = " + tSorted);
+                    if (i > .3 && i < .5 ) {
+                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                      if (matchB === -1) {
+                        // console.log(againCap + ": matchB = " + matchB);
                         return tSorted;
                       }
                     }
+                    else {
+                      if (i > .5 && i < .8) {
+                        // console.log(againCap + ": matchC = " + zSorted);
+                        return zSorted;
+                      }
+                      else {
+                        if (i > .8) {
+                          // console.log(againCap + ": matchD = " + tSorted);
+                          return tSorted;
+                        }
+                      }
+                    }
                   }
+                });
+                if (matchesToReturn === null || matchesToReturn.length === 0) {
+                  break
                 }
-              });
-              if (matchesToReturn === null || matchesToReturn.length === 0) {
-                break
               }
             }
             input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
             // fetchSuggestions(input.value);
-            $('a').click(function(event){
-              if ($(this).attr('href') === "javascript:void(0)") {
-                if (allMatchesAvailable.length > 0) {
+            if (matchesToReturn.length !== 0) {
+              $('a').click(function(event){
+                if ($(this).attr('href') === "javascript:void(0)") {
                   let confirmation = window.confirm(
                     "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
@@ -168,7 +171,7 @@
                     // }
                     console.log("the match: " + linkFollow.href);
                     linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_top";
+                    linkFollow.target = "_blank";
                     linkFollow.rel = "noopener noreferrer";
                     document.body.appendChild(linkFollow);
                     document.getElementById("linkFOLLOW").click();
@@ -214,8 +217,8 @@
                     // });
                   }
                 }
-              }
-            });
+              });
+            }
           })
           .catch(error => {
             console.error("Error fetching address suggestions for artiicleIndex :", error);
@@ -248,7 +251,7 @@
           // }
           
           // Filter the local list instead of making a server call
-          const localList = remoteSuggestionsCache["allMatches"] || [];
+          const localList = remoteSuggestionsCache[againCap] || [];
           // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
           const suggestions = localList.filter(item => 
             String(item.description).toLowerCase().includes(query.toLowerCase())
@@ -333,7 +336,7 @@
           else {
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
-                event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                // event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
                 if (event.target.value) { // && (!suggestions || suggestions?.length === 0)) {
                   input.blur();
                   input.disabled = true
@@ -343,54 +346,133 @@
                     try {
                       // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                       // Access the actual array from the done
+                      // console.log("event: " + typeof done, JSON.stringify(done));
                       if (done && typeof done === "object") {
                         // alert(JSON.stringify(done.data));
                         // alert(Object.keys(done.data).length);
-                        if (done.data && done.data.length > 0) {
+                        let doneAlert = Object.keys(done.data)?.length;
+                        if (done.data && doneAlert > 0) {
                           personalizedList = [];
-                        }
-                        for (var key in done.data) {
-                          let i = 0;
-                          let l = done[key]?.length;
-                          // alert(l);
-                          for (i,l;i<l;i++) {
-                            let tempObj = {};
-                            tempObj.description = done[key][i].description;
-                            let tData = done[key][i];
-                            let dLoc =  null;
-                            if (String(tData) && String(tData).indexOf("http") === -1) {
-                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                              dLoc =  "https://www.youtube.com/watch?v=";
-                              tempObj.youtubeUrl = dLoc + tData;
+                          for (var key in done.data) {
+                            let i = 0;
+                            let l = done.data[key]?.length;
+                            // alert(l);
+                            for (i,l;i<l;i++) {
+                              let tempObj = {};
+                              tempObj.description = done.data[key][i]?.description;
+                              let tData = Array.isArray(done.data[key])? done.data[key][i]:done.data[key];
+                              let dLoc =  null;
+                              if (String(tData) && String(tData).indexOf("http") === -1) {
+                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                dLoc =  "https://www.youtube.com/watch?v=";
+                                tempObj.youtubeUrl = dLoc + tData;
+                              }
+                              else {
+                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                tempObj.webAddressUrl = tData;
+                              }
+                              personalizedList.push(tempObj);
                             }
-                            else {
-                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                              tempObj.webAddressUrl = tData;
-                            }
-                            personalizedList.push(tempObj);
                           }
                         }
-                        if (Object.keys(personalizedList.tempObj).length > 0) {
-                          remoteSuggestionsCache["allMatches"] = personalizedList;
+                        if (personalizedList.tempObj && Object.keys(personalizedList.tempObj).length > 0) {
+                          remoteSuggestionsCache[againCap] = personalizedList;
                         }
-                        // $('a').click(function(event){
-                        //   if ($(this).attr('href') === "javascript:void(0)") {
-                        //     let confirmation = window.confirm(
-                        //       "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                        //     );
-                        //     if (confirmation) {
-                        //       event.preventDefault();
-                        //       var linkFollow = document.createElement("a");
-                        //       linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
-                        //       linkFollow.id = "linkFOLLOW";
-                        //       linkFollow.target = "_blank";
-                        //       linkFollow.rel = "noopener noreferrer";
-                        //       document.body.appendChild(linkFollow);
-                        //       document.getElementById("linkFOLLOW").click();
-                        //       document.getElementById("linkFOLLOW").remove();
+                        else {
+                          matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                            // if (event.target.value !== againCap) {
+                            //   localStorage.setItem("gsSearch", event.target.value);
+                            //   againCap = localStorage.getItem("gsSearch");
+                            // }
+                            if (String(val.description).indexOf(event.target.value) > -1) {
+                              console.log(event.target.value + ": result description: " + val?.description);
+                              // console.log("result index: " + index);
+                              let tubeUrl = val.youtubeUrl
+                              if (tubeUrl && tubeUrl !== null) {
+                                console.log("local storage all results: " + event.target.value);
+                                personalizedList.push(val);
+                                return tubeUrl
+                              }
+                            }
+                          }).filter((mapResult) => {
+                            return mapResult != null
+                          });
+                          if (matchesToReturn.length > 0) {
+                            // remoteSuggestionsCache[againCap] = personalizedList;
+                            allMatchesAvailable = [];
+                          }
+                          // else {
+                          //   remoteSuggestionsCache[againCap] = [];
+                          // }
+                          console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                          console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                          // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                          if (allMatchesAvailable.length < matchesToReturn.length) {
+                            console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                            while (allMatchesAvailable.length < matchesToReturn.length) {
+                              allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                                let i = Math.random()
+                                let tSorted = a;
+                                // console.log(againCap + ": tSorted = " + tSorted);
+                                let zSorted = b;
+                                // console.log(againCap + ": zSorted = " + zSorted);
+                                if (i < .3) {
+                                  let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                                  if (matchA > -1) {
+                                    // console.log(againCap + ": matchA = " + matchA);
+                                    return zSorted;
+                                  }
+                                }
+                                else {
+                                  if (i > .3 && i < .5 ) {
+                                    let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                                    if (matchB === -1) {
+                                      // console.log(againCap + ": matchB = " + matchB);
+                                      return tSorted;
+                                    }
+                                  }
+                                  else {
+                                    if (i > .5 && i < .8) {
+                                      // console.log(againCap + ": matchC = " + zSorted);
+                                      return zSorted;
+                                    }
+                                    else {
+                                      if (i > .8) {
+                                        // console.log(againCap + ": matchD = " + tSorted);
+                                        return tSorted;
+                                      }
+                                    }
+                                  }
+                                }
+                              });
+                              // if (matchesToReturn === null || matchesToReturn.length === 0) {
+                              //   break
+                              // }
+                            }
+                            //   input.value = againCap;
+                          }
+                        }
+                        // if (matchesToReturn !== null || matchesToReturn.length !== 0) {
+                        //   $('a').click(function(event){
+                        //     if ($(this).attr('href') === "javascript:void(0)") {
+                        //       let confirmation = window.confirm(
+                        //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                        //       );
+                        //       if (confirmation) {
+                        //         event.preventDefault();
+                        //         var linkFollow = document.createElement("a");
+                        //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+                        //         // linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+                        //         linkFollow.id = "linkFOLLOW";
+                        //         linkFollow.target = "_blank";
+                        //         linkFollow.rel = "noopener noreferrer";
+                        //         document.body.appendChild(linkFollow);
+                        //         document.getElementById("linkFOLLOW").click();
+                        //         document.getElementById("linkFOLLOW").remove();
+                        //       }
                         //     }
-                        //   }
-                        // });
+                        //   });
+                        // }
                         input.disabled = false
                         input.focus();
                       } 
@@ -398,109 +480,112 @@
                         console.warn("Expected an array in done from vidPlaylist, received:", done);
                         // Fallback to empty array if the structure is not as expected
                         personalizedList = [];
+                        input.disabled = false
                       }
                     }
                     catch (error) {
-                      console.log("Error in script call: " + error.stack)
+                      console.log("Error in script call: " + error.stack);
+                      input.disabled = false
                     }
                   });
                   // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
-                  if (personalizedList.length === 0) {
-                    serverside("getVI", [])
-                    .then((response) => {
-                      // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                      // Access the actual array from the response
-                      if (response && typeof response === "object") {
-                        for (var key in response) {
-                          // alert(JSON.stringify(response[key]));
-                          let i = 0;
-                          let l = response[key].length;
-                          // alert(l);
-                          for (i,l;i<l;i++) {
-                            let tempObj = {};
-                            tempObj.description = response[key][i]?.description;
-                            if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
-                              let tData = response[key][i].videoId;
-                              let dLoc =  null;
-                              dLoc =  "https://www.youtube.com/watch?v=";
-                              tempObj.youtubeUrl = dLoc + tData;
-                            }
-                            else {
-                              tempObj.webAddressUrl = response[key][i].videoId;
-                            }
-                            personalizedList.push(tempObj);
-                          }
-                        }
-                      } else {
-                        console.warn("Expected an array in response from getVI, received:", response);
-                        // Fallback to empty array if the structure is not as expected
-                        personalizedList = [];
-                      }
-                      remoteSuggestionsCache["allMatches"] = personalizedList;
-                      matchesToReturn = remoteSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                        if (!againCap === event.target.value) {
-                          localStorage.setItem("gsSearch", event.target.value);
-                          againCap = localStorage.getItem("gsSearch");
-                        }
-                        if (String(val.description).indexOf(againCap) > -1) {
-                          // console.log(againCap + ": result description: " + val?.description);
-                          // console.log("result index: " + index);
-                          let tubeUrl = val.youtubeUrl
-                          if (tubeUrl && tubeUrl !== null) {
-                            console.log("local storage all results: " + againCap);
-                            personalizedList.push(val);
-                            return tubeUrl
-                          }
-                        }
-                      }).filter((mapResult) => {
-                        return mapResult != null
-                      });
-                      // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                      console.log("all matches length greater than intents: ");
-                      console.log(allMatchesAvailable.length < matchesToReturn.length);
-                      while (allMatchesAvailable.length < matchesToReturn.length) {
-                        allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                          let i = Math.random()
-                          let tSorted = a;
-                          // console.log(againCap + ": tSorted = " + tSorted);
-                          let zSorted = b;
-                          // console.log(againCap + ": zSorted = " + zSorted);
-                          if (i < .3) {
-                            let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                            if (matchA > -1) {
-                              // console.log(againCap + ": matchA = " + matchA);
-                              return zSorted;
-                            }
-                          }
-                          else {
-                            if (i > .3 && i < .5 ) {
-                              let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                              if (matchB === -1) {
-                                // console.log(againCap + ": matchB = " + matchB);
-                                return tSorted;
-                              }
-                            }
-                            else {
-                              if (i > .5 && i < .8) {
-                                // console.log(againCap + ": matchC = " + zSorted);
-                                return zSorted;
-                              }
-                              else {
-                                if (i > .8) {
-                                  // console.log(againCap + ": matchD = " + tSorted);
-                                  return tSorted;
-                                }
-                              }
-                            }
-                          }
-                        });
-                        if (matchesToReturn === null || matchesToReturn.length === 0) {
-                          break
-                        }
-                      }
-                      input.value = againCap;
-                    });
-                  }
+                  // if (personalizedList.length === 0) {
+                    // serverside("getVI", [])
+                    // .then((response) => {
+                    //   // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                    //   // Access the actual array from the response
+                    //   if (response && typeof response === "object") {
+                    //     for (var key in response) {
+                    //       // alert(JSON.stringify(response[key]));
+                    //       let i = 0;
+                    //       let l = response[key].length;
+                    //       // alert(l);
+                    //       for (i,l;i<l;i++) {
+                    //         let tempObj = {};
+                    //         tempObj.description = response[key][i]?.description;
+                    //         if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
+                    //           let tData = response[key][i].videoId;
+                    //           let dLoc =  null;
+                    //           dLoc =  "https://www.youtube.com/watch?v=";
+                    //           tempObj.youtubeUrl = dLoc + tData;
+                    //         }
+                    //         else {
+                    //           tempObj.webAddressUrl = response[key][i].videoId;
+                    //         }
+                    //         personalizedList.push(tempObj);
+                    //       }
+                    //     }
+                    //   } else {
+                    //     console.warn("Expected an array in response from getVI, received:", response);
+                    //     // Fallback to empty array if the structure is not as expected
+                    //     personalizedList = [];
+                    //   }
+                    //   remoteSuggestionsCache[againCap] = matchesToReturn;
+                    //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                    //     if (!againCap === event.target.value) {
+                    //       localStorage.setItem("gsSearch", event.target.value);
+                    //       againCap = localStorage.getItem("gsSearch");
+                    //     }
+                    //     if (String(val.description).indexOf(againCap) > -1) {
+                    //       // console.log(againCap + ": result description: " + val?.description);
+                    //       // console.log("result index: " + index);
+                    //       let tubeUrl = val.youtubeUrl
+                    //       if (tubeUrl && tubeUrl !== null) {
+                    //         console.log("local storage all results: " + againCap);
+                    //         personalizedList.push(val);
+                    //         return tubeUrl
+                    //       }
+                    //     }
+                    //   }).filter((mapResult) => {
+                    //     return mapResult != null
+                    //   });
+                    //   remoteSuggestionsCache[againCap] = matchesToReturn;
+                    //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                    //   console.log("all matches length greater than intents: ");
+                    //   console.log(allMatchesAvailable.length < matchesToReturn.length);
+                    //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                    //     allMatchesAvailable = remoteSuggestionsCache[againCap].sort((a,b) => {
+                    //       let i = Math.random()
+                    //       let tSorted = a;
+                    //       // console.log(againCap + ": tSorted = " + tSorted);
+                    //       let zSorted = b;
+                    //       // console.log(againCap + ": zSorted = " + zSorted);
+                    //       if (i < .3) {
+                    //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                    //         if (matchA > -1) {
+                    //           // console.log(againCap + ": matchA = " + matchA);
+                    //           return zSorted;
+                    //         }
+                    //       }
+                    //       else {
+                    //         if (i > .3 && i < .5 ) {
+                    //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                    //           if (matchB === -1) {
+                    //             // console.log(againCap + ": matchB = " + matchB);
+                    //             return tSorted;
+                    //           }
+                    //         }
+                    //         else {
+                    //           if (i > .5 && i < .8) {
+                    //             // console.log(againCap + ": matchC = " + zSorted);
+                    //             return zSorted;
+                    //           }
+                    //           else {
+                    //             if (i > .8) {
+                    //               // console.log(againCap + ": matchD = " + tSorted);
+                    //               return tSorted;
+                    //             }
+                    //           }
+                    //         }
+                    //       }
+                    //     });
+                    //     if (matchesToReturn === null || matchesToReturn.length === 0) {
+                    //       break
+                    //     }
+                    //   }
+                    //   input.value = againCap;
+                    // });
+                  // }
                 }
                 // }
               }
@@ -515,6 +600,7 @@
           input.addEventListener('input', (event) => {
               if (!String(againCap).indexOf(event.target.value)) {
                 suggestionsDiv.innerHTML = '';
+                fetchSuggestions(event.target.value);
               }
               else {
                 if (String(againCap).indexOf(event.target.value)) {
@@ -524,58 +610,58 @@
               }
           });
 
-          document.addEventListener('click', (event) => {
-            matchesToReturn = remoteSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-              if (String(val.description).indexOf(againCap) > -1) {
-                // console.log(againCap + ": result description: " + val.description);
-                // console.log("result index: " + index);
-                let tubeUrl = val.youtubeUrl
-                if (tubeUrl && tubeUrl !== null) {
-                  console.log("local storage all results: " + againCap);
-                  personalizedList.push(val);
-                  return tubeUrl
-                }
-              }
-            }).filter((mapResult) => {
-              return mapResult != null
-            });
-            // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-            allMatchesAvailable = matchesToReturn.sort((a,b) => {
-              let i = Math.random()
-              let tSorted = a;
-              // console.log(againCap + ": tSorted = " + tSorted);
-              let zSorted = b;
-              // console.log(againCap + ": zSorted = " + zSorted);
-              if (i < .3) {
-                let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                if (matchA > -1) {
-                  // console.log(againCap + ": matchA = " + matchA);
-                  return zSorted;
-                }
-              }
-              else {
-                if (i > .3 && i < .5 ) {
-                  let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                  if (matchB === -1) {
-                    // console.log(againCap + ": matchB = " + matchB);
-                    return tSorted;
-                  }
-                }
-                else {
-                  if (i > .5 && i < .8) {
-                    // console.log(againCap + ": matchC = " + zSorted);
-                    return zSorted;
-                  }
-                  else {
-                    if (i > .8) {
-                      // console.log(againCap + ": matchD = " + tSorted);
-                      return tSorted;
-                    }
-                  }
-                }
-              }
-            });
-          });
+          // document.addEventListener('click', (event) => {
+          //   matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
+          //     if (String(val.description).indexOf(againCap) > -1) {
+          //       // console.log(againCap + ": result description: " + val.description);
+          //       // console.log("result index: " + index);
+          //       let tubeUrl = val.youtubeUrl
+          //       if (tubeUrl && tubeUrl !== null) {
+          //         console.log("local storage all results: " + againCap);
+          //         personalizedList.push(val);
+          //         return tubeUrl
+          //       }
+          //     }
+          //   }).filter((mapResult) => {
+          //     return mapResult != null
+          //   });
+          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+          //   allMatchesAvailable = matchesToReturn.sort((a,b) => {
+          //     let i = Math.random()
+          //     let tSorted = a;
+          //     // console.log(againCap + ": tSorted = " + tSorted);
+          //     let zSorted = b;
+          //     // console.log(againCap + ": zSorted = " + zSorted);
+          //     if (i < .3) {
+          //       let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+          //       if (matchA > -1) {
+          //         // console.log(againCap + ": matchA = " + matchA);
+          //         return zSorted;
+          //       }
+          //     }
+          //     else {
+          //       if (i > .3 && i < .5 ) {
+          //         let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+          //         if (matchB === -1) {
+          //           // console.log(againCap + ": matchB = " + matchB);
+          //           return tSorted;
+          //         }
+          //       }
+          //       else {
+          //         if (i > .5 && i < .8) {
+          //           // console.log(againCap + ": matchC = " + zSorted);
+          //           return zSorted;
+          //         }
+          //         else {
+          //           if (i > .8) {
+          //             // console.log(againCap + ": matchD = " + tSorted);
+          //             return tSorted;
+          //           }
+          //         }
+          //       }
+          //     }
+          //   });
+          // });
 
           input.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
