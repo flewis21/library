@@ -782,7 +782,7 @@ class AutoParams {
           // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyArrData: " + myArrData + "\nelaspeTime: " + elaspeTime)
         }
       }
-      console.log("boilerplate autoGlobearams: line 455");
+      // console.log("boilerplate TypeScript: line 455");
       // console.log(
       //   "randomSubstance: \n( \0: " +
       //     0 +
@@ -1226,8 +1226,8 @@ class AutoParams {
 //         this.someArgs +
 //         ") ",
 //     );
-//     this.trueFunc = this.trueVfalse(this.func);
-//     this.trueSomeArgs = this.trueVfalse(this.someArgs);
+//     this.trueFunc = autoGlobe.trueVfalse(this.func);
+//     this.trueSomeArgs = autoGlobe.trueVfalse(this.someArgs);
 //     this.funcUno = this.trueFunc
 //       ? decodeURIComponent(this.func)
 //       : Array("rndCoin");
@@ -1238,7 +1238,7 @@ class AutoParams {
 //       this.argsX = [];
 //       this.content = [];
 //       this.arrUno = Array.isArray(this.func);
-//       this.arrDos = this.trueVfalse(this.someArgs);
+//       this.arrDos = autoGlobe.trueVfalse(this.someArgs);
 //       if (this.arrUno && this.arrDos) {
 //         this.keys = this.func.concat(this.someArgs);
 //       } 
@@ -1274,12 +1274,12 @@ class AutoParams {
 //         }
 //         this.keyProParams;
 //         this.realItem;
-//         this.keysArrArr = this.trueVfalse(Array.isArray(pro));
+//         this.keysArrArr = autoGlobe.trueVfalse(Array.isArray(pro));
 //         if (this.keysArrArr) {
 //           this.funcLimit = [];
 //           this.paramLimit = [];
 //           pro.forEach((subParam, proIndex) => {
-//             this.realItem = this.trueVfalse(subParam);
+//             this.realItem = autoGlobe.trueVfalse(subParam);
 //             if (this.realItem) {
 //               this.keyProParams;
 //               if (typeof subParam === "object" || Array.isArray(subParam)) {
@@ -1314,7 +1314,7 @@ class AutoParams {
 //           }
 //         } 
 //         else {
-//           this.realItem = this.trueVfalse(pro);
+//           this.realItem = autoGlobe.trueVfalse(pro);
 //           if (this.realItem) {
 //             for (var key in this.keyPro) {
 //               this.keyProParams = null;
@@ -1350,11 +1350,11 @@ class AutoParams {
 //           ?.split(",")
 //           ?.map((param) => param?.trim())
 //           ?.filter((param) => param !== "");; //gsFParams();
-//         this.truDos = this.trueVfalse(this.fParams)
+//         this.truDos = autoGlobe.trueVfalse(this.fParams)
 //         this.resCount = 0;
 //         this.argsX.forEach((result, argsXIndex) => {
 //           console.log("argsX result " + this.resCount + ": " + result);
-//           this.truUno = this.trueVfalse(result);
+//           this.truUno = autoGlobe.trueVfalse(result);
 //           this.args = {};
 //           this.resolvedArgs = [];
 //           this.missingParams = [];
@@ -1382,12 +1382,12 @@ class AutoParams {
 //             this.contentMap = {};
 //             this.realItem;
 //             this.declaredParams.forEach((declaredParam, declaredParamIndex) => {
-//               this.declaredParamArrArr = this.trueVfalse(Array.isArray(declaredParam));
+//               this.declaredParamArrArr = autoGlobe.trueVfalse(Array.isArray(declaredParam));
 //               if (this.declaredParamArrArr) {
 //                 this.paramLimit = 0;
 //                 declaredParam.forEach((subParam, subParamIndex) => {
 //                   this.contentLimit.forEach((item, currentDeclaredIndex) => {
-//                     this.realItem = this.trueVfalse(subItem);
+//                     this.realItem = autoGlobe.trueVfalse(subItem);
 //                     if (this.realItem) {
 //                       this.currentDeclared = this.contentMap[declaredParam];
 //                       this.currentSub = subItem;
@@ -1403,10 +1403,10 @@ class AutoParams {
 //               else {
 //                 if (Array.isArray(this.contentLimit)) {
 //                   this.contentLimit.forEach((item, contentLimitIndex) => {
-//                     this.contentLimitArrArr = this.trueVfalse(Array.isArray(item));
+//                     this.contentLimitArrArr = autoGlobe.trueVfalse(Array.isArray(item));
 //                     if (this.contentLimitArrArr) {
 //                       item.forEach((subItem, mapItemIndex) => {
-//                         this.realItem = this.trueVfalse(subItem);
+//                         this.realItem = autoGlobe.trueVfalse(subItem);
 //                         if (this.realItem) {
 //                           this.paramDKey = this.declaredParams[mapItemIndex];
 //                           if (!this.contentMap[paramDKey]) {
@@ -1419,7 +1419,7 @@ class AutoParams {
 //                       });
 //                     } 
 //                     else {
-//                       this.realItem = this.trueVfalse(item);
+//                       this.realItem = autoGlobe.trueVfalse(item);
 //                       if (this.realItem) {
 //                         this.paramDKey = this.declaredParams[contentLimitIndex];
 //                         if (!this.contentMap[this.paramDKey]) {
@@ -1433,11 +1433,11 @@ class AutoParams {
 //                   });
 //                 } 
 //                 else {
-//                   this.contentArrArr = this.trueVfalse(Array.isArray(this.contentLimit));
+//                   this.contentArrArr = autoGlobe.trueVfalse(Array.isArray(this.contentLimit));
 //                   if (this.contentArrArr) {
 //                   } 
 //                   else {
-//                     this.realItem = this.trueVfalse(this.contentLimit);
+//                     this.realItem = autoGlobe.trueVfalse(this.contentLimit);
 //                     if (this.realItem) {
 //                       for (var key in this.declaredParams) {
 //                         this.paramDKey = this.declaredParams[key];
@@ -2007,24 +2007,24 @@ class MisCreator {
         ")\n ",
     );
     if (this.text?.indexOf(",") === -1) {
-      this.validthis.url = new ValidUrlResult(this.text).validUrlResult;
+      this.validUrl = new ValidUrlResult(this.text).validatedResult;
       autoGlobe.executed++;
     }
     if (!this.validUrl?.hostname) {
       this.supFunc = new MisStCreator(this.text).argsObject;
       autoGlobe.executed++;
-      this.truSup = this.trueVfalse(this.supFunc.func);
+      this.truSup = autoGlobe.trueVfalse(this.supFunc.func);
       autoGlobe.executed++;
       if (this.truSup) {
         Logger.log("function - " + this.supFunc.func);
       }
       while (!this.supFunc.func) {
-        this.truSup = this.trueVfalse(this.supFunc.func);
+        this.truSup = autoGlobe.trueVfalse(this.supFunc.func);
         autoGlobe.executed++;
         if (this.truSup) {
           Logger.log("function - " + this.supFunc.func);
         }
-        this.funcSup = this.functionRegistry.fileList;
+        this.funcSup = autoGlobe.functionRegistry.fileList;
         autoGlobe.executed++;
         this.rndSup =
           this.funcSup[Math.floor(Math.random() * Math.floor(this.funcSup.length))];
@@ -2048,11 +2048,11 @@ class MisCreator {
           this.earlyReturn = "misSt returned errors: " + JSON.stringify(this.supFunc);
           this.errorthis.url = this.text;
           this.form =
-            new DriveFiles([this.text].join("").toUpperCase()).filedMain ||
+            new DriveFiles(String(this.text).toUpperCase()).filedMain ||
             formMaker(
               [this.text].join("").toUpperCase(),
               "misForms",
-              this.functionRegistry.time,
+              autoGlobe.functionRegistry.time,
             );
           autoGlobe.executed++;
           if (typeof this.form === "object") {
@@ -2179,7 +2179,7 @@ class MisCreator {
       } catch (balance) {
         this.form =
           new DriveFiles([this.formattedPayload][0] || this.payLoad).filedMain ||
-          formMaker(this.payT, "misForms", this.functionRegistry.time);
+          formMaker(this.payT, "misForms", autoGlobe.functionRegistry.time);
         autoGlobe.executed++;
 
         if (typeof this.form === "object") {
@@ -2269,7 +2269,7 @@ class MisCreator {
         this.htmlData = "Error fetching URL: " + e.toString();
         this.supUrl = this.validUrl?.hostname;
         try {
-          this.form = new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain;
+          this.form = new DriveFiles(String(this.text).toUpperCase()).filedMain;
           this.responseObj = {
             dataStr: seoPastTime(this.validUrl?.hostname),
             url: this.form,
@@ -2277,11 +2277,11 @@ class MisCreator {
         } catch (balance) {
           // var this.form = formMaker();
           this.form =
-            new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+            new DriveFiles(String(this.text).toUpperCase()).filedMain ||
             formMaker(
               [JSON.stringify(this.text)].join("").toUpperCase(),
               "misForms",
-              this.functionRegistry.time,
+              autoGlobe.functionRegistry.time,
             );
           autoGlobe.executed++;
 
@@ -2435,7 +2435,8 @@ class MisCreator {
             } else {
               if (this.res >= 300 && this.res < 400) {
                 // Redirect occurred
-                this.location = this.response.getHeaders().Location;
+                this.location = String(this.response.getHeaders().Location).indexOf(":") > 1? String(this.response.getHeaders().Location).substring(0,String(this.response.getHeaders().Location).length - 5):String(this.response.getHeaders().Location);
+                console.log("event; result from response getHeaders: ", this.location);
                 this.htmlData = UrlFetchApp.fetch(this.location, {
                   followRedirects: true,
                   muteHttpExceptions: true,
@@ -2443,20 +2444,20 @@ class MisCreator {
                 this.supUrl = this.location;
                 try {
                   this.form = new DriveFiles(
-                    [JSON.stringify(this.text)].join("").toUpperCase(),
+                    String(this.text).toUpperCase(),
                   ).filedMain;
                   this.responseObj = {
-                    dataStr: seoPastTime(new ValidUrlResult(this.location).validUrlResult.hostname),
+                    dataStr: this.htmlData || seoPastTime(new ValidUrlResult(this.location).validatedResult.hostname),
                     url: this.form,
                   };
                 } catch (balance) {
                   // var this.form = formMaker();
                   this.form =
-                    new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+                    new DriveFiles(String(this.text).toUpperCase()).filedMain ||
                     formMaker(
                       [JSON.stringify(this.text)].join("").toUpperCase(),
                       "misForms",
-                      this.functionRegistry.time,
+                      autoGlobe.functionRegistry.time,
                     );
                   autoGlobe.executed++;
 
@@ -2597,7 +2598,7 @@ class MisCreator {
                     }
                     this.form.setConfirmationMessage("Thanks for your feedback !!");
                     this.responseObj = {
-                      dataStr: seoPastTime(new ValidUrlResult(this.location).validUrlResult.hostname),
+                      dataStr: seoPastTime(new ValidUrlResult(this.location).validatedResult.hostname),
                       url: this.form.getPublishedUrl(),
                     };
                   }
@@ -2609,7 +2610,7 @@ class MisCreator {
                 this.supUrl = this.validUrl.hostname;
                 try {
                   this.form = new DriveFiles(
-                    [JSON.stringify(this.text)].join("").toUpperCase(),
+                    String(this.text).toUpperCase(),
                   ).filedMain;
                   this.responseObj = {
                     dataStr: seoPastTime(this.validUrl.hostname),
@@ -2618,11 +2619,11 @@ class MisCreator {
                 } catch (balance) {
                   // var this.form = formMaker();
                   this.form =
-                    new DriveFiles([JSON.stringify(this.text)].join("").toUpperCase()).filedMain ||
+                    new DriveFiles(String(this.text).toUpperCase()).filedMain ||
                     formMaker(
                       [JSON.stringify(this.text)].join("").toUpperCase(),
                       "misForms",
-                      this.functionRegistry.time,
+                      autoGlobe.functionRegistry.time,
                     );
                   autoGlobe.executed++;
 
@@ -3908,12 +3909,15 @@ class DriveFiles {
       );
       try {
         this.files = DriveApp.searchFiles(this.searchQuery);
+        console.log("event; DriveApp search result: ", this.files.hasNext())
 
-        while (this.files.hasNext()) {
-          this.file = this.files.next();
-          this.fiTitle = this.file.getName();
-          this.fileUrl = this.file.getUrl();
-          this.dataTree.push(this.fileUrl);
+        if (this.files && this.files?.hasNext()) {
+          while (this.files.hasNext()) {
+            this.file = this.files.next();
+            this.fiTitle = this.file.getName();
+            this.fileUrl = this.file.getUrl();
+            this.dataTree.push(this.fileUrl);
+          }
         }
       } catch (e) {
         console.error("DriveFiles: Error during DriveApp search:", e);
@@ -4129,31 +4133,31 @@ class ValidUrlResult {
         typeof this.text +
         ")",
     );
-    this.validUrlResult = {};
-    this.validUrlResult.protocol = "";
-    this.validUrlResult.hostname = "";
-    this.validUrlResult.pathname = "";
-    this.validUrlResult.query =  "";
-    this.validUrlResult.rndRes = [];
-    this.validUrlResult.matches = "";
-    this.validUrlResult.allMatches = "";
+    this.validatedResult = {};
+    this.validatedResult.protocol = "";
+    this.validatedResult.hostname = "";
+    this.validatedResult.pathname = "";
+    this.validatedResult.query =  "";
+    this.validatedResult.rndRes = [];
+    this.validatedResult.matches = "";
+    this.validatedResult.allMatches = "";
     if (typeof this.text !== "string" || this.text?.length === 0) {
-      console.log("No url string or string length is 0!\nreturning: ",this.validUrlResult)
+      console.log("No url string or string length is 0!\nreturning: ",this.validatedResult)
     }
     else {
       this.urlRegex =
         /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
       this.regxRes = this.text.match(this.urlRegex);
       if (this.regxRes !== null) {
-        this.validUrlResult.matches = this.regxRes;
+        this.validatedResult.matches = this.regxRes;
       }
-      console.log("matches = " + this.validUrlResult.matches);
-      if (this.validUrlResult.matches.length === 0) {
+      console.log("matches = " + this.validatedResult.matches);
+      if (this.validatedResult.matches.length === 0) {
         // this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
         // if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
-          this.validUrlResult.matches = this.dataTree  //this.searchLinkDrive?.dataTree;
+          this.validatedResult.matches = this.dataTree  //this.searchLinkDrive?.dataTree;
         // }
-        console.log("matches to return = " + this.validUrlResult.matches);
+        console.log("matches to return = " + this.validatedResult.matches);
         // if (this.searchLinkDrive?.filedMain) {
         if (this?.filedMain) {
           autoGlobe.functionRegistry.vidTree();
@@ -4171,12 +4175,12 @@ class ValidUrlResult {
           });
           // String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
           Array(this?.filedMain)?.forEach((fileUrl) => {
-            if (fileUrl && this.validUrlResult.rndRes.indexOf(fileUrl) === -1) {
+            if (fileUrl && this.validatedResult.rndRes.indexOf(fileUrl) === -1) {
               if (this.vidData?.indexOf(fileUrl) !== -1) {
-                this.validUrlResult.rndRes.push(fileUrl);
+                this.validatedResult.rndRes.push(fileUrl);
               } 
               else {
-                this.validUrlResult.rndRes.push(fileUrl);
+                this.validatedResult.rndRes.push(fileUrl);
                 updateQuote(
                   JSON.stringify({
                     name: "videoSheet",
@@ -4190,31 +4194,31 @@ class ValidUrlResult {
           });
         }
       }
-      console.log("rndRes = " + this.validUrlResult.rndRes);
-      this.validUrlResult.allMatches = this.validUrlResult.matches ? this.validUrlResult.matches : this.validUrlResult.rndRes;
-      console.log(`allMatches = matches ? [...${this.validUrlResult.allMatches}]`);
-      if (this.validUrlResult.allMatches?.length > 0) {
+      console.log("rndRes = " + this.validatedResult.rndRes);
+      this.validatedResult.allMatches = this.validatedResult.matches ? this.validatedResult.matches : this.validatedResult.rndRes;
+      console.log(`allMatches = matches ? [...${this.validatedResult.allMatches}]`);
+      if (this.validatedResult.allMatches?.length > 0) {
         this.tempUrlResult = {};
         this.tempUrlResult.currentProtocol = "";
         this.tempUrlResult.currentHostname = "";
         this.tempUrlResult.currentPathname = "";
         this.tempUrlResult.currentQuery = "";
-        this.validUrlResult?.allMatches?.forEach((url) => {
+        this.validatedResult?.allMatches?.forEach((url) => {
           this.protocolEnd = url.indexOf("://");
           if (this.protocolEnd !== -1) {
             this.tempUrlResult.currentProtocol = url.substring(0, this.protocolEnd + 3);
             url = url.substring(this.protocolEnd + 3);
           }
           // else {
-          //   if (this.validUrlResult.rndRes.length === 0) {
+          //   if (this.validatedResult.rndRes.length === 0) {
           //     this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
           //     if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
-          //       this.validUrlResult.matches = this.searchLinkDrive?.dataTree;
+          //       this.validatedResult.matches = this.searchLinkDrive?.dataTree;
           //     }
-          //     console.log("matches to return = " + this.validUrlResult.matches);
+          //     console.log("matches to return = " + this.validatedResult.matches);
           //     if (this.searchLinkDrive?.filedMain) {
           //       String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
-          //         if (fileUrl && this.validUrlResult.rndRes.indexOf(fileUrl) === -1) {
+          //         if (fileUrl && this.validatedResult.rndRes.indexOf(fileUrl) === -1) {
           //           autoGlobe.functionRegistry.vidTree();
           //           this.vidSheetVals = autoGlobe.functionRegistry.getVideoList();
           //           this.vidData = [];
@@ -4229,10 +4233,10 @@ class ValidUrlResult {
           //             });
           //           });
           //           if (this.vidData?.indexOf(fileUrl) !== -1) {
-          //             this.validUrlResult.rndRes.push(fileUrl);
+          //             this.validatedResult.rndRes.push(fileUrl);
           //           } 
           //           else {
-          //             this.validUrlResult.rndRes.push(fileUrl);
+          //             this.validatedResult.rndRes.push(fileUrl);
           //             updateQuote(
           //               JSON.stringify({
           //                 name: "videoSheet",
@@ -4244,7 +4248,7 @@ class ValidUrlResult {
           //           }
           //         }
           //       });
-          //       this.validUrlResult.matches = this.searchLinkDrive?.dataTree
+          //       this.validatedResult.matches = this.searchLinkDrive?.dataTree
           //       this.tempUrlResult.currentProtocol = this.searchLinkDrive?.filedMain.substring(0, this.protocolEnd + 3);
           //       url = this.searchLinkDrive?.filedMain.substring(this.protocolEnd + 3);
           //     }
@@ -4256,9 +4260,9 @@ class ValidUrlResult {
           //     }
           //   }
           //   else {
-          //     if (this.validUrlResult.rndRes.length > 0) {
-          //       this.tempUrlResult.currentProtocol = this.validUrlResult.rndRes[0].substring(0, this.protocolEnd + 3);
-          //       url = this.validUrlResult.rndRes[0].substring(this.protocolEnd + 3);
+          //     if (this.validatedResult.rndRes.length > 0) {
+          //       this.tempUrlResult.currentProtocol = this.validatedResult.rndRes[0].substring(0, this.protocolEnd + 3);
+          //       url = this.validatedResult.rndRes[0].substring(this.protocolEnd + 3);
           //     }
           //   }
           // }
@@ -4269,20 +4273,20 @@ class ValidUrlResult {
           } else {
             this.tempUrlResult.currentHostname = url;
           }
-          this.queryStart = this.validUrlResult.pathname.indexOf("?");
+          this.queryStart = this.validatedResult.pathname.indexOf("?");
           if (this.queryStart !== -1) {
-            this.currentQuery = this.validUrlResult.pathname.substring(this.queryStart);
-            this.currentPathname = this.validUrlResult.pathname.substring(0, this.queryStart);
+            this.currentQuery = this.validatedResult.pathname.substring(this.queryStart);
+            this.currentPathname = this.validatedResult.pathname.substring(0, this.queryStart);
           }
           this.hostnameRegex =
             /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
           if (this.tempUrlResult.currentHostname && this.hostnameRegex.test(this.tempUrlResult.currentHostname)) {
             if (this.tempUrlResult.currentProtocol && this.tempUrlResult.currentHostname) {
-              this.validUrlResult.protocol = this.tempUrlResult.currentProtocol;
-              this.validUrlResult.hostname = this.tempUrlResult.currentHostname;
-              this.validUrlResult.pathname = this.tempUrlResult.currentPathname;
-              this.validUrlResult.query = this.tempUrlResult.currentQuery;
-              this.validUrlResult.url =
+              this.validatedResult.protocol = this.tempUrlResult.currentProtocol;
+              this.validatedResult.hostname = this.tempUrlResult.currentHostname;
+              this.validatedResult.pathname = this.tempUrlResult.currentPathname;
+              this.validatedResult.query = this.tempUrlResult.currentQuery;
+              this.validatedResult.url =
                 this.tempUrlResult.currentProtocol +
                 this.tempUrlResult.currentHostname +
                 this.tempUrlResult.currentPathname +
@@ -4444,18 +4448,23 @@ var geneicType = function (e) {
           //     q: data?.argsObject?.func + "," + data?.argsObject?.args,
           //   }
           // };
-          // eQueryObject = {parameter: {q: "sigma"}}
-          // let tempObj = funcHandle(eQueryObject);
+          // eQueryObject = {parameter: {q: "http://politico.com"}}
+          // data = funcHandle(eQueryObject);
           // handles =  tempObj
           console.log("data = " + JSON.stringify(data?.argsObject?.func), executed++);
-          if (data?.argsObject?.func?.length === 0 && data?.funcargsObject?.args?.length === 0) {
+          if (data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) {
             base = data?.argsObject?.res;
           }
           else {
-            // let funcU = data.funcUno;
-            base = data?.argsObject.res;
-            // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
-            // base = new RawFuncResult(funcU, funcD).rawFuncResult;
+            if (data?.tempObj?.argsObject?.app?.length === 0) {
+              base = data?.tempObj?.argsObject?.index?.res
+            }
+            else {
+              // let funcU = data.funcUno;
+              base = data?.argsObject?.res || data?.tempObj?.argsObject?.app;
+              // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
+              // base = new RawFuncResult(funcU, funcD).rawFuncResult;
+            }
           }
         }
         // if (typeof base === "string") {
@@ -4531,7 +4540,9 @@ var geneicType = function (e) {
                     }
                   }
                   else {
-                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [rndWord()]))?.argsObject.res;
+                    let uItems = autoGlobe.uniqueItemArray()
+                    var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
+                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [noSearch]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);

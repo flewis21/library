@@ -79,13 +79,76 @@ function needPastTime(searchString) {
   });
   // while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
-      var noSearch = autoGlobe.searchResult?.parameters;
+      let uItems = autoGlobe.uniqueItemArray()
+      var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
     let searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     if (vidData.indexOf(searchLink) !== -1) {
-      return;
-    } else {
+      // let driveLink = new DriveFiles(searchString,autoGlobe.functionRegistry.time).dataTree;
+      let matchLink = matchManager(null,searchString,autoGlobe.functionRegistry.time);
+      let tempFileArr = [];
+      let tempFolderArr = [];
+      for (let key in matchLink) {
+        let i = 0;
+        let l = Array.isArray(matchLink[key])? matchLink[key].length:[matchLink[key]].length
+        for (i,l;i<l;i++) {
+          let matchType = typeof matchLink[key];
+          if (matchType === "object") {
+            tempFileArr.push(matchLink[key][i]);
+          }
+          else {
+            if (matchType === "string") {
+              if (tempFolderArr.indexOf(matchLink[key] === -1)) {
+                tempFolderArr.push(matchLink[key]);
+              }
+            }
+          }
+        }
+      }
+      let fileArr = [];
+      tempFolderArr.forEach((arrReslt) => {
+        tempFileArr.forEach((strResult) => {
+          let fileObj = fileBrowser(arrReslt,strResult);
+          fileArr.push(fileObj);
+        })
+
+      })
+      let fileRes = [];
+      fileArr.forEach((obj) => {
+        for (let key in obj) {
+          // let i = 0;
+          // let l = Array.isArray(obj[key])? obj[key].length:[obj[key]].length;
+          // for (i,l;i<l;i++) {
+          //   let objType = typeof obj[key];
+          //   if (objType === "object") {
+
+          //   }
+          // }
+          if (key === "url") {
+            let objTest = obj[key];
+            if (vidData.indexOf(objTest) !== -1) {
+              fileRes.push(objTest);
+              return;
+            } else {
+              fileRes.push(objTest);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: 001,
+                  videoid: objTest,
+                  videodescription: searchString,
+                }),
+              );
+            }
+          }
+        }
+      })
+      fndOrdObj.playList = fileRes;
+      fndOrdObj.hardUrl = searchLink;
+      return fndOrdObj;
+    } 
+    else {
       updateQuote(
         JSON.stringify({
           name: "videoSheet",
@@ -265,13 +328,13 @@ function needPastTime(searchString) {
         }
       }
     });
-    if (rndRes && rndRes?.length === 0) {
-      return fndOrdObj
-      let isItValid = isValidUrl(searchString);
-      if (isItValid && isItValid.url) {
-        rndRes =  isItValid.url;
-      }
-    }
+    // if (rndRes && rndRes?.length === 0) {
+    //   return fndOrdObj
+    //   let isItValid = isValidUrl(searchString);
+    //   if (isItValid && isItValid.url) {
+    //     rndRes =  isItValid.url;
+    //   }
+    // }
     
     if (rndRes && rndRes?.length > 0) {
       var rndSort = [];
@@ -285,7 +348,7 @@ function needPastTime(searchString) {
       var revKind = sorKind.reverse();
       var popKind = revKind.pop();
       var rndKind = popKind.split(",");
-      fndOrdObj.playList = rndKind
+      fndOrdObj.playList = rndKind;
     }
     else {
       if (rndRes && rndRes?.length === 0) {

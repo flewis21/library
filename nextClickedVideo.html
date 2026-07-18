@@ -171,7 +171,7 @@
                     // }
                     console.log("the match: " + linkFollow.href);
                     linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
+                    linkFollow.target = "_top";
                     linkFollow.rel = "noopener noreferrer";
                     document.body.appendChild(linkFollow);
                     document.getElementById("linkFOLLOW").click();
@@ -226,7 +226,7 @@
           });
           
         const fetchSuggestions = debounce((query) => {
-          if (query.length < 1) {
+          if (query) {
             suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
             // localStorage.setItem("gsSearch", input.value);
@@ -346,7 +346,7 @@
                     try {
                       // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                       // Access the actual array from the done
-                      // console.log("event: " + typeof done, JSON.stringify(done));
+                      console.log("event: " + typeof done, JSON.stringify(done));
                       if (done && typeof done === "object") {
                         // alert(JSON.stringify(done.data));
                         // alert(Object.keys(done.data).length);
@@ -363,12 +363,12 @@
                               let tData = Array.isArray(done.data[key])? done.data[key][i]:done.data[key];
                               let dLoc =  null;
                               if (String(tData) && String(tData).indexOf("http") === -1) {
-                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                 dLoc =  "https://www.youtube.com/watch?v=";
                                 tempObj.youtubeUrl = dLoc + tData;
                               }
                               else {
-                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                 tempObj.webAddressUrl = tData;
                               }
                               personalizedList.push(tempObj);

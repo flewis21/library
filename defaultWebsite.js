@@ -86,7 +86,7 @@ var createFunctionResult = function (funcUno, funcDos) {
     let rawUrlResult = null;
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
-      isObjValUrl = isValidUrl(objVal);
+      isObjValUrl = new ValidUrlResult(objVal).validatedResult;
       if (Array.isArray(isObjValUrl?.matches)) {
         rawUrlResult = autoGlobe.trueVfalse(isObjValUrl?.matches[0]);
       }
@@ -2655,7 +2655,7 @@ var getUrl = function (appInterface) {
 
 var getUrlResponse = function (url, options) {
   let gURObj = {};
-  let validUrl = isValidUrl(url);
+  let validUrl = new ValidUrlResult(url).validatedResult;
   if (validUrl.hostname) {
     let response;
     let location;

@@ -2004,7 +2004,7 @@ var globalHandleGetData = function (rawFuncResult) {
   // };
   data["timestamp"] = new Date();
   data["pL"] = payLoad;
-  data["title"] = new ValidUrlResult(getScriptUrl()).validUrlResult.pathname.split("/")[3];
+  data["title"] = new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3];
 
   return data;
 };

@@ -132,15 +132,25 @@ function prose() {
     appJS: function () {
       var randomSECCo = allInvestors();
       var randomSECMe = vidPlaylist();
-      var myVid = randomSECCo.title;
-      var myVidId =
-        randomSECMe.videoItemUrl ||
-        (needUtility() && needUtility()[0] && needUtility()[0].videoItemUrl);
-      var infoLink = seoSheet(myVid).keyWords;
+      var myVid = randomSECCo?.title;
+      let altVid = needUtility();
+      let myVidId = null;
+      if (randomSECMe?.videoItemUrl) {
+        myVidId = randomSECMe?.videoItemUrl;
+      }
+      else {
+        if (altVid && altVid[0] && altVid[0]?.videoItemUrl){
+          myVidId = randomSECMe?.videoItemUrl;
+        }
+      }
+      var infoLink = seoSheet(myVid)?.keyWords;
       var pageArray = [];
       if (Array.isArray(infoLink)) {
         var page = infoLink.map(function (tv) {
-          var listItem = seoPastTime(tv) && seoPastTime(tv).playList;
+          let itemArr = seoPastTime(tv);
+          if (itemArr && itemArr.playList) {
+            var listItem = itemArr.playList;
+          }
           if (Array.isArray(listItem)) {
             var plaListNum = Math.floor(
               Math.random() * Math.floor(listItem.length),

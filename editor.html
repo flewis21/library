@@ -13,8 +13,10 @@
               <? var files = DriveApp.searchFiles('mimeType = "application/vnd.google-apps.document"'); ?> 
               <? while (files.hasNext()) {  
                 let file = files.next();
-                <option value=file.getUrl()>file.getName()</option>
-              } ?>
+                let fLink = file.getUrl();
+                let fName = file.getName();
+                <option value=fLink>fName</option>
+               } ?>
             </select>
             <label for="templateSelect">Select a Google Doc</label>
           </div>

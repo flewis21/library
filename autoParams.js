@@ -337,13 +337,13 @@ class FunctionHandle {
                     }
                     else {
                       if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") === -1) {
-                        this.tempObj = new MisStCreator(this.e.parameter[this.objData[0]])  ;
-                        this.mapArr[this.tempObj?.argsObject?.func || autoGlobe.func] = [];
+                        this.tempObj = new MisCreator(this.e.parameter[this.objData[0]])  ;
+                        this.mapArr[this.tempObj?.argsObject?.link || this.tempObj?.argsObject?.func] = [];
                         if (this.tempObj?.argsObject?.args) {
                           this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args]).mapKeys;
                         }
                         else {
-                          this.argsEd = autoGlobe.func;
+                          this.argsEd = new IsMapped(this.mapArr, []).mapKeys || autoGlobe.func;
                         }
                       }
                     }

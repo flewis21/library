@@ -3669,8 +3669,7 @@ function seoPastTime(searchString, time) {
       searchString +
       ", time: " +
       time +
-      ")\n " +
-      arguments.callee.caller.name,
+      ") ",
   );
   console.log(
     formatTime(autoGlobe.functionRegistry.time) +
@@ -4031,9 +4030,9 @@ function vidPlaylist(tunPlay) {
   else {
     let nptVideo = needPastTime(tunPlay);
     let nptUrl = nptVideo?.hardUrl;
-    if (!nptUrl) {
-      return vidResObj;
-    }
+    // if (!nptUrl) {
+    //   return vidResObj;
+    // }
     vidResObj.hardUrl = nptUrl;
     let listObj = nptVideo?.playList;
     if (listObj && listObj?.length > 0) {

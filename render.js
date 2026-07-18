@@ -401,6 +401,8 @@ class ContentApp extends Renderer {
 }
 
 var tentApp = function(blob, argsObject) {
+  console.log("event; ContentApp called: blob -", blob);
+  console.log("event; ContentApp called: argsObject -", JSON.stringify(argsObject));
   let renderStart = new Renderer(blob, argsObject);
   return renderStart;
 }
@@ -480,9 +482,10 @@ class ContentTemplate {
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
 class ContentCDN extends Renderer {
-  constructor (url) {
+  constructor (url, argsObject) {
     super();
     this.url = url;
+    this.argsObject = argsObject;
     // this.argsObject = argsObject;
     // console.log("contentCDN = function (this.url, this.argsObject) ", this.url, this.argsObject);
     try {
@@ -518,7 +521,7 @@ class ContentCDN extends Renderer {
               drivemC: this.contentMessage.filedMain,
             }
           this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
-          this.wATitle = this.contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          this.wATitle = this.contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.cdnOutput = HtmlService.createTemplate(this.html)
             .evaluate()
             .setTitle(this.wATitle)
@@ -536,7 +539,7 @@ class ContentCDN extends Renderer {
               drivemC: this.infoMessage.filedMain,
             }
           this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
-          this.wATitle = this.infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          this.wATitle = this.infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.cdnOutput = HtmlService.createTemplate(this.html)
             .evaluate()
             .setTitle(this.wATitle)
@@ -545,9 +548,9 @@ class ContentCDN extends Renderer {
         }
       }
       this.urlCDN = new DriveFiles(this.url);
-      this.wATitle =  this.urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+      this.wATitle =  this.urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
       console.log("From DriveFiles: urlCDN = " + this.urlCDN.filedMain);
-      this.tmp
+      this.cdnOutput = this.tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .setContent(seoCapital(this.urlCDN.filedMain || this.urlCDN.searArn))
@@ -604,7 +607,7 @@ class ContentCDN extends Renderer {
               drivemC: contentMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
-          let waTitle = contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          let waTitle = contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           return HtmlService.createTemplate(html)
             .evaluate()
             .setTitle(waTitle)
@@ -622,7 +625,7 @@ class ContentCDN extends Renderer {
               drivemC: infoMessage.filedMain,
             }
           let html = ContentApp.appContent(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj);
-          let waTitle = infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+          let waTitle = infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           return HtmlService.createTemplate(html)
             .evaluate()
             .setTitle(waTitle)
@@ -631,7 +634,7 @@ class ContentCDN extends Renderer {
         }
       }
       let urlCDN = new DriveFiles(url);
-      let wATitle =  urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validUrlResult?.pathname.split("/")[3];
+      let wATitle =  urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
       console.log("From DriveFiles: urlCDN = " + urlCDN.filedMain);
       return tmp
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
@@ -659,7 +662,9 @@ class ContentCDN extends Renderer {
 }
 
 var contCDN = function(url, argsObject) {
-  let html = ContentCDN.cdnData(url, argsObject);
+  console.log("event; ContentCDN called: url -", url);
+  console.log("event; ContentCDN called: argsObject -", JSON.stringify(argsObject));
+  let html = new ContentCDN(url, argsObject).cdnOutput;
   return html
 }
 
@@ -1412,10 +1417,10 @@ class RenderFile extends Renderer {
             {
               renTemp: this.tmp.evaluate().getContent(),
             },
-          );
+          ).tmp;
           // return renderTemplate.templateRender(this.html,this.argsObject,this.title)
-          this.fileOutput = HtmlService.createHtmlOutput(this.html) //this.tmp
-              // .evaluate()
+          this.fileOutput = this.html //this.tmp
+              .evaluate()
               .setTitle(this.title)
               // .append(this.html)
               // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -1704,7 +1709,10 @@ class RenderFile extends Renderer {
 }
 
 var rendFile = function(file, argsObject, title) {
-  let html = RenderFile.fileRender(file, argsObject, title)
+  console.log("event; RenderFile called: file -", file);
+  console.log("event; RenderFile called: argsObject -", JSON.stringify(argsObject));
+  console.log("event; RenderFile called: title -", title);
+  let html = new RenderFile(file, argsObject, title).fileOutput;
   return html;
 }
 
@@ -1849,9 +1857,10 @@ class RenderTemplate extends Renderer {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <a id="dmi" href="<?!= drivemI ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
+                                      <iframe id="dmi" src="<?!= global_sea_icn.getContent() ?>" class="thumbnail"></iframe>
+                                    // <a id="dmi" href="<?!= drivemI ?>" target="_blank">
+                                    //   <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
+                                    // </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2489,7 +2498,10 @@ class RenderTemplate extends Renderer {
 }
 
 var rendTemplate = function(blob, argsObject, title) {
-  let html = RenderTemplate.templateRender(blob, argsObject, title);
+  console.log("event; RenderTemplate called: blob -", blob);
+  console.log("event; RenderTemplate called: argsObject -", JSON.stringify(argsObject));
+  console.log("event; RenderTemplate called: title -", title);
+  let html = new RenderTemplate(blob, argsObject, title).templateOutput;
   return html
 }
 

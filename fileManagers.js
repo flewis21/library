@@ -1182,8 +1182,8 @@ var fileFold = function(folderX, fileX, time) {
       tree = pyroFolder.getFiles();
     }
     var nameTree;
-    while (tree.hasNext()) {
-      nameTree = tree.next();
+    while (tree?.hasNext()) {
+      nameTree = tree?.next();
       try {
         JSON.parse(nameTree);
       } catch (check) {
@@ -1372,29 +1372,35 @@ function fileMatchManager(folderX, fileX, time) {
         null,
     );
     var folderX = furtFolder();
-    var pyFolder = DriveApp.getFoldersByName(folderX)?.next();
+    let pyf = DriveApp.getFoldersByName(folderX);
+    if (pyf.hasNext()) {
+      var pyFolder = pyf?.next();
+    }
   } else {
-    var pyFolder = DriveApp.getFoldersByName(folderX)?.next();
+    let pyf = DriveApp.getFoldersByName(folderX);
+    if (pyf.hasNext()) {
+      var pyFolder = pyf?.next();
+    }
   }
-  var tree = pyFolder.getFiles();
+  var tree = pyFolder?.getFiles();
   let l;
-  // let treeIt = tree.hasNext()
+  // let treeIt = tree?.hasNext()
   if (fileX && fileX !== "fileX") {
     var matchFile = [fileX].join("").toLowerCase();
-    while (tree.hasNext()) {
-      var testFile = [tree.next().getName()].join("").toLowerCase();
+    while (tree?.hasNext()) {
+      var testFile = [tree?.next().getName()].join("").toLowerCase();
       if (testFile.includes(matchFile)) {
-        fileTree.push(tree.next().getName());
+        fileTree.push(tree?.next().getName());
       }
     }
   } else {
     // var matchFile = [fileX].join("").toLowerCase();
-    while (tree.hasNext()) {
-      // var testFile = [tree.next().getName()].join("").toLowerCase();
+    while (tree?.hasNext()) {
+      // var testFile = [tree?.next().getName()].join("").toLowerCase();
       // if (testFile.includes(matchFile)) {
       l = 1;
       for (var i = 0; i < l; i++) {
-        fileTree.push(tree.next().getName());
+        fileTree.push(tree?.next().getName());
       }
       // else {
       //   l=0
@@ -1404,10 +1410,10 @@ function fileMatchManager(folderX, fileX, time) {
     }
   }
   if (fileTree.length === 0) {
-    while (tree.hasNext()) {
+    while (tree?.hasNext()) {
       l = 1;
       for (var i = 0; i < l; i++) {
-        fileTree.push(tree.next().getName());
+        fileTree.push(tree?.next().getName());
       }
     }
   }
@@ -1426,8 +1432,8 @@ function fileMatchManager(folderX, fileX, time) {
 // return fileTree
 // else {
 //   var tree = DriveApp.getFiles();
-//   while (tree.hasNext()) {
-//     fileTree.push(tree.next().getName())}
+//   while (tree?.hasNext()) {
+//     fileTree.push(tree?.next().getName())}
 //     return fileTree}
 // return match
 // else {
@@ -1459,10 +1465,10 @@ function folderIdGlobal(folderX, time) {
     var folderX = furtFolder();
   }
   var tree = DriveApp.getFoldersByName(folderX);
-  while (tree.hasNext()) {
+  while (tree?.hasNext()) {
     var elaspeTime = autoGlobe.functionRegistry.time;
     var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
-    var myId = tree.next();
+    var myId = tree?.next();
     var id = myId.getId();
     var myFolder = DriveApp.getFolderById(id).getName();
     if (folderX === myFolder) {
@@ -1559,7 +1565,7 @@ function furtFolder(folder) {
   autoGlobe.functionRegistry.gTree();
   var tree = autoGlobe.functionRegistry.getFolderList();
   if (folder) {
-    var foldersObj = tree[tree.indexOf(folder)];
+    var foldersObj = tree[tree?.indexOf(folder)];
     return folder;
   } else {
     var foldersObj = tree;

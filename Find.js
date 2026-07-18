@@ -502,8 +502,8 @@ function matchManager(folderX, narrow, time) {
     //   xFolder.push(xfolderX);
     // });
     var xFolder = allFolders.sort((a, b) => {
-      let sA = getZuluPriority(a);
-      let sB = getZuluautoGloberiority(b);
+      let sA = autoGlobe.getZuluPriority(a);
+      let sB = autoGlobe.getZuluFreqPriority(b);
       return a - b;
     })[Math.floor(Math.random() * Math.floor(allFolders.length))];
     // console.log(

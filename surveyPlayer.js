@@ -54,8 +54,8 @@ function surveyPlayer(searchString, joinString) {
   while (noList.length < 3) {
     var noVid = substanceVegas(
       0,
-      [listGen].toString().length,
-      [listGen].toString().split(""),
+      String(listGen).toString().length,
+      String(listGen).toString().split(""),
       50,
       1,
       20,
