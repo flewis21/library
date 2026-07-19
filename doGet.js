@@ -1828,7 +1828,7 @@ var globalHandleGetData = function (rawFuncResult) {
         // Overwrite payLoad if 'app' property yields more specific or desired content
         // You might want more sophisticated merging here if both rawFuncResult and .app hold valuable distinct data.
         if (
-          appProcessed.type !== "unknown" ||
+          appProcessed.type !== "unknown" &&
           (appProcessed.data !== null && typeof appProcessed.data !== "undefined")
         ) {
           // while (typeof appProcessed === "object") {
@@ -2571,7 +2571,7 @@ function userClicked() {
 //      })
 //      )//: contentFile('uiAccess');
 //    Route.path("production", includeApp);
-//    return RenderTemplate.templateRender(Route["production"]("<?!= index ?>"))//, { properties: ContentApp.appContent("\n \n  <? var style = styleHtml() ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: styleHtml(), })
+//    return RenderTemplate.templateRender(Route["production"]("<?!= index ?>"))//, { properties: ContentApp.appContent("\n \n  <? var style = stylesSleep ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: stylesSleep, })
 //   } else
 //   {//     switch (e.parameter["default"])
 //     {//       case "posHtml":

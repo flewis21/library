@@ -59,6 +59,72 @@ function iframeC() {
   ).getContent();
 }
 
+
+class ClassifyFiles {
+  constructor(searchString) {
+    this.searchString = searchString;    
+    // let driveLink = new DriveFiles(this.searchString,autoGlobe.functionRegistry.time).dataTree;
+    this.matchLink = matchManager(null,this.searchString,autoGlobe.functionRegistry.time);
+    this.tempFileArr = [];
+    this.tempFolderArr = [];
+    for (let key in this.matchLink) {
+      this.i = 0;
+      this.l = Array.isArray(this.matchLink[key])? this.matchLink[key].length:[this.matchLink[key]].length
+      for (this.i,this.l;this.i<this.l;this.i++) {
+        this.matchType = typeof this.matchLink[key];
+        if (this.matchType === "object") {
+          this.tempFileArr.push(this.matchLink[key][this.i]);
+        }
+        else {
+          if (this.matchType === "string") {
+            if (this.tempFolderArr.indexOf(this.matchLink[key] === -1)) {
+              this.tempFolderArr.push(this.matchLink[key]);
+            }
+          }
+        }
+      }
+    }
+    this.fileArr = [];
+    this.tempFolderArr.forEach((arrReslt) => {
+      this.tempFileArr.forEach((strResult) => {
+        this.fileObj = fileBrowser(arrReslt,strResult);
+        this.fileArr.push(this.fileObj);
+      })
+
+    })
+    this.fileRes = [];
+    this.fileArr?.forEach((obj) => {
+      for (let key in obj) {
+        // let i = 0;
+        // let l = Array.isArray(obj[key])? obj[key].length:[obj[key]].length;
+        // for (i,l;i<l;i++) {
+        //   let objType = typeof obj[key];
+        //   if (objType === "object") {
+
+        //   }
+        // }
+        if (key === "url") {
+          this.objTest = obj[key];
+          if (autoGlobe.vidData?.indexOf(this.objTest) !== -1) {
+            this.fileRes.push(this.objTest);
+          } 
+          else {
+            this.fileRes.push(this.objTest);
+            updateQuote(
+              JSON.stringify({
+                name: "videoSheet",
+                number: parseInt("001", 8),
+                videoid: this.objTest,
+                videodescription: this.searchString,
+              }),
+            );
+          }
+        }
+      }
+    })
+  }
+}
+
 function needPastTime(searchString) {
   let fndOrdObj = {};
   autoGlobe.functionRegistry.vidTree();

@@ -457,7 +457,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
 // console.log(randomWord)
 
 function seoSheet(searchString, time) {
-  let executed = 0;
+  let executed = autoGlobe.executed;
   let elaspeTime;
   if (typeof time === "undefined") {
     var time = autoGlobe.functionRegistry.time;
@@ -642,7 +642,7 @@ function seoSheet(searchString, time) {
   if (stringSplit) {
     if (stringSplit.length > 0) {
       testString = testData([stringSplit], time).testArray;
-      console.log("testString = " + testString, executed++);
+      console.log(JSON.stringify(stringSplit) + "testString = " + testString, executed++);
     }
   } else {
     testString = testData([searchString], time).testArray;

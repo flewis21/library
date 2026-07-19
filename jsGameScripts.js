@@ -4,10 +4,10 @@ function jsGameScripts() {
     `
     <html id="jsGameScripts">
       <head>
-        <?!= styleHtml.abcIt.getContent() ?>
+        <?!= stylesSleep.abcIt.getContent() ?>
         <meta name="jsGameScripts" content="Boilerplate Script Game">
         <style>
-          <?!= styleHtml.renderFile.getContent() ?>
+          <?!= stylesSleep.renderFile.getContent() ?>
         </style>
       </head>
       <body>
@@ -52,9 +52,9 @@ function jsGameScripts() {
         <div class="actions"></div>
         <div class="arena"></div>
         <div class="enemy"></div>
-        <?!= styleHtml.runIt.getContent() ?>
-        <?!= styleHtml.mgfRunIt.getContent() ?>
-        <?!= styleHtml.jsGameScriptsRunIt.getContent() ?>
+        <?!= stylesSleep.runIt.getContent() ?>
+        <?!= stylesSleep.mgfRunIt.getContent() ?>
+        <?!= stylesSleep.jsGameScriptsRunIt.getContent() ?>
       </body>
     </html>`
     ,{

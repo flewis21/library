@@ -3254,7 +3254,7 @@ class StyleHtml {
 let stylesSleep = new StyleHtml();
 
 var builtStyling = function (e) {
-  var content = styleHtml.renderFile.getContent();
+  var content = stylesSleep.renderFile.getContent();
   var frame = frameHtml();
 
   var htmlString = `

@@ -2696,7 +2696,7 @@ var getUrlResponse = function (url, options) {
               if (res >= 300 && res < 400) {
                 // Redirect occurred
                 location = response.getHeaders().Location;
-                console.log("From response: Location = " + location);
+                // console.log("From response: Location = " + location);
                 htmlData = UrlFetchApp.fetch(location, {
                   followRedirects: true,
                   muteHttpExceptions: true,
@@ -2711,7 +2711,7 @@ var getUrlResponse = function (url, options) {
               }
               else {
                 location = response.getContentText();
-                console.log("From response: Location = " + location);
+                // console.log("From response: Location = " + location);
                 htmlData = location;
                 gURObj.app = htmlData;
                 supUrl = url;

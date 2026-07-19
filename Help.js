@@ -3550,7 +3550,7 @@ function seoCapital(url) {
           <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet" />
           <style>
-            <?!= new StyleHtml().renderFile.getContent() ?>
+            <?!= stylesSleep.renderFile.getContent() ?>
           </style>
         </head>
         <body>
@@ -3684,10 +3684,10 @@ function seoPastTime(searchString, time) {
       ", = " +
       time,
   );
-  let executed = 0;
+  let executed = autoGlobe.executed;
   let items;
   if (typeof searchString === "undefined") {
-    items = globalThis.uniqueItemArray();
+    items = autoGlobe.uniqueItemArray();
   } else {
     items = [{ Description: searchString }];
   }
@@ -3801,10 +3801,10 @@ function seoPastTime(searchString, time) {
         });
       }
     } else {
-      var domainSearch = isValidUrl(
+      var domainSearch = new ValidUrlResult(
         "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
           encodeURIComponent(searchString),
-      ).url;
+      ).validatedResult.url;
       console.log("domainSearch = " + domainSearch, executed++);
       // var unFilData = mis(domainSearch)
       // var data = unFilData.app

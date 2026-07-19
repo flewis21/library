@@ -207,21 +207,22 @@ class AppList {
 // </div>
 
 class Renderer {
-  constructor (blob, argsObject, title) {
+  constructor (payLoad, argsObject, title) {
     // super()
-    this.blob = blob;
+    this.file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
+    this.payLoad = payLoad;
     this.argsObject = argsObject;
     this.title = title;
     if (Array.isArray(this.argsObject)) {
       if (this.argsObject.length !== 0) {
-        this.blob = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], this.argsObject, this.title);
+        this.blob = new RenderTemplate(this.payLoad, this.argsObject, this.title || this.argsObject.payL.title);
         // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
       }
     }
     else {
       if (typeof this.argsObject === "object" && !Array.isArray(this.argsObject)) {
         if (this.argsObject !== null && Object.keys(this.argsObject).length > 0 && !this.argsObject?.myVar && !this.argsObject?.myNewArr && !Object.keys(this.argsObject)[0]?.rndTitle && typeof Object.keys(this.argsObject)[0] !== "number") {
-          this.blob = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], this.argsObject, this.title);
+          this.blob = new RenderTemplate(this.payLoad, this.argsObject, this.title || this.argsObject.payL.title);
           // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
         }
       }
@@ -237,9 +238,12 @@ class Renderer {
   }
 }
 
-var startRenderer = function(blob, argsObject, title) {
-  let payload = new Renderer(blob, argsObject, title);
-  return payload
+var startRenderer = function(payLoad, argsObject, title) {
+  console.log("event; startRenderer called: payLoad -", payLoad);
+  console.log("event; startRenderer called: argsObject -", JSON.stringify(argsObject));
+  console.log("event; startRenderer called: title -", title);
+  let blob = new Renderer(payLoad, argsObject, title);
+  return blob;
 }
 
 class ContentApp extends Renderer {
@@ -484,25 +488,29 @@ class ContentTemplate {
 class ContentCDN extends Renderer {
   constructor (url, argsObject) {
     super();
-    this.url = url;
-    this.argsObject = argsObject;
-    // this.argsObject = argsObject;
-    // console.log("contentCDN = function (this.url, this.argsObject) ", this.url, this.argsObject);
+    let payType = argsObject?.payL?.pL?.type;
+    let mContent = argsObject?.payL?.message?.content;
+    let mInfo = argsObject?.payL?.message?.info;
+    let contentMessage = "";
+    let locObj = "";
+    let html = "";
+    let wATitle = null;
+    let cdnOutput = "";
+    let infoMessage = "";
+    let tmp = "";
+    let keys = "";
+    // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
-      console.log("cdnData argsObject before tmp processing", this.argsObject);
-      this.tmp = HtmlService.createHtmlOutputFromFile("cors")
-      if (this.argsObject) {
-        try {
-          this.keys = Object.keys(this.argsObject);
-          this.keys.forEach(function (key) {
-            this.tmp[key] = this.argsObject[key];
-          });
-        } 
-        catch (error) {
-          console.rror("Error in contentCDN tmp" + error);
-        }
+      console.log("cdnData argsObject before tmp processing", argsObject);
+      tmp = HtmlService.createHtmlOutputFromFile("cors")
+      if (argsObject) {
+        keys = Object.keys(argsObject);
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+          console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
       }
-      console.log("cdnData argsObject after tmp processing", this.tmp);
+      console.log("cdnData argsObject after tmp processing", tmp);
       // console.log(
       //   "boilerplate render: line 359\ncontentCDN(this.tmp: " +
       //     JSON.stringify(this.tmp) +
@@ -510,51 +518,52 @@ class ContentCDN extends Renderer {
       //     arguments.callee.caller.name,
       // );
       //Early return
-      console.log("tmp payL pL type\n" + this.tmp.payL?.pL?.type, this.tmp.payL?.pL);
-      if (this.tmp.payL?.pL?.type !== "url" && this.tmp.payL?.pL?.type !== "text") {
-        if (this.tmp.payL?.message?.content) {
-          this.contentMessage = new DriveFiles(this.tmp.payL?.message?.content);
-          console.log("From DriveFiles: contentMessage = " + this.contentMessage.filedMain);
-          console.log("tmp payL message content\n" + this.tmp.payL?.message?.content, this.tmp.payL?.message);
-          this.locObj = 
+      console.log("tmp payL pL type\n" + payType, tmp?.payL?.pL);
+      if (payType !== "url" && payType !== "text") {
+        if (mContent) {
+          contentMessage = new ClassifyFiles(mContent);
+          console.log("From DriveFiles: contentMessage = " + contentMessage.objTest);
+          console.log("tmp payL message content\n" + mContent, tmp?.payL?.message);
+          locObj = 
             {
-              drivemC: this.contentMessage.filedMain,
+              drivemC: contentMessage.objTest,
             }
-          this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
-          this.wATitle = this.contentMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          this.cdnOutput = HtmlService.createTemplate(this.html)
+          html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          cdnOutput = html
             .evaluate()
-            .setTitle(this.wATitle)
+            .setTitle(wATitle)
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
       else {
-        if (this.tmp.payL?.message?.info) {
-          this.infoMessage = new DriveFiles(this.tmp.payL?.message?.info);
-          console.log("From DriveFiles: infoMessage = " + this.infoMessage.filedMain);
-          console.log("tmp payL message info\n" + this.tmp.payL?.message?.info, this.tmp.payL?.message);
-          this.locObj = 
+        if (mInfo && payType === "text") {
+          infoMessage = new ClassifyFiles(mInfo);
+          console.log("From DriveFiles: infoMessage = " + infoMessage.objTest);
+          console.log("tmp payL message info\n" + mInfo, tmp.payL?.message);
+          locObj = 
             {
-              drivemC: this.infoMessage.filedMain,
+              drivemC: infoMessage.objTest,
             }
-          this.html = tentApp(this.tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),this.locObj);
-          this.wATitle = this.infoMessage.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          this.cdnOutput = HtmlService.createTemplate(this.html)
+          html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          cdnOutput = html
             .evaluate()
-            .setTitle(this.wATitle)
+            .setTitle(wATitle)
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
-      this.urlCDN = new DriveFiles(this.url);
-      this.wATitle =  this.urlCDN.searArn || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-      console.log("From DriveFiles: urlCDN = " + this.urlCDN.filedMain);
-      this.cdnOutput = this.tmp
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .setContent(seoCapital(this.urlCDN.filedMain || this.urlCDN.searArn))
-        .setTitle(this.wATitle);
+      if (mInfo && payType === "url") {
+        wATitle =  new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+        console.log("From DriveFiles: mInfo = " + mInfo);
+        cdnOutput = tmp
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+          .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setContent(seoCapital(mInfo || wATitle))
+          .setTitle(wATitle);
+      }
     }
     catch (erR) {
       console.log("error in contentCDN: " + erR);
@@ -562,6 +571,19 @@ class ContentCDN extends Renderer {
         "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
       );
     }
+    this.url = url;
+    this.argsObject = argsObject;
+    this.tmp = tmp;
+    this.keys = keys;
+    this.payType = payType;
+    this.mContent = mContent;
+    this.mInfo = mInfo;
+    this.contentMessage = contentMessage;
+    this.locObj = locObj;
+    this.html = html;
+    this.wATitle = wATitle;
+    this.cdnOutput =cdnOutput;
+    this.infoMessage = infoMessage;
     // this.redirectURL = encodeURIComponent(
     //   this.url +
     //     "?" +
@@ -585,7 +607,7 @@ class ContentCDN extends Renderer {
           });
         } 
         catch (error) {
-          console.rror("Error in contentCDN tmp" + error);
+          console.error("Error in contentCDN tmp" + error);
         }
       }
       console.log("cdnData argsObject after tmp processing", tmp);
@@ -678,28 +700,25 @@ class ContentFile {
           .getContent(),
       );
       console.log(
-        "boilerplate render: line 326\ncontentFile(tmp: " +
+        "line 680\nContentFile(tmp: " +
           JSON.stringify(tmp) +
-          ")\n" +
-          arguments.callee.caller.name,
+          ")",
       );
       if (argsObject) {
         const keys = Object.keys(argsObject);
         console.log(
-          "boilerplate render: line 336\ncontentFile(keys: " +
+          "line 688\nContentFile(keys: " +
             keys[0] +
-            ")\n" +
-            arguments.callee.caller.name,
+            ")\n",
         );
         keys.forEach(function (key) {
           tmp[key] = argsObject[key];
         });
       }
       console.log(
-        "boilerplate render: line 348\ncontentFile(tmp: " +
+        "line 697\nContentFile(tmp: " +
           JSON.stringify(tmp[0]) +
-          ")\n" +
-          arguments.callee.caller.name,
+          ")",
       );
       this.tmp = tmp
         .evaluate()
@@ -1717,11 +1736,11 @@ var rendFile = function(file, argsObject, title) {
 }
 
 class RenderTemplate extends Renderer {
-  constructor () {
+  constructor (blob, argsObject, title) {
     super();
-    // this.blob = blob;
-    // this.argsObject = argsObject;
-    // this.title = title;
+    this.blob = blob;
+    this.argsObject = argsObject;
+    this.title = title;
     console.log(
       "boilerplate render: line 201\nrenderTemplate.templateRender(blob: " + this.blob &&
         this.blob?.length > 9
@@ -1738,55 +1757,96 @@ class RenderTemplate extends Renderer {
     console.log("argsObject before blob & tmp processing", this.argsObject);
     this.tmp = HtmlService.createTemplate(this.blob);
     if (this.argsObject) {
+      const keys = Object.keys(this.argsObject);
+      let shortTmp = this.tmp;
+      let shortObj = this.argsObject;
       try {
-        const keys = Object.keys(this.argsObject);
         keys.forEach(function (key) {
-          this.tmp[key] = this.argsObject[key];
+          shortTmp[key] = shortObj[key];
+          // this.tmp[key] = this.argsObject[key];
         });
       } catch (error) {
         return "Error in renderTemplate tmp" + error;
       }
+      this.tmp = shortTmp;
     }
     console.log("argsObject after tmp processing", this.tmp);
     // this.funcCheck = appList();
     // this.css = builtStyling();
     // this.schedule = dateTime(new Date());
     // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
-    this.html = null;
-    this.htmlPayL = null;
-    this.htmlPL = null;
+    this.payType = this.tmp.payL?.pL?.type;
+    this.parType = this.tmp.payL?.type;
+    this.payData = this.tmp.payL?.data;
+    this.payInfo = this.tmp.payL?.message?.info;
+    this.payTmp = this.tmp.evaluate().getContent();
+    this.payDataPL = this.tmp.payL?.pL?.data;
+    this.payDataD = this.tmp.payL?.pL?.dataData;
+    this.payDataI = this.tmp.payL?.pL?.dataIndex;
+    this.payMFeed = this.tmp.payL?.message?.feed;
+    this.payLink = this.tmp.payL?.pL?.link; 
+    this.payM = this.tmp.payL?.message;
+    this.payMContent = this.tmp.payL?.message?.content;
+    this.payPL = this.tmp.payL?.pL;
+    let shortTitle = this.title;
+    let shortType = this.payType;
+    let shortPar = this.parType;
+    let shortData = this.payData;
+    let shortInfo = this.payInfo;
+    let shortTmp = this.payTmp;
+    let shortDataPL = this.payDataPL;
+    let shortDataD = this.payDataD;
+    let shortDataI = this.payDataI;;
+    let shortFeed = this.payMFeed;
+    let shortLink = this.payLink; 
+    let shortM = this.payM;
+    let shortMContent = this.payMContent;
+    let shortPL = this.payPL;
+    let shortHtml = "";
+    let shortHtmlPayL = "";
+    let shortHtmlPL = "";
     try {
-      if (this.tmp.payL?.pL?.type === "html"  || this.tmp.payL?.type === "html") {
-        if (this.tmp.payL?.type === "html") {
-          this.htmlPayL = tentApp(this.tmp.payL?.data,
+      if (shortType === "html"  || shortPar === "html") {
+        if (shortPar === "html") {
+          shortHtmlPayL = new ContentApp(shortData,
             {
-              driveT: this.tmp.payL?.type,
+              driveT: shortPar,
             },
-          );
+          ).tmp
+            .evaluate()
+            .setTitle(shortTitle)
+            // .append(shortHtml)
+            // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+            .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
         }
         else {
-          if (this.tmp.payL?.pL?.type === "html") {
-            this.htmlPL = tentApp(this.tmp.payL?.message?.info,
+          if (shortType === "html") {
+            shortHtmlPL = new ContentApp(shortInfo,
               {
-                renTemp: this.tmp.evaluate().getContent(),
+                renTemp: shortTmp,
                 driveA: JSON.stringify(this.argsObject),
-                driveD: this.tmp.payL?.pL?.data,
-                drivedD: this.tmp.payL?.pL?.dataData,
-                drivemI: this.tmp.payL?.message?.info,
-                drivedI: this.tmp.payL?.pL?.dataIndex,
-                drivedU: this.tmp.payL?.message?.feed,
-                driveL: this.tmp.payL?.pL?.link,
-                driveM: this.tmp.payL?.message,
-                drivemC: this.tmp.payL?.message?.content,
-                driveP: this.tmp.payL?.pL,
-                driveT: this.tmp.payL?.pL?.type,
+                driveD: shortDataPL,
+                drivedD: shortDataD,
+                drivemI: shortInfo,
+                drivedI: shortDataI,
+                drivedU: shortFeed,
+                driveL: shortLink,
+                driveM: shortM,
+                drivemC: shortMContent,
+                driveP: shortPL,
+                driveT: shortType,
               },
-            );
+            ).tmp
+              .evaluate()
+              .setTitle(shortTitle)
+              // .append(shortHtml)
+              // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+              .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
           }
         }
       }
       else {
-        this.html = tentApp(
+        shortHtml = new ContentApp(
           `
         <html id="renderTemplate">
           <head>
@@ -2071,20 +2131,25 @@ class RenderTemplate extends Renderer {
           </body>
         </html>`,
           {
-            renTemp: this.tmp.evaluate().getContent(),
+            renTemp: shortTmp,
             driveA: JSON.stringify(this.argsObject),
-            driveD: this.tmp.payL?.pL?.data,
-            drivedD: this.tmp.payL?.pL?.dataData,
-            drivemI: this.tmp.payL?.message?.info,
-            drivedI: this.tmp.payL?.pL?.dataIndex,
-            drivedU: this.tmp.payL?.message?.feed,
-            driveL: this.tmp.payL?.pL?.link,
-            driveM: this.tmp.payL?.message,
-            drivemC: this.tmp.payL?.message?.content,
-            driveP: this.tmp.payL?.pL,
-            driveT: this.tmp.payL?.pL?.type,
+            driveD: shortDataPL,
+            drivedD: shortDataD,
+            drivemI: shortInfo,
+            drivedI: shortDataI,
+            drivedU: shortFeed,
+            driveL: shortLink,
+            driveM: shortM,
+            drivemC: shortMContent,
+            driveP: shortPL,
+            driveT: shortType,
           },
-        );
+        ).tmp
+          .evaluate()
+          .setTitle(shortTitle)
+          // .append(shortHtml)
+          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
       }
     } catch (error) {
       console.error("Error rendering template:", error, error.stack);
@@ -2092,20 +2157,9 @@ class RenderTemplate extends Renderer {
         "Error in rendertemplate html: " + this.blob + "\n" + error.stack,
       );
     }
-    if(!this.htmlPayL || !this.htmlPL) {
-      this.templateOutput =  HtmlService.createHtmlOutput(this.html) //this.tmp
-          .setTitle(this.title)
-          // .append(this.html)
-          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-    }
-    else {
-      this.templateOutput = HtmlService.createHtmlOutput(this.htmlPayL || this.htmlPL) //this.tmp
-          .setTitle(this.title)
-          // .append(this.html)
-          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-    }
+    this.html = shortHtml;
+    this.htmlPayL = shortHtmlPayL;
+    this.htmlPL = shortHtmlPL;
   }
   static templateRender (blob, argsObject, title) {
     console.log(

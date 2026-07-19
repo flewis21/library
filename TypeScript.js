@@ -1853,6 +1853,28 @@ class GetDomains extends IsMapped {
     });
   };
 }
+let dotBubble = new GetDomains()
+
+class ClassifyYIDs extends GetDomains {
+  constructor() {
+    super();
+    this.functionRegistry.vidTree();
+    this.vidSheetVals = this.functionRegistry.getVideoList();
+    this.vidData = [];
+    this.vidVals = Object.values(this.vidSheetVals);
+    this.vidVals.forEach((val) => {
+      this.inValsKeys = Object.keys(val);
+      this.inVVals = Object.values(val);
+      this.inVVals.forEach((inV) => {
+        this.truInv = this.trueVfalse(inV);
+        if (this.truInv) {
+          this.vidData.push(inV);
+        }
+      });
+    });
+  }
+}
+let inetGet =  new ClassifyYIDs()
 
 class RawFuncResult {
   constructor(funcUno, funcDos) {
@@ -2048,7 +2070,7 @@ class MisCreator {
           this.earlyReturn = "misSt returned errors: " + JSON.stringify(this.supFunc);
           this.errorthis.url = this.text;
           this.form =
-            new DriveFiles(String(this.text).toUpperCase()).filedMain ||
+            new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
             formMaker(
               [this.text].join("").toUpperCase(),
               "misForms",
@@ -2171,14 +2193,14 @@ class MisCreator {
       }
       this.payT = this.payT.toUpperCase();
       try {
-        this.form = new DriveFiles([this.formattedPayload][0] || this.payLoad).filedMain;
+        this.form = new ClassifyFiles([this.formattedPayload][0] || this.payLoad).objTest;
         this.webAppObj = {
           funcStr: globalThis[this.supFunc.func]?.toString(),
           url: this.form,
         };
       } catch (balance) {
         this.form =
-          new DriveFiles([this.formattedPayload][0] || this.payLoad).filedMain ||
+          new ClassifyFiles([this.formattedPayload][0] || this.payLoad).objTest ||
           formMaker(this.payT, "misForms", autoGlobe.functionRegistry.time);
         autoGlobe.executed++;
 
@@ -2239,7 +2261,8 @@ class MisCreator {
       }
       console.log("Final app:", this.supFunc.res);
       this.argsObject = { index: this.webAppObj, app: this.supFunc.res, link: this.supUrl };
-    } else {
+    } 
+    else {
       this.response;
       this.location;
       this.htmlData;
@@ -2263,21 +2286,22 @@ class MisCreator {
             muteHttpExceptions: true,
           },
         );
-      } catch (e) {
+      } 
+      catch (e) {
         Logger.log("Error fetching URL: ", e.toString());
         console.error("Error fetching URL: ", e.toString());
         this.htmlData = "Error fetching URL: " + e.toString();
         this.supUrl = this.validUrl?.hostname;
         try {
-          this.form = new DriveFiles(String(this.text).toUpperCase()).filedMain;
+          this.form = new ClassifyFiles(String(this.text).toUpperCase()).objTest;
           this.responseObj = {
-            dataStr: seoPastTime(this.validUrl?.hostname),
+            dataStr: this.htmlData || seoPastTime(this.validUrl?.hostname),
             url: this.form,
           };
         } catch (balance) {
           // var this.form = formMaker();
           this.form =
-            new DriveFiles(String(this.text).toUpperCase()).filedMain ||
+            new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
             formMaker(
               [JSON.stringify(this.text)].join("").toUpperCase(),
               "misForms",
@@ -2443,9 +2467,9 @@ class MisCreator {
                 }).getContentText();
                 this.supUrl = this.location;
                 try {
-                  this.form = new DriveFiles(
+                  this.form = new ClassifyFiles(
                     String(this.text).toUpperCase(),
-                  ).filedMain;
+                  ).objTest;
                   this.responseObj = {
                     dataStr: this.htmlData || seoPastTime(new ValidUrlResult(this.location).validatedResult.hostname),
                     url: this.form,
@@ -2453,7 +2477,7 @@ class MisCreator {
                 } catch (balance) {
                   // var this.form = formMaker();
                   this.form =
-                    new DriveFiles(String(this.text).toUpperCase()).filedMain ||
+                    new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
                     formMaker(
                       [JSON.stringify(this.text)].join("").toUpperCase(),
                       "misForms",
@@ -2609,9 +2633,9 @@ class MisCreator {
                 this.htmlData = this.location;
                 this.supUrl = this.validUrl.hostname;
                 try {
-                  this.form = new DriveFiles(
+                  this.form = new ClassifyFiles(
                     String(this.text).toUpperCase(),
-                  ).filedMain;
+                  ).objTest;
                   this.responseObj = {
                     dataStr: seoPastTime(this.validUrl.hostname),
                     url: this.form,
@@ -2619,7 +2643,7 @@ class MisCreator {
                 } catch (balance) {
                   // var this.form = formMaker();
                   this.form =
-                    new DriveFiles(String(this.text).toUpperCase()).filedMain ||
+                    new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
                     formMaker(
                       [JSON.stringify(this.text)].join("").toUpperCase(),
                       "misForms",
@@ -3111,7 +3135,7 @@ class MisStCreator {
             // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
             this.declaredParams.forEach((paramName, index) => {
               console.log(
-                "DEBUG: boilerplate Help: line 1722\nmisSt\norderedArgsForCurrentFunc:",
+                "DEBUG: line 3114\nMisStCreator\norderedArgsForCurrentFunc:",
                 this.orderedArgsForCurrentFunc,
               );
               // Try to get a positional argument first from initialContent
@@ -4451,17 +4475,19 @@ var geneicType = function (e) {
           // eQueryObject = {parameter: {q: "http://politico.com"}}
           // data = funcHandle(eQueryObject);
           // handles =  tempObj
-          console.log("data = " + JSON.stringify(data?.argsObject?.func), executed++);
           if (data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) {
+            console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
             base = data?.argsObject?.res;
           }
           else {
             if (data?.tempObj?.argsObject?.app?.length === 0) {
+              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
               base = data?.tempObj?.argsObject?.index?.res
             }
             else {
+              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
               // let funcU = data.funcUno;
-              base = data?.argsObject?.res || data?.tempObj?.argsObject?.app;
+              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app;
               // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
               // base = new RawFuncResult(funcU, funcD).rawFuncResult;
             }
@@ -4532,6 +4558,7 @@ var geneicType = function (e) {
                   if (typeof base === "object" && !Array.isArray(base)) {
                     if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
                       dataOR = globalHandleGetData(base);
+                      console.log()
                       // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                       return dataOR
                     }
@@ -4540,9 +4567,12 @@ var geneicType = function (e) {
                     }
                   }
                   else {
-                    let uItems = autoGlobe.uniqueItemArray()
-                    var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
-                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [noSearch]))?.argsObject.res;
+                    let uItems = autoGlobe.uniqueItemArray();
+                    let uiCos = autoGlobe.uniqueCoArray();
+                    let noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
+                    let unSearch = uiCos[Math.floor(Math.random() * Object.keys(uItems.length).length)].title;
+                    let uhUh = Array(noSearch,unSearch)[Math.floor(Math.random() * 2)];
+                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [uhUh]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);
@@ -4599,7 +4629,7 @@ var geneicType = function (e) {
         // let tempObj = funcHandle(e);
         // handles =  tempObj
         // console.log("handles = " + JSON.stringify(handles), executed++);
-        console.log("data = " + JSON.stringify(data), executed++);
+        console.log("event; FuncHandle returned: data = " + JSON.stringify(data), autoGlobe.executed++);
         if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
           base = data;
         }
