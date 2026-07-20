@@ -208,33 +208,38 @@ class AppList {
 
 class Renderer {
   constructor (payLoad, argsObject, title) {
-    // super()
-    this.file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
-    this.payLoad = payLoad;
-    this.argsObject = argsObject;
-    this.title = title;
-    if (Array.isArray(this.argsObject)) {
-      if (this.argsObject.length !== 0) {
-        this.blob = new RenderTemplate(this.payLoad, this.argsObject, this.title || this.argsObject.payL.title);
+    let blob = "";
+    console.log("event; Renderer payLoad received ", payLoad);
+    console.log("event; Renderer argsObject received ", JSON.stringify(argsObject));
+    console.log("event; Renderer title received ", title);
+    if (Array.isArray(argsObject)) {
+      if (argsObject.length !== 0) {
+        blob = new RendTemplate(payLoad, argsObject, title || argsObject?.payL?.title || argsObject?.driveA?.payL?.title);
         // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
       }
     }
     else {
-      if (typeof this.argsObject === "object" && !Array.isArray(this.argsObject)) {
-        if (this.argsObject !== null && Object.keys(this.argsObject).length > 0 && !this.argsObject?.myVar && !this.argsObject?.myNewArr && !Object.keys(this.argsObject)[0]?.rndTitle && typeof Object.keys(this.argsObject)[0] !== "number") {
-          this.blob = new RenderTemplate(this.payLoad, this.argsObject, this.title || this.argsObject.payL.title);
+      if (typeof argsObject === "object" && !Array.isArray(argsObject)) {
+        if (argsObject !== null && Object.keys(argsObject).length > 0 && !argsObject?.myVar && !argsObject?.myNewArr && !Object.keys(argsObject)[0]?.rndTitle && typeof Object.keys(argsObject)[0] !== "number") {
+          blob = new RendTemplate(payLoad, argsObject, title || argsObject?.payL?.title || argsObject?.driveA?.payL?.title);
           // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
         }
       }
       else {
-        if (typeof this.argsObject === "string") {
-          if (String(this.argsObject).length > 0) {
-            this.blob = this.argsObject;
+        if (typeof argsObject === "string") {
+          if (String(argsObject).length > 0) {
+            blob = argsObject;
               // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
           }
         }
       }
     }
+    // super()
+    this.file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
+    this.payLoad = payLoad;
+    this.argsObject = argsObject;
+    this.title = title;
+    this.blob = blob;
   }
 }
 
@@ -246,32 +251,31 @@ var startRenderer = function(payLoad, argsObject, title) {
   return blob;
 }
 
-class ContentApp extends Renderer {
+class ContentApp {
   constructor(blob, argsObject) {
-    super();
-    this.blob = blob;
-    this.argsObject = argsObject;
+    console.log("event; ContentApp blob received ", blob);
+    console.log("event; ContentApp argsObject received ", JSON.stringify(argsObject));
     console.log(
       "boilerplate render: line 201\ncontentApp(blob: " +
-        this.blob?.slice(0, 130) +
+        blob?.slice(0, 130) +
         "..., argsObject: " +
-        JSON.stringify(this.argsObject)?.slice(0, 130) +
+        JSON.stringify(argsObject)?.slice(0, 130) +
         ")",
     );
     console.log(
       autoGlobe.functionRegistry.time +
         "\nBlob is !" +
-        !this.blob +
+        !blob +
         " = " +
-        this.blob.substring(0, 130) +
+        blob.substring(0, 130) +
         "...\nargsObject is !" +
-        !this.argsObject +
+        !argsObject +
         " = " +
-        JSON.stringify(this.argsObject).slice(0, 130),
+        JSON.stringify(argsObject).slice(0, 130),
     );
-    this.api = null;
+    let api = null;
     try {
-      this.api = ContentService.createTextOutput(this.blob)
+      api = ContentService.createTextOutput(blob)
         .setMimeType(ContentService.MimeType.JSON)
         .getContent();
     } catch (error) {
@@ -281,9 +285,9 @@ class ContentApp extends Renderer {
       );
     }
 
-    this.tmp;
+    let tmp;
     try {
-      this.tmp = HtmlService.createTemplate(this.api);
+      tmp = HtmlService.createTemplate(api);
     } catch (error) {
       console.log("error in contentApp: " + error);
       console.error(
@@ -293,15 +297,13 @@ class ContentApp extends Renderer {
           error.stack,
       );
     }
+    let keys = "";
     try {
-      if (this.argsObject) {
-        this.keys = Object.keys(this.argsObject);
-        let shortTmp = this.tmp;
-        let shortObj = this.argsObject;
-        this.keys.forEach(function (key) {
-          shortTmp[key] = shortObj[key];
+      if (argsObject) {
+        keys = Object.keys(argsObject);
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
         });
-        this.tmp = shortTmp;
       }
     } catch (error) {
       console.log("error in contentApp: " + error);
@@ -310,12 +312,13 @@ class ContentApp extends Renderer {
       );
     }
     try {
-      this.tmp
-          .evaluate()
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .getContent()
-    } catch (error) {
+      tmp
+        .evaluate()
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .getContent()
+    } 
+    catch (error) {
       console.log("error in contentApp: " + error);
       console.error(
         "Error in contentApp evaluation: " +
@@ -324,6 +327,12 @@ class ContentApp extends Renderer {
           error.stack,
       );
     }
+    // super();
+    this.blob = blob;
+    this.argsObject = argsObject;
+    this.api = api;
+    this.tmp = tmp;
+    this.keys = keys;
   }
 
 
@@ -485,12 +494,14 @@ class ContentTemplate {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-class ContentCDN extends Renderer {
+class ContentCDN {
   constructor (url, argsObject) {
-    super();
+    console.log("event; ContentCDN url received ", url);
+    console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
     let payType = argsObject?.payL?.pL?.type;
     let mContent = argsObject?.payL?.message?.content;
     let mInfo = argsObject?.payL?.message?.info;
+    let pData = argsObject?.payL?.pL?.data;
     let contentMessage = "";
     let locObj = "";
     let html = "";
@@ -528,11 +539,12 @@ class ContentCDN extends Renderer {
             {
               drivemC: contentMessage.objTest,
             }
-          html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          html = new RendTemplate(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).html;
           wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           cdnOutput = html
-            .evaluate()
-            .setTitle(wATitle)
+            // .evaluate()
+            // .setTitle(wATitle)
+            .setContent(HtmlService.createHtmlOutput(html).getContent())
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
@@ -546,22 +558,23 @@ class ContentCDN extends Renderer {
             {
               drivemC: infoMessage.objTest,
             }
-          html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).tmp;
+          html = new RendTemplate(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).html;
           wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           cdnOutput = html
-            .evaluate()
-            .setTitle(wATitle)
+            // .evaluate()
+            // .setTitle(wATitle)
+            .setContent(HtmlService.createHtmlOutput(html).getContent())
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
             .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
         }
       }
-      if (mInfo && payType === "url") {
+      if ((mInfo || pData) && payType === "url") {
         wATitle =  new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-        console.log("From DriveFiles: mInfo = " + mInfo);
+        console.log("From DriveFiles: mInfo = " + (mInfo || pData));
         cdnOutput = tmp
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
           .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .setContent(seoCapital(mInfo || wATitle))
+          .setContent(seoCapital((mInfo || pData) || wATitle))
           .setTitle(wATitle);
       }
     }
@@ -571,6 +584,7 @@ class ContentCDN extends Renderer {
         "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
       );
     }
+    // super();
     this.url = url;
     this.argsObject = argsObject;
     this.tmp = tmp;
@@ -578,11 +592,12 @@ class ContentCDN extends Renderer {
     this.payType = payType;
     this.mContent = mContent;
     this.mInfo = mInfo;
+    this.pData = pData;
     this.contentMessage = contentMessage;
     this.locObj = locObj;
     this.html = html;
     this.wATitle = wATitle;
-    this.cdnOutput =cdnOutput;
+    this.cdnOutput = cdnOutput;
     this.infoMessage = infoMessage;
     // this.redirectURL = encodeURIComponent(
     //   this.url +
@@ -768,7 +783,7 @@ function defSBD(e) {
     if (e && e.parameter && e.parameter["func"] && !globalThis.hasOwnProperty(e.parameter["func"])) {
       // Get the actual function
       var foobarr = globalThis["rendFile"];
-      let html = RenderTemplate.templateRender(
+      let html = renderTemplate(
         `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
           body {
             flex-grow: 1;
@@ -864,7 +879,7 @@ function freeSBD(func) {
       var foobarr = testArray.res;
       var urlFunc = isValidUrl(foobarr).hostname;
       let html = null;
-      html = RenderTemplate.templateRender(
+      html = renderTemplate(
         `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -1143,7 +1158,7 @@ var includeGSFile = function (file, argsArray) {
 };
 
 var includeGSBlob = function (blob, argsObject) {
-  return renderTemplate.templateRender(`<?!= appJS ?>`, {
+  return renderTemplate(`<?!= appJS ?>`, {
     appJS: async function () {
       try {
         const content = await serverSide(blob, argsObject);
@@ -1198,6 +1213,9 @@ globalThis.oneTime = 59.9 * 1000;
 
 class RenderFile extends Renderer { 
   constructor(file, argsObject, title) {
+    console.log("event; RenderFile file received ", file);
+    console.log("event; RenderFile argsObject received ", JSON.stringify(argsObject));
+    console.log("event; RenderFile title received ", title);
     super();
     this.file = file;
     this.argsObject = argsObject;
@@ -1437,7 +1455,7 @@ class RenderFile extends Renderer {
               renTemp: this.tmp.evaluate().getContent(),
             },
           ).tmp;
-          // return renderTemplate.templateRender(this.html,this.argsObject,this.title)
+          // return renderTemplate(this.html,this.argsObject,this.title)
           this.fileOutput = this.html //this.tmp
               .evaluate()
               .setTitle(this.title)
@@ -1704,7 +1722,7 @@ class RenderFile extends Renderer {
               renTemp: tmp.evaluate().getContent(),
             },
           );
-          // return renderTemplate.templateRender(html,argsObject,title)
+          // return renderTemplate(html,argsObject,title)
           return HtmlService.createHtmlOutput(html) //tmp
               // .evaluate()
               .setTitle(title)
@@ -1735,73 +1753,50 @@ var rendFile = function(file, argsObject, title) {
   return html;
 }
 
-class RenderTemplate extends Renderer {
+class RendTemplate {
   constructor (blob, argsObject, title) {
-    super();
-    this.blob = blob;
-    this.argsObject = argsObject;
-    this.title = title;
+    console.log("event; RendTemplate blob received ", blob);
+    console.log("event; RendTemplate argsObject received ", JSON.stringify(argsObject));
+    console.log("event; RendTemplate title received ", title);
     console.log(
-      "boilerplate render: line 201\nrenderTemplate.templateRender(blob: " + this.blob &&
-        this.blob?.length > 9
-        ? this.blob?.substring(0, 130)
+      "DEBUG: line 1762\nRendTemplate.templateRender(blob: " + blob &&
+        blob?.length > 9
+        ? blob?.substring(0, 130)
         : "" +
             "..., argsObject: " +
-            JSON.stringify(this.argsObject) +
+            JSON.stringify(argsObject) +
             ", title: " +
-            this.title +
+            title +
             ")",
     );
-    this.executed = autoGlobe.executed;
+    let executed = autoGlobe.executed;
     console.log(autoGlobe.functionRegistry.time);
-    console.log("argsObject before blob & tmp processing", this.argsObject);
-    this.tmp = HtmlService.createTemplate(this.blob);
-    if (this.argsObject) {
-      const keys = Object.keys(this.argsObject);
-      let shortTmp = this.tmp;
-      let shortObj = this.argsObject;
+    console.log("argsObject before blob & tmp processing", argsObject);
+    let tmp = HtmlService.createTemplate(blob);
+    let keys = "";
+    if (argsObject) {
+      keys = Object.keys(argsObject);
       try {
         keys.forEach(function (key) {
-          shortTmp[key] = shortObj[key];
-          // this.tmp[key] = this.argsObject[key];
+          tmp[key] = argsObject[key];
         });
       } catch (error) {
         return "Error in renderTemplate tmp" + error;
       }
-      this.tmp = shortTmp;
     }
-    console.log("argsObject after tmp processing", this.tmp);
-    // this.funcCheck = appList();
-    // this.css = builtStyling();
-    // this.schedule = dateTime(new Date());
-    // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
-    this.payType = this.tmp.payL?.pL?.type;
-    this.parType = this.tmp.payL?.type;
-    this.payData = this.tmp.payL?.data;
-    this.payInfo = this.tmp.payL?.message?.info;
-    this.payTmp = this.tmp.evaluate().getContent();
-    this.payDataPL = this.tmp.payL?.pL?.data;
-    this.payDataD = this.tmp.payL?.pL?.dataData;
-    this.payDataI = this.tmp.payL?.pL?.dataIndex;
-    this.payMFeed = this.tmp.payL?.message?.feed;
-    this.payLink = this.tmp.payL?.pL?.link; 
-    this.payM = this.tmp.payL?.message;
-    this.payMContent = this.tmp.payL?.message?.content;
-    this.payPL = this.tmp.payL?.pL;
-    let shortTitle = this.title;
-    let shortType = this.payType;
-    let shortPar = this.parType;
-    let shortData = this.payData;
-    let shortInfo = this.payInfo;
-    let shortTmp = this.payTmp;
-    let shortDataPL = this.payDataPL;
-    let shortDataD = this.payDataD;
-    let shortDataI = this.payDataI;;
-    let shortFeed = this.payMFeed;
-    let shortLink = this.payLink; 
-    let shortM = this.payM;
-    let shortMContent = this.payMContent;
-    let shortPL = this.payPL;
+    console.log("argsObject after tmp processing", tmp);
+    let shortType = tmp.payL?.pL?.type;
+    let shortPar = tmp.payL?.type;
+    let shortData = tmp.payL?.data;
+    let shortInfo = tmp.payL?.message?.info;
+    let shortDataPL = tmp.payL?.pL?.data;
+    let shortDataD = tmp.payL?.pL?.dataData;
+    let shortDataI = tmp.payL?.pL?.dataIndex;
+    let shortFeed = tmp.payL?.message?.feed;
+    let shortLink = tmp.payL?.pL?.link;
+    let shortM = tmp.payL?.message;
+    let shortMContent = tmp.payL?.message?.content;
+    let shortPL = tmp.payL?.pL;
     let shortHtml = "";
     let shortHtmlPayL = "";
     let shortHtmlPL = "";
@@ -1814,7 +1809,7 @@ class RenderTemplate extends Renderer {
             },
           ).tmp
             .evaluate()
-            .setTitle(shortTitle)
+            .setTitle(title)
             // .append(shortHtml)
             // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -1823,8 +1818,8 @@ class RenderTemplate extends Renderer {
           if (shortType === "html") {
             shortHtmlPL = new ContentApp(shortInfo,
               {
-                renTemp: shortTmp,
-                driveA: JSON.stringify(this.argsObject),
+                renTemp: tmp.evaluate().getContent(),
+                driveA: JSON.stringify(argsObject),
                 driveD: shortDataPL,
                 drivedD: shortDataD,
                 drivemI: shortInfo,
@@ -1838,7 +1833,7 @@ class RenderTemplate extends Renderer {
               },
             ).tmp
               .evaluate()
-              .setTitle(shortTitle)
+              .setTitle(title)
               // .append(shortHtml)
               // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
               .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -2131,8 +2126,8 @@ class RenderTemplate extends Renderer {
           </body>
         </html>`,
           {
-            renTemp: shortTmp,
-            driveA: JSON.stringify(this.argsObject),
+            renTemp: tmp.evaluate().getContent(),
+            driveA: JSON.stringify(argsObject),
             driveD: shortDataPL,
             drivedD: shortDataD,
             drivemI: shortInfo,
@@ -2146,7 +2141,7 @@ class RenderTemplate extends Renderer {
           },
         ).tmp
           .evaluate()
-          .setTitle(shortTitle)
+          .setTitle(title)
           // .append(shortHtml)
           // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
@@ -2154,16 +2149,40 @@ class RenderTemplate extends Renderer {
     } catch (error) {
       console.error("Error rendering template:", error, error.stack);
       console.error(
-        "Error in rendertemplate html: " + this.blob + "\n" + error.stack,
+        "Error in rendertemplate html: " + blob + "\n" + error.stack,
       );
     }
+    // super();
+    this.blob = blob;
+    this.argsObject = argsObject;
+    this.title = title;
+    this.executed = executed;
+    this.tmp = tmp;
+    this.keys = keys;
+    // this.funcCheck = appList();
+    // this.css = builtStyling();
+    // this.schedule = dateTime(new Date());
+    // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+    this.payType = shortType;
+    this.parType = shortType;
+    this.payData = shortData;
+    this.payInfo = shortInfo;
+    this.payDataPL = shortDataPL;
+    this.payDataD = shortDataD;
+    this.payDataI = shortDataI;
+    this.payMFeed = shortFeed;
+    this.payLink = shortLink;
+    this.payM = shortM;
+    this.payMContent = shortMContent;
+    this.payPL = shortPL;
     this.html = shortHtml;
     this.htmlPayL = shortHtmlPayL;
     this.htmlPL = shortHtmlPL;
   }
+
   static templateRender (blob, argsObject, title) {
     console.log(
-      "boilerplate render: line 201\nrenderTemplate.templateRender(blob: " + blob &&
+      "DEBUG: line 2185\nRendTemplate.templateRender(blob: " + blob &&
         blob?.length > 9
         ? blob?.substring(0, 130)
         : "" +
@@ -2551,11 +2570,11 @@ class RenderTemplate extends Renderer {
   }
 }
 
-var rendTemplate = function(blob, argsObject, title) {
-  console.log("event; RenderTemplate called: blob -", blob);
-  console.log("event; RenderTemplate called: argsObject -", JSON.stringify(argsObject));
-  console.log("event; RenderTemplate called: title -", title);
-  let html = new RenderTemplate(blob, argsObject, title).templateOutput;
+var renderTemplate = function(blob, argsObject, title) {
+  console.log("event; RendTemplate called: blob -", blob);
+  console.log("event; RendTemplate called: argsObject -", JSON.stringify(argsObject));
+  console.log("event; RendTemplate called: title -", title);
+  let html = new RendTemplate(blob, argsObject, title).templateOutput;
   return html
 }
 
@@ -2574,7 +2593,7 @@ function wildSBD(e) {
     ) {
       // Get the actual function
       var foobarr = globalThis[e.parameter["func"]];
-      return RenderTemplate.templateRender(
+      return renderTemplate(
         `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="Subscribe" content="Pro Media Snip"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {
