@@ -70,7 +70,7 @@ function appSort(numIndex, time) {
 }
 
 var createFunctionResult = function (funcUno, funcDos) {
-  let executed = 0;
+  let executed = autoGlobe.executed;
   let rawFuncResult = null;
   let truUno = autoGlobe.truUno;
   let truDos = autoGlobe.truDos;

@@ -328,7 +328,7 @@ function isValidUrl(text) {
 // const table = videoSearch.slice(videoSearch.indexOf("SERP")).toString().split("SERP")
 // const pong = table.map((ping)=>{return ping.substring(0)})
 
-function mis(text, maxRetries = 3) {
+var mis = function(text, maxRetries = 3) {
   console.log(
     "boilerplate Help: line 196\nmis(text: " +
       text +
@@ -1831,7 +1831,7 @@ function mis(text, maxRetries = 3) {
 // var uniqueCoArray = sheetCalc;
 // var uniqueItemArray = itemCalc;
 
-function misSt(func, someArgs) {
+var misSt = function(func, someArgs) {
   console.log(
     "boilerplate Help: line 1298\nmisSt(func: " +
       func +
@@ -3941,11 +3941,10 @@ function seoYoutube(searchString, time) {
 
 function testlt() {
   console.log(
-    "boilerplate Help: line 325\ntestlt(: )\n " + arguments.callee.caller?.name,
+    "DEBUG: line 3944\ntestlt(: )\n " + arguments.callee.caller?.name,
   );
   console.log(
-    arguments.callee.caller.name +
-      "\n*** Inside testlt() function. It has been called. ***",
+    "*** Inside testlt() function. It has been called. ***",
   );
   // var numVarRnd = randNum;
   // var arrNum = numVarRnd

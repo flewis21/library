@@ -59,9 +59,18 @@ class FunctionHandle {
     if (!this.e) {
       this.rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
       this.customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
-        if (String(customerWk1).indexOf(this.rndCustomer) === 0) {
-          return autoGlobe.functionRegistry.fileList.indexOf(customerWk1)
-        }
+        let bl = ["driveManager","folderManager","formsUrls","matchManager"]; 
+        let sblx = [customerWk1];
+        bl.forEach((s) => {
+          if (sblx.indexOf(String(s)) > -1) {
+            sblx.pop()
+          }
+        })
+        sblx.map((customerWk2) => {
+          if (String(customerWk2).indexOf(rndCustomer) === 0) {
+            return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
+          }
+        })
       }).filter((isIn) => {
         return isIn != null
       });

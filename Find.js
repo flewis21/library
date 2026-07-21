@@ -1,4 +1,4 @@
-function driveManager(strNw, time) {
+var driveManager = function(strNw, time) {
   console.log(
     formatTime(autoGlobe.functionRegistry.time) +
       "\n" +
@@ -319,23 +319,23 @@ function driveManager(strNw, time) {
 //   }
 // };
 
-var fileTypeManager = function (fileType) {
-  if (fileType === "GOOGLE_DOCS") {
-    return DocumentApp;
-  } else if (fileType === "GOOGLE_SLIDES") {
-    return SlidesApp;
-  } else if (fileType === "GOOGLE_SHEETS") {
-    return SpreadsheetApp;
-  } else if (fileType === "GOOGLE_FORMS") {
-    return FormApp;
-  } else if (fileType === "application/pdf") {
-    return DriveApp;
-  } else {
-    console.warn("Unsupported file type: " + fileType);
-  }
-};
+// var fileTypeManager = function (fileType) {
+//   if (fileType === "GOOGLE_DOCS") {
+//     return DocumentApp;
+//   } else if (fileType === "GOOGLE_SLIDES") {
+//     return SlidesApp;
+//   } else if (fileType === "GOOGLE_SHEETS") {
+//     return SpreadsheetApp;
+//   } else if (fileType === "GOOGLE_FORMS") {
+//     return FormApp;
+//   } else if (fileType === "application/pdf") {
+//     return DriveApp;
+//   } else {
+//     console.warn("Unsupported file type: " + fileType);
+//   }
+// };
 
-function folderManager(folderX, time) {
+var folderManager = function(folderX, time) {
   // console.log(
   //   formatTime(autoGlobe.functionRegistry.time) +
   //     "\n" +
@@ -383,7 +383,7 @@ function folderManager(folderX, time) {
   }
 }
 
-function formsUrls(fileX, folderX, time) {
+var formsUrls = function(fileX, folderX, time) {
   console.log(
     formatTime(autoGlobe.functionRegistry.time) +
       "\n" +
@@ -464,7 +464,7 @@ function formsUrls(fileX, folderX, time) {
   }
 }
 
-function matchManager(folderX, narrow, time) {
+var matchManager = function(folderX, narrow, time) {
   // console.log(Math.floor((maxTime - new Date() % (1000 * 60)) / 1000) + "\n" + arguments.callee.name + "\nfolderX is !" + !folderX + ", = " + folderX + "\nnarrow is !" + !narrow + ", = " + narrow + "\ntime is !" + !time + ", = " + time);
   // console.log(
   //   formatTime(autoGlobe.functionRegistry.time) +
@@ -676,7 +676,7 @@ function matchManager(folderX, narrow, time) {
 //   }
 // };
 
-function searchUrlsTree(fileX) {
+var searchUrlsTree = function(fileX) {
   console.log(
     autoGlobe.functionRegistry.time +
       "\n" +
@@ -772,7 +772,7 @@ var validateFiles = function () {
 //   console.log(folderList);
 // };
 
-function validateFolders() {
+var validateFolders = function() {
   // Get all folders from the user's Drive.
   const folders = DriveApp.getFolders();
   const sharedFolderEmails = [];

@@ -208,38 +208,152 @@ class AppList {
 
 class Renderer {
   constructor (payLoad, argsObject, title) {
+    let dataOR = null;
+    let pLData = "";
     let blob = "";
+    let mIndex = "";
+    let mCDN = "";
+    let mContent = null;
+    let mInfo = null;
+    let html = "";
+    let htmlPayL = null;
+    let htmlPL = null;
     console.log("event; Renderer payLoad received ", payLoad);
     console.log("event; Renderer argsObject received ", JSON.stringify(argsObject));
     console.log("event; Renderer title received ", title);
-    if (Array.isArray(argsObject)) {
-      if (argsObject.length !== 0) {
-        blob = new RendTemplate(payLoad, argsObject, title || argsObject?.payL?.title || argsObject?.driveA?.payL?.title);
-        // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+
+    // Early return for getData action
+    if (payLoad && payLoad.parameter && payLoad.parameter.action === "getData") {
+      return geneicType(payLoad);
+    }
+    else {
+      // Early return for wwwDe action
+      if (payLoad && payLoad.parameter && payLoad.parameter.action === "getDe") {
+        return geneicType(payLoad.parameter.url);
+      }
+      else {
+        let kOL = null;
+        // Early return for serverside action
+        if (payLoad && payLoad.parameter && (!payLoad.parameter["file"] && !payLoad.parameter["args"] && !payLoad.parameter["func"])) {
+          kOL = Object.keys(payLoad.parameter);
+          console.log("payLoad.parameter[kOL[0]] !== file && args && func , kOL\n" + payLoad.parameter[kOL[0]], kOL);
+          if (kOL.length > 0) {
+            // let funcU = handles["exec"];
+            // let funcD = handles["args"];
+            // console.log("" + [funcU, funcD]);
+            // let base = this[libName].createFunctionResult(funcU, funcD);
+            // console.log("base = " + base, executed++);
+            dataOR = geneicType(payLoad);
+            // const data = this[libName].globalHandleGetData();
+            // Logger.log(
+            //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
+            // );
+          }
+          else {
+            if (kOL.length === 0) {
+              // let funcU = handles["exec"];
+              // let funcD = handles["args"];
+              // console.log("funcU & funcD\n" + [funcU, funcD]);
+              // let base = this[libName].createFunctionResult(funcU, funcD);
+              // console.log("base = " + base, executed++);
+              dataOR = geneicType();
+              // const data = this[libName].globalHandleGetData();
+              // Logger.log(
+              //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
+              // );
+            }
+          }
+        }
+        else {
+          if (payLoad && payLoad.parameter && (payLoad.parameter["file"] || payLoad.parameter["args"] || payLoad.parameter["func"])) {
+            kOL = Object.keys(payLoad.parameter);
+            console.log("payLoad.parameter[kOL[0]] = file || args || func\n" + payLoad.parameter[kOL[0]], kOL);
+            if (payLoad.parameter["file"]) {
+              return funcHandle(payLoad);
+              // dataOR = this[libName].globalHandleGetData(data);
+            }
+            else {
+              // let funcU = handles["exec"];
+              // let funcD = handles["args"];
+              // console.log("funcU & funcD\n" + [funcU, funcD]);
+              // let base = this[libName].createFunctionResult(funcU, funcD);
+              // console.log("base = " + base, executed++);
+              dataOR = geneicType(payLoad);
+              // Logger.log(
+              //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
+              // );
+            }
+          }
+          else {
+            if (!payLoad) {
+              // let funcU = handles["exec"];
+              // let funcD = handles["args"];
+              // console.log("funcU & funcD\n" + [funcU, funcD]);
+              // let base = this[libName].createFunctionResult(funcU, funcD);
+              // console.log("base = " + base, executed++);
+              dataOR = geneicType();
+              // const data = this[libName].globalHandleGetData();
+              // Logger.log(
+              //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
+              // );
+            }
+          }
+        }
+      }
+    }
+    pLData = dataOR.pL.data;
+    if (Array.isArray(pLData)) {
+      if (pLData.length !== 0) {
+        blob = new RendTemplate(payLoad, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        // mIndex = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        // mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        mContent = dataOR?.payL?.message?.content;
+        // mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
+        html = blob?.html;
+        htmlPayL = blob?.htmlPayL; 
+        htmlPL = blob?.htmlPL;
+        // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
       }
     }
     else {
-      if (typeof argsObject === "object" && !Array.isArray(argsObject)) {
-        if (argsObject !== null && Object.keys(argsObject).length > 0 && !argsObject?.myVar && !argsObject?.myNewArr && !Object.keys(argsObject)[0]?.rndTitle && typeof Object.keys(argsObject)[0] !== "number") {
-          blob = new RendTemplate(payLoad, argsObject, title || argsObject?.payL?.title || argsObject?.driveA?.payL?.title);
-          // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+      if (typeof pLData === "object" && !Array.isArray(pLData)) {
+        if (pLData !== null && Object.keys(pLData).length > 0 && !pLData?.myVar && !pLData?.myNewArr && !Object.keys(pLData)[0]?.rndTitle && typeof Object.keys(pLData)[0] !== "number") {
+          blob = new RendTemplate(payLoad, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          // mIndex = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          // mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          mContent = dataOR?.payL?.message?.content;
+          // mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
+          html = blob?.html
+          htmlPayL = blob?.htmlPayL;
+          htmlPL = blob?.htmlPL;
+          // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
         }
       }
       else {
-        if (typeof argsObject === "string") {
-          if (String(argsObject).length > 0) {
-            blob = argsObject;
-              // let renderIt = startRenderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
+        if (typeof pLData === "string") {
+          if (String(pLData).length > 0) {
+            mInfo = new ClassifyFiles(pLData);
+            mCDN = new ContentCDN(mInfo.objTest, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+              // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
           }
         }
       }
     }
     // super()
+    this.dataOR = dataOR;
+    this.pLData = pLData;
     this.file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
     this.payLoad = payLoad;
-    this.argsObject = argsObject;
+    this.dataOR = dataOR;
     this.title = title;
     this.blob = blob;
+    this.mIndex = mIndex;
+    this.mCDN = mCDN;
+    this.mContent = mContent;
+    this.mInfo = mInfo;
+    this.html = html;
+    this.htmlPayL = htmlPayL;
+    this.htmlPL = htmlPL;
   }
 }
 
@@ -499,15 +613,13 @@ class ContentCDN {
     console.log("event; ContentCDN url received ", url);
     console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
     let payType = argsObject?.payL?.pL?.type;
-    let mContent = argsObject?.payL?.message?.content;
-    let mInfo = argsObject?.payL?.message?.info;
+    let mContent = argsObject?.mContent;
+    let mInfo = argsObject?.mInfo;
     let pData = argsObject?.payL?.pL?.data;
-    let contentMessage = "";
     let locObj = "";
     let html = "";
     let wATitle = null;
     let cdnOutput = "";
-    let infoMessage = "";
     let tmp = "";
     let keys = "";
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
@@ -515,11 +627,22 @@ class ContentCDN {
       console.log("cdnData argsObject before tmp processing", argsObject);
       tmp = HtmlService.createHtmlOutputFromFile("cors")
       if (argsObject) {
-        keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-          console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
-        });
+        if (typeof argsObject === "object") {
+          keys = Object.keys(argsObject);
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            keys = Object.keys([argsObject]);
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       }
       console.log("cdnData argsObject after tmp processing", tmp);
       // console.log(
@@ -532,40 +655,40 @@ class ContentCDN {
       console.log("tmp payL pL type\n" + payType, tmp?.payL?.pL);
       if (payType !== "url" && payType !== "text") {
         if (mContent) {
-          contentMessage = new ClassifyFiles(mContent);
-          console.log("From DriveFiles: contentMessage = " + contentMessage.objTest);
+          console.log("From DriveFiles: contentMessage = " + mContent);
           console.log("tmp payL message content\n" + mContent, tmp?.payL?.message);
           locObj = 
             {
-              drivemC: contentMessage.objTest,
+              drivemC: mContent,
             }
-          html = new RendTemplate(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).html;
           wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          cdnOutput = html
+          // html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tmp;
+          cdnOutput = tmp
             // .evaluate()
-            // .setTitle(wATitle)
-            .setContent(HtmlService.createHtmlOutput(html).getContent())
+            .setTitle(wATitle)
+            // .setContent(HtmlService.createHtmlOutput(html).getContent())
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+            .getContent();     
         }
       }
       else {
         if (mInfo && payType === "text") {
-          infoMessage = new ClassifyFiles(mInfo);
-          console.log("From DriveFiles: infoMessage = " + infoMessage.objTest);
+          console.log("From DriveFiles: infoMessage = " + mInfo);
           console.log("tmp payL message info\n" + mInfo, tmp.payL?.message);
           locObj = 
             {
-              drivemC: infoMessage.objTest,
+              drivemC: mInfo,
             }
-          html = new RendTemplate(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj).html;
           wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          cdnOutput = html
+          // html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tnp;
+          cdnOutput = tmp
             // .evaluate()
-            // .setTitle(wATitle)
-            .setContent(HtmlService.createHtmlOutput(html).getContent())
+            .setTitle(wATitle)
+            // .setContent(HtmlService.createHtmlOutput(html).getContent())
             .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-            .setSandboxMode(HtmlService.SandboxMode.IFRAME);     
+            .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+            .getContent();     
         }
       }
       if ((mInfo || pData) && payType === "url") {
@@ -585,20 +708,18 @@ class ContentCDN {
       );
     }
     // super();
-    this.url = url;
-    this.argsObject = argsObject;
-    this.tmp = tmp;
-    this.keys = keys;
-    this.payType = payType;
-    this.mContent = mContent;
-    this.mInfo = mInfo;
-    this.pData = pData;
-    this.contentMessage = contentMessage;
-    this.locObj = locObj;
-    this.html = html;
-    this.wATitle = wATitle;
     this.cdnOutput = cdnOutput;
-    this.infoMessage = infoMessage;
+    this.wATitle = wATitle;
+    this.html = html;
+    this.locObj = locObj;
+    this.pData = pData;
+    this.mInfo = mInfo;
+    this.mContent = mContent;
+    this.payType = payType;
+    this.keys = keys;
+    this.tmp = tmp;
+    this.argsObject = argsObject;
+    this.url = url;
     // this.redirectURL = encodeURIComponent(
     //   this.url +
     //     "?" +
@@ -1234,7 +1355,7 @@ class RenderFile extends Renderer {
             });
           }
           this.tmp = tmp;
-          console.log("argsObject after tmp processing", this.argsObject);
+          console.log("argsObject after tmp processing", this.tmp);
 
           // this.tmp["list"] = htmlListArray;
           // END IF
@@ -2574,7 +2695,7 @@ var renderTemplate = function(blob, argsObject, title) {
   console.log("event; RendTemplate called: blob -", blob);
   console.log("event; RendTemplate called: argsObject -", JSON.stringify(argsObject));
   console.log("event; RendTemplate called: title -", title);
-  let html = new RendTemplate(blob, argsObject, title).templateOutput;
+  let html = new RendTemplate(blob, argsObject, title).html;
   return html
 }
 

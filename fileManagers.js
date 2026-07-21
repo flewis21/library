@@ -929,7 +929,7 @@ function driveUrls(fileX) {
 
 function fileBrowser(initialFolder, drillDown) {
   console.log(
-    "boilerplate fileManagers: line 753\nfileBrowser(initialFolder: " +
+    "DEBUG: line 932\nfileBrowser(initialFolder: " +
       initialFolder +
       ") ",
   );
@@ -970,26 +970,26 @@ function fileBrowser(initialFolder, drillDown) {
   }
   // If an initialFolder was provided, it remains selectedFolder
 
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      ":\nSelected folder for search: " +
-      selectedFolder,
-  );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     ":\nSelected folder for search: " +
+  //     selectedFolder,
+  // );
 
   // Function to get files from a given folder
   var getFilesFromFolder = function (folderName) {
-    console.log(
-      "boilerplate fileManagers: line 801\ngetFilesFromFolder(folderName: " +
-        folderName +
-        ") ",
-    );
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\ngetFilesFromFolder:\nSearching in: " +
-        folderName,
-    );
+    // console.log(
+    //   "DEBUG: line 984\ngetFilesFromFolder(folderName: " +
+    //     folderName +
+    //     ") ",
+    // );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\ngetFilesFromFolder:\nSearching in: " +
+    //     folderName,
+    // );
     var filesObj = fileMatchManager(folderName); // Should return files in 'folderName'
     if (!filesObj) {
       // Handle case where fileMatchManager returns falsy
@@ -1002,11 +1002,11 @@ function fileBrowser(initialFolder, drillDown) {
     for (var key in filesObj) {
       filesArray.push(filesObj[key]);
     }
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\ngetFilesFromFolder:\nFiles found: " +
-        filesArray.length,
-    );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\ngetFilesFromFolder:\nFiles found: " +
+    //     filesArray.length,
+    // );
     return filesArray;
   };
 
@@ -1035,19 +1035,19 @@ function fileBrowser(initialFolder, drillDown) {
         drillMatch.length > 0
           ? drillMatch[Math.floor(Math.random() * drillMatch.length)]
           : glFiles[Math.floor(Math.random() * glFiles.length)]; // Pick a random file
-      console.log(
-        formatTime(autoGlobe.functionRegistry.time) +
-          ":\nRandom file selected: " +
-          file,
-      );
+      // console.log(
+      //   formatTime(autoGlobe.functionRegistry.time) +
+      //     ":\nRandom file selected: " +
+      //     file,
+      // );
     } else {
       // If no files in the specific folder, broaden the search or pick a different folder
-      console.log(
-        formatTime(autoGlobe.functionRegistry.time) +
-          "\n: No files found in '" +
-          currentFolderToSearch +
-          "'. Retrying with a different folder if possible.",
-      );
+      // console.log(
+      //   formatTime(autoGlobe.functionRegistry.time) +
+      //     "\n: No files found in '" +
+      //     currentFolderToSearch +
+      //     "'. Retrying with a different folder if possible.",
+      // );
       // Option 1: Pick a *different* random folder from all available folders
       var allFoldersObj = folderManager();
       var allFolderNames = [];
@@ -1086,11 +1086,11 @@ function fileBrowser(initialFolder, drillDown) {
   }
 
   var dataTree = [];
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      ":\nSearching for file: " +
-      file,
-  );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     ":\nSearching for file: " +
+  //     file,
+  // );
 
   // Search for the specific file
   try {
@@ -1109,10 +1109,10 @@ function fileBrowser(initialFolder, drillDown) {
   }
 
   if (dataTree.length === 0) {
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\n: File not found in specific folder. Searching entire Drive.",
-    );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\n: File not found in specific folder. Searching entire Drive.",
+    // );
     try {
       var driveFileIterator = DriveApp.getFilesByName(file);
       while (driveFileIterator.hasNext()) {
@@ -1138,11 +1138,11 @@ function fileBrowser(initialFolder, drillDown) {
     return null; // No file found
   }
 
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      ":\nFound files: " +
-      dataTree.length,
-  );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     ":\nFound files: " +
+  //     dataTree.length,
+  // );
 
   var rndFiledMain = Math.floor(Math.random() * dataTree.length);
   var filedMain = dataTree[rndFiledMain];
@@ -1315,25 +1315,25 @@ function fileMatch(fileX, stringArray) {
 }
 
 function fileMatchManager(folderX, fileX, time) {
-  console.log(
-    "boilerplate fileManagers: line 1114\nfileMatchManager(folderX: " +
-      folderX +
-      ", fileX: " +
-      fileX +
-      ", time: " +
-      time +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      folderX +
-      ", = " +
-      !folderX,
-  );
+  // console.log(
+  //   "DEBUG: line 1319\nfileMatchManager(folderX: " +
+  //     folderX +
+  //     ", fileX: " +
+  //     fileX +
+  //     ", time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     folderX +
+  //     ", = " +
+  //     !folderX,
+  // );
   if (time === "time") {
     time = autoGlobe.functionRegistry.time
   }
@@ -1345,32 +1345,32 @@ function fileMatchManager(folderX, fileX, time) {
     [folderX].join("").length === 0 ||
     folderX === "folderX"
   ) {
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
-        ":\nfolderX: " +
-        "\nA: type of folder - " +
-        typeof folderX +
-        "\nB: folderX - " +
-        folderX +
-        "\nC: folder length - " +
-        [folderX].join("").length,
-    );
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
-        ":\nD: folder's null value - ",
-    );
-    console.log(
-      autoGlobe.functionRegistry.elapsedTime +
-        "\n" +
-        arguments.callee.name +
-        ":\n" +
-        folderX ===
-        null,
-    );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\n" +
+    //     arguments.callee.name +
+    //     ":\nfolderX: " +
+    //     "\nA: type of folder - " +
+    //     typeof folderX +
+    //     "\nB: folderX - " +
+    //     folderX +
+    //     "\nC: folder length - " +
+    //     [folderX].join("").length,
+    // );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\n" +
+    //     arguments.callee.name +
+    //     ":\nD: folder's null value - ",
+    // );
+    // console.log(
+    //   autoGlobe.functionRegistry.elapsedTime +
+    //     "\n" +
+    //     arguments.callee.name +
+    //     ":\n" +
+    //     folderX ===
+    //     null,
+    // );
     var folderX = furtFolder();
     let pyf = DriveApp.getFoldersByName(folderX);
     if (pyf.hasNext()) {
@@ -1440,27 +1440,27 @@ function fileMatchManager(folderX, fileX, time) {
 //   return fileTree}
 
 function folderIdGlobal(folderX, time) {
-  console.log(
-    "boilerplate fileManagers: line 1199\nfolderIdGlobal(folderX: " +
-      folderX +
-      ", time: " +
-      time +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nfolderX is !" +
-      !folderX +
-      ", = " +
-      folderX +
-      "\ntime is !" +
-      !time +
-      ", = " +
-      time,
-  );
+  // console.log(
+  //   "boilerplate fileManagers: line 1199\nfolderIdGlobal(folderX: " +
+  //     folderX +
+  //     ", time: " +
+  //     time +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nfolderX is !" +
+  //     !folderX +
+  //     ", = " +
+  //     folderX +
+  //     "\ntime is !" +
+  //     !time +
+  //     ", = " +
+  //     time,
+  // );
   if (typeof folderX === "undefined") {
     var folderX = furtFolder();
   }
@@ -1484,18 +1484,18 @@ function folderIdGlobal(folderX, time) {
 // console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nmyFolder: " + myFolder + "\nelaspeTime: " + elaspeTime + "\ntimeToExecute: " + timeToExecute)
 
 function folderMatch(folderX, stringArray) {
-  console.log(
-    "boilerplate fileManagers: line 1494\nfolderMatch(folderX: " + folderX +"stringArray: " + stringArray + ")\n " + arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      folderX +
-      ", = " +
-      !folderX,
-  );
+  // console.log(
+  //   "boilerplate fileManagers: line 1494\nfolderMatch(folderX: " + folderX +"stringArray: " + stringArray + ")\n " + arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     folderX +
+  //     ", = " +
+  //     !folderX,
+  // );
   if ([folderX].join("").length === 0) {
     var eDrive = folderManager();
     var folderX = eDrive[Math.floor(Math.random() * Math.floor(eDrive.length))];
@@ -1547,21 +1547,21 @@ function folderMatch(folderX, stringArray) {
 }
 
 function furtFolder(folder) {
-  console.log(
-    "boilerplate fileManagers: line 1276\nfurtFolder(folder: " +
-      folder +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nfolder is !" +
-      !folder +
-      ", = " +
-      folder,
-  );
+  // console.log(
+  //   "boilerplate fileManagers: line 1276\nfurtFolder(folder: " +
+  //     folder +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nfolder is !" +
+  //     !folder +
+  //     ", = " +
+  //     folder,
+  // );
   autoGlobe.functionRegistry.gTree();
   var tree = autoGlobe.functionRegistry.getFolderList();
   if (folder) {
@@ -1573,36 +1573,36 @@ function furtFolder(folder) {
       foldersObj[Math.floor(Math.random() * Math.floor(foldersObj.length))];
     return folder;
   }
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      ":\nfoldersObj.length: " +
-      foldersObj.length +
-      "\nfoldersObj",
-  );
-  var glFolders = [];
-  for (var key in foldersObj) {
-    glFolders.push(foldersObj[key]);
-  }
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      ":\nglFolders.length: " +
-      glFolders.length +
-      "\nglFolders",
-  );
-  if (
-    typeof folder === "undefined" ||
-    folder === null ||
-    [folder].join("").length === 0 ||
-    glFolders.indexOf(folder) === -1
-  ) {
-    var folder =
-      glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
-  }
-  return folder;
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     ":\nfoldersObj.length: " +
+  //     foldersObj.length +
+  //     "\nfoldersObj",
+  // );
+  // var glFolders = [];
+  // for (var key in foldersObj) {
+  //   glFolders.push(foldersObj[key]);
+  // }
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     ":\nglFolders.length: " +
+  //     glFolders.length +
+  //     "\nglFolders",
+  // );
+  // if (
+  //   typeof folder === "undefined" ||
+  //   folder === null ||
+  //   [folder].join("").length === 0 ||
+  //   glFolders.indexOf(folder) === -1
+  // ) {
+  //   var folder =
+  //     glFolders[Math.floor(Math.random() * Math.floor(glFolders.length))];
+  // }
+  // return folder;
 }
 // if (glFolders.indexOf(folder) === -1) {folder}
 

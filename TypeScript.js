@@ -1,6 +1,6 @@
 class AutoParams {
   constructor() {
-    console.log("Hello from AutoParams");
+    // console.log("Hello from AutoParams - " + this.numVarRnd);
     this.executed = 0;
 
     this.functionRegistry = {
@@ -1853,7 +1853,7 @@ class GetDomains extends IsMapped {
     });
   };
 }
-let dotBubble = new GetDomains()
+// let dotBubble = new GetDomains()
 
 class ClassifyYIDs extends GetDomains {
   constructor() {
@@ -1874,7 +1874,7 @@ class ClassifyYIDs extends GetDomains {
     });
   }
 }
-let inetGet =  new ClassifyYIDs()
+// let inetGet =  new ClassifyYIDs()
 
 class RawFuncResult {
   constructor(funcUno, funcDos) {
@@ -4149,68 +4149,79 @@ class ObjectConvertor {
 class ValidUrlResult {
   constructor(text) {
     // super();
-    this.text = text;
+    let resText = text;
     console.log(
       "\nValidUrlResult(text: " +
-        this.text +
+        resText +
         ": " +
-        typeof this.text +
+        typeof resText +
         ")",
     );
-    this.validatedResult = {};
-    this.validatedResult.protocol = "";
-    this.validatedResult.hostname = "";
-    this.validatedResult.pathname = "";
-    this.validatedResult.query =  "";
-    this.validatedResult.rndRes = [];
-    this.validatedResult.matches = "";
-    this.validatedResult.allMatches = "";
-    if (typeof this.text !== "string" || this.text?.length === 0) {
-      console.log("No url string or string length is 0!\nreturning: ",this.validatedResult)
+    let resVRt = {};
+    resVRt.protocol = "";
+    resVRt.hostname = "";
+    resVRt.pathname = "";
+    resVRt.query =  "";
+    resVRt.rndRes = [];
+    resVRt.matches = "";
+    resVRt.allMatches = "";
+    // let resText = this.text;
+    // let resVRt = this.validatedResult;
+    let resURx = "";
+    let resXReg = "";
+    let resTree = '';
+    let rTFiled = "";
+    let rTSheet = "";
+    let rtVData = "";
+    let rTVValues = "";
+    let rTIVValues = "";
+    let rTVTI = "";
+    if (typeof resText !== "string" || resText?.length === 0) {
+      console.log("No url string or string length is 0!\nreturning: ",resVRt)
     }
     else {
-      this.urlRegex =
+      resURx =
         /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-      this.regxRes = this.text.match(this.urlRegex);
-      if (this.regxRes !== null) {
-        this.validatedResult.matches = this.regxRes;
+      resXReg = resText.match(resURx);
+      if (resXReg !== null) {
+        resVRt.matches = resXReg;
       }
-      console.log("matches = " + this.validatedResult.matches);
-      if (this.validatedResult.matches.length === 0) {
-        // this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
+      console.log("matches = " + resVRt.matches);
+      if (resVRt.matches.length === 0) {
+        // this.searchLinkDrive = new DriveFiles(resText, autoGlobe.functionRegistry.time);
         // if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
-          this.validatedResult.matches = this.dataTree  //this.searchLinkDrive?.dataTree;
+          resVRt.matches = resTree  //this.searchLinkDrive?.dataTree;
         // }
-        console.log("matches to return = " + this.validatedResult.matches);
+        console.log("matches to return = " + resVRt.matches);
         // if (this.searchLinkDrive?.filedMain) {
-        if (this?.filedMain) {
+        if (rTFiled) {
           autoGlobe.functionRegistry.vidTree();
-          this.vidSheetVals = autoGlobe.functionRegistry.getVideoList();
-          this.vidData = [];
-          this.vidVals = Object.values(this.vidSheetVals);
-          this.vidVals.forEach((val) => {
-            this.inVVals = Object.values(val);
-            this.inVVals.forEach((inV) => {
-              this.truInv = autoGlobe.trueVfalse(inV);
-              if (this.truInv) {
-                this.vidData.push(inV);
+          rTSheet = autoGlobe.functionRegistry.getVideoList();
+          rtVData = [];
+          rTVValues = Object.values(rTSheet);
+          rTVValues.forEach((val) => {
+            rTIVValues = Object.values(val);
+            rTIVValues.forEach((inV) => {
+              rTVTI = autoGlobe.trueVfalse(inV);
+              if (rTVTI) {
+                rtVData.push(inV);
               }
             });
           });
           // String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
-          Array(this?.filedMain)?.forEach((fileUrl) => {
-            if (fileUrl && this.validatedResult.rndRes.indexOf(fileUrl) === -1) {
-              if (this.vidData?.indexOf(fileUrl) !== -1) {
-                this.validatedResult.rndRes.push(fileUrl);
+          Array(rTFiled)?.forEach((fileUrl) => {
+            if (fileUrl && resVRt.rndRes.indexOf(fileUrl) === -1) {
+              if (rtVData?.indexOf(fileUrl) !== -1) {
+                resVRt.rndRes.push(fileUrl);
               } 
               else {
-                this.validatedResult.rndRes.push(fileUrl);
+                resVRt.rndRes.push(fileUrl);
                 updateQuote(
                   JSON.stringify({
                     name: "videoSheet",
                     number: parseInt("001", 8),
                     videoid: fileUrl,
-                    videodescription: this.text,
+                    videodescription: resText,
                   }),
                 );
               }
@@ -4218,111 +4229,106 @@ class ValidUrlResult {
           });
         }
       }
-      console.log("rndRes = " + this.validatedResult.rndRes);
-      this.validatedResult.allMatches = this.validatedResult.matches ? this.validatedResult.matches : this.validatedResult.rndRes;
-      console.log(`allMatches = matches ? [...${this.validatedResult.allMatches}]`);
-      if (this.validatedResult.allMatches?.length > 0) {
-        this.tempUrlResult = {};
-        this.tempUrlResult.currentProtocol = "";
-        this.tempUrlResult.currentHostname = "";
-        this.tempUrlResult.currentPathname = "";
-        this.tempUrlResult.currentQuery = "";
-        this.validatedResult?.allMatches?.forEach((url) => {
-          this.protocolEnd = url.indexOf("://");
-          if (this.protocolEnd !== -1) {
-            this.tempUrlResult.currentProtocol = url.substring(0, this.protocolEnd + 3);
-            url = url.substring(this.protocolEnd + 3);
+      console.log("rndRes = " + resVRt.rndRes);
+      resVRt.allMatches = resVRt.matches ? resVRt.matches : resVRt.rndRes;
+      console.log(`allMatches = matches ? [...${resVRt.allMatches}]`);
+      let resTemp = this.tempUrlResult;
+      let resProto = this.protocolEnd;
+      if (resVRt.allMatches?.length > 0) {
+        resTemp = {};
+        resTemp.currentProtocol = "";
+        resTemp.currentHostname = "";
+        resTemp.currentPathname = "";
+        resTemp.currentQuery = "";
+        resVRt?.allMatches?.forEach((url) => {
+          resProto = url.indexOf("://");
+          let tempPE = resProto;
+          let tempUCro = resTemp.currentProtocol;
+          if (tempPE !== -1) {
+            tempUCro = url.substring(0, tempPE + 3);
+            url = url.substring(tempPE + 3);
+            console.log("Hello from ValidUrlResult allMatches ProtocolEnd - " + url);
           }
-          // else {
-          //   if (this.validatedResult.rndRes.length === 0) {
-          //     this.searchLinkDrive = new DriveFiles(this.text, autoGlobe.functionRegistry.time);
-          //     if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
-          //       this.validatedResult.matches = this.searchLinkDrive?.dataTree;
-          //     }
-          //     console.log("matches to return = " + this.validatedResult.matches);
-          //     if (this.searchLinkDrive?.filedMain) {
-          //       String(this.searchLinkDrive?.filedMain)?.forEach((fileUrl) => {
-          //         if (fileUrl && this.validatedResult.rndRes.indexOf(fileUrl) === -1) {
-          //           autoGlobe.functionRegistry.vidTree();
-          //           this.vidSheetVals = autoGlobe.functionRegistry.getVideoList();
-          //           this.vidData = [];
-          //           this.vidVals = Object.values(this.vidSheetVals);
-          //           this.vidVals.forEach((val) => {
-          //             this.inVVals = Object.values(val);
-          //             this.inVVals.forEach((inV) => {
-          //               this.truInv = autoGlobe.trueVfalse(inV);
-          //               if (this.truInv) {
-          //                 this.vidData.push(inV);
-          //               }
-          //             });
-          //           });
-          //           if (this.vidData?.indexOf(fileUrl) !== -1) {
-          //             this.validatedResult.rndRes.push(fileUrl);
-          //           } 
-          //           else {
-          //             this.validatedResult.rndRes.push(fileUrl);
-          //             updateQuote(
-          //               JSON.stringify({
-          //                 name: "videoSheet",
-          //                 number: parseInt("001", 8),
-          //                 videoid: fileUrl,
-          //                 videodescription: this.text,
-          //               }),
-          //             );
-          //           }
-          //         }
-          //       });
-          //       this.validatedResult.matches = this.searchLinkDrive?.dataTree
-          //       this.tempUrlResult.currentProtocol = this.searchLinkDrive?.filedMain.substring(0, this.protocolEnd + 3);
-          //       url = this.searchLinkDrive?.filedMain.substring(this.protocolEnd + 3);
-          //     }
-          //     else {
-          //       if (!this.searchLinkDrive?.filedMain) {
-          //         this.tempUrlResult.currentProtocol = url.substring(0, this.protocolEnd + 3);
-          //         url = url.substring(this.protocolEnd + 3);
-          //       }
-          //     }
-          //   }
-          //   else {
-          //     if (this.validatedResult.rndRes.length > 0) {
-          //       this.tempUrlResult.currentProtocol = this.validatedResult.rndRes[0].substring(0, this.protocolEnd + 3);
-          //       url = this.validatedResult.rndRes[0].substring(this.protocolEnd + 3);
-          //     }
-          //   }
-          // }
+          resTemp.currentProtocol = tempUCro;
+          resProto = tempPE;
           this.hostnameEnd = url.indexOf("/");
-          if (this.hostnameEnd !== -1) {
-            this.tempUrlResult.currentHostname = url.substring(0, this.hostnameEnd);
-            this.tempUrlResult.currentPathname = url.substring(this.hostnameEnd);
-          } else {
-            this.tempUrlResult.currentHostname = url;
+          let tempHostE = this.hostnameEnd;
+          let tempUCh = resTemp.currentHostname;
+          let tempUPn = resTemp.currentPathname;
+          if (tempHostE !== -1) {
+            tempUCh = url.substring(0, tempHostE);
+            tempUPn = url.substring(tempHostE);
+          } 
+          else {
+            tempUCh = url;
+            console.log("Hello from ValidUrlResult allMatches currentHostName - " + url);
           }
-          this.queryStart = this.validatedResult.pathname.indexOf("?");
-          if (this.queryStart !== -1) {
-            this.currentQuery = this.validatedResult.pathname.substring(this.queryStart);
-            this.currentPathname = this.validatedResult.pathname.substring(0, this.queryStart);
+          resTemp.currentPathname = tempUPn;
+          resTemp.currentHostname = tempUCh;
+          this.hostnameEnd = tempHostE;
+          this.queryStart = resVRt.pathname.indexOf("?");
+          let tempQ = this.queryStart;
+          let tempCQ = this.currentQuery;
+          let tempVRPh = resVRt.pathname;
+          let tempCh = this.currentPathname;
+          if (tempQ !== -1) {
+            tempCQ = tempVRPh.substring(tempQ);
+            tempCh = tempVRPh.substring(0, tempQ);
           }
+          this.queryStart = tempQ;
+          this.currentQuery = tempCQ;
+          resVRt.pathname = tempVRPh;
+          this.currentPathname = tempCh;
           this.hostnameRegex =
             /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-          if (this.tempUrlResult.currentHostname && this.hostnameRegex.test(this.tempUrlResult.currentHostname)) {
-            if (this.tempUrlResult.currentProtocol && this.tempUrlResult.currentHostname) {
-              this.validatedResult.protocol = this.tempUrlResult.currentProtocol;
-              this.validatedResult.hostname = this.tempUrlResult.currentHostname;
-              this.validatedResult.pathname = this.tempUrlResult.currentPathname;
-              this.validatedResult.query = this.tempUrlResult.currentQuery;
-              this.validatedResult.url =
-                this.tempUrlResult.currentProtocol +
-                this.tempUrlResult.currentHostname +
-                this.tempUrlResult.currentPathname +
-                this.tempUrlResult.currentQuery;
+          let tempHNX = this.hostnameRegex;
+          let tempVRP = resVRt.protocol;
+          let tempVRh = resVRt.hostname;
+          let tempVRQ = resVRt.query;
+          let tempURcQ = resTemp.currentQuery;
+          let tempVRUrl = resVRt.url;
+          if (tempUCh && tempHNX.test(tempUCh)) {
+            if (tempUCro && tempUCh) {
+              tempVRP = tempUCro;
+              tempVRh = tempUCh;
+              tempVRPh = tempUPn;
+              tempVRQ = tempURcQ;
+              tempVRUrl =
+                tempUCro +
+                tempUCh +
+                tempUPn +
+                tempURcQ;
             }
           }
+          resTemp.currentHostname = tempUCh;
+          this.hostnameRegex = tempHNX;
+          resTemp.currentProtocol = tempUCro;
+          resVRt.protocol = tempVRP;
+          resVRt.hostname = tempVRh;
+          resVRt.pathname = tempVRPh;
+          resTemp.currentPathname = tempUPn;
+          resVRt.query = tempVRQ;
+          resTemp.currentQuery = tempURcQ;
+          resVRt.url = tempVRUrl;
         });
       }
+      this.tempUrlResult = resTemp;
+      this.protocolEnd = resProto;
     }
+    this.text = resText;
+    this.urlRegex = resURx;
+    this.regxRes = resXReg;
+    this.dataTree = resTree;
+    this.filedMain = rTFiled;
+    this.vidSheetVals = rTSheet;
+    this.vidData = rtVData;
+    this.vidVals = rTVValues;
+    this.inVVals = rTIVValues;
+    this.truInv = rTVTI;
+    this.validatedResult = resVRt;
   }
 }
-let autoGlobe = new GetDomains()
+let autoGlobe = new ClassifyYIDs()
 // console.log(autoGlobe.globalThis[autoGlobe.argsX[0]].apply(this, autoGlobe.content));
     // Set some global variables
 autoGlobe.functionRegistry.initialize();
@@ -4337,41 +4343,59 @@ var geneicType = function (e) {
     data = funcHandle(e);
   }
   else {
-    let rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
-    let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
-      if (String(customerWk1).indexOf(rndCustomer) === 0) {
-        return autoGlobe.functionRegistry.fileList.indexOf(customerWk1)
-      }
-    }).filter((isIn) => {
-      return isIn != null
-    });
-    // console.log("These is the customGroup", customGroup);
-    let pSort = customGroup.sort((a,b) => {
+    let pSort = [];
+    while (pSort.length === 0) {
+      let varRnd = new AutoParams().numVarRnd;
+      let rndCustomer = autoGlobe.customOrder[varRnd];
+      // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+      let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
+        let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData"]; 
+        let sblx = [customerWk1];
+        bl.forEach((s) => {
+          if (sblx.indexOf(String(s)) > -1) {
+            sblx.pop()
+          }
+        })
+        if (sblx.length > 0) {
+          sblx.map((customerWk2) => {
+            if (String(customerWk2).indexOf(rndCustomer) === 0) {
+              // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
+              return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
+            }
+          })
+          return sblx[0]
+        }
+      }).filter((isIn) => {
+        return isIn != null
+      });
+      // console.log("These is the customGroup", customGroup);
+      pSort = customGroup.sort((a,b) => {
         let i = Math.random()
         let tSorted = a;
         let zSorted = b;
-        if (i < .3) {
+        if ((i > .3 && i < .5) || (i < .3)) {
           return zSorted - tSorted
         }
         else {
           i = Math.random()
-          if (i > .3 && i < .5 ) {
+          if ((i > .8) || (i < .3)) {
             return tSorted - zSorted
           }
           else {
             i = Math.random()
-            if (i > .5 && i < .8) {
+            if ((i > .5 && i < .8)) {
               return zSorted
             }
             else {
               i = Math.random()
-              if (i > .8) {
+              if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
                 return tSorted
               }
             }
           }
         }
       })
+    }
     // console.log("These is the sorted customGroup", pSort);
     let tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(pSort.length))];
     // let misStCallParameters = null
@@ -4381,7 +4405,7 @@ var geneicType = function (e) {
     // else {
     //   misStCallParameters = tempObj?.name
     // }
-    data = new MisStCreator(Array(tempObj?.name,tempObj?.parameters));
+    data = tempObj?.name // new MisStCreator(Array(tempObj?.name,tempObj?.parameters));
   //   base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
   //   console.log("What is type of base variable ", typeof base);
   //   if (typeof base === "string") {
@@ -4485,9 +4509,9 @@ var geneicType = function (e) {
               base = data?.tempObj?.argsObject?.index?.res
             }
             else {
-              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data), autoGlobe.executed++);
               // let funcU = data.funcUno;
-              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app;
+              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data;
               // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
               // base = new RawFuncResult(funcU, funcD).rawFuncResult;
             }
