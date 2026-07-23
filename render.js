@@ -208,21 +208,16 @@ class AppList {
 
 class Renderer {
   constructor (payLoad, argsObject, title) {
-    let dataOR = null;
-    let pLData = "";
-    let blob = "";
-    let mIndex = "";
-    let mCDN = "";
-    let mContent = null;
-    let mInfo = null;
-    let html = "";
-    let htmlPayL = null;
-    let htmlPL = null;
+    // super()
+    this.payLoad = payLoad;
+    this.argsObject = argsObject;
+    this.title = title;
     console.log("event; Renderer payLoad received ", payLoad);
     console.log("event; Renderer argsObject received ", JSON.stringify(argsObject));
     console.log("event; Renderer title received ", title);
 
     // Early return for getData action
+    let dataOR = "";
     if (payLoad && payLoad.parameter && payLoad.parameter.action === "getData") {
       return geneicType(payLoad);
     }
@@ -232,10 +227,10 @@ class Renderer {
         return geneicType(payLoad.parameter.url);
       }
       else {
-        let kOL = null;
         // Early return for serverside action
         if (payLoad && payLoad.parameter && (!payLoad.parameter["file"] && !payLoad.parameter["args"] && !payLoad.parameter["func"])) {
-          kOL = Object.keys(payLoad.parameter);
+          let kOL = Object.keys(payLoad.parameter);
+          this.kOL = kOL;
           console.log("payLoad.parameter[kOL[0]] !== file && args && func , kOL\n" + payLoad.parameter[kOL[0]], kOL);
           if (kOL.length > 0) {
             // let funcU = handles["exec"];
@@ -244,6 +239,7 @@ class Renderer {
             // let base = this[libName].createFunctionResult(funcU, funcD);
             // console.log("base = " + base, executed++);
             dataOR = geneicType(payLoad);
+            this.dataOR = dataOR;
             // const data = this[libName].globalHandleGetData();
             // Logger.log(
             //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -257,6 +253,7 @@ class Renderer {
               // let base = this[libName].createFunctionResult(funcU, funcD);
               // console.log("base = " + base, executed++);
               dataOR = geneicType();
+              this.dataOR = dataOR;
               // const data = this[libName].globalHandleGetData();
               // Logger.log(
               //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -266,7 +263,8 @@ class Renderer {
         }
         else {
           if (payLoad && payLoad.parameter && (payLoad.parameter["file"] || payLoad.parameter["args"] || payLoad.parameter["func"])) {
-            kOL = Object.keys(payLoad.parameter);
+            let kOL = Object.keys(payLoad.parameter);
+            this.kOL = kOL;
             console.log("payLoad.parameter[kOL[0]] = file || args || func\n" + payLoad.parameter[kOL[0]], kOL);
             if (payLoad.parameter["file"]) {
               return funcHandle(payLoad);
@@ -279,6 +277,7 @@ class Renderer {
               // let base = this[libName].createFunctionResult(funcU, funcD);
               // console.log("base = " + base, executed++);
               dataOR = geneicType(payLoad);
+              this.dataOR = dataOR;
               // Logger.log(
               //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
               // );
@@ -292,6 +291,7 @@ class Renderer {
               // let base = this[libName].createFunctionResult(funcU, funcD);
               // console.log("base = " + base, executed++);
               dataOR = geneicType();
+              this.dataOR = dataOR;
               // const data = this[libName].globalHandleGetData();
               // Logger.log(
               //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -301,59 +301,65 @@ class Renderer {
         }
       }
     }
-    pLData = dataOR.pL.data;
+    let file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
+    this.file = file
+    let pLData = dataOR.pL.data;
+    this.pLData = pLData;
     if (Array.isArray(pLData)) {
       if (pLData.length !== 0) {
-        blob = new RendTemplate(payLoad, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        // mIndex = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        // mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        mContent = dataOR?.payL?.message?.content;
-        // mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
-        html = blob?.html;
-        htmlPayL = blob?.htmlPayL; 
-        htmlPL = blob?.htmlPL;
+        let blob = new RendTemplate(dataOR, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        this.blob = blob;
+        // let mIndex = new RenderFile(file, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        // this.mIndex = mIndex;
+        // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        // this.mCDN = mCDN;
+        let mContent = dataOR?.payL?.message?.content;
+        this.mContent = mContent;
+        // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
+        // this.mInfo = mInfo;
+        let html = blob?.html;
+        this.html = html;
+        let htmlPayL = blob?.htmlPayL; 
+        this.htmlPayL = htmlPayL;
+        let htmlPL = blob?.htmlPL;
+        this.htmlPL = htmlPL;
         // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
       }
     }
     else {
       if (typeof pLData === "object" && !Array.isArray(pLData)) {
         if (pLData !== null && Object.keys(pLData).length > 0 && !pLData?.myVar && !pLData?.myNewArr && !Object.keys(pLData)[0]?.rndTitle && typeof Object.keys(pLData)[0] !== "number") {
-          blob = new RendTemplate(payLoad, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          // mIndex = new RenderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)], pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          // mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          mContent = dataOR?.payL?.message?.content;
-          // mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
-          html = blob?.html
-          htmlPayL = blob?.htmlPayL;
-          htmlPL = blob?.htmlPL;
+          let blob = new RendTemplate(dataOR, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          this.blob = blob;
+          // let mIndex = new RenderFile(file, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          // this.mIndex = mIndex;
+          // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          // this.mCDN = mCDN;
+          let mContent = dataOR?.payL?.message?.content;
+          this.mContent = mContent;
+          // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
+          // this.mInfo = mInfo;
+          let html = blob?.html;
+          this.html = html;
+          let htmlPayL = blob?.htmlPayL;
+          this.htmlPayL = htmlPayL;
+          let htmlPL = blob?.htmlPL;
+          this.htmlPL = htmlPL;
           // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
         }
       }
       else {
         if (typeof pLData === "string") {
           if (String(pLData).length > 0) {
-            mInfo = new ClassifyFiles(pLData);
-            mCDN = new ContentCDN(mInfo.objTest, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+            let mInfo = new ClassifyFiles(pLData);
+            this.mInfo = mInfo;
+            let mCDN = new ContentCDN(mInfo.urlTest || mInfo.fbSearchR, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+            this.mCDN = mCDN;
               // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
           }
         }
       }
     }
-    // super()
-    this.dataOR = dataOR;
-    this.pLData = pLData;
-    this.file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
-    this.payLoad = payLoad;
-    this.dataOR = dataOR;
-    this.title = title;
-    this.blob = blob;
-    this.mIndex = mIndex;
-    this.mCDN = mCDN;
-    this.mContent = mContent;
-    this.mInfo = mInfo;
-    this.html = html;
-    this.htmlPayL = htmlPayL;
-    this.htmlPL = htmlPL;
   }
 }
 
@@ -367,6 +373,9 @@ var startRenderer = function(payLoad, argsObject, title) {
 
 class ContentApp {
   constructor(blob, argsObject) {
+    // super();
+    this.blob = blob;
+    this.argsObject = argsObject;
     console.log("event; ContentApp blob received ", blob);
     console.log("event; ContentApp argsObject received ", JSON.stringify(argsObject));
     console.log(
@@ -387,22 +396,24 @@ class ContentApp {
         " = " +
         JSON.stringify(argsObject).slice(0, 130),
     );
-    let api = null;
     try {
-      api = ContentService.createTextOutput(blob)
+      let api = ContentService.createTextOutput(blob)
         .setMimeType(ContentService.MimeType.JSON)
         .getContent();
-    } catch (error) {
+      this.api = api;
+    } 
+    catch (error) {
       console.log("error in contentApp: " + error);
       console.error(
         "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
       );
     }
 
-    let tmp;
     try {
-      tmp = HtmlService.createTemplate(api);
-    } catch (error) {
+      let tmp = HtmlService.createTemplate(api);
+      this.tmp = tmp;
+    } 
+    catch (error) {
       console.log("error in contentApp: " + error);
       console.error(
         "Error in contentApp HTML template: " +
@@ -411,22 +422,23 @@ class ContentApp {
           error.stack,
       );
     }
-    let keys = "";
     try {
       if (argsObject) {
-        keys = Object.keys(argsObject);
+        let keys = Object.keys(argsObject);
+        this.keys = keys;
         keys.forEach(function (key) {
           tmp[key] = argsObject[key];
         });
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log("error in contentApp: " + error);
       console.error(
         "Error in contentApp template: " + error.toString() + "\n" + error.stack,
       );
     }
     try {
-      tmp
+      return tmp
         .evaluate()
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
         // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -441,12 +453,6 @@ class ContentApp {
           error.stack,
       );
     }
-    // super();
-    this.blob = blob;
-    this.argsObject = argsObject;
-    this.api = api;
-    this.tmp = tmp;
-    this.keys = keys;
   }
 
 
@@ -610,28 +616,23 @@ class ContentTemplate {
 
 class ContentCDN {
   constructor (url, argsObject) {
+    // super();
+    this.url = url;
+    this.argsObject = argsObject;
     console.log("event; ContentCDN url received ", url);
     console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
-    let payType = argsObject?.payL?.pL?.type;
-    let mContent = argsObject?.mContent;
-    let mInfo = argsObject?.mInfo;
-    let pData = argsObject?.payL?.pL?.data;
-    let locObj = "";
-    let html = "";
-    let wATitle = null;
-    let cdnOutput = "";
-    let tmp = "";
-    let keys = "";
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
       console.log("cdnData argsObject before tmp processing", argsObject);
-      tmp = HtmlService.createHtmlOutputFromFile("cors")
+      let tmp = HtmlService.createHtmlOutputFromFile("cors");
+      this.tmp = tmp;
       if (argsObject) {
         if (typeof argsObject === "object") {
-          keys = Object.keys(argsObject);
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
           keys.forEach(function (key) {
             tmp[key] = argsObject[key];
-            console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
           });
         }
         else {
@@ -639,7 +640,7 @@ class ContentCDN {
             keys = Object.keys([argsObject]);
             keys.forEach(function (key) {
               tmp[key] = [argsObject][key];
-              console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
             });
           }
         }
@@ -652,18 +653,29 @@ class ContentCDN {
       //     arguments.callee.caller.name,
       // );
       //Early return
+      let payType = argsObject?.payL?.pL?.type;
+      this.payType = payType;
       console.log("tmp payL pL type\n" + payType, tmp?.payL?.pL);
+      let mContent = argsObject?.mContent;
+      this.mContent = mContent;
+      // let cdnOutput = "";
+      // this.cdnOutput = cdnOutput;
+      let mInfo = argsObject?.mInfo;
+      this.mInfo = mInfo;
       if (payType !== "url" && payType !== "text") {
         if (mContent) {
           console.log("From DriveFiles: contentMessage = " + mContent);
           console.log("tmp payL message content\n" + mContent, tmp?.payL?.message);
-          locObj = 
+          let locObj = 
             {
               drivemC: mContent,
             }
-          wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          // html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tmp;
-          cdnOutput = tmp
+          this.locObj = locObj;
+          let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          this.wATitle = wATitle;
+          let html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tmp;
+          this.html = html;
+          return tmp
             // .evaluate()
             .setTitle(wATitle)
             // .setContent(HtmlService.createHtmlOutput(html).getContent())
@@ -676,13 +688,16 @@ class ContentCDN {
         if (mInfo && payType === "text") {
           console.log("From DriveFiles: infoMessage = " + mInfo);
           console.log("tmp payL message info\n" + mInfo, tmp.payL?.message);
-          locObj = 
+          let locObj = 
             {
               drivemC: mInfo,
             }
-          wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          // html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tnp;
-          cdnOutput = tmp
+          this.locObj = locObj;
+          let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          this.wATitle = wATitle;
+          let html = new ContentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle).tnp;
+          this.html = html;
+          return tmp
             // .evaluate()
             .setTitle(wATitle)
             // .setContent(HtmlService.createHtmlOutput(html).getContent())
@@ -691,10 +706,13 @@ class ContentCDN {
             .getContent();     
         }
       }
+      let pData = argsObject?.payL?.pL?.data;
+      this.pData = pData;
       if ((mInfo || pData) && payType === "url") {
-        wATitle =  new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+        let wATitle =  new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+        this.wATitle = wATitle;
         console.log("From DriveFiles: mInfo = " + (mInfo || pData));
-        cdnOutput = tmp
+        return tmp
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
           .setSandboxMode(HtmlService.SandboxMode.IFRAME)
           .setContent(seoCapital((mInfo || pData) || wATitle))
@@ -707,19 +725,6 @@ class ContentCDN {
         "Error in contentCDN html: " + erR.toString() + "\n" + erR.stack,
       );
     }
-    // super();
-    this.cdnOutput = cdnOutput;
-    this.wATitle = wATitle;
-    this.html = html;
-    this.locObj = locObj;
-    this.pData = pData;
-    this.mInfo = mInfo;
-    this.mContent = mContent;
-    this.payType = payType;
-    this.keys = keys;
-    this.tmp = tmp;
-    this.argsObject = argsObject;
-    this.url = url;
     // this.redirectURL = encodeURIComponent(
     //   this.url +
     //     "?" +
@@ -822,8 +827,14 @@ class ContentCDN {
 var contCDN = function(url, argsObject) {
   console.log("event; ContentCDN called: url -", url);
   console.log("event; ContentCDN called: argsObject -", JSON.stringify(argsObject));
-  let html = new ContentCDN(url, argsObject).cdnOutput;
-  return html
+  let cdnObj = new ContentCDN(url, argsObject);
+  let html = cdnObj.html;
+  let tmp = cdnObj.tmp;
+  let title = cdnObj.wATitle;
+  return tmp
+          .append(html)
+          .setTitle(title)
+          .getContent();
 }
 
 class ContentFile {

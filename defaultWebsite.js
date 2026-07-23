@@ -281,7 +281,7 @@ function createRandomFunction(searchString) {
       console.log("fileIndex",executed++);
       fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
-      let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams.parameters]])[scriptTitle];
+      let tempObj = IsMapped.mapout(mapArr, [scriptTitle, [...fileParams?.parameters]])[scriptTitle];
       console.log("tempObj",executed++);
       console.log(`Mapping this script: ${JSON.stringify(tempObj)}`);
       scriptUrl = resolveParams(tempObj);
@@ -320,7 +320,7 @@ function createRandomFunction(searchString) {
       fileParams = autoGlobe.functionRegistry.paramsList[fileIndex];
       console.log("fileParams",executed++);
       mapArr[scriptTitle] = [];
-      let tempObj = IsMapped.mapout(mapArr, [...fileParams.parameters]);
+      let tempObj = IsMapped.mapout(mapArr, [...fileParams?.parameters]);
       scriptUrl = tempObj
       console.log("scriptUrl",executed++);
     }
@@ -754,13 +754,13 @@ function functionFlex(e) {
     //   //       autoGlobe.functionRegistry.time,
     //   //     );
     //   //   } else if (typeof argsEd === "object" && argsEd !== null && argsEd.name) {
-    //   //     if (argsEd.parameters && argsEd.parameters.length > 0) {
+    //   //     if (argsEd?.parameters && argsEd?.parameters.length > 0) {
     //   //       e = objectOfS(
     //   //         ["parameter"],
     //   //         [
     //   //           [
     //   //             ["func", argsEd.name],
-    //   //             ["args", [...argsEd.parameters]],
+    //   //             ["args", [...argsEd?.parameters]],
     //   //           ],
     //   //         ],
     //   //         autoGlobe.functionRegistry.time,

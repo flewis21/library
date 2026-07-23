@@ -1917,70 +1917,79 @@ var globalHandleGetData = function (rawFuncResult) {
       // var seoHtml = seoCapital(iframeSrc);
       executed++;
       // return RenderTemplate.templateRender(rawFuncResult, { payL: payLoad }, payLoad.type);
-    } else if (payLoad.type === "url") {
-      // --- NEW: Handle "url" type directly ---
-      data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
-      data.message["info"] = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
-      data.message["link"] = payLoad.link;
-      //   var seoHtml = seoCapital(iframeSrc);
-      executed++
-      //   return RenderTemplate.templateRender(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
-    } else if (payLoad.type === "jsonData") {
-      data.message["content"] = payLoad.data || iframeSrc; // Assign iframeSrc
-      data.message["info"] = JSON.stringify(payLoad.dataIndex, null, 2);
-      data.message["link"] = payLoad.link;
-      //   var seoHtml = seoCapital(iframeSrc);
-      executed++
-      //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
     }
-    //iframeSrc in tenary
-    else if (payLoad.type === "text") {
-      data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
-      data.message["info"] = payLoad.data || payLoad.dataData;
-      data.message["link"] = payLoad.link;
-      //   var seoHtml = seoCapital(iframeSrc);
-      executed++
-      //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
-    } else if (payLoad.type === "object") {
-      // Here, if payLoad.data is an object, you need to decide how to display it.
-      // It could contain sub-properties you want to render.
-      if (payLoad.data.html || payLoad.data.app) {
-        data.message["info"] =
-          payLoad.data.html ||
-          payLoad.data.app ||
-          payLoad.data ||
-          payLoad.dataData;
-        // If the object itself contains a URL, use it for iframeSrc
-        data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-        //   var seoHtml = seoCapital(iframeSrc);
-        executed++
-        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
-      } else if (payLoad.data.url) {
-        // If the object explicitly has a 'url' property
-        data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
-        data.message["info"] = `URL provided: ${payLoad.data || payLoad.dataData}`;
-        data.message["link"] = `URL provided: ${payLoad.link}`;
-        //   var seoHtml = seoCapital(iframeSrc);
-        executed++
-        //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
-      } else {
-        // Default way to display a generic object: stringify it
-        data.message["content"] = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
-        data.message["info"] = payLoad?.dataData?.concat(
-          "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
-        );
-        data.message["link"] = payLoad.link;
-        //   var seoHtml = seoCapital(iframeSrc);
-        executed++
-        //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
+    else {
+      if (payLoad.type === "url") {
+          // --- NEW: Handle "url" type directly ---
+          data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
+          data.message["info"] = payLoad.data || payLoad.dataData; //`URL provided: ${payLoad.index || payLoad.dataIndex}`;
+          data.message["link"] = payLoad.link;
+          //   var seoHtml = seoCapital(iframeSrc);
+          executed++
+          //   return RenderTemplate.templateRender(seoCapital, {payL: payLoad}, JSON.stringify(rndE));
       }
-    } else if (payLoad.type === "unknown" || payLoad.type === "error") {
-      data.message["link"] = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
-      //   var seoHtml = seoCapital(iframeSrc);
-      executed++
-      //   return RenderTemplate.templateRender(feed, {payL: payLoad}, JSON.stringify(rndE));
+      else {
+        //iframeSrc in tenary
+        if (payLoad.type === "text") {
+          data.message["content"] = payLoad.dataIndex || iframeSrc; // Assign iframeSrc
+          data.message["info"] = payLoad.data || payLoad.dataData;
+          data.message["link"] = payLoad.link;
+          //   var seoHtml = seoCapital(iframeSrc);
+          executed++
+          //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+        }
+        else {
+          if (payLoad.type === "object") {
+            // Here, if payLoad.data is an object, you need to decide how to display it.
+            // It could contain sub-properties you want to render.
+            if (payLoad.data.html || payLoad.data.app) {
+              data.message["info"] =
+                payLoad.data.html ||
+                payLoad.data.app ||
+                payLoad.data ||
+                payLoad.dataData;
+              // If the object itself contains a URL, use it for iframeSrc
+              data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+              //   var seoHtml = seoCapital(iframeSrc);
+              executed++
+              //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
+            } 
+            else {
+              if (payLoad.data.url) {
+                // If the object explicitly has a 'url' property
+                data.message["content"] = payLoad.data.url || payLoad.dataIndex || iframeSrc;
+                data.message["info"] = `URL provided: ${payLoad.data || payLoad.dataData}`;
+                data.message["link"] = `URL provided: ${payLoad.link}`;
+                //   var seoHtml = seoCapital(iframeSrc);
+                executed++
+                //   return RenderTemplate.templateRender(seoHtml, {payL: payLoad}, JSON.stringify(rndE));
+              } 
+              else {
+                // Default way to display a generic object: stringify it
+                data.message["content"] = payLoad.dataIndex || payLoad.data || iframeSrc; // Assign iframeSrc
+                data.message["info"] = payLoad?.dataData?.concat(
+                  "\n\n\n\n" + JSON.stringify(payLoad, null, 2),
+                );
+                data.message["link"] = payLoad.link;
+                //   var seoHtml = seoCapital(iframeSrc);
+                executed++
+                //   return RenderTemplate.templateRender(appL, {payL: payLoad}, JSON.stringify(rndE));
+              }
+            }
+          }
+          else {
+            if (payLoad.type === "unknown" || payLoad.type === "error") {
+              data.message["link"] = `Error: ${payLoad.message || payLoad.data || payLoad.dataData || "Unknown error."}`;
+              //   var seoHtml = seoCapital(iframeSrc);
+              executed++
+              //   return RenderTemplate.templateRender(feed, {payL: payLoad}, JSON.stringify(rndE));
+            }
+          }
+        }
+      }
     }
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(`Error during payload processing:`, error);
     data.message["info"] = `Critical Error: ${error.stack}`;
     // iframeSrc = ""; // Clear iframe on critical error

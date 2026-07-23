@@ -15,7 +15,7 @@ function postToDiscord(currentMessage) {
 
 function postFromSpreadsheet(column, rowOff, colOff, discord) {
   var messageCell = ssCell(column, rowOff, colOff);
-  var currentMessage = messageCell.getValue();
+  var currentMessage = messageCell?.getValue();
   if (currentMessage == "") return;
   postToDiscord(currentMessage);
 }
@@ -32,7 +32,7 @@ function postToDrive(fileName, base64Data) {
     const bytes = Utilities.base64Decode(base64Data)
     const blob = Utilities.newBlob(bytes, contentType, fileName);
     const file = DriveApp.createFile(blob);
-    let isVUrl = isValidUrl(file.getUrl()) 
+    let isVUrl = new ValidUrlResult(file.getUrl()).validatedResult
     return { success: true, url: isVUrl.url };
   }
   catch (err) {

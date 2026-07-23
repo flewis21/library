@@ -63,65 +63,329 @@ function iframeC() {
 class ClassifyFiles {
   constructor(searchString) {
     this.searchString = searchString;    
-    // let driveLink = new DriveFiles(this.searchString,autoGlobe.functionRegistry.time).dataTree;
-    this.matchLink = matchManager(null,this.searchString,autoGlobe.functionRegistry.time);
-    this.tempFileArr = [];
-    this.tempFolderArr = [];
-    for (let key in this.matchLink) {
-      this.i = 0;
-      this.l = Array.isArray(this.matchLink[key])? this.matchLink[key].length:[this.matchLink[key]].length
-      for (this.i,this.l;this.i<this.l;this.i++) {
-        this.matchType = typeof this.matchLink[key];
-        if (this.matchType === "object") {
-          this.tempFileArr.push(this.matchLink[key][this.i]);
-        }
+    const driveLink = new DriveFiles(this.searchString,autoGlobe.functionRegistry.time);
+    const arn = driveLink.arn;
+    const iam = driveLink.iam;
+    const file = driveLink.file;
+    const files = driveLink.files;
+    const strNw = driveLink.strNw;
+    const fiTitle = driveLink.fiTitle;
+    const fileUrl = driveLink.fileUrl;
+    const mainStr = driveLink.mainStr;
+    const searArn = driveLink.searArn;
+    const dataTree = driveLink.dataTree;
+    const filedMain = driveLink.filedMain;
+    const manString = driveLink.manString;
+    const testStrNw = driveLink.testStrNw;
+    const targetFile = driveLink.targetFile;
+    const searchQuery = driveLink.searchQuery;
+    const rndFiledMain = driveLink.rndFiledMain;
+    const crmCalcResult = driveLink.crmCalcResult;
+    let dTreT = dataTree?.length > 0;
+    if (dTreT) {
+      let fileRes = [];
+      this.fileRes = fileRes;
+      dataTree?.forEach((url) => {
+        this.urlTest = url;
+        if (autoGlobe.vidData?.indexOf(url) !== -1) {
+          fileRes.push(url);
+        } 
         else {
-          if (this.matchType === "string") {
-            if (this.tempFolderArr.indexOf(this.matchLink[key] === -1)) {
-              this.tempFolderArr.push(this.matchLink[key]);
-            }
-          }
+          fileRes.push(url);
+          updateQuote(
+            JSON.stringify({
+              name: "videoSheet",
+              number: parseInt("001", 8),
+              videoid: url,
+              videodescription: searchString,
+            }),
+          );
         }
-      }
-    }
-    this.fileArr = [];
-    this.tempFolderArr.forEach((arrReslt) => {
-      this.tempFileArr.forEach((strResult) => {
-        this.fileObj = fileBrowser(arrReslt,strResult);
-        this.fileArr.push(this.fileObj);
       })
-
-    })
-    this.fileRes = [];
-    this.fileArr?.forEach((obj) => {
-      for (let key in obj) {
-        // let i = 0;
-        // let l = Array.isArray(obj[key])? obj[key].length:[obj[key]].length;
-        // for (i,l;i<l;i++) {
-        //   let objType = typeof obj[key];
-        //   if (objType === "object") {
-
+    }
+    else {
+      if (!dTreT) {
+        let matchLink = matchManager(null,searchString,autoGlobe.functionRegistry.time);
+        const fderX = matchLink.fderX;
+        this.fderX = fderX;
+        // let mFd = dataTree?.length > 0;
+        // if (mFd) {
+        //   let fileRes = [];
+        //   this.fileRes = fileRes;
+        //   dataTree?.forEach((str) => {
+        //     this.strTest = str;
+        //     if (autoGlobe.vidData?.indexOf(str) !== -1) {
+        //       fileRes.push(str);
+        //     } 
+        //     else {
+        //       fileRes.push(str);
+        //       updateQuote(
+        //         JSON.stringify({
+        //           name: "videoSheet",
+        //           number: parseInt("001", 8),
+        //           videoid: str,
+        //           videodescription: searchString,
+        //         }),
+        //       );
+        //     }
+        //   })
+        // }
+        const apps = matchLink.apps;
+        this.apps = apps;
+        let mApp = apps?.length > 0;
+        this.mApp = mApp;
+        if (mApp) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          apps?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const docs = matchLink.docs;
+        this.docs = docs;
+        let mDoc = docs?.length > 0;
+        this.mDoc = mDoc;
+        if (mDoc) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          docs?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const forms = matchLink.forms;
+        this.forms = forms;
+        let mFo = forms?.length > 0;
+        this.mFo = mFo;
+        if (mFo) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          forms?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const pdfs = matchLink.pdfs;
+        this.pdfs = pdfs;
+        let mPdf = pdfs?.length > 0;
+        this.mPdf = mPdf;
+        if (mPdf) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          pdfs?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const pngs = matchLink.pngs;
+        this.pngs = pngs;
+        let mPng = pngs?.length > 0;
+        this.mPng = mPng;
+        if (mPng) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          pngs?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const sheets = matchLink.sheets;
+        this.sheets = sheets;
+        let mSh = sheets?.length > 0;
+        this.mSh = mSh;
+        if (mSh) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          sheets?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        const slides = matchLink.slides;
+        this.slides = slides;
+        let mSli = slides?.length > 0;
+        this.mSli = mSli;
+        if (mSli) {
+          let fileRes = [];
+          this.fileRes = fileRes;
+          slides?.forEach((str) => {
+            this.strTest = str;
+            let fbSearchR = fileBrowser(fderX,str).url;
+            this.fbSearchR = fbSearchR;
+            if (autoGlobe.vidData?.indexOf(fbSearchR) !== -1) {
+              fileRes.push(fbSearchR);
+            } 
+            else {
+              fileRes.push(fbSearchR);
+              updateQuote(
+                JSON.stringify({
+                  name: "videoSheet",
+                  number: parseInt("001", 8),
+                  videoid: fbSearchR,
+                  videodescription: str,
+                }),
+              );
+            }
+          })
+        }
+        // let tempFileArr = [];
+        // this.tempFileArr = tempFileArr;
+        // let tempFolderArr = [];
+        // this.tempFolderArr = tempFolderArr;
+        // for (let key in matchLink) {
+        //   let i = 0;
+        //   this.i = i;
+        //   let l = Array.isArray(this.matchLink[key])? this.matchLink[key]?.length:[this.matchLink[key]]?.length;
+        //   this.l = l;
+        //   for (i,l;i<l;i++) {
+        //     let matchType = typeof matchLink[key];
+        //     this.matchType = matchType;
+        //     if (matchType === "object") {
+        //       tempFileArr.push(matchLink[key][i]);
+        //     }
+        //     else {
+        //       if (matchType === "string") {
+        //         if (tempFolderArr.indexOf(matchLink[key] === -1)) {
+        //           tempFolderArr.push(matchLink[key]);
+        //         }
+        //       }
+        //     }
         //   }
         // }
-        if (key === "url") {
-          this.objTest = obj[key];
-          if (autoGlobe.vidData?.indexOf(this.objTest) !== -1) {
-            this.fileRes.push(this.objTest);
-          } 
-          else {
-            this.fileRes.push(this.objTest);
-            updateQuote(
-              JSON.stringify({
-                name: "videoSheet",
-                number: parseInt("001", 8),
-                videoid: this.objTest,
-                videodescription: this.searchString,
-              }),
-            );
-          }
-        }
+        // let fileArr = [];
+        // this.fileArr = fileArr;
+        // tempFolderArr.forEach((arrReslt) => {
+        //   tempFileArr.forEach((strResult) => {
+        //     fileObj = fileBrowser(arrReslt,strResult);
+        //     fileArr.push(fileObj);
+        //   })
+
+        // })
+        // let fileRes = [];
+        // this.fileRes = fileRes;
+        // fileArr?.forEach((obj) => {
+        //   for (let key in obj) {
+        //     // let i = 0;
+        //     // let l = Array.isArray(obj[key])? obj[key]?.length:[obj[key]]?.length;
+        //     // for (i,l;i<l;i++) {
+        //     //   let objType = typeof obj[key];
+        //     //   if (objType === "object") {
+
+        //     //   }
+        //     // }
+        //     if (key === "url") {
+        //       let objTest = obj[key];
+        //       this.objTest = objTest;
+        //       if (autoGlobe.vidData?.indexOf(objTest) !== -1) {
+        //         fileRes.push(objTest);
+        //       } 
+        //       else {
+        //         fileRes.push(objTest);
+        //         updateQuote(
+        //           JSON.stringify({
+        //             name: "videoSheet",
+        //             number: parseInt("001", 8),
+        //             videoid: objTest,
+        //             videodescription: searchString,
+        //           }),
+        //         );
+        //       }
+        //     }
+        //   }
+        // })
       }
-    })
+    }
   }
 }
 
@@ -146,7 +410,7 @@ function needPastTime(searchString) {
   // while (typeof fndOrd !== "object") {
     if (typeof searchString === "undefined") {
       let uItems = autoGlobe.uniqueItemArray()
-      var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
+      var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems?.length)?.length)].Description;
       var searchString = noSearch || new SearchStrings().myNewArr;
     }
     let searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
@@ -157,7 +421,7 @@ function needPastTime(searchString) {
       let tempFolderArr = [];
       for (let key in matchLink) {
         let i = 0;
-        let l = Array.isArray(matchLink[key])? matchLink[key].length:[matchLink[key]].length
+        let l = Array.isArray(matchLink[key])? matchLink[key]?.length:[matchLink[key]]?.length
         for (i,l;i<l;i++) {
           let matchType = typeof matchLink[key];
           if (matchType === "object") {
@@ -184,7 +448,7 @@ function needPastTime(searchString) {
       fileArr.forEach((obj) => {
         for (let key in obj) {
           // let i = 0;
-          // let l = Array.isArray(obj[key])? obj[key].length:[obj[key]].length;
+          // let l = Array.isArray(obj[key])? obj[key]?.length:[obj[key]]?.length;
           // for (i,l;i<l;i++) {
           //   let objType = typeof obj[key];
           //   if (objType === "object") {
@@ -477,7 +741,7 @@ function pastTime(url) {
     0,
     10,
   );
-  const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid.length)); // Math.floor(Math.random());
+  const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid?.length)); // Math.floor(Math.random());
   const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
   // const randomKey = Math.floor(Math.random() * (Math.floor(10000)))// Math.floor(Math.random());
   const uniqueKey = [videoPlaylist].entries().next().value;
@@ -495,7 +759,7 @@ var seoKeyword = function () {
 function videoPage(search) {
   // var search = "NEWMONT Corp. DE"
   var res = seoSheet(search).keyWords;
-  var resRnd = Math.floor(Math.random() * Math.floor(res.length));
+  var resRnd = Math.floor(Math.random() * Math.floor(res?.length));
   var content = res[resRnd];
   var youPlayer = videoPlayer(content);
   var content = HtmlService.createTemplate(`
@@ -524,16 +788,16 @@ function videoPlayer(searchString) {
     }
   });
   const randomPlaylist = [];
-  for (var i = 0, l = idArray.length; i < l; i++) {
-    const randomVidKey = Math.floor(Math.random() * Math.floor(idArray.length)); // Math.floor(Math.random());
+  for (var i = 0, l = idArray?.length; i < l; i++) {
+    const randomVidKey = Math.floor(Math.random() * Math.floor(idArray?.length)); // Math.floor(Math.random());
     randomPlaylist.push(idArray[randomVidKey]);
   }
-  if (randomPlaylist.length === 0) {
+  if (randomPlaylist?.length === 0) {
     return;
   }
   let vidPlaylist = function () {
     const randomVidKey = Math.floor(
-      Math.random() * Math.floor(randomPlaylist.length),
+      Math.random() * Math.floor(randomPlaylist?.length),
     ); // Math.floor(Math.random());
     const videoObject = covObjects(randomPlaylist, ["youtubeID"]);
     const uniqueVidKey = [videoObject].entries().next().value;
@@ -845,7 +1109,7 @@ function videoPlayer(searchString) {
 
 // console.log(JSON.stringify(randomPlaylist[0][randomVidKey]))
 // const rdmIdArray = Utilities.jsonStringify([randomPlaylist])
-// const plVidKey = Math.floor(Math.random() * (Math.floor(randomPlaylist.length)))// Math.floor(Math.random());
+// const plVidKey = Math.floor(Math.random() * (Math.floor(randomPlaylist?.length)))// Math.floor(Math.random());
 // const playVid = Utilities.jsonStringify(randomPlaylist[0][plVidKey])}
 
 // serverSide('youTube', [])

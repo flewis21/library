@@ -216,18 +216,17 @@ function driveSheetsFilter(filterFiles) {
   console.log(
     "boilerplate fileManagers: line 178\ndriveSheetsFilter(filterFiles: " +
       filterFiles +
-      ")\n " +
-      arguments.callee.caller.name,
+      ") "
   );
-  console.log(
-    autoGlobe.functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      filterFiles +
-      ", = " +
-      !filterFiles,
-  );
+  // console.log(
+  //   autoGlobe.functionRegistry.time +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     filterFiles +
+  //     ", = " +
+  //     !filterFiles,
+  // );
   var fileList = [];
   var lowList = [];
   fileList = matchManager("Sheets").sheets;
@@ -928,18 +927,18 @@ function driveUrls(fileX) {
 // };
 
 function fileBrowser(initialFolder, drillDown) {
-  console.log(
-    "DEBUG: line 932\nfileBrowser(initialFolder: " +
-      initialFolder +
-      ") ",
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\nInitial folder: " +
-      initialFolder,
-  );
+  // console.log(
+  //   "DEBUG: line 932\nfileBrowser(initialFolder: " +
+  //     initialFolder +
+  //     ") ",
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\nInitial folder: " +
+  //     initialFolder,
+  // );
 
   var selectedFolder = initialFolder ? initialFolder : "Sheets";
   var file = undefined; // Will store the selected file name/ID
@@ -952,13 +951,13 @@ function fileBrowser(initialFolder, drillDown) {
     for (var key in allFoldersObj) {
       allFolderNames.push(allFoldersObj[key]);
     }
-    console.log(
-      formatTime(autoGlobe.functionRegistry.time) +
-        "\n" +
-        arguments.callee.name +
-        ":\nAll folders length: " +
-        allFolderNames.length,
-    );
+    // console.log(
+    //   formatTime(autoGlobe.functionRegistry.time) +
+    //     "\n" +
+    //     arguments.callee.name +
+    //     ":\nAll folders length: " +
+    //     allFolderNames.length,
+    // );
 
     if (allFolderNames.length > 0) {
       selectedFolder =
@@ -993,9 +992,9 @@ function fileBrowser(initialFolder, drillDown) {
     var filesObj = fileMatchManager(folderName); // Should return files in 'folderName'
     if (!filesObj) {
       // Handle case where fileMatchManager returns falsy
-      console.warn(
-        "fileMatchManager returned no files for folder: " + folderName,
-      );
+      // console.warn(
+      //   "fileMatchManager returned no files for folder: " + folderName,
+      // );
       return [];
     }
     var filesArray = [];
@@ -1147,11 +1146,11 @@ function fileBrowser(initialFolder, drillDown) {
   var rndFiledMain = Math.floor(Math.random() * dataTree.length);
   var filedMain = dataTree[rndFiledMain];
 
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      ":\nReturning: " +
-      JSON.stringify(filedMain),
-  );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     ":\nReturning: " +
+  //     JSON.stringify(filedMain),
+  // );
   return filedMain;
 }
 
@@ -1199,34 +1198,34 @@ var fileFold = function(folderX, fileX, time) {
 }
 
 var fileManager = function(fileX, folder, time, content, mimeType) {
-  console.log(
-    "boilerplate fileManagers: line 1015\nfileManager(fileX: " +
-      fileX +
-      ", folder: " +
-      folder +
-      ", time: " +
-      time +
-      ", content: " +
-      content +
-      ", mimeType: " +
-      mimeType +
-      ")\n " +
-      arguments.callee.caller.name,
-  );
-  console.log(
-    formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
-      fileX +
-      ", = " +
-      !fileX,
-  );
+  // console.log(
+  //   "boilerplate fileManagers: line 1015\nfileManager(fileX: " +
+  //     fileX +
+  //     ", folder: " +
+  //     folder +
+  //     ", time: " +
+  //     time +
+  //     ", content: " +
+  //     content +
+  //     ", mimeType: " +
+  //     mimeType +
+  //     ")\n " +
+  //     arguments.callee.caller.name,
+  // );
+  // console.log(
+  //   formatTime(autoGlobe.functionRegistry.time) +
+  //     "\n" +
+  //     arguments.callee.name +
+  //     "\n!" +
+  //     fileX +
+  //     ", = " +
+  //     !fileX,
+  // );
   if (typeof fileX !== "undefined" && typeof folder !== "undefined") {
-    console.log(
-      "Declaring folderId calling folderIdGlobal(" + folder,
-      time + ")",
-    );
+    // console.log(
+    //   "Declaring folderId calling folderIdGlobal(" + folder,
+    //   time + ")",
+    // );
     var folderId = folderIdGlobal(folder, time);
     // console.log("Declaring folderIdName calling DriveApp.getFileById(" + folderId + ").getName() to get the folder name")
     // var folderIdName = DriveApp.getFolderById(folderId).getName()
@@ -1245,12 +1244,12 @@ var fileManager = function(fileX, folder, time, content, mimeType) {
     }
     if (myFile) {
       // console.log(myFile)
-      console.log(
-        "calling DriveApp with id of file: " +
-          myFile.getId() +
-          " found in root drive - " +
-          folderId,
-      );
+      // console.log(
+      //   "calling DriveApp with id of file: " +
+      //     myFile.getId() +
+      //     " found in root drive - " +
+      //     folderId,
+      // );
       try {
         var thisFileId = myFile.getId();
         var thisFile = DriveApp.getFileById(thisFileId);
@@ -1649,7 +1648,7 @@ function rndUrls() {
 
 function shareDrive() {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "boilerplate : line \n(: " + +") ",
   );
   console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
   var dApp = DriveApp;

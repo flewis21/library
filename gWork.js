@@ -389,7 +389,7 @@ function randomSubstance(index, loopLength, importedData, arrD, time) {
         typeof importedData !== "string") &&
         [importedData].length > 0
       ) {
-        var myImportData = importedData.sort((a, b) => a - b)[
+        var myImportData = Array(importedData)?.sort((a, b) => a - b)[
           Math.floor(Math.random() * i)
         ];
         newArr.push(myImportData);

@@ -260,7 +260,7 @@ function epaData(e) {
 
 function epaA(epaAUrl) {
   console.log(
-    autoP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\nepaAUrl is !" +
@@ -272,7 +272,7 @@ function epaA(epaAUrl) {
     // No userProvidedValue
     let args = {};
     console.log("DEBUG: Generating epaAUrl...");
-    var rndStr = AutoParams.prototype.uniqueItemArray();
+    var rndStr = autoGlobe.uniqueItemArray();
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var product = rndStrObj["Description"];
@@ -831,7 +831,7 @@ function productRegNo(eparegno) {
                     active_ingredients: [
                       {
                         active_ing:
-                          AutoParams.prototype.uniqueItemArray()[
+                          autoGlobe.uniqueItemArray()[
                             randNum([JSON.stringify(eparegno)].join(" "))
                           ]["SKU"],
                         pc_code: randNum([JSON.stringify(trial())].join(" ")),
@@ -913,7 +913,7 @@ function productFullName(productName) {
           [
             "items",
             reqChoice()
-              ? AutoParams.prototype.uniqueItemArray()[
+              ? autoGlobe.uniqueItemArray()[
                   randNum([JSON.stringify(productName)].join(" "))
                 ]
               : [],
@@ -991,28 +991,28 @@ function productNamePartial(sSProduct) {
                 {
                   eparegno: randNum([JSON.stringify(trial())].join(" ")),
                   productname:
-                    AutoParams.prototype.uniqueCoArray()[
+                    autoGlobe.uniqueCoArray()[
                       randNum([JSON.stringify(sSProduct)].join(" "))
                     ]["ticker"],
                 },
                 {
                   eparegno: randNum([JSON.stringify(trial())].join(" ")),
                   productname:
-                    AutoParams.prototype.uniqueCoArray()[
+                    autoGlobe.uniqueCoArray()[
                       randNum([JSON.stringify(sSProduct)].join(" "))
                     ]["ticker"],
                 },
                 {
                   eparegno: randNum([JSON.stringify(trial())].join(" ")),
                   productname:
-                    AutoParams.prototype.uniqueCoArray()[
+                    autoGlobe.uniqueCoArray()[
                       randNum([JSON.stringify(sSProduct)].join(" "))
                     ]["ticker"],
                 },
                 {
                   eparegno: randNum([JSON.stringify(trial())].join(" ")),
                   productname:
-                    AutoParams.prototype.uniqueCoArray()[
+                    autoGlobe.uniqueCoArray()[
                       randNum([JSON.stringify(sSProduct)].join(" "))
                     ]["ticker"],
                 },
@@ -1157,7 +1157,7 @@ function productIngName(ingredient) {
                   active_ingredients: [
                     {
                       active_ing:
-                        AutoParams.prototype.uniqueItemArray()[
+                        autoGlobe.uniqueItemArray()[
                           randNum([JSON.stringify(trial())].join(" "))
                         ]["SKU"],
                       pc_code: randNum([JSON.stringify(trial())].join(" ")),
@@ -1237,7 +1237,7 @@ function productChemCode(code) {
                   active_ingredients: [
                     {
                       active_ing:
-                        AutoParams.prototype.uniqueItemArray()[
+                        autoGlobe.uniqueItemArray()[
                           randNum([JSON.stringify(trial())].join(" "))
                         ]["SKU"],
                       pc_code: randNum([JSON.stringify(trial())].join(" ")),
@@ -1317,7 +1317,7 @@ function productAbstractNum(abstract) {
                   active_ingredients: [
                     {
                       active_ing:
-                        AutoParams.prototype.uniqueItemArray()[
+                        autoGlobe.uniqueItemArray()[
                           randNum([JSON.stringify(trial())].join(" "))
                         ]["SKU"],
                       pc_code: randNum([JSON.stringify(trial())].join(" ")),

@@ -3916,12 +3916,11 @@ function seoYoutube(searchString, time) {
     if ([searchString].indexOf("http://") === -1) {
       rndSearch = "http://" + searchString
     }
-    else {
-      if ([rndSearch].indexOf(".com") === -1) {
-        rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
-      }
+    if ([rndSearch].indexOf(".com") === -1) {
+      rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
     }
-  }else {
+  }
+  else {
     rndSearch = searchString
   }
   // = isValidUrl(searchString).pathname;

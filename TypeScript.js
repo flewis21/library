@@ -535,6 +535,62 @@ class AutoParams {
     // ]
     //   .toString()
     //   .split(" ");
+    this.proSort = function () {
+      let proSort = [];
+      while (proSort.length === 0) {
+        let varRnd = this.numVarRnd;
+        let rndCustomer = this.customOrder[varRnd];
+        // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+        let customGroup = this.functionRegistry.fileList.map((customerWk1) => {
+          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS"]; 
+          let sblx = [customerWk1];
+          bl.forEach((s) => {
+            if (sblx.indexOf(String(s)) > -1) {
+              sblx.pop()
+            }
+          })
+          if (sblx.length > 0) {
+            sblx.map((customerWk2) => {
+              if (String(customerWk2).indexOf(rndCustomer) === 0) {
+                // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
+                return this.functionRegistry.fileList.indexOf(customerWk2)
+              }
+            })
+            return sblx[0]
+          }
+        }).filter((isIn) => {
+          return isIn != null
+        });
+        // console.log("These is the customGroup", customGroup);
+        proSort = customGroup.sort((a,b) => {
+          let i = Math.random()
+          let tSorted = a;
+          let zSorted = b;
+          if ((i > .3 && i < .5) || (i < .3)) {
+            return zSorted - tSorted
+          }
+          else {
+            i = Math.random()
+            if ((i > .8) || (i < .3)) {
+              return tSorted - zSorted
+            }
+            else {
+              i = Math.random()
+              if ((i > .5 && i < .8)) {
+                return zSorted
+              }
+              else {
+                i = Math.random()
+                if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
+                  return tSorted
+                }
+              }
+            }
+          }
+        })
+      }
+      return proSort;
+    }
     this.numVarRnd = (function () {
       var numLen = [
         Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
@@ -2828,7 +2884,7 @@ class MisStCreator {
     console.log("trueSomeArgs = " + this.trueSomeArgs, autoGlobe.executed++);
     this.funcUno = this.trueFunc
       ? decodeURIComponent(this.func)
-      : autoGlobe.functionRegistry.paramsList;
+      : autoGlobe.proSort();
     console.log("funcUno = " + this.funcUno, autoGlobe.executed++);
     this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
     // autoGlobe.numVarRnd = randNum(this.funcUno.toString()); 
@@ -4149,12 +4205,12 @@ class ObjectConvertor {
 class ValidUrlResult {
   constructor(text) {
     // super();
-    let resText = text;
+    this.text = text;
     console.log(
       "\nValidUrlResult(text: " +
-        resText +
+        text +
         ": " +
-        typeof resText +
+        typeof text +
         ")",
     );
     let resVRt = {};
@@ -4165,44 +4221,60 @@ class ValidUrlResult {
     resVRt.rndRes = [];
     resVRt.matches = "";
     resVRt.allMatches = "";
-    // let resText = this.text;
+    this.validatedResult = resVRt;
     // let resVRt = this.validatedResult;
     let resURx = "";
     let resXReg = "";
     let resTree = '';
+    this.dataTree = resTree;
     let rTFiled = "";
+    this.filedMain = rTFiled;
     let rTSheet = "";
+    this.vidSheetVals = rTSheet;
     let rtVData = "";
+    this.vidData = rtVData;
     let rTVValues = "";
+    this.vidVals = rTVValues;
     let rTIVValues = "";
+    this.inVVals = rTIVValues;
     let rTVTI = "";
-    if (typeof resText !== "string" || resText?.length === 0) {
+    this.truInv = rTVTI;
+    if (typeof text !== "string" || text?.length === 0) {
       console.log("No url string or string length is 0!\nreturning: ",resVRt)
     }
     else {
       resURx =
         /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-      resXReg = resText.match(resURx);
+      this.urlRegex = resURx;
+      resXReg = text.match(resURx);
+      this.regxRes = resXReg;
       if (resXReg !== null) {
         resVRt.matches = resXReg;
+        this.validatedResult = resVRt;
       }
       console.log("matches = " + resVRt.matches);
       if (resVRt.matches.length === 0) {
-        // this.searchLinkDrive = new DriveFiles(resText, autoGlobe.functionRegistry.time);
+        // this.searchLinkDrive = new DriveFiles(text, autoGlobe.functionRegistry.time);
         // if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
           resVRt.matches = resTree  //this.searchLinkDrive?.dataTree;
+          this.validatedResult = resVRt;
         // }
         console.log("matches to return = " + resVRt.matches);
         // if (this.searchLinkDrive?.filedMain) {
         if (rTFiled) {
           autoGlobe.functionRegistry.vidTree();
           rTSheet = autoGlobe.functionRegistry.getVideoList();
+          this.vidSheetVals = rTSheet;
           rtVData = [];
+          this.vidData = rtVData;
           rTVValues = Object.values(rTSheet);
+          this.vidVals = rTVValues;
           rTVValues.forEach((val) => {
             rTIVValues = Object.values(val);
+            this.inVVals = rTIVValues;
             rTIVValues.forEach((inV) => {
               rTVTI = autoGlobe.trueVfalse(inV);
+              this.truInv = rTVTI;
               if (rTVTI) {
                 rtVData.push(inV);
               }
@@ -4213,15 +4285,17 @@ class ValidUrlResult {
             if (fileUrl && resVRt.rndRes.indexOf(fileUrl) === -1) {
               if (rtVData?.indexOf(fileUrl) !== -1) {
                 resVRt.rndRes.push(fileUrl);
+                this.validatedResult = resVRt;
               } 
               else {
                 resVRt.rndRes.push(fileUrl);
+                this.validatedResult = resVRt;
                 updateQuote(
                   JSON.stringify({
                     name: "videoSheet",
                     number: parseInt("001", 8),
                     videoid: fileUrl,
-                    videodescription: resText,
+                    videodescription: text,
                   }),
                 );
               }
@@ -4231,17 +4305,20 @@ class ValidUrlResult {
       }
       console.log("rndRes = " + resVRt.rndRes);
       resVRt.allMatches = resVRt.matches ? resVRt.matches : resVRt.rndRes;
+      this.validatedResult = resVRt;
       console.log(`allMatches = matches ? [...${resVRt.allMatches}]`);
-      let resTemp = this.tempUrlResult;
-      let resProto = this.protocolEnd;
+      let resTemp = "";
+      let resProto = null;
       if (resVRt.allMatches?.length > 0) {
         resTemp = {};
         resTemp.currentProtocol = "";
         resTemp.currentHostname = "";
         resTemp.currentPathname = "";
         resTemp.currentQuery = "";
+        this.tempUrlResult = resTemp;
         resVRt?.allMatches?.forEach((url) => {
           resProto = url.indexOf("://");
+          this.protocolEnd = resProto;
           let tempPE = resProto;
           let tempUCro = resTemp.currentProtocol;
           if (tempPE !== -1) {
@@ -4250,9 +4327,10 @@ class ValidUrlResult {
             console.log("Hello from ValidUrlResult allMatches ProtocolEnd - " + url);
           }
           resTemp.currentProtocol = tempUCro;
+          this.tempUrlResult = resTemp;
           resProto = tempPE;
-          this.hostnameEnd = url.indexOf("/");
-          let tempHostE = this.hostnameEnd;
+          this.protocolEnd = resProto;
+          let tempHostE = url.indexOf("/");
           let tempUCh = resTemp.currentHostname;
           let tempUPn = resTemp.currentPathname;
           if (tempHostE !== -1) {
@@ -4264,24 +4342,26 @@ class ValidUrlResult {
             console.log("Hello from ValidUrlResult allMatches currentHostName - " + url);
           }
           resTemp.currentPathname = tempUPn;
+          this.tempUrlResult = resTemp;
           resTemp.currentHostname = tempUCh;
+          this.tempUrlResult = resTemp;
           this.hostnameEnd = tempHostE;
-          this.queryStart = resVRt.pathname.indexOf("?");
-          let tempQ = this.queryStart;
-          let tempCQ = this.currentQuery;
+          let tempQ = resVRt.pathname.indexOf("?");
+          this.queryStart = tempQ;
+          let tempCQ = resTemp.currentQuery;
           let tempVRPh = resVRt.pathname;
-          let tempCh = this.currentPathname;
+          let tempCh = resTemp.currentPathname;
           if (tempQ !== -1) {
             tempCQ = tempVRPh.substring(tempQ);
+            this.currentQuery = tempCQ;
             tempCh = tempVRPh.substring(0, tempQ);
+            this.currentPathname = tempCh;
           }
-          this.queryStart = tempQ;
-          this.currentQuery = tempCQ;
           resVRt.pathname = tempVRPh;
-          this.currentPathname = tempCh;
-          this.hostnameRegex =
+          this.validatedResult = resVRt;
+          let tempHNX =
             /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]+$|^localhost$/;
-          let tempHNX = this.hostnameRegex;
+          this.hostnameRegex = tempHNX;
           let tempVRP = resVRt.protocol;
           let tempVRh = resVRt.hostname;
           let tempVRQ = resVRt.query;
@@ -4301,31 +4381,26 @@ class ValidUrlResult {
             }
           }
           resTemp.currentHostname = tempUCh;
-          this.hostnameRegex = tempHNX;
+          this.tempUrlResult = resTemp;
           resTemp.currentProtocol = tempUCro;
+          this.tempUrlResult = resTemp;
           resVRt.protocol = tempVRP;
+          this.validatedResult = resVRt;
           resVRt.hostname = tempVRh;
+          this.validatedResult = resVRt;
           resVRt.pathname = tempVRPh;
+          this.validatedResult = resVRt;
           resTemp.currentPathname = tempUPn;
+          this.tempUrlResult = resTemp;
           resVRt.query = tempVRQ;
+          this.validatedResult = resVRt;
           resTemp.currentQuery = tempURcQ;
+          this.tempUrlResult = resTemp;
           resVRt.url = tempVRUrl;
+          this.validatedResult = resVRt;
         });
       }
-      this.tempUrlResult = resTemp;
-      this.protocolEnd = resProto;
     }
-    this.text = resText;
-    this.urlRegex = resURx;
-    this.regxRes = resXReg;
-    this.dataTree = resTree;
-    this.filedMain = rTFiled;
-    this.vidSheetVals = rTSheet;
-    this.vidData = rtVData;
-    this.vidVals = rTVValues;
-    this.inVVals = rTIVValues;
-    this.truInv = rTVTI;
-    this.validatedResult = resVRt;
   }
 }
 let autoGlobe = new ClassifyYIDs()
@@ -4334,7 +4409,7 @@ let autoGlobe = new ClassifyYIDs()
 autoGlobe.functionRegistry.initialize();
 autoGlobe.functionRegistry.startProcessTimer();
 
-var geneicType = function (e) {
+let geneicType = function (e) {
   let data = null;
   let base = null;
   let dataOR = null;
@@ -4343,61 +4418,62 @@ var geneicType = function (e) {
     data = funcHandle(e);
   }
   else {
-    let pSort = [];
-    while (pSort.length === 0) {
-      let varRnd = new AutoParams().numVarRnd;
-      let rndCustomer = autoGlobe.customOrder[varRnd];
-      // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
-      let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
-        let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData"]; 
-        let sblx = [customerWk1];
-        bl.forEach((s) => {
-          if (sblx.indexOf(String(s)) > -1) {
-            sblx.pop()
-          }
-        })
-        if (sblx.length > 0) {
-          sblx.map((customerWk2) => {
-            if (String(customerWk2).indexOf(rndCustomer) === 0) {
-              // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
-              return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
-            }
-          })
-          return sblx[0]
-        }
-      }).filter((isIn) => {
-        return isIn != null
-      });
-      // console.log("These is the customGroup", customGroup);
-      pSort = customGroup.sort((a,b) => {
-        let i = Math.random()
-        let tSorted = a;
-        let zSorted = b;
-        if ((i > .3 && i < .5) || (i < .3)) {
-          return zSorted - tSorted
-        }
-        else {
-          i = Math.random()
-          if ((i > .8) || (i < .3)) {
-            return tSorted - zSorted
-          }
-          else {
-            i = Math.random()
-            if ((i > .5 && i < .8)) {
-              return zSorted
-            }
-            else {
-              i = Math.random()
-              if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
-                return tSorted
-              }
-            }
-          }
-        }
-      })
-    }
+    let reSorted = autoGlobe.proSort();
+    data = reSorted[Math.floor(Math.random() * Math.floor(reSorted.length))];
+    // let pSort = [];
+    // while (pSort.length === 0) {
+    //   let varRnd = new AutoParams().numVarRnd;
+    //   let rndCustomer = autoGlobe.customOrder[varRnd];
+    //   // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+    //   let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
+    //     let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData"]; 
+    //     let sblx = [customerWk1];
+    //     bl.forEach((s) => {
+    //       if (sblx.indexOf(String(s)) > -1) {
+    //         sblx.pop()
+    //       }
+    //     })
+    //     if (sblx.length > 0) {
+    //       sblx.map((customerWk2) => {
+    //         if (String(customerWk2).indexOf(rndCustomer) === 0) {
+    //           // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
+    //           return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
+    //         }
+    //       })
+    //       return sblx[0]
+    //     }
+    //   }).filter((isIn) => {
+    //     return isIn != null
+    //   });
+    //   // console.log("These is the customGroup", customGroup);
+    //   pSort = customGroup.sort((a,b) => {
+    //     let i = Math.random()
+    //     let tSorted = a;
+    //     let zSorted = b;
+    //     if ((i > .3 && i < .5) || (i < .3)) {
+    //       return zSorted - tSorted
+    //     }
+    //     else {
+    //       i = Math.random()
+    //       if ((i > .8) || (i < .3)) {
+    //         return tSorted - zSorted
+    //       }
+    //       else {
+    //         i = Math.random()
+    //         if ((i > .5 && i < .8)) {
+    //           return zSorted
+    //         }
+    //         else {
+    //           i = Math.random()
+    //           if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
+    //             return tSorted
+    //           }
+    //         }
+    //       }
+    //     }
+    //   })
+    // }
     // console.log("These is the sorted customGroup", pSort);
-    let tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(pSort.length))];
     // let misStCallParameters = null
     // if (tempObj?.parameters) {
     //   misStCallParameters = Array(tempObj?.name,tempObj?.parameters)
@@ -4405,7 +4481,7 @@ var geneicType = function (e) {
     // else {
     //   misStCallParameters = tempObj?.name
     // }
-    data = tempObj?.name // new MisStCreator(Array(tempObj?.name,tempObj?.parameters));
+    // new MisStCreator(Array(tempObj?.name,tempObj?.parameters));
   //   base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
   //   console.log("What is type of base variable ", typeof base);
   //   if (typeof base === "string") {
@@ -4491,27 +4567,35 @@ var geneicType = function (e) {
           base = globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
         }
         else {
-          // eQueryObject = {
-          //   parameter: {
-          //     q: data?.argsObject?.func + "," + data?.argsObject?.args,
-          //   }
-          // };
-          // eQueryObject = {parameter: {q: "http://politico.com"}}
-          // data = funcHandle(eQueryObject);
-          // handles =  tempObj
-          if (data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) {
-            console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
+          if (false) {
+            eQueryObject = {
+              parameter: {
+                q: data?.argsObject?.func + "," + data?.argsObject?.args,
+              }
+            };
+          }
+          if (true) {
+            eQueryObject = {parameter: {func: "startRenderer",args: data}}
+            handles = funcHandle(eQueryObject);
+            data =  new MisStCreator([handles.funcUno,handles.funcDos]);
+            let dataErrors = data?.allErrors;
+            let dataFunc = data?.argsObject?.func;
+            let dataArgs = data?.argsObject?.args;
+            let dataRes = data?.argsObject?.res;
+          }
+          if ((data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) || (data?.funcUno?.length === 0 && data?.funcDos?.length === 0)) {
+            console.log("event; FuncHandle returned: data?.argsObject?.func = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
             base = data?.argsObject?.res;
           }
           else {
             if (data?.tempObj?.argsObject?.app?.length === 0) {
-              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+              console.log("event; FuncHandle returned: data?.tempObj?.argsObject?.app = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
               base = data?.tempObj?.argsObject?.index?.res
             }
             else {
-              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data), autoGlobe.executed++);
+              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.funcUno || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data), autoGlobe.executed++);
               // let funcU = data.funcUno;
-              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data;
+              base = data?.argsObject?.func || data?.funcUno || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data;
               // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
               // base = new RawFuncResult(funcU, funcD).rawFuncResult;
             }

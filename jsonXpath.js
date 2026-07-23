@@ -238,11 +238,14 @@ function jsonINIT(json) {
    */
   try {
     var tempArr = [];
-    for (var obj in json) {
-      tempArr.push([obj, json[obj]]);
+    if (typeof json === "object" && !Array.isArray(json)) {
+      for (var obj in json) {
+        tempArr.push([obj, json[obj]]);
+      }
     }
     return tempArr;
-  } catch (err) {
+  } 
+  catch (err) {
     console.log(err + " -:- " + url);
   }
 }
@@ -504,7 +507,7 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
     time = autoGlobe.functionRegistry.time;
   }
   if (typeof cokey === "undefined") {
-    var rndStr = autoGlobearams.prototype.uniqueItemArray();
+    var rndStr = autoGlobe.uniqueItemArray();
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var cokey = rndStrObj["Description"];

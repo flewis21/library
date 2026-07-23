@@ -731,7 +731,7 @@ var getNewsArticles = function(query, apiKey, pageSize = 10, page = 1) {
 // Function to fetch top headlines from News API
 function getTopHeadlines(country, category, apiKey, pageSize = 10, page = 1) {
   console.log(
-    formatTime(autoP.functionRegistry.time) + "\ncountry is !, = " + !country,
+    formatTime(autoGlobe.functionRegistry.time) + "\ncountry is !, = " + !country,
   );
   if (!apiKey) {
     return Promise.reject(
