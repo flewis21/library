@@ -747,7 +747,7 @@ function mapValues(data, index) {
   //     ", = " +
   //     index,
   // );
-  if (data) {
+  if (data && Array.isArray(data)) {
     data = data.map(function (e) {
       return e[index].valueOf();
     });

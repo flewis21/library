@@ -3223,7 +3223,7 @@ class StyleHtml {
       `${link_visited.getContent() + link_active.getContent()}`,
     );
     this.runIt = HtmlService.createHtmlOutput(
-      `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + js_query.getContent() + materialize_js.getContent() + luxon_js.getContent() + tabulator_js.getContent() + next_clicked_video.getContent() + busy_calendar.getContent()}`
+      `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + js_query.getContent() + materialize_js.getContent() + luxon_js.getContent() + tabulator_js.getContent() + next_clicked_video.getContent() + busy_calendar.getContent() + iframe_query.getContent()}`
     );
     this.abcIt = HtmlService.createHtmlOutput(
       `

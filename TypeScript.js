@@ -4574,7 +4574,7 @@ let geneicType = function (e) {
               }
             };
           }
-          if (true) {
+          if (false) {
             eQueryObject = {parameter: {func: "startRenderer",args: data}}
             handles = funcHandle(eQueryObject);
             data =  new MisStCreator([handles.funcUno,handles.funcDos]);

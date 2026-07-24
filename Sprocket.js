@@ -653,8 +653,8 @@ function dtlsMain(file) {
   );
   autoGlobe.functionRegistry.gTree();
   let mFold = autoGlobe.functionRegistry.folderTree.sort((a, b) => {
-    let up = getZuluPriority(a);
-    let down = getZuluPriority(b);
+    let up = autoGlobe.getZuluPriority(a);
+    let down = autoGlobe.getZuluPriority(b);
     return down - up
   })[Math.floor(Math.random() * autoGlobe.functionRegistry.folderTree.length)];
   let mFil = file || itemCalc().sort((a, b) => {
