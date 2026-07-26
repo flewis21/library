@@ -39,12 +39,19 @@
         const remoteSuggestionsCache = {};
         const localListsCache = {};
         let personalizedList = [];
+        let againContent = null;
         let againCap = null;
+        let matchesContent = null;
         let matchesToReturn = null;
+        let allContentAvailable = [];
         let allMatchesAvailable = [];
+        let searchBackEnd = null;
         let searchIntent = null;
         let fullList = [];
+        let contentList = [];
+        let suggestContent = "";
         let localList = [];
+        let suggestions = "";
 
         if (!input || !suggestionsDiv) {
           console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
@@ -82,16 +89,16 @@
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
-            searchIntent = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
-            localStorage.setItem("gsSearch", searchIntent);
-            againCap = localStorage.getItem("gsSearch");
-            matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-              if (String(val.description).indexOf(againCap) > -1) {
-                // console.log(againCap + ": result description: " + val.description);
+            searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
+            localStorage.setItem("ssSearch", searchBackEnd);
+            againContent = localStorage.getItem("ssSearch");
+            matchesContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+              if (String(val.description).indexOf(againContent) > -1) {
+                // console.log(againContent + ": result description: " + val.description);
                 // console.log("result index: " + index);
                 let tubeUrl = val.youtubeUrl
                 if (tubeUrl && tubeUrl !== null) {
-                  console.log("local storage all results: " + againCap);
+                  console.log("local storage all results: " + againContent);
                   // personalizedList.push(val);
                   return tubeUrl
                 }
@@ -99,85 +106,85 @@
             }).filter((mapResult) => {
               return mapResult != null
             });
-            // if (matchesToReturn.length > 0) {
-            //   remoteSuggestionsCache[againCap] = personalizedList;
+            // if (matchesContent.length > 0) {
+            //   remoteSuggestionsCache[againContent] = personalizedList;
             // }
             // else {
-            //   remoteSuggestionsCache[againCap] = [];
+            //   remoteSuggestionsCache[againContent] = [];
             // }
-            // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-            console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-            // console.log(allMatchesAvailable.length < matchesToReturn.length);
-            if (allMatchesAvailable.length < matchesToReturn.length) {
-              console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-              while (allMatchesAvailable.length < matchesToReturn.length) {
-                allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                  let i = Math.random()
-                  let tSorted = a;
-                  // console.log(againCap + ": tSorted = " + tSorted);
-                  let zSorted = b;
-                  // console.log(againCap + ": zSorted = " + zSorted);
-                  if (i < .3) {
-                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                    if (matchA > -1) {
-                      // console.log(againCap + ": matchA = " + matchA);
-                      return zSorted;
-                    }
-                  }
-                  else {
-                    if (i > .3 && i < .5 ) {
-                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                      if (matchB === -1) {
-                        // console.log(againCap + ": matchB = " + matchB);
-                        return tSorted;
-                      }
-                    }
-                    else {
-                      if (i > .5 && i < .8) {
-                        // console.log(againCap + ": matchC = " + zSorted);
-                        return zSorted;
-                      }
-                      else {
-                        if (i > .8) {
-                          // console.log(againCap + ": matchD = " + tSorted);
-                          return tSorted;
-                        }
-                      }
-                    }
-                  }
-                });
-                if (matchesToReturn === null || matchesToReturn.length === 0) {
-                  break
-                }
-              }
+            // console.log("matches to return: " + JSON.stringify(matchesContent));
+            console.log("event allContentAvailable resources", allContentAvailable.length);
+            // console.log(allContentAvailable.length < matchesContent.length);
+            if (allContentAvailable.length < matchesContent.length) {
+              console.log("event Matches to return length greater than available resources: ", matchesContent.length);
+              // while (allContentAvailable.length < matchesContent.length) {
+                // allContentAvailable = matchesContent.sort((a,b) => {
+                  // let i = Math.random()
+                  // let tSorted = a;
+                  // // console.log(againContent + ": tSorted = " + tSorted);
+                  // let zSorted = b;
+                  // // console.log(againContent + ": zSorted = " + zSorted);
+                  // if (i < .3) {
+                  //   let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                  //   if (matchA > -1) {
+                  //     // console.log(againContent + ": matchA = " + matchA);
+                  //     return zSorted;
+                  //   }
+                  // }
+                  // else {
+                  //   if (i > .3 && i < .5 ) {
+                  //     let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                  //     if (matchB === -1) {
+                  //       // console.log(againContent + ": matchB = " + matchB);
+                  //       return tSorted;
+                  //     }
+                  //   }
+                  //   else {
+                  //     if (i > .5 && i < .8) {
+                  //       // console.log(againContent + ": matchC = " + zSorted);
+                  //       return zSorted;
+                  //     }
+                  //     else {
+                  //       if (i > .8) {
+                  //         // console.log(againContent + ": matchD = " + tSorted);
+                  //         return tSorted;
+                  //       }
+                  //     }
+                  //   }
+                  // }
+                // });
+                // if (matchesContent === null || matchesContent.length === 0) {
+                //   break
+                // }
+              // }
             }
-            input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+            input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
             // fetchSuggestions(input.value);
-            if (matchesToReturn.length > 0) {
-              $('a').click(function(event){
-                if ($(this).attr('href') === "javascript:void(0)") {
-                  let confirmation = window.confirm(
-                    "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                  );
-                  if (confirmation) {
-                    event.preventDefault();
-                    var linkFollow = document.createElement("a");
-                    linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                    // if (matchesToReturn.length > 0) {
-                    //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+            // if (matchesContent.length > 0) {
+            //   $('a').click(function(event){
+            //     if ($(this).attr('href') === "javascript:void(0)") {
+            //       let confirmation = window.confirm(
+            //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+            //       );
+            //       if (confirmation) {
+                    // event.preventDefault();
+                    // var linkFollow = document.createElement("a");
+                    // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
+                    // if (matchesContent.length > 0) {
+                    //   // console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
                     // }
                     // else {
-                    //   if (matchesToReturn.length === 0) {
+                    //   if (matchesContent.length === 0) {
                     //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
                     //   }
                     // }
-                    console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_top";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
+                    // console.log("the match: " + linkFollow.href);
+                    // linkFollow.id = "linkFOLLOW";
+                    // linkFollow.target = "_top";
+                    // linkFollow.rel = "noopener noreferrer";
+                    // document.body.appendChild(linkFollow);
+                    // document.getElementById("linkFOLLOW").click();
+                    // document.getElementById("linkFOLLOW").remove();
                     // If the user preses the "Enter" key on the keyboard. 
                     // if (event.key === 'Enter')  {
                     // serverside("getVI", [])
@@ -217,15 +224,15 @@
                     //   console.error("Error fetching address suggestions for artiicleIndex :", error);
                     //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
                     // });
-                  }
-                }
-              });
-            }
-            else {
-              if (matchesToReturn.length === 0) {
-                return
-              }
-            }
+            //       }
+            //     }
+            //   });
+            // }
+            // else {
+            //   if (matchesContent.length === 0) {
+            //     return
+            //   }
+            // }
           })
           .catch(error => {
             console.error("Error fetching address suggestions for artiicleIndex :", error);
@@ -234,12 +241,12 @@
           
         const fetchSuggestions = debounce((query) => {
           if (query) {
-            suggestionsDiv.innerHTML = '';
+            // suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
             // localStorage.setItem("gsSearch", input.value);
             // againCap = localStorage.getItem("gsSearch");
             // input.blur();
-            return;
+            // return;
           }
           // againCap = localStorage.getItem("gsSearch");
           // if (String(againCap).indexOf(query) > -1) {
@@ -258,17 +265,16 @@
           // }
           
           // Filter the local list instead of making a server call
-          localList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
+          contentList = localSuggestionsCache["allMatches"] || [];
           // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          const suggestions = localList.filter(item => 
+          suggestContent = contentList.filter(item => 
             String(item.description).toLowerCase().includes(query.toLowerCase())
           );
           
-          suggestionsDiv.innerHTML = '';
-          if (suggestions?.length > 0) {
-            window.scrollTo(0,0);
-            let confirmation = null;
-            suggestions.forEach(suggestion => {
+          window.scrollTo(0,0);
+          let confirmation = null;
+          if (suggestContent?.length > 0) {
+            suggestContent?.forEach(suggestion => {
               // console.log(suggestion)
               const div = document.createElement('div');
               div.textContent = suggestion.description;
@@ -301,6 +307,12 @@
               });
               suggestionsDiv.appendChild(div);
             });
+          }
+          else {
+            if (suggestContent.length === 0) {
+              suggestionsDiv.innerHTML = '';
+            }
+          }
             input.addEventListener('keydown', (event) => {
               if (event.key === 'Tab') {
                 let confirmation;
@@ -620,7 +632,7 @@
                         //     }
                         //   });
                         // }
-                        input.disabled = false
+                        input.disabled = false;
                         input.focus();
                       } 
                       else {
@@ -634,6 +646,10 @@
                       console.log("Error in script call: " + error.stack);
                       input.disabled = false
                     }
+                  })
+                  .catch((err) => {
+                    console.error("Error on server side: ", err.stack);
+                    input.disabled = false
                   });
                   // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
                   // if (personalizedList.length === 0) {
@@ -736,14 +752,88 @@
                 }
                 // }
               }
+
+              // Filter the local list instead of making a server call
+              localList = remoteSuggestionsCache[againCap] || [];
+              // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+              suggestions = localList.filter(item => 
+                String(item.description).toLowerCase().includes(query.toLowerCase())
+              );
+
+              window.scrollTo(0,0);
+              let confirmation = null;
+              if (suggestions?.length > 0) {
+                suggestions?.forEach(suggestion => {
+                  // console.log(suggestion)
+                  const div = document.createElement('div');
+                  div.textContent = suggestion.description;
+                  div.classList.add("card-panel", "receipt", "btn-large");
+                  div.addEventListener('click', () => {
+                    input.value = suggestion.description;
+                    if (suggestion.youtubeURL) {
+                      confirmation = window.confirm(
+                        "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                      );
+                    }
+                    else {
+                      if (suggestion.webAddressUrl) {
+                        confirmation = window.confirm(
+                          "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                        );
+                      }
+                    }
+                    if (confirmation) {
+                      if (suggestion.youtubeURL) {
+                        window.open(suggestion.youtubeUrl);
+                      }
+                      else {
+                        if (suggestion.webAddressUrl) {
+                          document.location.href = suggestion.webAddressUrl;
+                        }
+                      }
+                    }
+                    suggestionsDiv.innerHTML = '';
+                  });
+                  suggestionsDiv.appendChild(div);
+                });
+              }
+              if (event.key === 'Tab') {
+                let confirmation;
+                suggestions?.forEach(suggestion => {
+                  // console.log(suggestion)
+                  if (suggestion && suggestion?.description.includes(event.target.value)) {
+                    if (suggestion.youtubeURL) {
+                      confirmation = window.confirm(
+                        suggestion?.youtubeUrl,
+                      );
+                    }
+                    else {
+                      if (suggestion.webAddressUrl) {
+                        confirmation = window.confirm(
+                          suggestion?.webAddressUrl,
+                        );
+                      }
+                    }
+                    if (confirmation) {
+                      if (suggestion.youtubeURL) {
+                        window.open(suggestion.youtubeUrl);
+                      }
+                      else {
+                        if (suggestion.webAddressUrl) {
+                          document.location.href = suggestion.webAddressUrl;
+                        }
+                      }
+                      suggestionsDiv.innerHTML = '';
+                    }
+                    else {
+                      suggestionsDiv.innerHTML = '';
+                      input.blur();
+                    }
+                  }
+                  return
+                });
+              }
             });
-          }
-          // else {
-          //   if (suggestions.length === 0) {
-          //     input.addEventListener('keydown', (event) => {
-          //     });
-          //   }
-          // }
         }, 300);
 
         // const fetchResults = debounce((query) => {
@@ -762,12 +852,12 @@
         if (input && suggestionsDiv) {
           input.disabled = false;
           input.addEventListener('input', (event) => {
-              if (!String(againCap).indexOf(event.target.value)) {
+              if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) === -1) {
                 suggestionsDiv.innerHTML = '';
                 fetchSuggestions(event.target.value);
               }
               else {
-                if (String(againCap).indexOf(event.target.value)) {
+                if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
                   fetchSuggestions(event.target.value);
                   // suggestionsDiv.innerHTML = '';
                 }
@@ -834,7 +924,8 @@
             }
           });
 
-        } else {
+        } 
+        else {
             console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
         }
 
