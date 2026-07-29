@@ -90,7 +90,7 @@
             }
             localSuggestionsCache["allMatches"] = fullList;
             searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
-            localStorage.setItem("ssSearch", searchBackEnd);
+            // localStorage.setItem("ssSearch", searchBackEnd);
             againContent = localStorage.getItem("ssSearch");
             matchesContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againContent) > -1) {
@@ -117,122 +117,123 @@
             // console.log(allContentAvailable.length < matchesContent.length);
             if (allContentAvailable.length < matchesContent.length) {
               console.log("event Matches to return length greater than available resources: ", matchesContent.length);
-              // while (allContentAvailable.length < matchesContent.length) {
-                // allContentAvailable = matchesContent.sort((a,b) => {
-                  // let i = Math.random()
-                  // let tSorted = a;
-                  // // console.log(againContent + ": tSorted = " + tSorted);
-                  // let zSorted = b;
-                  // // console.log(againContent + ": zSorted = " + zSorted);
-                  // if (i < .3) {
-                  //   let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                  //   if (matchA > -1) {
-                  //     // console.log(againContent + ": matchA = " + matchA);
-                  //     return zSorted;
-                  //   }
-                  // }
-                  // else {
-                  //   if (i > .3 && i < .5 ) {
-                  //     let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                  //     if (matchB === -1) {
-                  //       // console.log(againContent + ": matchB = " + matchB);
-                  //       return tSorted;
-                  //     }
-                  //   }
-                  //   else {
-                  //     if (i > .5 && i < .8) {
-                  //       // console.log(againContent + ": matchC = " + zSorted);
-                  //       return zSorted;
-                  //     }
-                  //     else {
-                  //       if (i > .8) {
-                  //         // console.log(againContent + ": matchD = " + tSorted);
-                  //         return tSorted;
-                  //       }
-                  //     }
-                  //   }
-                  // }
-                // });
-                // if (matchesContent === null || matchesContent.length === 0) {
-                //   break
-                // }
-              // }
+              while (allContentAvailable.length < matchesContent.length) {
+                allContentAvailable = matchesContent.sort((a,b) => {
+                  let i = Math.random()
+                  let tSorted = a;
+                  // console.log(againContent + ": tSorted = " + tSorted);
+                  let zSorted = b;
+                  // console.log(againContent + ": zSorted = " + zSorted);
+                  if (i < .3) {
+                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                    if (matchA > -1) {
+                      // console.log(againContent + ": matchA = " + matchA);
+                      return zSorted;
+                    }
+                  }
+                  else {
+                    if (i > .3 && i < .5 ) {
+                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                      if (matchB === -1) {
+                        // console.log(againContent + ": matchB = " + matchB);
+                        return tSorted;
+                      }
+                    }
+                    else {
+                      if (i > .5 && i < .8) {
+                        // console.log(againContent + ": matchC = " + zSorted);
+                        return zSorted;
+                      }
+                      else {
+                        if (i > .8) {
+                          // console.log(againContent + ": matchD = " + tSorted);
+                          return tSorted;
+                        }
+                      }
+                    }
+                  }
+                });
+                if (matchesContent === null || matchesContent.length === 0) {
+                  break
+                }
+              }
             }
             input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
-            // fetchSuggestions(input.value);
-            // if (matchesContent.length > 0) {
-            //   $('a').click(function(event){
-            //     if ($(this).attr('href') === "javascript:void(0)") {
-            //       let confirmation = window.confirm(
-            //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-            //       );
-            //       if (confirmation) {
-                    // event.preventDefault();
-                    // var linkFollow = document.createElement("a");
-                    // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
-                    // if (matchesContent.length > 0) {
-                    //   // console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
-                    // }
-                    // else {
-                    //   if (matchesContent.length === 0) {
-                    //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                    //   }
-                    // }
-                    // console.log("the match: " + linkFollow.href);
-                    // linkFollow.id = "linkFOLLOW";
-                    // linkFollow.target = "_top";
-                    // linkFollow.rel = "noopener noreferrer";
-                    // document.body.appendChild(linkFollow);
-                    // document.getElementById("linkFOLLOW").click();
-                    // document.getElementById("linkFOLLOW").remove();
+            fetchSuggestions(input.value);
+            if (matchesContent.length > 0) {
+              $('a').click(function(event){
+                if ($(this).attr('href') === "javascript:void(0)") {
+                  let confirmation = window.confirm(
+                    "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  );
+                  if (confirmation) {
+                    event.preventDefault();
+                    var linkFollow = document.createElement("a");
+                    linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
+                    if (matchesContent.length > 0) {
+                      // console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
+                    }
+                    else {
+                      if (matchesContent.length === 0) {
+                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                      }
+                    }
+                    console.log("the match: " + linkFollow.href);
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
                     // If the user preses the "Enter" key on the keyboard. 
                     // if (event.key === 'Enter')  {
-                    // serverside("getVI", [])
-                    // .then((response) => {
-                      // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                      // Access the actual array from the response
-                      // if (response && typeof response === "object") {
-                      //   fullList = [];
-                      //   for (var key in response) {
-                          // alert(JSON.stringify(response[key]));
-                          // let i = 0;
-                          // let l = response[key].length;
-                          // alert(l);
-                      //     for (i,l;i<l;i++) {
-                      //       let tempObj = {};
-                      //       tempObj.description = response[key][i].description;
-                      //       if (String(response[key][i].videoId).indexOf("http") === -1) {
-                      //         let tData = response[key][i].videoId;
-                      //         let dLoc =  null;
-                      //         dLoc =  "https://www.youtube.com/watch?v=";
-                      //         tempObj.youtubeUrl = dLoc + tData;
-                      //       }
-                      //       else {
-                      //         tempObj.youtubeUrl = response[key][i].videoId;
-                      //       }
-                      //       fullList.push(tempObj);
-                      //     }
-                      //   }
-                      // } 
-                      // else {
-                      //   console.warn("Expected an array in response from getVI, received:", response);
-                        // Fallback to empty array if the structure is not as expected
-                    //     fullList = [];
-                    //   }
-                    // })
-                    // .catch(error => {
-                    //   console.error("Error fetching address suggestions for artiicleIndex :", error);
-                    //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                    // });
-            //       }
-            //     }
-            //   });
-            // }
-            // else {
-            //   if (matchesContent.length === 0) {
-            //     return
-            //   }
-            // }
+                    //   serverside("getVI", [])
+                    //   .then((response) => {
+                    //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                    //     // Access the actual array from the response
+                    //     if (response && typeof response === "object") {
+                    //       fullList = [];
+                    //       for (var key in response) {
+                    //         alert(JSON.stringify(response[key]));
+                    //         let i = 0;
+                    //         let l = response[key].length;
+                    //         alert(l);
+                    //         for (i,l;i<l;i++) {
+                    //           let tempObj = {};
+                    //           tempObj.description = response[key][i].description;
+                    //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                    //             let tData = response[key][i].videoId;
+                    //             let dLoc =  null;
+                    //             dLoc =  "https://www.youtube.com/watch?v=";
+                    //             tempObj.youtubeUrl = dLoc + tData;
+                    //           }
+                    //           else {
+                    //             tempObj.youtubeUrl = response[key][i].videoId;
+                    //           }
+                    //           fullList.push(tempObj);
+                    //         }
+                    //       }
+                    //     } 
+                    //     else {
+                    //       console.warn("Expected an array in response from getVI, received:", response);
+                    //       Fallback to empty array if the structure is not as expected
+                    //       fullList = [];
+                    //     }
+                    //   })
+                    //   .catch(error => {
+                    //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                    //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                    //   });
+                    // }
+                  }
+                } 
+              });
+            }
+            else {
+              if (matchesContent.length === 0) {
+                return
+              }
+            }
           })
           .catch(error => {
             console.error("Error fetching address suggestions for artiicleIndex :", error);
@@ -401,7 +402,7 @@
                     //     // return
                     //   // });
                     // }
-                    if (event.key === 'Tab' && (suggestion && suggestion?.description?.toLowerCase().includes(event?.target?.value?.toLowerCase()))) {
+                    if (suggestion && suggestion?.description?.toLowerCase().includes(event?.target?.value?.toLowerCase())) {
                       const div = document.createElement('div');
                       div.textContent = suggestion.description;
                       div.classList.add("card-panel", "receipt", "btn-large");
@@ -758,8 +759,6 @@
                                         //     }
                                         //   });
                                         // }
-                                        input.disabled = false;
-                                        input.focus();
                                       } 
                                       else {
                                         console.warn("Expected an array in done from vidPlaylist, received:", done);
@@ -886,6 +885,7 @@
                               // if (userClicked) {
                                 serverside("getScriptUrl", [])
                                 .then((load) => {
+                                  localStorage.setItem("ssSearch", event.target.value);
                                   console.log("Data; Url for reLoad ", load.data);
                                   let linkFollow = document.createElement("a");
                                   linkFollow.href = new URL(load.data);
@@ -898,9 +898,13 @@
                                   document.getElementById("linkFOLLOW").remove();
                                   // window.location.href = load.data
                                   // input.value = event.target.value;
+                                  input.disabled = false;
+                                  input.focus();
                                 })
                                 .catch((fail) => {
                                   console.log("Failed to load ", fail);
+                                  input.disabled = false;
+                                  input.focus();
                                 });
                                 // break;
                               // }
