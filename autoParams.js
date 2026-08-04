@@ -51,128 +51,175 @@ let strSearch = new SearchStrings();
 class FunctionHandle {
   constructor(e) {
     this.e = e;
-    this.executed = autoGlobe.executed;
-    this.rndE = "";
-    this.mapArr = {};
+    let executed = autoGlobe.executed;
+    this.executed = executed;
+    let rndE = "";
+    this.rndE = rndE;
+    let mapArr = {};
+    this.mapArr = mapArr;
+    let funcTres;
+    this.funcTres = funcTres;
+    let tempObj = {};
+    this.tempObj = tempObj;
+    let payLoad;
+    this.payLoad = payLoad;
+    let htmlArray = autoGlobe.functionRegistry.getHtmlList();
+    this.htmlArray = htmlArray;
+    let rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));;
+    this.rndHtmlIndex = rndHtmlIndex;
+    let rndPage = htmlArray[rndHtmlIndex];
+    this.rndPage = rndPage;
+    let htmlTresArg;
+    this.htmlTresArg = htmlTresArg;
+    let firstArg;
+    this.firstArg = firstArg;
+    let funcTres0Index;
+    this.funcTres0Index = funcTres0Index;
+    let funcTresIndex;
+    this.funcTresIndex = funcTresIndex;
+    let htAml;
+    this.htAml = htAml;
+    let options = {
+      muteHttpExceptions: true,
+    };
+    this.options = options;
+    let driveA;
+    this.driveA = driveA;
+    let fT;
+    this.fT = fT;
+    let dT;
+    this.dT = dT;
+
 
     // Logging
-    if (!this.e) {
-      this.rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
-      this.customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
-        let bl = ["driveManager","folderManager","formsUrls","matchManager"]; 
-        let sblx = [customerWk1];
-        bl.forEach((s) => {
-          if (sblx.indexOf(String(s)) > -1) {
-            sblx.pop()
-          }
-        })
-        sblx.map((customerWk2) => {
-          if (String(customerWk2).indexOf(rndCustomer) === 0) {
-            return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
-          }
-        })
-      }).filter((isIn) => {
-        return isIn != null
-      });
-      // console.log("These is the customGroup",this.customGroup);
-      this.pSort = this.customGroup.sort((a,b) => {
-          let i = Math.random()
-          let tSorted = a;
-          let zSorted = b;
-          if (i < .3) {
-            return zSorted - tSorted
-          }
-          else {
-            i = Math.random()
-            if (i > .3 && i < .5 ) {
-              return tSorted - zSorted
-            }
-            else {
-              i = Math.random()
-              if (i > .5 && i < .8) {
-                return zSorted
-              }
-              else {
-                i = Math.random()
-                if (i > .8) {
-                  return tSorted
-                }
-              }
-            }
-          }
-        })
-      // console.log("These is the sorted customGroup",this.pSort);
-      this.tempObj = autoGlobe.functionRegistry?.paramsList[Math.floor(Math.random() * Math.floor(this.pSort.length))];
-      this.mapArr[this.tempObj?.name] = [];
-      // console.log("The existance of autoGlobe fParams is ", this.tempObj?.parameters? true:false);
+    if (!e) {
+      // let rndCustomer = autoGlobe.customOrder[autoGlobe.numVarRnd];
+      // this.rndCustomer = rndCustomer;
+      // let customGroup = autoGlobe.functionRegistry.fileList.map((customerWk1) => {
+      //   let bl = ["driveManager","folderManager","formsUrls","matchManager"];
+      //   this.bl = bl; 
+      //   let sblx = [customerWk1];
+      //   this.sblx = sblx;
+      //   bl.forEach((s) => {
+      //     if (sblx.indexOf(String(s)) > -1) {
+      //       sblx.pop()
+      //     }
+      //   })
+      //   sblx.map((customerWk2) => {
+      //     if (String(customerWk2).indexOf(rndCustomer) === 0) {
+      //       return autoGlobe.functionRegistry.fileList.indexOf(customerWk2)
+      //     }
+      //   })
+      // }).filter((isIn) => {
+      //     return isIn != null
+      // });
+      // this.customGroup = customGroup;
+      // // console.log("These is the customGroup",customGroup);
+      // let pSort = customGroup.sort((a,b) => {
+      //     let i = Math.random()
+      //     let tSorted = a;
+      //     this.tSorted = tSorted;
+      //     let zSorted = b;
+      //     this.zSorted = zSorted;
+      //     if (i < .3) {
+      //       return zSorted - tSorted
+      //     }
+      //     else {
+      //       i = Math.random()
+      //       if (i > .3 && i < .5 ) {
+      //         return tSorted - zSorted
+      //       }
+      //       else {
+      //         i = Math.random()
+      //         if (i > .5 && i < .8) {
+      //           return zSorted
+      //         }
+      //         else {
+      //           i = Math.random()
+      //           if (i > .8) {
+      //             return tSorted
+      //           }
+      //         }
+      //       }
+      //     }
+      //   })
+      // this.pSort = pSort;
+      let rSorted = autoGlobe.paramsSort()
+      this.rSorted = rSorted;
+      // console.log("These is the sorted customGroup",pSort);
+      tempObj = rSorted[Math.floor(Math.random() * Math.floor(rSorted.length))];
+      mapArr[tempObj?.name] = [];
+      // console.log("The existance of autoGlobe fParams is ", tempObj?.parameters? true:false);
       // autoGlobe.fParams
-      //   ? this.rndE = new IsMapped(this.mapArr, [...autoGlobe?.fParams]).mapKeys
+      //   ? rndE = new IsMapped(mapArr, [...autoGlobe?.fParams]).mapKeys
       //     :
-      //     this.rndE = new IsMapped(this.mapArr, []).mapKeys
-      if (this.tempObj?.parameters?.length > 0) {
-        this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.parameters]).mapKeys;
+      //     rndE = new IsMapped(mapArr, []).mapKeys
+      if (tempObj?.parameters?.length > 0) {
+        rndE = new IsMapped(mapArr, [...tempObj?.parameters]).mapKeys;
       }
       else {
-        this.rndE = new IsMapped(this.mapArr, []).mapKeys;
+        rndE = new IsMapped(mapArr, []).mapKeys;
       }
-      console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
+      console.log("rndE = " + JSON.stringify(rndE), executed++);
     }
     else {
-      if (this.e && !this.e.parameter) {
-        this.tempObj = new MisStCreator(this.e);
-        this.mapArr[this.tempObj?.argsObject?.func || autoGlobe.func] = [];
-        if (this.tempObj?.argsObject?.args) {
-          this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args] || [autoGlobe.func]).mapKeys;
+      if (e && !e.parameter) {
+        tempObj = new MisStCreator(e);
+        mapArr[tempObj?.argsObject?.func || autoGlobe.func] = [];
+        if (tempObj?.argsObject?.args) {
+          rndE = new IsMapped(mapArr, [...tempObj?.argsObject?.args] || [autoGlobe.func]).mapKeys;
         }
         else {
-          this.rndE = new IsMapped(this.mapArr, []).mapKeys;
+          rndE = new IsMapped(mapArr, []).mapKeys;
         }
-        console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
+        console.log("rndE = " + JSON.stringify(rndE), executed++);
       }
       else {
-        if (this.e && this.e.parameter) {
-          this.objData = Object.keys(this.e.parameter);
-          console.log("objData = " + this.e.parameter[this.objData[0]], this.objData);
-          if (this.objData.length === 0) {
-            this.mapArr[this.tempObj?.name || autoGlobe.func] = [];
-            if (this.tempObj?.parameters) {
-            }
-            else {
-            }
-            this.rndE = new IsMapped(this.mapArr, [...this.tempObj?.parameters] || [autoGlobe.func]).mapKeys;
-            console.log("rndE = " + JSON.stringify(this.rndE), this.executed++);
-            if (typeof this.rndE === "string") {
-              this.e = objectOfS(
+        if (e && e.parameter) {
+          let objData = Object.keys(e.parameter);
+          this.objData = objData;
+          console.log("objData = " + e.parameter[objData[0]], objData);
+          if (objData.length === 0) {
+            mapArr[tempObj?.name || autoGlobe.func] = [];
+            // if (tempObj?.parameters) {
+            // }
+            // else {
+            // }
+            rndE = new IsMapped(mapArr, [...tempObj?.parameters] || [autoGlobe.func]).mapKeys;
+            console.log("rndE = " + JSON.stringify(rndE), executed++);
+            if (typeof rndE === "string") {
+              e = objectOfS(
                 ["parameter"],
                 [
                   [
-                    ["func", this.rndE],
+                    ["func", rndE],
                   ],
                 ],
                 autoGlobe.functionRegistry.time,
               );
             }
             else {
-              if (typeof this.rndE === "object" && this.rndE !== null) {
-                this.rndEAP = Object.values(this.rndE);
-                if (this.rrndEAP && this.rndEAP.length > 0) {
-                  this.e = objectOfS(
+              if (typeof rndE === "object" && rndE !== null) {
+                let rndEAP = Object.values(rndE);
+                this.rndEAP = rndEAP;
+                if (rndEAP && rndEAP.length > 0) {
+                  e = objectOfS(
                     ["parameter"],
                     [
                       [
-                        ["func", Object.keys(this.rrndEAP)[0]],
-                        ["args", Object.values(this.rrndEAP)[0]],
+                        ["func", Object.keys(rndEAP)[0]],
+                        ["args", Object.values(rndEAP)[0]],
                       ],
                     ],
                     autoGlobe.functionRegistry.time,
                   );
                 } 
                 else {
-                  this.e = objectOfS(
+                  e = objectOfS(
                     ["parameter"],
                     [
                       [
-                        ["func", Object.keys(this.rrndEAP)[0]],
+                        ["func", Object.keys(rndEAP)[0]],
                       ],
                     ],
                     autoGlobe.functionRegistry.time,
@@ -180,8 +227,8 @@ class FunctionHandle {
                 }
               }
               else {
-                console.log("Unexpected rndE type: ", this.rndE);
-                this.e = objectOfS(
+                console.log("Unexpected rndE type: ", rndE);
+                e = objectOfS(
                   ["parameter"],
                   [
                     [
@@ -193,77 +240,68 @@ class FunctionHandle {
                 );
               }
             }
-            console.log(JSON.stringify(this.e));
+            console.log(JSON.stringify(e));
           }
           else {
-            if (this.objData.length > 0) {
-              if (this.objData.indexOf("file") > -1) {
-                console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(this.e));
+            if (objData.length > 0) {
+              if (objData.indexOf("file") > -1) {
+                console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
                 console.log(
                   "Determined that funcTres execution is requested! \n" +
-                    this.e.parameter["file"],
+                    e.parameter["file"],
                 );
-                this.funcTres = this.e?.parameter["file"];
+                funcTres = e?.parameter["file"];
                 try {
-                  this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
-                  this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
-                  this.rndPage = this.htmlArray[this.rndHtmlIndex];
-                  this.htmlTresArg = null; // = rndPage; // Default value
-                  console.log("htmlArray = " + this.htmlArray, this.executed++);
-                  if (this.funcTres) {
-                    if (Array.isArray(this.funcTres)) {
-                      this.firstArg = this.funcTres[0];
-                      if (this.htmlArray.includes(this.firstArg)) {
-                        this.funcTres0Index = this.htmlArray.findIndex(function (element) {
-                          return element === this.firstArg;
+                  htmlTresArg = null; // = rndPage; // Default value
+                  console.log("htmlArray = " + htmlArray, executed++);
+                  if (funcTres) {
+                    if (Array.isArray(funcTres)) {
+                      firstArg = funcTres[0];
+                      if (htmlArray.includes(firstArg)) {
+                        funcTres0Index = htmlArray.findIndex(function (element) {
+                          return element === firstArg;
                         });
-                        this.htmlTresArg = this.htmlArray[this.funcTres0Index];
+                        htmlTresArg = htmlArray[funcTres0Index];
                       }
                     } 
                     else {
-                      if (this.htmlArray.includes(this.funcTres)) {
-                        this.funcTresIndex = this.htmlArray.findIndex(function (element) {
+                      if (htmlArray.includes(funcTres)) {
+                        funcTresIndex = htmlArray.findIndex(function (element) {
                           return element === this?.funcTres;
                         });
-                        this.htmlTresArg = this.htmlArray[this.funcTresIndex];
+                        htmlTresArg = htmlArray[funcTresIndex];
                       }
                     }
                   }
-                  if (!this.htmlTresArg) {
+                  if (!htmlTresArg) {
                     try{
-                      this.payLoad = {};
-                      this.payLoad["type"] = "url";
-                      this.payLoad["data"] = null;
-                      if (!this.funcTres) {
-                        this.htAml = getScriptUrl() + "?file=" + this.rndPage;
-                        // return this.htAml;
+                      payLoad = {};
+                      payLoad["type"] = "url";
+                      payLoad["data"] = null;
+                      if (!funcTres) {
+                        htAml = getScriptUrl() + "?file=" + rndPage;
                       } 
                       else {
-                        this.fT = fileBrowser(null, this.funcTres);
-                        this.payLoad.data = this.fT?.url
-                        if (!this.fT?.url) {
-                          this.dT = driveManager(this.funcTres)
-                          this.payLoad.data = this.dT;
+                        fT = fileBrowser(null, funcTres);
+                        payLoad.data = fT?.url
+                        if (!fT?.url) {
+                          dT = driveManager(funcTres)
+                          payLoad.data = dT;
                         }
-                        let options = {
-                          muteHttpExceptions: true,
-                        };
-                        this.driveA = 
+                        driveA = 
                           {
                             payL: 
                               {
-                                pL: this.payLoad,
+                                pL: payLoad,
                               },
                           };
-                        // this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
-                        if (this.fT?.url) {
-                          this.htAml = contCDN(this.fT.url, this.driveA);
-                          return this.htAml
+                        // payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
+                        if (fT?.url) {
+                          htAml = renderTemplate(fT.url, driveA);
                         }
                         else {
-                          if (this.dT) {
-                            this.htAml = contCDN(this.dT, this.driveA);
-                            return this.htAml;
+                          if (dT) {
+                            htAml = renderTemplate(dT, driveA);
                             // payLoad.data["app"] = getUrlResponse(dT, options);
                             // let hTAml = rendTemplate(
                             //   payLoad.data["app"]?.app,
@@ -275,9 +313,8 @@ class FunctionHandle {
                             // return hTAml
                           }
                           else {
-                            if (!this.dT) {
-                              this.htAml = contCDN(getScriptUrl(), this.driveA);
-                              return this.htAml;
+                            if (!dT) {
+                              htAml = renderTemplate(getScriptUrl(), driveA);
                             // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
                             // let hTAml = rendTemplate(
                             //   payLoad.data["app"]?.app,
@@ -290,10 +327,10 @@ class FunctionHandle {
                             }
                           }
                         }
-                        // this.hTAml = RenderTemplate.templateRender(
-                        //   this.payLoad.data["app"]?.app,
+                        // htAml = renderTemplate(
+                        //   payLoad.data["app"]?.app,
                         //   {
-                        //     pL: this.payLoad,
+                        //     pL: payLoad,
                         //   },
                         //   isValidUrl(getScriptUrl()).pathname.split("/")[3],
                         // );
@@ -305,18 +342,17 @@ class FunctionHandle {
                     }
                   }
                   else { 
-                    if (this.htmlTresArg) {
+                    if (htmlTresArg) {
                       try {
-                        this.driveA = 
+                        driveA = 
                           {
-                            fileParam: this.funcTres,
+                            fileParam: funcTres,
                           }
-                        this.htAml = rendFile(
-                          this.funcTres,
-                          this.driveA,
-                          isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                        htAml = renderFile(
+                          funcTres,
+                          driveA,
+                          new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
                         );
-                        return this.htAml;
                       } 
                       catch (error) {
                         Logger.log("Requested! HTML Out of Order", error.stack);
@@ -338,81 +374,89 @@ class FunctionHandle {
                 }
               }
               else {
-                if (!this.e.parameter["func"] && !this.e.parameter["args"]) {
-                  if (typeof globalThis[this.e.parameter[this.objData[0]]] !== "function") {
-                    this.argsEd = null;
-                    if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") > -1) {
-                        this.argsEd = this.e.parameter[this.objData[0]]
+                let argsEd;
+                this.argsEd = argsEd;
+                let argsAP;
+                this.argsAP = argsAP;
+                let aOKeys;
+                this.aOKeys = aOKeys;
+                let argsedObj;
+                this.argsedObj = argsedObj;
+                if (!e.parameter["func"] && !e.parameter["args"]) {
+                  if (typeof globalThis[e.parameter[objData[0]]] !== "function") {
+                    argsEd = null;
+                    if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") > -1) {
+                        argsEd = e.parameter[objData[0]]
                     }
                     else {
-                      if (this.e.parameter[this.objData[0]] && this.e.parameter[this.objData[0]]?.indexOf(",") === -1) {
-                        this.tempObj = new MisCreator(this.e.parameter[this.objData[0]])  ;
-                        this.mapArr[this.tempObj?.argsObject?.link || this.tempObj?.argsObject?.func] = [];
-                        if (this.tempObj?.argsObject?.args) {
-                          this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args]).mapKeys;
+                      if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") === -1) {
+                        tempObj = new MisCreator(e.parameter[objData[0]])  ;
+                        mapArr[tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
+                        if (tempObj?.argsObject?.args) {
+                          argsEd = new IsMapped(mapArr, [...tempObj?.argsObject?.args]).mapKeys;
                         }
                         else {
-                          this.argsEd = new IsMapped(this.mapArr, []).mapKeys || autoGlobe.func;
+                          argsEd = new IsMapped(mapArr, []).mapKeys || autoGlobe.func;
                         }
                       }
                     }
-                    console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
-                    if (typeof this.argsEd === "string") {
-                      this.e = objectOfS(
+                    console.log("argsEd = " + JSON.stringify(argsEd), executed++);
+                    if (typeof argsEd === "string") {
+                      e = objectOfS(
                         ["parameter"],
-                        [[["args", this.argsEd]]],
+                        [[["args", argsEd]]],
                         autoGlobe.functionRegistry.time,
                       );
-                      console.log("e = " + JSON.stringify(this.e), this.executed++);
+                      console.log("e = " + JSON.stringify(e), executed++);
                     } 
                     else {
-                      if (typeof this.argsEd === "object" && this.argsEd !== null) {
-                        this.argsAP = Object.values(this.argsEd);
-                        if (this.argsAP && this.argsAP.length > 0) {
-                          this.e = objectOfS(
+                      if (typeof argsEd === "object" && argsEd !== null) {
+                        argsAP = Object.values(argsEd);
+                        if (argsAP && argsAP.length > 0) {
+                          e = objectOfS(
                             ["parameter"],
                             [
                               [
-                                ["func", Object.keys(this.argsEd)[0]],
-                                ["args", [...Object.values(this.argsEd)[0]]],
+                                ["func", Object.keys(argsEd)[0]],
+                                ["args", [...Object.values(argsEd)[0]]],
                               ],
                             ],
                             autoGlobe.functionRegistry.time,
                           );
-                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         } 
                         else {
-                          this.e = objectOfS(
+                          e = objectOfS(
                             ["parameter"],
-                            [[["func", Object.keys(this.argsEd)[0]]]],
+                            [[["func", Object.keys(argsEd)[0]]]],
                             autoGlobe.functionRegistry.time,
                           );
-                          console.log("e = " + JSON.stringify(this.e), this.executed++);
+                          console.log("e = " + JSON.stringify(e), executed++);
                         }
                       } 
                       else {
-                        console.log("Unexpected argsEd type: ", this.argsEd);
-                        this.argsedObj = [];
+                        console.log("Unexpected argsEd type: ", argsEd);
+                        argsedObj = [];
                         try {
-                          this.aOKeys = Object?.keys(this.argsEd);
-                          if (this.aOKeys.length > 0) {
-                            this.aOKeys.forEach((key) => {
-                              this.argsedObj.push(this.argsEd[key]);
+                          aOKeys = Object?.keys(argsEd);
+                          if (aOKeys.length > 0) {
+                            aOKeys.forEach((key) => {
+                              argsedObj.push(argsEd[key]);
                             });
-                            this.e = objectOfS(
+                            e = objectOfS(
                               ["parameter"],
                               [
                                 [
-                                  ["func", this.aOKeys],
-                                  ["args", this.argsedObj],
+                                  ["func", aOKeys],
+                                  ["args", argsedObj],
                                 ],
                               ],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           } 
                           else {
-                            this.e = objectOfS(
+                            e = objectOfS(
                               ["parameter"],
                               [
                                 [
@@ -422,7 +466,7 @@ class FunctionHandle {
                               ],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           }
                         }
                         catch (error) {
@@ -432,71 +476,71 @@ class FunctionHandle {
                     }
                   }
                   else {
-                    if (typeof globalThis[this.e.parameter[this.objData[0]]] === "function") {
-                      this.tempObj = new MisStCreator(this.e.parameter[this.objData[0]]);
-                      this.mapArr[this.tempObj?.argsObject?.func || autoGlobe.func] = [];
-                      if (this.tempObj?.argsObject?.args) {
-                        this.argsEd = new IsMapped(this.mapArr, [...this.tempObj?.argsObject?.args]).mapKeys;
+                    if (typeof globalThis[e.parameter[objData[0]]] === "function") {
+                      tempObj = new MisStCreator(e.parameter[objData[0]]);
+                      mapArr[tempObj?.argsObject?.func || autoGlobe.func] = [];
+                      if (tempObj?.argsObject?.args) {
+                        argsEd = new IsMapped(mapArr, [...tempObj?.argsObject?.args]).mapKeys;
                       }
                       else {
-                        this.argsEd = new IsMapped(this.mapArr, []).mapKeys;
+                        argsEd = new IsMapped(mapArr, []).mapKeys;
                       }
-                      console.log("argsEd = " + JSON.stringify(this.argsEd), this.executed++);
-                      if (typeof this.argsEd === "string") {
-                        this.e = objectOfS(
+                      console.log("argsEd = " + JSON.stringify(argsEd), executed++);
+                      if (typeof argsEd === "string") {
+                        e = objectOfS(
                           ["parameter"],
-                          [[["func", this.argsEd]]],
+                          [[["func", argsEd]]],
                           autoGlobe.functionRegistry.time,
                         );
-                        console.log("e = " + JSON.stringify(this.e), this.executed++);
+                        console.log("e = " + JSON.stringify(e), executed++);
                       } 
                       else {
-                        if (typeof this.argsEd === "object" && this.argsEd !== null) {
-                          this.argsAP = Object.values(this.argsEd);
-                          if (this.argsAP && this.argsAP.length > 0) {
-                            this.e = objectOfS(
+                        if (typeof argsEd === "object" && argsEd !== null) {
+                          argsAP = Object.values(argsEd);
+                          if (argsAP && argsAP.length > 0) {
+                            e = objectOfS(
                               ["parameter"],
                               [
                                 [
-                                  ["func", Object.keys(this.argsEd)[0]],
-                                  ["args", [...Object.values(this.argsEd)[0]]],
+                                  ["func", Object.keys(argsEd)[0]],
+                                  ["args", [...Object.values(argsEd)[0]]],
                                 ],
                               ],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           } 
                           else {
-                            this.e = objectOfS(
+                            e = objectOfS(
                               ["parameter"],
-                              [[["func", Object.keys(this.argsEd)[0]]]],
+                              [[["func", Object.keys(argsEd)[0]]]],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           }
                         } 
                         else {
-                          console.log("Unexpected argsEd type: ", this.argsEd);
-                          this.argsedObj = [];
-                          this.aOKeys = Object.keys(this.argsEd);
-                          if (this.aOKeys.length > 0) {
-                            this.aOKeys.forEach((key) => {
-                              this.argsedObj.push(this.argsEd[key]);
+                          console.log("Unexpected argsEd type: ", argsEd);
+                          argsedObj = [];
+                          aOKeys = Object.keys(argsEd);
+                          if (aOKeys.length > 0) {
+                            aOKeys.forEach((key) => {
+                              argsedObj.push(argsEd[key]);
                             });
-                            this.e = objectOfS(
+                            e = objectOfS(
                               ["parameter"],
                               [
                                 [
-                                  ["func", this.aOKeys],
-                                  ["args", this.argsedObj],
+                                  ["func", aOKeys],
+                                  ["args", argsedObj],
                                 ],
                               ],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           } 
                           else {
-                            this.e = objectOfS(
+                            e = objectOfS(
                               ["parameter"],
                               [
                                 [
@@ -506,78 +550,68 @@ class FunctionHandle {
                               ],
                               autoGlobe.functionRegistry.time,
                             );
-                            console.log("e = " + JSON.stringify(this.e), this.executed++);
+                            console.log("e = " + JSON.stringify(e), executed++);
                           }
                         }
                       }
-                      console.log(JSON.stringify(this.e));
+                      console.log(JSON.stringify(e));
                     }
                     else {
-                      console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(this.e));
+                      console.log(">>> [LIBRARY] LIBRARY REQUEST: " + JSON.stringify(e));
                       console.log(
                         "Determined that funcTres execution is requested! \n" +
-                          this.e.parameter[this.objData[0]],
+                          e.parameter[objData[0]],
                       );
-                      this.funcTres = this.e.parameter[this.objData[0]];
+                      funcTres = e.parameter[objData[0]];
                       try {
-                        this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
-                        this.rndHtmlIndex = Math.floor(Math.random() * Math.floor(this.htmlArray.length));
-                        this.rndPage = this.htmlArray[this.rndHtmlIndex];
-                        this.htmlTresArg; // = rndPage; // Default value
-                        console.log("htmlArray = " + this.htmlArray, this.executed++);
-                        if (this.funcTres) {
-                          if (Array.isArray(this.funcTres)) {
-                            this.firstArg = this.funcTres[0];
-                            if (this.htmlArray.includes(this.firstArg)) {
-                              this.funcTres0Index = this.htmlArray.findIndex(function (element) {
-                                return element === this.firstArg;
+                        console.log("htmlArray = " + htmlArray, executed++);
+                        if (funcTres) {
+                          if (Array.isArray(funcTres)) {
+                            firstArg = funcTres[0];
+                            if (htmlArray.includes(firstArg)) {
+                              funcTres0Index = htmlArray.findIndex(function (element) {
+                                return element === firstArg;
                               });
-                              this.htmlTresArg = this.htmlArray[this.funcTres0Index];
+                              htmlTresArg = htmlArray[funcTres0Index];
                             }
                           } 
                           else {
-                            if (this.htmlArray.includes(this.funcTres)) {
-                              this.funcTresIndex = this.htmlArray.findIndex(function (element) {
-                                return element === this.funcTres;
+                            if (htmlArray.includes(funcTres)) {
+                              funcTresIndex = htmlArray.findIndex(function (element) {
+                                return element === funcTres;
                               });
-                              this.htmlTresArg = this.htmlArray[this.funcTresIndex];
+                              htmlTresArg = htmlArray[funcTresIndex];
                             }
                           }
                         }
-                        if (!this.htmlTresArg) {
+                        if (!htmlTresArg) {
                           try{
-                            this.payLoad = {};
-                            this.payLoad["type"] = "url";
-                            this.payLoad["data"] = null;
-                            if (this.funcTres === "undefined") {
-                              this.hTAml = getScriptUrl() + "?file=" + this.rndPage;
-                              // return this.htAml;
+                            payLoad = {};
+                            payLoad["type"] = "url";
+                            payLoad["data"] = null;
+                            if (funcTres === "undefined") {
+                              htAml = getScriptUrl() + "?file=" + rndPage;
                             } 
                             else {
-                              this.fT = fileBrowser(null, this.funcTres);
-                              this.payLoad.data = this.fT?.url
-                              if (!this.fT?.url) {
-                                this.dT = driveManager(this.funcTres);
-                                this.payLoad.data = this.dT;
+                              fT = fileBrowser(null, funcTres);
+                              payLoad.data = fT?.url
+                              if (!fT?.url) {
+                                dT = driveManager(funcTres);
+                                payLoad.data = dT;
                               }
-                              let options = {
-                                muteHttpExceptions: true,
-                              };
-                              this.driveA = 
+                              driveA = 
                                 {
                                   payL: 
                                     {
-                                      pL: this.payLoad,
+                                      pL: payLoad,
                                     },
                                 };
-                              if (this.fT?.url) {
-                                this.htAml = contCDN(this.fT.url, this.driveA);
-                                return this.htAml
+                              if (fT?.url) {
+                                htAml = renderTemplate(fT.url, driveA);
                               }
                               else {
-                                if (this.dT) {
-                                  this.htAml = contCDN(this.dT, this.driveA);
-                                  return this.htAml;
+                                if (dT) {
+                                  htAml = renderTemplate(dT, driveA);
                                   // payLoad.data["app"] = getUrlResponse(dT, options);
                                   // let hTAml = rendTemplate(
                                   //   payLoad.data["app"]?.app,
@@ -589,9 +623,8 @@ class FunctionHandle {
                                   // return hTAml
                                 }
                                 else {
-                                  if (!this.dT) {
-                                    this.htAml = contCDN(getScriptUrl(), this.driveA);
-                                    return this.htAml;
+                                  if (!dT) {
+                                    htAml = renderTemplate(getScriptUrl(), driveA);
                                   // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
                                   // let hTAml = rendTemplate(
                                   //   payLoad.data["app"]?.app,
@@ -604,13 +637,13 @@ class FunctionHandle {
                                   }
                                 }
                               }
-                              // this.payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
-                              // this.hTAml = RenderTemplate.templateRender(
-                              //   this.payLoad.data["app"]?.app,
+                              // payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
+                              // htAml = renderTemplate(
+                              //   payLoad.data["app"]?.app,
                               //   {
-                              //     pL: this.payLoad,
+                              //     pL: payLoad,
                               //   },
-                              //   isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              //   new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
                               // );
                               // return hTAmla
                             }
@@ -620,18 +653,17 @@ class FunctionHandle {
                           }
                         }
                         else { 
-                          if (this.htmlTresArg) {
+                          if (htmlTresArg) {
                             try {
-                              this.driveA = 
+                              driveA = 
                                 {
-                                  fileParam: this.funcTres,
+                                  fileParam: funcTres,
                                 }
-                              this.htAml = rendFile(
-                                this.funcTres,
-                                this.driveA,
-                                isValidUrl(getScriptUrl()).pathname.split("/")[3],
+                              htAml = renderTemplate(
+                                funcTres,
+                                driveA,
+                                new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
                               );
-                              return this.htAml
                             } 
                             catch (error) {
                               Logger.log("Requested! HTML Out of Order", error.stack);
@@ -659,33 +691,39 @@ class FunctionHandle {
           }
         }
       }
-    } 
-    if (this.e && this.e.parameter && (this.e.parameter["func"] && this.e.parameter["args"])) {
-    this.funcUno = Array(this.e.parameter["func"]);
-    this.funcDos = Array(this.e.parameter["args"]);
+    }
+    let funcUno;
+    let funcDos;
+    this.funcUno = funcUno;
+    this.funcDos = funcDos;
+    if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
+    funcUno = Array(e.parameter["func"]);
+    funcDos = Array(e.parameter["args"]);
     }
     else {
-      if (this.e && this.e.parameter && (this.e.parameter["func"] && !this.e.parameter["args"])) {
-        this.funcUno = Array(this.e.parameter["func"]);
-        this.funcDos = Array(null);
+      if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
+        funcUno = Array(e.parameter["func"]);
+        funcDos = false;
       } 
       else {
-        if (this.e && this.e.parameter && (!this.e.parameter["func"] && this.e.parameter["args"])) {
-          this.funcUno = Array(null);
-          this.funcDos = Array(this.e.parameter["args"]);
+        if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
+          funcUno = false;
+          funcDos = Array(e.parameter["args"]);
         }  
         else {
-          this.funcUno = Object.keys(this.rndE);
-          this.funcDos = Object.values(this.rndE);
+          funcUno = Object.keys(rndE);
+          funcDos = Object.values(rndE);
         }
       } 
     }
-    console.log("exec and args\n" + [this.funcUno, this.funcDos], this.executed++);
+    console.log("exec and args\n" + [funcUno, funcDos], executed++);
     // return {
     //   exec: funcUno,
     //   args: funcDos,
     // };
   }
+
+
   static handleFunction(e) {
     var executed = 0;
     let funchAP = autoGlobe;
@@ -1193,11 +1231,11 @@ class FunctionHandle {
     else {
       if (e && e.parameter && (e.parameter["func"] && !e.parameter["args"])) {
         var funcUno = e.parameter["func"];
-        var funcDos = null;
+        var funcDos = false;
       } 
       else {
         if (e && e.parameter && (!e.parameter["func"] && e.parameter["args"])) {
-          var funcUno = null;
+          var funcUno = false;
           var funcDos = e.parameter["args"];
         }  
         else {

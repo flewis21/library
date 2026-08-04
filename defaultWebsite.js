@@ -72,8 +72,8 @@ function appSort(numIndex, time) {
 var createFunctionResult = function (funcUno, funcDos) {
   let executed = autoGlobe.executed;
   let rawFuncResult = null;
-  let truUno = autoGlobe.truUno;
-  let truDos = autoGlobe.truDos;
+  let truUno = autoGlobe.trueVfalse(funcUno);
+  let truDos = autoGlobe.trueVfalse(funcDos);
   console.log("truUno and truDos\n" + [truUno, truDos]);
 
   // --- BEGIN Refactored payLoad processing ---
@@ -134,19 +134,19 @@ var createFunctionResult = function (funcUno, funcDos) {
           parsedFuncArgs = funcDos; // Treat as a single string argument if not valid JSON
         }
       }
-      console.log("Parsed funtion and arguments = " + [funcUno, parsedFuncArgs]);
+      console.log("Parsed funtion and arguments = ",[funcUno, parsedFuncArgs]);
       if ((funcUno && typeof globalThis[funcUno] === "function " && !funcDos) || (funcUno && typeof globalThis[funcUno] !== "function" && !funcDos)) {
         console.log("This execution is initiating without funcDos. funcUno is  " , funcUno);
         try {
           let funcAFunc = crmT(funcUno);
           if (funcAFunc === -1) {
-            return
-            // rawFuncResult = mis([funcUno]);
+            // return
+            rawFuncResult = new MisCreator([funcUno]).argsObject.app;
           }
           else {
-            if (!funcAFunc === -1) {
+            if (funcAFunc > -1) {
               console.log(funcUno + "'s function index is = " + funcAFunc, executed++);
-              rawFuncResult = globalThis[funcUno]();
+              rawFuncResult = new MisStCreator(funcUno).argsObject.res;
             }
             else {
               return
@@ -158,48 +158,60 @@ var createFunctionResult = function (funcUno, funcDos) {
           console.log("But, it is failing.");
         }
         console.log("rawFuncResult = " + rawFuncResult, executed++);
-      } 
+      }
       else {
-        if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
-          console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
-          try {
-            rawFuncResult = mis(funcUno.concat(parsedFuncArgs));
+        if (funcUno && typeof globalThis[funcUno] === "function" && funcDos) {
+            console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
+            try {
+              rawFuncResult = new MisStCreator(funcUno,parsedFuncArgs).argsObject.res;
+            } 
+            catch (error) {
+              console.log("But, it is failing. " + [funcUno, parsedFuncArgs], error.stack);
+            }
+            console.log("rawFuncResult = " + rawFuncResult, executed++);
+        }
+        else {
+          if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
+            console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
+            try {
+              rawFuncResult = new MisCreator(funcUno.concat(parsedFuncArgs)).argsObject.app;
+            } 
+            catch (error) {
+              console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
+            }
+            console.log("rawFuncResult = " + rawFuncResult, executed++);
           } 
-          catch (error) {
-            console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
-          }
-          console.log("rawFuncResult = " + rawFuncResult, executed++);
-        } 
-        else { 
-          if (!funcUno && funcDos) {
-            console.log("This execution is initiating without funcUno.", !funcUno);
-            if (typeof globalThis[funcDos] === "function") {
+          else { 
+            if (!funcUno && funcDos) {
+              console.log("This execution is initiating without funcUno.", !funcUno);
+              if (typeof globalThis[funcDos] === "function") {
+                try {
+                  rawFuncResult = new MisStCreator(parsedFuncArgs).argsObject.res;
+                } 
+                catch (error) {
+                  console.log("But, it is failing.");
+                }
+              }
+              else {
+                rawFuncResult = new MisCreator(parsedFuncArgs).argsObject.app;
+              }
+              console.log("rawFuncResult = " + rawFuncResult, executed++);
+            } 
+            else {
+              console.log(
+                "This execution is initiating with all parameters \n",
+                  [funcUno, parsedFuncArgs]
+              );
               try {
-                rawFuncResult = globalThis[parsedFuncArgs]();
+                rawFuncResult = new MisStCreator([funcUno, parsedFuncArgs]).argsObject.res;
               } 
               catch (error) {
                 console.log("But, it is failing.");
+                return
+                // rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
               }
+              console.log("rawFuncResult = " + rawFuncResult, executed++);
             }
-            else {
-              rawFuncResult = mis(parsedFuncArgs);
-            }
-            console.log("rawFuncResult = " + rawFuncResult, executed++);
-          } 
-          else {
-            console.log(
-              "This execution is initiating with all parameters \n",
-                [funcUno, parsedFuncArgs]
-            );
-            try {
-              rawFuncResult = globalThis[funcUno].apply(this, parsedFuncArgs);
-            } 
-            catch (error) {
-              console.log("But, it is failing.");
-              return
-              // rawFuncResult = mis([funcUno, ...parsedFuncArgs]);
-            }
-            console.log("rawFuncResult = " + rawFuncResult, executed++);
           }
         }
       }

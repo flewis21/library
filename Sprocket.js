@@ -350,11 +350,7 @@ function dtlsBridge(func, time) {
           [
             [
               "func",
-              autoGlobe.functionRegistry.fileList[
-                Math.floor(
-                  Math.random() * Math.floor(autoGlobe.functionRegistry.fileList),
-                )
-              ],
+              autoGlobe.proSort()[Math.floor(Math.random() * Math.floor(autoGlobe.proSort().length))],
             ],
           ],
         ],
@@ -373,7 +369,7 @@ function dtlsBridge(func, time) {
       ", = " +
       time,
   );
-  var appList = gsFiles();
+  var appList = autoGlobe.proSort();
   var lowCapFunc = [func].join("").toLowerCase().split(",");
   var funFirst = crmT(lowCapFunc[0]);
   if (crmCalc(lowCapFunc[0]) === true) {
@@ -387,7 +383,8 @@ function dtlsBridge(func, time) {
     if (typeof jsFunc === "undefined") {
       return;
     }
-  } else {
+  } 
+  else {
     var appLen = appList.length;
     var rdmNumForName = Math.floor(Math.random() * Math.floor(appLen));
     var randomSeo = appList[rdmNumForName];
@@ -400,7 +397,8 @@ function dtlsBridge(func, time) {
       var lowCapSeo = [seoFirst].join("").toLowerCase().split(",");
       var seoTwo = appList.indexOf(lowCapSeo[0]);
       var resSeo = appList[seoTwo];
-    } else {
+    } 
+    else {
       var sLen = rndKey?.length;
       var sLenRnd = Math.floor(Math.random() * Math.floor(sLen));
       var seoFirst = appSort(sLenRnd);
@@ -418,7 +416,8 @@ function dtlsBridge(func, time) {
       if (typeof jsFunc === "undefined") {
         return;
       }
-    } else {
+    } 
+    else {
       var formName = randomSeo;
       var jsFunc = wwAccess(
         "bridge",
@@ -658,8 +657,8 @@ function dtlsMain(file) {
     return down - up
   })[Math.floor(Math.random() * autoGlobe.functionRegistry.folderTree.length)];
   let mFil = file || itemCalc().sort((a, b) => {
-    let up = getZuluautoGloberiority(a.Description);
-    let down = getZuluautoGloberiority(b.Description);
+    let up = autoGlobe.getZuluFreqPriority(a.Description);
+    let down = autoGlobe.getZuluFreqPriority(b.Description);
     return up - down
   })[Math.floor(Math.random() * 26)].Description;
   let isProduct = matchManager(mFold, mFil, autoGlobe.functionRegistry.time).forms[Math.floor(Math.random() * 26)];

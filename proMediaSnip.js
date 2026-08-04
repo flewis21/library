@@ -124,7 +124,7 @@ function proMediaSnip(e) {
   html.menu_itemHover = HtmlService.createHtmlOutput(
     `.menu-item:hover>.menu-img {transform: scale(1.03);}`,
   ).getContent();
-  return wwAccess("test", rendTemplate, html.evaluate().getContent());
+  return wwAccess("test", renderTemplate, html.evaluate().getContent());
 }
 
 function prose() {

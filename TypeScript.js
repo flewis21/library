@@ -535,6 +535,68 @@ class AutoParams {
     // ]
     //   .toString()
     //   .split(" ");
+    this.paramsSort = function () {
+      let paramsSort = [];
+      while (paramsSort.length === 0) {
+        let varRnd = this.numVarRnd;
+        let rndCustomer = this.customOrder[varRnd];
+        // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+        let customGroup = this.functionRegistry.paramsList.map((customerWk1, index) => {
+          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter"]; 
+          let sblx = [customerWk1.name];
+          if (sblx.length > 0) {
+            bl.forEach((s) => {
+              if (sblx.indexOf(String(s)) > -1) {
+                sblx.pop()
+              }
+            })
+          }
+          let customerWk3 = null; 
+          if (sblx.length > 0) {
+            customerWk3 = sblx.map((customerWk2) => {
+              if (String(customerWk2)[0] === rndCustomer) {
+                // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
+                // return this.functionRegistry.paramsList[index] //.indexOf(customerWk2)
+                return customerWk1
+              }
+            })
+          }
+          if (customerWk3) {
+            return customerWk3[0]
+          }
+        }).filter((isIn) => {
+          return isIn != null
+        });
+        // console.log("These is the customGroup", customGroup);
+        paramsSort = customGroup.sort((a,b) => {
+          let i = Math.random()
+          let tSorted = a;
+          let zSorted = b;
+          if ((i > .3 && i < .5) || (i < .3)) {
+            return zSorted.name - tSorted.name
+          }
+          else {
+            i = Math.random()
+            if ((i > .8) || (i < .3)) {
+              return tSorted.name - zSorted.name
+            }
+            else {
+              i = Math.random()
+              if ((i > .5 && i < .8)) {
+                return zSorted
+              }
+              else {
+                i = Math.random()
+                if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
+                  return tSorted
+                }
+              }
+            }
+          }
+        })
+      }
+      return proSort;
+    }
     this.proSort = function () {
       let proSort = [];
       while (proSort.length === 0) {
@@ -542,7 +604,7 @@ class AutoParams {
         let rndCustomer = this.customOrder[varRnd];
         // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
         let customGroup = this.functionRegistry.fileList.map((customerWk1) => {
-          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS"]; 
+          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter"]; 
           let sblx = [customerWk1];
           bl.forEach((s) => {
             if (sblx.indexOf(String(s)) > -1) {
@@ -2870,184 +2932,223 @@ class MisStCreator {
     this.someArgs = someArgs;
     console.log(
       "\nMisStCreator(func: " +
-        this.func +
+        func +
         ", someArgs: " +
-        this.someArgs +
-        ")\n ",
+        someArgs +
+        ")\n "
     );
+    let argsX = []; // Holds function names found
+    this.argsX = argsX;
+    let initialContent = []; // Renamed to clearly indicate initial, raw arguments
+    this.initialContent = initialContent;
+    let holdResolvedArgsX;
+    this.holdResolvedArgsX = holdResolvedArgsX;
+    let args = {}; // Arguments for the current function call
+    this.args = args;
+    let resolvedArgs = []; // Resolved arguments array for the current function
+    this.resolvedArgs = resolvedArgs;
+    let missingParams = []; // Parameters that couldn't be resolved
+    this.missingParams = missingParams;
 
-    // this.funcUno = decodeURIComponent(this.func);
-    // this.funcDos = decodeURIComponent(this.someArgs);
-    this.trueFunc = autoGlobe.trueVfalse(this.func);
-    console.log("trueFunc = " + this.trueFunc, autoGlobe.executed++);
-    this.trueSomeArgs = autoGlobe.trueVfalse(this.someArgs);
-    console.log("trueSomeArgs = " + this.trueSomeArgs, autoGlobe.executed++);
-    this.funcUno = this.trueFunc
-      ? decodeURIComponent(this.func)
+    // let funcUno = decodeURIComponent(func);
+    // this.funcUno = funcUno;
+    // let funcDos = decodeURIComponent(someArgs);
+    // this.funcDos = funcDos;
+    let trueFunc = autoGlobe.trueVfalse(func);
+    this.trueFunc = trueFunc;
+    console.log("trueFunc = " + trueFunc, autoGlobe.executed++);
+    let trueSomeArgs = autoGlobe.trueVfalse(someArgs);
+    this.trueSomeArgs = trueSomeArgs;
+    console.log("trueSomeArgs = " + trueSomeArgs, autoGlobe.executed++);
+    let funcUno = trueFunc
+      ? decodeURIComponent(func)
       : autoGlobe.proSort();
-    console.log("funcUno = " + this.funcUno, autoGlobe.executed++);
-    this.funcDos = this.trueSomeArgs ? decodeURIComponent(this.someArgs) : this.trueSomeArgs;
-    // autoGlobe.numVarRnd = randNum(this.funcUno.toString()); 
+    this.funcUno = funcUno;
+    console.log("funcUno = " + funcUno, autoGlobe.executed++);
+    let funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
+    this.funcDos = funcDos;
+    // autoGlobe.numVarRnd = randNum(funcUno.toString()); 
     // Assuming randNum is globally accessible
     console.log("numVarRnd = " + autoGlobe.numVarRnd, autoGlobe.executed++);
 
-    if (this.funcUno || this.funcDos) {
-      this.argsX = []; // Holds function names found
-      this.initialContent = []; // Renamed to clearly indicate initial, raw arguments
+    if (funcUno || funcDos) {
 
-      // this.keys = [
-      //   this.funcDos !== "undefined" && this.funcDos !== null // More robust check for funcDos
-      //     ? [this.funcUno].concat(Object.values(this.funcDos)) // Object.values returns an array, avoid nesting it [[]]
-      //     : [this.funcUno],
+      // let keys = [
+      //   funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
+      //     ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
+      //     : [funcUno],
       // ]
       //   .toString()
       //   .split(",");
-      this.arrUno = Array.isArray(this.func);
-      this.arrDos = autoGlobe.trueVfalse(this.someArgs);
-      console.log("arrDos = " + this.arrDos, autoGlobe.executed++);
-      if (this.arrUno && this.arrDos) {
-        this.keys = Object.values(this.func).toString().split(",").concat(this.someArgs);
+      // this.keys = keys;
+      let arrUno = Array.isArray(func);
+      this.arrUno = arrUno;
+      let arrDos = autoGlobe.trueVfalse(someArgs);
+      this.arrDos = arrDos;
+      console.log("arrDos = " + arrDos, autoGlobe.executed++);
+      let keys;
+      this.keys = keys;
+      if (arrUno && arrDos) {
+        keys = Object.values(func).toString().split(",").concat(someArgs);
       } 
       else {
-        if (this.arrUno && !this.arrDos) {
-          this.keys = Object.values(this.func).toString().split(",");
+        if (arrUno && !arrDos) {
+          keys = Object.values(func).toString().split(",");
         } 
         else {
-          if (!this.arrUno && this.arrDos) {
-            this.keys = [this.func].concat(this.someArgs);
+          if (!arrUno && arrDos) {
+            keys = [func].concat(someArgs);
           } 
           else {
-            if (!this.arrUno && !this.arrDos) {
-              this.keys = [this.func];
+            if (!arrUno && !arrDos) {
+              keys = [func];
             }
           }
         }
       }
 
-      this.keys.forEach((pro) => {
+      keys.forEach((pro) => {
         // this.proFact = autoGlobe.trueVfalse(pro)
-        this.keysArrArr;
+        let keysArrArr;
+        this.keysArrArr = keysArrArr;
         if (typeof pro !== "string" && pro !== null) {
-          this.proValue = Object.keys(pro);
-          this.keysArrArr = this.proValue.length > 0;
+          let proValue = Object.keys(pro);
+          this.proValue = proValue;
+          keysArrArr = proValue.length > 0;
         } 
         else {
-          this.keysArrArr = false;
+          keysArrArr = false;
         }
-        this.keyPro = this.keysArrArr ? pro : [pro];
-        this.keyProParams;
-        this.realItem;
-        if (this.keyPro) {
-          this.funcLimit = [];
-          this.paramLimit = [];
-          this.keyPro?.forEach((subParam, proIndex) => {
-            this.subArrArr;
+        let keyPro = keysArrArr? pro : [pro];
+        this.keyPro = keyPro;
+        let keyProParams;
+        this.keyProParams = keyProParams;
+        let realItem;
+        this.realItem = realItem;
+        if (keyPro) {
+          let funcLimit = [];
+          this.funcLimit = funcLimit;
+          let paramLimit = [];
+          this.paramLimit = paramLimit;
+          keyPro?.forEach((subParam, proIndex) => {
+            let subArrArr;
+            this.subArrArr = subArrArr;
             if (typeof subParam !== "string" && subParam !== null) {
-              this.subValue = Object.values(subParam).toString().split(",");
-              this.subArrArr = this.subValue.length > 0;
+              let subValue = Object.values(subParam).toString().split(",");
+              this.subValue = subValue;
+              subArrArr = subValue.length > 0;
             } 
             else {
-              this.subArrArr = false;
+              subArrArr = false;
             }
-            if (this.subArrArr && subParam.length >= 1) {
+            if (subArrArr && subParam.length >= 1) {
               subParam.forEach((subA, subAIndex) => {
-                this.rtParamB = subA[subAIndex];
-                this.keyProParams =
+                let rtParamB = subA[subAIndex];
+                this.rtParamB = rtParamB;
+                keyProParams =
                   typeof subA === "object" || Array.isArray(subA)
-                    ? crmT(this.rtParamB)
+                    ? crmT(rtParamB)
                     : crmT(subA);
-                console.log("keyProParams = " + this.keyProParams, autoGlobe.executed++);
-                if (this.keyProParams >= 0) {
-                  this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
-                  console.log("argsX = " + this.argsX, autoGlobe.executed++);
+                console.log("keyProParams = " + keyProParams, autoGlobe.executed++);
+                if (keyProParams >= 0) {
+                  argsX.push(autoGlobe.functionRegistry.fileList[keyProParams]);
+                  console.log("argsX = " + argsX, autoGlobe.executed++);
                 } 
                 else {
-                  // this.keyProParams = ;
+                  let theSP;
+                  this.theSP = theSP;
+                  // keyProParams = ;
                   if (typeof subA === "object" && !Array.isArray(subA)) {
-                    this.theSP = subA;
-                    this.initialContent.push(subA);
+                    theSP = subA;
+                    initialContent.push(subA);
                   } 
                   else { 
                     if (Array.isArray(subA)) {
-                      this.theSP = subA;
-                      this.initialContent.push(this.rtParamB);
+                      theSP = subA;
+                      initialContent.push(this.rtParamB);
                     } 
                     else {
-                      this.theSP = subA;
-                      this.initialContent.push(subA);
+                      theSP = subA;
+                      initialContent.push(subA);
                     }
                   }
                 }
               });
-              // this.keyProParams = crmT(this.rtParamA);
+              // let rtParamA = subParam[proIndex];
+              // this.rtParamA = rtParamA;
+              // keyProParams = crmT(rtParamA);
             } 
             else {
-              // this.keyProParams = crmT(subParam);
-              this.realItem = autoGlobe.trueVfalse(subParam);
-              console.log("realItem = " + this.realItem, autoGlobe.executed++);
+              // keyProParams = crmT(subParam);
+              realItem = autoGlobe.trueVfalse(subParam);
+              console.log("realItem = " + realItem, autoGlobe.executed++);
             }
-            // this.realItem;
+            // realItem;
             // if (typeof subParam !== "string" && subParam !== null) {
-            //   this.subValue = Object.keys(subParam);
-            //   this.realItem = this.subValue.length > 0;
+            //   let subValue = Object.keys(subParam);
+            //   this.subValue = subValue;
+            //   realItem = subValue.length > 0;
             // }
             // else {
-            //   this.realItem = false;
+            //   realItem = false;
             // }
-            if (this.realItem) {
-              this.rtParamA = subParam[proIndex];
-              this.keyProParams =
+            if (realItem) {
+              let rtParamA = subParam[proIndex];
+              this.rtParamA = rtParamA;
+              keyProParams =
                 typeof subParam === "object" || Array.isArray(subParam)
-                  ? crmT(this.rtParamA)
+                  ? crmT(rtParamA)
                   : crmT(subParam);
-              console.log("keyProParams = " + this.keyProParams, autoGlobe.executed++);
-              if (this.keyProParams >= 0) {
-                this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
-                console.log("argsX = " + this.argsX, autoGlobe.executed++);
+              console.log("keyProParams = " + keyProParams, autoGlobe.executed++);
+              if (keyProParams >= 0) {
+                argsX.push(autoGlobe.functionRegistry.fileList[keyProParams]);
+                console.log("argsX = " + argsX, autoGlobe.executed++);
               } 
               else {
-                // this.keyProParams = ;
+                let theSP;
+                this.theSP = theSP;
+                // keyProParams = ;
                 if (typeof subParam === "object" && !Array.isArray(subParam)) {
-                  this.theSP = subParam;
-                  this.initialContent.push(subParam);
+                  theSP = subParam;
+                  initialContent.push(subParam);
                 } 
                 else {
                   if (Array.isArray(subParam)) {
-                    this.theSP = subParam;
-                    this.initialContent.push(this.rtParamA);
+                    theSP = subParam;
+                    initialContent.push(this.rtParamA);
                   } 
                   else {
-                    this.theSP = subParam;
-                    this.initialContent.push(subParam);
+                    theSP = subParam;
+                    initialContent.push(subParam);
                   }
                 }
               }
             }
           });
-          // if (this.funcLimit.length > 0) {
-          //   this.argsX.push(this.funcLimit);
+          // if (funcLimit.length > 0) {
+          //   argsX.push(funcLimit);
           // }
           // if (paramLimit.length > 0) {
-          //   this.initialContent.push(paramLimit);
+          //   initialContent.push(paramLimit);
           // }
         } 
         else {
-          this.realItem = autoGlobe.trueVfalse(pro);
-          console.log("realItem = " + this.realItem, autoGlobe.executed++);
-          if (this.realItem) {
-            for (var key in this.keyPro) {
-              this.keyProParams =
+          realItem = autoGlobe.trueVfalse(pro);
+          console.log("realItem = " + realItem, autoGlobe.executed++);
+          if (realItem) {
+            for (var key in keyPro) {
+              keyProParams =
                 typeof pro === "object" || Array.isArray(pro)
                   ? crmT(pro[key])
                   : crmT(pro);
-              console.log("keyProParams = " + this.keyProParams, autoGlobe.executed++);
-              if (this.keyProParams >= 0) {
-                this.argsX.push(autoGlobe.functionRegistry.fileList[this.keyProParams]);
-                console.log("argsX = " + this.argsX, autoGlobe.executed++);
+              console.log("keyProParams = " + keyProParams, autoGlobe.executed++);
+              if (keyProParams >= 0) {
+                argsX.push(autoGlobe.functionRegistry.fileList[keyProParams]);
+                console.log("argsX = " + argsX, autoGlobe.executed++);
               } 
               else {
-                // this.keyProParams = ;
-                this.initialContent.push(
+                // keyProParams = ;
+                initialContent.push(
                   typeof pro === "object" || Array.isArray(pro) ? pro[key] : pro,
                 );
               }
@@ -3056,19 +3157,22 @@ class MisStCreator {
         }
       });
 
-      this.holdResolvedArgsX;
 
-      if (this.argsX.length > 0) {
-        console.log("Check if there are functions to process", this.argsX);
+      if (argsX.length > 0) {
+        console.log("Check if there are functions to process", argsX);
         // Check if there are functions to process
-        this.allErrors = {};
-        this.arrDRnd = null;
-        this.fParams = autoGlobe.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
-        console.log("fParams = " + this.fParams.slice(0, 1), autoGlobe.executed++);
-        console.log("global functions list length:", Object.keys(this.fParams).length);
-        this.resCount = 0;
+        let allErrors = {};
+        this.allErrors = allErrors;
+        let arrDRnd = null;
+        this.arrDRnd = arrDRnd;
+        let fParams = autoGlobe.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
+        this.fParams = fParams;
+        console.log("fParams = " + fParams.slice(0, 1), autoGlobe.executed++);
+        console.log("global functions list length:", Object.keys(fParams).length);
+        let resCount = 0;
+        this.resCount = resCount;
 
-        this.argsX.forEach((result) => {
+        argsX.forEach((result) => {
           // 'result' is the function name (e.g., 'renderFile')
           console.log(
             "--- Inside argsX.forEach loop, BEFORE any other logic ---",
@@ -3076,151 +3180,162 @@ class MisStCreator {
           console.log('Current "result" (function name):', result);
           console.log(
             'Value of "initialContent" at start of this iteration:',
-            this.initialContent,
+            initialContent,
           );
 
-          console.log("argsX result " + this.resCount + ": " + result);
-          this.args = {}; // Arguments for the current function call
-          this.resolvedArgs = []; // Resolved arguments array for the current function
-          this.missingParams = []; // Parameters that couldn't be resolved
+          console.log("argsX result " + resCount + ": " + result);
 
-          this.searchString = this.fParams.find((fP) => {
-            this.dP = fP.name;
-            this.noDP = this.dP === result;
-            if (this.noDP) {
-              this.dP = fP;
+          let searchString = fParams.find((fP) => {
+            let dP = fP.name;
+            this.dP = dP;
+            let noDP = dP === result;
+            this.noDP = noDP;
+            if (noDP) {
+              dP = fP;
               return fP.name === result;
             }
           });
-          console.log(JSON.stringify(this.searchString));
-          this.declaredParams = []; // Initialize here for wider scope
+          this.searchString = searchString;
+          console.log(JSON.stringify(searchString));
+          let declaredParams = []; // Initialize here for wider scope
+          this.declaredParams = declaredParams;
 
-          if (this.searchString && this.searchString.parameters) {
-            this.declaredParams = this.searchString.parameters;
+          if (searchString && searchString.parameters) {
+            declaredParams = searchString.parameters;
             console.log(
               "Current initialContent: " +
-                this.initialContent +
+                initialContent +
                 "\nDeclared parameters for " +
                 result +
                 ": " +
-                this.declaredParams,
+                declaredParams,
             );
 
             // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
             // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
-            this.orderedArgsForCurrentFunc = [];
-            this.contentMap = {}; // Reset contentMap for each function
+            let orderedArgsForCurrentFunc = [];
+            this.orderedArgsForCurrentFunc = orderedArgsForCurrentFunc;
+            let contentMap = {}; // Reset contentMap for each function
+            this.contentMap = contentMap;
 
             // First, populate contentMap with any named matches (if initialContent is not just positional)
             // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
-            this.htmlArray = autoGlobe.functionRegistry.getHtmlList();
+            let htmlArray = autoGlobe.functionRegistry.getHtmlList();
+            this.htmlArray = htmlArray;
             // [
             //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
             // ]
             //   .toString()
             //   .split(" ");
-            console.log("htmlArray = " + this.htmlArray, autoGlobe.executed++);
-            this.allFolders;
+            console.log("htmlArray = " + htmlArray, autoGlobe.executed++);
+            let allFolders;
+            this.allFolders = allFolders;
             function payLoadReg() {
-              this.rndE = objectOfS(
+              let rndE = objectOfS(
                 ["parameter"],
                 [
                   [
                     ["func", result],
-                    ["args", [...this.initialContent]],
+                    ["args", [...initialContent]],
                   ],
                 ],
                 autoGlobe.functionRegistry.time,
               );
-              console.log("rndE = " + this.rndE, autoGlobe.executed++);
-              this.funcUnoMis = this.rndE.parameter["func"];
-              this.funcDosMis = this.rndE.parameter["args"];
-              this.payLoad = null; // Initialize payLoad
+              this.rndE = rndE;
+              console.log("rndE = " + rndE, autoGlobe.executed++);
+              let funcUnoMis = rndE.parameter["func"];
+              this.funcUnoMis = funcUnoMis;
+              let funcDosMis = rndE.parameter["args"];
+              this.funcDosMis = funcDosMis;
+              let payLoad = null; // Initialize payLoad
+              this.payLoad = payLoad;
+              let recurCall = autoGlobe.proSort();
+              this.recurCall = recurCall;
 
-              // Ensure globalThis[this.funcUnoMis] exists before calling
+              // Ensure globalThis[funcUnoMis] exists before calling
               if (
-                this.funcUnoMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1 ||
-                this.funcDosMis.indexOf("mis" || "misSt" || "dtlsPro") !== -1
+                recurCall.indexOf(funcUnoMis) === -1 ||
+                recurCall.indexOf(funcDosMis) === -1
               ) {
                 // Prevent infinite recursion
                 console.warn(
                   "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
                 );
-                this.payLoad = "Recursive call prevented.";
+                payLoad = "Recursive call prevented.";
               } 
               else {
-                if (typeof globalThis[this.funcUnoMis] === "function") {
+                if (typeof globalThis[funcUnoMis] === "function") {
                   console.log(
-                    "DEBUG, Prevent infinite recursion: \nMisStCreator\globalThis[funcUnoMis]:",
-                    globalThis[this.funcUnoMis].toString(),
+                    "DEBUG, \nMisStCreator\globalThis[funcUnoMis]:",
+                    globalThis[funcUnoMis].toString(),
                   );
-                  this.payLoad = globalThis[this.funcUnoMis].apply(this, this.funcDosMis);
-                  console.log("payLoad = " + this.payLoad, autoGlobe.executed++);
+                  payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+                  console.log("payLoad = " + payLoad, autoGlobe.executed++);
                 } 
                 else {
                   console.warn(
                     "Function for 'data' parameter not found:",
-                    this.funcUnoMis,
+                    funcUnoMis,
                   );
-                  this.payLoad = "Function not found for data generation.";
+                  payLoad = "Function not found for data generation.";
                 }
               }
             }
 
-            this.initialContent.forEach((item) => {
+            initialContent.forEach((item) => {
               console.log(
                 "DEBUG: \nMisStCreator\norderedArgsForCurrentFunc:",
-                this.orderedArgsForCurrentFunc,
+                orderedArgsForCurrentFunc,
               );
-              this.declaredParams.forEach((declaredParam) => {
+              declaredParams.forEach((declaredParam) => {
                 // More precise matching for named arguments or specific values
                 if (item === declaredParam) {
                   // Exact match for a declared parameter name
-                  this.contentMap[declaredParam] = item;
+                  contentMap[declaredParam] = item;
                 }
                 // If you also want to match if the item *contains* the declared param, be very careful:
                 // else if (typeof item === 'string' && item.includes(declaredParam)) {
                 //    // This can be tricky. Maybe only if item is longer and contains the param as a substring,
                 //    // or if you have specific parsing rules. For simplicity, sticking to exact match here.
-                //    this.contentMap[declaredParam] = item;
+                //    contentMap[declaredParam] = item;
                 // }
               });
             });
 
             // Then, build orderedArgsForCurrentFunc based on declaredParams order
             // This prioritizes `initialContent` by position, then fills from `contentMap` if any.
-            this.declaredParams.forEach((paramName, index) => {
+            declaredParams.forEach((paramName, index) => {
               console.log(
                 "DEBUG: line 3114\nMisStCreator\norderedArgsForCurrentFunc:",
-                this.orderedArgsForCurrentFunc,
+                orderedArgsForCurrentFunc,
               );
               // Try to get a positional argument first from initialContent
               if (
-                this.initialContent[index] !== undefined &&
-                this.initialContent[index] !== null &&
+                initialContent[index] !== undefined &&
+                initialContent[index] !== null &&
                 paramName
               ) {
-                this.orderedArgsForCurrentFunc.push(this.initialContent[index]);
+                orderedArgsForCurrentFunc.push(initialContent[index]);
                 console.log(
                   "DEBUG, Try to get a positional argument first from initialContent: \nMisStCreator\norderedArgsForCurrentFunc:",
-                  this.orderedArgsForCurrentFunc,
+                  orderedArgsForCurrentFunc,
                 );
               }
               // Fallback to contentMap if a named argument was found, and not already set positionally
               else {
-                if (this.contentMap.hasOwnProperty(paramName)) {
-                  this.orderedArgsForCurrentFunc.push(this.contentMap[paramName]);
+                if (contentMap.hasOwnProperty(paramName)) {
+                  orderedArgsForCurrentFunc.push(contentMap[paramName]);
                   console.log(
                     "DEBUG, Fallback to contentMap if a named argument was found, and not already set positionally: \nMisStCreator\norderedArgsForCurrentFunc:",
-                    this.orderedArgsForCurrentFunc,
+                    orderedArgsForCurrentFunc,
                   );
                 }
                 // Otherwise, the parameter is missing for now
                 else {
-                  this.orderedArgsForCurrentFunc.push(null);
+                  orderedArgsForCurrentFunc.push(null);
                   console.log(
                     "DEBUG, the parameter is missing for now: \nMisStCreator\norderedArgsForCurrentFunc:",
-                    this.orderedArgsForCurrentFunc,
+                    orderedArgsForCurrentFunc,
                   );
                 }
               }
@@ -3230,31 +3345,34 @@ class MisStCreator {
               "Ordered arguments for " +
                 result +
                 ": " +
-                this.orderedArgsForCurrentFunc,
+                orderedArgsForCurrentFunc,
             );
 
             // --- RESOLVE ARGUMENTS FOR THE CURRENT FUNCTION CALL ---
             // Loop through declared parameters and assign values from `orderedArgsForCurrentFunc`
-            this.declaredParams.forEach((declaredParamName, index) => {
+            declaredParams.forEach((declaredParamName, index) => {
               console.log(
                 "DEBUG: \nMisStCreator\norderedArgsForCurrentFunc:",
-                this.orderedArgsForCurrentFunc,
+                orderedArgsForCurrentFunc,
               );
-              this.userProvidedValue = this.orderedArgsForCurrentFunc[index]; // Get the mapped value
+              let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
+              this.userProvidedValue = userProvidedValue;
 
               console.log(
                 'Value of "' + declaredParamName + '" (userProvidedValue):',
-                this.userProvidedValue,
+                userProvidedValue,
               );
 
               // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
               // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-              if (this.userProvidedValue === null && this.userProvidedValue === undefined) {
+              if (userProvidedValue === null && userProvidedValue === undefined) {
                 if (declaredParamName === "e") {
-                  this.arrDRnd = appSort();
-                  this.searchResult = randomSubstance(0, this.arrDRnd.length, this.arrDRnd).myNewArr;
-                  result = this.fParams.find((rndS) => {
-                    return rndS.name === this.searchResult;
+                  let arrDRnd = appSort();
+                  this.arrDRnd = arrDRnd;
+                  let searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
+                  this.searchResult = searchResult;
+                  result = fParams.find((rndS) => {
+                    return rndS.name === searchResult;
                   });
                   console.log("resolved e.parameter pre-result", result);
                   try {
@@ -3263,7 +3381,7 @@ class MisStCreator {
                     console.log("Check/Balance for " + result.toString());
                   }
                   if (typeof result === "string" && result !== "undefined") {
-                    this.args[declaredParamName] = objectOfS(
+                    args[declaredParamName] = objectOfS(
                       ["parameter"],
                       [
                         [
@@ -3281,14 +3399,14 @@ class MisStCreator {
                       result !== null &&
                       result.name
                     ) {
-                      this.args[declaredParamName] = objectOfS(
+                      args[declaredParamName] = objectOfS(
                         ["parameter"],
                         [
                           [
                             ["func", result.name],
                             [
                               "args",
-                              JSON.stringify(this.orderedArgsForCurrentFunc) || result.parameters,
+                              JSON.stringify(orderedArgsForCurrentFunc) || result.parameters,
                             ],
                             ["action", "getData"],
                             ["file", "uiAccess"],
@@ -3299,7 +3417,7 @@ class MisStCreator {
                     } 
                     else {
                       if (result !== null && result && result.name) {
-                        this.args[declaredParamName] = objectOfS(
+                        args[declaredParamName] = objectOfS(
                           ["parameter"],
                           [
                             [
@@ -3313,230 +3431,250 @@ class MisStCreator {
                       }
                     }
                   }
-                  console.log("args[declaredParamName] = " + this.args[declaredParamName], autoGlobe.executed++);
-                  this.resolvedArgs.push(JSON.stringify(this.args[declaredParamName]));
+                  console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
+                  resolvedArgs.push(JSON.stringify(args[declaredParamName]));
                 } 
                 else {
                   if (declaredParamName === "time") {
-                    this.args[declaredParamName] =
+                    args[declaredParamName] =
                       // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                       //   ? this.userProvidedValue
                       //   :
                       autoGlobe.functionRegistry.time;
-                    console.log("args[declaredParamName] = " + this.args[declaredParamName], autoGlobe.executed++);
-                    this.resolvedArgs.push(this.args[declaredParamName]);
+                    console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
+                    resolvedArgs.push(args[declaredParamName]);
                   } 
                   else {
                     if (declaredParamName === "data") {
                       // if (
-                      //   this.userProvidedValue !== null &&
-                      //   this.userProvidedValue !== undefined &&
-                      //   Array.isArray(this.userProvidedValue)
+                      //   userProvidedValue !== null &&
+                      //   userProvidedValue !== undefined &&
+                      //   Array.isArray(userProvidedValue)
                       // ) {
-                      //   this.args[declaredParamName] = this.userProvidedValue;
+                      //   args[declaredParamName] = userProvidedValue;
                       // } else {
-                      // this.rndE = objectOfS(
+                      // let rndE = objectOfS(
                       //   ["parameter"],
                       //   [
                       //     [
                       //       ["func", "mis"],
-                      //       ["args", [result, ...this.initialContent]],
+                      //       ["args", [result, ...initialContent]],
                       //     ],
                       //   ],
                       //   autoGlobe.functionRegistry.time,
                       // );
-                      // this.funcUnoMis = this.rndE.parameter["func"];
-                      // this.funcDosMis = this.rndE.parameter["this.args"];
-                      // this.payLoad = null; // Initialize payLoad
+                      // this.rndE = rndE;
+                      // funcUnoMis = rndE.parameter["func"];
+                      // funcDosMis = rndE.parameter["args"];
+                      // payLoad = null; // Initialize payLoad
 
                       // // Ensure globalThis[funcUnoMis] exists before calling
-                      // if (this.funcUnoMis === "misSt") {
+                      // if (funcUnoMis === "misSt") {
                       //   // Prevent infinite recursion
                       //   console.warn(
                       //     "Attempted to call misSt recursively from 'data' parameter generation. Skipping.",
                       //   );
-                      //   this.payLoad = "Recursive call prevented.";
-                      // } else if (typeof globalThis[this.funcUnoMis] === "function") {
-                      //   this.payLoad = globalThis[this.funcUnoMis].apply(this, this.funcDosMis);
-                      // } else {
+                      //   payLoad = "Recursive call prevented.";
+                      // } 
+                      // else if (typeof globalThis[funcUnoMis] === "function") {
+                      //   payLoad = globalThis[funcUnoMis].apply(this, funcDosMis);
+                      // } 
+                      // else {
                       //   console.warn(
                       //     "Function for 'data' parameter not found:",
-                      //     this.funcUnoMis,
+                      //     funcUnoMis,
                       //   );
-                      //   this.payLoad = "Function not found for data generation.";
+                      //   payLoad = "Function not found for data generation.";
                       // }
                       try {
                         JSON.parse(result.toString());
-                      } catch (check) {
+                      } 
+                      catch (check) {
                         console.log("Check/Balance for " + result.toString());
                       }
 
-                      this.args[declaredParamName] = {
+                      args[declaredParamName] = {
                         message: payLoadReg(),
                         timestamp: new Date(),
                       };
                       // }
-                      this.resolvedArgs.push(this.args[declaredParamName]);
+                      resolvedArgs.push(args[declaredParamName]);
                     } 
                     else {
                       if (declaredParamName === "func") {
                         try {
                           JSON.parse(result.toString());
-                        } catch (check) {
+                        } 
+                        catch (check) {
                           console.log("Check/Balance for " + result.toString());
                         }
-                        this.args[declaredParamName] =
+                        args[declaredParamName] =
                           // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                           //   ? this.userProvidedValue
                           //   :
                           result;
-                        this.resolvedArgs.push(this.args[declaredParamName]);
+                        resolvedArgs.push(args[declaredParamName]);
                       } 
                       else {
                         if (declaredParamName === "varA") {
                           try {
                             JSON.parse(result.toString());
-                          } catch (check) {
+                          } 
+                          catch (check) {
                             console.log("Check/Balance for " + result.toString());
                           }
                           console.log(
                             "Declared parameter " +
                               declaredParamName +
                               " is not the user provided value " +
-                              this.userProvidedValue +
+                              userProvidedValue +
                               ",",
-                            declaredParamName !== this.userProvidedValue,
+                            declaredParamName !== userProvidedValue,
                           );
                           // if (
-                          //   this.userProvidedValue !== null &&
-                          //   this.userProvidedValue !== undefined &&
-                          //   this.userProvidedValue !== declaredParamName
+                          //   userProvidedValue !== null &&
+                          //   userProvidedValue !== undefined &&
+                          //   userProvidedValue !== declaredParamName
                           // ) {
-                          //   this.args[declaredParamName] = this.userProvidedValue;
-                          //   console.log("Error: using ", this.userProvidedValue);
-                          // } else {
+                          //   args[declaredParamName] = userProvidedValue;
+                          //   console.log("Error: using ", userProvidedValue);
+                          // } 
+                          // else {
                           // Simplified random function call logic
-                          this.randomFuncResult = null;
-                          this.randomFuncName =
-                            this.fParams[Math.floor(Math.random() * this.fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
-                          console.log("resolved varA pre-result", this.randomFuncName);
+                          let randomFuncResult = null;
+                          this.randomFuncResult = randomFuncResult;
+                          let randomFuncName =
+                            fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
+                          this.randomFuncName = randomFuncName;
+                          console.log("resolved varA pre-result", randomFuncName);
                           if (
-                            typeof this.randomFuncName === "string" &&
-                            typeof globalThis[this.randomFuncName] === "function"
+                            typeof randomFuncName === "string" &&
+                            typeof globalThis[randomFuncName] === "function"
                           ) {
-                            this.randomFuncResult = globalThis[this.randomFuncName]();
-                          console.log("randomFuncResult = " + this.randomFuncResult, autoGlobe.executed++);
-                            console.log("Error: using ", this.randomFuncName);
+                            randomFuncResult = globalThis[randomFuncName]();
+                          console.log("randomFuncResult = " + randomFuncResult, autoGlobe.executed++);
+                            console.log("Error: using ", randomFuncName);
                           } 
                           else {
                             if (
-                              typeof this.randomFuncName === "object" &&
-                              this.randomFuncName !== null &&
-                              this.randomFuncName.name &&
-                              typeof globalThis[this.randomFuncName.name] === "function"
+                              typeof randomFuncName === "object" &&
+                              randomFuncName !== null &&
+                              randomFuncName.name &&
+                              typeof globalThis[randomFuncName.name] === "function"
                             ) {
-                              this.randomFuncResult = globalThis[this.randomFuncName.name].apply(
+                              randomFuncResult = globalThis[randomFuncName.name].apply(
                                 this,
-                                this.randomFuncName.parameters || [],
+                                randomFuncName.parameters || [],
                               );
-                              console.log("randomFuncResult = " + this.randomFuncResult, autoGlobe.executed++);
+                              console.log("randomFuncResult = " + randomFuncResult, autoGlobe.executed++);
                               console.log(
                                 "Error: using, " +
-                                  this.randomFuncName.name +
+                                  randomFuncName.name +
                                   " with parameters " +
-                                  this.randomFuncName.parameters,
+                                  randomFuncName.parameters,
                               );
                             }
                           }
-                          this.args[declaredParamName] = this.randomFuncResult;
+                          args[declaredParamName] = randomFuncResult;
                           // }
-                          this.resolvedArgs.push(this.args[declaredParamName]);
+                          resolvedArgs.push(args[declaredParamName]);
                         } 
                         else {
                           if (declaredParamName === "epaAUrl") {
                             // if (this.userProvidedValue !== null && this.userProvidedValue !== undefined) {
-                            //   this.args[declaredParamName] = this.userProvidedValue;
+                            //   args[declaredParamName] = this.userProvidedValue;
                             // } else {
                             console.log("DEBUG: Generating epaAUrl...");
-                            this.data = coUtility(this.product)[0]; // Assuming 'product' is accessible
-                            console.log("data = " + this.data, autoGlobe.executed++);
-                            console.log("DEBUG: data from coUtility:", this.data);
+                            let data = coUtility(this.product)[0]; // Assuming 'product' is accessible
+                            this.data = data;
+                            console.log("data = " + data, autoGlobe.executed++);
+                            console.log("DEBUG: data from coUtility:", data);
 
-                            this.generatedUrl = null;
-                            if (this.data && typeof this.data.rndTitle !== "undefined") {
-                              this.test = productNamePartial(
-                                [this.data.rndTitle.replace(/,./g, "")].toString().split(" ")[
+                            let generatedUrl = null;
+                            this.generatedUrl = generatedUrl;
+                            if (data && typeof data.rndTitle !== "undefined") {
+                              let test = productNamePartial(
+                                [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
                                   Math.floor(
                                     Math.random() *
                                       Math.floor(
-                                        [this.data.rndTitle.replace(/,./g, "")]
+                                        [data.rndTitle.replace(/,./g, "")]
                                           .toString()
                                           .split(" ").length,
                                       ),
                                   )
                                 ],
                               );
-                              console.log("test = " + this.test, autoGlobe.executed++);
-                              console.log("DEBUG: test from productNamePartial:", this.test);
+                              this.test = test;
+                              console.log("test = " + test, autoGlobe.executed++);
+                              console.log("DEBUG: test from productNamePartial:", test);
 
-                              if (this.test && typeof this.test.eparegno !== "undefined") {
-                                this.test2 = productRegNo(this.test.eparegno);
-                                console.log("DEBUG: test2 from productRegNo:", this.test2);
-                                console.log("test2 = " + this.test2, autoGlobe.executed++);
+                              if (test && typeof test.eparegno !== "undefined") {
+                                let test2 = productRegNo(test.eparegno);
+                                this.test2 = test2;
+                                console.log("DEBUG: test2 from productRegNo:", test2);
+                                console.log("test2 = " + test2, autoGlobe.executed++);
 
                                 if (
-                                  this.test2 &&
-                                  this.test2.hasOwnProperty("active_ingredients") &&
-                                  this.test2.active_ingredients.length > 0
+                                  test2 &&
+                                  test2.hasOwnProperty("active_ingredients") &&
+                                  test2.active_ingredients.length > 0
                                 ) {
-                                  this.uniqueData = [];
-                                  this.test2.active_ingredients.forEach((ing) => {
+                                  let uniqueData = [];
+                                  this.uniqueData = uniqueData;
+                                  test2.active_ingredients.forEach((ing) => {
                                     if (ing.active_ing) {
-                                      this.pIName = productIngName(ing.active_ing);
-                                      console.log("pIName = " + this.pIName, autoGlobe.executed++);
-                                      if (typeof this.pIName !== "undefined") {
-                                        this.uniqueData.push(
-                                          this.pIName["items"] || this.pIName["first"] || this.pIName,
+                                      let pIName = productIngName(ing.active_ing);
+                                      this.pIName = pIName;
+                                      console.log("pIName = " + pIName, autoGlobe.executed++);
+                                      if (typeof pIName !== "undefined") {
+                                        uniqueData.push(
+                                          pIName["items"] || pIName["first"] || pIName,
                                         );
                                       }
                                     }
                                   });
 
-                                  if (this.uniqueData.length > 0) {
+                                  if (uniqueData.length > 0) {
                                     // Flatten uniqueData if it's an array of arrays
-                                    this.flatUniqueData = [];
-                                    this.uniqueData.forEach((arr) => {
+                                    let flatUniqueData = [];
+                                    this.flatUniqueData = flatUniqueData;
+                                    uniqueData.forEach((arr) => {
                                       if (Array.isArray(arr)) {
-                                        this.flatUniqueData.push(...arr);
+                                        flatUniqueData.push(...arr);
                                       } else {
-                                        this.flatUniqueData.push(arr);
+                                        flatUniqueData.push(arr);
                                       }
                                     });
 
-                                    this.matches = this.flatUniqueData.filter(
+                                    let matches = flatUniqueData.filter(
                                       (ac) =>
                                         ac &&
                                         ac.eparegnumber &&
                                         String(ac.eparegnumber)
                                           .toLowerCase()
-                                          .includes(String(this.test2.eparegno).toLowerCase()),
+                                          .includes(String(test2.eparegno).toLowerCase()),
                                     );
+                                    this.matches = matches;
 
-                                    if (this.matches.length > 0) {
-                                      this.randomKey = Math.floor(
-                                        Math.random() * this.matches.length,
+                                    if (matches.length > 0) {
+                                      let randomKey = Math.floor(
+                                        Math.random() * matches.length,
                                       );
-                                      this.isDataKey = this.matches[this.randomKey];
-                                      this.randomCasNumber = this.isDataKey["casnumber"];
+                                      this.randomKey = randomKey;
+                                      let isDataKey = matches[randomKey];
+                                      this.isDataKey = isDataKey;
+                                      let randomCasNumber = isDataKey["casnumber"];
+                                      this.randomCasNumber = randomCasNumber;
 
                                       console.log(
                                         "DEBUG: randomCasNumber generated:",
-                                        this.randomCasNumber,
+                                        randomCasNumber,
                                       );
-                                      if (this.randomCasNumber) {
-                                        this.generatedUrl =
+                                      if (randomCasNumber) {
+                                        generatedUrl =
                                           "https://ofmpub.epa.gov/sor_internet/registry/substreg/searchandretrieve/substancesearch/search.do?multipleEntriesSearch=&multipleKeys=" +
-                                          this.randomCasNumber +
+                                          randomCasNumber +
                                           "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
                                       }
                                     }
@@ -3544,13 +3682,13 @@ class MisStCreator {
                                 }
                               }
                             }
-                            this.args[declaredParamName] = this.generatedUrl; // Assign the generated URL (or null if not found)
+                            args[declaredParamName] = generatedUrl; // Assign the generated URL (or null if not found)
                             console.log(
                               "DEBUG: Final epaAUrl for args:",
-                              this.args[declaredParamName],
+                              args[declaredParamName],
                             );
                             // }
-                            this.resolvedArgs.push(this.args[declaredParamName]);
+                            resolvedArgs.push(args[declaredParamName]);
                           } 
                           else {
                             if (
@@ -3558,33 +3696,35 @@ class MisStCreator {
                               declaredParamName === "companyNameUrl"
                             ) {
                               // if (
-                              //   this.userProvidedValue !== null &&
-                              //   this.userProvidedValue !== undefined &&
-                              //   isValidUrl(this.userProvidedValue).hostname
+                              //   userProvidedValue !== null &&
+                              //   userProvidedValue !== undefined &&
+                              //   isValidUrl(userProvidedValue).hostname
                               // ) {
-                              //   this.args[declaredParamName] = this.userProvidedValue;
+                              //   args[declaredParamName] = userProvidedValue;
                               // } else {
                               // Assuming autoGlobe.functionRegistry.gTree and fileBrowser are accessible
-                              this.folder = autoGlobe.functionRegistry.getFolderList()[autoGlobe.numVarRnd];
-                              console.log("folder = " + this.folder, autoGlobe.executed++);
-                              this.args[declaredParamName] = fileBrowser(this.folder).url;
-                              console.log("args[declaredParamName] = " + this.args[declaredParamName], autoGlobe.executed++);
+                              let folder = autoGlobe.functionRegistry.getFolderList()[autoGlobe.numVarRnd];
+                              this.folder = folder;
+                              console.log("folder = " + folder, autoGlobe.executed++);
+                              args[declaredParamName] = fileBrowser(folder).url;
+                              console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
                               // }
-                              this.resolvedArgs.push(this.args[declaredParamName]);
+                              resolvedArgs.push(args[declaredParamName]);
                             } 
                             else {
                               if (declaredParamName === "object") {
-                                this.args[declaredParamName] =
+                                args[declaredParamName] =
                                   // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                   //   ? this.userProvidedValue
                                   //   :
                                   JSON.stringify({});
-                                this.resolvedArgs.push(this.args[declaredParamName]);
+                                resolvedArgs.push(args[declaredParamName]);
                               } 
                               else {
                                 if (declaredParamName === "file") {
-                                  this.rndPage =
-                                    this.htmlArray[Math.floor(Math.random() * this.htmlArray.length)];
+                                  let rndPage =
+                                    htmlArray[Math.floor(Math.random() * htmlArray.length)];
+                                  this.rndPage = rndPage;
                                   this.args[declaredParamName] =
                                     // this.userProvidedValue !== null &&
                                     // this.userProvidedValue !== undefined &&
@@ -3594,76 +3734,83 @@ class MisStCreator {
                                     // )
                                     //   ? this.userProvidedValue
                                     //   :
-                                    this.rndPage;
-                                  this.resolvedArgs.push(this.args[declaredParamName]);
+                                    rndPage;
+                                  resolvedArgs.push(args[declaredParamName]);
                                 } 
                                 else {
                                   if (declaredParamName === "fileX") {
-                                    this.folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd()];
-                                    console.log("folderX = " + this.folderX, autoGlobe.executed++);
-                                    this.folderRoot = DriveApp.getFoldersByName(this.folderX); // Assuming Google Apps Script DriveApp
-                                    this.fileXName = "undefined";
-                                    if (this.folderRoot.hasNext) {
-                                      this.fileBulk = this.folderRoot.next().getFiles();
-                                      this.fileNames = [];
-                                      if (this.fileBulk.hasNext()) {
-                                        while (this.fileBulk.hasNext()) {
-                                          this.fileUrl = this.fileBulk.next();
-                                          this.fileNames.push(fileUrl.getName());
+                                    let folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd()];
+                                    this.folderX = folderX;
+                                    console.log("folderX = " + folderX, autoGlobe.executed++);
+                                    let folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
+                                    this.folderRoot = folderRoot;
+                                    let fileXName = "undefined";
+                                    this.fileXName = fileXName;
+                                    if (folderRoot.hasNext) {
+                                      let fileBulk = folderRoot.next().getFiles();
+                                      this.fileBulk = fileBulk;
+                                      let fileNames = [];
+                                      this.fileNames = fileNames;
+                                      if (fileBulk.hasNext()) {
+                                        while (fileBulk.hasNext()) {
+                                          let fileUrl = fileBulk.next();
+                                          this.fileUrl = fileUrl;
+                                          fileNames.push(fileUrl.getName());
                                         }
-                                        if (this.fileNames.length > 0) {
-                                          this.fileXName =
-                                            this.fileNames[Math.floor(Math.random() * this.fileNames.length)];
+                                        if (fileNames.length > 0) {
+                                          fileXName =
+                                            fileNames[Math.floor(Math.random() * fileNames.length)];
                                         }
                                       }
                                     }
-                                    this.args[declaredParamName] =
+                                    args[declaredParamName] =
                                       // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                       //   ? this.userProvidedValue
                                       //   :
                                       this.fileXName;
-                                    this.resolvedArgs.push(this.args[declaredParamName]);
+                                    this.resolvedArgs.push(args[declaredParamName]);
                                   } 
                                   else {
                                     if (
                                       declaredParamName === "folderX" ||
                                       declaredParamName === "folder"
                                     ) {
-                                      this.args[declaredParamName] =
+                                      args[declaredParamName] =
                                         // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                         //   ? this.userProvidedValue
                                         //   :
-                                        this.allFolders = autoGlobe.functionRegistry.folderTree;
-                                      console.log("allFolders = " + this.allFolders, autoGlobe.executed++);
-                                      this.allFolders[autoGlobe.numVarRnd]; // allFolders should be defined or passed
-                                      this.resolvedArgs.push(this.args[declaredParamName]);
+                                        allFolders = autoGlobe.functionRegistry.folderTree;
+                                      console.log("allFolders = " + allFolders, autoGlobe.executed++);
+                                      allFolders[autoGlobe.numVarRnd]; // allFolders should be defined or passed
+                                      resolvedArgs.push(args[declaredParamName]);
                                     } 
                                     else {
                                       if (
                                         declaredParamName === "numIndex" ||
                                         declaredParamName === "infinitum"
                                       ) {
-                                        this.args[declaredParamName] =
+                                        args[declaredParamName] =
                                           // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                           //   ? this.userProvidedValue
                                           //   :
                                           autoGlobe.numVarRnd;
-                                        this.resolvedArgs.push(this.args[declaredParamName]);
+                                        resolvedArgs.push(args[declaredParamName]);
                                       } 
                                       else {
                                         if (declaredParamName === "itemName") {
-                                          this.rndItemIndex = Math.floor(
+                                          let rndItemIndex = Math.floor(
                                             Math.random() *
-                                              Math.floor(globalThis.uniqueItemArray().length),
+                                              Math.floor(autoGlobe.uniqueItemArray().length),
                                           );
-                                          console.log("rndItemIndex = " + this.rndItemIndex, autoGlobe.executed++);
-                                          this.args[declaredParamName] =
-                                            // this.userProvidedValue !== null && this.userProvidedValue !== undefined
-                                            //   ? this.userProvidedValue
+                                          this.rndItemIndex = rndItemIndex;
+                                          console.log("rndItemIndex = " + rndItemIndex, autoGlobe.executed++);
+                                          args[declaredParamName] =
+                                            // userProvidedValue !== null && userProvidedValue !== undefined
+                                            //   ? userProvidedValue
                                             //   :
-                                            globalThis.uniqueItemArray()[this.rndItemIndex]["Description"];
-                                          console.log("args[declaredParamName] = " + this.args[declaredParamName], autoGlobe.executed++);
-                                          this.resolvedArgs.push(this.args[declaredParamName]);
+                                            autoGlobe.uniqueItemArray()[rndItemIndex]["Description"];
+                                          console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
+                                          resolvedArgs.push(args[declaredParamName]);
                                         } 
                                         else {
                                           if (
@@ -3671,39 +3818,43 @@ class MisStCreator {
                                               declaredParamName,
                                             )
                                           ) {
-                                            this.nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
-                                            this.rndCoIndex = Math.floor(
-                                              Math.random() * Math.floor(globalThis.uniqueCoArray().length),
+                                            let nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
+                                            this.nameArray = nameArray;
+                                            let rndCoIndex = Math.floor(
+                                              Math.random() * Math.floor(autoGlobe.uniqueCoArray().length),
                                             );
-                                            console.log("rndCoIndex = " + this.rndCoIndex, autoGlobe.executed++);
-                                            this.tiParam = globalThis.uniqueCoArray()[this.rndCoIndex]["title"];
-                                            console.log("tiParam = " + this.tiParam, autoGlobe.executed++);
-                                            this.args[this.nameArray[this.nameArray.indexOf(declaredParamName)]] =
-                                              // this.userProvidedValue !== null && this.userProvidedValue !== undefined
-                                              //   ? this.userProvidedValue
+                                            this.rndCoIndex = rndCoIndex;
+                                            console.log("rndCoIndex = " + rndCoIndex, autoGlobe.executed++);
+                                            let tiParam = autoGlobe.uniqueCoArray()[rndCoIndex]["title"];
+                                            this.tiParam = tiParam;
+                                            console.log("tiParam = " + tiParam, autoGlobe.executed++);
+                                            args[nameArray[nameArray.indexOf(declaredParamName)]] =
+                                              // userProvidedValue !== null && userProvidedValue !== undefined
+                                              //   ? userProvidedValue
                                               //   :
-                                              this.tiParam;
-                                            this.resolvedArgs.push(
-                                              this.args[this.nameArray[this.nameArray.indexOf(declaredParamName)]],
+                                              tiParam;
+                                            resolvedArgs.push(
+                                              args[nameArray[nameArray.indexOf(declaredParamName)]],
                                             );
                                           } 
                                           else {
                                             if (declaredParamName === "stringArray") {
-                                              this.args[declaredParamName] =
+                                              args[declaredParamName] =
                                                 // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                                 //   ? this.userProvidedValue
                                                 //   :
                                                 appSort(autoGlobe.numVarRnd); // Assuming appSort is accessible
-                                              this.resolvedArgs.push(this.args[declaredParamName]);
+                                              resolvedArgs.push(args[declaredParamName]);
                                             } 
                                             else {
                                               if (declaredParamName === "argsObject") {
                                                 try {
                                                   JSON.parse(result.toString());
-                                                } catch (check) {
+                                                } 
+                                                catch (check) {
                                                   console.log("Check/Balance for " + result.toString());
                                                 }
-                                                this.args[declaredParamName] =
+                                                args[declaredParamName] =
                                                   // this.userProvidedValue !== null &&
                                                   // this.userProvidedValue !== undefined &&
                                                   // Array.isArray(this.userProvidedValue)
@@ -3713,7 +3864,7 @@ class MisStCreator {
                                                     message: payLoadReg(),
                                                     timestamp: new Date(),
                                                   });
-                                                this.resolvedArgs.push(this.args[declaredParamName]);
+                                                resolvedArgs.push(args[declaredParamName]);
                                               }
                                             }
                                           }
@@ -3734,55 +3885,56 @@ class MisStCreator {
               else {
                 // Generic handler for other declared parameters not covered by specific logic
                 if (
-                  this.userProvidedValue !== null &&
-                  this.userProvidedValue !== undefined
+                  userProvidedValue !== null &&
+                  userProvidedValue !== undefined
                 ) {
-                  this.args[declaredParamName] = this.userProvidedValue;
+                  args[declaredParamName] = userProvidedValue;
                 } else {
-                  this.missingParams.push(declaredParamName);
-                  this.args[declaredParamName] = null; // Assign null, but mark as missing
+                  missingParams.push(declaredParamName);
+                  args[declaredParamName] = null; // Assign null, but mark as missing
                 }
-                this.resolvedArgs.push(this.args[declaredParamName]);
+                resolvedArgs.push(args[declaredParamName]);
               }
             }); // End of declaredParams.forEach
 
-            if (this.missingParams.length === 0) {
+            if (missingParams.length === 0) {
               // No need to reassign 'content' here. It should remain the initial input.
               // The 'args' and 'resolvedArgs' are the output for the current function.
             } 
             else {
-              this.allErrors[result] =
-                `Error: Missing parameters for ${result}: ${this.missingParams.join(", ")}`;
-              console.error(this.allErrors[result]);
+              allErrors[result] =
+                `Warning: Missing parameters for ${result}: ${missingParams.join(", ")}`;
+              console.warn(allErrors[result]);
             }
           } 
           else {
             console.warn("No declared parameters found for function:", result);
           }
 
-          console.log("Resolved arguments for " + result + ":", this.args);
+          console.log("Resolved arguments for " + result + ":", args);
           console.log(
             "Resolved parameters Array for " + result + ":",
-            this.resolvedArgs,
+            resolvedArgs,
           );
-          this.resCount++;
+          resCount++;
 
-          this.holdResolvedArgsX = this.resolvedArgs;
+          holdResolvedArgsX = resolvedArgs;
 
           // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
           // For now, it's scoped to each iteration.
         }); // End of argsX.forEach
 
-        this.errorKeys = Object.keys(this.allErrors);
+        let errorKeys = Object.keys(allErrors);
+        this.errorKeys = errorKeys;
       } 
       else {
         console.log("No functions found to call in argsX.");
       }
       console.log(
         "misSt returned :\nfunc = " +
-          this.argsX +
+          argsX +
           ":\nargs = " +
-          this.holdResolvedArgsX?.toString().replace(/,/g, " "),
+          holdResolvedArgsX?.toString().replace(/,/g, " "),
       );
     }
     // --- Final Execution and Return ---
@@ -3795,44 +3947,48 @@ class MisStCreator {
     // This section needs careful review based on how you intend to use `args` and `resolvedArgs`
     // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
 
-    this.finalResultData = null; // To store the output of the function call(s)
-    if (this.argsX) {
-      if (this.argsX.length > 0) {
-        if (this.argsX.length === 1) {
-          this.funcToCall = this.argsX[0];
+    let finalResultData = null; // To store the output of the function call(s)
+    this.finalResultData = finalResultData;
+    if (argsX) {
+      if (argsX.length > 0) {
+        if (argsX.length === 1) {
+          let funcToCall = argsX[0];
+          this.funcToCall = funcToCall;
           // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
           // might not be correct if `argsX` has multiple functions.
           // Best to save the resolved args from inside the loop to a map/array.
           // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
           // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
-          this.lastResolvedArgs = this.holdResolvedArgsX; // This assumes only one item in argsX for now
+          let lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
+          this.lastResolvedArgs = lastResolvedArgs;
 
-          if (typeof globalThis[this.funcToCall] === "function") {
+          if (typeof globalThis[funcToCall] === "function") {
             try {
-              this.finalResultData = globalThis[this.funcToCall].apply(
+              finalResultData = globalThis[funcToCall].apply(
                 this,
-                this.lastResolvedArgs,
+                lastResolvedArgs,
               );
-              console.log("finalResultData = " + this.finalResultData, autoGlobe.executed++);
+              console.log("finalResultData = " + finalResultData, autoGlobe.executed++);
               console.log(
-                `typeof ${typeof this.finalResultData}: finalResultData: ${this.finalResultData} (from direct call)`,
+                `typeof finalResultData: ${typeof finalResultData}: ${finalResultData} (from direct call)`,
               );
-            } catch (e) {
+            } 
+            catch (e) {
               console.error(
-                `Error calling ${this.funcToCall} with arguments ${JSON.stringify(this.lastResolvedArgs)}: ${e.toString()}`,
+                `Error calling ${funcToCall} with arguments ${JSON.stringify(lastResolvedArgs)}: ${e.toString()}`,
               );
-              this.finalResultData = `Error calling function: ${e.toString()}`;
+              finalResultData = `Error calling function: ${e.toString()}`;
             }
           } 
           else {
-            console.error("Function not found:", this.funcToCall);
-            this.finalResultData = `Function not found: ${this.funcToCall}`;
+            console.error("Function not found:", funcToCall);
+            finalResultData = `Function not found: ${funcToCall}`;
           }
         } 
         else {
           // Multiple functions in argsX
-          this.finalResultData = [];
-          this.argsX.forEach((funcName, index) => {
+          finalResultData = [];
+          argsX.forEach((funcName, index) => {
             // You would need to store the `resolvedArgs` for each `funcName` during the `argsX.forEach` loop
             // For now, this part assumes `resolvedArgs` would be globally available or stored.
             // This part needs to be adjusted based on the specific `resolvedArgs` for `funcName`.
@@ -3844,47 +4000,49 @@ class MisStCreator {
             if (typeof globalThis[funcName] === "function") {
               try {
                 // Pass initialContent or a specifically resolved arg for THIS funcName
-                this.resultForFunc = globalThis[funcName].apply(
+                let resultForFunc = globalThis[funcName].apply(
                   this,
-                  this.initialContent,
+                  initialContent,
                 ); // Using initialContent for simplicity for now
-                console.log("resultForFunc = " + this.resultForFunc, autoGlobe.executed++);
-                this.finalResultData.push({ [funcName]: this.resultForFunc });
+                this.resultForFunc = resultForFunc;
+                console.log("resultForFunc = " + resultForFunc, autoGlobe.executed++);
+                finalResultData.push({ [funcName]: resultForFunc });
               } catch (e) {
                 console.error(
-                  `Error calling ${funcName} with arguments ${JSON.stringify(this.initialContent)}: ${e.toString()}`,
+                  `Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`,
                 );
-                this.finalResultData.push({
+                finalResultData.push({
                   [funcName]: `Error calling function: ${e.toString()}`,
                 });
               }
             } 
             else {
               console.error("Function not found:", funcName);
-              this.finalResultData.push({
+              finalResultData.push({
                 [funcName]: `Function not found: ${funcName}`,
               });
             }
           });
           console.log(
-            `typeof ${typeof this.finalResultData} finalResultData (array of results)`,
+            `typeof ${typeof finalResultData} finalResultData (array of results)`,
           );
         }
       } 
       else {
         console.log(
-          "No function to call: Skipping .apply(" + this.initialContent + ")",
+          "No function to call: Skipping .apply(" + initialContent + ")",
         );
-        this.finalResultData = this.initialContent;
-        console.log(`typeof ${typeof this.finalResultData} finalResultData`);
+        finalResultData = initialContent;
+        console.log(`typeof finalResultData: ${typeof finalResultData} `);
       }
     }
 
-    this.argsObject = {
-      func: this.argsX.toString(), // Consider joining with something like ', ' for readability
-      args: this.initialContent, // .toString().replace(/,/g, " "), // This is the original raw args
-      res: this.finalResultData, // The actual result of the function call(s)
+    let argsObject = {
+      func: argsX.toString(), // Consider joining with something like ', ' for readability
+      args: initialContent, // .toString().replace(/,/g, " "), // This is the original raw args
+      res: finalResultData, // The actual result of the function call(s)
     };
+    this.argsObject = argsObject;
   }
 }
 
@@ -3895,50 +4053,64 @@ class DriveFiles {
     this.time = time;
     console.log(
       "strNw is !" +
-        !this.strNw +
+        !strNw +
         ", = " +
-        this.strNw +
+        strNw +
         "\ntime is !" +
-        !this.time +
+        !time +
         ", = " +
-        this.time,
+        time,
     );
 
     console.log(
       'DriveFiles: Before iam definition. strNw value: "' +
-        this.strNw +
+        strNw +
         '", isFalsy: ' +
-        !this.strNw,
+        !strNw,
     );
-    if (!this.strNw) {
+    if (!strNw) {
       console.log("DriveFiles: strNw is falsy. testlt() will be called.");
     } else {
       console.log("DriveFiles: strNw is truthy. testlt() will NOT be called.");
     }
-    this.searArn = autoGlobe.domainData.indexOf(this.strNw) === -1? autoGlobe.domainData[Math.floor(Math.random() * autoGlobe.domainData.length)]:autoGlobe.domainData[domainData.indexOf(this.strNw)];
-    if (this.searArn.indexOf("http") === -1) {
-      this.searArn = "http://" + this.searArn
+    let searArn;
+    this.searArn = searArn;
+    if (autoGlobe.domainData.indexOf(strNw) === -1) {
+      searArn = autoGlobe.domainData[Math.floor(Math.random() * autoGlobe.domainData.length)];
+    }
+    else {
+      if (autoGlobe.domainData.indexOf(strNw) > -1) {
+        searArn = autoGlobe.domainData[domainData.indexOf(strNw)];
+      }
+    }
+    if (searArn.indexOf("http") === -1) {
+      searArn = "http://" + searArn
     }
     // NOTE: The testlt() call here is still explicit in your code.
     // This means testlt() will be called regardless of strNw's truthiness
     // due to its direct placement before the mainStr assignment.
-    this.manString = !this.strNw ? this.searArn : this.strNw;
-    // console.log("DriveFiles: manString (from testlt()):", this.manString);
-    this.testStrNw = !this.strNw ? this.manString : this.manString;
-    // console.log("DriveFiles: testStrNw:", this.testStrNw);
-    this.mainStr = this.strNw || this.testStrNw;
-    // console.log("DriveFiles: mainStr (strNw || testStrNw):", this.mainStr);
+    let manString = !strNw ? searArn : strNw;
+    this.manString = manString;
+    // console.log("DriveFiles: manString (from testlt()):", manString);
+    let testStrNw = !strNw ? manString : manString;
+    this.testStrNw = testStrNw;
+    // console.log("DriveFiles: testStrNw:", testStrNw);
+    let mainStr = strNw || testStrNw;
+    this.mainStr = mainStr;
+    // console.log("DriveFiles: mainStr (strNw || testStrNw):", mainStr);
 
-    this.arn = String(this.mainStr).toLowerCase();
-    this.iam;
+    let arn = String(mainStr).toLowerCase();
+    this.arn = arn;
+    let iam;
+    this.iam = iam;
     try {
-      this.iam = JSON.parse(
-        ObjectConvertor.newConvert([[String(this.mainStr)]], ["file"], autoGlobe.functionRegistry.time),
+      iam = JSON.parse(
+        ObjectConvertor.newConvert([[String(mainStr)]], ["file"], autoGlobe.functionRegistry.time),
       );
-      // console.log("iam = " + this.iam, autoGlobe.executed++);
-      // console.log("DriveFiles: iam successfully parsed:", this.iam);
-      if (this.iam && this.iam[0] && this.iam[0]["file"]) {
-        console.log('DriveFiles: iam[0]["file"] is:', this.iam[0]["file"]);
+      // console.log("iam = " + iam, autoGlobe.executed++);
+      // console.log("DriveFiles: iam successfully parsed:", iam);
+      if (iam && iam[0] && iam[0]["file"]) {
+        console.log('DriveFiles: iam[0]["file"] is:', iam[0]["file"]);
       } else {
         console.warn(
           'DriveFiles: iam or iam[0]["file"] is invalid after parsing.',
@@ -3946,23 +4118,26 @@ class DriveFiles {
       }
     } catch (e) {
       console.error("DriveFiles: Error parsing iam JSON:", e);
-      this.filedMain = null; // Return null if JSON parsing fails
+      let filedMain = null; // Return null if JSON parsing fails
+      this.filedMain = filedMain;
     }
-    this.crmCalcResult = ObjectConvertor.newCRMCalc(this.iam[0]["file"] || this.arn);
-    console.log("crmCalcResult = " + this.crmCalcResult, autoGlobe.executed++);
+    let crmCalcResult = ObjectConvertor.newCRMCalc(iam[0]["file"] || arn);
+    this.crmCalcResult = crmCalcResult;
+    console.log("crmCalcResult = " + crmCalcResult, autoGlobe.executed++);
     console.log(
       "DriveFiles: crmCalc result (index of found function or -1): " +
-        this.crmCalcResult,
+        crmCalcResult,
     );
     // If crmCalcResult is 0 or positive (meaning a function was found),
     // then we stop execution and return null as per your desired guard logic.
-    if (this.crmCalcResult >= 0) {
+    if (crmCalcResult >= 0) {
       console.log(
         "DriveFiles: Matching function name found (index: " +
-          this.crmCalcResult +
+          crmCalcResult +
           "). Stopping further DriveApp execution.",
       );
-      this.filedMain = null;
+      let filedMain = null;
+      this.filedMain = filedMain;
     } 
     else {
       // If crmCalcResult is -1 (meaning no function was found),
@@ -3970,101 +4145,124 @@ class DriveFiles {
       console.log(
         "DriveFiles: No matching function name found. Proceeding with efficient DriveApp search.",
       );
-      this.dataTree = [];
-      this.targetFile = this.iam[0] && this.iam[0]["file"] ? this.iam[0]["file"] : null;
+      let dataTree = [];
+      this.dataTree = dataTree;
+      let targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
+      this.targetFile = targetFile;
 
-      if (!this.targetFile) {
+      if (!targetFile) {
         console.warn(
           "DriveFiles: targetFile is invalid. Cannot perform DriveApp search. Returning null.",
         );
-        this.filedMain = null;
+        let filedMain = null;
+        this.filedMain = filedMain;
       }
       // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
       // Construct the search query. 'title contains' searches file names.
       // Use the exact targetFile for the query.
-      this.searchQuery = 'title contains "' + this.targetFile + '"';
+      let searchQuery = 'title contains "' + targetFile + '"';
+      this.searchQuery = searchQuery;
       console.log(
         "DriveFiles: Performing DriveApp search with query:",
-        this.searchQuery,
+        searchQuery,
       );
       try {
-        this.files = DriveApp.searchFiles(this.searchQuery);
-        console.log("event; DriveApp search result: ", this.files.hasNext())
+        let files = DriveApp.searchFiles(searchQuery);
+        this.files = files;
 
-        if (this.files && this.files?.hasNext()) {
-          while (this.files.hasNext()) {
-            this.file = this.files.next();
-            this.fiTitle = this.file.getName();
-            this.fileUrl = this.file.getUrl();
-            this.dataTree.push(this.fileUrl);
+        if (files) {
+          while (files.hasNext()) {
+            let tempObj = {}
+            let file = files.next();
+            this.file = file;
+            tempObj.file = this.file;
+            let fiTitle = file.getName();
+            this.fiTitle = fiTitle;
+            tempObj.fiTitle = this.fiTitle;
+            let fileUrl = file.getUrl();
+            this.fileUrl = fileUrl;
+            tempObj.fileUrl = this.fileUrl;
+            dataTree.push(fileUrl);
+            console.log("event; DriveApp search result: ", JSON.stringify(tempObj));
           }
         }
       } catch (e) {
         console.error("DriveFiles: Error during DriveApp search:", e);
-        this.filedMain = null; // Handle search errors gracefully
+        let filedMain = null; // Handle search errors gracefully
+        this.filedMain = filedMain;
       }
       console.log(
         "DriveFiles: Final dataTree length after search:",
-        this.dataTree.length,
+        dataTree.length,
       );
-      if (this.dataTree.length > 0) {
-        this.rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
-        this.filedMain = this.dataTree[this.rndFiledMain];
+      if (dataTree.length > 0) {
+        let rndFiledMain = Math.floor(Math.random() * dataTree.length);
+        this.rndFiledMain = rndFiledMain;
+        let filedMain = dataTree[rndFiledMain];
+        this.filedMain = filedMain;
         console.log(
           "DriveFiles: Returning a random found file URL:",
-          this.filedMain,
+          filedMain,
         );
       } 
       else {
-        if (this.dataTree.length === 0) {
+        if (dataTree.length === 0) {
           console.warn(
             "DriveFiles: No matching files found after DriveApp search. Returning null.",
           );
-          // this.dataTree = [];
+          // let dataTree = [];
+          // this.dataTree = dataTree;
           // this.options = { muteHttpExceptions: true };
           // this.data = null;
           // try {}
           // catch(fromResponse) {}
-          // this.data = getUrlResponse(this.mainStr, this.options)?.app;
+          // this.data = getUrlResponse(mainStr, this.options)?.app;
           // console.log("data = " + this.data, autoGlobe.executed++);
           // if (!this.data) {
             // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
             // Construct the search query. 'title contains' searches file names.
             // Use the exact targetFile for the query.
-            // this.searchQuery = 'title contains "' + this.mainStr + '"';
+            // let searchQuery = 'title contains "' + mainStr + '"';
+            // this.searchQuery = searchQuery;
             // console.log(
             //   "DriveFiles: Performing DriveApp search with query:",
-            //   this.searchQuery,
+            //   searchQuery,
             // );
             // try {
-            //   this.files = DriveApp.searchFiles(this.searchQuery);
+            //   let files = DriveApp.searchFiles(searchQuery);
+            //   this.files = files;
 
-            //   while (this.files.hasNext()) {
-            //     this.file = this.files.next();
-            //     this.fiTitle = this.file.getName();
-            //     this.fileUrl = this.file.getUrl();
-            //     this.dataTree.push(this.fileUrl);
+            //   while (files.hasNext()) {
+            //     let file = files.next();
+            //     this.file = file;
+            //     let fiTitle = file.getName();
+            //     this.fiTitle = fiTitle;
+            //     let fileUrl = file.getUrl();
+            //     this.fileUrl = fileUrl;
+            //     dataTree.push(fileUrl);
             //   }
             // } catch (e) {
             //   console.error("driveManager: Error during DriveApp search:", e);
-            //   this.filedMain = null; // Handle search errors gracefully
+            //   let filedMain = null; // Handle search errors gracefully
+            //   this.filedMain = filedMain;
             // }
             console.log(
               "DriveFiles: Final dataTree length after search:",
-              this.dataTree.length,
+              dataTree.length,
             );
-            if (this.dataTree.length > 0) {
-              this.rndFiledMain = Math.floor(Math.random() * this.dataTree.length);
-              this.filedMain = this.dataTree[this.rndFiledMain];
+            if (dataTree.length > 0) {
+              let rndFiledMain = Math.floor(Math.random() * dataTree.length);
+              let filedMain = dataTree[rndFiledMain];
+              this.filedMain = filedMain;
               console.log(
                 "DriveFiles: Returning a random found file URL:",
-                this.filedMain,
+                filedMain,
               );
             }
             // else {
-              // if (this.dataTree.length === 0) {
+              // if (dataTree.length === 0) {
                 // autoGlobe.executed++;
-                // this.filedSide = createFormFunction(this.strNw);
+                // this.filedSide = createFormFunction(strNw);
                 // this.funcKeys = Object.keys([this.filedSide]);
                 // this.funcUrl = null;
                 // this.funcKeys.forEach((key) => {
@@ -4075,7 +4273,8 @@ class DriveFiles {
             // }
           // }
           // else {
-            // this.filedMain = this.mainStr;
+            // let filedMain = mainStr;
+            // this.filedMain = filedMain;
           // }
         }
       }
@@ -4259,7 +4458,7 @@ class ValidUrlResult {
           resVRt.matches = resTree  //this.searchLinkDrive?.dataTree;
           this.validatedResult = resVRt;
         // }
-        console.log("matches to return = " + resVRt.matches);
+        console.log("matches to return = ", resVRt.matches);
         // if (this.searchLinkDrive?.filedMain) {
         if (rTFiled) {
           autoGlobe.functionRegistry.vidTree();
@@ -4309,7 +4508,7 @@ class ValidUrlResult {
       console.log(`allMatches = matches ? [...${resVRt.allMatches}]`);
       let resTemp = "";
       let resProto = null;
-      if (resVRt.allMatches?.length > 0) {
+      if (resVRt?.allMatches?.length > 0) {
         resTemp = {};
         resTemp.currentProtocol = "";
         resTemp.currentHostname = "";
@@ -4575,27 +4774,52 @@ let geneicType = function (e) {
             };
           }
           if (false) {
-            eQueryObject = {parameter: {func: "startRenderer",args: data}}
-            handles = funcHandle(eQueryObject);
-            data =  new MisStCreator([handles.funcUno,handles.funcDos]);
+            eQueryObject = {parameter: {file: uiAccess}}
+            handles = startRenderer(eQueryObject);
+            data = 
+              {
+               argsObject: 
+                {
+                  func: handles.funcUno,
+                  args: handles.funcDos,
+                  res: handles.funcUno + "," + handles.funcDos,
+                }
+              } //,String(handles.funcDos);
             let dataErrors = data?.allErrors;
             let dataFunc = data?.argsObject?.func;
             let dataArgs = data?.argsObject?.args;
             let dataRes = data?.argsObject?.res;
           }
           if ((data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) || (data?.funcUno?.length === 0 && data?.funcDos?.length === 0)) {
-            console.log("event; FuncHandle returned: data?.argsObject?.func = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
+            console.log(typeof data + " | event; FuncHandle returned: data?.argsObject?.func = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
             base = data?.argsObject?.res;
           }
           else {
             if (data?.tempObj?.argsObject?.app?.length === 0) {
-              console.log("event; FuncHandle returned: data?.tempObj?.argsObject?.app = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+              console.log(typeof data + " | event; FuncHandle returned: data?.tempObj?.argsObject?.app = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
               base = data?.tempObj?.argsObject?.index?.res
             }
             else {
-              console.log("event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.funcUno || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data), autoGlobe.executed++);
-              // let funcU = data.funcUno;
-              base = data?.argsObject?.func || data?.funcUno || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data;
+              console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app;
+              if (!base) {
+                if (data && data?.argsObject && (data?.argsObject["func"] && data?.argsObject["args"])) {
+                  base = createFunctionResult(data?.argsObject["func"], data?.argsObject["args"]);
+                }
+                else {
+                  if (data && data?.argsObject && (data?.argsObject["func"] && !data?.argsObject["args"])) {
+                    base = createFunctionResult(data?.argsObject["func"]);
+                  } 
+                  else {
+                    if (data && data?.argsObject && (!data?.argsObject["func"] && data?.argsObject["args"])) {
+                      base = createFunctionResult(false, data?.argsObject["args"]);
+                    }  
+                    else {
+                      base = createFunctionResult(data);
+                    }
+                  } 
+                }
+              }
               // let funcD = autoP.resolvedArgs.length > 0?  autoP.resolvedArgs:data.funcDos;
               // base = new RawFuncResult(funcU, funcD).rawFuncResult;
             }
@@ -4642,7 +4866,8 @@ let geneicType = function (e) {
               // }
               if (typeof base === "string") {
                 if (String(base).length > 0) {
-                  dataOR = globalHandleGetData(base);
+                  // handles = createFunctionResult(base);
+                  dataOR = globalHandleGetData(handles);
                   // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                   // let renderIt =
                   return dataOR
@@ -4654,6 +4879,7 @@ let geneicType = function (e) {
               else {
                 if (Array.isArray(base)) {
                   if (base.length !== 0) {
+                    // handles = createFunctionResult(base);
                     dataOR = globalHandleGetData(base);
                     // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                     return dataOR
@@ -4737,15 +4963,44 @@ let geneicType = function (e) {
         // let tempObj = funcHandle(e);
         // handles =  tempObj
         // console.log("handles = " + JSON.stringify(handles), executed++);
-        console.log("event; FuncHandle returned: data = " + JSON.stringify(data), autoGlobe.executed++);
-        if (data?.funcUno?.length === 0 && data?.funcDos?.length === 0) {
-          base = data;
+        // console.log("event; FuncHandle returned: data = " + JSON.stringify(data), autoGlobe.executed++);
+        if ((data?.argsObject?.func?.length === 0 && data?.argsObject?.args?.length === 0) || (data?.funcUno?.length === 0 && data?.funcDos?.length === 0)) {
+          console.log(typeof data + " | event; FuncHandle returned: data?.argsObject?.func = " + JSON.stringify(data?.argsObject?.func), autoGlobe.executed++);
+          base = data?.argsObject?.res;
+          // base = data;
         }
         else {
-          base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
+          if (data?.tempObj?.argsObject?.app?.length === 0) {
+            console.log(typeof data + " | event; FuncHandle returned: data?.tempObj?.argsObject?.app = " + JSON.stringify(data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+            base = data?.tempObj?.argsObject?.index?.res
+          }
+          else {
+            console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
+            base = data?.argsObject?.func|| data?.argsObject?.res || data?.tempObj?.argsObject?.app
+            // base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
+            if (!base) {
+              if (data && (data?.funcUno && data?.funcDos)) {
+                base = createFunctionResult(data?.funcUno, data?.funcDos);
+              }
+              else {
+                if (data && (data?.funcUno && !data?.funcDos)) {
+                  base = createFunctionResult(data?.funcUno);
+                } 
+                else {
+                  if (data && (!data?.funcUno && data?.funcDos)) {
+                    base = createFunctionResult(false, data?.funcDos);
+                  }  
+                  else {
+                    base = createFunctionResult(data);
+                  }
+                } 
+              }
+            }
+          }
         }
         if (typeof base === "string") {
           if (String(base).length > 0) {
+            // handles = createFunctionResult(base);
             dataOR = globalHandleGetData(base);
             return dataOR
           }
@@ -4756,6 +5011,7 @@ let geneicType = function (e) {
         else {
           if (Array.isArray(base)) {
             if (base.length !== 0) {
+              // handles = createFunctionResult(base);
               dataOR = globalHandleGetData(base);
               return dataOR
             }

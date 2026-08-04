@@ -741,8 +741,8 @@ function pastTime(url) {
     0,
     10,
   );
-  const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid?.length)); // Math.floor(Math.random());
-  const videoPlaylist = covObjects(uniqueVid, ["youtubeID"]);
+  const randomKey = Math.floor(Math.random() * Math.floor(uniqueVid?.playList?.length)); // Math.floor(Math.random());
+  const videoPlaylist = covObjects(uniqueVid?.playList, ["youtubeID"]);
   // const randomKey = Math.floor(Math.random() * (Math.floor(10000)))// Math.floor(Math.random());
   const uniqueKey = [videoPlaylist].entries().next().value;
   console.log(uniqueKey[1][randomKey]);

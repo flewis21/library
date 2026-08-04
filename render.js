@@ -212,9 +212,15 @@ class Renderer {
     this.payLoad = payLoad;
     this.argsObject = argsObject;
     this.title = title;
-    console.log("event; Renderer payLoad received ", payLoad);
-    console.log("event; Renderer argsObject received ", JSON.stringify(argsObject));
-    console.log("event; Renderer title received ", title);
+    if (payLoad) {
+      console.log("event; Renderer payLoad received ", payLoad);
+    }
+    if (argsObject) {
+      console.log("event; Renderer argsObject received ", JSON.stringify(argsObject));
+    }
+    if (title) {
+      console.log("event; Renderer title received ", title);
+    }
 
     // Early return for getData action
     let dataOR = "";
@@ -268,7 +274,7 @@ class Renderer {
             console.log("payLoad.parameter[kOL[0]] = file || args || func\n" + payLoad.parameter[kOL[0]], kOL);
             if (payLoad.parameter["file"]) {
               return funcHandle(payLoad);
-              // dataOR = this[libName].globalHandleGetData(data);
+              // dataOR = funcHandle(payLoad); // this[libName].globalHandleGetData(data);
             }
             else {
               // let funcU = handles["exec"];
@@ -284,18 +290,24 @@ class Renderer {
             }
           }
           else {
-            if (!payLoad) {
-              // let funcU = handles["exec"];
-              // let funcD = handles["args"];
-              // console.log("funcU & funcD\n" + [funcU, funcD]);
-              // let base = this[libName].createFunctionResult(funcU, funcD);
-              // console.log("base = " + base, executed++);
-              dataOR = geneicType();
+            if (payLoad && typeof payLoad === "string") {
+              dataOR = geneicType(payLoad);
               this.dataOR = dataOR;
-              // const data = this[libName].globalHandleGetData();
-              // Logger.log(
-              //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
-              // );
+            }
+            else {
+              if (!payLoad) {
+                // let funcU = handles["exec"];
+                // let funcD = handles["args"];
+                // console.log("funcU & funcD\n" + [funcU, funcD]);
+                // let base = this[libName].createFunctionResult(funcU, funcD);
+                // console.log("base = " + base, executed++);
+                dataOR = geneicType();
+                this.dataOR = dataOR;
+                // const data = this[libName].globalHandleGetData();
+                // Logger.log(
+                //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
+                // );
+              }
             }
           }
         }
@@ -303,25 +315,33 @@ class Renderer {
     }
     let file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
     this.file = file
-    let pLData = dataOR.pL.data;
+    let pLData = dataOR?.pL?.data;
     this.pLData = pLData;
+    let dataSearch = dataOR?.message?.info || autoGlobe.vidVals[Object.keys(autoGlobe.vidVals)[Math.floor(Math.random() * Math.floor(Object.keys(autoGlobe.vidVals).length))]].Video;
+    this.dataSearch = dataSearch;
     if (Array.isArray(pLData)) {
-      if (pLData.length !== 0) {
-        let blob = new RendTemplate(dataOR, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        this.blob = blob;
-        // let mIndex = new RenderFile(file, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        // this.mIndex = mIndex;
-        // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+      if (pLData.length > 0) {
+        // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        // this.blob = blob;
+        let mIndex = new RendFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        this.mIndex = mIndex;
+        // let mCDN = new ContentCDN(dataOR?.payL?.mess age?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // this.mCDN = mCDN;
         let mContent = dataOR?.payL?.message?.content;
         this.mContent = mContent;
         // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
         // this.mInfo = mInfo;
-        let html = blob?.html;
+        // let html = blob?.html;
+        // this.html = html;
+        // let htmlPayL = blob?.htmlPayL; 
+        // this.htmlPayL = htmlPayL;
+        // let htmlPL = blob?.htmlPL;
+        // this.htmlPL = htmlPL;
+        let html = mIndex?.html;
         this.html = html;
-        let htmlPayL = blob?.htmlPayL; 
+        let htmlPayL = mIndex?.htmlPayL;
         this.htmlPayL = htmlPayL;
-        let htmlPL = blob?.htmlPL;
+        let htmlPL = mIndex?.htmlPL;
         this.htmlPL = htmlPL;
         // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
       }
@@ -329,21 +349,27 @@ class Renderer {
     else {
       if (typeof pLData === "object" && !Array.isArray(pLData)) {
         if (pLData !== null && Object.keys(pLData).length > 0 && !pLData?.myVar && !pLData?.myNewArr && !Object.keys(pLData)[0]?.rndTitle && typeof Object.keys(pLData)[0] !== "number") {
-          let blob = new RendTemplate(dataOR, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          this.blob = blob;
-          // let mIndex = new RenderFile(file, pLData, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          // this.mIndex = mIndex;
+          // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          // this.blob = blob;
+          let mIndex = new RendFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          this.mIndex = mIndex;
           // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // this.mCDN = mCDN;
           let mContent = dataOR?.payL?.message?.content;
           this.mContent = mContent;
           // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
           // this.mInfo = mInfo;
-          let html = blob?.html;
+          // let html = blob?.html;
+          // this.html = html;
+          // let htmlPayL = blob?.htmlPayL;
+          // this.htmlPayL = htmlPayL;
+          // let htmlPL = blob?.htmlPL;
+          // this.htmlPL = htmlPL;
+          let html = mIndex?.html;
           this.html = html;
-          let htmlPayL = blob?.htmlPayL;
+          let htmlPayL = mIndex?.htmlPayL;
           this.htmlPayL = htmlPayL;
-          let htmlPL = blob?.htmlPL;
+          let htmlPL = mIndex?.htmlPL;
           this.htmlPL = htmlPL;
           // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
         }
@@ -351,10 +377,13 @@ class Renderer {
       else {
         if (typeof pLData === "string") {
           if (String(pLData).length > 0) {
-            let mInfo = new ClassifyFiles(pLData);
-            this.mInfo = mInfo;
-            let mCDN = contCDN(mInfo.urlTest || mInfo.fbSearchR, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-            this.mCDN = mCDN;
+            // let mInfo = new ClassifyFiles(pLData);
+            let matchTemp = {};
+            matchTemp.searchString = dataSearch
+            this.mInfo = matchTemp;
+            // let mCDN = contCDN(mInfo.urlTest || mInfo.fbSearchR, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+            let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+            this.mCDN = blob;
               // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
           }
         }
@@ -364,22 +393,32 @@ class Renderer {
 }
 
 var startRenderer = function(payLoad, argsObject, title) {
-  console.log("event; startRenderer called: payLoad -", payLoad);
-  console.log("event; startRenderer called: argsObject -", JSON.stringify(argsObject));
-  console.log("event; startRenderer called: title -", title);
+  if (payLoad) {
+    console.log("event; startRenderer called: payLoad -", payLoad);
+  }
+  if (argsObject) {
+    console.log("event; startRenderer called: argsObject -", JSON.stringify(argsObject));
+  }
+  if (title) {
+    console.log("event; startRenderer called: title -", title);
+  }
   let blob = new Renderer(payLoad, argsObject, title);
   return blob;
 }
 
-class ContentApp {
+class TentApp {
   constructor(blob, argsObject) {
     // super();
     this.blob = blob;
     this.argsObject = argsObject;
-    console.log("event; ContentApp blob received ", blob);
-    console.log("event; ContentApp argsObject received ", JSON.stringify(argsObject));
+    if (blob) {
+      console.log("event; TentApp blob received ", blob);
+    }
+    if (argsObject) {
+      console.log("event; TentApp argsObject received ", JSON.stringify(argsObject));
+    }
     console.log(
-      "boilerplate render: line 201\ncontentApp(blob: " +
+      "DEBUG: line 399\nTentApp(blob: " +
         blob?.slice(0, 130) +
         "..., argsObject: " +
         JSON.stringify(argsObject)?.slice(0, 130) +
@@ -396,7 +435,7 @@ class ContentApp {
         " = " +
         JSON.stringify(argsObject).slice(0, 130),
     );
-    let api
+    let api;
     try {
       api = ContentService.createTextOutput(blob)
         .setMimeType(ContentService.MimeType.JSON)
@@ -404,9 +443,9 @@ class ContentApp {
       this.api = api;
     } 
     catch (error) {
-      console.log("error in contentApp: " + error);
+      console.log("error in TentApp: " + error);
       console.error(
-        "Error in contentApp JSON: " + error.toString() + "\n" + error.stack,
+        "Error in TentApp JSON: " + error.toString() + "\n" + error.stack,
       );
     }
 
@@ -416,9 +455,9 @@ class ContentApp {
       this.tmp = tmp;
     } 
     catch (error) {
-      console.log("error in contentApp: " + error);
+      console.log("error in TentApp: " + error);
       console.error(
-        "Error in contentApp HTML template: " +
+        "Error in TentApp HTML template: " +
           error.toString() +
           "\n" +
           error.stack,
@@ -426,33 +465,30 @@ class ContentApp {
     }
     try {
       if (argsObject) {
-        let keys = Object.keys(argsObject);
-        this.keys = keys;
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       }
     } 
     catch (error) {
-      console.log("error in contentApp: " + error);
+      console.log("error in TentApp: " + error);
       console.error(
-        "Error in contentApp template: " + error.toString() + "\n" + error.stack,
-      );
-    }
-    try {
-      return tmp
-        .evaluate()
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-        .getContent()
-    } 
-    catch (error) {
-      console.log("error in contentApp: " + error);
-      console.error(
-        "Error in contentApp evaluation: " +
-          error.toString() +
-          "\n" +
-          error.stack,
+        "Error in TentApp template: " + error.toString() + "\n" + error.stack,
       );
     }
   }
@@ -503,10 +539,24 @@ class ContentApp {
     }
     try {
       if (argsObject) {
-        const keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          // this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            // this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       }
     } catch (error) {
       console.log("error in contentApp: " + error);
@@ -535,15 +585,30 @@ class ContentApp {
   };
 }
 
-var tentApp = function(blob, argsObject) {
-  console.log("event; ContentApp called: blob -", blob);
-  console.log("event; ContentApp called: argsObject -", JSON.stringify(argsObject));
+var contentApp = function(blob, argsObject) {
+  if (blob) {
+    console.log("event; ContentApp called: blob -", blob);
+  }
+  if (argsObject) {
+    console.log("event; ContentApp called: argsObject -", JSON.stringify(argsObject));
+  }
   let tentStart = new ContentApp(blob, argsObject).tmp;
-  return tentStart
-          .evaluate()
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-          // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-          .getContent()
+  try {
+    return tentStart
+      .evaluate()
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+      .getContent()
+  } 
+  catch (error) {
+    console.log("error in contentApp: " + error);
+    console.error(
+      "Error in contentApp evaluation: " +
+        error.toString() +
+        "\n" +
+        error.stack,
+    );
+  }
 }
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
 // const argsObject = ContentService.createTextOutput({ args });
@@ -559,10 +624,24 @@ class ContentBlob {
   constructor (blob, argsObject) {
   var tmp = HtmlService.createTemplate(blob);
     if (argsObject) {
-      var keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
     }
     this.tmp = tmp
       .evaluate()
@@ -590,10 +669,24 @@ class ContentTemplate {
     try {
       var tmp = HtmlService.createTemplateFromFile(file);
       if (argsObject) {
-        var keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       }
       this.tmp = tmp
         .evaluate()
@@ -620,18 +713,21 @@ class ContentTemplate {
 // Route[file] = argsObject
 // return tmp.setMimeType(ContentService.MimeType.JSON).getContent()
 
-class ContentCDN {
+class ContCDN {
   constructor (url, argsObject) {
     // super();
     this.url = url;
     this.argsObject = argsObject;
-    console.log("event; ContentCDN url received ", url);
-    console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
+    if (url) {
+      console.log("event; ContentCDN url received ", url);
+    }
+    if (argsObject) {
+      console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
+    }
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
-    let tmp; 
     try {
       console.log("cdnData argsObject before tmp processing", argsObject);
-      tmp = HtmlService.createHtmlOutputFromFile("cors");
+      let tmp = HtmlService.createHtmlOutputFromFile("cors");
       this.tmp = tmp;
       if (argsObject) {
         if (typeof argsObject === "object") {
@@ -644,7 +740,8 @@ class ContentCDN {
         }
         else {
           if (typeof argsObject === "string") {
-            keys = Object.keys([argsObject]);
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
             keys.forEach(function (key) {
               tmp[key] = [argsObject][key];
               // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
@@ -749,10 +846,24 @@ class ContentCDN {
       const tmp = HtmlService.createHtmlOutputFromFile("cors")
       if (argsObject) {
         try {
-          const keys = Object.keys(argsObject);
-          keys.forEach(function (key) {
-            tmp[key] = argsObject[key];
-          });
+          if (typeof argsObject === "object") {
+            let keys = Object.keys(argsObject);
+            // this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = argsObject[key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+          else {
+            if (typeof argsObject === "string") {
+              let keys = Object.keys([argsObject]);
+              // this.keys = keys;
+              keys.forEach(function (key) {
+                tmp[key] = [argsObject][key];
+                // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+              });
+            }
+          }
         } 
         catch (error) {
           console.error("Error in contentCDN tmp" + error);
@@ -831,9 +942,13 @@ class ContentCDN {
   };
 }
 
-var contCDN = function(url, argsObject) {
-  console.log("event; ContentCDN called: url -", url);
-  console.log("event; ContentCDN called: argsObject -", JSON.stringify(argsObject));
+var contentCDN = function(url, argsObject) {
+  if (url) {
+    console.log("event; ContentCDN called: url -", url);
+  }
+  if (argsObject) {
+    console.log("event; ContentCDN called: argsObject -", JSON.stringify(argsObject));
+  }
   let cdnObj = new ContentCDN(url, argsObject);
   let html = cdnObj.html;
   let tmp = cdnObj.tmp;
@@ -854,8 +969,10 @@ var contCDN = function(url, argsObject) {
   }
 }
 
-class ContentFile {
+class ContFile {
   constructor (file, argsObject) {
+    this.file = file;
+    this.argsObject = argsObject;
     console.log("contentFile = function (file, argsObject) ", file, argsObject);
     try {
       const tmp = HtmlService.createTemplateFromFile(
@@ -863,31 +980,51 @@ class ContentFile {
           .setMimeType(ContentService.MimeType.JSON)
           .getContent(),
       );
+      this.tmp = tmp;
       console.log(
         "line 680\nContentFile(tmp: " +
           JSON.stringify(tmp) +
           ")",
       );
       if (argsObject) {
-        const keys = Object.keys(argsObject);
-        console.log(
-          "line 688\nContentFile(keys: " +
-            keys[0] +
-            ")\n",
-        );
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
+          console.log(
+            "DEBUG: line 973\nContentFile(keys: " +
+              keys[0] +
+              ")\n",
+          );
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
+            console.log(
+              "DEBUG: line 973\nContentFile(keys: " +
+                keys[0] +
+                ")\n",
+            );
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       }
       console.log(
         "line 697\nContentFile(tmp: " +
           JSON.stringify(tmp[0]) +
           ")",
       );
-      this.tmp = tmp
-        .evaluate()
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-        .getContent();
+      // this.tmp = tmp
+      //   .evaluate()
+      //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      //   .getContent();
     } catch (error) {
       console.log("error in contentFile: " + error);
       throw new Error(
@@ -898,6 +1035,16 @@ class ContentFile {
   res() {
     return this.tmp
   };
+}
+
+let contentFile = function(file, argsObject) {
+  console.log("event; contentFile called: payLoad -", file);
+  console.log("event; contentFile called: argsObject -", JSON.stringify(argsObject));
+  let blob = new ContFile(file, argsObject);
+  return blob.tmp
+    .evaluate()
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+    .getContent();;
 }
 
 // const tmp = ContentService.createTextOutput(JSON.stringify({ argsObject }));
@@ -948,7 +1095,7 @@ function defSBD(e) {
   = document.getElementById("pageObj");pagE.innerHTML 
   = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: ContentApp.appContent(
+          renBlob: contentApp(
             `<html id="defSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -1044,7 +1191,7 @@ function freeSBD(func) {
           var pagE 
             = document.getElementById("pageObj");}</script></html>`,
         {
-          renBlob: ContentApp.appContent(
+          renBlob: contentApp(
             `<html id="freeSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
             body {
               flex-grow: 1;
@@ -1088,7 +1235,7 @@ function freeSBD(func) {
         `Problem with content, exiting. globalThis[testTime] == "${typeof globalThis[testTime]}"`,
         foobarr,
       );
-      html = RenderFile.fileRender("myGNUFreeJS", {}, "freeSDB");
+      html = renderFile("myGNUFreeJS", {}, "freeSDB");
       return html
     }
   } catch (error) {
@@ -1109,11 +1256,24 @@ var include = function (file, argsObject) {
   try {
     const tmp = HtmlService.createHtmlOutputFromFile(file);
     if (argsObject) {
-      const keys = Object.keys(argsObject);
-
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+      if (typeof argsObject === "object") {
+        let keys = Object.keys(argsObject);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
+      }
+      else {
+        if (typeof argsObject === "string") {
+          let keys = Object.keys([argsObject]);
+          // this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = [argsObject][key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+      }
 
       // tmp["list"] = htmlListArray;
     } // END IF
@@ -1135,11 +1295,24 @@ var include = function (file, argsObject) {
 var includeApp = function (blob, argsObject) {
   const tmp = HtmlService.createHtmlOutput(blob);
   if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+    if (typeof argsObject === "object") {
+      let keys = Object.keys(argsObject);
+      // this.keys = keys;
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+        // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      });
+    }
+    else {
+      if (typeof argsObject === "string") {
+        let keys = Object.keys([argsObject]);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = [argsObject][key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
+      }
+    }
 
     // tmp["list"] = htmlListArray;
   } // END IF
@@ -1159,10 +1332,24 @@ var includeBlob = function (file, argsObject) {
       temp.setMimeType(ContentService.MimeType.TEXT).getContent(),
     );
     if (argsObject) {
-      const keys = Object.keys(argsObject);
-      keys.forEach(function (key) {
-        tmp[key] = argsObject[key];
-      });
+      if (typeof argsObject === "object") {
+        let keys = Object.keys(argsObject);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = argsObject[key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
+      }
+      else {
+        if (typeof argsObject === "string") {
+          let keys = Object.keys([argsObject]);
+          // this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = [argsObject][key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+      }
       // tmp["list"] = htmlListArray;
     } // END IF;Route[file] = argsObject
     return tmp
@@ -1242,12 +1429,34 @@ var includeGSFile = function (file, argsArray) {
     },
   };
   try {
-    const keys = Object.keys(myApp);
-    keys.forEach(function (key) {
-      tmp[key] = [key];
-    })
+    if (typeof myApp === "object") {
+      let keys = Object.keys(myApp);
+      // this.keys = keys;
+      keys.forEach(function (key) {
+        tmp[key] = [key];
+        // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      })
       ? console.log("keys = " + typeof keys)
       : console.error("keys = " + typeof keys);
+    }
+    else {
+      if (typeof myApp === "string") {
+        let keys = Object.keys([myApp]);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = [key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        })
+        ? console.log("keys = " + typeof keys)
+        : console.error("keys = " + typeof keys);
+      }
+    }
+    // const keys = Object.keys(myApp);
+    // keys.forEach(function (key) {
+    //   tmp[key] = [key];
+    // })
+    //   ? console.log("keys = " + typeof keys)
+    //   : console.error("keys = " + typeof keys);
   } catch (error) {
     console.error(error);
     throw new Error(
@@ -1256,12 +1465,34 @@ var includeGSFile = function (file, argsArray) {
   }
   if (argsArray) {
     try {
-      const keys = Object.keys(argsArray);
-      keys.forEach(function (key) {
-        tmp[key] = argsArray[key];
-      })
+      if (typeof argsArray === "object") {
+        let keys = Object.keys(argsArray);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = argsArray[key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        })
         ? console.log("keys = " + typeof keys)
         : console.error("keys = " + typeof keys);
+      }
+      else {
+        if (typeof argsArray === "string") {
+          let keys = Object.keys([argsArray]);
+          // this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = [argsArray][key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          })
+          ? console.log("keys = " + typeof keys)
+          : console.error("keys = " + typeof keys);
+        }
+      }
+      // const keys = Object.keys(argsArray);
+      // keys.forEach(function (key) {
+      //   tmp[key] = argsArray[key];
+      // })
+      //   ? console.log("keys = " + typeof keys)
+      //   : console.error("keys = " + typeof keys);
     } catch (error) {
       console.error(error);
       throw new Error(
@@ -1329,11 +1560,24 @@ var includeRunIt = () => {
 var includeJs = function (blob, argsObject) {
   const tmp = HtmlService.createTemplate(blob);
   if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+    if (typeof argsObject === "object") {
+      let keys = Object.keys(argsObject);
+      // this.keys = keys;
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+        // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      });
+    }
+    else {
+      if (typeof argsObject === "string") {
+        let keys = Object.keys([argsObject]);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = [argsObject][key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
+      }
+    }
 
     // tmp["list"] = htmlListArray;
   } // END IF
@@ -1346,11 +1590,24 @@ var includeJs = function (blob, argsObject) {
 var myWebFunction = function (webApp, argsObject) {
   const tmp = HtmlService.createHtmlOutput(webApp);
   if (argsObject) {
-    const keys = Object.keys(argsObject);
-
-    keys.forEach(function (key) {
-      tmp[key] = argsObject[key];
-    });
+    if (typeof argsObject === "object") {
+      let keys = Object.keys(argsObject);
+      // this.keys = keys;
+      keys.forEach(function (key) {
+        tmp[key] = argsObject[key];
+        // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      });
+    }
+    else {
+      if (typeof argsObject === "string") {
+        let keys = Object.keys([argsObject]);
+        // this.keys = keys;
+        keys.forEach(function (key) {
+          tmp[key] = [argsObject][key];
+          // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+        });
+      }
+    }
 
     // tmp["list"] = htmlListArray;
   } // END IF
@@ -1360,38 +1617,58 @@ var myWebFunction = function (webApp, argsObject) {
 
 globalThis.oneTime = 59.9 * 1000;
 
-class RenderFile extends Renderer { 
+class RendFile { 
   constructor(file, argsObject, title) {
-    console.log("event; RenderFile file received ", file);
-    console.log("event; RenderFile argsObject received ", JSON.stringify(argsObject));
-    console.log("event; RenderFile title received ", title);
-    super();
+    if (file) {
+      console.log("event; RendFile file received ", file);
+    }
+    if (argsObject) {
+      console.log("event; RendFile argsObject received ", JSON.stringify(argsObject));
+    }
+    if (title) {
+      console.log("event; RendFile title received ", title);
+    }
+    // super();
     this.file = file;
     this.argsObject = argsObject;
     this.title = title;
     try {
-      if (this.file) {
-        this.htmlList = autoGlobe.functionRegistry.getHtmlList();
-        if (this.htmlList.indexOf(this.file) !== -1) { 
-          console.log("argsObject before htmlList & tmp processing", this.argsObject);
-          let tmp = HtmlService.createTemplateFromFile(this.file);
-          let tmpObj = this.argsObject;
-          if (this.argsObject) {
-            this.keys = Object.keys(this.argsObject);
-            this.keys.forEach(function (key) {
-              tmp[key] = tmpObj[key];
-            });
-          }
+      if (file) {
+        let htmlList = autoGlobe.functionRegistry.getHtmlList();
+        this.htmlList = htmlList;
+        if (htmlList.indexOf(file) !== -1) { 
+          console.log("argsObject before htmlList & tmp processing", argsObject);
+          let tmp = HtmlService.createTemplateFromFile(file);
           this.tmp = tmp;
-          console.log("argsObject after tmp processing", this.tmp);
+          if (argsObject) {
+            if (typeof argsObject === "object") {
+              let keys = Object.keys(argsObject);
+              this.keys = keys;
+              keys.forEach(function (key) {
+                tmp[key] = argsObject[key];
+                // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+              });
+            }
+            else {
+              if (typeof argsObject === "string") {
+                let keys = Object.keys([argsObject]);
+                this.keys = keys;
+                keys.forEach(function (key) {
+                  tmp[key] = [argsObject][key];
+                  // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+                });
+              }
+            }
+          }
+          console.log("argsObject after tmp processing", tmp);
 
-          // this.tmp["list"] = htmlListArray;
+          // tmp["list"] = htmlListArray;
           // END IF
-          // Route[this.file] = this.argsObject
+          // Route[file] = argsObject
           // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
           // this.funcCheck = appList();
           // this.schedule = dateTime(new Date());
-          this.html = new ContentApp(
+          let html = new TentApp(
             `
           <!doctype html>
             <html lang="en">
@@ -1601,27 +1878,24 @@ class RenderFile extends Renderer {
               </body>
             </html>`,
             {
-              renTemp: this.tmp.evaluate().getContent(),
+              renTemp: tmp.evaluate().getContent(),
             },
           ).tmp;
-          // return renderTemplate(this.html,this.argsObject,this.title)
-          this.fileOutput = this.html //this.tmp
-              .evaluate()
-              .setTitle(this.title)
-              // .append(this.html)
-              // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-              .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+          this.html = html;
+          // return renderTemplate(html,argsObject,title)
+          // this.fileOutput = html //tmp
         }
-      } else {
-        this.fileOutput = handleRequest(this.argsObject);
       }
-    } catch (error) {
-      console.error("error in renderTemplate: " + error);
+    } 
+    catch (error) {
+      console.error("error in renderFile: " + error);
       console.error(
         "Error in renderFile html: " + error.toString() + "\n" + error.stack,
       );
     }
   }
+
+
   static fileRender (file, argsObject, title) {
     console.log(
       autoGlobe.functionRegistry.time +
@@ -1645,10 +1919,24 @@ class RenderFile extends Renderer {
           console.log("argsObject before htmlList & tmp processing", argsObject);
           const tmp = HtmlService.createTemplateFromFile(file);
           if (argsObject) {
-            const keys = Object.keys(argsObject);
-            keys.forEach(function (key) {
-              tmp[key] = argsObject[key];
-            });
+            if (typeof argsObject === "object") {
+              let keys = Object.keys(argsObject);
+              // this.keys = keys;
+              keys.forEach(function (key) {
+                tmp[key] = argsObject[key];
+                // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+              });
+            }
+            else {
+              if (typeof argsObject === "string") {
+                let keys = Object.keys([argsObject]);
+                // this.keys = keys;
+                keys.forEach(function (key) {
+                  tmp[key] = [argsObject][key];
+                  // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+                });
+              }
+            }
           }
           console.log("argsObject after tmp processing", argsObject);
 
@@ -1658,7 +1946,7 @@ class RenderFile extends Renderer {
           // var research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
           // var funcCheck = appList();
           // var schedule = dateTime(new Date());
-          var html = ContentApp.appContent(
+          var html = contentApp(
             `
           <!doctype html>
             <html lang="en">
@@ -1879,7 +2167,8 @@ class RenderFile extends Renderer {
               // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
               .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
         }
-      } else {
+      } 
+      else {
         return handleRequest(argsObject);
       }
     } catch (error) {
@@ -1894,12 +2183,33 @@ class RenderFile extends Renderer {
   };
 }
 
-var rendFile = function(file, argsObject, title) {
-  console.log("event; RenderFile called: file -", file);
-  console.log("event; RenderFile called: argsObject -", JSON.stringify(argsObject));
-  console.log("event; RenderFile called: title -", title);
-  let html = new RenderFile(file, argsObject, title).fileOutput;
-  return html;
+var  renderFile = function(file, argsObject, title) {
+  if (file) {
+    console.log("event; renderFile called: file -", file);
+  }
+  else {
+    if (argsObject) {
+      return handleRequest(argsObject);
+    }
+    else {
+      if (!argsObject) {
+        return handleRequest();
+      }
+    }
+  }
+  if (argsObject) {
+    console.log("event; renderFile called: argsObject -", JSON.stringify(argsObject));
+  }
+  if (title) {
+    console.log("event; renderFile called: title -", title);
+  }
+  let template = new RendFile(file, argsObject, title);
+  return template.html
+    .evaluate()
+    .setTitle(title)
+    // .append(html)
+    // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);;
 }
 
 class RendTemplate {
@@ -1907,29 +2217,29 @@ class RendTemplate {
     // super();
     this.blob = blob;
     this.argsObject = argsObject;
-    let shortType = argsObject.payL?.pL?.type;
+    let shortType = argsObject?.payL?.pL?.type;
     this.payType = shortType;
-    let shortPar = argsObject.payL?.type;
+    let shortPar = argsObject?.payL?.type;
     this.parType = shortPar;
-    let shortData = argsObject.payL?.data;
+    let shortData = argsObject?.payL?.data;
     this.payData = shortData;
-    let shortInfo = argsObject.payL?.message?.info;
+    let shortInfo = argsObject?.payL?.message?.info;
     this.payInfo = shortInfo;
-    let shortDataPL = argsObject.payL?.pL?.data;
+    let shortDataPL = argsObject?.payL?.pL?.data;
     this.payDataPL = shortDataPL;
-    let shortDataD = argsObject.payL?.pL?.dataData;
+    let shortDataD = argsObject?.payL?.pL?.dataData;
     this.payDataD = shortDataD;
-    let shortDataI = argsObject.payL?.pL?.dataIndex;
+    let shortDataI = argsObject?.payL?.pL?.dataIndex;
     this.payDataI = shortDataI;
-    let shortFeed = argsObject.payL?.message?.feed;
+    let shortFeed = argsObject?.payL?.message?.feed;
     this.payMFeed = shortFeed;
-    let shortLink = argsObject.payL?.pL?.link;
+    let shortLink = argsObject?.payL?.pL?.link;
     this.payLink = shortLink;
-    let shortM = argsObject.payL?.message;
+    let shortM = argsObject?.payL?.message;
     this.payM = shortM;
-    let shortMContent = argsObject.payL?.message?.content;
+    let shortMContent = argsObject?.payL?.message?.content;
     this.payMContent = shortMContent;
-    let shortPL = argsObject.payL?.pL;
+    let shortPL = argsObject?.payL?.pL;
     this.payPL = shortPL;
     this.title = title;
     console.log("event; RendTemplate blob received ", blob);
@@ -1953,12 +2263,25 @@ class RendTemplate {
     let tmp = HtmlService.createTemplate(blob);
     this.tmp = tmp;
     if (argsObject) {
-      let keys = Object.keys(argsObject);
-      this.keys = keys;
       try {
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       } 
       catch (error) {
         return "Error in renderTemplate tmp" + error;
@@ -1968,7 +2291,7 @@ class RendTemplate {
     try {
       if (shortType === "html"  || shortPar === "html") {
         if (shortPar === "html") {
-          let shortHtmlPayL = tentApp(shortData,
+          let shortHtmlPayL = new TentApp(shortData,
             {
               driveT: shortPar,
             },
@@ -1983,7 +2306,7 @@ class RendTemplate {
         }
         else {
           if (shortType === "html") {
-            let shortHtmlPL = tentApp(shortInfo,
+            let shortHtmlPL = new TentApp(shortInfo,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -2010,7 +2333,7 @@ class RendTemplate {
         }
       }
       else {
-        let shortHtml = tentApp(
+        let shortHtml = new TentApp(
           `
         <html id="renderTemplate">
           <head>
@@ -2348,10 +2671,24 @@ class RendTemplate {
     const tmp = HtmlService.createTemplate(blob);
     if (argsObject) {
       try {
-        const keys = Object.keys(argsObject);
-        keys.forEach(function (key) {
-          tmp[key] = argsObject[key];
-        });
+        if (typeof argsObject === "object") {
+          let keys = Object.keys(argsObject);
+          // this.keys = keys;
+          keys.forEach(function (key) {
+            tmp[key] = argsObject[key];
+            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+          });
+        }
+        else {
+          if (typeof argsObject === "string") {
+            let keys = Object.keys([argsObject]);
+            // this.keys = keys;
+            keys.forEach(function (key) {
+              tmp[key] = [argsObject][key];
+              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+            });
+          }
+        }
       } catch (error) {
         return "Error in renderTemplate tmp" + error;
       }
@@ -2367,7 +2704,7 @@ class RendTemplate {
     try {
       if (tmp.payL?.pL?.type === "html"  || tmp.payL?.type === "html") {
         if (tmp.payL?.type === "html") {
-          htmlPayL = ContentApp.appContent(tmp.payL?.data,
+          htmlPayL = contentApp(tmp.payL?.data,
             {
               driveT: tmp.payL?.type,
             },
@@ -2375,7 +2712,7 @@ class RendTemplate {
         }
         else {
           if (tmp.payL?.pL?.type === "html") {
-            htmlPL = ContentApp.appContent(tmp.payL?.message?.info,
+            htmlPL = contentApp(tmp.payL?.message?.info,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -2395,7 +2732,7 @@ class RendTemplate {
         }
       }
       else {
-        html = ContentApp.appContent(
+        html = contentApp(
           `
         <html id="renderTemplate">
           <head>
@@ -2694,7 +3031,8 @@ class RendTemplate {
           },
         );
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error rendering template:", error, error.stack);
       console.error(
         "Error in rendertemplate html: " + blob + "\n" + error.stack,
@@ -2734,7 +3072,7 @@ var renderTemplate = function(blob, argsObject, title) {
 
 var tagBuilder = function (content) {
   console.log(JSON.stringify(this["start"]) + "\n" + arguments.callee.name);
-  const htmlBody = ContentApp.appContent(content);
+  const htmlBody = contentApp(content);
   return htmlBody;
 };
 
@@ -2767,7 +3105,7 @@ function wildSBD(e) {
             = document.getElementById("pageObj");
           pagE.innerHTML = <?= JSON.stringify(e) ?>}</script></html>`,
         {
-          renBlob: ContentApp.appContent(
+          renBlob: contentApp(
             `<html id="wildSBD"><head><base target="_top"><meta charset="utf-8"><meta name="doGet" content="Company get Function"><meta name=viewport content="width=device-width, initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet"><style>
 
             body {

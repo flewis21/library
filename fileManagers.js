@@ -112,8 +112,7 @@ function driveFormsFilter(filterFiles) {
   console.log(
     "boilerplate fileManagers: line 93\ndriveFormsFilter(filterFiles: " +
       filterFiles +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")"
   );
   console.log(
     autoGlobe.functionRegistry.time +
@@ -423,7 +422,7 @@ function driveVideoForms() {
 
 function driveVideoFormsFilter(filterFiles) {
   console.log(
-    "boilerplate : line \n(: " + +")\n " + arguments.callee.caller.name,
+    "DEBUG : line 426 \ndriveVideoFormsFilter(filterFiles: " + filterFiles +")"
   );
   console.log(
     autoGlobe.functionRegistry.time +
@@ -1022,10 +1021,10 @@ function fileBrowser(initialFolder, drillDown) {
 
     if (glFiles.length > 0) {
       var drillMatch = [];
-      drillDown
+      drillDown && typeof drillDown === "string"
         ? glFiles.map((fm) => {
             let myFileName = fm.toLowerCase();
-            if (myFileName.includes(drillDown.toLowerCase())) {
+            if (myFileName.includes(drillDown?.toLowerCase())) {
               drillMatch.push(fm);
             }
           })
@@ -1162,8 +1161,8 @@ var fbTester = function () {
   return res;
 };
 
-var fileFold = function(folderX, fileX, time) {
-  let executed = 0;
+let fileFold = function(folderX, fileX, time) {
+  let executed = autoGlobe.executed;
   var elapsedTime = autoGlobe.functionRegistry.elapsedTimeInSeconds;
   console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];

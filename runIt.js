@@ -53,11 +53,11 @@ function carbon(email) {
     file
       .getEditors()
       .map((editor) => {
-        return editor.getEmail();
+        return editor?.getEmail();
         console.log(editor.getEmail());
       })
       .forEach((editor) => {
-        if (email.includes(editor)) {
+        if (email?.includes(editor)) {
           isEditor = true;
         }
       });

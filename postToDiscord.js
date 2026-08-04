@@ -29,9 +29,9 @@ function postFromSpreadsheet(column, rowOff, colOff, discord) {
 function postToDrive(fileName, base64Data) {
   try {
     const contentType = "video/webm";
-    const bytes = Utilities.base64Decode(base64Data)
-    const blob = Utilities.newBlob(bytes, contentType, fileName);
-    const file = DriveApp.createFile(blob);
+    const bytes = Utilities?.base64Decode(base64Data)
+    const blob = Utilities?.newBlob(bytes, contentType, fileName);
+    const file = DriveApp?.createFile(blob);
     let isVUrl = new ValidUrlResult(file.getUrl()).validatedResult
     return { success: true, url: isVUrl.url };
   }

@@ -4,13 +4,10 @@ function surveyPlayer(searchString, joinString) {
       searchString +
       ", joinString: " +
       joinString +
-      ")\n " +
-      arguments.callee.caller.name,
+      ")"
   );
   console.log(
     autoGlobe.functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
       "\nsearchString is !" +
       !searchString +
       " = " +

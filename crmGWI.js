@@ -1626,7 +1626,7 @@ var updateQuote = function (formDataJson) {
 
     // You can return the PDF URL to the client-side for them to display or download.
 
-    let slideRender = RenderFile.fileRender("slideCard", formData, "Success");
+    let slideRender = renderFile("slideCard", formData, "Success");
     return slideRender;
     return invoicePdfUrl;
   } catch (error) {

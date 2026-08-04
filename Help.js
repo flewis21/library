@@ -16,20 +16,26 @@ function crmCalc(func) {
   var lowCapFunc;
   if (Array.isArray(func)) {
     lowCapFunc = func.join("").toLowerCase().split(",");
-  } else if (typeof func === "string" && func) {
-    lowCapFunc = func.toLowerCase();
+  } 
+  else {
+    if (func && typeof func === "string") {
+      lowCapFunc = func.toLowerCase();
+    }
   }
   console.log(
     "\nlowCapFunc is !" +
       !lowCapFunc +
       ", = " +
-      lowCapFunc,
+      lowCapFunc
   );
   var funFact;
   if (Array.isArray(lowCapFunc)) {
     funFact = lowCapApp.indexOf(lowCapFunc[0]);
-  } else if (typeof lowCapFunc === "string" && lowCapFunc) {
-    funFact = lowCapApp.indexOf(lowCapFunc);
+  } 
+  else {
+    if (typeof lowCapFunc === "string" && lowCapFunc) {
+      funFact = lowCapApp.indexOf(lowCapFunc);
+    }
   }
   return funFact;
 }
@@ -3697,8 +3703,8 @@ function seoPastTime(searchString, time) {
   var searchString = items[rndItenIndex]["Description"]
     .split(" ")
     .sort((a, b) => {
-      const priorityA = getZuluautoGloberiority(a.toLowerCase());
-      const priorityB = getZuluautoGloberiority(b.toLowerCase());
+      const priorityA = autoGlobe.getZuluFreqPriority(a.toLowerCase());
+      const priorityB = autoGlobe.getZuluFreqPriority(b.toLowerCase());
       return priorityA - priorityB;
     })
     .join("")
@@ -3900,7 +3906,7 @@ function seoYoutube(searchString, time) {
   //     ", = " +
   //     time,
   // );
-  let executed = 0;
+  let executed = autoGlobe.executed;
   if (typeof searchString === "undefined") {
     var items = globalThis.uniqueItemArray();
     console.log("items = " + items, executed++);
@@ -4076,7 +4082,7 @@ function vidPlaylist(tunPlay) {
 
 function wwAccess(rName, rFunc, rArgs) {
   console.log(
-    "boilerplate wwAccess : line 3164\nwwAccess(rName: " +
+    "DEBUG : line 4085\nwwAccess(rName: " +
       rName +
       ", rFunc: " +
       rFunc +
@@ -4088,7 +4094,7 @@ function wwAccess(rName, rFunc, rArgs) {
   Route.path = function (route, rFunction) {
     return (Route[route] = rFunction);
   };
-  if (globalThis["rFunc"].name) {
+  if (globalThis[String(rFunc?.name)]) {
     var funcS = this[rFunc.name]; // Get the actual function
     Route.path(rName, funcS); // Associate the function with the route
     const args = rArgs;
@@ -4097,7 +4103,8 @@ function wwAccess(rName, rFunc, rArgs) {
     } catch (error) {
       console.error("Type Error: ", error.toString());
     }
-  } else {
+  } 
+  else {
     console.error("Invalid function name: " + rFunc.name);
     return "Invalid function name";
   }

@@ -2205,20 +2205,25 @@ var ssSheetName = function () {
   }
 };
 
-function submitDomain(formData) {
+var submitDomain = function(formData) {
   // var ss = SpreadsheetApp.getActiveSpreadsheet();
   // var sheet = ss.getSheetByName("DomainListings"); // Replace with your sheet name
   var sheet = ssGetSheetBySpreadsheetUrl(
     "https://docs.google.com/spreadsheets/d/1-vNcN0vCLcXgMY9uwcKukUgv_4njggRZ6fqoZs-hBFE/edit#gid=138098962",
     "DomainListings",
   );
-  sheet.appendRow([
-    formData.domain,
-    formData.price,
-    formData.email,
-    "Available",
-  ]); // Add other fields
-  return "Domain listing submitted successfully!";
+  if (typeof formData === "object" && !Array.isArray(formData)) {
+    sheet.appendRow([
+      formData?.domain,
+      formData?.price,
+      formData?.email,
+      "Available",
+    ]); // Add other fields
+    return "Domain listing submitted successfully!";
+  }
+  else {
+    return "Domain listing failed to be submitted!";
+  }
 }
 
 function taxiService() {

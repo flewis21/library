@@ -28,7 +28,7 @@ function doGet(e) {
       `globalThis[${Object.keys(getDoFunction)}].apply(this, [${Object.values(getDoFunction)}])`,
       finalFS,
     );
-    return RenderTemplate.templateRender(
+    return renderTemplate(
       ` <!DOCTYPE html>
           <html>
             <head><base target="_self"></head>
