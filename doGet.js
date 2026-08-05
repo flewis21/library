@@ -471,7 +471,7 @@ function doGetStop(e) {
 
 function handleRequest(e) {
   if (e && e.parameter && e.parameter.action === "getData") {
-    const handles = new FunctionHandle();
+    const handles = funcHandle(e);
     let funcU = handles.funcUno;
     let funcD = handles.funcDos;
     let base = createFunctionResult(funcU, funcD);

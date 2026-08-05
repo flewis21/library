@@ -225,7 +225,7 @@ class Renderer {
     // Early return for getData action
     let dataOR = "";
     if (payLoad && payLoad.parameter && payLoad.parameter.action === "getData") {
-      return geneicType(payLoad);
+      return handleRequest(payLoad);
     }
     else {
       // Early return for wwwDe action
@@ -719,10 +719,10 @@ class ContCDN {
     this.url = url;
     this.argsObject = argsObject;
     if (url) {
-      console.log("event; ContentCDN url received ", url);
+      console.log("event; ContCDN url received ", url);
     }
     if (argsObject) {
-      console.log("event; ContentCDN argsObject received ", JSON.stringify(argsObject));
+      console.log("event; ContCDN argsObject received ", JSON.stringify(argsObject));
     }
     // console.log("contentCDN = function (url, argsObject) ", url, argsObject);
     try {
@@ -760,11 +760,11 @@ class ContCDN {
       let payType = argsObject?.payL?.pL?.type;
       this.payType = payType;
       console.log("tmp payL pL type\n" + payType, tmp?.payL?.pL);
-      let mContent = argsObject?.mContent;
+      let mContent = argsObject?.message?.content;
       this.mContent = mContent;
       // let cdnOutput = "";
       // this.cdnOutput = cdnOutput;
-      let mInfo = argsObject?.mInfo;
+      let mInfo = argsObject?.message?.info;
       this.mInfo = mInfo;
       if (payType !== "url" && payType !== "text") {
         if (mContent) {
@@ -777,7 +777,7 @@ class ContCDN {
           this.locObj = locObj;
           let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
-          let html = tentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
+          let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
           // return HtmlService.createHtmlOutput(html)
           //   // .evaluate()
@@ -799,7 +799,7 @@ class ContCDN {
           this.locObj = locObj;
           let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
-          let html = tentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
+          let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
           // return tmp
           //   // .evaluate()
@@ -944,23 +944,26 @@ class ContCDN {
 
 var contentCDN = function(url, argsObject) {
   if (url) {
-    console.log("event; ContentCDN called: url -", url);
+    console.log("event; contentCDN called: url -", url);
   }
   if (argsObject) {
-    console.log("event; ContentCDN called: argsObject -", JSON.stringify(argsObject));
+    console.log("event; contentCDN called: argsObject -", JSON.stringify(argsObject));
   }
-  let cdnObj = new ContentCDN(url, argsObject);
-  let html = cdnObj.html;
+  let cdnObj = new ContCDN(url, argsObject);
+  let html = cdnObj.html.tmp;
   let tmp = cdnObj.tmp;
   let title = cdnObj.wATitle;
   if (html) {
-    return HtmlService.createHtmlOutput(html)
+    console.log("DEBUG: line 1669\ncontentCDN html before processing\n", html);
+    return HtmlService.createTemplate(html)
+      .evaluate()
       .setTitle(title)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .getContent();
   }
   else {
+    console.log("DEBUG: line 1669\ncontentCDN tmp before processing\n", JSON.stringify(tmp));
     return HtmlService.createHtmlOutput(tmp)
       .setTitle(title)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
@@ -1637,7 +1640,6 @@ class RendFile {
         let htmlList = autoGlobe.functionRegistry.getHtmlList();
         this.htmlList = htmlList;
         if (htmlList.indexOf(file) !== -1) { 
-          console.log("argsObject before htmlList & tmp processing", argsObject);
           let tmp = HtmlService.createTemplateFromFile(file);
           this.tmp = tmp;
           if (argsObject) {
@@ -1660,7 +1662,6 @@ class RendFile {
               }
             }
           }
-          console.log("argsObject after tmp processing", tmp);
 
           // tmp["list"] = htmlListArray;
           // END IF
@@ -1668,6 +1669,7 @@ class RendFile {
           // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url
           // this.funcCheck = appList();
           // this.schedule = dateTime(new Date());
+          console.log("DEBUG: line 1669\nRendFile tmp before processing\n", JSON.stringify(tmp));
           let html = new TentApp(
             `
           <!doctype html>
@@ -1882,6 +1884,7 @@ class RendFile {
             },
           ).tmp;
           this.html = html;
+          console.log("DEBIG: line 1884\nRendFile html after tmp processing\n", html);
           // return renderTemplate(html,argsObject,title)
           // this.fileOutput = html //tmp
         }

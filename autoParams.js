@@ -659,7 +659,7 @@ class FunctionHandle {
                                 {
                                   fileParam: funcTres,
                                 }
-                              htAml = renderTemplate(
+                              htAml = renderFile(
                                 funcTres,
                                 driveA,
                                 new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],

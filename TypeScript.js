@@ -42,8 +42,8 @@ class AutoParams {
           "theRoll",
           "ssSheets",
           "slideCard",
-          "Section3.Challenge1",
-          "editor",
+          // "Section3.Challenge1",
+          // "editor",
           "edgarFriendly",
           "cors",
           "playParam",
@@ -595,7 +595,7 @@ class AutoParams {
           }
         })
       }
-      return proSort;
+      return paramsSort;
     }
     this.proSort = function () {
       let proSort = [];
@@ -4773,8 +4773,8 @@ let geneicType = function (e) {
               }
             };
           }
-          if (false) {
-            eQueryObject = {parameter: {file: uiAccess}}
+          if (true) {
+            eQueryObject = {parameter: {action: "getData"}}
             handles = startRenderer(eQueryObject);
             data = 
               {
