@@ -775,7 +775,7 @@ class ContCDN {
               drivemC: mContent,
             }
           this.locObj = locObj;
-          let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
           let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
@@ -797,7 +797,7 @@ class ContCDN {
               drivemC: mInfo,
             }
           this.locObj = locObj;
-          let wATitle = new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
           let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
@@ -813,7 +813,7 @@ class ContCDN {
       let pData = argsObject?.payL?.pL?.data;
       this.pData = pData;
       if ((mInfo || pData) && payType === "url") {
-        let wATitle =  new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+        let wATitle =  argsObject?.message?.title || new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
         this.wATitle = wATitle;
         console.log("From DriveFiles: mInfo = " + (mInfo || pData));
         // return tmp
@@ -955,7 +955,7 @@ var contentCDN = function(url, argsObject) {
   let title = cdnObj.wATitle;
   if (html) {
     console.log("DEBUG: line 1669\ncontentCDN html before processing\n", html);
-    return HtmlService.createTemplate(html)
+    return html
       .evaluate()
       .setTitle(title)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
@@ -964,7 +964,7 @@ var contentCDN = function(url, argsObject) {
   }
   else {
     console.log("DEBUG: line 1669\ncontentCDN tmp before processing\n", JSON.stringify(tmp));
-    return HtmlService.createHtmlOutput(tmp)
+    return tmp
       .setTitle(title)
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -2207,9 +2207,9 @@ var  renderFile = function(file, argsObject, title) {
     console.log("event; renderFile called: title -", title);
   }
   let template = new RendFile(file, argsObject, title);
-  return template.html
+  return template?.html
     .evaluate()
-    .setTitle(title)
+    .setTitle(title || file)
     // .append(html)
     // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);;
@@ -3066,7 +3066,8 @@ var renderTemplate = function(blob, argsObject, title) {
   console.log("event; RendTemplate called: argsObject -", JSON.stringify(argsObject));
   console.log("event; RendTemplate called: title -", title);
   let html = new RendTemplate(blob, argsObject, title).html;
-  return HtmlService.createHtmlOutput(html)
+  return html.tmp
+    .evaluate()
     .setTitle(title)
     // .append(shortHtml)
     // .setSandboxMode(HtmlService.SandboxMode.IFRAME)

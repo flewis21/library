@@ -241,6 +241,11 @@
           });
           
         const fetchSuggestions = debounce((query) => {
+          input.addEventListener("input", (event) => {
+            if (String(event.target.value).length < 1) {
+              return
+            }
+          })
           let qTemp;
           if (query) {
             // suggestionsDiv.innerHTML = '';
@@ -300,32 +305,41 @@
                                 }
                               }
                               if (personalizedList.tempObj && Object.keys(personalizedList.tempObj).length > 0) {
-                                // remoteSuggestionsCache[againCap] = personalizedList;
-                                // searchIntent = remoteSuggestionsCache[againCap][Math.floor(Math.random() * done.data.length)].description;
-                                // localStorage.setItem("gsSearch", searchIntent);
-                                // againCap = localStorage.getItem("gsSearch");
-                                // matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
-                                //   if (String(val.description).indexOf(againCap) > -1) {
-                                //     // console.log(againCap + ": result description: " + val.description);
-                                //     // console.log("result index: " + index);
-                                //     let tubeUrl = val.youtubeUrl;
-                                //     let webUrl = val.webAddressUrl;
-                                //     if (webUrl && webUrl !== null) {
-                                //       console.log("local storage web results: " + againCap);
-                                //       window.open(webUrl, "_blank");
-                                //     }
+                                remoteSuggestionsCache[againCap] = personalizedList;
+                                remoteIntent = remoteSuggestionsCache[againCap][Math.floor(Math.random() * done.data.length)].description;
+                                localStorage.setItem("rsSearch", remoteIntent);
+                                againCap = localStorage.getItem("rsSearch");
+                                matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
+                                  if (String(val.description).indexOf(againCap) > -1) {
+                                    // console.log(againCap + ": result description: " + val.description);
+                                    // console.log("result index: " + index);
+                                    let tubeUrl = val.youtubeUrl;
+                                    let webUrl = val.webAddressUrl;
+                                    if (webUrl && webUrl !== null) {
+                                      console.log("local storage web results: " + againCap);
+                                      // window.open(new URL(webUrl), "_self");
+                                      let linkFollow = document.createElement("a");
+                                      linkFollow.href = new URL(webUrl);
+                                      // console.log("the match: " + linkFollow.href);
+                                      linkFollow.id = "linkFOLLOW";
+                                      linkFollow.target = "_self";
+                                      linkFollow.rel = "noopener noreferrer";
+                                      document.body.appendChild(linkFollow);
+                                      document.getElementById("linkFOLLOW").click();
+                                      document.getElementById("linkFOLLOW").remove();
+                                    }
                                 //     else {
                                 //       if (tubeUrl && tubeUrl !== null) {
                                 //         console.log("local storage all results: " + againCap);
                                 //         // personalizedList.push(val);
-                                //         // window.open(tubeUrl, "_blank")
+                                //         // window.open(tubeUrl, "_self")
                                 //         return tubeUrl
                                 //       }
                                 //     }
-                                //   }
-                                // }).filter((mapResult) => {
-                                //   return mapResult != null
-                                // });
+                                  }
+                                }).filter((mapResult) => {
+                                  return mapResult != null
+                                });
                                 // // if (matchesToReturn.length > 0) {
                                 // //   remoteSuggestionsCache[againCap] = personalizedList;
                                 // // }
@@ -897,7 +911,7 @@
                                 }
                               }
                               suggestionsDiv.innerHTML = '';
-                              // return;
+                              return;
                             }
                             else {
                               if (suggestion.webAddressUrl) {
@@ -917,7 +931,7 @@
                                 }
                               }
                               suggestionsDiv.innerHTML = '';
-                              // return;
+                              return;
                             }
                             install++
                             userClicked = install;

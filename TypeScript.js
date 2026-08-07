@@ -38,24 +38,24 @@ class AutoParams {
         this.htmlArray = [
           "Untitled",
           "uiAccess",
-          "theWorks",
+          // "theWorks",
           "theRoll",
           "ssSheets",
-          "slideCard",
+          // "slideCard",
           // "Section3.Challenge1",
           // "editor",
           "edgarFriendly",
           "cors",
           "playParam",
-          "cGWI",
-          "proMedia",
+          // "cGWI",
+          // "proMedia",
           "epaWebsite",
           "callBack",
           "oddChances",
           "jsGame",
           "checkOnDay",
           "userInterfaceAccess",
-          "styling",
+          // "styling",
           "popUpOpen",
           "congressLeg",
           "congressMembers",
@@ -2973,48 +2973,48 @@ class MisStCreator {
 
     if (funcUno || funcDos) {
 
-      // let keys = [
+      // let vals = [
       //   funcDos !== "undefined" && funcDos !== null // More robust check for funcDos
       //     ? [funcUno].concat(Object.values(funcDos)) // Object.values returns an array, avoid nesting it [[]]
       //     : [funcUno],
       // ]
       //   .toString()
       //   .split(",");
-      // this.keys = keys;
+      // this.vals = vals;
       let arrUno = Array.isArray(func);
       this.arrUno = arrUno;
       let arrDos = autoGlobe.trueVfalse(someArgs);
       this.arrDos = arrDos;
       console.log("arrDos = " + arrDos, autoGlobe.executed++);
-      let keys;
-      this.keys = keys;
+      let vals;
+      this.vals = vals;
       if (arrUno && arrDos) {
-        keys = Object.values(func).toString().split(",").concat(someArgs);
+        vals = Object.values(func).toString().split(",").concat(someArgs);
       } 
       else {
         if (arrUno && !arrDos) {
-          keys = Object.values(func).toString().split(",");
+          vals = Object.values(func).toString().split(",");
         } 
         else {
           if (!arrUno && arrDos) {
-            keys = [func].concat(someArgs);
+            vals = [func].concat(someArgs);
           } 
           else {
             if (!arrUno && !arrDos) {
-              keys = [func];
+              vals = [func];
             }
           }
         }
       }
 
-      keys.forEach((pro) => {
+      vals.forEach((pro) => {
         // this.proFact = autoGlobe.trueVfalse(pro)
         let keysArrArr;
         this.keysArrArr = keysArrArr;
         if (typeof pro !== "string" && pro !== null) {
-          let proValue = Object.keys(pro);
-          this.proValue = proValue;
-          keysArrArr = proValue.length > 0;
+          let proKeyValue = Object.keys(pro);
+          this.proKeyValue = proKeyValue;
+          keysArrArr = proKeyValue.length > 0;
         } 
         else {
           keysArrArr = false;
@@ -3085,9 +3085,9 @@ class MisStCreator {
             }
             // realItem;
             // if (typeof subParam !== "string" && subParam !== null) {
-            //   let subValue = Object.keys(subParam);
-            //   this.subValue = subValue;
-            //   realItem = subValue.length > 0;
+            //   let subKeyValue = Object.keys(subParam);
+            //   this.subKeyValue = subKeyValue;
+            //   realItem = subKeyValue.length > 0;
             // }
             // else {
             //   realItem = false;
@@ -4773,7 +4773,7 @@ let geneicType = function (e) {
               }
             };
           }
-          if (true) {
+          if (false) {
             eQueryObject = {parameter: {action: "getData"}}
             handles = startRenderer(eQueryObject);
             data = 
