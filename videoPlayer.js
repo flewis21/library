@@ -411,12 +411,12 @@ function needPastTime(searchString) {
     if (typeof searchString === "undefined") {
       let uItems = autoGlobe.uniqueItemArray()
       var noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems?.length)?.length)].Description;
-      var searchString = noSearch || new SearchStrings().myNewArr;
+      var searchString = noSearch || strSearch.myNewArr;
     }
-    let searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(searchString)})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(searchString)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+    let searchLink = `http://www.bing.com/search?q=(${encodeURIComponent(String(searchString))})%20intitle%3A%20-%20YouTube+AND+${encodeURIComponent(String(searchString))}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
     if (vidData.indexOf(searchLink) !== -1) {
-      // let driveLink = new DriveFiles(searchString,autoGlobe.functionRegistry.time).dataTree;
-      let matchLink = matchManager(null,searchString,autoGlobe.functionRegistry.time);
+      // let driveLink = new DriveFiles(String(searchString),autoGlobe.functionRegistry.time).dataTree;
+      let matchLink = matchManager(null,String(searchString),autoGlobe.functionRegistry.time);
       let tempFileArr = [];
       let tempFolderArr = [];
       for (let key in matchLink) {
@@ -467,7 +467,7 @@ function needPastTime(searchString) {
                   name: "videoSheet",
                   number: 001,
                   videoid: objTest,
-                  videodescription: searchString,
+                  videodescription: String(searchString),
                 }),
               );
             }
@@ -484,7 +484,7 @@ function needPastTime(searchString) {
           name: "videoSheet",
           number: 001,
           videoid: searchLink,
-          videodescription: searchString,
+          videodescription: String(searchString),
         }),
       );
     }
@@ -650,7 +650,7 @@ function needPastTime(searchString) {
                   name: "videoSheet",
                   number: 001,
                   videoid: test,
-                  videodescription: searchString,
+                  videodescription: String(searchString),
                 }),
               );
             }
@@ -660,7 +660,7 @@ function needPastTime(searchString) {
     });
     // if (rndRes && rndRes?.length === 0) {
     //   return fndOrdObj
-    //   let isItValid = isValidUrl(searchString);
+    //   let isItValid = isValidUrl(String(searchString));
     //   if (isItValid && isItValid.url) {
     //     rndRes =  isItValid.url;
     //   }
@@ -709,7 +709,7 @@ function needPastTime(searchString) {
             let vidMatch = vidObj[match];
             let truMatch = autoGlobe.trueVfalse(vidMatch);
             if (truMatch && typeof vidMatch !== "number") {
-              let searchMatch = String(vidMatch).search(searchString) > -1;
+              let searchMatch = String(vidMatch).search(String(searchString)) > -1;
               let matchSearch = String(searchString).search(vidMatch) > -1;
               if (searchMatch || matchSearch) {
                 playVid.push(videoId);

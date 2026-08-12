@@ -3365,7 +3365,7 @@ class MisStCreator {
 
               // --- YOUR SPECIFIC PARAMETER RESOLUTION LOGIC ---
               // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
-              if (userProvidedValue === null && userProvidedValue === undefined) {
+              if (userProvidedValue === null || userProvidedValue === undefined) {
                 if (declaredParamName === "e") {
                   let arrDRnd = appSort();
                   this.arrDRnd = arrDRnd;
@@ -3739,7 +3739,7 @@ class MisStCreator {
                                 } 
                                 else {
                                   if (declaredParamName === "fileX") {
-                                    let folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd()];
+                                    let folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd];
                                     this.folderX = folderX;
                                     console.log("folderX = " + folderX, autoGlobe.executed++);
                                     let folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
@@ -3814,11 +3814,11 @@ class MisStCreator {
                                         } 
                                         else {
                                           if (
-                                            ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"].includes(
+                                            ["tunPlay", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"].includes(
                                               declaredParamName,
                                             )
                                           ) {
-                                            let nameArray = ["tunPlay", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
+                                            let nameArray = ["tunPlay", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
                                             this.nameArray = nameArray;
                                             let rndCoIndex = Math.floor(
                                               Math.random() * Math.floor(autoGlobe.uniqueCoArray().length),
@@ -4930,7 +4930,7 @@ let geneicType = function (e) {
                       }
                       else {
                         if (typeof base === "object" && !Array.isArray(base)) {
-                          if (base !== null && Object.keys(base).length > 0 && !base?.myVar && !base?.myNewArr && !Object.keys(base)[0]?.rndTitle && typeof Object.keys(base)[0] !== "number") {
+                          if ((base !== null && Object.keys(base).length > 0) && (!base?.myVar || !base?.myNewArr || !base?.name || !Object.keys(base)[0]?.rndTitle || typeof Object.keys(base)[0] !== "number")) {
                             dataOR = globalHandleGetData(base);
                             // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                             return dataOR

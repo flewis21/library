@@ -31,7 +31,7 @@ let cXStation = new XStation();
 
 function checkxStation() {
   let html = HtmlService.createTemplate(
-    ContentApp.appContent(
+    contentApp(
       `<html id='test'>
         <body>
           <div class='container'>

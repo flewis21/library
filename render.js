@@ -592,7 +592,7 @@ var contentApp = function(blob, argsObject) {
   if (argsObject) {
     console.log("event; ContentApp called: argsObject -", JSON.stringify(argsObject));
   }
-  let tentStart = new ContentApp(blob, argsObject).tmp;
+  let tentStart = new TentApp(blob, argsObject).tmp;
   try {
     return tentStart
       .evaluate()
@@ -729,26 +729,26 @@ class ContCDN {
       console.log("cdnData argsObject before tmp processing", argsObject);
       let tmp = HtmlService.createHtmlOutputFromFile("cors");
       this.tmp = tmp;
-      if (argsObject) {
-        if (typeof argsObject === "object") {
-          let keys = Object.keys(argsObject);
-          this.keys = keys;
-          keys.forEach(function (key) {
-            tmp[key] = argsObject[key];
-            // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
-          });
-        }
-        else {
-          if (typeof argsObject === "string") {
-            let keys = Object.keys([argsObject]);
-            this.keys = keys;
-            keys.forEach(function (key) {
-              tmp[key] = [argsObject][key];
-              // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
-            });
-          }
-        }
-      }
+      // if (argsObject) {
+      //   if (typeof argsObject === "object") {
+      //     let keys = Object.keys(argsObject);
+      //     this.keys = keys;
+      //     keys.forEach(function (key) {
+      //       tmp[key] = argsObject[key];
+      //       // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      //     });
+      //   }
+      //   else {
+      //     if (typeof argsObject === "string") {
+      //       let keys = Object.keys([argsObject]);
+      //       this.keys = keys;
+      //       keys.forEach(function (key) {
+      //         tmp[key] = [argsObject][key];
+      //         // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
+      //       });
+      //     }
+      //   }
+      // }
       console.log("cdnData argsObject after tmp processing", tmp);
       // console.log(
       //   "boilerplate render: line 359\ncontentCDN(this.tmp: " +
@@ -757,22 +757,22 @@ class ContCDN {
       //     arguments.callee.caller.name,
       // );
       //Early return
-      let payType = argsObject?.payL?.pL?.type;
+      let payType = argsObject?.pL?.type;
       this.payType = payType;
-      console.log("tmp payL pL type\n" + payType, tmp?.payL?.pL);
-      let mContent = argsObject?.message?.content;
-      this.mContent = mContent;
+      console.log("type\n" + payType, argsObject?.pL);
+      // let mContent = argsObject?.message?.content;
+      // this.mContent = mContent;
       // let cdnOutput = "";
       // this.cdnOutput = cdnOutput;
-      let mInfo = argsObject?.message?.info;
-      this.mInfo = mInfo;
+      // let mInfo = argsObject?.message?.info;
+      // this.mInfo = mInfo;
       if (payType !== "url" && payType !== "text") {
-        if (mContent) {
-          console.log("From DriveFiles: contentMessage = " + mContent);
-          console.log("tmp payL message content\n" + mContent, tmp?.payL?.message);
+        if (argsObject?.message?.content) {
+          console.log("From DriveFiles: contentMessage = " + argsObject?.message?.content);
+          console.log("message content\n" + argsObject?.message?.content, argsObject?.message);
           let locObj = 
             {
-              drivemC: mContent,
+              drivemC: argsObject?.message?.content,
             }
           this.locObj = locObj;
           let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
@@ -789,12 +789,12 @@ class ContCDN {
         }
       }
       else {
-        if (mInfo && payType === "text") {
-          console.log("From DriveFiles: infoMessage = " + mInfo);
-          console.log("tmp payL message info\n" + mInfo, tmp.payL?.message);
+        if (argsObject?.message?.info && payType === "text") {
+          console.log("From DriveFiles: infoMessage = " + argsObject?.message?.info);
+          console.log("message info\n" + argsObject?.message?.info, argsObject?.message);
           let locObj = 
             {
-              drivemC: mInfo,
+              drivemC: argsObject?.message?.info,
             }
           this.locObj = locObj;
           let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
@@ -810,12 +810,12 @@ class ContCDN {
           //   .getContent();     
         }
       }
-      let pData = argsObject?.payL?.pL?.data;
+      let pData = argsObject?.pL?.data;
       this.pData = pData;
-      if ((mInfo || pData) && payType === "url") {
+      if ((argsObject?.message?.info || pData) && payType === "url") {
         let wATitle =  argsObject?.message?.title || new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
         this.wATitle = wATitle;
-        console.log("From DriveFiles: mInfo = " + (mInfo || pData));
+        console.log("From DriveFiles: mInfo = " + (argsObject?.message?.info || pData));
         // return tmp
         //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         //   .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -950,6 +950,7 @@ var contentCDN = function(url, argsObject) {
     console.log("event; contentCDN called: argsObject -", JSON.stringify(argsObject));
   }
   let cdnObj = new ContCDN(url, argsObject);
+  console.log("event; contentCDN returned: ", JSON.stringify(cdnObj));
   let html = cdnObj.html.tmp;
   let tmp = cdnObj.tmp;
   let title = cdnObj.wATitle;
@@ -963,12 +964,15 @@ var contentCDN = function(url, argsObject) {
       .getContent();
   }
   else {
-    console.log("DEBUG: line 1669\ncontentCDN tmp before processing\n", JSON.stringify(tmp));
-    return tmp
-      .setTitle(title)
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .getContent();
+    if (tmp) {
+      console.log("DEBUG: line 1669\ncontentCDN tmp before processing\n", JSON.stringify(tmp));
+      return tmp
+        .evaluate()
+        .setTitle(title)
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
+        .setSandboxMode(HtmlService.SandboxMode.IFRAME)
+        .getContent();
+    }
   }
 }
 
@@ -2245,9 +2249,25 @@ class RendTemplate {
     let shortPL = argsObject?.payL?.pL;
     this.payPL = shortPL;
     this.title = title;
-    console.log("event; RendTemplate blob received ", blob);
-    console.log("event; RendTemplate argsObject received ", JSON.stringify(argsObject));
-    console.log("event; RendTemplate title received ", title);
+    if (blob) {
+      console.log("event; RendTemplate blob received ", blob);
+    }
+    // else {
+    //   if (argsObject) {
+    //     return handleRequest(argsObject);
+    //   }
+    //   else {
+    //     if (!argsObject) {
+    //       return handleRequest();
+    //     }
+    //   }
+    // }
+    if (argsObject) {
+      console.log("event; RendTemplate argsObject received ", JSON.stringify(argsObject));
+    }
+    if (title) {
+      console.log("event; RendTemplate title received ", title);
+    }
     console.log(
       "DEBUG: line 1762\nRendTemplate.templateRender(blob: " + blob &&
         blob?.length > 9
@@ -3062,9 +3082,25 @@ class RendTemplate {
 }
 
 var renderTemplate = function(blob, argsObject, title) {
-  console.log("event; RendTemplate called: blob -", blob);
-  console.log("event; RendTemplate called: argsObject -", JSON.stringify(argsObject));
-  console.log("event; RendTemplate called: title -", title);
+  if (blob) {
+    console.log("event; renderTemplate called: blob -", blob);
+  }
+  // else {
+  //   if (argsObject) {
+  //     return handleRequest(argsObject);
+  //   }
+  //   else {
+  //     if (!argsObject) {
+  //       return handleRequest();
+  //     }
+  //   }
+  // }
+  if (argsObject) {
+    console.log("event; renderTemplate called: argsObject -", JSON.stringify(argsObject));
+  }
+  if (title) {
+    console.log("event; renderTemplate called: title -", title);
+  }
   let html = new RendTemplate(blob, argsObject, title).html;
   return html.tmp
     .evaluate()

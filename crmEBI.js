@@ -14,7 +14,7 @@ function crmEBI(fx) {
       section: ["EBI Yes", "EBI No", "template"],
     },
   };
-  var result = ContentApp.appContent(
+  var result = contentApp(
     `
 <!DOCTYPE html>
   <html>
@@ -76,7 +76,7 @@ function crmEBI(fx) {
           JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
         );
         if (fx === objMaster.miscellaneous.section[0]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
     <html>
     <head>
@@ -232,7 +232,7 @@ function crmEBI(fx) {
             {},
           );
         } else if (fx === objMaster.miscellaneous.section[1]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
     <html>
     <head>
@@ -387,7 +387,7 @@ function crmEBI(fx) {
             {},
           );
         } else if (fx === objMaster.miscellaneous.section[2]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
               <html>
                 <head>
@@ -822,9 +822,9 @@ function crmEBI(fx) {
             " ",
           );
         } else if (fx === objMaster) {
-          return ContentApp.appContent(``, {}, " ");
+          return contentApp(``, {}, " ");
         } else {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
       <html>
       <head>

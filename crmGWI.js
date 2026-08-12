@@ -462,7 +462,7 @@
 // </html>
 // `;
 
-//   var result = ContentApp.appContent(mainHtmlBlob, templateVariables);
+//   var result = contentApp(mainHtmlBlob, templateVariables);
 //   return result;
 // };
 
@@ -478,7 +478,7 @@ function crmGWI(fx) {
   );
   // var fx = e;
   var objMaster = { miscellaneous: { section: [] } };
-  var result = ContentApp.appContent(
+  var result = contentApp(
     `
 <!DOCTYPE html>
   <html>
@@ -537,7 +537,7 @@ function crmGWI(fx) {
     {
       index: (function index() {
         console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
-        return ContentApp.appContent(
+        return contentApp(
           `<!DOCTYPE html>
   <html>
   <head>
@@ -1486,15 +1486,15 @@ var acceptQuote = function (formDataJson) {
  * @return {string} A confirmation message or URL.
  */
 var updateQuote = function (formDataJson) {
-  let autoPFN = new ProjectFUnctionNames();
   let formData;
   try {
     // ... (rest of your existing code to parse formData)
     if (!formDataJson) {
+      let autoPFN = autoGlobe.paramsSort();
       // ... (your existing fallback logic)
       formData = JSON.parse(
         convertToObjects(
-          [[autoPFN.paramsList[Math.floor(Math.random() * autoPFN.paramsList.length)].name, "007", "McClaren"]],
+          [[autoPFN[Math.floor(Math.random() * Math.floor(autoPFN.length))].name, "007", "McClaren"]],
           ["name", "number", "car"],
           autoP.functionRegistry.time,
         ),

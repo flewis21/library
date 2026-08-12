@@ -222,9 +222,7 @@ async function jsonFormatter() {
 function jsonINIT(json) {
   console.log(
     autoGlobe.functionRegistry.time +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
+      "\njsonINIT(json)\n!" +
       json +
       ", = " +
       !json,
@@ -275,17 +273,15 @@ function jsonINIT(json) {
 function jsonXpath(jsonXpathDataRange) {
   console.log(
     formatTime(autoGlobe.functionRegistry.time) +
-      "\n" +
-      arguments.callee.name +
-      "\n!" +
+      "\njsonXpath(jsonXpathDataRange)\n!" +
       jsonXpathDataRange +
       ", = " +
       !jsonXpathDataRange,
   );
-  var jsonXpathNoHeaders = [jsonXpathDataRange].map(function (val) {
+  let jsonXpathNoHeaders = [jsonXpathDataRange].map(function (val) {
     return val.toString().toLowerCase();
   });
-  var jsonXpathRowsToReturn = jsonXpathNoHeaders.filter(function (a) {
+  let jsonXpathRowsToReturn = jsonXpathNoHeaders.filter(function (a) {
     return a[0];
   });
   return jsonXpathRowsToReturn;
