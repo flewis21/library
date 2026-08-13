@@ -794,7 +794,7 @@ class ContCDN {
           console.log("message info\n" + argsObject?.message?.info, argsObject?.message);
           let locObj = 
             {
-              drivemC: argsObject?.message?.info,
+              drivemC: argsObject?.message?.content,
             }
           this.locObj = locObj;
           let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
@@ -951,7 +951,7 @@ var contentCDN = function(url, argsObject) {
   }
   let cdnObj = new ContCDN(url, argsObject);
   console.log("event; contentCDN returned: ", JSON.stringify(cdnObj));
-  let html = cdnObj.html.tmp;
+  let html = contentApp(cdnObj.html.tmp);
   let tmp = cdnObj.tmp;
   let title = cdnObj.wATitle;
   if (html) {
