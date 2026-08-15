@@ -318,22 +318,45 @@
                                     if (webUrl && webUrl !== null) {
                                       console.log("local storage web results: " + againCap);
                                       // window.open(new URL(webUrl), "_self");
-                                      let linkFollow = document.createElement("a");
-                                      linkFollow.href = new URL(webUrl);
-                                      // console.log("the match: " + linkFollow.href);
-                                      linkFollow.id = "linkFOLLOW";
-                                      linkFollow.target = "_self";
-                                      linkFollow.rel = "noopener noreferrer";
-                                      document.body.appendChild(linkFollow);
-                                      document.getElementById("linkFOLLOW").click();
-                                      document.getElementById("linkFOLLOW").remove();
+                                      // let linkFollow = document.createElement("a");
+                                      // linkFollow.href = new URL(webUrl);
+                                      // // console.log("the match: " + linkFollow.href);
+                                      // linkFollow.id = "linkFOLLOW";
+                                      // linkFollow.target = "_self";
+                                      // linkFollow.rel = "noopener noreferrer";
+                                      // document.body.appendChild(linkFollow);
+                                      // document.getElementById("linkFOLLOW").click();
+                                      // document.getElementById("linkFOLLOW").remove();
+                                      serverside("getScriptUrl", [])
+                                      .then((load) => {
+                                        localStorage.setItem("ssSearch", event.target.value);
+                                        // console.log("Data; Url for reLoad ", load.data);
+                                        let linkFollow = document.createElement("a");
+                                        linkFollow.href = new URL(webUrl);
+                                        // console.log("the match: " + linkFollow.href);
+                                        linkFollow.id = "linkFOLLOW";
+                                        linkFollow.target = "_blank";
+                                        linkFollow.rel = "noopener noreferrer";
+                                        document.body.appendChild(linkFollow);
+                                        document.getElementById("linkFOLLOW").click();
+                                        document.getElementById("linkFOLLOW").remove();
+                                        // window.location.href = load.data
+                                        // input.value = event.target.value;
+                                        input.disabled = false;
+                                        input.focus();
+                                      })
+                                      .catch((fail) => {
+                                        console.log("Failed to load ", fail);
+                                        input.disabled = false;
+                                        input.focus();
+                                      });
                                     }
                                 //     else {
                                 //       if (tubeUrl && tubeUrl !== null) {
                                 //         console.log("local storage all results: " + againCap);
                                 //         // personalizedList.push(val);
                                 //         // window.open(tubeUrl, "_self")
-                                //         return tubeUrl
+                                        return tubeUrl
                                 //       }
                                 //     }
                                   }
@@ -691,29 +714,29 @@
                   // return
                   // break
                   // if (userClicked) {
-                    serverside("getScriptUrl", [])
-                    .then((load) => {
-                      localStorage.setItem("ssSearch", event.target.value);
-                      // console.log("Data; Url for reLoad ", load.data);
-                      let linkFollow = document.createElement("a");
-                      linkFollow.href = new URL(load.data);
-                      // console.log("the match: " + linkFollow.href);
-                      linkFollow.id = "linkFOLLOW";
-                      linkFollow.target = "_self";
-                      linkFollow.rel = "noopener noreferrer";
-                      document.body.appendChild(linkFollow);
-                      document.getElementById("linkFOLLOW").click();
-                      document.getElementById("linkFOLLOW").remove();
-                      // window.location.href = load.data
-                      // input.value = event.target.value;
-                      input.disabled = false;
-                      input.focus();
-                    })
-                    .catch((fail) => {
-                      console.log("Failed to load ", fail);
-                      input.disabled = false;
-                      input.focus();
-                    });
+                    // serverside("getScriptUrl", [])
+                    // .then((load) => {
+                    //   localStorage.setItem("ssSearch", event.target.value);
+                    //   // console.log("Data; Url for reLoad ", load.data);
+                    //   let linkFollow = document.createElement("a");
+                    //   linkFollow.href = new URL(load.data);
+                    //   // console.log("the match: " + linkFollow.href);
+                    //   linkFollow.id = "linkFOLLOW";
+                    //   linkFollow.target = "_self";
+                    //   linkFollow.rel = "noopener noreferrer";
+                    //   document.body.appendChild(linkFollow);
+                    //   document.getElementById("linkFOLLOW").click();
+                    //   document.getElementById("linkFOLLOW").remove();
+                    //   // window.location.href = load.data
+                    //   // input.value = event.target.value;
+                    //   input.disabled = false;
+                    //   input.focus();
+                    // })
+                    // .catch((fail) => {
+                    //   console.log("Failed to load ", fail);
+                    //   input.disabled = false;
+                    //   input.focus();
+                    // });
                     // break;
                   // }
                   // }

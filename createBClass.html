@@ -1,92 +1,61 @@
-Logging output too large. Truncating output. event; contentCDN returned:  
+
+ {
+  "dataOR":
   {
-    "url":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
+    "message":
+    {
+      "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
+      "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
+    },
+    "timestamp":"2026-08-13T03:03:03.201Z",
+    "pL":
+    {
+      "type":"text",
+      "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
+    },
+    "title":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
+  },
+  "pLData":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
+  "dataSearch":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
+  "mInfo":
+  {
+    "searchString":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
+  },
+  "mCDN":
+  {
+    "blob":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
     "argsObject":
+    {
+      "message":
       {
-        "message":
-          {
-            "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-            "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "timestamp":"2026-08-11T20:33:25.814Z",
-        "pL":
-          {
-            "type":"text",
-            "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "title":"AKfycbzSm_UL92vPX0cs44OIQcqspZ0slio5TAAWqBy52j0"
+        "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
+        "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
       },
+      "timestamp":"2026-08-13T03:03:03.201Z",
+      "pL":
+      {
+        "type":"text",
+        "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
+      },
+      "title":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
+    },
+    "executed":24,
     "tmp":
+    {
+      "message":
       {
-        "message":
-          {
-            "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-            "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "timestamp":"2026-08-11T20:33:25.814Z",
-        "pL":
-          {
-            "type":"text",
-            "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "title":"AKfycbzSm_UL92vPX0cs44OIQcqspZ0slio5TAAWqBy52j0"
+        "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
+        "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
       },
+      "timestamp":"2026-08-13T03:03:03.201Z",
+      "pL":
+      {
+        "type":"text",
+        "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
+      },
+      "title":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
+    },
     "keys":["message","timestamp","pL","title"],
-    "mContent":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-    "mInfo":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
-    "locObj":
-      {
-        "drivemC":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
-      },
-    "wATitle":"AKfycbzSm_UL92vPX0cs44OIQcqspZ0slio5TAAWqBy52j0",
     "html":
-      {
-        "blob":
-          "<!doctype html>\n<html>\n  <head>\n    <base target=\"_top\" />\n  </head>\n  <body>\n    <script>\n      \n      \n\n      function redirect() {\n        \n        var params = new URLSearchParams(window.location.search);\n        var redirectURL = params.get(\"url\");\n        if (redirectURL) {\n          window.location.href = decodeURIComponent(redirectURL);\n        } else {\n          \n          console.error(\"No redirect URL provided.\");\n        }\n      }\n\n      \n      window.onload = redirect;\n    </script>\n  </body>\n</html>\n\n        \n  <script>\n    let drivMC = <?= drivemC ?>;\n    if (drivMC) {\n      window.location.href = drivMC;\n    }\n  </script>\n\n    <script>\n\n      function serverside(func, args) {\n        return new Promise((resolve, reject) => {\n          google.script.run\n          .withSuccessHandler(result => {\n            try {\n              resolve(result)\n            }\n            catch (error) {\n              console.log(\"Success error: \" + error.stack)\n            }})\n          .withFailureHandler(error => {\n              reject(error)})\n          .runBoilerplate(func, args)\n        });\n      }\n      function debounce(func, delay) {\n        let timeout;\n        try {\n          return function(...args) {\n            const context = this;\n            clearTimeout(timeout);\n            timeout = setTimeout(() => func.apply(context, args), delay);\n          };\n        }\n        catch (error) {\n          console.log(\"Timeout error: \" + error.stack)\n        }\n      }\n\n      const nVid = document.querySelectorAll(\".userClickedNext\");\n      const input = document.getElementById(\"artiicleIndex\");\n      const suggestionsDiv = document.getElementById(\"artiicleIndexSuggestions\");\n      document.addEventListener(\"DOMContentLoaded\", function() {\n        \n        const localSuggestionsCache = {};\n        const remoteSuggestionsCache = {};\n        const localListsCache = {};\n        let personalizedList = [];\n        let againContent = null;\n        let againCap = null;\n        let matchesContent = null;\n        let matchesToReturn = null;\n        let allContentAvailable = [];\n        let allMatchesAvailable = [];\n        let searchBackEnd = null;\n        let searchIntent = null;\n        let fullList = [];\n        let contentList = [];\n        let suggestContent = \"\";\n        let localList = [];\n        let suggestions = \"\";\n\n        if (!input || !suggestionsDiv) {\n          console.error(\"Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.\");\n          return;\n        }\n\n        serverside(\"getVI\", [])\n          .then((response) => {\n            \n            \n            if (response && typeof response === \"object\") {\n              for (var key in response) {\n                \n                let i = 0;\n                let l = response[key].length;\n                \n                for (i,l;i<l;i++) {\n                  let tempObj = {};\n                  tempObj.description = response[key][i].description;\n                  if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf(\"http\") === -1) {\n                    let tData = response[key][i].videoId;\n                    let dLoc =  null;\n                    dLoc =  \"https://www.youtube.com/watch?v=\";\n                    tempObj.youtubeUrl = dLoc + tData;\n                  }\n                  else {\n                    tempObj.webAddressUrl = response[key][i].videoId;\n                  }\n                  fullList.push(tempObj);\n                }\n              }\n            } else {\n              console.warn(\"Expected an array in response from getVI, received:\", response);\n              \n              fullList = [];\n            }\n            localSuggestionsCache[\"allMatches\"] = fullList;\n            searchBackEnd = localSuggestionsCache[\"allMatches\"][Math.floor(Math.random() * response.data.length)].description;\n            localStorage.setItem(\"gsSearch\", searchBackEnd);\n            againContent = localStorage.getItem(\"ssSearch\") || localStorage.getItem(\"gsSearch\");\n            matchesContent = localSuggestionsCache[\"allMatches\"].map((val) => {   \n              if (String(val.description).indexOf(againContent) > -1) {\n                \n                \n                let tubeUrl = val.youtubeUrl\n                if (tubeUrl && tubeUrl !== null) {\n                  console.log(\"local storage all results: \" + againContent);\n                  \n                  return tubeUrl\n                }\n              }\n            }).filter((mapResult) => {\n              return mapResult != null\n            });\n            \n            \n            \n            \n            \n            \n            \n            console.log(\"event allContentAvailable resources\", allContentAvailable.length);\n            \n            if (allContentAvailable.length < matchesContent.length) {\n              console.log(\"event Matches to return length greater than available resources: \", matchesContent.length);\n              while (allContentAvailable.length < matchesContent.length) {\n                allContentAvailable = matchesContent.sort((a,b) => {\n                  let i = Math.random()\n                  let tSorted = a;\n                  \n                  let zSorted = b;\n                  \n                  if (i < .3) {\n                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());\n                    if (matchA > -1) {\n                      \n                      return zSorted;\n                    }\n                  }\n                  else {\n                    if (i > .3 && i < .5 ) {\n                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());\n                      if (matchB === -1) {\n                        \n                        return tSorted;\n                      }\n                    }\n                    else {\n                      if (i > .5 && i < .8) {\n                        \n                        return zSorted;\n                      }\n                      else {\n                        if (i > .8) {\n                          \n                          return tSorted;\n                        }\n   
-
-
-
-contentCDN returned:  
-  {
-    "url":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
-    "argsObject":
-      {
-        "message":
-          {
-            "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-            "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-          "timestamp":"2026-08-11T22:42:15.399Z",
-          "pL":
-            {
-              "type":"text",
-              "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-            },
-          "title":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
-      },
-    "tmp":
-      {
-        "message":
-          {
-            "content":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-            "info":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "timestamp":"2026-08-11T22:42:15.399Z",
-        "pL":
-          {
-            "type":"text",
-            "data":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')"
-          },
-        "title":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
-      },
-    "keys":["message","timestamp","pL","title"],
-    "mContent":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242",
-    "mInfo":"Error calling function: Error: Failed to process quote updatance: Cannot read properties of undefined (reading 'evaluate')",
-    "locObj":
-      {
-        "drivemC":"https://www.clubhouse.com/@fabianlewis?utm_medium=ch_profile&utm_campaign=lhTUtHb2bYqPN3w8EEB7FQ-247242"
-      },
-    "wATitle":"AKfycbzhrxdXzM08AAwA5ualRXdnDtV6C_xQ7bcq4v6H0HNdBqPr2C8A1URyWN0FLLccQuoA"
-  }
-
-
+    {
+      "blob":"\n        <html id=\"renderTemplate\">\n          <head>\n            <?!= stylesSleep.abcIt.getContent() ?>\n            <style>\n              <?!= stylesSleep.renderFile.getContent() ?>\n              <!--[if lt IE 9]>\n              <script>\n                document.createElement(\"article\");\n                document.createElement(\"footer\");\n                document.createElement(\"header\");\n                document.createElement(\"nav\");\n                document.createElement(\"main\");\n                document.createElement(\"section\");\n                document.createElement(\"aside\");\n              </script>\n              <![endif]-->\n            </style>\n          </head>\n          <body>\n            <nav class=\"flex-div responsive-section transparent static-fix\">\n              <div class=\"nav-left flex-div responsive-section\">\n                <img src=\"<?!= global_logo.getContent() ?>\" class=\"logo menu-icon\" />\n              </div>\n              <div id=\"navMiddle\" class=\"nav-middle flex-div responsive-section\">\n                <div class=\"search-box flex-div\">\n                  <input id=\"artiicleIndex\" class=\"getVideo\" type=\"text\" placeholder=\"Search\">\n                </div>\n              </div>\n              <div class=\"nav-right flex-div responsive-section\">\n                <img src=\"<?!= global_sea_icn.getContent() ?>\" class=\"user-icon\" />\n              </div>\n            </nav>\n            <div id=\"artiicleIndexSuggestions\" class=\"autocomplete-suggestions responsive-section transparent static-fix\"></div>\n            <main class=\"responsive-section float-left\">\n              <header class=\"transparent banner responsive-section\">\n                <div id=\"player1\" class=\"row card-panel transparent list-container grid\" style=\"display: none\"></div>\n                <div id=\"iframePlayer\" class=\"row card-panel transparent\" style=\"display: none\"></div>\n                <h4><?!= drivedD?.split(\"{\")[0] ?></h4>\n                <label id=\"loadingLab\">\n                  <strong>\n                    <p>Recent Applications</p>\n                  </strong>\n                </label>\n              </header>\n              <div class=\"row responsive-section\">\n              <div class=\"card-panel transparent responsive-section\">\n              <div class=\"responsive-section\">\n              <div class=\"responsive-section\">\n              <div class=\"receipt transparent responsive-section\">\n              <table class=\"striped centered highlight transparent z-depth-5 responsive-section static-fix\">\n                <thead class=\"transparent\" >\n                </thead>\n                <tbody class=\"transparent\" style=\"vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;\">\n                  <tr class=\"transparent\" style=\"justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;\">\n                    <td class=\"transparent\" style=\"vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;\">\n                      <table class=\"striped centered highlight purple z-depth-5 responsive-section static-fix\">\n                        <tbody class=\"transparent\" style=\"vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;\">\n                          <td class=\"transparent\">\n                            <div class=\"transparent row responsive-section\">\n                              <section class=\"transparent responsive-section static-fix\">\n                                <header class=\"transparent responsive-section list-container grid\">\n                                  <h2>Power</h2>\n                                  <p> Is the conveyance of power and authority an objective, measurable quantity?</p>\n                                  <aside class=\"transparent responsive-section card-panel vid-list\">\n                                    <article class=\"transparent responsive-section card-panel static-fix container\">\n                                      <div class=\"row responsive-section static-fix\">\n                                        <?!= renTemp ?>\n                                      </div>\n                                    </article>\n                                      <iframe id=\"dmi\" src=\"<?!= global_sea_icn.getContent() ?>\" class=\"thumbnail\"></iframe>\n                                    // <a id=\"dmi\" href=\"<?!= drivemI ?>\" target=\"_blank\">\n                                    //   <img src=\"<?!= global_sea_icn.getContent() ?>\" class=\"thumbnail\" />\n                                    // </a>\n                                    <div class=\"flex-div\">\n                                      <img src=\"<?!= global_sea_icn.getContent() ?>\" />\n                                      <div class=\"vid-info\">\n                                        <p>\n                                          <i>   \n                                            No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n\n                                            <?!= JSON.stringify(driveM) ?>\n                                          </i>\n                                        </p>\n                                      </div>\n                                    </div>\n                                  </aside>\n                                  <article class=\"transparent responsive-section card-panel vid-list\">\n                                    <arti

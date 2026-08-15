@@ -3789,11 +3789,22 @@ class MisStCreator {
                                         declaredParamName === "numIndex" ||
                                         declaredParamName === "infinitum"
                                       ) {
-                                        args[declaredParamName] =
-                                          // this.userProvidedValue !== null && this.userProvidedValue !== undefined
-                                          //   ? this.userProvidedValue
-                                          //   :
-                                          autoGlobe.numVarRnd;
+                                        if (declaredParamName === "numIndex") {
+                                          args[declaredParamName] =
+                                            // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                            //   ? this.userProvidedValue
+                                            //   :
+                                            autoGlobe.numVarRnd;
+                                        }
+                                        else {
+                                          if (declaredParamName === "infinitum") {
+                                            args[declaredParamName] =
+                                              // this.userProvidedValue !== null && this.userProvidedValue !== undefined
+                                              //   ? this.userProvidedValue
+                                              //   :
+                                              [autoGlobe.numVarRnd - 1, autoGlobe.numVarRnd];
+                                          }
+                                        }
                                         resolvedArgs.push(args[declaredParamName]);
                                       } 
                                       else {

@@ -19,9 +19,9 @@ function surveyPlayer(searchString, joinString) {
   );
   //var url = seoSheet(encodeURIComponent(searchString)).url;Youtube Widget
 
-  var rndFol = furtFolder();
+  // var rndFol = furtFolder();
 
-  var currentFileUrl = fileBrowser(rndFol).url;
+  var currentFileUrl = new ClassifyFiles(searchString) // fileBrowser(rndFol).url;
 
   // var eFolder = DriveApp.getFoldersByName(rndFol).next();
   // var folderFile = eFolder.getFilesByName("Code Editor");
@@ -30,7 +30,7 @@ function surveyPlayer(searchString, joinString) {
 
   var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
 
-  var dataTree = driveManager(rndStrObj["Description"]);
+  var dataTree = new DriveFiles(rndStrObj["Description"]);
 
   // while (folderFile.hasNext()) {
   //   var myFile = folderFile.next();
@@ -60,11 +60,11 @@ function surveyPlayer(searchString, joinString) {
     noList.push(noVid);
   }
 
-  if (dataTree) {
-    var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.length));
-    var filed = dataTree[rndFiled];
+  if (dataTree.dataTree) {
+    var rndFiled = Math.floor(Math.random() * Math.floor(dataTree.dataTree.length));
+    var filed = dataTree.dataTree[rndFiled];
   } else {
-    var filed = currentFileUrl;
+    var filed = currentFileUrl.urlTest;
   }
 
   if (!searchString && !joinString) {

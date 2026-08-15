@@ -509,19 +509,20 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
     var cokey = rndStrObj["Description"];
   }
 
-  if (typeof url === "undefined" || !isValidUrl(url).hostname) {
-    var rndFol = furtFolder();
-    var url = fileBrowser(rndFol).url;
+  if (typeof url === "undefined" || !new ValidUrlResult(url).validatedResult.hostname) {
+    var rndFol = new ClassifyFiles(cokey);
+    var url = rndFol.urlTest; //fileBrowser(rndFol).url;
   }
   let response;
   let location;
+  let options = {
+      followRedirects: true, // Allow automatic redirects
+      muteHttpExceptions: true,
+    }
   let retries = 0;
   let delay = 1000;
   try {
-    response = UrlFetchApp.fetch(url, {
-      followRedirects: true, // Allow automatic redirects
-      muteHttpExceptions: true,
-    });
+    response = UrlFetchApp.fetch(url, options);
   } catch (e) {
     Logger.log("Error fetching URL: ", e.toString());
     console.error("Error fetching URL: ", e.toString());
@@ -538,10 +539,7 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
           Logger.log(`Rate limit hit, retrying in ${delay} ms`);
           while (retries < maxRetries) {
             try {
-              response = UrlFetchApp.fetch(url, {
-                followRedirects: true, // Allow automatic redirects
-                muteHttpExceptions: true,
-              });
+              response = UrlFetchApp.fetch(url, options);
             } catch (error) {
               Logger.log("Error fetching data: " + error);
               retries++;
@@ -554,10 +552,7 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
           var conText = response.getContentText();
           if (res >= 300 && res < 400) {
             location = response.getHeaders().Location;
-            var content = UrlFetchApp.fetch(location, {
-              followRedirects: true,
-              muteHttpExceptions: true,
-            }).getContentText();
+            var content = UrlFetchApp.fetch(location, options).getContentText();
           } else {
             if (
               typeof response.getResponseCode === "function" &&

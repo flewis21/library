@@ -419,7 +419,7 @@ class TentApp {
     }
     console.log(
       "DEBUG: line 399\nTentApp(blob: " +
-        blob?.slice(0, 130) +
+        JSON.stringify(blob)?.slice(0, 130) +
         "..., argsObject: " +
         JSON.stringify(argsObject)?.slice(0, 130) +
         ")",
@@ -429,11 +429,11 @@ class TentApp {
         "\nBlob is !" +
         !blob +
         " = " +
-        blob.substring(0, 130) +
+        JSON.stringify(blob)?.substring(0, 130) +
         "...\nargsObject is !" +
         !argsObject +
         " = " +
-        JSON.stringify(argsObject).slice(0, 130),
+        JSON.stringify(argsObject)?.slice(0, 130),
     );
     let api;
     try {
@@ -777,7 +777,7 @@ class ContCDN {
           this.locObj = locObj;
           let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
-          let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
+          let html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
           // return HtmlService.createHtmlOutput(html)
           //   // .evaluate()
@@ -799,7 +799,7 @@ class ContCDN {
           this.locObj = locObj;
           let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
           this.wATitle = wATitle;
-          let html = new TentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
+          let html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           this.html = html;
           // return tmp
           //   // .evaluate()
@@ -951,14 +951,15 @@ var contentCDN = function(url, argsObject) {
   }
   let cdnObj = new ContCDN(url, argsObject);
   console.log("event; contentCDN returned: ", JSON.stringify(cdnObj));
-  let html = contentApp(cdnObj.html.tmp);
+  let html = cdnObj.html;
   let tmp = cdnObj.tmp;
   let title = cdnObj.wATitle;
   if (html) {
     console.log("DEBUG: line 1669\ncontentCDN html before processing\n", html);
-    return html
-      .evaluate()
+    return HtmlService.createHtmlOutput(html)
+      // ?.evaluate()
       .setTitle(title)
+      // .getContent()
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .getContent();
