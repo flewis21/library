@@ -1713,7 +1713,7 @@ class RendFile {
                 </nav>
                 <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
                   <header class="banner card-panel transparent static-fix">
-                    <div id="iframePlayer" class="row card-panel transparent" style="display: none"></div>
+                    <div id="iframePlayer" class="row transparent" style="display: none"></div>
                     <h1>Blog</h1>
                     <label id="loadingLab">
                       <strong>
@@ -1721,12 +1721,12 @@ class RendFile {
                       </strong>
                     </label>
                   </header>
-                  <div class="row responsive-section transparent">
+                  <div class="center row responsive-section transparent">
                   <div class="card-panel transparent responsive-section">
                   <div class="responsive-section transparent">
                   <div class="responsive-section transparent">
                   <div class="receipt transparent responsive-section">
-                  <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                  <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix container">
                     <thead class="transparent">
                     </thead>
                     <tbody class="transparent">
@@ -2395,7 +2395,7 @@ class RendTemplate {
             <main class="responsive-section float-left">
               <header class="transparent banner responsive-section">
                 <div id="player1" class="row card-panel transparent list-container grid" style="display: none"></div>
-                <div id="iframePlayer" class="row card-panel transparent" style="display: none"></div>
+                <div id="iframePlayer" class="row transparent" style="display: none"></div>
                 <h4><?!= drivedD?.split("{")[0] ?></h4>
                 <label id="loadingLab">
                   <strong>
@@ -2403,12 +2403,12 @@ class RendTemplate {
                   </strong>
                 </label>
               </header>
-              <div class="row responsive-section">
+              <div class="center row responsive-section">
               <div class="card-panel transparent responsive-section">
               <div class="responsive-section">
               <div class="responsive-section">
               <div class="receipt transparent responsive-section">
-              <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+              <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix container">
                 <thead class="transparent" >
                 </thead>
                 <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">

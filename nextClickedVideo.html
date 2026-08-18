@@ -251,8 +251,8 @@
             // suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
             qTemp = query
-            input.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter') {
+            input.addEventListener('select', (event) => {
+              // if (event.key === 'Enter') {
                 // let filContent = suggestions.filter(item => 
                 //     String(item).toLowerCase() === event.target.value.toLowerCase()
                 //   );
@@ -282,6 +282,7 @@
                               let doneAlert = Object.keys(done.data)?.length;
                               if (done.data && doneAlert > 0) {
                                 personalizedList = [];
+                                let reUrlList = [];
                                 for (var key in done.data) {
                                   let i = 0;
                                   let l = false;
@@ -327,8 +328,12 @@
                                         // Get the original request URL from the URL parameters
                                         // var params = new URLSearchParams(window.location.search);
                                         // var redirectURL = params.get("url");
-                                        var redirectURL = tempObj?.youtubeURL || tempObj?.webAddressUrl;
+                                        let redirectURL = false;
+                                        if (reUrlList.indexOf((tempObj?.youtubeURL || tempObj?.webAddressUrl)) < 0) {
+                                          redirectURL = tempObj?.youtubeURL || tempObj?.webAddressUrl;
+                                        }
                                         if (redirectURL) {
+                                          reUrlList.push(redirectURL)
                                           // window.location.href = decodeURIComponent(redirectURL);
 
                                           // Call the redirect function after the page load
@@ -336,7 +341,7 @@
                                             "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                                           );
                                           if (confirmation) {
-                                            event.preventDefault();
+                                            // event.preventDefault();
                                             var linkFollow = document.createElement("a");
                                             // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
                                             // if (matchesContent.length > 0) {
@@ -908,7 +913,7 @@
                 //     }
                 //   });
                 // }
-              }
+              // }
               // else {
               //   if (event.key !== 'Enter') {
               //     return
@@ -1078,7 +1083,7 @@
                         if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
                           const div = document.createElement('div');
                           div.textContent = suggestion.description;
-                          div.classList.add("card-panel", "receipt", "btn-large");
+                          div.classList.add("receipt", "btn-large");
                           div.addEventListener('click', () => {
                             input.value = suggestion.description;
                             let confirmation;
