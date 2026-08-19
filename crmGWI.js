@@ -1625,8 +1625,16 @@ var updateQuote = function (formDataJson) {
     // console.log('Email confirmation sent.');
 
     // You can return the PDF URL to the client-side for them to display or download.
-
-    let slideRender = renderFile("slideCard", formData, "Success");
+    let slInList = autoGlobe.functionRegistry.getHtmlList();
+    let slideRender = false;
+    if (slInList.indexOf("slideCard") > -1) {
+      slideRender = renderFile("slideCard", formData, "Success");
+    }
+    else {
+      if (slInList.indexOf("slideCard") === -1) {
+        slideRender = renderFile(slInList[Math.floor(Math.random() * Math.floor(19))], formData, "Success");
+      }
+    }
     return slideRender;
     return invoicePdfUrl;
   } catch (error) {

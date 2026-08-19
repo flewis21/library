@@ -242,6 +242,7 @@
           
         const fetchSuggestions = debounce((query) => {
           input.addEventListener("input", (event) => {
+            console.log("event; input event: ", JSON.stringify(event.target))
             if (String(event.target.value).length < 1) {
               return
             }

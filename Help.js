@@ -3697,7 +3697,7 @@ function seoPastTime(searchString, time) {
   } else {
     items = [{ Description: searchString }];
   }
-  console.log("items = " + items, executed++);
+  console.log("DEBUG: line 3700\nitems = " + items, executed++);
   // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
   var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
   var searchString = items[rndItenIndex]["Description"]
@@ -3709,16 +3709,16 @@ function seoPastTime(searchString, time) {
     })
     .join("")
     .replace(/,/g, ""); // .searchString().myNewArr;
-  console.log("searchString = " + searchString, executed++);
+  console.log("DEBUG: line 3712\nsearchString = " + searchString, executed++);
   var uniqueVid = seoYoutube(searchString, autoGlobe.functionRegistry.time)?.myIdArr;
-  console.log("uniqueVid = " + uniqueVid, executed++);
+  console.log("DEBUG: line 3714\nuniqueVid = " + uniqueVid, executed++);
   let fndOrd = [];
   while (fndOrd.length === 0) {
     var sorFndOrd = uniqueVid?.filter((vidObject) => {
       var elaspeTime = autoGlobe.functionRegistry.time;
-      console.log("elaspeTime = " + elaspeTime, executed++);
+      console.log("DEBUG: line 3719\nelaspeTime = " + elaspeTime, executed++);
       var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
-      console.log("timeToExecute = " + timeToExecute, executed++);
+      console.log("DEBUG: line 3721\ntimeToExecute = " + timeToExecute, executed++);
       if (
         vidObject.length === 11 &&
         vidObject !== '"' &&
@@ -3811,7 +3811,7 @@ function seoPastTime(searchString, time) {
         "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
           encodeURIComponent(searchString),
       ).validatedResult.url;
-      console.log("domainSearch = " + domainSearch, executed++);
+      console.log("DEBUG: line 3814\ndomainSearch = " + domainSearch, executed++);
       // var unFilData = mis(domainSearch)
       // var data = unFilData.app
       return { playList: domainSearch };
@@ -3832,9 +3832,9 @@ function seoPastTime(searchString, time) {
     const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
     var rndRes = fndOrd.filter((test) => {
       var elaspeTime = autoGlobe.functionRegistry.time;
-      console.log("elaspeTime = " + elaspeTime, executed++);
+      console.log("DEBUG: line 3835\nelaspeTime = " + elaspeTime, executed++);
       var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
-      console.log("timeToExecute = " + timeToExecute, executed++);
+      console.log("DEBUG: line 3837\ntimeToExecute = " + timeToExecute, executed++);
       for (var i = 0, l = randomKey; i < l; i++) {
         if (
           test.indexOf("false") === -1 &&

@@ -229,7 +229,7 @@ function needUtility(rndClient, arrD, time) {
   let executed = 0;
   if (typeof rndClient === "undefined") {
     var rndClient = autoGlobe.searchString().myNewArr;
-    console.log("rndClient = " + rndClient, executed++);
+    console.log("DEBUG: line 232\nrndClient = " + rndClient, executed++);
   }
   var client = rndClient;
   // console.log("needUtility: \n" + client + " is a:  \n" + typeof [client].join("") + ", and is " + [client].join("").length + " characters in length")
@@ -237,9 +237,9 @@ function needUtility(rndClient, arrD, time) {
   if (typeof client !== "undefined" && [client].join("").length > 0) {
     // console.log("needUtility: \n" + [client].join("").length + " is greater than " + 0);
     var seoTitle = seoSheet(client, time).keyWords;
-    console.log("seoTitle = " + seoTitle, executed++);
+    console.log("DEBUG: line 240\nseoTitle = " + seoTitle, executed++);
     console.log(
-      "needUtility: \nvar " + seoTitle + " = seoSheet(" + client,
+      "DEBUG: line 242\nvar " + seoTitle + " = seoSheet(" + client,
       time + ").keyWords",
     );
     var improvUI = [seoTitle].join("").split(" ");
@@ -264,11 +264,11 @@ function needUtility(rndClient, arrD, time) {
       var rndTitle2 =
         title2[Math.floor(Math.random() * Math.floor(title2.length))];
       var coName = allTime([rndTitle2].join("").toLowerCase(), arrD, time);
-      console.log("coName = " + coName, executed++);
+      console.log("DEBUG: line 267\ncoName = " + coName, executed++);
       try {
         if (Array.isArray(rndTitle2)) {
           console.log(
-            " + needUtility: \nvar " +
+            "DEBUG: line 271\nvar " +
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
@@ -277,7 +277,7 @@ function needUtility(rndClient, arrD, time) {
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
           console.log(
-            " + needUtility: \nvar " +
+            "DEBUG: line 280\nvar " +
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
@@ -293,7 +293,7 @@ function needUtility(rndClient, arrD, time) {
         console.log("coName = " + coName, executed++);
         if (Array.isArray(rndTitle2)) {
           console.log(
-            " + needUtility: \nvar " +
+            "DEBUG: line 296\nvar " +
               coName +
               " = allTime(" +
               rndTitle2.join("").toLowerCase(),
@@ -302,7 +302,7 @@ function needUtility(rndClient, arrD, time) {
           );
         } else if (typeof rndTitle2 === "string" && rndTitle2) {
           console.log(
-            " + needUtility: \nvar " +
+            "DEBUG: line 305\nvar " +
               coName +
               " = allTime(" +
               rndTitle2.toLowerCase(),
@@ -315,7 +315,7 @@ function needUtility(rndClient, arrD, time) {
       var coName = allTime(null, arrD, time);
       console.log("coName = " + coName, executed++);
       console.log(
-        "needUtility: \nvar " + coName + " = allTime(" + null,
+        "DEBUG: line 318\nvar " + coName + " = allTime(" + null,
         [arrD].toString().substring(0, 20),
         time + ")",
       );
@@ -324,7 +324,7 @@ function needUtility(rndClient, arrD, time) {
     var coName = allTime(null, arrD, time);
     console.log("coName = " + coName, executed++);
     console.log(
-      "needUtility: \nvar " + coName + " = allTime(" + null,
+      "DEBUG: line 327\nvar " + coName + " = allTime(" + null,
       [arrD].toString().substring(0, 20),
       time + ")",
     );
@@ -461,20 +461,20 @@ function seoSheet(searchString, time) {
   let elaspeTime;
   if (typeof time === "undefined") {
     var time = autoGlobe.functionRegistry.time;
-    console.log("time = " + formatTime(time), executed++);
+    console.log("DEBUG: line 464\ntime = " + formatTime(time), executed++);
   }
   if (typeof searchString === "undefined") {
     var searchString = autoGlobe.searchString().myNewArr;
-    console.log("searchString = " + searchString, executed++);
+    console.log("DEBUG: line 468\nsearchString = " + searchString, executed++);
   }
   var uniqueSeo = seoTwitter(null, searchString, time).twiData;
-  console.log("uniqueSeo = " + uniqueSeo, executed++);
+  console.log("DEBUG: line 471\nuniqueSeo = " + uniqueSeo, executed++);
   var fndOrd = uniqueSeo
     .join("")
     .split(" ")
     .filter((p) => {
       elaspeTime = autoGlobe.functionRegistry.time;
-      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
+      console.log("DEBUG: line 477\nelaspeTime = " + formatTime(elaspeTime), executed++);
       if (p.length > 3 && p.length < 18) {
         return p[0] !== "<";
       }
@@ -642,24 +642,24 @@ function seoSheet(searchString, time) {
   if (stringSplit) {
     if (stringSplit.length > 0) {
       testString = testData([stringSplit], time).testArray;
-      console.log(JSON.stringify(stringSplit) + "testString = " + testString, executed++);
+      // console.log(JSON.stringify(stringSplit) + "testString = " + testString, executed++);
     }
   } else {
     testString = testData([searchString], time).testArray;
-    console.log("testString = " + testString, executed++);
+    console.log("DEBUG: line 649\ntestString = " + testString, executed++);
   }
   var lowerCaseS = [];
   if (lowerCaseS.indexOf(testString) === -1) {
     var stringUI = [testString].join("").split(",");
     stringUI.map((increase) => {
       elaspeTime = autoGlobe.functionRegistry.time;
-      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
+      console.log("DEBUG: line 656\nelaspeTime = " + formatTime(elaspeTime), executed++);
     });
   }
   if (reSearch) {
     reSearch.map((seo) => {
       elaspeTime = autoGlobe.functionRegistry.time;
-      console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
+      console.log("DEBUG: line 662\nelaspeTime = " + formatTime(elaspeTime), executed++);
       var lowerCaseResearch = seo.toLowerCase();
       for (var i = 0, l = lowerCaseS.length; i < l; i++) {
         if (typeof lowerCaseS[i][lowerCaseS[i].length - 1] !== "undefined") {
@@ -668,7 +668,7 @@ function seoSheet(searchString, time) {
           if (lowerCaseResearch.includes(lowerCaseSearchString)) {
             if (lowerCaseS.indexOf(seo) === -1) {
               elaspeTime = autoGlobe.functionRegistry.time;
-              console.log("elaspeTime = " + formatTime(elaspeTime), executed++);
+              console.log("DEBUG: line 671\nelaspeTime = " + formatTime(elaspeTime), executed++);
               lowerCaseS.push(seo);
             }
           }

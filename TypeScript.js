@@ -3371,21 +3371,22 @@ class MisStCreator {
                   this.arrDRnd = arrDRnd;
                   let searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
                   this.searchResult = searchResult;
-                  result = fParams.find((rndS) => {
+                  let eResult = fParams.find((rndS) => {
                     return rndS.name === searchResult;
                   });
-                  console.log("resolved e.parameter pre-result", result);
+                  this.eResult = eResult;
+                  console.log("resolved e.parameter pre-result", eResult);
                   try {
-                    JSON.parse(result.toString());
+                    JSON.parse(eResult?.toString());
                   } catch (check) {
-                    console.log("Check/Balance for " + result.toString());
+                    console.log("DEBUG: line 3381\nCheck/Balance for " + eResult?.toString());
                   }
-                  if (typeof result === "string" && result !== "undefined") {
+                  if (typeof eResult === "string" && eResult !== "undefined") {
                     args[declaredParamName] = objectOfS(
                       ["parameter"],
                       [
                         [
-                          ["func", result],
+                          ["func", eResult],
                           ["action", "getData"],
                           ["file", "uiAccess"],
                         ],
@@ -3395,18 +3396,18 @@ class MisStCreator {
                   } 
                   else {
                     if (
-                      typeof result === "object" &&
-                      result !== null &&
-                      result.name
+                      typeof eResult === "object" &&
+                      eResult !== null &&
+                      eResult.name
                     ) {
                       args[declaredParamName] = objectOfS(
                         ["parameter"],
                         [
                           [
-                            ["func", result.name],
+                            ["func", eResult.name],
                             [
                               "args",
-                              JSON.stringify(orderedArgsForCurrentFunc) || result.parameters,
+                              JSON.stringify(orderedArgsForCurrentFunc) || eResult.parameters,
                             ],
                             ["action", "getData"],
                             ["file", "uiAccess"],
@@ -3416,12 +3417,12 @@ class MisStCreator {
                       );
                     } 
                     else {
-                      if (result !== null && result && result.name) {
+                      if (eResult !== null && eResult && eResult.name) {
                         args[declaredParamName] = objectOfS(
                           ["parameter"],
                           [
                             [
-                              ["func", result.name],
+                              ["func", eResult.name],
                               ["action", "getData"],
                               ["file", "uiAccess"],
                             ],
@@ -3741,7 +3742,7 @@ class MisStCreator {
                                   if (declaredParamName === "fileX") {
                                     let folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd];
                                     this.folderX = folderX;
-                                    console.log("folderX = " + folderX, autoGlobe.executed++);
+                                    console.log("DEBUG: line 3744\nfolderX = " + folderX, autoGlobe.executed++);
                                     let folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
                                     this.folderRoot = folderRoot;
                                     let fileXName = "undefined";

@@ -1132,34 +1132,54 @@ var fbTester = function () {
 let fileFold = function(folderX, fileX, time) {
   let executed = autoGlobe.executed;
   var elapsedTime = autoGlobe.functionRegistry.elapsedTimeInSeconds;
-  console.log("elapsedTime = " + formatTime(elapsedTime), executed++);
+  console.log("DEBUG: line 1135\nelapsedTime = " + formatTime(elapsedTime), executed++);
   var fileFree = [];
   var folderXIsValid = autoGlobe.trueVfalse(folderX);
-  console.log("folderXIsValid = " + folderXIsValid, executed++);
-  if (folderXIsValid) {
-    if (!folderXIsValid) {
+  console.log("DEBUG: line 1138\nfolderXIsValid = " + folderXIsValid, executed++);
+  if (!folderXIsValid) {
+    return;
+  }
+  else {
+    if (folderXIsValid) {
+      let pyFolder = DriveApp.getFoldersByName(folderX);
+      let pyroFolder = false;
+      let tree;
+      let nameTree = false;
+      let myName = false;
+      while (pyFolder.hasNext()) {
+        pyroFolder = pyFolder.next();
+        if (pyroFolder) {
+          tree = pyroFolder.getFiles();
+          while (tree?.hasNext()) {
+            nameTree = tree?.next();
+            try {
+              JSON.parse(nameTree);
+            } 
+            catch (check) {
+              console.log(check);
+            }
+            if (nameTree) {
+              myName = nameTree.getName();
+              if (myName) {
+                fileFree.push(myName);
+              }
+              else {
+                break
+              }
+            }
+            else {
+              break
+            }
+          }
+        }
+        else {
+          break
+        }
+      }
+    } 
+    else {
       return;
     }
-    var pyFolder = DriveApp.getFoldersByName(folderX);
-    var pyroFolder;
-    var tree;
-    while (pyFolder.hasNext()) {
-      pyroFolder = pyFolder.next();
-      tree = pyroFolder.getFiles();
-    }
-    var nameTree;
-    while (tree?.hasNext()) {
-      nameTree = tree?.next();
-      try {
-        JSON.parse(nameTree);
-      } catch (check) {
-        console.log(check);
-      }
-      let myName = nameTree.getName();
-      fileFree.push(myName);
-    }
-  } else {
-    return;
   }
   return fileFree;
 }

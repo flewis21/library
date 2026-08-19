@@ -313,7 +313,7 @@ class Renderer {
         }
       }
     }
-    let file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 25)]
+    let file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 19)]
     this.file = file
     let pLData = dataOR?.pL?.data;
     this.pLData = pLData;
@@ -587,10 +587,10 @@ class TentApp {
 
 var contentApp = function(blob, argsObject) {
   if (blob) {
-    console.log("event; ContentApp called: blob -", blob);
+    console.log("event; contentApp called: blob -", blob);
   }
   if (argsObject) {
-    console.log("event; ContentApp called: argsObject -", JSON.stringify(argsObject));
+    console.log("event; contentApp called: argsObject -", JSON.stringify(argsObject));
   }
   let tentStart = new TentApp(blob, argsObject).tmp;
   try {
@@ -1675,7 +1675,7 @@ class RendFile {
           // this.funcCheck = appList();
           // this.schedule = dateTime(new Date());
           console.log("DEBUG: line 1669\nRendFile tmp before processing\n", JSON.stringify(tmp));
-          let html = new TentApp(
+          let html = contentApp(
             `
           <!doctype html>
             <html lang="en">
@@ -1887,7 +1887,7 @@ class RendFile {
             {
               renTemp: tmp.evaluate().getContent(),
             },
-          ).tmp;
+          );
           this.html = html;
           console.log("DEBIG: line 1884\nRendFile html after tmp processing\n", html);
           // return renderTemplate(html,argsObject,title)
@@ -2212,7 +2212,7 @@ var  renderFile = function(file, argsObject, title) {
     console.log("event; renderFile called: title -", title);
   }
   let template = new RendFile(file, argsObject, title);
-  return template?.html
+  return HtmlService.createTemplate(template?.html)
     .evaluate()
     .setTitle(title || file)
     // .append(html)

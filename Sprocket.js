@@ -181,7 +181,7 @@ function portBing(searchPort) {
   console.log("portBing = function (" + searchPort + ")");
   var cokey;
   if (typeof searchPort === "undefined") {
-    var rndStr = globalThis.uniqueItemArray();
+    var rndStr = autoGlobe.uniqueItemArray();
     var rndStrObj =
       rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
     var searchBing = rndStrObj["Description"];

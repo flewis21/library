@@ -1435,16 +1435,16 @@ var seoTwitter = function (folderX, searchString, time) {
   let executed = 0;
   if (typeof time === "undefined") {
     var time = autoGlobe.functionRegistry.time;
-    console.log("time = " + formatTime(time), executed++);
+    console.log("DEBUG: line 1438\ntime = " + formatTime(time), executed++);
   }
   var foldCounter = 0;
   var foldData = folderManager(folderX); // && folderX !== "folderX" ? folderX : randomFolderName);
-  console.log("foldData = " + foldData.slice(foldData.length - 1), executed++);
+  console.log("DEBUG: line 1442\nfoldData = " + foldData.slice(foldData.length - 1), executed++);
   var randomFolderCount = Math.floor(
     Math.random() * Math.floor(foldData.length),
   );
   var minFold = fileFold(foldData[randomFolderCount]);
-  console.log("minFold = " + minFold, executed++);
+  console.log("DEBUG: line 1447\nminFold = " + minFold, executed++);
   var rndString =
     minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
   if (!searchString) {
@@ -1453,7 +1453,7 @@ var seoTwitter = function (folderX, searchString, time) {
     searchString = rndString;
   }
   var uniqueSeo = seoBites(searchString, minFold, time);
-  console.log("uniqueSeo = " + uniqueSeo, executed++);
+  console.log("DEBUG: line 1456\nuniqueSeo = " + uniqueSeo, executed++);
   return { twiData: uniqueSeo };
   var data = [];
   while (data.length === 0) {
@@ -2306,19 +2306,19 @@ function wanUtil(namedVar, time) {
   if (typeof time === "undefined") {
     var time = autoGlobe.functionRegistry.time;
   }
-  console.log("namedVar: " + namedVar + "\nTime: " + time);
+  console.log("DEBUG: line 2309\nnamedVar: " + namedVar + "\nTime: " + time);
   // console.log("Calling rndString with namedVar: " + namedVar)
   // var strVar = rndString(namedVar, time).resStr
   // console.log("Recieved strVar: " + strVar + " from rndString with namedVar: " + namedVar)
-  console.log("Calling testData with namedVar: " + namedVar);
+  console.log("DEBUG: line 2313\nCalling testData with namedVar: " + namedVar);
   var strVar = testData(namedVar, time).testArray;
   console.log(
-    "Recieved strVar: " + strVar + " from testData with namedVar: " + namedVar,
+    "DEBUG: line 2316\nRecieved strVar: " + strVar + " from testData with namedVar: " + namedVar,
   );
-  console.log("Calling needUtility with strVar: " + strVar);
+  console.log("DEBUG: line 2318\nCalling needUtility with strVar: " + strVar);
   var wanVar = needUtility(null, strVar, time)[0]?.rndTitle;
   console.log(
-    "Recieved wanVar: " + wanVar + " from needUtility with strVar: " + strVar,
+    "DEBUG: line 2321\nRecieved wanVar: " + wanVar + " from needUtility with strVar: " + strVar,
   );
   return JSON.stringify({
     verInfo: wanVar,

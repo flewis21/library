@@ -18,7 +18,7 @@ function navBar(
   ref9,
   title9,
 ) {
-  const navBar = ContentApp.appContent(
+  const navBar = contentApp(
     "\n <div>\n    <?!= ref1 ?><?!= ref2 ?><?!= ref3 ?><?!= ref4 ?><?!= ref5 ?><?!= ref6 ?><?!= ref7 ?><?!= ref8 ?><?!= ref9 ?>\n  <?!= test ?>\n   </div>\n  ",
     {
       ref1: ContentApp.appContent(
