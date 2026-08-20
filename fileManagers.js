@@ -1141,16 +1141,17 @@ let fileFold = function(folderX, fileX, time) {
   }
   else {
     if (folderXIsValid) {
+      // let allFold = autoGlobe.functionRegistry.getFolderList()
       let pyFolder = DriveApp.getFoldersByName(folderX);
       let pyroFolder = false;
       let tree;
       let nameTree = false;
       let myName = false;
-      while (pyFolder.hasNext()) {
+      if (pyFolder.hasNext()) {
         pyroFolder = pyFolder.next();
         if (pyroFolder) {
           tree = pyroFolder.getFiles();
-          while (tree?.hasNext()) {
+          if (tree?.hasNext()) {
             nameTree = tree?.next();
             try {
               JSON.parse(nameTree);
@@ -1164,16 +1165,16 @@ let fileFold = function(folderX, fileX, time) {
                 fileFree.push(myName);
               }
               else {
-                break
+              return;
               }
             }
             else {
-              break
+              return;
             }
           }
         }
         else {
-          break
+          return;
         }
       }
     } 

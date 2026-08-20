@@ -323,11 +323,11 @@ class Renderer {
       if (pLData.length > 0) {
         // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // this.blob = blob;
-        let mIndex = new RendFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+        let mIndex = renderFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         this.mIndex = mIndex;
         // let mCDN = new ContentCDN(dataOR?.payL?.mess age?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // this.mCDN = mCDN;
-        let mContent = dataOR?.payL?.message?.content;
+        let mContent = dataOR?.message?.content;
         this.mContent = mContent;
         // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
         // this.mInfo = mInfo;
@@ -337,7 +337,7 @@ class Renderer {
         // this.htmlPayL = htmlPayL;
         // let htmlPL = blob?.htmlPL;
         // this.htmlPL = htmlPL;
-        let html = mIndex?.html;
+        let html = mIndex?.getContent();
         this.html = html;
         let htmlPayL = mIndex?.htmlPayL;
         this.htmlPayL = htmlPayL;
@@ -351,7 +351,7 @@ class Renderer {
         if (pLData !== null && Object.keys(pLData).length > 0 && !pLData?.myVar && !pLData?.myNewArr && !Object.keys(pLData)[0]?.rndTitle && typeof Object.keys(pLData)[0] !== "number") {
           // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // this.blob = blob;
-          let mIndex = new RendFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+          let mIndex = renderFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           this.mIndex = mIndex;
           // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // this.mCDN = mCDN;
@@ -382,7 +382,7 @@ class Renderer {
             matchTemp.searchString = dataSearch
             this.mInfo = matchTemp;
             // let mCDN = contCDN(mInfo.urlTest || mInfo.fbSearchR, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-            let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+            let blob = renderTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
             this.mCDN = blob;
               // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
           }

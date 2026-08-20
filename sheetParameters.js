@@ -1550,7 +1550,7 @@ function sheetsMaker(fileName, folderX, time) {
         ", = " +
         newFile,
     );
-    sheetsFileManager(newFile.getId(), folderX, start);
+    sheetsFileManager(newFile.getId(), folderX, autoGlobe.functionRegistry.start);
     return newFile;
   }
 }
@@ -1678,7 +1678,7 @@ function sheetsUrls(fileX, folderX, time) {
   var fileNameList = matchManager(folderX ? folderX : "Sheets", fileX);
   var mineField = [];
   if (fileNameList) {
-    while (mineField.length === 0) {
+    if (mineField.length === 0) {
       fileNameList.sheets.map((repo) => {
         if (repo.toLowerCase().includes(fileX?.toLowerCase())) {
           var mineFile = DriveApp.getFilesByName(repo);
@@ -1707,7 +1707,7 @@ function sheetsUrls(fileX, folderX, time) {
     return mineField[Math.floor(Math.random() * Math.floor(mineField.length))];
   } else {
     var treeRoot = DriveApp.getRootFolder().getFiles();
-    while (treeRoot.hasNext()) {
+    if (treeRoot.hasNext()) {
       var trueName = treeRoot.next();
       if (trueName) {
         var truMime = trueName.getMimeType();

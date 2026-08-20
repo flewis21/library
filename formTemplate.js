@@ -1430,7 +1430,7 @@ function createRandomForm() {
 }
 
 function dtls(callFunc, time) {
-  var appList = autoGlobe.functionRegistry.getFileList();
+  var appList = autoGlobe.functionRegistry.fileList;
   // for (var key in globalThis) {
   //   if (typeof globalThis[key] == "function") {
   //     appList.push(key);

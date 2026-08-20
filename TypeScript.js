@@ -542,7 +542,7 @@ class AutoParams {
         let rndCustomer = this.customOrder[varRnd];
         // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
         let customGroup = this.functionRegistry.paramsList.map((customerWk1, index) => {
-          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter"]; 
+          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter","driveVideoFormsFilter"]; 
           let sblx = [customerWk1.name];
           if (sblx.length > 0) {
             bl.forEach((s) => {
@@ -2969,7 +2969,7 @@ class MisStCreator {
     this.funcDos = funcDos;
     // autoGlobe.numVarRnd = randNum(funcUno.toString()); 
     // Assuming randNum is globally accessible
-    console.log("numVarRnd = " + autoGlobe.numVarRnd, autoGlobe.executed++);
+    console.log("DEBUG: line 2972\nnumVarRnd = " + autoGlobe.numVarRnd, autoGlobe.executed++);
 
     if (funcUno || funcDos) {
 
@@ -3372,14 +3372,15 @@ class MisStCreator {
                   let searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
                   this.searchResult = searchResult;
                   let eResult = fParams.find((rndS) => {
-                    return rndS.name === searchResult;
+                    return rndS.name === arrDRnd[Math.floor(Math.random() * Math.floor(arrDRnd.length))];
                   });
                   this.eResult = eResult;
                   console.log("resolved e.parameter pre-result", eResult);
                   try {
-                    JSON.parse(eResult?.toString());
-                  } catch (check) {
-                    console.log("DEBUG: line 3381\nCheck/Balance for " + eResult?.toString());
+                    console.log("DEBUG: line 3380\nCheck/Balance for " + JSON.parse(eResult?.toString()));
+                  } 
+                  catch (check) {
+                    console.log("DEBUG: line 3382\nCheck/Balance for " + eResult?.toString());
                   }
                   if (typeof eResult === "string" && eResult !== "undefined") {
                     args[declaredParamName] = objectOfS(
@@ -3487,11 +3488,17 @@ class MisStCreator {
                       //   );
                       //   payLoad = "Function not found for data generation.";
                       // }
+                      // try {
+                      //   JSON.parse(result.toString());
+                      // } 
+                      // catch (check) {
+                      //   console.log("Check/Balance for " + result.toString());
+                      // }
                       try {
-                        JSON.parse(result.toString());
+                        console.log("DEBUG: line 3498\nCheck/Balance for " + JSON.parse(result?.toString()));
                       } 
                       catch (check) {
-                        console.log("Check/Balance for " + result.toString());
+                        console.log("DEBUG: line 3501\nCheck/Balance for " + result?.toString());
                       }
 
                       args[declaredParamName] = {
@@ -3503,11 +3510,17 @@ class MisStCreator {
                     } 
                     else {
                       if (declaredParamName === "func") {
+                        // try {
+                        //   JSON.parse(result.toString());
+                        // } 
+                        // catch (check) {
+                        //   console.log("Check/Balance for " + result.toString());
+                        // }
                         try {
-                          JSON.parse(result.toString());
+                          console.log("DEBUG: line 3520\nCheck/Balance for " + JSON.parse(result?.toString()));
                         } 
                         catch (check) {
-                          console.log("Check/Balance for " + result.toString());
+                          console.log("DEBUG: line 3523\nCheck/Balance for " + result?.toString());
                         }
                         args[declaredParamName] =
                           // this.userProvidedValue !== null && this.userProvidedValue !== undefined
@@ -3518,11 +3531,17 @@ class MisStCreator {
                       } 
                       else {
                         if (declaredParamName === "varA") {
+                          // try {
+                          //   JSON.parse(result.toString());
+                          // } 
+                          // catch (check) {
+                          //   console.log("Check/Balance for " + result.toString());
+                          // }
                           try {
-                            JSON.parse(result.toString());
+                            console.log("DEBUG: line 3541\nCheck/Balance for " + JSON.parse(result?.toString()));
                           } 
                           catch (check) {
-                            console.log("Check/Balance for " + result.toString());
+                            console.log("DEBUG: line 3544\nCheck/Balance for " + result?.toString());
                           }
                           console.log(
                             "Declared parameter " +
@@ -3740,7 +3759,7 @@ class MisStCreator {
                                 } 
                                 else {
                                   if (declaredParamName === "fileX") {
-                                    let folderX = autoGlobe.functionRegistry.folderTree[autoGlobe.numVarRnd];
+                                    let folderX = autoGlobe.functionRegistry.getFolderList()[autoGlobe.numVarRnd];
                                     this.folderX = folderX;
                                     console.log("DEBUG: line 3744\nfolderX = " + folderX, autoGlobe.executed++);
                                     let folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
@@ -3788,9 +3807,11 @@ class MisStCreator {
                                     else {
                                       if (
                                         declaredParamName === "numIndex" ||
+                                        declaredParamName === "chance" ||
                                         declaredParamName === "infinitum"
                                       ) {
-                                        if (declaredParamName === "numIndex") {
+                                        if (declaredParamName === "numIndex" ||
+                                        declaredParamName === "chance") {
                                           args[declaredParamName] =
                                             // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                             //   ? this.userProvidedValue
@@ -3803,7 +3824,7 @@ class MisStCreator {
                                               // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                               //   ? this.userProvidedValue
                                               //   :
-                                              [autoGlobe.numVarRnd - 1, autoGlobe.numVarRnd];
+                                              [autoGlobe.numVarRnd - 1 + " " + autoGlobe.numVarRnd];
                                           }
                                         }
                                         resolvedArgs.push(args[declaredParamName]);
@@ -3826,11 +3847,11 @@ class MisStCreator {
                                         } 
                                         else {
                                           if (
-                                            ["tunPlay", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"].includes(
+                                            ["tunPlay", "rndTitle", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"].includes(
                                               declaredParamName,
                                             )
                                           ) {
-                                            let nameArray = ["tunPlay", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
+                                            let nameArray = ["tunPlay", "rndTitle", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
                                             this.nameArray = nameArray;
                                             let rndCoIndex = Math.floor(
                                               Math.random() * Math.floor(autoGlobe.uniqueCoArray().length),
@@ -3860,11 +3881,17 @@ class MisStCreator {
                                             } 
                                             else {
                                               if (declaredParamName === "argsObject") {
+                                                // try {
+                                                //   JSON.parse(result.toString());
+                                                // } 
+                                                // catch (check) {
+                                                //   console.log("Check/Balance for " + result.toString());
+                                                // }
                                                 try {
-                                                  JSON.parse(result.toString());
+                                                  console.log("DEBUG: line 3891\nCheck/Balance for " + JSON.parse(result?.toString()));
                                                 } 
                                                 catch (check) {
-                                                  console.log("Check/Balance for " + result.toString());
+                                                  console.log("DEBUG: line 3895\nCheck/Balance for " + result?.toString());
                                                 }
                                                 args[declaredParamName] =
                                                   // this.userProvidedValue !== null &&
