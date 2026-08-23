@@ -2928,8 +2928,6 @@ class MisCreator {
 class MisStCreator {
   constructor(func, someArgs) {
     // super(func, someArgs);
-    this.func = func;
-    this.someArgs = someArgs;
     console.log(
       "\nMisStCreator(func: " +
         func +
@@ -2938,35 +2936,23 @@ class MisStCreator {
         ")\n "
     );
     let argsX = []; // Holds function names found
-    this.argsX = argsX;
     let initialContent = []; // Renamed to clearly indicate initial, raw arguments
-    this.initialContent = initialContent;
     let holdResolvedArgsX;
-    this.holdResolvedArgsX = holdResolvedArgsX;
     let args = {}; // Arguments for the current function call
-    this.args = args;
     let resolvedArgs = []; // Resolved arguments array for the current function
-    this.resolvedArgs = resolvedArgs;
     let missingParams = []; // Parameters that couldn't be resolved
-    this.missingParams = missingParams;
 
     // let funcUno = decodeURIComponent(func);
-    // this.funcUno = funcUno;
     // let funcDos = decodeURIComponent(someArgs);
-    // this.funcDos = funcDos;
     let trueFunc = autoGlobe.trueVfalse(func);
-    this.trueFunc = trueFunc;
     console.log("trueFunc = " + trueFunc, autoGlobe.executed++);
     let trueSomeArgs = autoGlobe.trueVfalse(someArgs);
-    this.trueSomeArgs = trueSomeArgs;
     console.log("trueSomeArgs = " + trueSomeArgs, autoGlobe.executed++);
     let funcUno = trueFunc
       ? decodeURIComponent(func)
       : autoGlobe.proSort();
-    this.funcUno = funcUno;
     console.log("funcUno = " + funcUno, autoGlobe.executed++);
     let funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
-    this.funcDos = funcDos;
     // autoGlobe.numVarRnd = randNum(funcUno.toString()); 
     // Assuming randNum is globally accessible
     console.log("DEBUG: line 2972\nnumVarRnd = " + autoGlobe.numVarRnd, autoGlobe.executed++);
@@ -2982,12 +2968,9 @@ class MisStCreator {
       //   .split(",");
       // this.vals = vals;
       let arrUno = Array.isArray(func);
-      this.arrUno = arrUno;
       let arrDos = autoGlobe.trueVfalse(someArgs);
-      this.arrDos = arrDos;
       console.log("arrDos = " + arrDos, autoGlobe.executed++);
       let vals;
-      this.vals = vals;
       if (arrUno && arrDos) {
         vals = Object.values(func).toString().split(",").concat(someArgs);
       } 
@@ -3010,44 +2993,54 @@ class MisStCreator {
       vals.forEach((pro) => {
         // this.proFact = autoGlobe.trueVfalse(pro)
         let keysArrArr;
-        this.keysArrArr = keysArrArr;
+        if (true) {
+          if (false) {
+            this.keysArrArr = keysArrArr;
+            this.keyPro = keyPro;
+            this.keyProParams = keyProParams;
+            this.realItem = realItem;
+          }
+        }
         if (typeof pro !== "string" && pro !== null) {
           let proKeyValue = Object.keys(pro);
-          this.proKeyValue = proKeyValue;
+          if (true) {
+            if (false) {
+              this.proKeyValue = proKeyValue;
+            }
+          }
           keysArrArr = proKeyValue.length > 0;
         } 
         else {
           keysArrArr = false;
         }
         let keyPro = keysArrArr? pro : [pro];
-        this.keyPro = keyPro;
         let keyProParams;
-        this.keyProParams = keyProParams;
         let realItem;
-        this.realItem = realItem;
         if (keyPro) {
           let funcLimit = [];
-          this.funcLimit = funcLimit;
           let paramLimit = [];
-          this.paramLimit = paramLimit;
           keyPro?.forEach((subParam, proIndex) => {
             let subArrArr;
-            this.subArrArr = subArrArr;
+            let theSP;
+            let rtParam
             if (typeof subParam !== "string" && subParam !== null) {
               let subValue = Object.values(subParam).toString().split(",");
-              this.subValue = subValue;
               subArrArr = subValue.length > 0;
+              if (true) {
+                if (false) {
+                  this.subValue = subValue;
+                }
+              }
             } 
             else {
               subArrArr = false;
             }
             if (subArrArr && subParam.length >= 1) {
               subParam.forEach((subA, subAIndex) => {
-                let rtParamB = subA[subAIndex];
-                this.rtParamB = rtParamB;
+                rtParam = subA[subAIndex];
                 keyProParams =
                   typeof subA === "object" || Array.isArray(subA)
-                    ? crmT(rtParamB)
+                    ? crmT(rtParam)
                     : crmT(subA);
                 console.log("keyProParams = " + keyProParams, autoGlobe.executed++);
                 if (keyProParams >= 0) {
@@ -3055,8 +3048,6 @@ class MisStCreator {
                   console.log("argsX = " + argsX, autoGlobe.executed++);
                 } 
                 else {
-                  let theSP;
-                  this.theSP = theSP;
                   // keyProParams = ;
                   if (typeof subA === "object" && !Array.isArray(subA)) {
                     theSP = subA;
@@ -3065,7 +3056,7 @@ class MisStCreator {
                   else { 
                     if (Array.isArray(subA)) {
                       theSP = subA;
-                      initialContent.push(this.rtParamB);
+                      initialContent.push(rtParam);
                     } 
                     else {
                       theSP = subA;
@@ -3093,8 +3084,7 @@ class MisStCreator {
             //   realItem = false;
             // }
             if (realItem) {
-              let rtParamA = subParam[proIndex];
-              this.rtParamA = rtParamA;
+              rtParam = subParam[proIndex];
               keyProParams =
                 typeof subParam === "object" || Array.isArray(subParam)
                   ? crmT(rtParamA)
@@ -3105,8 +3095,6 @@ class MisStCreator {
                 console.log("argsX = " + argsX, autoGlobe.executed++);
               } 
               else {
-                let theSP;
-                this.theSP = theSP;
                 // keyProParams = ;
                 if (typeof subParam === "object" && !Array.isArray(subParam)) {
                   theSP = subParam;
@@ -3115,13 +3103,20 @@ class MisStCreator {
                 else {
                   if (Array.isArray(subParam)) {
                     theSP = subParam;
-                    initialContent.push(this.rtParamA);
+                    initialContent.push(rtParam);
                   } 
                   else {
                     theSP = subParam;
                     initialContent.push(subParam);
                   }
                 }
+              }
+            }
+            if (true) {
+              if (false) {
+                this.subArrArr = subArrArr;
+                this.theSP = theSP;
+                this.rtParam = rtParam;
               }
             }
           });
@@ -3131,6 +3126,12 @@ class MisStCreator {
           // if (paramLimit.length > 0) {
           //   initialContent.push(paramLimit);
           // }
+          if (true) {
+            if (false) {
+              this.funcLimit = funcLimit;
+              this.paramLimit = paramLimit;
+            }
+          }
         } 
         else {
           realItem = autoGlobe.trueVfalse(pro);
@@ -3162,15 +3163,11 @@ class MisStCreator {
         console.log("Check if there are functions to process", argsX);
         // Check if there are functions to process
         let allErrors = {};
-        this.allErrors = allErrors;
         let arrDRnd = null;
-        this.arrDRnd = arrDRnd;
         let fParams = autoGlobe.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
-        this.fParams = fParams;
         console.log("fParams = " + fParams.slice(0, 1), autoGlobe.executed++);
         console.log("global functions list length:", Object.keys(fParams).length);
         let resCount = 0;
-        this.resCount = resCount;
 
         argsX.forEach((result) => {
           // 'result' is the function name (e.g., 'renderFile')
@@ -3187,18 +3184,22 @@ class MisStCreator {
 
           let searchString = fParams.find((fP) => {
             let dP = fP.name;
-            this.dP = dP;
-            let noDP = dP === result;
-            this.noDP = noDP;
+            let noDP = dP == result;
             if (noDP) {
               dP = fP;
-              return fP.name === result;
+              return fP.name == result;
+            }
+            if (true) {
+              if (dP) {
+                this.dP = dP;
+              }
+              if (noDP) {
+                this.noDP = noDP;
+              }
             }
           });
-          this.searchString = searchString;
           console.log(JSON.stringify(searchString));
           let declaredParams = []; // Initialize here for wider scope
-          this.declaredParams = declaredParams;
 
           if (searchString && searchString.parameters) {
             declaredParams = searchString.parameters;
@@ -3214,14 +3215,11 @@ class MisStCreator {
             // --- SINGLE, CORRECT BLOCK FOR MAPPING INPUTS TO DECLARED PARAMETERS ---
             // `orderedArgs` will hold the values from `initialContent` mapped to `declaredParams` order
             let orderedArgsForCurrentFunc = [];
-            this.orderedArgsForCurrentFunc = orderedArgsForCurrentFunc;
             let contentMap = {}; // Reset contentMap for each function
-            this.contentMap = contentMap;
 
             // First, populate contentMap with any named matches (if initialContent is not just positional)
             // This part assumes initialContent might contain named arguments. If it's strictly positional, this loop can be simplified.
             let htmlArray = autoGlobe.functionRegistry.getHtmlList();
-            this.htmlArray = htmlArray;
             // [
             //   `untitled proMedia epaWebsite callBack oddChances jsGame checkOnDay uiAccess popUpOpen congressLeg congressMembers jFundamentals gnuFree myGNUFreeJS Section3.Challenge1 cors edgarFriendly editor ssForms styling theRoll theWorks userInterfaceAccess cGWI`,
             // ]
@@ -3229,7 +3227,6 @@ class MisStCreator {
             //   .split(" ");
             console.log("htmlArray = " + htmlArray, autoGlobe.executed++);
             let allFolders;
-            this.allFolders = allFolders;
             function payLoadReg() {
               let rndE = objectOfS(
                 ["parameter"],
@@ -3241,16 +3238,11 @@ class MisStCreator {
                 ],
                 autoGlobe.functionRegistry.time,
               );
-              this.rndE = rndE;
               console.log("rndE = " + rndE, autoGlobe.executed++);
               let funcUnoMis = rndE.parameter["func"];
-              this.funcUnoMis = funcUnoMis;
               let funcDosMis = rndE.parameter["args"];
-              this.funcDosMis = funcDosMis;
               let payLoad = null; // Initialize payLoad
-              this.payLoad = payLoad;
               let recurCall = autoGlobe.proSort();
-              this.recurCall = recurCall;
 
               // Ensure globalThis[funcUnoMis] exists before calling
               if (
@@ -3278,6 +3270,15 @@ class MisStCreator {
                     funcUnoMis,
                   );
                   payLoad = "Function not found for data generation.";
+                }
+              }
+              if (true) {
+                if (true) {
+                  this.rndE = rndE;
+                  this.funcUnoMis = funcUnoMis;
+                  this.funcDosMis = funcDosMis;
+                  this.payLoad = payLoad;
+                  this.recurCall = recurCall;
                 }
               }
             }
@@ -3356,7 +3357,6 @@ class MisStCreator {
                 orderedArgsForCurrentFunc,
               );
               let userProvidedValue = orderedArgsForCurrentFunc[index]; // Get the mapped value
-              this.userProvidedValue = userProvidedValue;
 
               console.log(
                 'Value of "' + declaredParamName + '" (userProvidedValue):',
@@ -3367,14 +3367,11 @@ class MisStCreator {
               // IMPORTANT: Only check `declaredParamName` here, as `paramName` would be derived from `orderedArgsForCurrentFunc`
               if (userProvidedValue === null || userProvidedValue === undefined) {
                 if (declaredParamName === "e") {
-                  let arrDRnd = appSort();
-                  this.arrDRnd = arrDRnd;
+                  arrDRnd = appSort();
                   let searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
-                  this.searchResult = searchResult;
                   let eResult = fParams.find((rndS) => {
                     return rndS.name === arrDRnd[Math.floor(Math.random() * Math.floor(arrDRnd.length))];
                   });
-                  this.eResult = eResult;
                   console.log("resolved e.parameter pre-result", eResult);
                   try {
                     console.log("DEBUG: line 3380\nCheck/Balance for " + JSON.parse(eResult?.toString()));
@@ -3435,6 +3432,14 @@ class MisStCreator {
                   }
                   console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
                   resolvedArgs.push(JSON.stringify(args[declaredParamName]));
+                  if (true) {
+                    if (searchResult) {
+                      this.searchResult = searchResult;
+                    }
+                    if (eResult) {
+                      this.eResult = eResult;
+                    }
+                  }
                 } 
                 else {
                   if (declaredParamName === "time") {
@@ -3562,10 +3567,8 @@ class MisStCreator {
                           // else {
                           // Simplified random function call logic
                           let randomFuncResult = null;
-                          this.randomFuncResult = randomFuncResult;
                           let randomFuncName =
                             fParams[Math.floor(Math.random() * fParams.length)]; //.find((fP) => fP.name !== result); // Use searchString to derive function name if needed
-                          this.randomFuncName = randomFuncName;
                           console.log("resolved varA pre-result", randomFuncName);
                           if (
                             typeof randomFuncName === "string" &&
@@ -3598,6 +3601,14 @@ class MisStCreator {
                           args[declaredParamName] = randomFuncResult;
                           // }
                           resolvedArgs.push(args[declaredParamName]);
+                          if (true) {
+                            if (randomFuncResult) {
+                              this.randomFuncResult = randomFuncResult;
+                            }
+                            if (randomFuncName) {
+                              this.randomFuncName = randomFuncName;
+                            }
+                          }
                         } 
                         else {
                           if (declaredParamName === "epaAUrl") {
@@ -3606,12 +3617,10 @@ class MisStCreator {
                             // } else {
                             console.log("DEBUG: Generating epaAUrl...");
                             let data = coUtility(this.product)[0]; // Assuming 'product' is accessible
-                            this.data = data;
                             console.log("data = " + data, autoGlobe.executed++);
                             console.log("DEBUG: data from coUtility:", data);
 
                             let generatedUrl = null;
-                            this.generatedUrl = generatedUrl;
                             if (data && typeof data.rndTitle !== "undefined") {
                               let test = productNamePartial(
                                 [data.rndTitle.replace(/,./g, "")].toString().split(" ")[
@@ -3625,13 +3634,11 @@ class MisStCreator {
                                   )
                                 ],
                               );
-                              this.test = test;
                               console.log("test = " + test, autoGlobe.executed++);
                               console.log("DEBUG: test from productNamePartial:", test);
 
                               if (test && typeof test.eparegno !== "undefined") {
                                 let test2 = productRegNo(test.eparegno);
-                                this.test2 = test2;
                                 console.log("DEBUG: test2 from productRegNo:", test2);
                                 console.log("test2 = " + test2, autoGlobe.executed++);
 
@@ -3641,16 +3648,19 @@ class MisStCreator {
                                   test2.active_ingredients.length > 0
                                 ) {
                                   let uniqueData = [];
-                                  this.uniqueData = uniqueData;
                                   test2.active_ingredients.forEach((ing) => {
                                     if (ing.active_ing) {
                                       let pIName = productIngName(ing.active_ing);
-                                      this.pIName = pIName;
                                       console.log("pIName = " + pIName, autoGlobe.executed++);
                                       if (typeof pIName !== "undefined") {
                                         uniqueData.push(
                                           pIName["items"] || pIName["first"] || pIName,
                                         );
+                                      }
+                                      if (true) {
+                                        if (false) {
+                                          this.pIName = pIName;
+                                        }
                                       }
                                     }
                                   });
@@ -3658,7 +3668,6 @@ class MisStCreator {
                                   if (uniqueData.length > 0) {
                                     // Flatten uniqueData if it's an array of arrays
                                     let flatUniqueData = [];
-                                    this.flatUniqueData = flatUniqueData;
                                     uniqueData.forEach((arr) => {
                                       if (Array.isArray(arr)) {
                                         flatUniqueData.push(...arr);
@@ -3675,17 +3684,13 @@ class MisStCreator {
                                           .toLowerCase()
                                           .includes(String(test2.eparegno).toLowerCase()),
                                     );
-                                    this.matches = matches;
 
                                     if (matches.length > 0) {
                                       let randomKey = Math.floor(
                                         Math.random() * matches.length,
                                       );
-                                      this.randomKey = randomKey;
                                       let isDataKey = matches[randomKey];
-                                      this.isDataKey = isDataKey;
                                       let randomCasNumber = isDataKey["casnumber"];
-                                      this.randomCasNumber = randomCasNumber;
 
                                       console.log(
                                         "DEBUG: randomCasNumber generated:",
@@ -3697,8 +3702,38 @@ class MisStCreator {
                                           randomCasNumber +
                                           "&onSRS=true&onChemResourceDir=true&substanceNameScope=beginswith";
                                       }
+                                      if (true) {
+                                        if (false) {
+                                          this.randomKey = randomKey;
+                                          this.isDataKey = isDataKey;
+                                          this.randomCasNumber = randomCasNumber;
+                                        }
+                                      }
+                                    }
+                                    if (true) {
+                                      if (false) {
+                                        this.flatUniqueData = flatUniqueData;
+                                      }
+                                      if (matches) {
+                                        this.matches = matches;
+                                      }
                                     }
                                   }
+                                  if (true) {
+                                    if (uniqueData && uniqueData.length > 0) {
+                                      this.uniqueData = uniqueData;
+                                    }
+                                  }
+                                }
+                                if (true) {
+                                  if (test2) {
+                                    this.test2 = test2;
+                                  }
+                                }
+                              }
+                              if (true) {
+                                if (test) {
+                                  this.test = test;
                                 }
                               }
                             }
@@ -3709,6 +3744,14 @@ class MisStCreator {
                             );
                             // }
                             resolvedArgs.push(args[declaredParamName]);
+                            if (true) {
+                              if (data) {
+                                this.data = data;
+                              }
+                              if (generatedUrl) {
+                                this.generatedUrl = generatedUrl;
+                              }
+                            }
                           } 
                           else {
                             if (
@@ -3724,12 +3767,16 @@ class MisStCreator {
                               // } else {
                               // Assuming autoGlobe.functionRegistry.gTree and fileBrowser are accessible
                               let folder = autoGlobe.functionRegistry.getFolderList()[autoGlobe.numVarRnd];
-                              this.folder = folder;
                               console.log("folder = " + folder, autoGlobe.executed++);
                               args[declaredParamName] = fileBrowser(folder).url;
                               console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
                               // }
                               resolvedArgs.push(args[declaredParamName]);
+                              if (true) {
+                                if (false) {
+                                  this.folder = folder;
+                                }
+                              }
                             } 
                             else {
                               if (declaredParamName === "object") {
@@ -3744,8 +3791,7 @@ class MisStCreator {
                                 if (declaredParamName === "file") {
                                   let rndPage =
                                     htmlArray[Math.floor(Math.random() * htmlArray.length)];
-                                  this.rndPage = rndPage;
-                                  this.args[declaredParamName] =
+                                  args[declaredParamName] =
                                     // this.userProvidedValue !== null &&
                                     // this.userProvidedValue !== undefined &&
                                     // typeof this.userProvidedValue === "string" &&
@@ -3756,30 +3802,42 @@ class MisStCreator {
                                     //   :
                                     rndPage;
                                   resolvedArgs.push(args[declaredParamName]);
+                                  if (true) {
+                                    if (false) {
+                                      this.rndPage = rndPage;
+                                    }
+                                  }
                                 } 
                                 else {
                                   if (declaredParamName === "fileX") {
                                     let folderX = autoGlobe.functionRegistry.getFolderList()[autoGlobe.numVarRnd];
-                                    this.folderX = folderX;
                                     console.log("DEBUG: line 3744\nfolderX = " + folderX, autoGlobe.executed++);
                                     let folderRoot = DriveApp.getFoldersByName(folderX); // Assuming Google Apps Script DriveApp
-                                    this.folderRoot = folderRoot;
                                     let fileXName = "undefined";
-                                    this.fileXName = fileXName;
                                     if (folderRoot.hasNext) {
                                       let fileBulk = folderRoot.next().getFiles();
-                                      this.fileBulk = fileBulk;
                                       let fileNames = [];
-                                      this.fileNames = fileNames;
                                       if (fileBulk.hasNext()) {
                                         while (fileBulk.hasNext()) {
                                           let fileUrl = fileBulk.next();
-                                          this.fileUrl = fileUrl;
                                           fileNames.push(fileUrl.getName());
+                                          if (true) {
+                                            if (fileUrl) {
+                                              this.fileUrl = fileUrl;
+                                            }
+                                          }
                                         }
                                         if (fileNames.length > 0) {
                                           fileXName =
                                             fileNames[Math.floor(Math.random() * fileNames.length)];
+                                        }
+                                      }
+                                      if (true) {
+                                        if (false) {
+                                          this.fileBulk = fileBulk;
+                                        }
+                                        if (fileNames && fileNames.length > 0) {
+                                          this.fileNames = fileNames;
                                         }
                                       }
                                     }
@@ -3787,8 +3845,17 @@ class MisStCreator {
                                       // this.userProvidedValue !== null && this.userProvidedValue !== undefined
                                       //   ? this.userProvidedValue
                                       //   :
-                                      this.fileXName;
-                                    this.resolvedArgs.push(args[declaredParamName]);
+                                      fileXName;
+                                    resolvedArgs.push(args[declaredParamName]);
+                                    if (true) {
+                                      if (folderX) {
+                                        this.folderX = folderX;
+                                        this.folderRoot = folderRoot;
+                                      }
+                                      if (fileXName) {
+                                        this.fileXName = fileXName;
+                                      }
+                                    }
                                   } 
                                   else {
                                     if (
@@ -3835,7 +3902,6 @@ class MisStCreator {
                                             Math.random() *
                                               Math.floor(autoGlobe.uniqueItemArray().length),
                                           );
-                                          this.rndItemIndex = rndItemIndex;
                                           console.log("rndItemIndex = " + rndItemIndex, autoGlobe.executed++);
                                           args[declaredParamName] =
                                             // userProvidedValue !== null && userProvidedValue !== undefined
@@ -3844,6 +3910,11 @@ class MisStCreator {
                                             autoGlobe.uniqueItemArray()[rndItemIndex]["Description"];
                                           console.log("args[declaredParamName] = " + args[declaredParamName], autoGlobe.executed++);
                                           resolvedArgs.push(args[declaredParamName]);
+                                          if (true) {
+                                            if (false) {
+                                              this.rndItemIndex = rndItemIndex;
+                                            }
+                                          }
                                         } 
                                         else {
                                           if (
@@ -3852,14 +3923,11 @@ class MisStCreator {
                                             )
                                           ) {
                                             let nameArray = ["tunPlay", "rndTitle", "coKey", "searchString", "rndKey", "search", "searchDTLS", "filterFiles", "fileName", "narrow"];
-                                            this.nameArray = nameArray;
                                             let rndCoIndex = Math.floor(
                                               Math.random() * Math.floor(autoGlobe.uniqueCoArray().length),
                                             );
-                                            this.rndCoIndex = rndCoIndex;
                                             console.log("rndCoIndex = " + rndCoIndex, autoGlobe.executed++);
                                             let tiParam = autoGlobe.uniqueCoArray()[rndCoIndex]["title"];
-                                            this.tiParam = tiParam;
                                             console.log("tiParam = " + tiParam, autoGlobe.executed++);
                                             args[nameArray[nameArray.indexOf(declaredParamName)]] =
                                               // userProvidedValue !== null && userProvidedValue !== undefined
@@ -3869,6 +3937,15 @@ class MisStCreator {
                                             resolvedArgs.push(
                                               args[nameArray[nameArray.indexOf(declaredParamName)]],
                                             );
+                                            if (true) {
+                                              if (false) {
+                                                this.nameArray = nameArray;
+                                              }
+                                              if (true) {
+                                                this.rndCoIndex = rndCoIndex;
+                                                this.tiParam = tiParam;
+                                              }
+                                            }
                                           } 
                                           else {
                                             if (declaredParamName === "stringArray") {
@@ -3934,6 +4011,11 @@ class MisStCreator {
                 }
                 resolvedArgs.push(args[declaredParamName]);
               }
+              if (true) {
+                if (userProvidedValue) {
+                  this.userProvidedValue = userProvidedValue;
+                }
+              }
             }); // End of declaredParams.forEach
 
             if (missingParams.length === 0) {
@@ -3944,6 +4026,18 @@ class MisStCreator {
               allErrors[result] =
                 `Warning: Missing parameters for ${result}: ${missingParams.join(", ")}`;
               console.warn(allErrors[result]);
+            }
+            if (true) {
+              if (orderedArgsForCurrentFunc && orderedArgsForCurrentFunc.length > 0) {
+                this.orderedArgsForCurrentFunc = orderedArgsForCurrentFunc;
+              }
+              if (contentMap && Object.keys(contentMap).length > 0) {
+                this.contentMap = contentMap;
+              }
+              if (false) {
+                this.htmlArray = htmlArray;
+                this.allFolders = allFolders;
+              }
             }
           } 
           else {
@@ -3958,13 +4052,35 @@ class MisStCreator {
           resCount++;
 
           holdResolvedArgsX = resolvedArgs;
+          if (true) {
+            if (searchString) {
+              this.searchString = searchString;
+            }
+            if (declaredParams && declaredParams.length > 0) {
+              this.declaredParams = declaredParams;
+            }
+          }
 
           // You might want to store 'args' or 'resolvedArgs' for each function in argsX if you process multiple.
           // For now, it's scoped to each iteration.
         }); // End of argsX.forEach
 
         let errorKeys = Object.keys(allErrors);
-        this.errorKeys = errorKeys;
+        if (true) {
+          if (allErrors && Object.keys(allErrors).length > 0) {
+            this.allErrors = allErrors;
+            this.errorKeys = errorKeys;
+          }
+          if (arrDRnd) {
+            this.arrDRnd = arrDRnd;
+          }
+          if (false) {
+            this.fParams = fParams;
+          }
+          if (resCount && resCount - 1 >= 0) {
+            this.resCount = resCount;
+          }
+        }
       } 
       else {
         console.log("No functions found to call in argsX.");
@@ -3975,6 +4091,13 @@ class MisStCreator {
           ":\nargs = " +
           holdResolvedArgsX?.toString().replace(/,/g, " "),
       );
+      if (true) {
+        if (false) {
+          this.arrUno = arrUno;
+          this.arrDos = arrDos;
+          this.vals = vals;
+        }
+      }
     }
     // --- Final Execution and Return ---
     // The previous structure was applying 'content' to the called functions.
@@ -3987,19 +4110,16 @@ class MisStCreator {
     // outside the `argsX.forEach` loop, especially if `argsX` has multiple functions.
 
     let finalResultData = null; // To store the output of the function call(s)
-    this.finalResultData = finalResultData;
     if (argsX) {
       if (argsX.length > 0) {
         if (argsX.length === 1) {
           let funcToCall = argsX[0];
-          this.funcToCall = funcToCall;
           // You need to decide which arguments to pass here. `resolvedArgs` from the last loop iteration
           // might not be correct if `argsX` has multiple functions.
           // Best to save the resolved args from inside the loop to a map/array.
           // For now, assuming only one function in argsX, use the `resolvedArgs` from that iteration.
           // A more robust solution would pass the `resolvedArgs` from the relevant `argsX.forEach` iteration.
           let lastResolvedArgs = holdResolvedArgsX; // This assumes only one item in argsX for now
-          this.lastResolvedArgs = lastResolvedArgs;
 
           if (typeof globalThis[funcToCall] === "function") {
             try {
@@ -4023,6 +4143,12 @@ class MisStCreator {
             console.error("Function not found:", funcToCall);
             finalResultData = `Function not found: ${funcToCall}`;
           }
+          if (true) {
+            if (true) {
+              this.funcToCall = funcToCall;
+              this.lastResolvedArgs = lastResolvedArgs;
+            }
+          }
         } 
         else {
           // Multiple functions in argsX
@@ -4043,10 +4169,15 @@ class MisStCreator {
                   this,
                   initialContent,
                 ); // Using initialContent for simplicity for now
-                this.resultForFunc = resultForFunc;
                 console.log("resultForFunc = " + resultForFunc, autoGlobe.executed++);
                 finalResultData.push({ [funcName]: resultForFunc });
-              } catch (e) {
+                if (true) {
+                  if (true) {
+                    this.resultForFunc = resultForFunc;
+                  }
+                }
+              } 
+              catch (e) {
                 console.error(
                   `Error calling ${funcName} with arguments ${JSON.stringify(initialContent)}: ${e.toString()}`,
                 );
@@ -4081,7 +4212,40 @@ class MisStCreator {
       args: initialContent, // .toString().replace(/,/g, " "), // This is the original raw args
       res: finalResultData, // The actual result of the function call(s)
     };
-    this.argsObject = argsObject;
+    if (true) {
+      if (true) {
+        this.func = func;
+        this.funcUno = funcUno;
+        this.funcDos = funcDos;
+        this.trueFunc = trueFunc;
+        this.trueSomeArgs = trueSomeArgs;
+        this.finalResultData = finalResultData;
+        this.argsObject = argsObject;
+      }
+      if (someArgs) {
+        this.someArgs = someArgs;
+      }
+      if (argsX) {
+        this.argsX = argsX;
+      }
+      if (initialContent && initialContent.length > 0) {
+        this.initialContent = initialContent;
+      }
+      if (holdResolvedArgsX) {
+        this.holdResolvedArgsX = holdResolvedArgsX;
+      }
+      if (resolvedArgs) {
+        this.resolvedArgs = resolvedArgs;
+      }
+      if (args) {
+        this.args = args;
+      }
+      if (missingParams) {
+        this.missingParams = missingParams;
+      }
+      if (false) {
+      }
+    }
   }
 }
 
@@ -4802,7 +4966,7 @@ let geneicType = function (e) {
     if (i < .4) {
       if (!e) {
         if (i < .2) {
-          base = globalThis["vidPlaylist"]?.apply(this, [rndWord()]);
+          base = globalThis["myFileJS"]?.apply(this, [rndWord()]);
         }
         else {
           if (false) {
@@ -4812,8 +4976,8 @@ let geneicType = function (e) {
               }
             };
           }
-          if (false) {
-            eQueryObject = {parameter: {action: "getData"}}
+          if (true) {
+            eQueryObject = {parameter: {func: "myFileJS"}}
             handles = startRenderer(eQueryObject);
             data = 
               {
@@ -4945,7 +5109,7 @@ let geneicType = function (e) {
                     let noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
                     let unSearch = uiCos[Math.floor(Math.random() * Object.keys(uItems.length).length)].title;
                     let uhUh = Array(noSearch,unSearch)[Math.floor(Math.random() * 2)];
-                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [uhUh]))?.argsObject.res;
+                    base = new MisStCreator(Array(["myFileJS"] + "," + [uhUh]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);
@@ -5107,7 +5271,7 @@ let geneicType = function (e) {
                     }
                   }
                   else {
-                    base = new MisStCreator(Array(["vidPlaylist"] + "," + [rndWord()]))?.argsObject.res;
+                    base = new MisStCreator(Array(["myFileJS"] + "," + [rndWord()]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);

@@ -29,7 +29,7 @@ function jFund(fx) {
       ],
     },
   };
-  var result = ContentApp.appContent(
+  var result = contentApp(
     `<!DOCTYPE html>
       <html>
         <head>
@@ -47,7 +47,7 @@ function jFund(fx) {
           JSON.stringify(this["start"]) + "\n" + arguments.callee.name,
         );
         if (fx === objMaster.objects.challenges[1]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -74,7 +74,7 @@ function jFund(fx) {
             "dynamicSentence1",
           );
         } else if (fx === objMaster.objects.challenges[2]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -118,7 +118,7 @@ function jFund(fx) {
             "dynamicSentence2",
           );
         } else if (fx === objMaster.objects.challenges[3]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -178,7 +178,7 @@ function jFund(fx) {
             "objBMI",
           );
         } else if (fx === objMaster.objects.challenges[0]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -217,7 +217,7 @@ function jFund(fx) {
           );
         }
         if (fx === objMaster.arrays.lessons[0]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -262,7 +262,7 @@ function jFund(fx) {
             "arrays",
           );
         } else if (fx === objMaster.objects.lessons[0]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -304,7 +304,7 @@ function jFund(fx) {
             "objects",
           );
         } else if (fx === objMaster.objects.lessons[2]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -352,7 +352,7 @@ function jFund(fx) {
             "loops",
           );
         } else if (fx === objMaster.objects.lessons[1]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -414,7 +414,7 @@ function jFund(fx) {
             "objMethods",
           );
         } else if (fx === objMaster.miscellaneous.section[0]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -453,7 +453,7 @@ function jFund(fx) {
             "test",
           );
         } else if (fx === objMaster.miscellaneous.section[1]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<html>
               <head></head>
               <body>
@@ -478,7 +478,7 @@ function jFund(fx) {
             "ssTest",
           );
         } else if (fx === objMaster.miscellaneous.section[2]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
               <html lang="en">
 
@@ -554,7 +554,7 @@ function jFund(fx) {
             "The Simple Webapp Trio",
           );
         } else if (fx === objMaster.miscellaneous.section[3]) {
-          return ContentApp.appContent(
+          return contentApp(
             `<!DOCTYPE html>
               <html>
                 <head><title>Journalism Web App</title></head>
@@ -648,7 +648,7 @@ function jFund(fx) {
             " ",
           );
         } else if (fx === objMaster) {
-          return ContentApp.appContent(``, {}, " ");
+          return contentApp(``, {}, " ");
         }
       })(),
       link: getUrl(ScriptApp) + "?default=jFun&fx=" + fx,
@@ -814,7 +814,7 @@ function superTest(e) {
       "\n!ed, = " +
       !e,
   );
-  var html = ContentApp.appContent(
+  var html = contentApp(
     "\n   <body id='test'>\n<a id='caller' href='<?!= link ?>'>Update</a>\n<div id='div'>Waiting...</div><br>\n<script id='gold' type='text/javascript'>\ndocument.defaultView.addEventListener('DOMContentLoaded', test);\n<?!= misc ?>\n\n</script>\n    </body>\n   ",
     {
       misc: function test(e) {

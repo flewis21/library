@@ -50,45 +50,26 @@ let strSearch = new SearchStrings();
 
 class FunctionHandle {
   constructor(e) {
-    this.e = e;
     let executed = autoGlobe.executed;
-    this.executed = executed;
     let rndE = "";
-    this.rndE = rndE;
     let mapArr = {};
-    this.mapArr = mapArr;
     let funcTres;
-    this.funcTres = funcTres;
     let tempObj = {};
-    this.tempObj = tempObj;
     let payLoad;
-    this.payLoad = payLoad;
     let htmlArray = autoGlobe.functionRegistry.getHtmlList();
-    this.htmlArray = htmlArray;
-    let rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));;
-    this.rndHtmlIndex = rndHtmlIndex;
+    let rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
     let rndPage = htmlArray[rndHtmlIndex];
-    this.rndPage = rndPage;
     let htmlTresArg;
-    this.htmlTresArg = htmlTresArg;
     let firstArg;
-    this.firstArg = firstArg;
     let funcTres0Index;
-    this.funcTres0Index = funcTres0Index;
     let funcTresIndex;
-    this.funcTresIndex = funcTresIndex;
     let htAml;
-    this.htAml = htAml;
     let options = {
       muteHttpExceptions: true,
     };
-    this.options = options;
     let driveA;
-    this.driveA = driveA;
     let fT;
-    this.fT = fT;
     let dT;
-    this.dT = dT;
 
 
     // Logging
@@ -145,7 +126,11 @@ class FunctionHandle {
       //   })
       // this.pSort = pSort;
       let rSorted = autoGlobe.paramsSort()
-      this.rSorted = rSorted;
+      if (false) {
+        if (rSorted) {
+          this.rSorted = rSorted;
+        }
+      }
       // console.log("These is the sorted customGroup",pSort);
       tempObj = rSorted[Math.floor(Math.random() * Math.floor(rSorted.length))];
       mapArr[tempObj?.name] = [];
@@ -177,7 +162,11 @@ class FunctionHandle {
       else {
         if (e && e.parameter) {
           let objData = Object.keys(e.parameter);
-          this.objData = objData;
+          if (false) {
+            if (objData) {
+              this.objData = objData;
+            }
+          }
           console.log("objData = " + e.parameter[objData[0]], objData);
           if (objData.length === 0) {
             mapArr[tempObj?.name || autoGlobe.func] = [];
@@ -201,7 +190,12 @@ class FunctionHandle {
             else {
               if (typeof rndE === "object" && rndE !== null) {
                 let rndEAP = Object.values(rndE);
-                this.rndEAP = rndEAP;
+                if (true) {
+                  
+                }
+                if (rndEAP) {
+                  this.rndEAP = rndEAP;
+                }
                 if (rndEAP && rndEAP.length > 0) {
                   e = objectOfS(
                     ["parameter"],
@@ -303,7 +297,7 @@ class FunctionHandle {
                           if (dT) {
                             htAml = renderTemplate(dT, driveA);
                             // payLoad.data["app"] = getUrlResponse(dT, options);
-                            // let hTAml = rendTemplate(
+                            // hTAml = rendTemplate(
                             //   payLoad.data["app"]?.app,
                             //   {
                             //     pL: payLoad,
@@ -316,7 +310,7 @@ class FunctionHandle {
                             if (!dT) {
                               htAml = renderTemplate(getScriptUrl(), driveA);
                             // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
-                            // let hTAml = rendTemplate(
+                            // hTAml = rendTemplate(
                             //   payLoad.data["app"]?.app,
                             //   {
                             //     pL: payLoad,
@@ -375,13 +369,9 @@ class FunctionHandle {
               }
               else {
                 let argsEd;
-                this.argsEd = argsEd;
                 let argsAP;
-                this.argsAP = argsAP;
                 let aOKeys;
-                this.aOKeys = aOKeys;
                 let argsedObj;
-                this.argsedObj = argsedObj;
                 if (!e.parameter["func"] && !e.parameter["args"]) {
                   if (typeof globalThis[e.parameter[objData[0]]] !== "function") {
                     argsEd = null;
@@ -613,7 +603,7 @@ class FunctionHandle {
                                 if (dT) {
                                   htAml = renderTemplate(dT, driveA);
                                   // payLoad.data["app"] = getUrlResponse(dT, options);
-                                  // let hTAml = rendTemplate(
+                                  // hTAml = rendTemplate(
                                   //   payLoad.data["app"]?.app,
                                   //   {
                                   //     pL: payLoad,
@@ -626,7 +616,7 @@ class FunctionHandle {
                                   if (!dT) {
                                     htAml = renderTemplate(getScriptUrl(), driveA);
                                   // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
-                                  // let hTAml = rendTemplate(
+                                  // hTAml = rendTemplate(
                                   //   payLoad.data["app"]?.app,
                                   //   {
                                   //     pL: payLoad,
@@ -686,6 +676,20 @@ class FunctionHandle {
                     }
                   }
                 }
+                if (true) {
+                  if (argsEd) {
+                    this.argsEd = argsEd;
+                  }
+                  if (argsAP) {
+                    this.argsAP = argsAP;
+                  }
+                  if (aOKeys) {
+                    this.aOKeys = aOKeys;
+                  }
+                  if (argsedObj) {
+                    this.argsedObj = argsedObj;
+                  }
+                }
               }
             }
           }
@@ -694,8 +698,6 @@ class FunctionHandle {
     }
     let funcUno;
     let funcDos;
-    this.funcUno = funcUno;
-    this.funcDos = funcDos;
     if (e && e.parameter && (e.parameter["func"] && e.parameter["args"])) {
     funcUno = Array(e.parameter["func"]);
     funcDos = Array(e.parameter["args"]);
@@ -717,6 +719,71 @@ class FunctionHandle {
       } 
     }
     console.log("exec and args\n" + [funcUno, funcDos], executed++);
+    if (true) {
+      if (true) {
+        this.e = e;
+      }
+      if (executed) {
+        this.executed = executed;
+      }
+      if (false) {
+        this.htmlArray = htmlArray;
+      }
+      if (rndHtmlIndex) {
+        this.rndHtmlIndex = rndHtmlIndex;
+      }
+      if (rndPage) {
+        this.rndPage = rndPage;
+      }
+      if (false) {
+        this.options = options;
+      }
+      if (rndE) {
+        this.rndE = rndE;
+      }
+      if (mapArr && Object.keys(mapArr).length > 0) {
+        this.mapArr = mapArr;
+      }
+      if (true) {
+        this.funcUno = funcUno;
+      }
+      if (true) {
+        this.funcDos = funcDos;
+      }
+      if (funcTres) {
+        this.funcTres = funcTres;
+      }
+      if (tempObj && Object.keys(tempObj).length > 0) {
+        this.tempObj = tempObj;
+      }
+      if (payLoad) {
+        this.payLoad = payLoad;
+      }
+      if (htmlTresArg) {
+        this.htmlTresArg = htmlTresArg;
+      }
+      if (firstArg) {
+        this.firstArg = firstArg;
+      }
+      if (funcTres0Index) {
+        this.funcTres0Index = funcTres0Index;
+      }
+      if (funcTresIndex) {
+        this.funcTresIndex = funcTresIndex;
+      }
+      if (htAml) {
+        this.htAml = htAml;
+      }
+      if (driveA) {
+        this.driveA = driveA;
+      }
+      if (fT) {
+        this.fT = fT;
+      }
+      if (dT) {
+        this.dT = dT;
+      }
+    }
     // return {
     //   exec: funcUno,
     //   args: funcDos,

@@ -993,7 +993,7 @@
 //             },
 // })                                                //})
 //                     }
-// return ContentApp.appContent(content)
+// return contentApp(content)
 // }
 
 function myFileJS(e) {

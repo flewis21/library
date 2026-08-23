@@ -1,7 +1,7 @@
 // The main function that generates your web app HTML
 // var crmGWI = function (fx) {
 //   console.log(
-//     autoP.functionRegistry.time +
+//     autoGlobe.functionRegistry.time +
 //     "\n" +
 //     arguments.callee.name +
 //     "\n!" +
@@ -12,7 +12,7 @@
 
 //   // --- First ContentApp call: For the main form HTML ---
 //   var indexContent = (function index() {
-//     console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
+//     console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
 //     return ContentApp.appContent(
 //       `
 //     <h1>General Work Invoice</h1>
@@ -468,7 +468,7 @@
 
 function crmGWI(fx) {
   console.log(
-    autoP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -536,7 +536,7 @@ function crmGWI(fx) {
   </html>`,
     {
       index: (function index() {
-        console.log(autoP.functionRegistry.time + "\n" + arguments.callee.name);
+        console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
         return contentApp(
           `<!DOCTYPE html>
   <html>
@@ -1152,7 +1152,7 @@ function crmGWI(fx) {
 
 var workEd = function (ed) {
   console.log(
-    autoP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\n!" +
@@ -1191,7 +1191,7 @@ var workEd = function (ed) {
     sheetName,
     sicSliceArray,
     numCols,
-    autoP.functionRegistry.time,
+    autoGlobe.functionRegistry.time,
   ).myFileX;
 };
 
@@ -1211,7 +1211,7 @@ var workEd = function (ed) {
 //   convertToObjects(
 //     [[arguments.callee.name]],
 //     ["name"],
-//     autoP.functionRegistry.time,
+//     autoGlobe.functionRegistry.time,
 //   ),
 // )[0];
 // console.log("Fake formData for quote acceptance:", formData);
@@ -1333,6 +1333,7 @@ var acceptSsUrl = "";
  * @return {string} A confirmation message or URL.
  */
 var acceptQuote = function (formDataJson) {
+  let autoPFN = autoGlobe.paramsSort();
   let formData;
   try {
     // ... (rest of your existing code to parse formData)
@@ -1342,7 +1343,7 @@ var acceptQuote = function (formDataJson) {
         convertToObjects(
           [[formatDataJson || autoPFN.paramsList[Math.floor(Math.random() * autoPFN.paramsList.length)].name, "007", "Bugatti"]],
           ["name", "number", "car"],
-          autoP.functionRegistry.time,
+          autoGlobe.functionRegistry.time,
         ),
       )[0];
       console.log("Fake formData for quote acceptance:", formData);
@@ -1374,7 +1375,7 @@ var acceptQuote = function (formDataJson) {
       sheetId,
       colArray,
       arrayData,
-      autoP.functionRegistry.time,
+      autoGlobe.functionRegistry.time,
     );
     console.log(
       "SpreadsheetApp.openByUrl(rawSpreadSheet.myFileX) ",
@@ -1496,7 +1497,7 @@ var updateQuote = function (formDataJson) {
         convertToObjects(
           [[autoPFN[Math.floor(Math.random() * Math.floor(autoPFN.length))].name, "007", "McClaren"]],
           ["name", "number", "car"],
-          autoP.functionRegistry.time,
+          autoGlobe.functionRegistry.time,
         ),
       )[0];
       // console.log("Fake formData for quote updatance:", formData);
@@ -1529,7 +1530,7 @@ var updateQuote = function (formDataJson) {
     //   sheetId,
     //   colArray,
     //   arrayData,
-    //   autoP.functionRegistry,time,
+    //   autoGlobe.functionRegistry,time,
     // );
     // console.log(
     //   "SpreadsheetApp.openByUrl(rawSpreadSheet) ",

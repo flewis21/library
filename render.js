@@ -1726,13 +1726,13 @@ class RendFile {
                   <div class="responsive-section transparent">
                   <div class="responsive-section transparent">
                   <div class="receipt transparent responsive-section">
-                  <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix container">
+                  <table class="centered highlight transparent z-depth-1 responsive-section static-fix container">
                     <thead class="transparent">
                     </thead>
                     <tbody class="transparent">
                       <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
                         <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                          <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix">
+                          <table class="centered highlight transparent z-depth-1 responsive-section static-fix">
                             <tbody class="transparent">
                               <td class="transparent">
                                 <div class="row transparent">
@@ -1745,9 +1745,6 @@ class RendFile {
                                             <?!= renTemp ?>
                                           </div>
                                         </article>
-                                        <a id="tro" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -1756,14 +1753,6 @@ class RendFile {
                                         </div>
                                       </aside>
                                       <article class="transparent vid-list">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
-                                        <a id="lti" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -1775,14 +1764,6 @@ class RendFile {
                                         </div>
                                       </article>
                                       <article class="transparent vid-list">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
-                                        <a id="rpc" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -1794,14 +1775,6 @@ class RendFile {
                                         </div>
                                       </article>
                                       <article class="transparent vid-list">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
-                                        <a id="rdi" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -1813,14 +1786,6 @@ class RendFile {
                                         </div>
                                       </article>
                                       <article class="transparent vid-list">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
-                                        <a id="ccm" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -1832,14 +1797,6 @@ class RendFile {
                                         </div>
                                       </article>
                                       <article class="transparent vid-list">
-                                        <article class="transparent">
-                                          <div class="row">
-                                            <?!= renTemp ?>
-                                          </div>
-                                        </article>
-                                        <a id="beb" href="javascript:void(0)">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail transparent" />
-                                        </a>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
                                           <div class="vid-info">
@@ -2283,7 +2240,6 @@ class RendTemplate {
     let executed = autoGlobe.executed;
     this.executed = executed;
     console.log(autoGlobe.functionRegistry.time);
-    console.log("argsObject before blob & tmp processing", argsObject);
     let tmp = HtmlService.createTemplate(blob);
     this.tmp = tmp;
     if (argsObject) {
@@ -2311,11 +2267,11 @@ class RendTemplate {
         return "Error in renderTemplate tmp" + error;
       }
     }
-    console.log("argsObject after tmp processing", tmp);
     try {
       if (shortType === "html"  || shortPar === "html") {
         if (shortPar === "html") {
-          let shortHtmlPayL = new TentApp(shortData,
+          console.log("argsObject before blob & tmp processing", argsObject);
+          let shortHtmlPayL = contentApp(shortData,
             {
               driveT: shortPar,
             },
@@ -2327,10 +2283,12 @@ class RendTemplate {
           //   // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
           //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
           this.html = shortHtmlPayL;
+          console.log("argsObject after tmp processing", shortHtmlPayL);
         }
         else {
           if (shortType === "html") {
-            let shortHtmlPL = new TentApp(shortInfo,
+            console.log("argsObject before blob & tmp processing", tmp.evaluate().getContent());
+            let shortHtmlPL = contentApp(shortInfo,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -2353,11 +2311,13 @@ class RendTemplate {
               // // // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
               // // .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
             this.html = shortHtmlPL;
+            console.log("argsObject after tmp processing", shortHtmlPL);
           }
         }
       }
       else {
-        let shortHtml = new TentApp(
+        console.log("argsObject before blob & tmp processing", argsObject);
+        let shortHtml = contentApp(
           `
         <html id="renderTemplate">
           <head>
@@ -2377,7 +2337,7 @@ class RendTemplate {
               <![endif]-->
             </style>
           </head>
-          <body>
+          <body class="transparent">
             <nav class="flex-div responsive-section transparent static-fix">
               <div class="nav-left flex-div responsive-section">
                 <img src="<?!= global_logo.getContent() ?>" class="logo menu-icon" />
@@ -2392,7 +2352,7 @@ class RendTemplate {
               </div>
             </nav>
             <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
-            <main class="responsive-section float-left">
+            <main class="transparent responsive-section float-left">
               <header class="transparent banner responsive-section">
                 <div id="player1" class="row card-panel transparent list-container grid" style="display: none"></div>
                 <div id="iframePlayer" class="row transparent" style="display: none"></div>
@@ -2403,18 +2363,18 @@ class RendTemplate {
                   </strong>
                 </label>
               </header>
-              <div class="center row responsive-section">
+              <div class="transparent center row responsive-section">
               <div class="card-panel transparent responsive-section">
-              <div class="responsive-section">
-              <div class="responsive-section">
+              <div class="transparent responsive-section">
+              <div class="transparent responsive-section">
               <div class="receipt transparent responsive-section">
-              <table class="striped centered highlight transparent z-depth-5 responsive-section static-fix container">
+              <table class="centered highlight transparent z-depth-1 responsive-section static-fix container">
                 <thead class="transparent" >
                 </thead>
                 <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
                   <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
                     <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                      <table class="striped centered highlight purple z-depth-5 responsive-section static-fix">
+                      <table class="centered highlight transparent z-depth-1 responsive-section static-fix">
                         <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
                           <td class="transparent">
                             <div class="transparent row responsive-section">
@@ -2428,10 +2388,6 @@ class RendTemplate {
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                      <iframe id="dmi" src="<?!= global_sea_icn.getContent() ?>" class="thumbnail"></iframe>
-                                    // <a id="dmi" href="<?!= drivemI ?>" target="_blank">
-                                    //   <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    // </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2445,14 +2401,6 @@ class RendTemplate {
                                     </div>
                                   </aside>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="del" href="<?!= driveL ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2465,14 +2413,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="qua" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2485,14 +2425,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="ddi" href="<?!= drivedI ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2505,14 +2437,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <aside class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="ama" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2523,14 +2447,6 @@ class RendTemplate {
                                     </div>
                                   </aside>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="vsd" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2542,14 +2458,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="ccc" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2561,14 +2469,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <article class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="sli" href="javascript:void(0)">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2580,14 +2480,6 @@ class RendTemplate {
                                     </div>
                                   </article>
                                   <aside class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
-                                        <?!= renTemp ?>
-                                      </div>
-                                    </article>
-                                    <a id="drd" href="<?!= driveD ?>" target="_blank">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" class="thumbnail" />
-                                    </a>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
                                       <div class="vid-info">
@@ -2663,6 +2555,7 @@ class RendTemplate {
         //   // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
         this.html = shortHtml;
+        console.log("argsObject after tmp processing", shortHtml);
       }
     } 
     catch (error) {
@@ -3103,7 +2996,7 @@ var renderTemplate = function(blob, argsObject, title) {
     console.log("event; renderTemplate called: title -", title);
   }
   let html = new RendTemplate(blob, argsObject, title).html;
-  return html.tmp
+  return HtmlService.createTemplate(html)
     .evaluate()
     .setTitle(title)
     // .append(shortHtml)

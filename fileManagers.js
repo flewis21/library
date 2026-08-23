@@ -1666,7 +1666,7 @@ function sheetsFileManager(fileX, folder, time) {
     if (!folder) {
       var folder = "Sheets";
     }
-    var folderId = folderIdGlobal(folder, start);
+    var folderId = folderIdGlobal(folder, autoGlobe.functionRegistry.start);
     var idToName = SpreadsheetApp.openById(fileX).getName();
     var file = DriveApp.getRootFolder().getFilesByName(idToName);
     while (file.hasNext()) {

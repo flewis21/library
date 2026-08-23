@@ -639,7 +639,7 @@
                       // console.log("result index: " + index);
                       let tubeUrl = val.youtubeUrl;
                       let webUrl = val.webAddressUrl;
-                      if (webUrl && webUrl !== null) {
+                      while (webUrl && webUrl !== null) {
                         console.log("local storage web results: " + againCap);
                         // window.open(new URL(webUrl), "_self");
                         // let linkFollow = document.createElement("a");
