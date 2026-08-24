@@ -241,18 +241,18 @@
           });
           
         const fetchSuggestions = debounce((query) => {
-          input.addEventListener("input", (event) => {
+          input.addEventListener("change", (event) => {
             console.log("event; input event: ", JSON.stringify(event.target))
             if (String(event.target.value).length < 1) {
               return
             }
-          })
           let qTemp;
-          if (query) {
+          if (String(event.target.value).length >= 1) {
             // suggestionsDiv.innerHTML = '';
             window.scrollTo(0,0);
             qTemp = query
             input.addEventListener('select', (event) => {
+              if (true) {
               // if (event.key === 'Enter') {
                 // let filContent = suggestions.filter(item => 
                 //     String(item).toLowerCase() === event.target.value.toLowerCase()
@@ -920,12 +920,14 @@
               //     return
               //   }
               // }
+            }
             })
             // localStorage.setItem("gsSearch", input.value);
             // againCap = localStorage.getItem("gsSearch");
             // input.blur();
             // return;
-          }
+          // }
+          // })
           // againCap = localStorage.getItem("gsSearch");
           // if (String(againCap).indexOf(query) > -1) {
           //   input.addEventListener('input', (event) => {
@@ -1080,7 +1082,7 @@
                     //   // });
                     // }
                     if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
-                      input.addEventListener("change", (event) => {
+                      input.addEventListener("input", (event) => {
                         if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
                           const div = document.createElement('div');
                           div.textContent = suggestion.description;
@@ -1260,6 +1262,8 @@
               suggestionsDiv.innerHTML = '';
             }
           }
+          }
+          })
         }, 300);
 
         // const fetchResults = debounce((query) => {
