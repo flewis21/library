@@ -1747,7 +1747,7 @@ class RendFile {
                                         </article>
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
                                           </div>
                                         </div>
@@ -1755,7 +1755,7 @@ class RendFile {
                                       <article class="transparent vid-list">
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <header class="transparent">
                                               <h3><a href="">Legal Title:</a></h3>
                                             </header>
@@ -1766,7 +1766,7 @@ class RendFile {
                                       <article class="transparent vid-list">
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <header class="transparent">
                                               <h3><a href="">Rights of Possession and Control:</a></h3>
                                             </header>
@@ -1777,7 +1777,7 @@ class RendFile {
                                       <article class="transparent vid-list">
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <header class="transparent">
                                               <h3><a href="">Right of Disposal:</a></h3>
                                             </header>
@@ -1788,7 +1788,7 @@ class RendFile {
                                       <article class="transparent vid-list">
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <header class="transparent">
                                               <h3><a href="">Freedom from Competing Claims:</a></h3>
                                             </header>
@@ -1799,7 +1799,7 @@ class RendFile {
                                       <article class="transparent vid-list">
                                         <div class="flex-div transparent">
                                           <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info">
+                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
                                             <header class="transparent">
                                               <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
                                             </header>
@@ -2180,33 +2180,18 @@ var  renderFile = function(file, argsObject, title) {
 class RendTemplate {
   constructor (blob, argsObject, title) {
     // super();
-    this.blob = blob;
-    this.argsObject = argsObject;
     let shortType = argsObject?.payL?.pL?.type;
-    this.payType = shortType;
     let shortPar = argsObject?.payL?.type;
-    this.parType = shortPar;
     let shortData = argsObject?.payL?.data;
-    this.payData = shortData;
     let shortInfo = argsObject?.payL?.message?.info;
-    this.payInfo = shortInfo;
     let shortDataPL = argsObject?.payL?.pL?.data;
-    this.payDataPL = shortDataPL;
     let shortDataD = argsObject?.payL?.pL?.dataData;
-    this.payDataD = shortDataD;
     let shortDataI = argsObject?.payL?.pL?.dataIndex;
-    this.payDataI = shortDataI;
     let shortFeed = argsObject?.payL?.message?.feed;
-    this.payMFeed = shortFeed;
     let shortLink = argsObject?.payL?.pL?.link;
-    this.payLink = shortLink;
     let shortM = argsObject?.payL?.message;
-    this.payM = shortM;
     let shortMContent = argsObject?.payL?.message?.content;
-    this.payMContent = shortMContent;
     let shortPL = argsObject?.payL?.pL;
-    this.payPL = shortPL;
-    this.title = title;
     if (blob) {
       console.log("event; RendTemplate blob received ", blob);
     }
@@ -2238,15 +2223,13 @@ class RendTemplate {
             ")",
     );
     let executed = autoGlobe.executed;
-    this.executed = executed;
     console.log(autoGlobe.functionRegistry.time);
     let tmp = HtmlService.createTemplate(blob);
-    this.tmp = tmp;
     if (argsObject) {
       try {
+        let keys = false;
         if (typeof argsObject === "object") {
-          let keys = Object.keys(argsObject);
-          this.keys = keys;
+          keys = Object.keys(argsObject);
           keys.forEach(function (key) {
             tmp[key] = argsObject[key];
             // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
@@ -2254,12 +2237,16 @@ class RendTemplate {
         }
         else {
           if (typeof argsObject === "string") {
-            let keys = Object.keys([argsObject]);
-            this.keys = keys;
+            keys = Object.keys([argsObject]);
             keys.forEach(function (key) {
               tmp[key] = [argsObject][key];
               // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
             });
+          }
+        }
+        if (true) {
+          if (true) {
+            this.keys = keys;
           }
         }
       } 
@@ -2268,10 +2255,11 @@ class RendTemplate {
       }
     }
     try {
+      let html = false;
       if (shortType === "html"  || shortPar === "html") {
         if (shortPar === "html") {
           console.log("argsObject before blob & tmp processing", argsObject);
-          let shortHtmlPayL = contentApp(shortData,
+          html = contentApp(shortData,
             {
               driveT: shortPar,
             },
@@ -2282,13 +2270,12 @@ class RendTemplate {
           //   // .append(shortHtml)
           //   // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
           //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-          this.html = shortHtmlPayL;
-          console.log("argsObject after tmp processing", shortHtmlPayL);
+          console.log("argsObject after tmp processing", html);
         }
         else {
           if (shortType === "html") {
             console.log("argsObject before blob & tmp processing", tmp.evaluate().getContent());
-            let shortHtmlPL = contentApp(shortInfo,
+            html = contentApp(shortInfo,
               {
                 renTemp: tmp.evaluate().getContent(),
                 driveA: JSON.stringify(argsObject),
@@ -2310,14 +2297,13 @@ class RendTemplate {
               // // // .append(shortHtml)
               // // // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
               // // .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-            this.html = shortHtmlPL;
-            console.log("argsObject after tmp processing", shortHtmlPL);
+            console.log("argsObject after tmp processing", html);
           }
         }
       }
       else {
         console.log("argsObject before blob & tmp processing", argsObject);
-        let shortHtml = contentApp(
+        html = contentApp(
           `
         <html id="renderTemplate">
           <head>
@@ -2368,20 +2354,24 @@ class RendTemplate {
               <div class="transparent responsive-section">
               <div class="transparent responsive-section">
               <div class="receipt transparent responsive-section">
-              <table class="centered highlight transparent z-depth-1 responsive-section static-fix container">
+              <table class="centered highlight transparent z-depth-2 responsive-section static-fix container">
                 <thead class="transparent" >
                 </thead>
                 <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
                   <tr class="transparent" style="justify-content: space-around;border-radius: 3%;height: auto;display: block;margin: auto;">
                     <td class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
-                      <table class="centered highlight transparent z-depth-1 responsive-section static-fix">
+                      <table class="centered highlight transparent z-depth-2 responsive-section static-fix">
                         <tbody class="transparent" style="vertical-align: top;text-align: left;flex-flow: row wrap;grid-column: 1;grid-row: 1;align-content: flex-start;z-index: 0;height: 100%;">
                           <td class="transparent">
                             <div class="transparent row responsive-section">
                               <section class="transparent responsive-section static-fix">
                                 <header class="transparent responsive-section list-container grid">
                                   <h2>Power</h2>
-                                  <p> Is the conveyance of power and authority an objective, measurable quantity?</p>
+                                  <div class="vid-info">
+                                    <p class="toolbar-icon"> 
+                                      Is the conveyance of power and authority an objective, measurable quantity?
+                                    </p>
+                                  </div>
                                   <aside class="transparent responsive-section card-panel vid-list">
                                     <article class="transparent responsive-section card-panel static-fix container">
                                       <div class="row responsive-section static-fix">
@@ -2390,108 +2380,110 @@ class RendTemplate {
                                     </article>
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <p>
-                                          <i>   
-                                            No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
-                                            <?!= JSON.stringify(driveM) ?>
-                                          </i>
-                                        </p>
-                                      </div>
+                                      <?!= JSON.stringify(driveM) ?>
                                     </div>
                                   </aside>
+                                  <div class="vid-info">
+                                    <p class="toolbar-icon">
+                                      <i>   
+                                        No, the conveyance of power and authority is not inherently an objective, measurable quantity. Here's why:\n
+                                      </i>
+                                    </p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <?!= drivedD ?>
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Subjectivity in Definition:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
-                                      </div>
+                                      <?!= drivedD ?>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Subjectivity in Definition:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <?!= driveT ?>
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Qualitative Aspects:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
-                                      </div>
+                                      <?!= driveT ?>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Qualitative Aspects:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <?!= drivedI ?>
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Contextual Dependence:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
-                                      </div>
+                                      <?!= drivedI ?>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Contextual Dependence:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
+                                  </div>
                                   <aside class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <i>
-                                          However, there are some aspects that can be measured or assessed to some degree:
-                                        </i>
-                                      </div>
                                     </div>
                                   </aside>
+                                  <div class="vid-info">
+                                    <p class="toolbar-icon">
+                                      <i>
+                                        However, there are some aspects that can be measured or assessed to some degree:
+                                      </i>
+                                    </p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Visible Demonstrations:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
-                                      </div>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Visible Demonstrations:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Compliance and Obedience:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
-                                      </div>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Compliance and Obedience:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
+                                  </div>
                                   <article class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">Social Influence:</a></h3>
-                                        </header>
-                                        <p style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
-                                      </div>
                                     </div>
                                   </article>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">Social Influence:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
+                                  </div>
                                   <aside class="transparent responsive-section card-panel vid-list">
                                     <div class="flex-div">
                                       <img src="<?!= global_sea_icn.getContent() ?>" />
-                                      <div class="vid-info">
-                                        <header class="responsive-section">
-                                          <h3><a href="javascript:void(0)">In conclusion:</a></h3>
-                                        </header>
-                                        <p style="text-align: left">
-                                        While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
-                                        </p>
-                                      </div>
                                     </div>
                                   </aside>
+                                  <div class="vid-info">
+                                    <header class="responsive-section">
+                                      <h3><a href="javascript:void(0)">In conclusion:</a></h3>
+                                    </header>
+                                    <p class="toolbar-icon" style="text-align: left">
+                                    While some aspects of the conveyance of power and authority can be measured or assessed, it's crucial to acknowledge the inherent limitations and the significant role of subjective interpretation in understanding these complex phenomena.
+                                    </p>
+                                  </div>
                                 </header>
                               </section>
                             </div>
@@ -2554,8 +2546,12 @@ class RendTemplate {
         //   // .append(shortHtml)
         //   // .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-        this.html = shortHtml;
-        console.log("argsObject after tmp processing", shortHtml);
+        console.log("argsObject after tmp processing", html);
+      }
+      if (true) {
+        if (true) {
+          this.html = html;
+        }
       }
     } 
     catch (error) {
@@ -2568,6 +2564,51 @@ class RendTemplate {
     // this.css = builtStyling();
     // this.schedule = dateTime(new Date());
     // this.research = geneFrame(seoSheet(coUtility()[0].rndTitle).url)
+    if (true) {
+      if (true) {
+        this.blob = blob;
+        this.argsObject = argsObject;
+        this.title = title;
+        this.executed = executed;
+        this.tmp = tmp;
+      }
+      if (shortType) {
+        this.payType = shortType;
+      }
+      if (shortPar) {
+        this.parType = shortPar;
+      }
+      if (shortData) {
+        this.payData = shortData;
+      }
+      if (shortInfo) {
+        this.payInfo = shortInfo;
+      }
+      if (shortDataPL) {
+        this.payDataPL = shortDataPL;
+      }
+      if (shortDataD) {
+        this.payDataD = shortDataD;
+      }
+      if (shortDataI) {
+        this.payDataI = shortDataI;
+      }
+      if (shortFeed) {
+        this.payMFeed = shortFeed;
+      }
+      if (shortLink) {
+        this.payLink = shortLink;
+      }
+      if (shortM) {
+        this.payM = shortM;
+      }
+      if (shortMContent) {
+        this.payMContent = shortMContent;
+      }
+      if (shortPL) {
+        this.payPL = shortPL;
+      }
+    }
   }
 
   static templateRender (blob, argsObject, title) {

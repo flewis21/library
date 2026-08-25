@@ -271,7 +271,7 @@
                         input.blur();
                         input.disabled = true
                         // localStorage.setItem("gsSearch", event.target.value);
-                        serverside("vidPlaylist", [qTemp])
+                        serverside("vidPlaylist", [String(qTemp)])
                         .then((done) => {
                           try {
                             // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
@@ -655,6 +655,328 @@
                         .then((load) => {
                           localStorage.setItem("ssSearch", event.target.value);
                           // console.log("Data; Url for reLoad ", load.data);
+          
+          // Filter the local list instead of making a server call
+          contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
+          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+          suggestContent = contentList.filter(item => 
+            String(item.description).toLowerCase().includes(event.target.value.toLowerCase())
+          );
+          
+          window.scrollTo(0,0);
+          // let confirmation = null;
+          let suggestL = suggestContent?.length;
+          let userClicked = false;
+          let install = 0;
+          if (suggestL > 0) {
+            // let i = 0;
+            // let l = suggestContent.length
+            // while (userClicked === false) {
+              // for (i,l;i<l;i++) {
+                suggestContent?.forEach((suggestion, index) => {
+                  // console.log(suggestion)
+                  // let suggestion = suggestContent[i]
+                  // const div = document.createElement('div');
+                  // div.textContent = suggestion.description;
+                  // div.classList.add("card-panel", "receipt", "btn-large");
+                  // div.addEventListener('click', () => {
+                  //   input.value = suggestion.description;
+                  //   let confirmation;
+                  //   if (suggestion.youtubeURL) {
+                  //     confirmation = window.confirm(
+                  //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                  //     );
+                  //     if (confirmation) {
+                  //       if (suggestion.youtubeURL) {
+                  //         window.open(suggestion.youtubeUrl, "_blank");
+                  //       }
+                  //       else {
+                  //         if (suggestion.webAddressUrl) {
+                  //           window.open(suggestion.webAddressUrl, "_blank");
+                  //           // document.location.href = suggestion.webAddressUrl;
+                  //         }
+                  //       }
+                  //     }
+                  //     suggestionsDiv.innerHTML = '';
+                  //     return;
+                  //   }
+                  //   else {
+                  //     if (suggestion.webAddressUrl) {
+                  //       confirmation = window.confirm(
+                  //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                  //       );
+                  //     }
+                  //     if (confirmation) {
+                  //       if (suggestion.youtubeURL) {
+                  //         window.open(suggestion.youtubeUrl, "_blank");
+                  //       }
+                  //       else {
+                  //         if (suggestion.webAddressUrl) {
+                  //           window.open(suggestion.webAddressUrl, "_blank");
+                  //           // document.location.href = suggestion.webAddressUrl;
+                  //         }
+                  //       }
+                  //     }
+                  //     suggestionsDiv.innerHTML = '';
+                  //     return;
+                  //   }
+                  //   install++
+                  //   userClicked = install;
+                  //   console.log(" User clicked; Left-Click Button ", userClicked);
+                  // });
+                  // suggestionsDiv.appendChild(div);
+                  input.addEventListener('keydown', (event) => {
+                    // if (event.key === 'Tab') {
+                    //   // suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           suggestion?.youtubeUrl,
+                    //         );
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl, "_blank");
+                    //             return;
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               window.open(suggestion.webAddressUrl, "_blank");
+                    //               // document.location.href = suggestion.webAddressUrl;
+                    //               return;
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //           return;
+                    //         }
+                    //         // else {
+                    //         //   if (!confirmation) {
+                    //         //     // suggestionsDiv.innerHTML = '';
+                    //         //     input.blur();
+                    //         //     return;
+                    //         //   }
+                    //         // }
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             suggestion?.webAddressUrl,
+                    //           );
+                    //         }
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl, "_blank");
+                    //             return;
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               window.open(suggestion.webAddressUrl, "_blank");
+                    //               // document.location.href = suggestion.webAddressUrl;
+                    //               return;
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //           return;
+                    //         }
+                    //         // else {
+                    //         //   if (!confirmation) {
+                    //         //     // suggestionsDiv.innerHTML = '';
+                    //         //     input.blur();
+                    //         //     return;
+                    //         //   }
+                    //         // }
+                    //       }
+                    //       return;
+                    //     }
+                    //     // userClicked++
+                    //     // console.log(" User clicked; Tab ", userClicked);
+                    //     // return
+                    //   // });
+                    // }
+                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
+                      input.addEventListener("input", (event) => {
+                        // if (String(event.target.value).length < 1) {
+                        //   return
+                        // }
+                        if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
+                          const div = document.createElement('div');
+                          div.textContent = suggestion.description;
+                          div.classList.add("receipt", "btn-large");
+                          div.addEventListener('click', () => {
+                            input.value = suggestion.description;
+                            let confirmation;
+                            if (suggestion.youtubeURL) {
+                              confirmation = window.confirm(
+                                "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                              );
+                              if (confirmation) {
+                                if (suggestion.youtubeURL) {
+                                  window.open(suggestion.youtubeUrl, "_blank");
+                                }
+                                else {
+                                  if (suggestion.webAddressUrl) {
+                                    window.open(suggestion.webAddressUrl, "_blank");
+                                    // document.location.href = suggestion.webAddressUrl;
+                                  }
+                                }
+                              }
+                              suggestionsDiv.innerHTML = '';
+                              return;
+                            }
+                            else {
+                              if (suggestion.webAddressUrl) {
+                                confirmation = window.confirm(
+                                  "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                                );
+                              }
+                              if (confirmation) {
+                                if (suggestion.youtubeURL) {
+                                  window.open(suggestion.youtubeUrl, "_blank");
+                                }
+                                else {
+                                  if (suggestion.webAddressUrl) {
+                                    window.open(suggestion.webAddressUrl, "_blank");
+                                    // document.location.href = suggestion.webAddressUrl;
+                                  }
+                                }
+                              }
+                              suggestionsDiv.innerHTML = '';
+                              return;
+                            }
+                            install++
+                            userClicked = install;
+                            console.log(" User clicked; Left-Click Button ", userClicked);
+                          });
+                          suggestionsDiv.appendChild(div);
+                          // return
+                        }
+                      })
+                    } 
+                    else {
+                      // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
+                        // if (index && suIndexLen < suggestContent?.length) {
+                        //   while (suIndexLen < suggestContent?.length) {
+                        //     input.blur();
+                        //     input.disabled = true
+                            let suIndexLen = index + 1;
+                            // if (suIndexLen >= suggestContent?.length) {
+                              // input.addEventListener("input", (event) => {
+                              // })
+                            // }
+                          // }
+                          // return
+                        // }
+                      // }
+                    }
+
+
+                    // // Filter the local list instead of making a server call
+                    // localList = remoteSuggestionsCache[againCap] || [];
+                    // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+                    // suggestions = localList.filter(item => 
+                    //   String(item.description).toLowerCase().includes(query.toLowerCase())
+                    // );
+
+                    // window.scrollTo(0,0);
+                    // // let confirmation = null;
+                    // if (suggestions?.length > 0) {
+                    //   suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     const div = document.createElement('div');
+                    //     div.textContent = suggestion.description;
+                    //     div.classList.add("card-panel", "receipt", "btn-large");
+                    //     div.addEventListener('click', () => {
+                    //       input.value = suggestion.description;
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                    //         );
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl);
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               document.location.href = suggestion.webAddressUrl;
+                    //             }
+                    //           }
+                    //         }
+                    //         suggestionsDiv.innerHTML = '';
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                    //           );
+                    //           if (confirmation) {
+                    //             if (suggestion.youtubeURL) {
+                    //               window.open(suggestion.youtubeUrl);
+                    //             }
+                    //             else {
+                    //               if (suggestion.webAddressUrl) {
+                    //                 document.location.href = suggestion.webAddressUrl;
+                    //               }
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //         }
+                    //       }
+                    //     });
+                    //     suggestionsDiv.appendChild(div);
+                    //   });
+                    // }
+                    // if (event.key === 'Tab') {
+                    //   suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     if (suggestion && suggestion?.description.includes(event.target.value)) {
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           suggestion?.youtubeUrl,
+                    //         );
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             suggestion?.webAddressUrl,
+                    //           );
+                    //         }
+                    //       }
+                    //       if (confirmation) {
+                    //         if (suggestion.youtubeURL) {
+                    //           window.open(suggestion.youtubeUrl);
+                    //         }
+                    //         else {
+                    //           if (suggestion.webAddressUrl) {
+                    //             document.location.href = suggestion.webAddressUrl;
+                    //           }
+                    //         }
+                    //         suggestionsDiv.innerHTML = '';
+                    //       }
+                    //       else {
+                    //         suggestionsDiv.innerHTML = '';
+                    //         input.blur();
+                    //       }
+                    //     }
+                    //     return
+                    //   });
+                    // }
+                    // return;
+                    // install++
+                    // userClicked = install;
+                    // console.log("User clicked; Tab or Enter: ", userClicked)
+                  });
+                });
+                // if (userClicked) {
+                //   break;
+                // }
+              // }
+            // }
+          }
+          else {
+            if (suggestContent.length === 0) {
+              suggestionsDiv.innerHTML = '';
+            }
+          }
                           let linkFollow = document.createElement("a");
                           linkFollow.href = load.data + "?q=" + webUrl;
                           // console.log("the match: " + linkFollow.href);
@@ -943,325 +1265,6 @@
           //     suggestionsDiv.innerHTML = '';
           //   }
           // }
-          
-          // Filter the local list instead of making a server call
-          contentList = localSuggestionsCache["allMatches"] || [];
-          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          suggestContent = contentList.filter(item => 
-            String(item.description).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          window.scrollTo(0,0);
-          // let confirmation = null;
-          let suggestL = suggestContent?.length;
-          let userClicked = false;
-          let install = 0;
-          if (suggestL > 0) {
-            // let i = 0;
-            // let l = suggestContent.length
-            // while (userClicked === false) {
-              // for (i,l;i<l;i++) {
-                suggestContent?.forEach((suggestion, index) => {
-                  // console.log(suggestion)
-                  // let suggestion = suggestContent[i]
-                  // const div = document.createElement('div');
-                  // div.textContent = suggestion.description;
-                  // div.classList.add("card-panel", "receipt", "btn-large");
-                  // div.addEventListener('click', () => {
-                  //   input.value = suggestion.description;
-                  //   let confirmation;
-                  //   if (suggestion.youtubeURL) {
-                  //     confirmation = window.confirm(
-                  //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                  //     );
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   else {
-                  //     if (suggestion.webAddressUrl) {
-                  //       confirmation = window.confirm(
-                  //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                  //       );
-                  //     }
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   install++
-                  //   userClicked = install;
-                  //   console.log(" User clicked; Left-Click Button ", userClicked);
-                  // });
-                  // suggestionsDiv.appendChild(div);
-                  input.addEventListener('keydown', (event) => {
-                    // if (event.key === 'Tab') {
-                    //   // suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
-                    //         }
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
-                    //       }
-                    //       return;
-                    //     }
-                    //     // userClicked++
-                    //     // console.log(" User clicked; Tab ", userClicked);
-                    //     // return
-                    //   // });
-                    // }
-                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
-                      input.addEventListener("input", (event) => {
-                        if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
-                          const div = document.createElement('div');
-                          div.textContent = suggestion.description;
-                          div.classList.add("receipt", "btn-large");
-                          div.addEventListener('click', () => {
-                            input.value = suggestion.description;
-                            let confirmation;
-                            if (suggestion.youtubeURL) {
-                              confirmation = window.confirm(
-                                "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                              );
-                              if (confirmation) {
-                                if (suggestion.youtubeURL) {
-                                  window.open(suggestion.youtubeUrl, "_blank");
-                                }
-                                else {
-                                  if (suggestion.webAddressUrl) {
-                                    window.open(suggestion.webAddressUrl, "_blank");
-                                    // document.location.href = suggestion.webAddressUrl;
-                                  }
-                                }
-                              }
-                              suggestionsDiv.innerHTML = '';
-                              return;
-                            }
-                            else {
-                              if (suggestion.webAddressUrl) {
-                                confirmation = window.confirm(
-                                  "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                                );
-                              }
-                              if (confirmation) {
-                                if (suggestion.youtubeURL) {
-                                  window.open(suggestion.youtubeUrl, "_blank");
-                                }
-                                else {
-                                  if (suggestion.webAddressUrl) {
-                                    window.open(suggestion.webAddressUrl, "_blank");
-                                    // document.location.href = suggestion.webAddressUrl;
-                                  }
-                                }
-                              }
-                              suggestionsDiv.innerHTML = '';
-                              return;
-                            }
-                            install++
-                            userClicked = install;
-                            console.log(" User clicked; Left-Click Button ", userClicked);
-                          });
-                          suggestionsDiv.appendChild(div);
-                          // return
-                        }
-                      })
-                    } 
-                    else {
-                      // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
-                        // if (index && suIndexLen < suggestContent?.length) {
-                        //   while (suIndexLen < suggestContent?.length) {
-                        //     input.blur();
-                        //     input.disabled = true
-                            let suIndexLen = index + 1;
-                            // if (suIndexLen >= suggestContent?.length) {
-                              // input.addEventListener("input", (event) => {
-                              // })
-                            // }
-                          // }
-                          // return
-                        // }
-                      // }
-                    }
-
-
-                    // // Filter the local list instead of making a server call
-                    // localList = remoteSuggestionsCache[againCap] || [];
-                    // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-                    // suggestions = localList.filter(item => 
-                    //   String(item.description).toLowerCase().includes(query.toLowerCase())
-                    // );
-
-                    // window.scrollTo(0,0);
-                    // // let confirmation = null;
-                    // if (suggestions?.length > 0) {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     const div = document.createElement('div');
-                    //     div.textContent = suggestion.description;
-                    //     div.classList.add("card-panel", "receipt", "btn-large");
-                    //     div.addEventListener('click', () => {
-                    //       input.value = suggestion.description;
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl);
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               document.location.href = suggestion.webAddressUrl;
-                    //             }
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                    //           );
-                    //           if (confirmation) {
-                    //             if (suggestion.youtubeURL) {
-                    //               window.open(suggestion.youtubeUrl);
-                    //             }
-                    //             else {
-                    //               if (suggestion.webAddressUrl) {
-                    //                 document.location.href = suggestion.webAddressUrl;
-                    //               }
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //         }
-                    //       }
-                    //     });
-                    //     suggestionsDiv.appendChild(div);
-                    //   });
-                    // }
-                    // if (event.key === 'Tab') {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.includes(event.target.value)) {
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
-                    //         }
-                    //       }
-                    //       if (confirmation) {
-                    //         if (suggestion.youtubeURL) {
-                    //           window.open(suggestion.youtubeUrl);
-                    //         }
-                    //         else {
-                    //           if (suggestion.webAddressUrl) {
-                    //             document.location.href = suggestion.webAddressUrl;
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         suggestionsDiv.innerHTML = '';
-                    //         input.blur();
-                    //       }
-                    //     }
-                    //     return
-                    //   });
-                    // }
-                    // return;
-                    // install++
-                    // userClicked = install;
-                    // console.log("User clicked; Tab or Enter: ", userClicked)
-                  });
-                });
-                // if (userClicked) {
-                //   break;
-                // }
-              // }
-            // }
-          }
-          else {
-            if (suggestContent.length === 0) {
-              suggestionsDiv.innerHTML = '';
-            }
-          }
           }
           })
         }, 300);
