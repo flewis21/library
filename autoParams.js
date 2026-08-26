@@ -261,7 +261,7 @@ class FunctionHandle {
                     else {
                       if (htmlArray.includes(funcTres)) {
                         funcTresIndex = htmlArray.findIndex(function (element) {
-                          return element === this?.funcTres;
+                          return element === funcTres;
                         });
                         htmlTresArg = htmlArray[funcTresIndex];
                       }
@@ -273,31 +273,31 @@ class FunctionHandle {
                       payLoad["type"] = "url";
                       payLoad["data"] = null;
                       if (!funcTres) {
-                        htAml = getScriptUrl() + "?file=" + rndPage;
+                        htAml =  getScriptUrl() + "?file=" + rndPage;
                       } 
                       else {
                         fT = fileBrowser(null, funcTres);
-                        payLoad.data = fT?.url
+                        // payLoad.data = fT?.url
                         if (!fT?.url) {
                           dT = driveManager(funcTres)
-                          payLoad.data = dT;
+                          // payLoad.data = dT;
                         }
-                        driveA = 
-                          {
-                            payL: 
-                              {
-                                pL: payLoad,
-                              },
-                          };
+                        driveA = globalHandleGetData((fT || dT))
+                          // {
+                          //   payL: 
+                          //     {
+                          //       pL: payLoad,
+                          //     },
+                          // };
                         // payLoad.data["app"] = getUrlResponse(fT?.url || getScriptUrl(), options);
                         if (fT?.url) {
-                          htAml = renderTemplate(fT.url, driveA);
+                          htAml =  contentCDN(fT.url, driveA);
                         }
                         else {
                           if (dT) {
-                            htAml = renderTemplate(dT, driveA);
+                            htAml =  contentCDN(dT, driveA);
                             // payLoad.data["app"] = getUrlResponse(dT, options);
-                            // hTAml = rendTemplate(
+                            // return rendTemplate(
                             //   payLoad.data["app"]?.app,
                             //   {
                             //     pL: payLoad,
@@ -308,9 +308,9 @@ class FunctionHandle {
                           }
                           else {
                             if (!dT) {
-                              htAml = renderTemplate(getScriptUrl(), driveA);
+                              htAml =  contentCDN(getScriptUrl(), driveA);
                             // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
-                            // hTAml = rendTemplate(
+                            // return rendTemplate(
                             //   payLoad.data["app"]?.app,
                             //   {
                             //     pL: payLoad,
@@ -321,7 +321,7 @@ class FunctionHandle {
                             }
                           }
                         }
-                        // htAml = renderTemplate(
+                        // return renderTemplate(
                         //   payLoad.data["app"]?.app,
                         //   {
                         //     pL: payLoad,
@@ -338,11 +338,11 @@ class FunctionHandle {
                   else { 
                     if (htmlTresArg) {
                       try {
-                        driveA = 
-                          {
-                            fileParam: funcTres,
-                          }
-                        htAml = renderFile(
+                        driveA = globalHandleGetData(funcTres);
+                          // {
+                          //   fileParam: funcTres,
+                          // }
+                        htAml =  renderFile(
                           funcTres,
                           driveA,
                           new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
@@ -580,30 +580,30 @@ class FunctionHandle {
                             payLoad["type"] = "url";
                             payLoad["data"] = null;
                             if (funcTres === "undefined") {
-                              htAml = getScriptUrl() + "?file=" + rndPage;
+                              htAml =  getScriptUrl() + "?file=" + rndPage;
                             } 
                             else {
                               fT = fileBrowser(null, funcTres);
-                              payLoad.data = fT?.url
+                              // payLoad.data = fT?.url
                               if (!fT?.url) {
                                 dT = driveManager(funcTres);
-                                payLoad.data = dT;
+                                // payLoad.data = dT;
                               }
-                              driveA = 
-                                {
-                                  payL: 
-                                    {
-                                      pL: payLoad,
-                                    },
-                                };
+                              driveA = globalHandleGetData((fT || dT))
+                                // {
+                                //   payL: 
+                                //     {
+                                //       pL: payLoad,
+                                //     },
+                                // };
                               if (fT?.url) {
-                                htAml = renderTemplate(fT.url, driveA);
+                                htAml =  contentCDN(fT.url, driveA);
                               }
                               else {
                                 if (dT) {
-                                  htAml = renderTemplate(dT, driveA);
+                                  htAml =  contentCDN(dT, driveA);
                                   // payLoad.data["app"] = getUrlResponse(dT, options);
-                                  // hTAml = rendTemplate(
+                                  // return rendTemplate(
                                   //   payLoad.data["app"]?.app,
                                   //   {
                                   //     pL: payLoad,
@@ -614,9 +614,9 @@ class FunctionHandle {
                                 }
                                 else {
                                   if (!dT) {
-                                    htAml = renderTemplate(getScriptUrl(), driveA);
+                                    htAml =  contentCDN(getScriptUrl(), driveA);
                                   // payLoad.data["app"] = getUrlResponse(getScriptUrl(), options);
-                                  // hTAml = rendTemplate(
+                                  // return rendTemplate(
                                   //   payLoad.data["app"]?.app,
                                   //   {
                                   //     pL: payLoad,
@@ -628,7 +628,7 @@ class FunctionHandle {
                                 }
                               }
                               // payLoad.data["app"] = getUrlResponse(this.fT?.url || getScriptUrl(), options);
-                              // htAml = renderTemplate(
+                              // return renderTemplate(
                               //   payLoad.data["app"]?.app,
                               //   {
                               //     pL: payLoad,

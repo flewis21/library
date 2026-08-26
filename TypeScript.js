@@ -4977,16 +4977,16 @@ let geneicType = function (e) {
             };
           }
           if (true) {
-            eQueryObject = {parameter: {func: "myFileJS"}}
+            eQueryObject = {parameter: {file: data}}
             handles = startRenderer(eQueryObject);
             data = 
               {
-               argsObject: 
-                {
-                  func: handles.funcUno,
-                  args: handles.funcDos,
-                  res: handles.funcUno + "," + handles.funcDos,
-                }
+               argsObject: handles
+                // {
+                //   func: handles.funcUno,
+                //   args: handles.funcDos,
+                //   res: handles.funcUno + "," + handles.funcDos,
+                // }
               } //,String(handles.funcDos);
             let dataErrors = data?.allErrors;
             let dataFunc = data?.argsObject?.func;

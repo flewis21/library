@@ -655,6 +655,22 @@
                         .then((load) => {
                           localStorage.setItem("ssSearch", event.target.value);
                           // console.log("Data; Url for reLoad ", load.data);
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = load.data + "?q=" + webUrl;
+                          // console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_blank";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // window.location.href = load.data
+                          // input.value = event.target.value;
+                          input.disabled = false;
+                          input.focus();
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
           
           // Filter the local list instead of making a server call
           contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
@@ -977,22 +993,6 @@
               suggestionsDiv.innerHTML = '';
             }
           }
-                          let linkFollow = document.createElement("a");
-                          linkFollow.href = load.data + "?q=" + webUrl;
-                          // console.log("the match: " + linkFollow.href);
-                          linkFollow.id = "linkFOLLOW";
-                          linkFollow.target = "_blank";
-                          linkFollow.rel = "noopener noreferrer";
-                          document.body.appendChild(linkFollow);
-                          document.getElementById("linkFOLLOW").click();
-                          document.getElementById("linkFOLLOW").remove();
-                          // window.location.href = load.data
-                          // input.value = event.target.value;
-                          input.disabled = false;
-                          input.focus();
-                        })
-                        .catch((fail) => {
-                          console.log("Failed to load ", fail);
                           input.disabled = false;
                           input.focus();
                         });

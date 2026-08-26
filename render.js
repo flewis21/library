@@ -209,9 +209,6 @@ class AppList {
 class Renderer {
   constructor (payLoad, argsObject, title) {
     // super()
-    this.payLoad = payLoad;
-    this.argsObject = argsObject;
-    this.title = title;
     if (payLoad) {
       console.log("event; Renderer payLoad received ", payLoad);
     }
@@ -233,10 +230,10 @@ class Renderer {
         return geneicType(payLoad.parameter.url);
       }
       else {
+        let kOL = false;
         // Early return for serverside action
         if (payLoad && payLoad.parameter && (!payLoad.parameter["file"] && !payLoad.parameter["args"] && !payLoad.parameter["func"])) {
-          let kOL = Object.keys(payLoad.parameter);
-          this.kOL = kOL;
+          kOL = Object.keys(payLoad.parameter);
           console.log("payLoad.parameter[kOL[0]] !== file && args && func , kOL\n" + payLoad.parameter[kOL[0]], kOL);
           if (kOL.length > 0) {
             // let funcU = handles["exec"];
@@ -245,7 +242,6 @@ class Renderer {
             // let base = this[libName].createFunctionResult(funcU, funcD);
             // console.log("base = " + base, executed++);
             dataOR = geneicType(payLoad);
-            this.dataOR = dataOR;
             // const data = this[libName].globalHandleGetData();
             // Logger.log(
             //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -259,7 +255,6 @@ class Renderer {
               // let base = this[libName].createFunctionResult(funcU, funcD);
               // console.log("base = " + base, executed++);
               dataOR = geneicType();
-              this.dataOR = dataOR;
               // const data = this[libName].globalHandleGetData();
               // Logger.log(
               //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -269,12 +264,11 @@ class Renderer {
         }
         else {
           if (payLoad && payLoad.parameter && (payLoad.parameter["file"] || payLoad.parameter["args"] || payLoad.parameter["func"])) {
-            let kOL = Object.keys(payLoad.parameter);
-            this.kOL = kOL;
+            kOL = Object.keys(payLoad.parameter);
             console.log("payLoad.parameter[kOL[0]] = file || args || func\n" + payLoad.parameter[kOL[0]], kOL);
             if (payLoad.parameter["file"]) {
-              return funcHandle(payLoad);
-              // dataOR = funcHandle(payLoad); // this[libName].globalHandleGetData(data);
+              // return funcHandle(payLoad);
+              dataOR = funcHandle(payLoad); // this[libName].globalHandleGetData(data);
             }
             else {
               // let funcU = handles["exec"];
@@ -283,7 +277,6 @@ class Renderer {
               // let base = this[libName].createFunctionResult(funcU, funcD);
               // console.log("base = " + base, executed++);
               dataOR = geneicType(payLoad);
-              this.dataOR = dataOR;
               // Logger.log(
               //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
               // );
@@ -292,7 +285,6 @@ class Renderer {
           else {
             if (payLoad && typeof payLoad === "string") {
               dataOR = geneicType(payLoad);
-              this.dataOR = dataOR;
             }
             else {
               if (!payLoad) {
@@ -302,7 +294,6 @@ class Renderer {
                 // let base = this[libName].createFunctionResult(funcU, funcD);
                 // console.log("base = " + base, executed++);
                 dataOR = geneicType();
-                this.dataOR = dataOR;
                 // const data = this[libName].globalHandleGetData();
                 // Logger.log(
                 //   "globalHandleGetData returned:\n" + JSON.stringify(dataOR),
@@ -311,24 +302,29 @@ class Renderer {
             }
           }
         }
+        if (true) {
+          if (kOL) {
+            this.kOL = kOL;
+          }
+        }
       }
     }
     let file = autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * 19)]
-    this.file = file
-    let pLData = dataOR?.pL?.data;
-    this.pLData = pLData;
-    let dataSearch = dataOR?.message?.info || autoGlobe.vidVals[Object.keys(autoGlobe.vidVals)[Math.floor(Math.random() * Math.floor(Object.keys(autoGlobe.vidVals).length))]].Video;
-    this.dataSearch = dataSearch;
+    let pLData = dataOR?.driveA?.pL?.data || dataOR?.pL?.data;
+    let dataSearch = dataOR?.driveA?.message?.info || dataOR?.message?.info || autoGlobe.vidVals[Object.keys(autoGlobe.vidVals)[Math.floor(Math.random() * Math.floor(Object.keys(autoGlobe.vidVals).length))]].Video;
+    let mIndex = false;
+    let mContent = false;
+    let html = false;
+    let htmlPayL = false;
+    let htmlPL = false;
     if (Array.isArray(pLData)) {
       if (pLData.length > 0) {
         // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // this.blob = blob;
-        let mIndex = renderFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-        this.mIndex = mIndex;
+        mIndex = renderFile(file, dataOR?.driveA || dataOR, title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // let mCDN = new ContentCDN(dataOR?.payL?.mess age?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
         // this.mCDN = mCDN;
-        let mContent = dataOR?.message?.content;
-        this.mContent = mContent;
+        mContent = dataOR?.driveA?.message?.content || dataOR?.message?.content;
         // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
         // this.mInfo = mInfo;
         // let html = blob?.html;
@@ -337,12 +333,9 @@ class Renderer {
         // this.htmlPayL = htmlPayL;
         // let htmlPL = blob?.htmlPL;
         // this.htmlPL = htmlPL;
-        let html = mIndex?.getContent();
-        this.html = html;
-        let htmlPayL = mIndex?.htmlPayL;
-        this.htmlPayL = htmlPayL;
-        let htmlPL = mIndex?.htmlPL;
-        this.htmlPL = htmlPL;
+        html = mIndex?.getContent();
+        htmlPayL = mIndex?.htmlPayL;
+        htmlPL = mIndex?.htmlPL;
         // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
       }
     }
@@ -351,12 +344,10 @@ class Renderer {
         if (pLData !== null && Object.keys(pLData).length > 0 && !pLData?.myVar && !pLData?.myNewArr && !Object.keys(pLData)[0]?.rndTitle && typeof Object.keys(pLData)[0] !== "number") {
           // let blob = new RendTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // this.blob = blob;
-          let mIndex = renderFile(file, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-          this.mIndex = mIndex;
+          mIndex = renderFile(file, dataOR?.driveA || dataOR, title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // let mCDN = new ContentCDN(dataOR?.payL?.message?.info, pLData,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
           // this.mCDN = mCDN;
-          let mContent = dataOR?.payL?.message?.content;
-          this.mContent = mContent;
+          mContent = dataOR?.driveA?.payL?.message?.content || dataOR?.payL?.message?.content;
           // let mInfo = new ClassifyFiles(dataOR?.payL?.message?.info);
           // this.mInfo = mInfo;
           // let html = blob?.html;
@@ -365,12 +356,9 @@ class Renderer {
           // this.htmlPayL = htmlPayL;
           // let htmlPL = blob?.htmlPL;
           // this.htmlPL = htmlPL;
-          let html = mIndex?.html;
-          this.html = html;
-          let htmlPayL = mIndex?.htmlPayL;
-          this.htmlPayL = htmlPayL;
-          let htmlPL = mIndex?.htmlPL;
-          this.htmlPL = htmlPL;
+          html = mIndex?.html;
+          htmlPayL = mIndex?.htmlPayL;
+          htmlPL = mIndex?.htmlPL;
           // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
         }
       }
@@ -380,13 +368,45 @@ class Renderer {
             // let mInfo = new ClassifyFiles(pLData);
             let matchTemp = {};
             matchTemp.searchString = dataSearch
-            this.mInfo = matchTemp;
-            // let mCDN = contCDN(mInfo.urlTest || mInfo.fbSearchR, dataOR.pL,  title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-            let blob = renderTemplate(pLData, dataOR, title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
-            this.mCDN = blob;
               // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
+            if (true) {
+              if (matchTemp.searchString) {
+                let validSearch = new ValidUrlResult(matchTemp.searchString).validatedResult.hostname
+                if (validSearch) {
+                  this.mInfo = matchTemp;
+                  let mCDN = contentCDN(matchTemp.searchString, dataOR?.driveA?.pL || dataOR?.pL,  title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+                  this.mCDN = mCDN;
+                }
+                else {
+                  if (true) {
+                    let blob = renderTemplate(pLData, dataOR?.driveA || dataOR, title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
+                    this.mCDN = blob;
+                  }
+                }
+              }
+            }
           }
         }
+      }
+    }
+    if (true) {
+      if (true) {
+        this.payLoad = payLoad;
+        this.argsObject = argsObject;
+        this.title = title;
+        this.dataOR = dataOR;
+        this.file = file
+        this.pLData = pLData;
+        this.dataSearch = dataSearch;
+        this.mIndex = mIndex;
+        this.mContent = mContent;
+        this.html = html;
+      }
+      if (htmlPayL) {
+        this.htmlPayL = htmlPayL;
+      }
+      if (htmlPL) {
+        this.htmlPL = htmlPL;
       }
     }
   }
@@ -716,8 +736,6 @@ class ContentTemplate {
 class ContCDN {
   constructor (url, argsObject) {
     // super();
-    this.url = url;
-    this.argsObject = argsObject;
     if (url) {
       console.log("event; ContCDN url received ", url);
     }
@@ -728,7 +746,6 @@ class ContCDN {
     try {
       console.log("cdnData argsObject before tmp processing", argsObject);
       let tmp = HtmlService.createHtmlOutputFromFile("cors");
-      this.tmp = tmp;
       // if (argsObject) {
       //   if (typeof argsObject === "object") {
       //     let keys = Object.keys(argsObject);
@@ -758,7 +775,6 @@ class ContCDN {
       // );
       //Early return
       let payType = argsObject?.pL?.type;
-      this.payType = payType;
       console.log("type\n" + payType, argsObject?.pL);
       // let mContent = argsObject?.message?.content;
       // this.mContent = mContent;
@@ -766,19 +782,21 @@ class ContCDN {
       // this.cdnOutput = cdnOutput;
       // let mInfo = argsObject?.message?.info;
       // this.mInfo = mInfo;
+      let locObj = false;
+      let wATitle = false;
+      let html = false;
       if (payType !== "url" && payType !== "text") {
+        if (true) {
+        }
         if (argsObject?.message?.content) {
           console.log("From DriveFiles: contentMessage = " + argsObject?.message?.content);
           console.log("message content\n" + argsObject?.message?.content, argsObject?.message);
-          let locObj = 
+          locObj = 
             {
               drivemC: argsObject?.message?.content,
             }
-          this.locObj = locObj;
-          let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          this.wATitle = wATitle;
-          let html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
-          this.html = html;
+          wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           // return HtmlService.createHtmlOutput(html)
           //   // .evaluate()
           //   .setTitle(wATitle)
@@ -792,15 +810,12 @@ class ContCDN {
         if (argsObject?.message?.info && payType === "text") {
           console.log("From DriveFiles: infoMessage = " + argsObject?.message?.info);
           console.log("message info\n" + argsObject?.message?.info, argsObject?.message);
-          let locObj = 
+          locObj = 
             {
               drivemC: argsObject?.message?.content,
             }
-          this.locObj = locObj;
-          let wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-          this.wATitle = wATitle;
-          let html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
-          this.html = html;
+          wATitle = argsObject?.message?.title || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
+          html = contentApp(tmp.append(stylesSleep.cCDNRunIt.getContent()).getContent(),locObj,wATitle);
           // return tmp
           //   // .evaluate()
           //   .setTitle(wATitle)
@@ -811,16 +826,32 @@ class ContCDN {
         }
       }
       let pData = argsObject?.pL?.data;
-      this.pData = pData;
       if ((argsObject?.message?.info || pData) && payType === "url") {
-        let wATitle =  argsObject?.message?.title || new ValidUrlResult(mInfo)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
-        this.wATitle = wATitle;
+        wATitle =  argsObject?.message?.title || new ValidUrlResult(argsObject?.message?.info)?.validatedResult?.pathname.split("/")[3] || new ValidUrlResult(getScriptUrl())?.validatedResult?.pathname.split("/")[3];
         console.log("From DriveFiles: mInfo = " + (argsObject?.message?.info || pData));
         // return tmp
         //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         //   .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         //   .setContent(seoCapital((mInfo || pData) || wATitle))
         //   .setTitle(wATitle);
+      }
+      if (true) {
+        if (true) {
+          this.tmp = tmp;
+        }
+        if (payType) {
+          this.payType = payType;
+        }
+        if (pData) {
+          this.pData = pData;
+        }
+        if (locObj) {
+          this.locObj = locObj;
+        }
+        if (true) {
+          this.wATitle = wATitle;
+          this.html = html;
+        }
       }
     }
     catch (erR) {
@@ -836,6 +867,12 @@ class ContCDN {
     //       .map((key) => key + "=" + this.argsObject[key])
     //       .join("&"),
     // );
+    if (true) {
+      if (true) {
+        this.url = url;
+        this.argsObject = argsObject;
+      }
+    }
   }
 
 
@@ -968,7 +1005,7 @@ var contentCDN = function(url, argsObject) {
     if (tmp) {
       console.log("DEBUG: line 1669\ncontentCDN tmp before processing\n", JSON.stringify(tmp));
       return tmp
-        .evaluate()
+        // .evaluate()
         .setTitle(title)
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) //Important for CORS
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
@@ -1637,20 +1674,15 @@ class RendFile {
       console.log("event; RendFile title received ", title);
     }
     // super();
-    this.file = file;
-    this.argsObject = argsObject;
-    this.title = title;
     try {
       if (file) {
         let htmlList = autoGlobe.functionRegistry.getHtmlList();
-        this.htmlList = htmlList;
         if (htmlList.indexOf(file) !== -1) { 
           let tmp = HtmlService.createTemplateFromFile(file);
-          this.tmp = tmp;
           if (argsObject) {
+            let keys = false;
             if (typeof argsObject === "object") {
-              let keys = Object.keys(argsObject);
-              this.keys = keys;
+              keys = Object.keys(argsObject);
               keys.forEach(function (key) {
                 tmp[key] = argsObject[key];
                 // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
@@ -1658,12 +1690,16 @@ class RendFile {
             }
             else {
               if (typeof argsObject === "string") {
-                let keys = Object.keys([argsObject]);
-                this.keys = keys;
+                keys = Object.keys([argsObject]);
                 keys.forEach(function (key) {
                   tmp[key] = [argsObject][key];
                   // console.log("event; argsObject read: " + JSON.stringify(tmp), autoGlobe.executed);
                 });
+              }
+            }
+            if (true) {
+              if (keys) {
+                this.keys = keys;
               }
             }
           }
@@ -1737,77 +1773,77 @@ class RendFile {
                               <td class="transparent">
                                 <div class="row transparent">
                                   <section class="transparent">
-                                      <header class="card-panel transparent list-container grid">
+                                    <header class="card-panel transparent list-container grid">
                                       <h2>Owe</h2>
                                       <aside class="card-panel transparent vid-list">
-                                        <article class="transparent">
+                                        <article class="transparent toolbar-icon z-index: 5">
                                           <div class="row">
                                             <?!= renTemp ?>
                                           </div>
                                         </article>
                                         <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <p> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
-                                          </div>
+                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
                                         </div>
                                       </aside>
-                                      <article class="transparent vid-list">
-                                        <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <header class="transparent">
-                                              <h3><a href="">Legal Title:</a></h3>
-                                            </header>
-                                            <p> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
-                                          </div>
-                                        </div>
-                                      </article>
-                                      <article class="transparent vid-list">
-                                        <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <header class="transparent">
-                                              <h3><a href="">Rights of Possession and Control:</a></h3>
-                                            </header>
-                                            <p> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
-                                          </div>
-                                        </div>
-                                      </article>
-                                      <article class="transparent vid-list">
-                                        <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <header class="transparent">
-                                              <h3><a href="">Right of Disposal:</a></h3>
-                                            </header>
-                                            <p>This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
-                                          </div>
-                                        </div>
-                                      </article>
-                                      <article class="transparent vid-list">
-                                        <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <header class="transparent">
-                                              <h3><a href="">Freedom from Competing Claims:</a></h3>
-                                            </header>
-                                            <p> True ownership means that your right to the property is secure and not easily challenged by others. </p>
-                                          </div>
-                                        </div>
-                                      </article>
-                                      <article class="transparent vid-list">
-                                        <div class="flex-div transparent">
-                                          <img src="<?!= global_sea_icn.getContent() ?>" class="transparent" />
-                                          <div class="vid-info header toolbar toolbar-icon menu-icon">
-                                            <header class="transparent">
-                                              <h3><a href="">Bearing the Burdens of Ownership:</a></h3>
-                                            </header>
-                                            <p> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
-                                          </div>
-                                        </div>
-                                      </article>
                                     </header>
+                                    <div class="vid-info">
+                                      <p class="toolbar-icon"> To truly "own" something, beyond just having it issued, granted in custody, or being responsible for it, you generally need these key elements:</p>
+                                    </div>
+                                    <article class="transparent vid-list toolbar-icon z-index: 5">
+                                      <div class="flex-div transparent">
+                                        <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
+                                      </div>
+                                    </article>
+                                    <div class="vid-info">
+                                      <header class="transparent">
+                                        <h3><a href="javascript:void(0)">Legal Title:</a></h3>
+                                      </header>
+                                      <p class="toolbar-icon"> This is the formal, legal recognition of your right to the property. It's often documented in official records, like a deed for real estate or a certificate of title for a vehicle. </p>
+                                    </div>
+                                    <article class="transparent vid-list toolbar-icon z-index: 5">
+                                      <div class="flex-div transparent">
+                                        <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
+                                      </div>
+                                    </article>
+                                    <div class="vid-info">
+                                      <header class="transparent">
+                                        <h3><a href="javascript:void(0)">Rights of Possession and Control:</a></h3>
+                                      </header>
+                                      <p class="toolbar-icon"> This includes the right to use the property as you see fit (within legal limits), to exclude others from using it, and to determine what happens to it. </p>
+                                    </div>
+                                    <article class="transparent vid-list toolbar-icon z-index: 5">
+                                      <div class="flex-div transparent">
+                                        <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
+                                      </div>
+                                    </article>
+                                    <div class="vid-info">
+                                      <header class="transparent">
+                                        <h3><a href="javascript:void(0)">Right of Disposal:</a></h3>
+                                      </header>
+                                      <p class="toolbar-icon">This is the power to transfer ownership to someone else, whether by sale, gift, or inheritance. </p>
+                                    </div>
+                                    <article class="transparent vid-list toolbar-icon z-index: 5">
+                                      <div class="flex-div transparent">
+                                        <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
+                                      </div>
+                                    </article>
+                                    <div class="vid-info">
+                                      <header class="transparent">
+                                        <h3><a href="javascript:void(0)">Freedom from Competing Claims:</a></h3>
+                                      </header>
+                                      <p class="toolbar-icon"> True ownership means that your right to the property is secure and not easily challenged by others. </p>
+                                    </div>
+                                    <article class="transparent vid-list toolbar-icon z-index: 5">
+                                      <div class="flex-div transparent">
+                                        <img src="<?!= global_sea_icn.getContent() ?>" class="transparent user-icon" />
+                                      </div>
+                                    </article>
+                                    <div class="vid-info">
+                                      <header class="transparent">
+                                        <h3><a href="javascript:void(0)">Bearing the Burdens of Ownership:</a></h3>
+                                      </header>
+                                      <p class="toolbar-icon"> This means that the owner is responsible for any liabilities, taxes, or maintainance associated with the property. </p>
+                                    </div>
                                   </section>
                                 </div>
                                 <iframe src="https://discord.com/widget?id=1477464657722867722&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
@@ -1845,10 +1881,20 @@ class RendFile {
               renTemp: tmp.evaluate().getContent(),
             },
           );
-          this.html = html;
           console.log("DEBIG: line 1884\nRendFile html after tmp processing\n", html);
           // return renderTemplate(html,argsObject,title)
           // this.fileOutput = html //tmp
+          if (true) {
+            if (true) {
+              this.tmp = tmp;
+              this.html = html;
+            }
+          }
+        }
+        if (true) {
+          if (false) {
+            this.htmlList = htmlList;
+          }
         }
       }
     } 
@@ -1857,6 +1903,13 @@ class RendFile {
       console.error(
         "Error in renderFile html: " + error.toString() + "\n" + error.stack,
       );
+    }
+    if (true) {
+      if (true) {
+        this.file = file;
+        this.argsObject = argsObject;
+        this.title = title;
+      }
     }
   }
 
@@ -2372,14 +2425,14 @@ class RendTemplate {
                                       Is the conveyance of power and authority an objective, measurable quantity?
                                     </p>
                                   </div>
-                                  <aside class="transparent responsive-section card-panel vid-list">
-                                    <article class="transparent responsive-section card-panel static-fix container">
-                                      <div class="row responsive-section static-fix">
+                                  <aside class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <article class="transparent responsive-section card-panel static-fix container toolbar-icon z-depth-2">
+                                      <div class="row responsive-section static-fix toolbar-icon z-depth-2">
                                         <?!= renTemp ?>
                                       </div>
                                     </article>
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                       <?!= JSON.stringify(driveM) ?>
                                     </div>
                                   </aside>
@@ -2390,9 +2443,9 @@ class RendTemplate {
                                       </i>
                                     </p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                       <?!= drivedD ?>
                                     </div>
                                   </article>
@@ -2402,9 +2455,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> Power and authority themselves are complex concepts with no single, universally agreed-upon definition. What constitutes "power" or "authority" can vary significantly depending on the context, the individuals involved, and the values held by the observer.</p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                       <?!= driveT ?>
                                     </div>
                                   </article>
@@ -2414,9 +2467,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> The impact of power and authority often involves qualitative factors like influence, respect, legitimacy, and the consent of those subject to it. These are difficult to quantify precisely.</p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                       <?!= drivedI ?>
                                     </div>
                                   </article>
@@ -2426,9 +2479,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> The effectiveness of the conveyance of power and authority depends heavily on the specific context – the social, political, and cultural environment in which it occurs.</p>
                                   </div>
-                                  <aside class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <aside class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                     </div>
                                   </aside>
                                   <div class="vid-info">
@@ -2438,9 +2491,9 @@ class RendTemplate {
                                       </i>
                                     </p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                     </div>
                                   </article>
                                   <div class="vid-info">
@@ -2449,9 +2502,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> Observable actions like issuing commands, making decisions, controlling resources, or enforcing rules can provide evidence of the exercise of power.</p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                     </div>
                                   </article>
                                   <div class="vid-info">
@@ -2460,9 +2513,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> The extent to which others comply with the directives of an authority figure can be observed and, to some extent, measured.</p>
                                   </div>
-                                  <article class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <article class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                     </div>
                                   </article>
                                   <div class="vid-info">
@@ -2471,9 +2524,9 @@ class RendTemplate {
                                     </header>
                                     <p class="toolbar-icon" style="text-align: left"> The ability to influence the beliefs, attitudes, or behaviors of others can be assessed through surveys, observations, or other social science research methods.</p>
                                   </div>
-                                  <aside class="transparent responsive-section card-panel vid-list">
-                                    <div class="flex-div">
-                                      <img src="<?!= global_sea_icn.getContent() ?>" />
+                                  <aside class="transparent responsive-section card-panel vid-list toolbar-icon z-depth-2">
+                                    <div class="flex-div toolbar-icon z-depth-2">
+                                      <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                                     </div>
                                   </aside>
                                   <div class="vid-info">
