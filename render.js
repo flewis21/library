@@ -1744,7 +1744,7 @@ class RendFile {
                     </div>
                   </div>
                   <div class="nav-right flex-div">
-                    <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
+                    <img id="mainUjpg" src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
                   </div>
                 </nav>
                 <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
@@ -2387,7 +2387,7 @@ class RendTemplate {
                 </div>
               </div>
               <div class="nav-right flex-div responsive-section">
-                <img src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
+                <img id="mainUjpg" src="<?!= global_sea_icn.getContent() ?>" class="user-icon" />
               </div>
             </nav>
             <div id="artiicleIndexSuggestions" class="autocomplete-suggestions responsive-section transparent static-fix"></div>
