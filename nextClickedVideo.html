@@ -150,8 +150,10 @@
         let againContent = null;
         let againCap = null;
         let matchesContent = null;
+        let matchContent = null;
         let matchesToReturn = null;
         let allContentAvailable = [];
+        let contentAvailable = [];
         let allMatchesAvailable = [];
         let searchBackEnd = null;
         let searchIntent = null;
@@ -269,7 +271,7 @@
             input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
             let openYTPlayer = document.getElementById("mainUjpg");
             openYTPlayer.click();
-            // fetchSuggestions(input.value);
+            // fetchSuggestions(String(againContent));
             // let openYTPlayer = document.createElement("a");
             // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
             // openYTPlayer.id = "openYTPLAYER";
@@ -349,7 +351,132 @@
             }
             else {
               if (matchesContent.length === 0) {
-                return
+                matchContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                  if (String(val.description).indexOf(againContent) > -1) {
+                    // console.log(againContent + ": result description: " + val.description);
+                    // console.log("result index: " + index);
+                    let webUrl = val.webAddressUrl
+                    if (webUrl && webUrl !== null) {
+                      console.log("local storage all results: " + againContent);
+                      // personalizedList.push(val);
+                      return webUrl
+                    }
+                  }
+                }).filter((mapResult) => {
+                  return mapResult != null
+                });
+                console.log("event contentAvailable resources", contentAvailable.length);
+                // console.log(contentAvailable.length < matchContent.length);
+                if (contentAvailable.length < matchContent.length) {
+                  console.log("event Match to return length greater than available resources: ", matchContent.length);
+                  while (contentAvailable.length < matchContent.length) {
+                    contentAvailable = matchContent.sort((a,b) => {
+                      let i = Math.random()
+                      let tSorted = a;
+                      // console.log(againContent + ": tSorted = " + tSorted);
+                      let zSorted = b;
+                      // console.log(againContent + ": zSorted = " + zSorted);
+                      if (i < .3) {
+                        let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                        if (matchA > -1) {
+                          // console.log(againContent + ": matchA = " + matchA);
+                          return zSorted;
+                        }
+                      }
+                      else {
+                        if (i > .3 && i < .5 ) {
+                          let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                          if (matchB === -1) {
+                            // console.log(againContent + ": matchB = " + matchB);
+                            return tSorted;
+                          }
+                        }
+                        else {
+                          if (i > .5 && i < .8) {
+                            // console.log(againContent + ": matchC = " + zSorted);
+                            return zSorted;
+                          }
+                          else {
+                            if (i > .8) {
+                              // console.log(againContent + ": matchD = " + tSorted);
+                              return tSorted;
+                            }
+                          }
+                        }
+                      }
+                    });
+                    if (matchContent === null || matchContent.length === 0) {
+                      break
+                    }
+                  }
+                }
+              $('a').click(function(event){
+                if ($(this).attr('href') === "javascript:void(0)") {
+                  let confirmation = window.confirm(
+                    "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  );
+                  if (confirmation) {
+                    event.preventDefault();
+                    let linkFollow = document.createElement("a");
+                    linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
+                    if (matchContent.length > 0) {
+                      // console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
+                    }
+                    else {
+                      if (matchContent.length === 0) {
+                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                      }
+                    }
+                    console.log("the match: " + linkFollow.href);
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                    // If the user preses the "Enter" key on the keyboard. 
+                    // if (event.key === 'Enter')  {
+                    //   serverside("getVI", [])
+                    //   .then((response) => {
+                    //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                    //     // Access the actual array from the response
+                    //     if (response && typeof response === "object") {
+                    //       fullList = [];
+                    //       for (var key in response) {
+                    //         alert(JSON.stringify(response[key]));
+                    //         let i = 0;
+                    //         let l = response[key].length;
+                    //         alert(l);
+                    //         for (i,l;i<l;i++) {
+                    //           let tempObj = {};
+                    //           tempObj.description = response[key][i].description;
+                    //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                    //             let tData = response[key][i].videoId;
+                    //             let dLoc =  null;
+                    //             dLoc =  "https://www.youtube.com/watch?v=";
+                    //             tempObj.youtubeUrl = dLoc + tData;
+                    //           }
+                    //           else {
+                    //             tempObj.youtubeUrl = response[key][i].videoId;
+                    //           }
+                    //           fullList.push(tempObj);
+                    //         }
+                    //       }
+                    //     } 
+                    //     else {
+                    //       console.warn("Expected an array in response from getVI, received:", response);
+                    //       Fallback to empty array if the structure is not as expected
+                    //       fullList = [];
+                    //     }
+                    //   })
+                    //   .catch(error => {
+                    //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                    //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                    //   });
+                    // }
+                  }
+                } 
+              });
               }
             }
           })
@@ -360,12 +487,12 @@
 
 
             input.addEventListener('keydown', (event) => {
-              if (true) {
+              // if (true) {
               if (event.key === 'Enter') {
                 console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
-                if (String(event.target.value).length < 1) {
-                  return
-                }
+                // if (String(event.target.value).length < 1) {
+                //   return
+                // }
                 // let filContent = suggestions.filter(item => 
                 //     String(item).toLowerCase() === event.target.value.toLowerCase()
                 //   );
@@ -499,6 +626,7 @@
                               // Fallback to empty array if the structure is not as expected
                               personalizedList = [];
                               input.disabled = false
+                              fetchSuggestions(String(event.target.value));
                               // let openYTPlayer = document.getElementById("mainUjpg");
                               // openYTPlayer.click();
                             }
@@ -848,7 +976,35 @@
                   //   }
                   // }
                 }
-                // else {
+                else {
+                        serverside("getScriptUrl", [])
+                        .then((load) => {
+                          let openYTPlayer = document.getElementById("mainUjpg");
+                          openYTPlayer.click();
+                          localStorage.setItem("ssSearch", String(event.target.value));
+                          // console.log("Data; Url for reLoad ", load.data);
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = load.data;
+                          // console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_self";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // window.location.href = load.data
+                          // input.value = event.target.value;
+                          // input.disabled = false;
+                          // input.focus();
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
+                          input.disabled = false;
+                          input.focus();
+                          let openYTPlayer = document.getElementById("mainUjpg");
+                          openYTPlayer.click();
+                        });
+                  // fetchSuggestions(String(event.target.value));
                 //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
                 //     // if (event.target.value !== againCap) {
                 //     //   localStorage.setItem("gsSearch", event.target.value);
@@ -921,7 +1077,7 @@
                 //     }
                 //     //   input.value = againCap;
                 //   }
-                // }
+                }
                 // if (matchesToReturn !== null || matchesToReturn.length !== 0) {
                 //   $('a').click(function(event){
                 //     if ($(this).attr('href') === "javascript:void(0)") {
@@ -944,20 +1100,112 @@
                 //   });
                 // }
               }
+              else {
+        
+        if (input && suggestionsDiv) {
+          input.disabled = false;
+          input.addEventListener('input', (event) => {
+              if (String(event.target.value).length === 0) {
+                suggestionsDiv.innerHTML = '';
+              }
+              else {
+                if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) === -1) {
+                  suggestionsDiv.innerHTML = '';
+                  fetchSuggestions(event.target.value);
+                }
+                else {
+                  if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
+                    if (String(event.target.value).length > 0) {
+                      fetchSuggestions(event.target.value);
+                    }
+                  }
+                }
+              }
+          });
+
+          // document.addEventListener('click', (event) => {
+          //   matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
+          //     if (String(val.description).indexOf(againCap) > -1) {
+          //       // console.log(againCap + ": result description: " + val.description);
+          //       // console.log("result index: " + index);
+          //       let tubeUrl = val.youtubeUrl
+          //       if (tubeUrl && tubeUrl !== null) {
+          //         console.log("local storage all results: " + againCap);
+          //         personalizedList.push(val);
+          //         return tubeUrl
+          //       }
+          //     }
+          //   }).filter((mapResult) => {
+          //     return mapResult != null
+          //   });
+          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+          //   allMatchesAvailable = matchesToReturn.sort((a,b) => {
+          //     let i = Math.random()
+          //     let tSorted = a;
+          //     // console.log(againCap + ": tSorted = " + tSorted);
+          //     let zSorted = b;
+          //     // console.log(againCap + ": zSorted = " + zSorted);
+          //     if (i < .3) {
+          //       let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+          //       if (matchA > -1) {
+          //         // console.log(againCap + ": matchA = " + matchA);
+          //         return zSorted;
+          //       }
+          //     }
+          //     else {
+          //       if (i > .3 && i < .5 ) {
+          //         let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+          //         if (matchB === -1) {
+          //           // console.log(againCap + ": matchB = " + matchB);
+          //           return tSorted;
+          //         }
+          //       }
+          //       else {
+          //         if (i > .5 && i < .8) {
+          //           // console.log(againCap + ": matchC = " + zSorted);
+          //           return zSorted;
+          //         }
+          //         else {
+          //           if (i > .8) {
+          //             // console.log(againCap + ": matchD = " + tSorted);
+          //             return tSorted;
+          //           }
+          //         }
+          //       }
+          //     }
+          //   });
+          // });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                suggestionsDiv.innerHTML = '';
+                input.blur();
+            }
+          });
+
+        } 
+        else {
+            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
+        }
+              }
               // else {
               //   if (event.key !== 'Enter') {
               //     return
               //   }
               // }
-            }
+            // }
             })
           
         const fetchSuggestions = debounce((query) => {
+          if (String(query).length <= 3) {
+            window.scrollTo(0,0);
+            return
+          }
+          else {
           // input.addEventListener("focus", (event) => {
           // let qTemp;
           // if (String(event.target.value).length >= 1) {
             // suggestionsDiv.innerHTML = '';
-            window.scrollTo(0,0);
           
           // Filter the local list instead of making a server call
           contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
@@ -1029,7 +1277,7 @@
                   // });
                   // suggestionsDiv.appendChild(div);
                   input.addEventListener('keydown', (event) => {
-                    // if (event.key === 'Tab') {
+                    if (!event.key === 'Enter') {
                     //   // suggestions?.forEach(suggestion => {
                     //     // console.log(suggestion)
                     //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
@@ -1096,74 +1344,99 @@
                     //     // return
                     //   // });
                     // }
-                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
+                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
                       input.addEventListener("input", (event) => {
-                        // if (String(event.target.value).length < 1) {
-                        //   return
-                        // }
-                        if (suggestion && suggestion?.description?.toLowerCase()?.includes(event?.target?.value?.toLowerCase())) {
-                          const div = document.createElement('div');
-                          div.textContent = suggestion.description;
-                          div.classList.add("receipt", "btn-large");
-                          div.addEventListener('click', () => {
-                            input.value = suggestion.description;
-                            let confirmation;
-                            if (suggestion.youtubeURL) {
-                              confirmation = window.confirm(
-                                "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                              );
-                              if (confirmation) {
-                                if (suggestion.youtubeURL) {
-                                  window.open(suggestion.youtubeUrl, "_blank");
-                                }
-                                else {
-                                  if (suggestion.webAddressUrl) {
-                                    window.open(suggestion.webAddressUrl, "_blank");
-                                    // document.location.href = suggestion.webAddressUrl;
-                                  }
-                                }
-                              }
-                              suggestionsDiv.innerHTML = '';
-                              return;
-                            }
-                            else {
-                              if (suggestion.webAddressUrl) {
+                          if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
+                            const div = document.createElement('div');
+                            div.textContent = suggestion.description;
+                            div.classList.add("receipt", "btn-large");
+                            div.addEventListener('click', () => {
+                              input.value = suggestion.description;
+                              let confirmation;
+                              if (suggestion.youtubeURL) {
                                 confirmation = window.confirm(
-                                  "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                                 );
-                              }
-                              if (confirmation) {
-                                if (suggestion.youtubeURL) {
-                                  window.open(suggestion.youtubeUrl, "_blank");
-                                }
-                                else {
-                                  if (suggestion.webAddressUrl) {
-                                    window.open(suggestion.webAddressUrl, "_blank");
-                                    // document.location.href = suggestion.webAddressUrl;
+                                if (confirmation) {
+                                  if (suggestion.youtubeURL) {
+                                    window.open(suggestion.youtubeUrl, "_blank");
+                                  }
+                                  else {
+                                    if (suggestion.webAddressUrl) {
+                                      window.open(suggestion.webAddressUrl, "_blank");
+                                      // document.location.href = suggestion.webAddressUrl;
+                                    }
                                   }
                                 }
+                                suggestionsDiv.innerHTML = '';
+                                return;
                               }
-                              suggestionsDiv.innerHTML = '';
-                              return;
-                            }
-                            install++
-                            userClicked = install;
-                            console.log(" User clicked; Left-Click Button ", userClicked);
-                          });
-                          suggestionsDiv.appendChild(div);
-                          // return
-                        }
+                              else {
+                                if (suggestion.webAddressUrl) {
+                                  confirmation = window.confirm(
+                                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                                  );
+                                }
+                                if (confirmation) {
+                                  if (suggestion.youtubeURL) {
+                                    window.open(suggestion.youtubeUrl, "_blank");
+                                  }
+                                  else {
+                                    if (suggestion.webAddressUrl) {
+                                      window.open(suggestion.webAddressUrl, "_blank");
+                                      // document.location.href = suggestion.webAddressUrl;
+                                    }
+                                  }
+                                }
+                                suggestionsDiv.innerHTML = '';
+                                return;
+                              }
+                              install++
+                              userClicked = install;
+                              console.log(" User clicked; Left-Click Button ", userClicked);
+                            });
+                            suggestionsDiv.appendChild(div);
+                            // return
+                          }
                       })
                     } 
                     else {
+                      // if (!event.key === 'Enter') {
                       // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
                         // if (index && suIndexLen < suggestContent?.length) {
                         //   while (suIndexLen < suggestContent?.length) {
                         //     input.blur();
                         //     input.disabled = true
                             let suIndexLen = index + 1;
-                            let openYTPlayer = document.getElementById("mainUjpg");
-                            openYTPlayer.click();
+                      input.addEventListener("change", (event) => {
+                        let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        // serverside("getScriptUrl", [])
+                        // .then((load) => {
+                        //   localStorage.setItem("ssSearch", event.target.value);
+                        //   // console.log("Data; Url for reLoad ", load.data);
+                        //   let linkFollow = document.createElement("a");
+                        //   linkFollow.href = load.data + "?q=" + webUrl;
+                        //   // console.log("the match: " + linkFollow.href);
+                        //   linkFollow.id = "linkFOLLOW";
+                        //   linkFollow.target = "_blank";
+                        //   linkFollow.rel = "noopener noreferrer";
+                        //   document.body.appendChild(linkFollow);
+                        //   document.getElementById("linkFOLLOW").click();
+                        //   document.getElementById("linkFOLLOW").remove();
+                        //   // window.location.href = load.data
+                        //   // input.value = event.target.value;
+                        //   // input.disabled = false;
+                        //   // input.focus();
+                        // })
+                        // .catch((fail) => {
+                        //   console.log("Failed to load ", fail);
+                        //   input.disabled = false;
+                        //   input.focus();
+                        //   let openYTPlayer = document.getElementById("mainUjpg");
+                        //   openYTPlayer.click();
+                        // });
+                      })
                             // if (suIndexLen >= suggestContent?.length) {
                               // input.addEventListener("input", (event) => {
                               // })
@@ -1171,6 +1444,7 @@
                           // }
                           // return
                         // }
+                      // }
                       // }
                     }
 
@@ -1264,7 +1538,7 @@
                     //     }
                     //     return
                     //   });
-                    // }
+                    }
                     // return;
                     // install++
                     // userClicked = install;
@@ -1280,6 +1554,7 @@
           else {
             if (suggestContent.length === 0) {
               suggestionsDiv.innerHTML = '';
+            }
             }
           }
             // localStorage.setItem("gsSearch", input.value);
@@ -1319,92 +1594,6 @@
           
         //   // return
         // }, 300);
-        
-        if (input && suggestionsDiv) {
-          input.disabled = false;
-          input.addEventListener('input', (event) => {
-              if (String(event.target.value).length === 0) {
-                suggestionsDiv.innerHTML = '';
-              }
-              else {
-                if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) === -1) {
-                  suggestionsDiv.innerHTML = '';
-                  fetchSuggestions(event.target.value);
-                }
-                else {
-                  if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
-                    if (String(event.target.value).length > 0) {
-                      fetchSuggestions(event.target.value);
-                    }
-                  }
-                }
-              }
-          });
-
-          // document.addEventListener('click', (event) => {
-          //   matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
-          //     if (String(val.description).indexOf(againCap) > -1) {
-          //       // console.log(againCap + ": result description: " + val.description);
-          //       // console.log("result index: " + index);
-          //       let tubeUrl = val.youtubeUrl
-          //       if (tubeUrl && tubeUrl !== null) {
-          //         console.log("local storage all results: " + againCap);
-          //         personalizedList.push(val);
-          //         return tubeUrl
-          //       }
-          //     }
-          //   }).filter((mapResult) => {
-          //     return mapResult != null
-          //   });
-          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-          //   allMatchesAvailable = matchesToReturn.sort((a,b) => {
-          //     let i = Math.random()
-          //     let tSorted = a;
-          //     // console.log(againCap + ": tSorted = " + tSorted);
-          //     let zSorted = b;
-          //     // console.log(againCap + ": zSorted = " + zSorted);
-          //     if (i < .3) {
-          //       let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-          //       if (matchA > -1) {
-          //         // console.log(againCap + ": matchA = " + matchA);
-          //         return zSorted;
-          //       }
-          //     }
-          //     else {
-          //       if (i > .3 && i < .5 ) {
-          //         let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-          //         if (matchB === -1) {
-          //           // console.log(againCap + ": matchB = " + matchB);
-          //           return tSorted;
-          //         }
-          //       }
-          //       else {
-          //         if (i > .5 && i < .8) {
-          //           // console.log(againCap + ": matchC = " + zSorted);
-          //           return zSorted;
-          //         }
-          //         else {
-          //           if (i > .8) {
-          //             // console.log(againCap + ": matchD = " + tSorted);
-          //             return tSorted;
-          //           }
-          //         }
-          //       }
-          //     }
-          //   });
-          // });
-
-          input.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
-            }
-          });
-
-        } 
-        else {
-            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
-        }
 
       });
 
