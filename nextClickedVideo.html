@@ -484,10 +484,495 @@
             console.error("Error fetching address suggestions for artiicleIndex :", error);
             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
           });
+          
+        const fetchSuggestions = debounce((query) => {
+          if (String(query).length <= 3) {
+            window.scrollTo(0,0);
+            // return
+          }
+          else {
+          // input.addEventListener("focus", (event) => {
+          // let qTemp;
+          // if (String(event.target.value).length >= 1) {
+            // suggestionsDiv.innerHTML = '';
+          
+          // Filter the local list instead of making a server call
+          contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
+          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+          suggestContent = contentList.filter(item => 
+            String(item.description).toLowerCase().includes(query.toLowerCase())
+          );
+          
+          window.scrollTo(0,0);
+          // let confirmation = null;
+          let suggestL = suggestContent?.length;
+          let userClicked = false;
+          let install = 0;
+          if (suggestL > 0) {
+            // let i = 0;
+            // let l = suggestContent.length
+            // while (userClicked === false) {
+              // for (i,l;i<l;i++) {
+                suggestContent?.forEach((suggestion, index) => {
+                  // console.log(suggestion)
+                  // let suggestion = suggestContent[i]
+                  // const div = document.createElement('div');
+                  // div.textContent = suggestion.description;
+                  // div.classList.add("card-panel", "receipt", "btn-large");
+                  // div.addEventListener('click', () => {
+                  //   input.value = suggestion.description;
+                  //   let confirmation;
+                  //   if (suggestion.youtubeURL) {
+                  //     confirmation = window.confirm(
+                  //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                  //     );
+                  //     if (confirmation) {
+                  //       if (suggestion.youtubeURL) {
+                  //         window.open(suggestion.youtubeUrl, "_blank");
+                  //       }
+                  //       else {
+                  //         if (suggestion.webAddressUrl) {
+                  //           window.open(suggestion.webAddressUrl, "_blank");
+                  //           // document.location.href = suggestion.webAddressUrl;
+                  //         }
+                  //       }
+                  //     }
+                  //     suggestionsDiv.innerHTML = '';
+                  //     return;
+                  //   }
+                  //   else {
+                  //     if (suggestion.webAddressUrl) {
+                  //       confirmation = window.confirm(
+                  //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                  //       );
+                  //     }
+                  //     if (confirmation) {
+                  //       if (suggestion.youtubeURL) {
+                  //         window.open(suggestion.youtubeUrl, "_blank");
+                  //       }
+                  //       else {
+                  //         if (suggestion.webAddressUrl) {
+                  //           window.open(suggestion.webAddressUrl, "_blank");
+                  //           // document.location.href = suggestion.webAddressUrl;
+                  //         }
+                  //       }
+                  //     }
+                  //     suggestionsDiv.innerHTML = '';
+                  //     return;
+                  //   }
+                  //   install++
+                  //   userClicked = install;
+                  //   console.log(" User clicked; Left-Click Button ", userClicked);
+                  // });
+                  // suggestionsDiv.appendChild(div);
+                  input.addEventListener('keydown', (event) => {
+                    // if (!event.key === 'Enter') {
+                    //   // suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           suggestion?.youtubeUrl,
+                    //         );
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl, "_blank");
+                    //             return;
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               window.open(suggestion.webAddressUrl, "_blank");
+                    //               // document.location.href = suggestion.webAddressUrl;
+                    //               return;
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //           return;
+                    //         }
+                    //         // else {
+                    //         //   if (!confirmation) {
+                    //         //     // suggestionsDiv.innerHTML = '';
+                    //         //     input.blur();
+                    //         //     return;
+                    //         //   }
+                    //         // }
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             suggestion?.webAddressUrl,
+                    //           );
+                    //         }
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl, "_blank");
+                    //             return;
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               window.open(suggestion.webAddressUrl, "_blank");
+                    //               // document.location.href = suggestion.webAddressUrl;
+                    //               return;
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //           return;
+                    //         }
+                    //         // else {
+                    //         //   if (!confirmation) {
+                    //         //     // suggestionsDiv.innerHTML = '';
+                    //         //     input.blur();
+                    //         //     return;
+                    //         //   }
+                    //         // }
+                    //       }
+                    //       return;
+                    //     }
+                    //     // userClicked++
+                    //     // console.log(" User clicked; Tab ", userClicked);
+                    //     // return
+                    //   // });
+                    // }
+                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
+                      input.addEventListener("input", (event) => {
+                          if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
+                            const div = document.createElement('div');
+                            div.textContent = suggestion.description;
+                            div.classList.add("receipt", "btn-large");
+                            div.addEventListener('click', () => {
+                              input.value = suggestion.description;
+                              let confirmation;
+                              if (suggestion.youtubeURL) {
+                                confirmation = window.confirm(
+                                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                                );
+                                if (confirmation) {
+                                  if (suggestion.youtubeURL) {
+                                    window.open(suggestion.youtubeUrl, "_blank");
+                                  }
+                                  else {
+                                    if (suggestion.webAddressUrl) {
+                                      window.open(suggestion.webAddressUrl, "_blank");
+                                      // document.location.href = suggestion.webAddressUrl;
+                                    }
+                                  }
+                                }
+                                suggestionsDiv.innerHTML = '';
+                                return;
+                              }
+                              else {
+                                if (suggestion.webAddressUrl) {
+                                  confirmation = window.confirm(
+                                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                                  );
+                                }
+                                if (confirmation) {
+                                  if (suggestion.youtubeURL) {
+                                    window.open(suggestion.youtubeUrl, "_blank");
+                                  }
+                                  else {
+                                    if (suggestion.webAddressUrl) {
+                                      window.open(suggestion.webAddressUrl, "_blank");
+                                      // document.location.href = suggestion.webAddressUrl;
+                                    }
+                                  }
+                                }
+                                suggestionsDiv.innerHTML = '';
+                                return;
+                              }
+                              install++
+                              userClicked = install;
+                              console.log(" User clicked; Left-Click Button ", userClicked);
+                            });
+                            suggestionsDiv.appendChild(div);
+                            // return
+                          }
+                      })
+                    } 
+                    else {
+                      // if (!event.key === 'Enter') {
+                      // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
+                        // if (index && suIndexLen < suggestContent?.length) {
+                        //   while (suIndexLen < suggestContent?.length) {
+                        //     input.blur();
+                        //     input.disabled = true
+                            let suIndexLen = index + 1;
+                      input.addEventListener("change", (event) => {
+                        let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        // serverside("getScriptUrl", [])
+                        // .then((load) => {
+                        //   localStorage.setItem("ssSearch", event.target.value);
+                        //   // console.log("Data; Url for reLoad ", load.data);
+                        //   let linkFollow = document.createElement("a");
+                        //   linkFollow.href = load.data + "?q=" + webUrl;
+                        //   // console.log("the match: " + linkFollow.href);
+                        //   linkFollow.id = "linkFOLLOW";
+                        //   linkFollow.target = "_blank";
+                        //   linkFollow.rel = "noopener noreferrer";
+                        //   document.body.appendChild(linkFollow);
+                        //   document.getElementById("linkFOLLOW").click();
+                        //   document.getElementById("linkFOLLOW").remove();
+                        //   // window.location.href = load.data
+                        //   // input.value = event.target.value;
+                        //   // input.disabled = false;
+                        //   // input.focus();
+                        // })
+                        // .catch((fail) => {
+                        //   console.log("Failed to load ", fail);
+                        //   input.disabled = false;
+                        //   input.focus();
+                        //   let openYTPlayer = document.getElementById("mainUjpg");
+                        //   openYTPlayer.click();
+                        // });
+                      })
+                            // if (suIndexLen >= suggestContent?.length) {
+                              // input.addEventListener("input", (event) => {
+                              // })
+                            // }
+                          // }
+                          // return
+                        // }
+                      // }
+                      // }
+                    }
 
 
-            input.addEventListener('keydown', (event) => {
+                    // // Filter the local list instead of making a server call
+                    // localList = remoteSuggestionsCache[againCap] || [];
+                    // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+                    // suggestions = localList.filter(item => 
+                    //   String(item.description).toLowerCase().includes(query.toLowerCase())
+                    // );
+
+                    // window.scrollTo(0,0);
+                    // // let confirmation = null;
+                    // if (suggestions?.length > 0) {
+                    //   suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     const div = document.createElement('div');
+                    //     div.textContent = suggestion.description;
+                    //     div.classList.add("card-panel", "receipt", "btn-large");
+                    //     div.addEventListener('click', () => {
+                    //       input.value = suggestion.description;
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                    //         );
+                    //         if (confirmation) {
+                    //           if (suggestion.youtubeURL) {
+                    //             window.open(suggestion.youtubeUrl);
+                    //           }
+                    //           else {
+                    //             if (suggestion.webAddressUrl) {
+                    //               document.location.href = suggestion.webAddressUrl;
+                    //             }
+                    //           }
+                    //         }
+                    //         suggestionsDiv.innerHTML = '';
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                    //           );
+                    //           if (confirmation) {
+                    //             if (suggestion.youtubeURL) {
+                    //               window.open(suggestion.youtubeUrl);
+                    //             }
+                    //             else {
+                    //               if (suggestion.webAddressUrl) {
+                    //                 document.location.href = suggestion.webAddressUrl;
+                    //               }
+                    //             }
+                    //           }
+                    //           suggestionsDiv.innerHTML = '';
+                    //         }
+                    //       }
+                    //     });
+                    //     suggestionsDiv.appendChild(div);
+                    //   });
+                    // }
+                    // if (event.key === 'Tab') {
+                    //   suggestions?.forEach(suggestion => {
+                    //     // console.log(suggestion)
+                    //     if (suggestion && suggestion?.description.includes(event.target.value)) {
+                    //       if (suggestion.youtubeURL) {
+                    //         let confirmation = window.confirm(
+                    //           suggestion?.youtubeUrl,
+                    //         );
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           let confirmation = window.confirm(
+                    //             suggestion?.webAddressUrl,
+                    //           );
+                    //         }
+                    //       }
+                    //       if (confirmation) {
+                    //         if (suggestion.youtubeURL) {
+                    //           window.open(suggestion.youtubeUrl);
+                    //         }
+                    //         else {
+                    //           if (suggestion.webAddressUrl) {
+                    //             document.location.href = suggestion.webAddressUrl;
+                    //           }
+                    //         }
+                    //         suggestionsDiv.innerHTML = '';
+                    //       }
+                    //       else {
+                    //         suggestionsDiv.innerHTML = '';
+                    //         input.blur();
+                    //       }
+                    //     }
+                    //     return
+                    //   });
+                    // }
+                    // return;
+                    // install++
+                    // userClicked = install;
+                    // console.log("User clicked; Tab or Enter: ", userClicked)
+                  });
+                });
+                // if (userClicked) {
+                //   break;
+                // }
+              // }
+            // }
+          }
+          else {
+            if (suggestContent.length === 0) {
+              suggestionsDiv.innerHTML = '';
+            }
+            }
+          }
+            // localStorage.setItem("gsSearch", input.value);
+            // againCap = localStorage.getItem("gsSearch");
+            // input.blur();
+            // return;
+          // }
+          // })
+          // againCap = localStorage.getItem("gsSearch");
+          // if (String(againCap).indexOf(query) > -1) {
+          //   input.addEventListener('input', (event) => {
+          //     input.disabled = false;
+          //     if (!String(againCap).contains(event.target.value) && !suggestionsDiv.contains(query)) {
+          //       suggestionsDiv.innerHTML = '';
+          //     }
+          //   })
+          //   // input.value = againCap;
+          // }
+          // else {
+          //   if (String(againCap).indexOf(query) === -1) {
+          //     suggestionsDiv.innerHTML = '';
+          //   }
+          // }
+          // }
+          // })
+        }, 300);
+
+        // const fetchResults = debounce((query) => {
+        //   if (query) {
+        //     suggestionsDiv.innerHTML = '';
+        //     window.scrollTo(0,0);
+        //     // localStorage.setItem("gsSearch", input.value);
+        //     // againCap = localStorage.getItem("gsSearch");
+        //     // input.blur();
+        //     return;
+        //   }
+          
+        //   // return
+        // }, 300);
+        
+        if (input && suggestionsDiv) {
+          againContent = localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch");
+          input.disabled = false;
+          input.addEventListener('input', (event) => {
+              // if (event?.target?.value.length <= 3) {
+              //   suggestionsDiv.innerHTML = '';
+              // }
+              // else {
+                // if (String(againContent?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) === -1) {
+                  // suggestionsDiv.innerHTML = '';
+                  // fetchSuggestions(event?.target?.value);
+                // }
+                // else {
+                  // if (String(againContent?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
+                    if (event?.target?.value?.length > 3) {
+                      fetchSuggestions(event?.target?.value);
+                    }
+                  // }
+                // }
+              // }
+          });
+
+
+            // input.addEventListener('keydown', (event) => {
               // if (true) {
+              // else {
+              // }
+              // else {
+              //   if (event.key !== 'Enter') {
+              //     return
+              //   }
+              // }
+            // }
+            // })
+
+          // document.addEventListener('click', (event) => {
+          //   matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
+          //     if (String(val.description).indexOf(againCap) > -1) {
+          //       // console.log(againCap + ": result description: " + val.description);
+          //       // console.log("result index: " + index);
+          //       let tubeUrl = val.youtubeUrl
+          //       if (tubeUrl && tubeUrl !== null) {
+          //         console.log("local storage all results: " + againCap);
+          //         personalizedList.push(val);
+          //         return tubeUrl
+          //       }
+          //     }
+          //   }).filter((mapResult) => {
+          //     return mapResult != null
+          //   });
+          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+          //   allMatchesAvailable = matchesToReturn.sort((a,b) => {
+          //     let i = Math.random()
+          //     let tSorted = a;
+          //     // console.log(againCap + ": tSorted = " + tSorted);
+          //     let zSorted = b;
+          //     // console.log(againCap + ": zSorted = " + zSorted);
+          //     if (i < .3) {
+          //       let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+          //       if (matchA > -1) {
+          //         // console.log(againCap + ": matchA = " + matchA);
+          //         return zSorted;
+          //       }
+          //     }
+          //     else {
+          //       if (i > .3 && i < .5 ) {
+          //         let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+          //         if (matchB === -1) {
+          //           // console.log(againCap + ": matchB = " + matchB);
+          //           return tSorted;
+          //         }
+          //       }
+          //       else {
+          //         if (i > .5 && i < .8) {
+          //           // console.log(againCap + ": matchC = " + zSorted);
+          //           return zSorted;
+          //         }
+          //         else {
+          //           if (i > .8) {
+          //             // console.log(againCap + ": matchD = " + tSorted);
+          //             return tSorted;
+          //           }
+          //         }
+          //       }
+          //     }
+          //   });
+          // });
+
+          input.addEventListener('keydown', (event) => {
               if (event.key === 'Enter') {
                 console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
                 // if (String(event.target.value).length < 1) {
@@ -1100,83 +1585,6 @@
                 //   });
                 // }
               }
-              else {
-        
-        if (input && suggestionsDiv) {
-          input.disabled = false;
-          input.addEventListener('input', (event) => {
-              if (String(event.target.value).length === 0) {
-                suggestionsDiv.innerHTML = '';
-              }
-              else {
-                if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) === -1) {
-                  suggestionsDiv.innerHTML = '';
-                  fetchSuggestions(event.target.value);
-                }
-                else {
-                  if (String(againCap?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
-                    if (String(event.target.value).length > 0) {
-                      fetchSuggestions(event.target.value);
-                    }
-                  }
-                }
-              }
-          });
-
-          // document.addEventListener('click', (event) => {
-          //   matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
-          //     if (String(val.description).indexOf(againCap) > -1) {
-          //       // console.log(againCap + ": result description: " + val.description);
-          //       // console.log("result index: " + index);
-          //       let tubeUrl = val.youtubeUrl
-          //       if (tubeUrl && tubeUrl !== null) {
-          //         console.log("local storage all results: " + againCap);
-          //         personalizedList.push(val);
-          //         return tubeUrl
-          //       }
-          //     }
-          //   }).filter((mapResult) => {
-          //     return mapResult != null
-          //   });
-          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-          //   allMatchesAvailable = matchesToReturn.sort((a,b) => {
-          //     let i = Math.random()
-          //     let tSorted = a;
-          //     // console.log(againCap + ": tSorted = " + tSorted);
-          //     let zSorted = b;
-          //     // console.log(againCap + ": zSorted = " + zSorted);
-          //     if (i < .3) {
-          //       let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-          //       if (matchA > -1) {
-          //         // console.log(againCap + ": matchA = " + matchA);
-          //         return zSorted;
-          //       }
-          //     }
-          //     else {
-          //       if (i > .3 && i < .5 ) {
-          //         let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-          //         if (matchB === -1) {
-          //           // console.log(againCap + ": matchB = " + matchB);
-          //           return tSorted;
-          //         }
-          //       }
-          //       else {
-          //         if (i > .5 && i < .8) {
-          //           // console.log(againCap + ": matchC = " + zSorted);
-          //           return zSorted;
-          //         }
-          //         else {
-          //           if (i > .8) {
-          //             // console.log(againCap + ": matchD = " + tSorted);
-          //             return tSorted;
-          //           }
-          //         }
-          //       }
-          //     }
-          //   });
-          // });
-
-          input.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
                 suggestionsDiv.innerHTML = '';
                 input.blur();
@@ -1187,413 +1595,6 @@
         else {
             console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
         }
-              }
-              // else {
-              //   if (event.key !== 'Enter') {
-              //     return
-              //   }
-              // }
-            // }
-            })
-          
-        const fetchSuggestions = debounce((query) => {
-          if (String(query).length <= 3) {
-            window.scrollTo(0,0);
-            return
-          }
-          else {
-          // input.addEventListener("focus", (event) => {
-          // let qTemp;
-          // if (String(event.target.value).length >= 1) {
-            // suggestionsDiv.innerHTML = '';
-          
-          // Filter the local list instead of making a server call
-          contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
-          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          suggestContent = contentList.filter(item => 
-            String(item.description).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          window.scrollTo(0,0);
-          // let confirmation = null;
-          let suggestL = suggestContent?.length;
-          let userClicked = false;
-          let install = 0;
-          if (suggestL > 0) {
-            // let i = 0;
-            // let l = suggestContent.length
-            // while (userClicked === false) {
-              // for (i,l;i<l;i++) {
-                suggestContent?.forEach((suggestion, index) => {
-                  // console.log(suggestion)
-                  // let suggestion = suggestContent[i]
-                  // const div = document.createElement('div');
-                  // div.textContent = suggestion.description;
-                  // div.classList.add("card-panel", "receipt", "btn-large");
-                  // div.addEventListener('click', () => {
-                  //   input.value = suggestion.description;
-                  //   let confirmation;
-                  //   if (suggestion.youtubeURL) {
-                  //     confirmation = window.confirm(
-                  //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                  //     );
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   else {
-                  //     if (suggestion.webAddressUrl) {
-                  //       confirmation = window.confirm(
-                  //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                  //       );
-                  //     }
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   install++
-                  //   userClicked = install;
-                  //   console.log(" User clicked; Left-Click Button ", userClicked);
-                  // });
-                  // suggestionsDiv.appendChild(div);
-                  input.addEventListener('keydown', (event) => {
-                    if (!event.key === 'Enter') {
-                    //   // suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
-                    //         }
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
-                    //       }
-                    //       return;
-                    //     }
-                    //     // userClicked++
-                    //     // console.log(" User clicked; Tab ", userClicked);
-                    //     // return
-                    //   // });
-                    // }
-                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
-                      input.addEventListener("input", (event) => {
-                          if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
-                            const div = document.createElement('div');
-                            div.textContent = suggestion.description;
-                            div.classList.add("receipt", "btn-large");
-                            div.addEventListener('click', () => {
-                              input.value = suggestion.description;
-                              let confirmation;
-                              if (suggestion.youtubeURL) {
-                                confirmation = window.confirm(
-                                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                                );
-                                if (confirmation) {
-                                  if (suggestion.youtubeURL) {
-                                    window.open(suggestion.youtubeUrl, "_blank");
-                                  }
-                                  else {
-                                    if (suggestion.webAddressUrl) {
-                                      window.open(suggestion.webAddressUrl, "_blank");
-                                      // document.location.href = suggestion.webAddressUrl;
-                                    }
-                                  }
-                                }
-                                suggestionsDiv.innerHTML = '';
-                                return;
-                              }
-                              else {
-                                if (suggestion.webAddressUrl) {
-                                  confirmation = window.confirm(
-                                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                                  );
-                                }
-                                if (confirmation) {
-                                  if (suggestion.youtubeURL) {
-                                    window.open(suggestion.youtubeUrl, "_blank");
-                                  }
-                                  else {
-                                    if (suggestion.webAddressUrl) {
-                                      window.open(suggestion.webAddressUrl, "_blank");
-                                      // document.location.href = suggestion.webAddressUrl;
-                                    }
-                                  }
-                                }
-                                suggestionsDiv.innerHTML = '';
-                                return;
-                              }
-                              install++
-                              userClicked = install;
-                              console.log(" User clicked; Left-Click Button ", userClicked);
-                            });
-                            suggestionsDiv.appendChild(div);
-                            // return
-                          }
-                      })
-                    } 
-                    else {
-                      // if (!event.key === 'Enter') {
-                      // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
-                        // if (index && suIndexLen < suggestContent?.length) {
-                        //   while (suIndexLen < suggestContent?.length) {
-                        //     input.blur();
-                        //     input.disabled = true
-                            let suIndexLen = index + 1;
-                      input.addEventListener("change", (event) => {
-                        let openYTPlayer = document.getElementById("mainUjpg");
-                        // openYTPlayer.click();
-                        // serverside("getScriptUrl", [])
-                        // .then((load) => {
-                        //   localStorage.setItem("ssSearch", event.target.value);
-                        //   // console.log("Data; Url for reLoad ", load.data);
-                        //   let linkFollow = document.createElement("a");
-                        //   linkFollow.href = load.data + "?q=" + webUrl;
-                        //   // console.log("the match: " + linkFollow.href);
-                        //   linkFollow.id = "linkFOLLOW";
-                        //   linkFollow.target = "_blank";
-                        //   linkFollow.rel = "noopener noreferrer";
-                        //   document.body.appendChild(linkFollow);
-                        //   document.getElementById("linkFOLLOW").click();
-                        //   document.getElementById("linkFOLLOW").remove();
-                        //   // window.location.href = load.data
-                        //   // input.value = event.target.value;
-                        //   // input.disabled = false;
-                        //   // input.focus();
-                        // })
-                        // .catch((fail) => {
-                        //   console.log("Failed to load ", fail);
-                        //   input.disabled = false;
-                        //   input.focus();
-                        //   let openYTPlayer = document.getElementById("mainUjpg");
-                        //   openYTPlayer.click();
-                        // });
-                      })
-                            // if (suIndexLen >= suggestContent?.length) {
-                              // input.addEventListener("input", (event) => {
-                              // })
-                            // }
-                          // }
-                          // return
-                        // }
-                      // }
-                      // }
-                    }
-
-
-                    // // Filter the local list instead of making a server call
-                    // localList = remoteSuggestionsCache[againCap] || [];
-                    // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-                    // suggestions = localList.filter(item => 
-                    //   String(item.description).toLowerCase().includes(query.toLowerCase())
-                    // );
-
-                    // window.scrollTo(0,0);
-                    // // let confirmation = null;
-                    // if (suggestions?.length > 0) {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     const div = document.createElement('div');
-                    //     div.textContent = suggestion.description;
-                    //     div.classList.add("card-panel", "receipt", "btn-large");
-                    //     div.addEventListener('click', () => {
-                    //       input.value = suggestion.description;
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl);
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               document.location.href = suggestion.webAddressUrl;
-                    //             }
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                    //           );
-                    //           if (confirmation) {
-                    //             if (suggestion.youtubeURL) {
-                    //               window.open(suggestion.youtubeUrl);
-                    //             }
-                    //             else {
-                    //               if (suggestion.webAddressUrl) {
-                    //                 document.location.href = suggestion.webAddressUrl;
-                    //               }
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //         }
-                    //       }
-                    //     });
-                    //     suggestionsDiv.appendChild(div);
-                    //   });
-                    // }
-                    // if (event.key === 'Tab') {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.includes(event.target.value)) {
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
-                    //         }
-                    //       }
-                    //       if (confirmation) {
-                    //         if (suggestion.youtubeURL) {
-                    //           window.open(suggestion.youtubeUrl);
-                    //         }
-                    //         else {
-                    //           if (suggestion.webAddressUrl) {
-                    //             document.location.href = suggestion.webAddressUrl;
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         suggestionsDiv.innerHTML = '';
-                    //         input.blur();
-                    //       }
-                    //     }
-                    //     return
-                    //   });
-                    }
-                    // return;
-                    // install++
-                    // userClicked = install;
-                    // console.log("User clicked; Tab or Enter: ", userClicked)
-                  });
-                });
-                // if (userClicked) {
-                //   break;
-                // }
-              // }
-            // }
-          }
-          else {
-            if (suggestContent.length === 0) {
-              suggestionsDiv.innerHTML = '';
-            }
-            }
-          }
-            // localStorage.setItem("gsSearch", input.value);
-            // againCap = localStorage.getItem("gsSearch");
-            // input.blur();
-            // return;
-          // }
-          // })
-          // againCap = localStorage.getItem("gsSearch");
-          // if (String(againCap).indexOf(query) > -1) {
-          //   input.addEventListener('input', (event) => {
-          //     input.disabled = false;
-          //     if (!String(againCap).contains(event.target.value) && !suggestionsDiv.contains(query)) {
-          //       suggestionsDiv.innerHTML = '';
-          //     }
-          //   })
-          //   // input.value = againCap;
-          // }
-          // else {
-          //   if (String(againCap).indexOf(query) === -1) {
-          //     suggestionsDiv.innerHTML = '';
-          //   }
-          // }
-          // }
-          // })
-        }, 300);
-
-        // const fetchResults = debounce((query) => {
-        //   if (query) {
-        //     suggestionsDiv.innerHTML = '';
-        //     window.scrollTo(0,0);
-        //     // localStorage.setItem("gsSearch", input.value);
-        //     // againCap = localStorage.getItem("gsSearch");
-        //     // input.blur();
-        //     return;
-        //   }
-          
-        //   // return
-        // }, 300);
 
       });
 

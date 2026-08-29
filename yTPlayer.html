@@ -55,12 +55,17 @@
   }
   function myPlay() {
     let list = null;
-    list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))]
+    list = allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))];
+    localStorage.setItem("ytSearch", list);
     return list
   }
   if (!againCap) {
-    localStorage.setItem("ytSearch", myPlay())
+    // localStorage.setItem("ytSearch", myPlay())
     againCap = localStorage.getItem("ytSearch");
+    if (!againCap) {
+      loadPlaylist();
+      againCap = localStorage.getItem("ytSearch");
+    }
   }
   let ctr = 0;
   let iframePlayer;
@@ -131,15 +136,15 @@
         changeBorderColor(event.data);
         setLoop();
       } else if (event.data == YT.PlayerState.STOPPED) {
+        // loadPlaylist();
         changeBorderColor(event.data);
-        iframePlayer.loadPlaylist(againCap, ctr);
       } else if (event.data == YT.PlayerState.UNSTARTED) {
         changeBorderColor(event.data);
         setTimeout(2000, playVideo)
         // playVideo();
       } else if (event.data == YT.PlayerState.ENDED) {
+        // loadPlaylist();
         changeBorderColor(event.data);
-        ctr++
         // setShuffle();
         // playVideo();
         // setShuffle();
@@ -248,7 +253,7 @@
       if (iframePlayer && iframePlayer.loadPlaylist) {
         iframePlayer.loadPlaylist({
           listType: 'playlist',
-          list: allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
+          list: myPlay() || allMatchesAvailable[Math.floor(Math.random() * Math.floor(allMatchesAvailable.length))],
           index: 0,
           startSeconds: 0
         });
