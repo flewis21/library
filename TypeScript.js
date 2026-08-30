@@ -854,7 +854,7 @@ class AutoParams {
     this.searchString = function () {
       console.log(
         formatTime(this.functionRegistry.time) +
-          "\nBoilerplate TypeScript line 1398\nsearchString()",
+          "\nBoilerplate TypeScript line 857\nsearchString()",
       );
       var arrDRnd = this.functionRegistry.getFileList();
       var arrD = this.functionRegistry.getFileList();
@@ -4252,8 +4252,6 @@ class MisStCreator {
 class DriveFiles {
   constructor(strNw, time) {
     // super(strNw);
-    this.strNw = strNw;
-    this.time = time;
     console.log(
       "strNw is !" +
         !strNw +
@@ -4277,7 +4275,6 @@ class DriveFiles {
       console.log("DriveFiles: strNw is truthy. testlt() will NOT be called.");
     }
     let searArn;
-    this.searArn = searArn;
     if (autoGlobe.domainData.indexOf(strNw) === -1) {
       searArn = autoGlobe.domainData[Math.floor(Math.random() * autoGlobe.domainData.length)];
     }
@@ -4293,19 +4290,16 @@ class DriveFiles {
     // This means testlt() will be called regardless of strNw's truthiness
     // due to its direct placement before the mainStr assignment.
     let manString = !strNw ? searArn : strNw;
-    this.manString = manString;
     // console.log("DriveFiles: manString (from testlt()):", manString);
     let testStrNw = !strNw ? manString : manString;
-    this.testStrNw = testStrNw;
     // console.log("DriveFiles: testStrNw:", testStrNw);
     let mainStr = strNw || testStrNw;
-    this.mainStr = mainStr;
     // console.log("DriveFiles: mainStr (strNw || testStrNw):", mainStr);
 
     let arn = String(mainStr).toLowerCase();
-    this.arn = arn;
     let iam;
-    this.iam = iam;
+    let filedMain = false; // Return null if JSON parsing fails
+    let dataTree = false;
     try {
       iam = JSON.parse(
         ObjectConvertor.newConvert([[String(mainStr)]], ["file"], autoGlobe.functionRegistry.time),
@@ -4321,11 +4315,9 @@ class DriveFiles {
       }
     } catch (e) {
       console.error("DriveFiles: Error parsing iam JSON:", e);
-      let filedMain = null; // Return null if JSON parsing fails
-      this.filedMain = filedMain;
+      filedMain = null; // Return null if JSON parsing fails
     }
     let crmCalcResult = ObjectConvertor.newCRMCalc(iam[0]["file"] || arn);
-    this.crmCalcResult = crmCalcResult;
     console.log("crmCalcResult = " + crmCalcResult, autoGlobe.executed++);
     console.log(
       "DriveFiles: crmCalc result (index of found function or -1): " +
@@ -4339,8 +4331,7 @@ class DriveFiles {
           crmCalcResult +
           "). Stopping further DriveApp execution.",
       );
-      let filedMain = null;
-      this.filedMain = filedMain;
+      filedMain = null;
     } 
     else {
       // If crmCalcResult is -1 (meaning no function was found),
@@ -4348,61 +4339,63 @@ class DriveFiles {
       console.log(
         "DriveFiles: No matching function name found. Proceeding with efficient DriveApp search.",
       );
-      let dataTree = [];
-      this.dataTree = dataTree;
+      dataTree = [];
       let targetFile = iam[0] && iam[0]["file"] ? iam[0]["file"] : null;
-      this.targetFile = targetFile;
 
       if (!targetFile) {
         console.warn(
           "DriveFiles: targetFile is invalid. Cannot perform DriveApp search. Returning null.",
         );
-        let filedMain = null;
-        this.filedMain = filedMain;
+        filedMain = null;
       }
       // --- EFFICIENT DRIVEAPP SEARCH USING DriveApp.searchFiles() ---
       // Construct the search query. 'title contains' searches file names.
       // Use the exact targetFile for the query.
       let searchQuery = 'title contains "' + targetFile + '"';
-      this.searchQuery = searchQuery;
       console.log(
         "DriveFiles: Performing DriveApp search with query:",
         searchQuery,
       );
       try {
         let files = DriveApp.searchFiles(searchQuery);
-        this.files = files;
 
         if (files) {
           while (files.hasNext()) {
             let tempObj = {}
             let file = files.next();
-            this.file = file;
             tempObj.file = this.file;
             let fiTitle = file.getName();
-            this.fiTitle = fiTitle;
             tempObj.fiTitle = this.fiTitle;
             let fileUrl = file.getUrl();
-            this.fileUrl = fileUrl;
             tempObj.fileUrl = this.fileUrl;
             dataTree.push(fileUrl);
             console.log("event; DriveApp search result: ", JSON.stringify(tempObj));
+            if (true) {
+              if (file) {
+                this.file = file;
+                this.fiTitle = fiTitle;
+                this.fileUrl = fileUrl;
+              }
+            }
+          }
+        }
+        if (true) {
+          if (false) {
+            this.files = files;
           }
         }
       } catch (e) {
         console.error("DriveFiles: Error during DriveApp search:", e);
-        let filedMain = null; // Handle search errors gracefully
-        this.filedMain = filedMain;
+        filedMain = null; // Handle search errors gracefully
       }
       console.log(
         "DriveFiles: Final dataTree length after search:",
         dataTree.length,
       );
+      let rndFiledMain = false;
       if (dataTree.length > 0) {
-        let rndFiledMain = Math.floor(Math.random() * dataTree.length);
-        this.rndFiledMain = rndFiledMain;
-        let filedMain = dataTree[rndFiledMain];
-        this.filedMain = filedMain;
+        rndFiledMain = Math.floor(Math.random() * dataTree.length);
+        filedMain = dataTree[rndFiledMain];
         console.log(
           "DriveFiles: Returning a random found file URL:",
           filedMain,
@@ -4454,9 +4447,8 @@ class DriveFiles {
               dataTree.length,
             );
             if (dataTree.length > 0) {
-              let rndFiledMain = Math.floor(Math.random() * dataTree.length);
-              let filedMain = dataTree[rndFiledMain];
-              this.filedMain = filedMain;
+              rndFiledMain = Math.floor(Math.random() * dataTree.length);
+              filedMain = dataTree[rndFiledMain];
               console.log(
                 "DriveFiles: Returning a random found file URL:",
                 filedMain,
@@ -4481,8 +4473,39 @@ class DriveFiles {
           // }
         }
       }
+      if (true) {
+        if (true) {
+          this.searchQuery = searchQuery;
+          this.rndFiledMain = rndFiledMain;
+        }
+        if (false) {
+          this.targetFile = targetFile;
+        }
+      }
+    }
+    if (true) {
+      if (true) {
+        this.strNw = strNw;
+        this.time = time;
+        this.searArn = searArn;
+        this.filedMain = filedMain;
+        this.crmCalcResult = crmCalcResult;
+        this.dataTree = dataTree;
+      }
+      if (false) {
+        this.manString = manString;
+        this.testStrNw = testStrNw;
+        this.mainStr = mainStr;
+        this.arn = arn;
+        this.iam = iam;
+      }
     }
   }
+}
+
+function filesGlobal(strNw, time) {
+  let driveFilesGlobal = new DriveFiles(strNw, time);
+  return driveFilesGlobal;
 }
 
 class ObjectConvertor {

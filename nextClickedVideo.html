@@ -269,8 +269,8 @@
               }
             }
             input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
-            let openYTPlayer = document.getElementById("mainUjpg");
-            openYTPlayer.click();
+            // let openYTPlayer = document.getElementById("mainUjpg");
+            // openYTPlayer.click();
             // fetchSuggestions(String(againContent));
             // let openYTPlayer = document.createElement("a");
             // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
@@ -973,6 +973,7 @@
           // });
 
           input.addEventListener('keydown', (event) => {
+            let enterClicked = 0;
               if (event.key === 'Enter') {
                 console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
                 // if (String(event.target.value).length < 1) {
@@ -1009,7 +1010,7 @@
                         // document.getElementById("openYTPLAYER").click();
                         // document.getElementById("openYTPLAYER").remove();
                         // qTemp = query
-                        serverside("vidPlaylist", [[String(event.target.value)]])
+                        serverside("vidPlaylist", [String(event.target.value)])
                         .then((done) => {
                           try {
                             // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
@@ -1462,10 +1463,12 @@
                   // }
                 }
                 else {
+                      if (enterClicked <= 1) {
                         serverside("getScriptUrl", [])
                         .then((load) => {
                           let openYTPlayer = document.getElementById("mainUjpg");
                           openYTPlayer.click();
+                          enterClicked++;
                           localStorage.setItem("ssSearch", String(event.target.value));
                           // console.log("Data; Url for reLoad ", load.data);
                           let linkFollow = document.createElement("a");
@@ -1486,9 +1489,11 @@
                           console.log("Failed to load ", fail);
                           input.disabled = false;
                           input.focus();
-                          let openYTPlayer = document.getElementById("mainUjpg");
-                          openYTPlayer.click();
+                            let openYTPlayer = document.getElementById("mainUjpg");
+                            openYTPlayer.click();
+                          enterClicked++;
                         });
+                          }
                   // fetchSuggestions(String(event.target.value));
                 //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
                 //     // if (event.target.value !== againCap) {
