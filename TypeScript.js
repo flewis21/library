@@ -4630,7 +4630,6 @@ class ObjectConvertor {
 class ValidUrlResult {
   constructor(text) {
     // super();
-    this.text = text;
     console.log(
       "\nValidUrlResult(text: " +
         text +
@@ -4646,60 +4645,43 @@ class ValidUrlResult {
     resVRt.rndRes = [];
     resVRt.matches = "";
     resVRt.allMatches = "";
-    this.validatedResult = resVRt;
     // let resVRt = this.validatedResult;
     let resURx = "";
     let resXReg = "";
     let resTree = '';
-    this.dataTree = resTree;
     let rTFiled = "";
-    this.filedMain = rTFiled;
     let rTSheet = "";
-    this.vidSheetVals = rTSheet;
     let rtVData = "";
-    this.vidData = rtVData;
     let rTVValues = "";
-    this.vidVals = rTVValues;
     let rTIVValues = "";
-    this.inVVals = rTIVValues;
     let rTVTI = "";
-    this.truInv = rTVTI;
-    if (typeof text !== "string" || text?.length === 0) {
-      console.log("No url string or string length is 0!\nreturning: ",resVRt)
+    if (typeof text !== "string" || text?.length === 0 || typeof text?.getContent === "function" || typeof text?.evaluate === "function" || (text.trim().startsWith("<") && text.trim().endsWith(">"))) {
+      console.log("No url string, string is Html, or string length is 0!\nreturning: ",resVRt)
     }
     else {
       resURx =
         /(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))|((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))/gi;
-      this.urlRegex = resURx;
       resXReg = text.match(resURx);
-      this.regxRes = resXReg;
       if (resXReg !== null) {
         resVRt.matches = resXReg;
-        this.validatedResult = resVRt;
       }
       console.log("matches = " + resVRt.matches);
       if (resVRt.matches.length === 0) {
         // this.searchLinkDrive = new DriveFiles(text, autoGlobe.functionRegistry.time);
         // if (this.searchLinkDrive && this.searchLinkDrive.dataTree && this.searchLinkDrive.dataTree !== null && Array.isArray(this.searchLinkDrive.dataTree)) {
           resVRt.matches = resTree  //this.searchLinkDrive?.dataTree;
-          this.validatedResult = resVRt;
         // }
         console.log("matches to return = ", resVRt.matches);
         // if (this.searchLinkDrive?.filedMain) {
         if (rTFiled) {
           autoGlobe.functionRegistry.vidTree();
           rTSheet = autoGlobe.functionRegistry.getVideoList();
-          this.vidSheetVals = rTSheet;
           rtVData = [];
-          this.vidData = rtVData;
           rTVValues = Object.values(rTSheet);
-          this.vidVals = rTVValues;
           rTVValues.forEach((val) => {
             rTIVValues = Object.values(val);
-            this.inVVals = rTIVValues;
             rTIVValues.forEach((inV) => {
               rTVTI = autoGlobe.trueVfalse(inV);
-              this.truInv = rTVTI;
               if (rTVTI) {
                 rtVData.push(inV);
               }
@@ -4710,11 +4692,9 @@ class ValidUrlResult {
             if (fileUrl && resVRt.rndRes.indexOf(fileUrl) === -1) {
               if (rtVData?.indexOf(fileUrl) !== -1) {
                 resVRt.rndRes.push(fileUrl);
-                this.validatedResult = resVRt;
               } 
               else {
                 resVRt.rndRes.push(fileUrl);
-                this.validatedResult = resVRt;
                 updateQuote(
                   JSON.stringify({
                     name: "videoSheet",
@@ -4730,7 +4710,6 @@ class ValidUrlResult {
       }
       console.log("rndRes = " + resVRt.rndRes);
       resVRt.allMatches = resVRt.matches ? resVRt.matches : resVRt.rndRes;
-      this.validatedResult = resVRt;
       console.log(`allMatches = matches ? [...${resVRt.allMatches}]`);
       let resTemp = "";
       let resProto = null;
@@ -4740,10 +4719,8 @@ class ValidUrlResult {
         resTemp.currentHostname = "";
         resTemp.currentPathname = "";
         resTemp.currentQuery = "";
-        this.tempUrlResult = resTemp;
         resVRt?.allMatches?.forEach((url) => {
           resProto = url.indexOf("://");
-          this.protocolEnd = resProto;
           let tempPE = resProto;
           let tempUCro = resTemp.currentProtocol;
           if (tempPE !== -1) {
@@ -4806,28 +4783,62 @@ class ValidUrlResult {
             }
           }
           resTemp.currentHostname = tempUCh;
-          this.tempUrlResult = resTemp;
           resTemp.currentProtocol = tempUCro;
-          this.tempUrlResult = resTemp;
           resVRt.protocol = tempVRP;
-          this.validatedResult = resVRt;
           resVRt.hostname = tempVRh;
-          this.validatedResult = resVRt;
           resVRt.pathname = tempVRPh;
-          this.validatedResult = resVRt;
           resTemp.currentPathname = tempUPn;
-          this.tempUrlResult = resTemp;
           resVRt.query = tempVRQ;
-          this.validatedResult = resVRt;
           resTemp.currentQuery = tempURcQ;
-          this.tempUrlResult = resTemp;
           resVRt.url = tempVRUrl;
-          this.validatedResult = resVRt;
+          if (true) {
+            if (resProto) {
+              this.protocolEnd = resProto;
+            }
+          }
         });
+        if (true) {
+          if (resTemp) {
+            this.tempUrlResult = resTemp;
+          }
+        }
+      }
+      if (true) {
+        if (true) {
+          this.validatedResult = resVRt;
+        }
+        if (false) {
+          this.urlRegex = resURx;
+        }
+        if (resXReg) {
+          this.regxRes = resXReg;
+        }
+      }
+    }
+    if (true) {
+      if (true) {
+        this.text = text;
+        this.validatedResult = resVRt;
+        this.dataTree = resTree;
+        this.filedMain = rTFiled;
+      }
+      if (false) {
+        this.vidSheetVals = rTSheet;
+        this.vidData = rtVData;
+        this.vidVals = rTVValues;
+        this.inVVals = rTIVValues;
+        this.truInv = rTVTI;
       }
     }
   }
 }
+
+function vaURL(){
+  let finRes = new ValidUrlResult()
+  return finRes;
+}
+
+
 let autoGlobe = new ClassifyYIDs()
 // console.log(autoGlobe.globalThis[autoGlobe.argsX[0]].apply(this, autoGlobe.content));
     // Set some global variables

@@ -1402,7 +1402,7 @@ function handleGetData(e) {
       );
       var seoHtml = seoCapital(iframeSrc);
       executed++;
-      return RenderTemplate.templateRender(appL, { payL: payLoad }, JSON.stringify(rndE));
+      return renderTemplate(appL, { payL: payLoad }, JSON.stringify(rndE));
     } else if (payLoad.type === "url") {
       // --- NEW: Handle "url" type directly ---
       iframeSrc = payLoad.dataIndex || iframeSrc; // Assign the URL to iframeSrc
