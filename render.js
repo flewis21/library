@@ -2336,7 +2336,60 @@ class RendTemplate {
     let html = false;
     try {
       let result = contentApp(
-        `<div class="center app-container" id="div"><?!= HtmlService.createTemplateFromFile(file).evaluate().append(index).getContent() ?></div>`,
+        `<!DOCTYPE html>
+            <html>
+              <head>
+                <base target="_self">
+                <style>
+                  <?!= global_website.getContent() ?>
+                  .app-container {
+                    background-color: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    width: 90%;
+                    max-width: 800px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    position: relative;
+                  }
+                  nav {
+                    width: 100%;
+                    background-color: #4CAF50;
+                    padding: 15px 0;
+                    text-align: center;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
+                  }
+                  nav a {
+                    color: white !important;
+                    font-size: 1.2em;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                  }
+                  nav a:hover {
+                    background-color: #45a049;
+                  }
+                  @media (max-width: 600px) {
+                    .app-container {
+                      width: 95%;
+                      padding: 15px;
+                    }
+                  }
+                </style>
+              </head>
+              <body>
+                <nav class="center">
+                  <a id="caller" href="<?= getUrl(ScriptApp) ?>?func=crmEBI&args=${fx}" target="_top">update</a>
+                </nav>
+                <br>
+                <div class="center app-container" id="div"><?!= HtmlService.createTemplateFromFile(file).evaluate().append(index).getContent() ?></div>
+              </body>
+            </html>`,
           {
             file: autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * Math.floor(autoGlobe.functionRegistry.getHtmlList().length))],
             index: (function index() {

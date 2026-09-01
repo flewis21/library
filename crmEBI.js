@@ -21,7 +21,7 @@ function crmEBI(fx) {
     <head>
       <base target="_self">
       <style>
-        <?!= website.getContent() ?>
+        <?!= global_website.getContent() ?>
         .app-container {
           background-color: white;
           padding: 30px;
