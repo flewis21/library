@@ -405,8 +405,14 @@ class DataApp {
       searchString = noSearch || strSearch.myNewArr;
     }
     let uriSearch = encodeURIComponent(String(searchString));
-    let searchLink = `http://www.bing.com/search?q=(${uriSearch})%20intitle%3A%20-%20YouTube+AND+${uriSearch}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-    if (autoGlobe.vidData.indexOf(searchLink) !== -1) {
+    let searchArr = [];
+    autoGlobe.vidData.forEach((term)  =>  {
+      if (String(term).includes(searchString || uriSearch)) {
+        searchArr.push(term)
+      }
+    });
+    let searchLink = false;
+    if (searchArr.length > 0) {
       // let driveLink = new DriveFiles(String(searchString),autoGlobe.functionRegistry.time).dataTree;
       // let matchLink = matchManager(null,String(searchString),autoGlobe.functionRegistry.time);
       // let tempFileArr = [];
@@ -466,25 +472,22 @@ class DataApp {
       //     }
       //   }
       // })
-      let savFiles = classFiles(searchString);
-      fndOrdObj.playList = savFiles.fileRes;
-      fndOrdObj.hardUrl = searchLink;
-      if (true) {
-        if (savFiles) {
-          this.savFiles = savFiles
-        }
-      }
+      fndOrdObj.playList = searchArr;
+      fndOrdObj.hardUrl = searchArr[Math.floor(Math.random() * Math.floor(searchArr.length))];
       return fndOrdObj;
-    } 
+    }
     else {
-      updateQuote(
-        JSON.stringify({
-          name: "videoSheet",
-          number: parseInt("001", 8),
-          videoid: searchLink,
-          videodescription: String(searchString),
-        }),
-      );
+      if (searchArr.length === 0) {
+        searchLink = `http://www.bing.com/search?q=(${uriSearch})%20intitle%3A%20-%20YouTube+AND+${uriSearch}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+        updateQuote(
+          JSON.stringify({
+            name: "videoSheet",
+            number: parseInt("001", 8),
+            videoid: searchLink,
+            videodescription: String(searchString),
+          }),
+        );
+      }
     }
     fndOrdObj.hardUrl = searchLink;
     const options = { muteHTTPExceptions: true };
@@ -609,6 +612,7 @@ class DataApp {
         this.fndOrdObj = fndOrdObj;
         this.searchString = searchString;
         this.uriSearch = uriSearch;
+        this.searchArr = searchArr;
         this.searchLink = searchLink;
       }
       if (noSearch) {

@@ -25,14 +25,11 @@ function bingSWF(searchString, time) {
     muteHttpExceptions: true,
   };
   console.log(
-    "bingSWF: \nDeclaring data = [" +
-      UrlFetchApp.fetch(searcher, searcherOptions).getContentText() +
-      "]",
+    "bingSWF: \nDeclaring data = []",
   );
-  var data = [UrlFetchApp.fetch(searcher, searcherOptions).getContentText()];
+  var data = [getUrlResponse(searcher, searcherOptions).app];
   console.log(
-    "bingSWF: [UrlFetchApp.fetch(" + searcher,
-    searcherOptions + ").getContentText()]\n",
+    "bingSWF: [UrlFetchApp.fetch().getContentText()]\n",
     typeof data,
   );
   // console.log("bingSWF: \n")
@@ -77,7 +74,8 @@ function bingSWF(searchString, time) {
   var setPlate = plate.filter((plated) => {
     if (typeof plated === "undefined" || plated.length == 0) {
       return;
-    } else {
+    } 
+    else {
       return plated;
     }
   });
@@ -2053,7 +2051,7 @@ function ssData(playSheet, sheetName, time) {
 }
 
 function ssDatabase(file, sheet, col, headers, data) {
-  var result = ContentApp.appContent("<?!= `createProject()` ?> ", {
+  var result = contentApp("<?!= `createProject()` ?> ", {
     createProject: function myProject() {
       var ws = spreadSheetCreate(file, sheet);
       ws.appendRow(headers);
@@ -2236,7 +2234,7 @@ function taxiService() {
 }
 
 function tutorial(text) {
-  var html = ContentApp.appContent(`
+  var html = contentApp(`
     <body id="screen"></body>
     <script>
       document
@@ -2326,7 +2324,7 @@ function wanUtil(namedVar, time) {
 }
 
 function wsSIPOC(fileX, col) {
-  var result = ContentApp.appContent(
+  var result = contentApp(
     `
     <div id="ss"><?!= createSheet() ?></div>
     <script>

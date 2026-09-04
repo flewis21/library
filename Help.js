@@ -3917,14 +3917,14 @@ function seoYoutube(searchString, time) {
       .replace(/,/g, "");
   }
   let rndSearch;
-  let rndSearchValidation = isValidUrl(searchString);
+  let rndSearchValidation = vaURL(searchString).validatedResult;
   if (!rndSearchValidation.hostname) {
     if ([searchString].indexOf("http://") === -1) {
       rndSearch = "http://" + searchString
     }
-    if ([rndSearch].indexOf(".com") === -1) {
-      rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
-    }
+      if ([rndSearch].indexOf(".com") === -1) {
+        rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
+      }
   }
   else {
     rndSearch = searchString

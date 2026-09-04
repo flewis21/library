@@ -535,14 +535,15 @@ class AutoParams {
     // ]
     //   .toString()
     //   .split(" ");
+    this.privateApps = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter","driveVideoFormsFilter","isValidUrl","postFromSpreadsheet"];
     this.paramsSort = function () {
-      let paramsSort = [];
+      let paramsSort = [];  
       while (paramsSort.length === 0) {
         let varRnd = this.numVarRnd;
         let rndCustomer = this.customOrder[varRnd];
         // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
         let customGroup = this.functionRegistry.paramsList.map((customerWk1, index) => {
-          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter","driveVideoFormsFilter"]; 
+          let bl = this.privateApps; 
           let sblx = [customerWk1.name];
           if (sblx.length > 0) {
             bl.forEach((s) => {
@@ -604,7 +605,7 @@ class AutoParams {
         let rndCustomer = this.customOrder[varRnd];
         // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
         let customGroup = this.functionRegistry.fileList.map((customerWk1) => {
-          let bl = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter"]; 
+          let bl = this.privateApps; 
           let sblx = [customerWk1];
           bl.forEach((s) => {
             if (sblx.indexOf(String(s)) > -1) {
@@ -3016,7 +3017,7 @@ class MisStCreator {
         let keyPro = keysArrArr? pro : [pro];
         let keyProParams;
         let realItem;
-        if (keyPro) {
+        if (keyPro && Array.isArray(keyPro)) {
           let funcLimit = [];
           let paramLimit = [];
           keyPro?.forEach((subParam, proIndex) => {
@@ -3372,6 +3373,13 @@ class MisStCreator {
                   let eResult = fParams.find((rndS) => {
                     return rndS.name === arrDRnd[Math.floor(Math.random() * Math.floor(arrDRnd.length))];
                   });
+                  while (!eResult) {
+                    arrDRnd = appSort();
+                    searchResult = randomSubstance(0, arrDRnd.length, arrDRnd).myNewArr;
+                    eResult = fParams.find((rndS) => {
+                      return rndS.name === arrDRnd[Math.floor(Math.random() * Math.floor(arrDRnd.length))];
+                    });
+                  }
                   console.log("resolved e.parameter pre-result", eResult);
                   try {
                     console.log("DEBUG: line 3380\nCheck/Balance for " + JSON.parse(eResult?.toString()));
@@ -4833,8 +4841,8 @@ class ValidUrlResult {
   }
 }
 
-function vaURL(){
-  let finRes = new ValidUrlResult()
+function vaURL(text){
+  let finRes = new ValidUrlResult(text);
   return finRes;
 }
 
@@ -5011,7 +5019,7 @@ let geneicType = function (e) {
             };
           }
           if (true) {
-            eQueryObject = {parameter: {file: data}}
+            eQueryObject = {parameter: {func: data}}
             handles = startRenderer(eQueryObject);
             data = 
               {
@@ -5038,7 +5046,7 @@ let geneicType = function (e) {
             }
             else {
               console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
-              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app;
+              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN;
               if (!base) {
                 if (data && data?.argsObject && (data?.argsObject["func"] && data?.argsObject["args"])) {
                   base = createFunctionResult(data?.argsObject["func"], data?.argsObject["args"]);
@@ -5104,7 +5112,7 @@ let geneicType = function (e) {
               if (typeof base === "string") {
                 if (String(base).length > 0) {
                   // handles = createFunctionResult(base);
-                  dataOR = globalHandleGetData(handles);
+                  dataOR = globalHandleGetData(base);
                   // let organizeIt = new Renderer("<div>Hello World!</div>", dataOR.pL.data,dataOR.title);
                   // let renderIt =
                   return dataOR
@@ -5213,7 +5221,7 @@ let geneicType = function (e) {
           }
           else {
             console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
-            base = data?.argsObject?.func|| data?.argsObject?.res || data?.tempObj?.argsObject?.app
+            base = data?.argsObject?.func|| data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN;
             // base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
             if (!base) {
               if (data && (data?.funcUno && data?.funcDos)) {

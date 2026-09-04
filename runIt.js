@@ -277,7 +277,7 @@ function pill() {
       '\n  document.addEventListener(\'DOMContentLoaded\', function() {\n  let timePicker = document.getElementById("prefTime");\n M.Timepicker.init(timePicker, { defaultTime: "now" })\n })\n \n  document.getElementById("btn").addEventListener("click", function() {\n  google.script.run.runItLog();\n  })\nvar elems = document.querySelectorAll(\'select\');\n    var instances = M.FormSelect.init(elems, options);\n  });',
   }
   pill = Route["test"]("epaWebsite", data);
-  return ContentApp.appContent(pill, data);
+  return contentApp(pill, data);
   //:contentFile('uiAccess')
 }
 

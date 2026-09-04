@@ -1028,16 +1028,15 @@ var contentCDN = function(url, argsObject) {
 
 class ContFile {
   constructor (file, argsObject) {
-    this.file = file;
-    this.argsObject = argsObject;
     console.log("contentFile = function (file, argsObject) ", file, argsObject);
+    let tmp = false;
+    let keys = false;
     try {
-      const tmp = HtmlService.createTemplateFromFile(
+      tmp = HtmlService.createTemplateFromFile(
         ContentService.createTextOutput(file)
           .setMimeType(ContentService.MimeType.JSON)
           .getContent(),
       );
-      this.tmp = tmp;
       console.log(
         "line 680\nContentFile(tmp: " +
           JSON.stringify(tmp) +
@@ -1045,8 +1044,7 @@ class ContFile {
       );
       if (argsObject) {
         if (typeof argsObject === "object") {
-          let keys = Object.keys(argsObject);
-          this.keys = keys;
+          keys = Object.keys(argsObject);
           console.log(
             "DEBUG: line 973\nContentFile(keys: " +
               keys[0] +
@@ -1059,8 +1057,7 @@ class ContFile {
         }
         else {
           if (typeof argsObject === "string") {
-            let keys = Object.keys([argsObject]);
-            this.keys = keys;
+            keys = Object.keys([argsObject]);
             console.log(
               "DEBUG: line 973\nContentFile(keys: " +
                 keys[0] +
@@ -1082,11 +1079,20 @@ class ContFile {
       //   .evaluate()
       //   .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
       //   .getContent();
-    } catch (error) {
+    } 
+    catch (error) {
       console.log("error in contentFile: " + error);
-      throw new Error(
+      console.error(
         "Error in contentFile html: " + error.toString() + "\n" + error.stack,
       );
+    }
+    if (true) {
+      if (true) {
+        this.file = file;
+        this.argsObject = argsObject;
+        this.tmp = tmp;
+        this.keys = keys;
+      }
     }
   };
   res() {
@@ -1095,8 +1101,12 @@ class ContFile {
 }
 
 let contentFile = function(file, argsObject) {
-  console.log("event; contentFile called: payLoad -", file);
-  console.log("event; contentFile called: argsObject -", JSON.stringify(argsObject));
+  if (file) {
+    console.log("event; contentFile called: payLoad -", file);
+  }
+  if (argsObject) {
+    console.log("event; contentFile called: argsObject -", JSON.stringify(argsObject));
+  }
   let blob = new ContFile(file, argsObject);
   return blob.tmp
     .evaluate()

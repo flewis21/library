@@ -1,6 +1,6 @@
 function jsGameScripts() {
   let gamerUrl = getScriptUrl();
-  let html = ContentApp.appContent(
+  let html = contentApp(
     `
     <html id="jsGameScripts">
       <head>

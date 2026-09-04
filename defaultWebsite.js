@@ -49,17 +49,19 @@ function appSort(numIndex, time) {
     "q",
     "z",
   ];
-  var rndNumLen = numIndex || Math.floor(Math.random() * 26);
+  var rndNumLen = numIndex || Math.floor(Math.random() * arrData.length);
   var freqArray = [];
-  var i = 0;
+  var i = rndNumLen;
   var l = 1;
+  let xFile = arrData[rndNumLen];
   for (i, l; i < l; i++) {
     titleArray.sort((a, b) => {
       // return console.log("that function: " + arguments.callee.caller.name + "\nthis function: " + arguments.callee.name + "\nsort: " +  a + " OR " + b + "\nelapsedTime: " + elapsedTime)
       if (a[0].toLowerCase() === arrData[numIndex || i]) {
         if (freqArray.indexOf(a) > -1) {
           return;
-        } else {
+        } 
+        else {
           freqArray.push(a);
         }
       }
@@ -2667,7 +2669,7 @@ var getUrl = function (appInterface) {
 
 var getUrlResponse = function (url, options) {
   let gURObj = {};
-  let validUrl = new ValidUrlResult(url).validatedResult;
+  let validUrl = vaURL(url).validatedResult;
   if (validUrl.hostname) {
     let response;
     let location;
