@@ -980,6 +980,7 @@ function productNamePartial(sSProduct) {
   // let feed = "";
 
   // const url = "https://search.epa.gov/epasearch/?querytext=" + sSProduct;
+  let proUrl = vidPlaylist(sSProduct)
   const res = objectOfS(
     [sSProduct],
     [

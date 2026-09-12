@@ -5019,7 +5019,7 @@ let geneicType = function (e) {
             };
           }
           if (true) {
-            eQueryObject = {parameter: {func: data}}
+            eQueryObject = {parameter: {func: "productTime",args: rndWord()}}
             handles = startRenderer(eQueryObject);
             data = 
               {
@@ -5151,7 +5151,7 @@ let geneicType = function (e) {
                     let noSearch = uItems[Math.floor(Math.random() * Object.keys(uItems.length).length)].Description;
                     let unSearch = uiCos[Math.floor(Math.random() * Object.keys(uItems.length).length)].title;
                     let uhUh = Array(noSearch,unSearch)[Math.floor(Math.random() * 2)];
-                    base = new MisStCreator(Array(["myFileJS"] + "," + [uhUh]))?.argsObject.res;
+                    base = new MisStCreator(Array(["myFileJS"] + "," + [encodeURIComponent(uhUh)]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);
@@ -5313,7 +5313,7 @@ let geneicType = function (e) {
                     }
                   }
                   else {
-                    base = new MisStCreator(Array(["myFileJS"] + "," + [rndWord()]))?.argsObject.res;
+                    base = new MisStCreator(Array(["myFileJS"] + "," + [encodeURIComponent(rndWord())]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);

@@ -479,6 +479,138 @@ class DataApp {
     else {
       if (searchArr.length === 0) {
         searchLink = `http://www.bing.com/search?q=(${uriSearch})%20intitle%3A%20-%20YouTube+AND+${uriSearch}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+        fndOrdObj.hardUrl = searchLink;
+        const options = { muteHTTPExceptions: true };
+        let retries = 0;
+        let maxRetries = 1;
+        let delay = 1000;
+        let data = null;
+        try {
+          data = getUrlResponse(searchLink, options);
+          if (!data) {
+            retries++;
+            delay += 3002;
+            Utilities.sleep(delay + Math.random() * 2000);
+            Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+            while (retries < maxRetries) {
+              try {
+                data = getUrlResponse(searchLink, options);
+              }
+              catch (error) {
+                Logger.log("Error fetching data: " + error);
+                retries++;
+                delay += 2;
+                Utilities.sleep(delay);
+              }
+            }
+            Logger.log("Max retries reached, failed to fetch data.");
+          }
+        }
+        catch (error) {
+          Logger.log("Error response received: " + l.stack);
+          console.log("Error response received,", l.stack);
+        }
+        const videoSearch = data?.app;
+        const vidsSearched = [];
+        const vidValues = [];
+        const sorFndOrd = [];
+        [videoSearch].map((videoId) => {
+          let idArray = videoId
+            ?.slice(videoId.indexOf(`v=`))
+            ?.toString()
+            ?.split(`v=`);
+          for (var i = 1; i < idArray?.length; i++) {
+            let playId = idArray[i]?.toString()?.substring(0, 11);
+            vidsSearched.push(playId);
+            vidValues.push(playId.valueOf());
+          }
+          return vidsSearched.forEach(function (vid) {
+            let vidObject = vid;
+            if (
+              vidObject[0].indexOf("=") === -1 &&
+              vidObject[0].indexOf("query") === -1 &&
+              vidObject[0].indexOf(";") === -1 &&
+              vidObject[0].indexOf("ajax") === -1 &&
+              vidObject[0].indexOf("whole") === -1 &&
+              vidObject[0].indexOf("inner") === -1 &&
+              vidObject[0].indexOf("strong") === -1 &&
+              vidObject[0].indexOf("ing") === -1 &&
+              vidObject[0].indexOf("brid") === -1 &&
+              vidObject[0].indexOf("ctrl") === -1 &&
+              vidObject[0].indexOf("location") === -1 &&
+              vidObject[0].indexOf("wiki") === -1 &&
+              vidObject[0].indexOf("//") === -1 &&
+              vidObject[0].indexOf("Html") === -1 &&
+              vidObject[0].indexOf("data") === -1 &&
+              vidObject[0].indexOf("undefined") === -1 &&
+              vidObject[0].indexOf("client") === -1 &&
+              vidObject[0].indexOf("/") === -1 &&
+              vidObject[0].indexOf("peri") === -1 &&
+              vidObject[0].indexOf("ten") === -1 &&
+              vidObject[0].indexOf("out") === -1 &&
+              vidObject[0].indexOf("new") === -1 &&
+              vidObject[0].indexOf("]") === -1 &&
+              vidObject[0].indexOf("[") === -1 &&
+              vidObject[0].indexOf("\\") === -1 &&
+              vidObject[0].indexOf("get") === -1 &&
+              vidObject[0].indexOf("&&") === -1 &&
+              vidObject[0].indexOf("a.severity") === -1 &&
+              vidObject[0].indexOf("b_cont") === -1 &&
+              vidObject[0].indexOf(",") === -1 &&
+              vidObject[0].indexOf("document.qu") === -1 &&
+              vidObject[0].indexOf("1,typeof h!") === -1 &&
+              vidObject[0].indexOf("EdgeWorksp") === -1 &&
+              vidObject[0].indexOf("{") === -1 &&
+              vidObject[0].indexOf("personaI") === -1
+            ) {
+              sorFndOrd.push(vid);
+            }
+          });
+        });
+        let i = 0;
+        let l = sorFndOrd?.length;
+        let fndOrd = [];
+        for (i, l; i < l; i++) {
+          sorFndOrd?.sort((a, b) => {
+            if (a !== b && fndOrd?.indexOf(a) === -1) {
+              if (fndOrd?.indexOf(a) > -1) {
+                return;
+              }
+
+              fndOrd?.push(a);
+            } else if (a === b && fndOrd?.indexOf(a) === -1) {
+              if (fndOrd?.indexOf(a) > -1) {
+                return;
+              }
+
+              fndOrd.push(a);
+            } else if (b !== a && fndOrd.indexOf(b) === -1) {
+              if (fndOrd.indexOf(b) > -1) {
+                return;
+              }
+
+              fndOrd?.push(b);
+            }
+          });
+        }
+        if (true) {
+          if (false) {
+            this.options = options;
+            this.retries = retries;
+            this.maxRetries = maxRetries;
+            this.delay = delay;
+            this.i = i;
+            this.l = l;
+          }
+          if (data) {
+            this.data = data;
+            this.videoSearch = videoSearch;
+            this.vidsSearched = vidsSearched;
+            this.vidValues = vidValues;
+            this.sorFndOrd = sorFndOrd;
+            this.fndOrd = fndOrd;
+          }
+        }
         updateQuote(
           JSON.stringify({
             name: "videoSheet",
@@ -487,126 +619,12 @@ class DataApp {
             videodescription: String(searchString),
           }),
         );
+        // if (typeof fndOrd === "object") {
+        //   break;
+        // }
+        // }
       }
     }
-    fndOrdObj.hardUrl = searchLink;
-    const options = { muteHTTPExceptions: true };
-    let retries = 0;
-    let maxRetries = 1;
-    let delay = 1000;
-    let data = null;
-    try {
-      data = getUrlResponse(searchLink, options);
-      if (!data) {
-        retries++;
-        delay += 3002;
-        Utilities.sleep(delay + Math.random() * 2000);
-        Logger.log(`Rate limit hit, retrying in ${delay} ms`);
-        while (retries < maxRetries) {
-          try {
-            data = getUrlResponse(searchLink, options);
-          }
-          catch (error) {
-            Logger.log("Error fetching data: " + error);
-            retries++;
-            delay += 2;
-            Utilities.sleep(delay);
-          }
-        }
-        Logger.log("Max retries reached, failed to fetch data.");
-      }
-    }
-    catch (error) {
-      Logger.log("Error response received: " + l.stack);
-      console.log("Error response received,", l.stack);
-    }
-    const videoSearch = data?.app;
-    const vidsSearched = [];
-    const vidValues = [];
-    const sorFndOrd = [];
-    [videoSearch].map((videoId) => {
-      let idArray = videoId
-        ?.slice(videoId.indexOf(`v=`))
-        ?.toString()
-        ?.split(`v=`);
-      for (var i = 1; i < idArray?.length; i++) {
-        let playId = idArray[i]?.toString()?.substring(0, 11);
-        vidsSearched.push(playId);
-        vidValues.push(playId.valueOf());
-      }
-      return vidsSearched.forEach(function (vid) {
-        let vidObject = vid;
-        if (
-          vidObject[0].indexOf("=") === -1 &&
-          vidObject[0].indexOf("query") === -1 &&
-          vidObject[0].indexOf(";") === -1 &&
-          vidObject[0].indexOf("ajax") === -1 &&
-          vidObject[0].indexOf("whole") === -1 &&
-          vidObject[0].indexOf("inner") === -1 &&
-          vidObject[0].indexOf("strong") === -1 &&
-          vidObject[0].indexOf("ing") === -1 &&
-          vidObject[0].indexOf("brid") === -1 &&
-          vidObject[0].indexOf("ctrl") === -1 &&
-          vidObject[0].indexOf("location") === -1 &&
-          vidObject[0].indexOf("wiki") === -1 &&
-          vidObject[0].indexOf("//") === -1 &&
-          vidObject[0].indexOf("Html") === -1 &&
-          vidObject[0].indexOf("data") === -1 &&
-          vidObject[0].indexOf("undefined") === -1 &&
-          vidObject[0].indexOf("client") === -1 &&
-          vidObject[0].indexOf("/") === -1 &&
-          vidObject[0].indexOf("peri") === -1 &&
-          vidObject[0].indexOf("ten") === -1 &&
-          vidObject[0].indexOf("out") === -1 &&
-          vidObject[0].indexOf("new") === -1 &&
-          vidObject[0].indexOf("]") === -1 &&
-          vidObject[0].indexOf("[") === -1 &&
-          vidObject[0].indexOf("\\") === -1 &&
-          vidObject[0].indexOf("get") === -1 &&
-          vidObject[0].indexOf("&&") === -1 &&
-          vidObject[0].indexOf("a.severity") === -1 &&
-          vidObject[0].indexOf("b_cont") === -1 &&
-          vidObject[0].indexOf(",") === -1 &&
-          vidObject[0].indexOf("document.qu") === -1 &&
-          vidObject[0].indexOf("1,typeof h!") === -1 &&
-          vidObject[0].indexOf("EdgeWorksp") === -1 &&
-          vidObject[0].indexOf("{") === -1 &&
-          vidObject[0].indexOf("personaI") === -1
-        ) {
-          sorFndOrd.push(vid);
-        }
-      });
-    });
-    let i = 0;
-    let l = sorFndOrd?.length;
-    let fndOrd = [];
-    for (i, l; i < l; i++) {
-      sorFndOrd?.sort((a, b) => {
-        if (a !== b && fndOrd?.indexOf(a) === -1) {
-          if (fndOrd?.indexOf(a) > -1) {
-            return;
-          }
-
-          fndOrd?.push(a);
-        } else if (a === b && fndOrd?.indexOf(a) === -1) {
-          if (fndOrd?.indexOf(a) > -1) {
-            return;
-          }
-
-          fndOrd.push(a);
-        } else if (b !== a && fndOrd.indexOf(b) === -1) {
-          if (fndOrd.indexOf(b) > -1) {
-            return;
-          }
-
-          fndOrd?.push(b);
-        }
-      });
-    }
-    // if (typeof fndOrd === "object") {
-    //   break;
-    // }
-    // }
     if (true) {
       if (true) {
         this.fndOrdObj = fndOrdObj;
@@ -620,20 +638,6 @@ class DataApp {
       }
       if (false) {
         this.uItems = uItems;
-        this.options = options;
-        this.retries = retries;
-        this.maxRetries = maxRetries;
-        this.delay = delay;
-        this.i = i;
-        this.l = l;
-      }
-      if (data) {
-        this.data = data;
-        this.videoSearch = videoSearch;
-        this.vidsSearched = vidsSearched;
-        this.vidValues = vidValues;
-        this.sorFndOrd = sorFndOrd;
-        this.fndOrd = fndOrd;
       }
     }
 
@@ -976,15 +980,15 @@ function needPastTime(searchString) {
               let vidMatch = vidObj[match];
               let truMatch = autoGlobe.trueVfalse(vidMatch);
               if (truMatch && typeof vidMatch !== "number") {
-                let searchMatch = String(vidMatch).search(String(searchString)) > -1;
-                let matchSearch = String(searchString).search(vidMatch) > -1;
+                let searchMatch = String(vidMatch)?.search(String(searchString)) > -1;
+                let matchSearch = String(searchString)?.search(vidMatch) > -1;
                 if (searchMatch || matchSearch) {
                   playVid.push(videoId);
                 }
               }
               else {
                 if (truMatch && typeof vidMatch === "number") {
-                  let matchSearch = String(searchString).search(vidMatch) > -1;
+                  let matchSearch = String(searchString)?.search(vidMatch) > -1;
                   if (matchSearch) {
                     playVid.push(videoId);
                   }

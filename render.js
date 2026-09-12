@@ -2397,11 +2397,11 @@ class RendTemplate {
                   <a id="caller" href="<?= getUrl(ScriptApp) ?>?func=crmEBI&args=${fx}" target="_top">update</a>
                 </nav>
                 <br>
-                <div class="center app-container" id="div"><?!= HtmlService.createTemplateFromFile(file).evaluate().append(index).getContent() ?></div>
+                <div class="center app-container" id="div"><?!= HtmlService.createTemplate(file).evaluate().getContent() ?></div>
               </body>
             </html>`,
           {
-            file: autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * Math.floor(autoGlobe.functionRegistry.getHtmlList().length))],
+            file: renderFile(autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * Math.floor(autoGlobe.functionRegistry.getHtmlList().length))]),
             index: (function index() {
       
               if (fx === objMaster.miscellaneous.section[0]) {
