@@ -88,7 +88,7 @@ var createFunctionResult = function (funcUno, funcDos) {
     let rawUrlResult = null;
     let isObjValUrl = null;
     if (truVal && objVal?.indexOf(",") === -1) {
-      isObjValUrl = new ValidUrlResult(objVal).validatedResult;
+      isObjValUrl = vaURL(objVal).validatedResult;
       if (Array.isArray(isObjValUrl?.matches)) {
         rawUrlResult = autoGlobe.trueVfalse(isObjValUrl?.matches[0]);
       }
@@ -143,12 +143,12 @@ var createFunctionResult = function (funcUno, funcDos) {
           let funcAFunc = crmT(funcUno);
           if (funcAFunc === -1) {
             // return
-            rawFuncResult = new MisCreator([funcUno]).argsObject.app;
+            rawFuncResult = misCx([funcUno]).argsObject.app;
           }
           else {
             if (funcAFunc > -1) {
               console.log(funcUno + "'s function index is = " + funcAFunc, executed++);
-              rawFuncResult = new MisStCreator(funcUno).argsObject.res;
+              rawFuncResult = misStC(funcUno).argsObject.res;
             }
             else {
               return
@@ -165,7 +165,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         if (funcUno && typeof globalThis[funcUno] === "function" && funcDos) {
             console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
             try {
-              rawFuncResult = new MisStCreator(funcUno,parsedFuncArgs).argsObject.res;
+              rawFuncResult = misStC(funcUno,parsedFuncArgs).argsObject.res;
             } 
             catch (error) {
               console.log("But, it is failing. " + [funcUno, parsedFuncArgs], error.stack);
@@ -176,7 +176,7 @@ var createFunctionResult = function (funcUno, funcDos) {
           if (funcUno && typeof globalThis[funcUno] !== "function" && funcDos) { 
             console.log("This execution is initiating with funcDos. funcDos is  " , funcDos);
             try {
-              rawFuncResult = new MisCreator(funcUno.concat(parsedFuncArgs)).argsObject.app;
+              rawFuncResult = misCx(String(funcUno.concat(parsedFuncArgs))).argsObject.app;
             } 
             catch (error) {
               console.log("But, it is failing. " + funcUno.concat(parsedFuncArgs).join(""), error.stack);
@@ -188,14 +188,14 @@ var createFunctionResult = function (funcUno, funcDos) {
               console.log("This execution is initiating without funcUno.", !funcUno);
               if (typeof globalThis[funcDos] === "function") {
                 try {
-                  rawFuncResult = new MisStCreator(parsedFuncArgs).argsObject.res;
+                  rawFuncResult = misStC(parsedFuncArgs).argsObject.res;
                 } 
                 catch (error) {
                   console.log("But, it is failing.");
                 }
               }
               else {
-                rawFuncResult = new MisCreator(parsedFuncArgs).argsObject.app;
+                rawFuncResult = misCx(parsedFuncArgs).argsObject.app;
               }
               console.log("rawFuncResult = " + rawFuncResult, executed++);
             } 
@@ -2679,7 +2679,7 @@ var getUrlResponse = function (url, options) {
     let maxRetries = 1;
     let delay = 1000;
     try {
-      response = UrlFetchApp.fetch(validUrl.url, options);
+      response = UrlFetchApp.fetch(validUrl?.url, options);
       try {
         if (response) {
           var res = response.getResponseCode();

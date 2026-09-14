@@ -149,7 +149,7 @@ class FunctionHandle {
     }
     else {
       if (e && !e.parameter) {
-        tempObj = new MisStCreator(e);
+        tempObj = misStC(e);
         mapArr[tempObj?.argsObject?.func || autoGlobe.func] = [];
         if (tempObj?.argsObject?.args) {
           rndE = new IsMapped(mapArr, [...tempObj?.argsObject?.args] || [autoGlobe.func]).mapKeys;
@@ -345,7 +345,7 @@ class FunctionHandle {
                         htAml =  renderFile(
                           funcTres,
                           driveA,
-                          new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
+                          vaURL(getScriptUrl()).validatedResult.pathname.split("/")[3],
                         );
                       } 
                       catch (error) {
@@ -380,10 +380,18 @@ class FunctionHandle {
                     }
                     else {
                       if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") === -1) {
-                        tempObj = new MisCreator(e.parameter[objData[0]])  ;
-                        mapArr[tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
-                        if (tempObj?.argsObject?.args) {
-                          argsEd = new IsMapped(mapArr, [...tempObj?.argsObject?.args]).mapKeys;
+                        if (e.parameter[objData[0]]?.indexOf("http") === -1) {
+                          e.parameter[objData[0]] = "http://" + e.parameter[objData[0]]
+                        }
+                        tempObj = contentCDN(e.parameter[objData[0]],
+                            // {
+                            //   followRedirects: false, // Prevent automatic redirects
+                            //   muteHttpExceptions: true,
+                            // }
+                            );
+                        mapArr[e.parameter[objData[0]]] = [] // || tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
+                        if (tempObj) { //?.argsObject?.args) {
+                          argsEd = new IsMapped(mapArr, [String(tempObj)]).mapKeys; // ?.argsObject?.args]).mapKeys;
                         }
                         else {
                           argsEd = new IsMapped(mapArr, []).mapKeys || autoGlobe.func;
@@ -467,7 +475,7 @@ class FunctionHandle {
                   }
                   else {
                     if (typeof globalThis[e.parameter[objData[0]]] === "function") {
-                      tempObj = new MisStCreator(e.parameter[objData[0]]);
+                      tempObj = misStC(e.parameter[objData[0]]);
                       mapArr[tempObj?.argsObject?.func || autoGlobe.func] = [];
                       if (tempObj?.argsObject?.args) {
                         argsEd = new IsMapped(mapArr, [...tempObj?.argsObject?.args]).mapKeys;
@@ -652,7 +660,7 @@ class FunctionHandle {
                               htAml = renderFile(
                                 funcTres,
                                 driveA,
-                                new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3],
+                                vaURL(getScriptUrl()).validatedResult.pathname.split("/")[3],
                               );
                             } 
                             catch (error) {

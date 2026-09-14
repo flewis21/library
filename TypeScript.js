@@ -2138,153 +2138,181 @@ class RawFuncResult {
 class MisCreator {
   constructor(text, maxRetries = 3) {
     // super(text);
-    this.text = text || [this.funcUno, this.parsedFuncArgs];
-    this.maxRetries = maxRetries;
     console.log(
       "boilerplate Help: line 196\nMisCreator(text: " +
-        this.text +
+        text +
         ", maxRetries: " +
-        this.maxRetries +
+        maxRetries +
         ")\n ",
     );
-    if (this.text?.indexOf(",") === -1) {
-      this.validUrl = new ValidUrlResult(this.text).validatedResult;
-      autoGlobe.executed++;
+    let executed = autoGlobe.executed;
+    let validUrl = false;
+    let supFunc = false;
+    let truSup = false;
+    let funcSup = false;
+    let rndSup = false;
+    let isError = false;
+    let earlyReturn = false;
+    let errorUrl = false;
+    let form = false;
+    let runChance = 0;
+    let url = false;
+    let argsObject = false;
+    let fx = false;
+    let payLoad = false;
+    let htmlContent = false;
+    let html = false;
+    let formattedPayload = false;
+    let payT = false;
+    let values = false;
+    let webAppObj = false;
+    let response = false;
+    let location = false;
+    let htmlData = false;
+    let supUrl = false;
+    let retries = 0;
+    let delay = 1000;
+    let responseObj = false;
+    let res = false;
+    if (text?.indexOf(",") === -1) {
+      if (text?.indexOf("http") === -1) {
+        text = "http://" + text
+      }
+      validUrl = vaURL(text).validatedResult;
+      executed++;
     }
-    if (!this.validUrl?.hostname) {
-      this.supFunc = new MisStCreator(this.text).argsObject;
-      autoGlobe.executed++;
-      this.truSup = autoGlobe.trueVfalse(this.supFunc.func);
-      autoGlobe.executed++;
-      if (this.truSup) {
-        Logger.log("function - " + this.supFunc.func);
+    if (!validUrl || (validUrl && !validUrl?.hostname)) {
+      supFunc = misStC(text).argsObject;
+      executed++;
+      truSup = autoGlobe.trueVfalse(supFunc.func);
+      executed++;
+      if (truSup) {
+        Logger.log("function - " + supFunc.func);
       }
-      while (!this.supFunc.func) {
-        this.truSup = autoGlobe.trueVfalse(this.supFunc.func);
-        autoGlobe.executed++;
-        if (this.truSup) {
-          Logger.log("function - " + this.supFunc.func);
+      while (!supFunc.func) {
+        truSup = autoGlobe.trueVfalse(supFunc.func);
+        executed++;
+        if (truSup) {
+          Logger.log("function - " + supFunc.func);
         }
-        this.funcSup = autoGlobe.functionRegistry.fileList;
-        autoGlobe.executed++;
-        this.rndSup =
-          this.funcSup[Math.floor(Math.random() * Math.floor(this.funcSup.length))];
-        this.supFunc = new MisStCreator(this.rndSup).argsObject;
-        autoGlobe.executed++;
+        funcSup = autoGlobe.functionRegistry.fileList;
+        executed++;
+        rndSup =
+          funcSup[Math.floor(Math.random() * Math.floor(funcSup.length))];
+        supFunc = misStC(rndSup).argsObject;
+        executed++;
       }
-      if (this.supFunc && typeof this.supFunc === "object") {
-        this.isError = false;
-        for (var key in this.supFunc) {
+      if (supFunc && typeof supFunc === "object") {
+        for (var key in supFunc) {
           if (
-            typeof this.supFunc[key] === "string" &&
-            this.supFunc[key].startsWith("Error:")
+            typeof supFunc[key] === "string" &&
+            supFunc[key].startsWith("Error:")
           ) {
-            this.isError = true;
-            break;
+            isError = true;
           }
+          break;
         }
-        if (this.isError) {
-          Logger.log("Error(s) from misSt:", this.supFunc);
-          console.error("Error(s) from misSt:", this.supFunc);
-          this.earlyReturn = "misSt returned errors: " + JSON.stringify(this.supFunc);
-          this.errorthis.url = this.text;
-          this.form =
-            new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
+        if (isError) {
+          Logger.log("Error(s) from misSt:", supFunc);
+          console.error("Error(s) from misSt:", supFunc);
+          earlyReturn = "misSt returned errors: " + JSON.stringify(supFunc);
+          errorUrl = text;
+          form =
+            classFiles(String(text).toUpperCase()).objTest ||
             formMaker(
-              [this.text].join("").toUpperCase(),
+              [text].join("").toUpperCase(),
               "misForms",
               autoGlobe.functionRegistry.time,
             );
-          autoGlobe.executed++;
-          if (typeof this.form === "object") {
-            // fileManager(coData.rndTitle, "this.forms")
+          executed++;
+          if (typeof form === "object") {
+            // fileManager(coData.rndTitle, "forms")
             Logger.log(
-              `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+              `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
             );
 
-            // --- Set Basic this.form Properties ---
+            // --- Set Basic form Properties ---
 
             // Randomly decide to collect email or not
-            this.form.setCollectEmail(Math.random() < 0.5);
+            form.setCollectEmail(Math.random() < 0.5);
 
             // Randomly decide to show progress bar for multi-section this.forms
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.setProgressBar(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.setProgressBar(true);
             }
 
             // --- Add Sections and Questions ---
 
-            this.form.addSectionHeaderItem().setTitle(this.earlyReturn);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Your Name").setRequired(true);
+            form.addSectionHeaderItem().setTitle(earlyReturn);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Your Name").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addDateItem().setTitle("Birth Date").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form
                 .addParagraphtTextItem()
                 .setTitle("Your Message")
                 .setRequired(true);
             }
-            this.form.setConfirmationMessage("Thanks for your feedback !!");
-            this.url = seoPastTime(this.text) || this.form.getPublishedUrl() || this.form;
+            form.setConfirmationMessage("Thanks for your feedback !!");
+            url = seoPastTime(text) || form.getPublishedUrl() || form;
           }
-          console.log("Final app:", this.earlyReturn);
-          this.argsObject = { index: url, app: this.earlyReturn, link: this.errorUrl };
+          console.log("Final app:", earlyReturn);
+          argsObject = { index: url, app: earlyReturn, link: errorUrl };
         }
       }
-      this.fx = this.supFunc?.func;
-      this.payLoad = this.supFunc?.args;
-      console.log("The 'e.parameter[args]' for url links, " + this.payLoad);
+      fx = supFunc?.func;
+      payLoad = supFunc?.args;
+      console.log("The 'e.parameter[args]' for url links, " + payLoad);
       console.log(
         "The 'e.parameter[args]' for url links after encoding, " +
-          encodeURIComponent(this.payLoad),
+          encodeURIComponent(payLoad),
       );
-      autoGlobe.executed++;
-      // if (this.supFunc.func) {
-      // if (this.supFunc.args) {
-      //     this.html =
+      executed++;
+      // if (supFunc.func) {
+      // if (supFunc.args) {
+      //     html =
       //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>&args=<?= action ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: "100%"; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
       // = document.getElementById("breakUrl");</script>`);
-      //     this.html.this.url =
-      //       getScriptUrl().toString() + "?func=" + this.fx + "&args=" + this.payLoad;
-      // this.html.nav = this.fx;
-      // this.html.action = this.payLoad;
-      //     return this.html.evaluate().getContent();
-      // } else if (!this.supFunc.args) {
-      // const this.fx = this.supFunc.func;
-      //     this.html =
+      //     html.url =
+      //       getScriptUrl().toString() + "?func=" + fx + "&args=" + payLoad;
+      // html.nav = fx;
+      // html.action = payLoad;
+      //     return html.evaluate().getContent();
+      // } else if (!supFunc.args) {
+      // const fx = supFunc.func;
+      //     html =
       //       HtmlService.createTemplate(`<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(url))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
       // = document.getElementById("breakUrl");</script>`);
-      //     this.html.this.url = getScriptUrl().toString() + "?func=" + this.fx;
-      // this.html.nav = this.fx;
-      //     return this.html.evaluate().getContent();
+      //     html.url = getScriptUrl().toString() + "?func=" + fx;
+      // html.nav = fx;
+      //     return html.evaluate().getContent();
       // }
 
-      this.htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
+      htmlContent = `<!DOCTYPE html><html lang="en"><body><div><label><nav class="center"><a id="caller" href="<?= getUrl(ScriptApp) ?>?func=<?= nav ?>" target="_top">update<label id="spLab"><strong><?!= seoCapital(HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent()) ?></strong></label><div id="contentPlayer"><iframe class="z-depth-5 card-panel deep-purple darken-1 scale-transition scale-out scale-in btn-large" src="<?= HtmlService.createTemplate(decodeURIComponent(encodeURIComponent(formUrl))).evaluate().getContent() ?>" id="eventRes01" class="menu-img grey darken-4 z-depth-5" style="width: 100%; height: 100%; border: none;" allow="thislay" allow="encrypted-media" title="Dontime Life Website" frameborder="0" allowfullscreen ></iframe></div></a></nav></label></div><br /><input type="hidden" value="<?= getScriptUrl() ?>" id="breakUrl" /></body></html><script>var appUrl
       = document.getElementById("breakUrl");</script>`;
-      this.html = HtmlService.createTemplate(this.htmlContent);
-      this.html.formurl =
-        getScriptUrl() + "?func=" + this.fx + (this.payLoad ? "&args=" + this.payLoad : "");
-      this.html.nav = this.fx;
-      this.html.action = this.payLoad;
-      this.supUrl =
+      html = HtmlService.createTemplate(htmlContent);
+      html.formurl =
+        getScriptUrl() + "?func=" + fx + (payLoad ? "&args=" + payLoad : "");
+      html.nav = fx;
+      html.action = payLoad;
+      supUrl =
         getScriptUrl().toString() +
         "?func=" +
-        this.fx +
+        fx +
         "&args=" +
-        (this.payLoad ? encodeURIComponent(this.payLoad) : "");
-      autoGlobe.executed++;
-      // this.form = formMaker();
-      this.formattedPayLoad = "";
-      if (this.payLoad && typeof this.payLoad === "object") {
-        if (Array.isArray(this.payLoad)) {
-          this.formattedPayLoad = this.payLoad
+        (payLoad ? encodeURIComponent(payLoad) : "");
+      executed++;
+      // form = formMaker();
+      if (payLoad && typeof payLoad === "object") {
+        if (Array.isArray(payLoad)) {
+          formattedPayload = payLoad
             .map((item) => {
               if (typeof item === "string") {
                 return item;
@@ -2292,8 +2320,9 @@ class MisCreator {
               return JSON.stringify(item);
             })
             .join(", ");
-        } else {
-          this.values = Object.values(this.payLoad)
+        } 
+        else {
+          values = Object.values(payLoad)
             .map((value) => {
               if (typeof value === "string") {
                 return value;
@@ -2301,105 +2330,105 @@ class MisCreator {
               return JSON.stringify(value);
             })
             .join(", ");
-          this.formattedPayLoad = this.values;
+          formattedPayload = values;
         }
       }
-      this.payT = this.fx;
-      if (this.formattedPayload) {
-        this.payT += "(" + this.formattedPayload + ")";
-      } else if (this.payLoad) {
-        this.payT += "(" + this.payLoad + ")";
+      payT = fx;
+      if (formattedPayload) {
+        payT += String("(" + formattedPayload + ")").toUpperCase();
+      } 
+      else {
+        if (payLoad) {
+          payT += String("(" + payLoad + ")").toUpperCase();
+        }
       }
-      this.payT = this.payT.toUpperCase();
+      // payT = payT.toUpperCase();
       try {
-        this.form = new ClassifyFiles([this.formattedPayload][0] || this.payLoad).objTest;
-        this.webAppObj = {
-          funcStr: globalThis[this.supFunc.func]?.toString(),
-          url: this.form,
+        form = classFiles([formattedPayload][0] || payLoad).objTest;
+        webAppObj = {
+          funcStr: globalThis[supFunc.func]?.toString(),
+          url: form,
         };
-      } catch (balance) {
-        this.form =
-          new ClassifyFiles([this.formattedPayload][0] || this.payLoad).objTest ||
-          formMaker(this.payT, "misForms", autoGlobe.functionRegistry.time);
-        autoGlobe.executed++;
+      } 
+      catch (balance) {
+        form =
+          classFiles([formattedPayload][0] || payLoad).objTest ||
+          formMaker(payT, "misForms", autoGlobe.functionRegistry.time);
+        executed++;
 
-        if (typeof this.form === "object") {
+        if (typeof form === "object") {
           // fileManager(coData.rndTitle, "Forms")
           Logger.log(
-            `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+            `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
           );
 
           // --- Set Basic this.form Properties ---
 
           // Randomly decide to collect email or not
-          this.form.setCollectEmail(Math.random() < 0.5);
+          form.setCollectEmail(Math.random() < 0.5);
 
-          // Randomly decide to show progress bar for multi-section this.forms
-          this.runChance = Math.random();
-          if (this.runChance < 0.7) {
-            this.form.setProgressBar(true);
+          // Randomly decide to show progress bar for multi-section forms
+          runChance = Math.random();
+          if (runChance < 0.7) {
+            form.setProgressBar(true);
           }
 
           // --- Add Sections and Questions ---
 
-          if (this.fx) {
-            this.form
+          if (fx) {
+            form
               .addSectionHeaderItem()
-              .setTitle(globalThis[this.supFunc.func].toString());
-          } else {
-            this.form.addSectionHeaderItem().setTitle("No Function Found");
+              .setTitle(globalThis[supFunc.func].toString());
+          } 
+          else {
+            form.addSectionHeaderItem().setTitle("No Function Found");
           }
-          if (this.supFunc && this.supFunc.res) {
-            if (typeof this.supFunc.res === "object") {
-              this.form.addSectionHeaderItem().setTitle(JSON.stringify(this.supFunc.res));
-            } else {
-              this.form.addSectionHeaderItem().setTitle(this.supFunc.res);
+          if (supFunc && supFunc.res) {
+            if (typeof supFunc.res === "object") {
+              form.addSectionHeaderItem().setTitle(JSON.stringify(supFunc.res));
+            } 
+            else {
+              form.addSectionHeaderItem().setTitle(supFunc.res);
             }
           }
-          this.runChance = Math.random();
-          if (this.runChance < 0.7) {
-            this.form.addTextItem().setTitle("Your Name").setRequired(true);
+          runChance = Math.random();
+          if (runChance < 0.7) {
+            form.addTextItem().setTitle("Your Name").setRequired(true);
           }
-          this.runChance = Math.random();
-          if (this.runChance < 0.7) {
-            this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+          runChance = Math.random();
+          if (runChance < 0.7) {
+            form.addDateItem().setTitle("Birth Date").setRequired(true);
           }
-          this.runChance = Math.random();
-          if (this.runChance < 0.7) {
-            this.form
+          runChance = Math.random();
+          if (runChance < 0.7) {
+            form
               .addParagraphtTextItem()
               .setTitle("Your Message")
               .setRequired(true);
           }
-          this.form.setConfirmationMessage("Thanks for your feedback !!");
+          form.setConfirmationMessage("Thanks for your feedback !!");
         }
-        this.webAppObj = {
-          funcStr: globalThis[this.supFunc.func]?.toString(),
-          url: this.form.getPublishedUrl(),
+        webAppObj = {
+          funcStr: globalThis[supFunc.func]?.toString(),
+          url: form.getPublishedUrl(),
         };
       }
-      console.log("Final app:", this.supFunc.res);
-      this.argsObject = { index: this.webAppObj, app: this.supFunc.res, link: this.supUrl };
+      console.log("Final app:", supFunc.res);
+      argsObject = { index: webAppObj, app: supFunc.res, link: supUrl };
     } 
     else {
-      this.response;
-      this.location;
-      this.htmlData;
-      this.supUrl;
-      this.retries = 0;
-      this.delay = 1000;
       try {
-        // if (this.supFunc) {
-        //   this.response = UrlFetchApp.fetch(this.supFunc.args, {
+        // if (supFunc) {
+        //   response = UrlFetchApp.fetch(supFunc.args, {
         //     followRedirects: false, // Prevent automatic redirects
         //   });
         // } else {
-        //   this.response = UrlFetchApp.fetch(this.validUrl?.hostname, {
+        //   response = UrlFetchApp.fetch(validUrl?.hostname, {
         //     followRedirects: false, // Prevent automatic redirects
         //   });
         // }
-        this.response = UrlFetchApp.fetch(
-          this.supFunc && this.supFunc.args ? this.supFunc.args : this.validUrl?.hostname,
+        response = UrlFetchApp.fetch(
+          validUrl?.url,
           {
             followRedirects: false, // Prevent automatic redirects
             muteHttpExceptions: true,
@@ -2409,506 +2438,512 @@ class MisCreator {
       catch (e) {
         Logger.log("Error fetching URL: ", e.toString());
         console.error("Error fetching URL: ", e.toString());
-        this.htmlData = "Error fetching URL: " + e.toString();
-        this.supUrl = this.validUrl?.hostname;
+        htmlData = "Error fetching URL: " + e.toString();
+        supUrl = validUrl?.hostname;
         try {
-          this.form = new ClassifyFiles(String(this.text).toUpperCase()).objTest;
-          this.responseObj = {
-            dataStr: this.htmlData || seoPastTime(this.validUrl?.hostname),
-            url: this.form,
+          form = classFiles(String(text).toUpperCase()).objTest;
+          responseObj = {
+            dataStr: htmlData || seoPastTime(validUrl?.hostname),
+            url: form,
           };
-        } catch (balance) {
-          // var this.form = formMaker();
-          this.form =
-            new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
+        } 
+        catch (balance) {
+          // var form = formMaker();
+          form =
+            classFiles(String(text).toUpperCase()).objTest ||
             formMaker(
-              [JSON.stringify(this.text)].join("").toUpperCase(),
+              [JSON.stringify(text)].join("").toUpperCase(),
               "misForms",
               autoGlobe.functionRegistry.time,
             );
-          autoGlobe.executed++;
+          executed++;
 
-          if (typeof this.form === "object") {
-            // fileManager(coData.rndTitle, "this.forms")
+          if (typeof form === "object") {
+            // fileManager(coData.rndTitle, "forms")
             Logger.log(
-              `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+              `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
             );
 
-            // --- Set Basic this.form Properties ---
+            // --- Set Basic form Properties ---
 
             // Randomly decide to collect email or not
-            this.form.setCollectEmail(Math.random() < 0.5);
+            form.setCollectEmail(Math.random() < 0.5);
 
-            // Randomly decide to show progress bar for multi-section this.forms
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.setProgressBar(true);
+            // Randomly decide to show progress bar for multi-section forms
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.setProgressBar(true);
             }
 
             // --- Add Sections and Questions ---
 
-            this.form.addSectionHeaderItem().setTitle(this.htmlData);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Industry").setRequired(true);
+            form.addSectionHeaderItem().setTitle(htmlData);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Industry").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Sector").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Sector").setRequired(true);
             }
-            this.form
+            form
               .addParagraphtTextItem()
               .setTitle("Industry/Market Corrections")
               .setRequired(false);
-            this.form.addParagraphtTextItem().setTitle("News").setRequired(false);
-            this.form
+            form.addParagraphtTextItem().setTitle("News").setRequired(false);
+            form
               .addParagraphtTextItem()
               .setTitle("Economic/Business Cycles")
               .setRequired(false);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Stock Price").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Stock Price").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Outstanding Shares").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Quarterly Earnings").setRequired(true);
             }
-            this.form
+            form
               .addTextItem()
               .setTitle("Annualized Net Income")
               .setRequired(false);
-            this.form.addTextItem().setTitle("Total Equity").setRequired(false);
-            this.form.addTextItem().setTitle("Retained Earnings").setRequired(false);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form
+            form.addTextItem().setTitle("Total Equity").setRequired(false);
+            form.addTextItem().setTitle("Retained Earnings").setRequired(false);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form
                 .addTextItem()
                 .setTitle("Cash & Marketable Securities")
                 .setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form
                 .addTextItem()
                 .setTitle("Accounts Receivable")
                 .setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Inventories").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Inventories").setRequired(true);
             }
-            this.form
+            form
               .addTextItem()
               .setTitle("Long-term Investments")
               .setRequired(false);
-            this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form
+            form.addTextItem().setTitle("Net PP&E").setRequired(false);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form
                 .addTextItem()
                 .setTitle("Current Financial Liabilities")
                 .setRequired(true);
             }
-            this.form
+            form
               .addTextItem()
               .setTitle("Long-term Interest-bearing Debts")
               .setRequired(false);
-            this.form
+            form
               .addTextItem()
               .setTitle("Current Year Total Earnings")
               .setRequired(false);
-            this.form
+            form
               .addTextItem()
               .setTitle("Base Year Total Earnings")
               .setRequired(false);
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addTextItem().setTitle("Your Name").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addTextItem().setTitle("Your Name").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form.addDateItem().setTitle("Birth Date").setRequired(true);
             }
-            this.runChance = Math.random();
-            if (this.runChance < 0.7) {
-              this.form
+            runChance = Math.random();
+            if (runChance < 0.7) {
+              form
                 .addParagraphtTextItem()
                 .setTitle("Your Message")
                 .setRequired(true);
             }
-            this.form.setConfirmationMessage("Thanks for your feedback !!");
-            this.responseObj = {
-              dataStr: seoPastTime(this.validUrl?.hostname),
-              url: this.form.getPublishedUrl(),
+            form.setConfirmationMessage("Thanks for your feedback !!");
+           responseObj = {
+              dataStr: seoPastTime(validUrl?.hostname),
+              url: form.getPublishedUrl(),
             };
-            autoGlobe.executed++;
+            executed++;
           }
         }
       }
       try {
-        if (this.response) {
-          this.res = this.response.getResponseCode();
-          if (this.res) {
-            if (this.res === 429) {
-              this.retries++;
-              this.delay += 2;
-              Utilities.sleep(this.delay + Math.random() * 500);
-              Logger.log(`Rate limit hit, retrying in ${this.delay} ms`);
-              while (this.retries < this.maxRetries) {
+        if (response) {
+          res = response.getResponseCode();
+          if (res) {
+            if (res === 429) {
+              retries++;
+              delay += 2;
+              Utilities.sleep(delay + Math.random() * 500);
+              Logger.log(`Rate limit hit, retrying in ${delay} ms`);
+              while (retries < maxRetries) {
                 try {
-                  this.response = UrlFetchApp.fetch(
-                    this.supFunc && this.supFunc.args ? this.supFunc.args : this.validUrl?.hostname,
+                  response = UrlFetchApp.fetch(
+                    validUrl?.hostname,
                     {
                       followRedirects: false, // Prevent automatic redirects
                       muteHttpExceptions: true,
                     },
                   );
-                } catch (error) {
+                } 
+                catch (error) {
                   Logger.log("Error fetching data: " + error);
-                  this.retries++;
-                  this.delay += 2;
-                  Utilities.sleep(this.delay);
+                  retries++;
+                  delay += 2;
+                  Utilities.sleep(delay);
                 }
               }
               Logger.log("Max retries reached, failed to fetch data.");
-            } else {
-              if (this.res >= 300 && this.res < 400) {
+            } 
+            else {
+              if (res >= 300 && res < 400) {
                 // Redirect occurred
-                this.location = String(this.response.getHeaders().Location).indexOf(":") > 1? String(this.response.getHeaders().Location).substring(0,String(this.response.getHeaders().Location).length - 5):String(this.response.getHeaders().Location);
-                console.log("event; result from response getHeaders: ", this.location);
-                this.htmlData = UrlFetchApp.fetch(this.location, {
+                ocation = String(response.getHeaders().Location).indexOf(":") > 1? String(response.getHeaders().Location).substring(0,String(response.getHeaders().Location).length - 5):String(response.getHeaders().Location);
+                console.log("event; result from response getHeaders: ", location);
+                htmlData = UrlFetchApp.fetch(location, {
                   followRedirects: true,
                   muteHttpExceptions: true,
                 }).getContentText();
-                this.supUrl = this.location;
+                supUrl = location;
                 try {
-                  this.form = new ClassifyFiles(
-                    String(this.text).toUpperCase(),
+                  form = classFiles(
+                    String(text).toUpperCase(),
                   ).objTest;
-                  this.responseObj = {
-                    dataStr: this.htmlData || seoPastTime(new ValidUrlResult(this.location).validatedResult.hostname),
-                    url: this.form,
+                  responseObj = {
+                    dataStr: htmlData || seoPastTime(vaURL(this.location).validatedResult.hostname),
+                    url: form,
                   };
-                } catch (balance) {
-                  // var this.form = formMaker();
-                  this.form =
-                    new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
+                } 
+                catch (balance) {
+                  // var form = formMaker();
+                  form =
+                    classFiles(String(text).toUpperCase()).objTest ||
                     formMaker(
-                      [JSON.stringify(this.text)].join("").toUpperCase(),
+                      [JSON.stringify(text)].join("").toUpperCase(),
                       "misForms",
                       autoGlobe.functionRegistry.time,
                     );
-                  autoGlobe.executed++;
+                  executed++;
 
-                  if (typeof this.form === "object") {
-                    // fileManager(coData.rndTitle, "this.forms")
+                  if (typeof form === "object") {
+                    // fileManager(coData.rndTitle, "forms")
                     Logger.log(
-                      `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+                      `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
                     );
 
-                    // --- Set Basic this.form Properties ---
+                    // --- Set Basic form Properties ---
 
                     // Randomly decide to collect email or not
-                    this.form.setCollectEmail(Math.random() < 0.5);
+                    form.setCollectEmail(Math.random() < 0.5);
 
-                    // Randomly decide to show progress bar for multi-section this.forms
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.setProgressBar(true);
+                    // Randomly decide to show progress bar for multi-section forms
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.setProgressBar(true);
                     }
 
                     // --- Add Sections and Questions ---
 
-                    this.form
+                    form
                       .addSectionHeaderItem()
-                      .setTitle("Redirect occurred\n" + this.htmlData);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Industry").setRequired(true);
+                      .setTitle("Redirect occurred\n" + htmlData);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Industry").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Industry").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Industry").setRequired(true);
                     }
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("Industry/Market Corrections")
                       .setRequired(false);
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("News")
                       .setRequired(false);
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("Economic/Business Cycles")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Stock Price")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Outstanding Shares")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Quarterly Earnings")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Annualized Net Income")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Total Equity")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Retained Earnings")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Cash & Marketable Securities")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Accounts Receivable")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Inventories")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Long-term Investments")
                       .setRequired(false);
-                    this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Current Financial Liabilities")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Long-term Interest-bearing Debts")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Current Year Total Earnings")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Base Year Total Earnings")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Your Name").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Your Name").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addDateItem().setTitle("Birth Date").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addParagraphtTextItem()
                         .setTitle("Your Message")
                         .setRequired(true);
                     }
-                    this.form.setConfirmationMessage("Thanks for your feedback !!");
-                    this.responseObj = {
-                      dataStr: seoPastTime(new ValidUrlResult(this.location).validatedResult.hostname),
-                      url: this.form.getPublishedUrl(),
+                    form.setConfirmationMessage("Thanks for your feedback !!");
+                    responseObj = {
+                      dataStr: seoPastTime(vaURL(location).validatedResult.hostname),
+                      url: form.getPublishedUrl(),
                     };
                   }
                 }
-              } else {
+              } 
+              else {
                 // No redirect or other error
-                this.location = this.response.getContentText();
-                this.htmlData = this.location;
-                this.supUrl = this.validUrl.hostname;
+                location = response.getContentText();
+                htmlData = location;
+                supUrl = validUrl.hostname;
                 try {
-                  this.form = new ClassifyFiles(
-                    String(this.text).toUpperCase(),
+                  form = classFiles(
+                    String(text).toUpperCase(),
                   ).objTest;
-                  this.responseObj = {
-                    dataStr: seoPastTime(this.validUrl.hostname),
-                    url: this.form,
+                  responseObj = {
+                    dataStr: seoPastTime(validUrl.hostname),
+                    url: form,
                   };
-                } catch (balance) {
+                } 
+                catch (balance) {
                   // var this.form = formMaker();
-                  this.form =
-                    new ClassifyFiles(String(this.text).toUpperCase()).objTest ||
+                  form =
+                    classFiles(String(text).toUpperCase()).objTest ||
                     formMaker(
-                      [JSON.stringify(this.text)].join("").toUpperCase(),
+                      [JSON.stringify(text)].join("").toUpperCase(),
                       "misForms",
                       autoGlobe.functionRegistry.time,
                     );
-                  autoGlobe.executed++;
+                  executed++;
 
-                  if (typeof this.form === "object") {
+                  if (typeof form === "object") {
                     // fileManager(coData.rndTitle, "Forms")
                     Logger.log(
-                      `Created new form: ${this.form.getTitle()} - ${this.form.getEditUrl()}`,
+                      `Created new form: ${form.getTitle()} - ${form.getEditUrl()}`,
                     );
 
-                    // --- Set Basic this.form Properties ---
+                    // --- Set Basic form Properties ---
 
                     // Randomly decide to collect email or not
-                    this.form.setCollectEmail(Math.random() < 0.5);
+                    form.setCollectEmail(Math.random() < 0.5);
 
-                    // Randomly decide to show progress bar for multi-section this.forms
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.setProgressBar(true);
+                    // Randomly decide to show progress bar for multi-section forms
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.setProgressBar(true);
                     }
 
                     // --- Add Sections and Questions ---
 
-                    this.form
+                    form
                       .addSectionHeaderItem()
-                      .setTitle("No redirect or other error\n" + this.htmlData);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Industry").setRequired(true);
+                      .setTitle("No redirect or other error\n" + htmlData);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Industry").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Sector").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Sector").setRequired(true);
                     }
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("Industry/Market Corrections")
                       .setRequired(false);
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("News")
                       .setRequired(false);
-                    this.form
+                    form
                       .addParagraphtTextItem()
                       .setTitle("Economic/Business Cycles")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Stock Price")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Outstanding Shares")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Quarterly Earnings")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Annualized Net Income")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Total Equity")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Retained Earnings")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Cash & Marketable Securities")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Accounts Receivable")
                         .setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Inventories")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Long-term Investments")
                       .setRequired(false);
-                    this.form.addTextItem().setTitle("Net PP&E").setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    form.addTextItem().setTitle("Net PP&E").setRequired(false);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addTextItem()
                         .setTitle("Current Financial Liabilities")
                         .setRequired(true);
                     }
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Long-term Interest-bearing Debts")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Current Year Total Earnings")
                       .setRequired(false);
-                    this.form
+                    form
                       .addTextItem()
                       .setTitle("Base Year Total Earnings")
                       .setRequired(false);
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addTextItem().setTitle("Your Name").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addTextItem().setTitle("Your Name").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form.addDateItem().setTitle("Birth Date").setRequired(true);
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form.addDateItem().setTitle("Birth Date").setRequired(true);
                     }
-                    this.runChance = Math.random();
-                    if (this.runChance < 0.7) {
-                      this.form
+                    runChance = Math.random();
+                    if (runChance < 0.7) {
+                      form
                         .addParagraphtTextItem()
                         .setTitle("Your Message")
                         .setRequired(true);
                     }
-                    this.form.setConfirmationMessage("Thanks for your feedback !!");
-                    this.responseObj = {
-                      dataStr: seoPastTime(this.validUrl.hostname),
-                      url: this.form.getPublishedUrl(),
+                    form.setConfirmationMessage("Thanks for your feedback !!");
+                    responseObj = {
+                      dataStr: seoPastTime(validUrl.hostname),
+                      url: form.getPublishedUrl(),
                     };
                   }
                 }
@@ -2920,10 +2955,68 @@ class MisCreator {
         Logger.log("Error resolving TinyURL: " + e.toString());
         console.error("Error resolving TinyURL: ", e.toString());
       }
-      console.log("Final app:", this.htmlData);
-      this.argsObject = { index: this.responseObj, app: this.htmlData, link: this.supUrl };
+      console.log("Final app:", htmlData);
+      argsObject = { index: responseObj, app: htmlData, link: supUrl };
+    }
+    if (true) {
+      if (true) {
+        this.text = text;// || [this.funcUno, this.parsedFuncArgs];
+        this.executed = executed;
+        this.form = form;
+        this.runChance = runChance;
+        this.supUrl = supUrl;
+        this.url = url;
+        this.argsObject = argsObject;
+      }
+      if (supFunc) {
+        this.supFunc = supFunc;
+        this.htmlContent = htmlContent;
+        this.html = html;
+        this.webAppObj = webAppObj;
+        if (isError) {
+          this.isError = isError;
+          this.earlyReturn = earlyReturn;
+          this.errorUrl = errorUrl;
+        }
+        if (fx) {
+          this.fx = fx;
+        }
+        if (payLoad) {
+          this.payLoad = payLoad;
+        }
+        if (formattedPayload) {
+          this.formattedPayload = formattedPayload;
+        }
+        if (payT) {
+          this.payT = payT;
+        }
+      }
+      if (false) {
+        this.maxRetries = maxRetries;
+        this.truSup = truSup;
+        this.funcSup = funcSup;
+        this.rndSup = rndSup;
+        this.values = values;
+      }
+      if (validUrl) {
+        this.validUrl = validUrl
+        this.response = response;
+        this.res = res;
+        this.location = location;
+        this.htmlData = htmlData;
+        this.responseObj = responseObj;
+        if (false) {
+          this.retries = retries;
+          this.delay = delay;
+        }
+      }
     }
   }
+}
+
+function misCx(text, maxRetries = 3) {
+  let createMis = new MisCreator(text, maxRetries = 3);
+  return createMis
 }
 
 class MisStCreator {
@@ -4257,6 +4350,11 @@ class MisStCreator {
   }
 }
 
+function misStC(func, someArgs) {
+  let createMisSt = new MisStCreator(func, someArgs);
+  return createMisSt
+}
+
 class DriveFiles {
   constructor(strNw, time) {
     // super(strNw);
@@ -5019,7 +5117,7 @@ let geneicType = function (e) {
             };
           }
           if (true) {
-            eQueryObject = {parameter: {func: "productTime",args: rndWord()}}
+            eQueryObject = {parameter: {q: autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}}
             handles = startRenderer(eQueryObject);
             data = 
               {
@@ -5221,7 +5319,7 @@ let geneicType = function (e) {
           }
           else {
             console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
-            base = data?.argsObject?.func|| data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN;
+            base = data?.argsObject?.func|| data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN || data?.tempObj;
             // base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
             if (!base) {
               if (data && (data?.funcUno && data?.funcDos)) {
@@ -5281,7 +5379,7 @@ let geneicType = function (e) {
                 base = data;
               }
               else {
-                base = new MisStCreator(data.funcUno + "," + data.funcDos)?.argsObject.res;
+                base = misStC(data.funcUno + "," + data.funcDos)?.argsObject.res;
               }
               if (typeof base === "string") {
                 if (String(base).length > 0) {
@@ -5313,7 +5411,7 @@ let geneicType = function (e) {
                     }
                   }
                   else {
-                    base = new MisStCreator(Array(["myFileJS"] + "," + [encodeURIComponent(rndWord())]))?.argsObject.res;
+                    base = misStC(Array(["myFileJS"] + "," + [encodeURIComponent(rndWord())]))?.argsObject.res;
                     if (typeof base === "string") {
                       if (String(base).length > 0) {
                         dataOR = globalHandleGetData(base);
