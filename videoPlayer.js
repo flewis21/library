@@ -974,28 +974,33 @@ function needPastTime(searchString) {
           let vidKeys = Object.keys(autoGlobe.vidSheetVals);
           vidKeys.forEach((key) => {
             let vidObj = autoGlobe.vidSheetVals[key];
-            let videoId = vidObj["Video"];
-            let matchKeys = Object.keys(vidObj);
-            matchKeys.forEach((match) => {
-              let vidMatch = vidObj[match];
-              let truMatch = autoGlobe.trueVfalse(vidMatch);
-              if (truMatch && typeof vidMatch !== "number") {
-                let searchMatch = String(vidMatch)?.search(String(searchString)) > -1;
-                let matchSearch = String(searchString)?.search(vidMatch) > -1;
-                if (searchMatch || matchSearch) {
-                  playVid.push(videoId);
-                }
-              }
-              else {
-                if (truMatch && typeof vidMatch === "number") {
+            let goodDescA = String(vidObj["Description"]).indexOf("[") === -1;
+            let goodDescB = String(vidObj["Description"]).indexOf("/") === -1;
+            let goodDescC = String(vidObj["Description"]).indexOf("oop benefit inheritance javascript deep div") === -1;
+            if (vidObj && (goodDescA && goodDescB && goodDescC)) {
+              let videoId = vidObj["Video"];
+              let matchKeys = Object.keys(vidObj);
+              matchKeys.forEach((match) => {
+                let vidMatch = vidObj[match];
+                let truMatch = autoGlobe.trueVfalse(vidMatch);
+                if (truMatch && typeof vidMatch !== "number") {
+                  let searchMatch = String(vidMatch)?.search(String(searchString)) > -1;
                   let matchSearch = String(searchString)?.search(vidMatch) > -1;
-                  if (matchSearch) {
+                  if (searchMatch || matchSearch) {
                     playVid.push(videoId);
                   }
-
                 }
-              }
-            });
+                else {
+                  if (truMatch && typeof vidMatch === "number") {
+                    let matchSearch = String(searchString)?.search(vidMatch) > -1;
+                    if (matchSearch) {
+                      playVid.push(videoId);
+                    }
+
+                  }
+                }
+              });
+            }
           });
           fndOrdObj.playList = playVid;
         }

@@ -131,7 +131,7 @@ function createFormFunction(searchString) {
     let tubeUrlsArr = [];
     tubeArr.forEach((vidId) => {
       let itHasHttp = String(vidId).indexOf("http");
-      if (itHasHttp === -1) {
+      if (vidId && itHasHttp === -1) {
         let linkLocation = "https://www.youtube.com/watch?v=" + vidId;
         // tubeUrlsArr.push(linkLocation);
         // let rndTube = Math.floor(Math.random() * (Math.floor(tubeUrlsArr.length)));

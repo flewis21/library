@@ -55,6 +55,7 @@ class FunctionHandle {
     let mapArr = {};
     let funcTres;
     let tempObj = {};
+    let tempForm = false;
     let payLoad;
     let htmlArray = autoGlobe.functionRegistry.getHtmlList();
     let rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
@@ -381,7 +382,7 @@ class FunctionHandle {
                     else {
                       if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") === -1) {
                         if (e.parameter[objData[0]]?.indexOf("http") === -1) {
-                          e.parameter[objData[0]] = "http://" + e.parameter[objData[0]]
+                          e.parameter[objData[0]] = "http://" + e.parameter[objData[0]];
                         }
                         tempObj = contentCDN(e.parameter[objData[0]],
                             // {
@@ -392,6 +393,7 @@ class FunctionHandle {
                         mapArr[e.parameter[objData[0]]] = [] // || tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
                         if (tempObj) { //?.argsObject?.args) {
                           argsEd = new IsMapped(mapArr, [String(tempObj)]).mapKeys; // ?.argsObject?.args]).mapKeys;
+                          tempForm = createFormFunction(e.parameter[objData[0]])
                         }
                         else {
                           argsEd = new IsMapped(mapArr, []).mapKeys || autoGlobe.func;
@@ -763,6 +765,7 @@ class FunctionHandle {
       }
       if (tempObj && Object.keys(tempObj).length > 0) {
         this.tempObj = tempObj;
+        this.tempForm = tempForm;
       }
       if (payLoad) {
         this.payLoad = payLoad;
