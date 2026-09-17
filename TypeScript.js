@@ -34,35 +34,35 @@ class AutoParams {
       getParamsList: function () {
         return this.paramsList;
       },
+      htmlArray: [
+        "Untitled",
+        "uiAccess",
+        // "theWorks",
+        "theRoll",
+        "ssSheets",
+        // "slideCard",
+        // "Section3.Challenge1",
+        // "editor",
+        "edgarFriendly",
+        "cors",
+        "playParam",
+        // "cGWI",
+        // "proMedia",
+        "epaWebsite",
+        "callBack",
+        "oddChances",
+        "jsGame",
+        "checkOnDay",
+        "userInterfaceAccess",
+        // "styling",
+        "popUpOpen",
+        "congressLeg",
+        "congressMembers",
+        "jFundamentals",
+        "gnuFree",
+        "myGNUFreeJS",
+      ],
       getHtmlList: function () {
-        this.htmlArray = [
-          "Untitled",
-          "uiAccess",
-          // "theWorks",
-          "theRoll",
-          "ssSheets",
-          // "slideCard",
-          // "Section3.Challenge1",
-          // "editor",
-          "edgarFriendly",
-          "cors",
-          "playParam",
-          // "cGWI",
-          // "proMedia",
-          "epaWebsite",
-          "callBack",
-          "oddChances",
-          "jsGame",
-          "checkOnDay",
-          "userInterfaceAccess",
-          // "styling",
-          "popUpOpen",
-          "congressLeg",
-          "congressMembers",
-          "jFundamentals",
-          "gnuFree",
-          "myGNUFreeJS",
-        ]
         return this.htmlArray;
       },
 
@@ -289,176 +289,315 @@ class AutoParams {
       // },
 
       // ... other properties or methods ...
+
+      // A hypothetical frequency-based order for the Zulu alphabet
+      zuluFrequencyOrder: [
+        "a",
+        "u",
+        "i",
+        "e",
+        "o",
+        "m",
+        "n",
+        "s",
+        "h",
+        "k",
+        "l",
+        "t",
+        "b",
+        "p",
+        "g",
+        "d",
+        "y",
+        "z",
+        "w",
+        "v",
+        "f",
+        "r",
+        "c",
+        "j",
+        "q",
+        "x",
+        "ng",
+        "sh",
+        "ph",
+        "bh",
+        "hl",
+        "th",
+        "ch",
+        "kh",
+        "ts",
+        "mb",
+        "tsh",
+        "dl",
+        "nc",
+        "nd",
+        "nq",
+        "nt",
+      ],
+      getZuluFrequencyOrder: function () {
+        return this.zuluFrequencyOrder;
+      },
+
+      zuluFreqPriority: new Map(),
+      // Function to get the priority of the first letter/multigraph
+      getZuluFreqPriority: function(word) {
+        const lowercaseWord = word.toLowerCase();
+
+        // Check for multigraphs first, as they are longer
+        for (const key of this.zuluFrequencyOrder) {
+          if (lowercaseWord.startsWith(key)) {
+            return this.zuluFreqPriority.get(key);
+          }
+        }
+
+        // If no multigraph is found, check for single letters
+        if (lowercaseWord.length > 0) {
+          return this.zuluFreqPriority.get(lowercaseWord.charAt(0));
+        }
+
+        return Infinity; // For empty strings
+      },
+
+      zuluOrder: [
+        "a",
+        "b",
+        "bh",
+        "c",
+        "ch",
+        "d",
+        "dl",
+        "e",
+        "f",
+        "g",
+        "h",
+        "hh",
+        "hl",
+        "i",
+        "j",
+        "k",
+        "kh",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "ph",
+        "q",
+        "r",
+        "s",
+        "sh",
+        "t",
+        "th",
+        "ts",
+        "tsh",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+      ],
+      getZuluOrder: function () {
+        return this.zuluOrder;
+      },
+
+      zuluPriority: new Map(),
+      // Function to get the priority of the first letter/multigraph
+      getZuluPriority: function(word) {
+        const lowercaseWord = word.toLowerCase();
+
+        // Check for multigraphs first, as they are longer
+        for (const key of this.zuluOrder) {
+          if (lowercaseWord.startsWith(key)) {
+            return this.zuluPriority.get(key);
+          }
+        }
+
+        // If no multigraph is found, check for single letters
+        if (lowercaseWord.length > 0) {
+          return this.zuluPriority.get(lowercaseWord.charAt(0));
+        }
+
+        return Infinity; // For empty strings
+      },
+
+      customOrder: [
+        "e",
+        "t",
+        "a",
+        "o",
+        "n",
+        "r",
+        "i",
+        "s",
+        "h",
+        "d",
+        "l",
+        "f",
+        "c",
+        "m",
+        "u",
+        "g",
+        "y",
+        "p",
+        "w",
+        "b",
+        "v",
+        "k",
+        "x",
+        "j",
+        "q",
+        "z",
+      ],
+
+      // Step 1: Create a lookup map for quick access to priority/rank
+      // Lower index in customOrder means higher priority (comes earlier in sort)
+      freqPriority: new Map(),
+      getFreqPriority: function () {
+        return this.freqPriority;
+      },
+      privateApps: ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter","driveVideoFormsFilter","isValidUrl","postFromSpreadsheet"],
+      paramsSort: function () {
+        let paramsSort = [];  
+        while (paramsSort.length === 0) {
+          let varRnd = this.numVarRnd;
+          let rndCustomer = this.customOrder[varRnd];
+          // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+          let customGroup = this.paramsList.map((customerWk1, index) => {
+            let bl = this.privateApps; 
+            let sblx = [customerWk1.name];
+            if (sblx.length > 0) {
+              bl.forEach((s) => {
+                if (sblx.indexOf(String(s)) > -1) {
+                  sblx.pop()
+                }
+              })
+            }
+            let customerWk3 = null; 
+            if (sblx.length > 0) {
+              customerWk3 = sblx.map((customerWk2) => {
+                if (String(customerWk2)[0] === rndCustomer) {
+                  // console.log("Hello from this.fileList - " + customerWk2);
+                  // return this.paramsList[index] //.indexOf(customerWk2)
+                  return customerWk1
+                }
+              })
+            }
+            if (customerWk3) {
+              return customerWk3[0]
+            }
+          }).filter((isIn) => {
+            return isIn != null
+          });
+          // console.log("These is the customGroup", customGroup);
+          paramsSort = customGroup.sort((a,b) => {
+            let i = Math.random()
+            let tSorted = a;
+            let zSorted = b;
+            if ((i > .3 && i < .5) || (i < .3)) {
+              return zSorted.name - tSorted.name
+            }
+            else {
+              i = Math.random()
+              if ((i > .8) || (i < .3)) {
+                return tSorted.name - zSorted.name
+              }
+              else {
+                i = Math.random()
+                if ((i > .5 && i < .8)) {
+                  return zSorted
+                }
+                else {
+                  i = Math.random()
+                  if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
+                    return tSorted
+                  }
+                }
+              }
+            }
+          })
+        }
+        return paramsSort;
+      },
+      proSort: function () {
+        let proSort = [];
+        while (proSort.length === 0) {
+          let varRnd = this.numVarRnd;
+          let rndCustomer = this.customOrder[varRnd];
+          // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
+          let customGroup = this.fileList.map((customerWk1) => {
+            let bl = this.privateApps; 
+            let sblx = [customerWk1];
+            bl.forEach((s) => {
+              if (sblx.indexOf(String(s)) > -1) {
+                sblx.pop()
+              }
+            })
+            if (sblx.length > 0) {
+              sblx.map((customerWk2) => {
+                if (String(customerWk2).indexOf(rndCustomer) === 0) {
+                  // console.log("Hello from this.fileList - " + customerWk2);
+                  return this.fileList.indexOf(customerWk2)
+                }
+              })
+              return sblx[0]
+            }
+          }).filter((isIn) => {
+            return isIn != null
+          });
+          // console.log("These is the customGroup", customGroup);
+          proSort = customGroup.sort((a,b) => {
+            let i = Math.random()
+            let tSorted = a;
+            let zSorted = b;
+            if ((i > .3 && i < .5) || (i < .3)) {
+              return zSorted - tSorted
+            }
+            else {
+              i = Math.random()
+              if ((i > .8) || (i < .3)) {
+                return tSorted - zSorted
+              }
+              else {
+                i = Math.random()
+                if ((i > .5 && i < .8)) {
+                  return zSorted
+                }
+                else {
+                  i = Math.random()
+                  if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
+                    return tSorted
+                  }
+                }
+              }
+            }
+          })
+        }
+        return proSort;
+      },
+      numVarRnd: (function () {
+        var numLen = [
+          Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
+        ];
+        var len = numLen[Math.floor(Math.random() * numLen.length)];
+        var rnd = Math.floor(Math.random() * 26);
+        var res = Math.floor(rnd * len);
+        return res;
+      })(),
     };
 
         // Set some global variables
     // this.functionRegistry.initialize();
     // this.functionRegistry.startProcessTimer();
-
-    // A hypothetical frequency-based order for the Zulu alphabet
-    this.zuluFrequencyOrder = [
-      "a",
-      "u",
-      "i",
-      "e",
-      "o",
-      "m",
-      "n",
-      "s",
-      "h",
-      "k",
-      "l",
-      "t",
-      "b",
-      "p",
-      "g",
-      "d",
-      "y",
-      "z",
-      "w",
-      "v",
-      "f",
-      "r",
-      "c",
-      "j",
-      "q",
-      "x",
-      "ng",
-      "sh",
-      "ph",
-      "bh",
-      "hl",
-      "th",
-      "ch",
-      "kh",
-      "ts",
-      "mb",
-      "tsh",
-      "dl",
-      "nc",
-      "nd",
-      "nq",
-      "nt",
-    ];
-
-    this.zuluFreqPriority = new Map();
-    this.zuluFrequencyOrder.forEach((char, index) => {
-      this.zuluFreqPriority.set(char, index);
+    this.functionRegistry.zuluFrequencyOrder.forEach((char, index) => {
+      this.functionRegistry.zuluFreqPriority.set(char, index);
     });
-    // Function to get the priority of the first letter/multigraph
-    this.getZuluFreqPriority = (word) => {
-      const lowercaseWord = word.toLowerCase();
-
-      // Check for multigraphs first, as they are longer
-      for (const key of this.zuluFrequencyOrder) {
-        if (lowercaseWord.startsWith(key)) {
-          return this.zuluFreqPriority.get(key);
-        }
-      }
-
-      // If no multigraph is found, check for single letters
-      if (lowercaseWord.length > 0) {
-        return this.zuluFreqPriority.get(lowercaseWord.charAt(0));
-      }
-
-      return Infinity; // For empty strings
-    };
-    this.zuluOrder = [
-      "a",
-      "b",
-      "bh",
-      "c",
-      "ch",
-      "d",
-      "dl",
-      "e",
-      "f",
-      "g",
-      "h",
-      "hh",
-      "hl",
-      "i",
-      "j",
-      "k",
-      "kh",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "ph",
-      "q",
-      "r",
-      "s",
-      "sh",
-      "t",
-      "th",
-      "ts",
-      "tsh",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z",
-    ];
-
-    this.zuluPriority = new Map();
-    this.zuluOrder.forEach((char, index) => {
-      this.zuluPriority.set(char, index);
+    this.functionRegistry.zuluOrder.forEach((char, index) => {
+      this.functionRegistry.zuluPriority.set(char, index);
     });
-    // Function to get the priority of the first letter/multigraph
-    this.getZuluPriority = (word) => {
-      const lowercaseWord = word.toLowerCase();
-
-      // Check for multigraphs first, as they are longer
-      for (const key of this.zuluOrder) {
-        if (lowercaseWord.startsWith(key)) {
-          return this.zuluPriority.get(key);
-        }
-      }
-
-      // If no multigraph is found, check for single letters
-      if (lowercaseWord.length > 0) {
-        return this.zuluPriority.get(lowercaseWord.charAt(0));
-      }
-
-      return Infinity; // For empty strings
-    };
-    this.customOrder = [
-      "e",
-      "t",
-      "a",
-      "o",
-      "n",
-      "r",
-      "i",
-      "s",
-      "h",
-      "d",
-      "l",
-      "f",
-      "c",
-      "m",
-      "u",
-      "g",
-      "y",
-      "p",
-      "w",
-      "b",
-      "v",
-      "k",
-      "x",
-      "j",
-      "q",
-      "z",
-    ];
-
-    // Step 1: Create a lookup map for quick access to priority/rank
-    // Lower index in customOrder means higher priority (comes earlier in sort)
-    this.freqPriority = new Map();
-    this.customOrder.forEach((char, index) => {
-      this.freqPriority.set(char, index);
+    this.functionRegistry.customOrder.forEach((char, index) => {
+      this.functionRegistry.freqPriority.set(char, index);
     });
 
     // Example array to sort (e.g., letters from a scrambled word)
@@ -535,134 +674,6 @@ class AutoParams {
     // ]
     //   .toString()
     //   .split(" ");
-    this.privateApps = ["driveManager","folderManager","formsUrls","matchManager","validateFiles","searchUrlsTree","validateFolders","validGroup","gsFiles","gsFParams","mis","misSt","wwAccess","vidFactor","testlt","seoYoutube","resolveParams","paramVals","funcHandle","handleGetData","testClassResolve","coSortCIKS","seoPictTime","createFormFunction","dtlsTv","postToDrive","epaC","prose","postToDiscord","yahooSort","createRandomFunction","pictBing","coSortTickers","stockPro","handleFormSubmission","dtlsVegas","coSortTitles","pastSeo","furtFolder","driveSheetsFilter","driveVideoFormsFilter","isValidUrl","postFromSpreadsheet"];
-    this.paramsSort = function () {
-      let paramsSort = [];  
-      while (paramsSort.length === 0) {
-        let varRnd = this.numVarRnd;
-        let rndCustomer = this.customOrder[varRnd];
-        // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
-        let customGroup = this.functionRegistry.paramsList.map((customerWk1, index) => {
-          let bl = this.privateApps; 
-          let sblx = [customerWk1.name];
-          if (sblx.length > 0) {
-            bl.forEach((s) => {
-              if (sblx.indexOf(String(s)) > -1) {
-                sblx.pop()
-              }
-            })
-          }
-          let customerWk3 = null; 
-          if (sblx.length > 0) {
-            customerWk3 = sblx.map((customerWk2) => {
-              if (String(customerWk2)[0] === rndCustomer) {
-                // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
-                // return this.functionRegistry.paramsList[index] //.indexOf(customerWk2)
-                return customerWk1
-              }
-            })
-          }
-          if (customerWk3) {
-            return customerWk3[0]
-          }
-        }).filter((isIn) => {
-          return isIn != null
-        });
-        // console.log("These is the customGroup", customGroup);
-        paramsSort = customGroup.sort((a,b) => {
-          let i = Math.random()
-          let tSorted = a;
-          let zSorted = b;
-          if ((i > .3 && i < .5) || (i < .3)) {
-            return zSorted.name - tSorted.name
-          }
-          else {
-            i = Math.random()
-            if ((i > .8) || (i < .3)) {
-              return tSorted.name - zSorted.name
-            }
-            else {
-              i = Math.random()
-              if ((i > .5 && i < .8)) {
-                return zSorted
-              }
-              else {
-                i = Math.random()
-                if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
-                  return tSorted
-                }
-              }
-            }
-          }
-        })
-      }
-      return paramsSort;
-    }
-    this.proSort = function () {
-      let proSort = [];
-      while (proSort.length === 0) {
-        let varRnd = this.numVarRnd;
-        let rndCustomer = this.customOrder[varRnd];
-        // console.log("Hello from new AutoParams().numVarRnd - " + rndCustomer);
-        let customGroup = this.functionRegistry.fileList.map((customerWk1) => {
-          let bl = this.privateApps; 
-          let sblx = [customerWk1];
-          bl.forEach((s) => {
-            if (sblx.indexOf(String(s)) > -1) {
-              sblx.pop()
-            }
-          })
-          if (sblx.length > 0) {
-            sblx.map((customerWk2) => {
-              if (String(customerWk2).indexOf(rndCustomer) === 0) {
-                // console.log("Hello from autoGlobe.functionRegistry.fileList - " + customerWk2);
-                return this.functionRegistry.fileList.indexOf(customerWk2)
-              }
-            })
-            return sblx[0]
-          }
-        }).filter((isIn) => {
-          return isIn != null
-        });
-        // console.log("These is the customGroup", customGroup);
-        proSort = customGroup.sort((a,b) => {
-          let i = Math.random()
-          let tSorted = a;
-          let zSorted = b;
-          if ((i > .3 && i < .5) || (i < .3)) {
-            return zSorted - tSorted
-          }
-          else {
-            i = Math.random()
-            if ((i > .8) || (i < .3)) {
-              return tSorted - zSorted
-            }
-            else {
-              i = Math.random()
-              if ((i > .5 && i < .8)) {
-                return zSorted
-              }
-              else {
-                i = Math.random()
-                if ((i > .5 && i < .8) || (i > .3 && i < .5)) {
-                  return tSorted
-                }
-              }
-            }
-          }
-        })
-      }
-      return proSort;
-    }
-    this.numVarRnd = (function () {
-      var numLen = [
-        Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), Math.random(), 
-      ];
-      var len = numLen[Math.floor(Math.random() * numLen.length)];
-      var rnd = Math.floor(Math.random() * 26);
-      var res = Math.floor(rnd * len);
-      return res;
-    })();
     // const allFolders = folderManager();
     this.uniqueCoArray = function () {
       var secSheet = (function () {
@@ -751,7 +762,7 @@ class AutoParams {
       //   }
       // }
 
-      var arrData = this.customOrder;
+      var arrData = this.functionRegistry.customOrder;
       var numLen = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25,
@@ -805,7 +816,7 @@ class AutoParams {
       //   }
       // }
 
-      var arrData = this.customOrder;
+      var arrData = this.functionRegistry.customOrder;
       var numLen = [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25,
@@ -880,8 +891,8 @@ class AutoParams {
             typeof arrDRnd === "string"
           ) {
             var myImportData = [arrDRnd].sort((a, b) => {
-              let pA = freqPriority.get(a);
-              let pB = freqPriority.get(b);
+              let pA = this.functionRegistry.freqPriority.get(a);
+              let pB = this.functionRegistry.freqPriority.get(b);
               return pA - pB;
             })[Math.floor(Math.random() * [arrDRnd].length)];
             newArr.push(myImportData);
@@ -892,8 +903,8 @@ class AutoParams {
       } else if (typeof arrD !== "undefined") {
         for (i, l; i < l; i++) {
           var myArrData = arrD.sort((a, b) => {
-            let pA = autoGlobe.freqPriority.get(a);
-            let pB = autoGlobe.freqPriority.get(b);
+            let pA = this.functionRegistry.freqPriority.get(a);
+            let pB = this.functionRegistry.freqPriority.get(b);
             return pA - pB;
           })[Math.floor(Math.random() * arrD.length)];
           newArr.push(myArrData);
@@ -917,8 +928,8 @@ class AutoParams {
       // );
       if (newArr) {
         var sortNewArr = newArr.sort((a, b) => {
-          let pA = autoGlobe.freqPriority.get(a);
-          let pB = autoGlobe.freqPriority.get(b);
+          let pA = this.functionRegistry.freqPriority.get(a);
+          let pB = this.functionRegistry.freqPriority.get(b);
           return pA - pB;
         })[Math.floor(Math.random() * newArr.length)];
         // return console.log({myNewArr: sortNewArr});
@@ -4960,7 +4971,7 @@ let geneicType = function (e) {
     data = funcHandle(e);
   }
   else {
-    let reSorted = autoGlobe.proSort();
+    let reSorted = autoGlobe.functionRegistry.proSort();
     data = reSorted[Math.floor(Math.random() * Math.floor(reSorted.length))];
     // let pSort = [];
     // while (pSort.length === 0) {
@@ -5144,7 +5155,7 @@ let geneicType = function (e) {
             }
             else {
               console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
-              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN;
+              base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN || data?.tempObj;
               if (!base) {
                 if (data && data?.argsObject && (data?.argsObject["func"] && data?.argsObject["args"])) {
                   base = createFunctionResult(data?.argsObject["func"], data?.argsObject["args"]);

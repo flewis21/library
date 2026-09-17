@@ -399,10 +399,18 @@ class DataApp {
     let fndOrdObj = {};
     let noSearch = false;
     let uItems = false;
+    let urlSearched = false;
     if (typeof searchString === "undefined") {
       uItems = autoGlobe.uniqueItemArray()
       noSearch = autoGlobe.vidSheetVals[Math.floor(Math.random() * Object.keys(autoGlobe.vidSheetVals?.length)?.length)].Description || uItems[Math.floor(Math.random() * Object.keys(uItems?.length)?.length)].Description;
       searchString = noSearch || strSearch.myNewArr;
+    }
+    else {
+      urlSearched = vaURL(searchString).validatedResult.hostname
+      if (urlSearched) {
+        // Early return.
+        return
+      }
     }
     let uriSearch = encodeURIComponent(String(searchString));
     let searchArr = [];
@@ -629,6 +637,7 @@ class DataApp {
       if (true) {
         this.fndOrdObj = fndOrdObj;
         this.searchString = searchString;
+        this.urlSearched = urlSearched;
         this.uriSearch = uriSearch;
         this.searchArr = searchArr;
         this.searchLink = searchLink;
@@ -976,27 +985,31 @@ function needPastTime(searchString) {
             let vidObj = autoGlobe.vidSheetVals[key];
             let goodDescA = String(vidObj["Description"]).indexOf("[") === -1;
             let goodDescB = String(vidObj["Description"]).indexOf("/") === -1;
-            let goodDescC = String(vidObj["Description"]).indexOf("oop benefit inheritance javascript deep div") === -1;
-            if (vidObj && (goodDescA && goodDescB && goodDescC)) {
+            if (vidObj && String(vidObj["Description"]) && (goodDescA && goodDescB)) {
               let videoId = vidObj["Video"];
               let matchKeys = Object.keys(vidObj);
               matchKeys.forEach((match) => {
-                let vidMatch = vidObj[match];
-                let truMatch = autoGlobe.trueVfalse(vidMatch);
-                if (truMatch && typeof vidMatch !== "number") {
-                  let searchMatch = String(vidMatch)?.search(String(searchString)) > -1;
-                  let matchSearch = String(searchString)?.search(vidMatch) > -1;
-                  if (searchMatch || matchSearch) {
-                    playVid.push(videoId);
-                  }
-                }
-                else {
-                  if (truMatch && typeof vidMatch === "number") {
-                    let matchSearch = String(searchString)?.search(vidMatch) > -1;
-                    if (matchSearch) {
+                if (match === "Description") {
+                  let vidMatch = vidObj[match];
+                  let goodDescC = String(vidMatch).indexOf("oop benefit inheritance javascript deep div") === -1;
+                  let goodDescD = String(vidMatch).indexOf("(") === -1;
+                  let goodDescE = String(vidMatch).indexOf("[") === -1;
+                  let truMatch = autoGlobe.trueVfalse(vidMatch);
+                  if (truMatch && typeof vidMatch !== "number" && goodDescC && goodDescD && goodDescE) {
+                    let searchMatch = String(vidMatch)?.search(String(searchString)) > -1;
+                    let matchSearch = String(searchString)?.search(String(vidMatch)) > -1;
+                    if (searchMatch || matchSearch) {
                       playVid.push(videoId);
                     }
+                  }
+                  else {
+                    if (truMatch && typeof vidMatch === "number") {
+                      let matchSearch = String(searchString)?.search(vidMatch) > -1;
+                      if (matchSearch) {
+                        playVid.push(videoId);
+                      }
 
+                    }
                   }
                 }
               });

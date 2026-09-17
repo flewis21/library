@@ -26,8 +26,8 @@ class SearchStrings {
               typeof arrDRnd === "string"
             ) {
               let myImportData = [arrDRnd].sort((a, b) => {
-                let pA = freqPriority.get(a);
-                let pB = freqPriority.get(b);
+                let pA = autoGlobe.functionRegistry.freqPriority.get(a);
+                let pB = autoGlobe.functionRegistry.freqPriority.get(b);
                 return pA - pB;
               })[Math.floor(Math.random() * [arrDRnd].length)];
               newArr.push(myImportData);
@@ -37,8 +37,8 @@ class SearchStrings {
       }
       if (newArr) {
         let sortNewArr = newArr.sort((a, b) => {
-          let pA = autoGlobe.freqPriority.get(a);
-          let pB = autoGlobe.freqPriority.get(b);
+          let pA = autoGlobe.functionRegistry.freqPriority.get(a);
+          let pB = autoGlobe.functionRegistry.freqPriority.get(b);
           return pA - pB;
         })[Math.floor(Math.random() * newArr.length)];
         this.myNewArr = sortNewArr;
@@ -56,6 +56,7 @@ class FunctionHandle {
     let funcTres;
     let tempObj = {};
     let tempForm = false;
+    let tempUrlData = false;
     let payLoad;
     let htmlArray = autoGlobe.functionRegistry.getHtmlList();
     let rndHtmlIndex = Math.floor(Math.random() * Math.floor(htmlArray.length));
@@ -126,7 +127,7 @@ class FunctionHandle {
       //     }
       //   })
       // this.pSort = pSort;
-      let rSorted = autoGlobe.paramsSort()
+      let rSorted = autoGlobe.functionRegistry.paramsSort()
       if (false) {
         if (rSorted) {
           this.rSorted = rSorted;
@@ -381,19 +382,20 @@ class FunctionHandle {
                     }
                     else {
                       if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") === -1) {
-                        if (e.parameter[objData[0]]?.indexOf("http") === -1) {
-                          e.parameter[objData[0]] = "http://" + e.parameter[objData[0]];
+                        if (String(e.parameter[objData[0]])?.indexOf("http") === -1 && String(e.parameter[objData[0]])?.indexOf(" ") === -1) {
+                          e.parameter[objData[0]] = String("http://" + e.parameter[objData[0]]);
                         }
-                        tempObj = contentCDN(e.parameter[objData[0]],
+                        tempObj = resUrlData(e.parameter[objData[0]],
                             // {
                             //   followRedirects: false, // Prevent automatic redirects
                             //   muteHttpExceptions: true,
                             // }
                             );
                         mapArr[e.parameter[objData[0]]] = [] // || tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
-                        if (tempObj) { //?.argsObject?.args) {
-                          argsEd = new IsMapped(mapArr, [String(tempObj)]).mapKeys; // ?.argsObject?.args]).mapKeys;
-                          tempForm = createFormFunction(e.parameter[objData[0]])
+                        if (tempObj && Object.keys(tempObj).length > 0) { //?.argsObject?.args) {
+                          argsEd = new IsMapped(mapArr, [String(tempObj?.data?.app) || tempObj?.playlist || tempObj?.hardUrl]).mapKeys; // ?.argsObject?.args]).mapKeys;
+                          // tempForm = createFormFunction(e.parameter[objData[0]]);
+                          // tempUrlData = resUrlData();
                         }
                         else {
                           argsEd = new IsMapped(mapArr, []).mapKeys || autoGlobe.func;
@@ -766,6 +768,7 @@ class FunctionHandle {
       if (tempObj && Object.keys(tempObj).length > 0) {
         this.tempObj = tempObj;
         this.tempForm = tempForm;
+        this.tempUrlData = tempUrlData;
       }
       if (payLoad) {
         this.payLoad = payLoad;
