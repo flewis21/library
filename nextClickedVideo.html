@@ -29,6 +29,7 @@
           console.log("Timeout error: " + error.stack)
         }
       }
+      const homePage = serverside("getScriptUrl", []);
                                       function redirect(myObj, myArr) {
                                         // Get the original request URL from the URL parameters
                                         // var params = new URLSearchParams(window.location.search);
@@ -109,7 +110,7 @@
                                         else {
                                           // Handle the case where the URL parameter is missing
                                           console.error("No redirect URL provided.");
-                                          serverside("getScriptUrl", [])
+                                          homePage
                                           .then((load) => {
                                             localStorage.setItem("ssSearch", event.target.value);
                                             // console.log("Data; Url for reLoad ", load.data);
@@ -700,7 +701,7 @@
                       input.addEventListener("change", (event) => {
                         let openYTPlayer = document.getElementById("mainUjpg");
                         // openYTPlayer.click();
-                        // serverside("getScriptUrl", [])
+                        // homePage
                         // .then((load) => {
                         //   localStorage.setItem("ssSearch", event.target.value);
                         //   // console.log("Data; Url for reLoad ", load.data);
@@ -1239,7 +1240,7 @@
                   // return
                   // break
                   // if (userClicked) {
-                    // serverside("getScriptUrl", [])
+                    // homePage
                     // .then((load) => {
                     //   localStorage.setItem("ssSearch", event.target.value);
                     //   // console.log("Data; Url for reLoad ", load.data);
@@ -1292,7 +1293,7 @@
                         // document.body.appendChild(linkFollow);
                         // document.getElementById("linkFOLLOW").click();
                         // document.getElementById("linkFOLLOW").remove();
-                        serverside("getScriptUrl", [])
+                        homePage
                         .then((load) => {
                           localStorage.setItem("ssSearch", event.target.value);
                           // console.log("Data; Url for reLoad ", load.data);
@@ -1464,7 +1465,7 @@
                 }
                 else {
                       if (enterClicked <= 1) {
-                        serverside("getScriptUrl", [])
+                        homePage
                         .then((load) => {
                           let openYTPlayer = document.getElementById("mainUjpg");
                           openYTPlayer.click();
