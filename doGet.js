@@ -373,7 +373,7 @@ function doGet(e) {
                                 let htmlArray = autoGlobe.functionRegistry.getHtmlList()
                                 let args =
                                   htmlArray[Math.floor(Math.random() * Math.floor(htmlArray.length))];
-                                let renF = RenderFile.fileRender(args,{payL: payload},args)
+                                let renF = renderFile(args,{payL: payload},args)
                                 if (renF) {
                                   return renF
                                 } else {
@@ -434,7 +434,7 @@ function doGetPost(e) {
     )
   ];
   args = barArgs || ["jFundamentals"];
-  if (RenderFile.fileRender(args)) {
+  if (renderFile(args)) {
     return RenderTemplate.templateRender(
       ContentApp.appContent(`<?!= appL ?>`, {
         appL:
@@ -649,7 +649,7 @@ function handleGetData(e) {
               }
             }
             try {
-              return RenderFile.fileRender(
+              return renderFile(
                 funcTres,
                 {
                   fileParam: funcTres,

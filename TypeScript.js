@@ -38,7 +38,7 @@ class AutoParams {
         "Untitled",
         "uiAccess",
         // "theWorks",
-        "theRoll",
+        // "theRoll",
         "ssSheets",
         // "slideCard",
         // "Section3.Challenge1",
@@ -1312,7 +1312,11 @@ class AutoParams {
     }
   }
 };
-// let freqP = new AutoParams();
+
+function freqP() {
+  let funcReg = new AutoParams();
+  return funcReg;
+}
 
 // class RandomArray extends AutoParams {
 //   constructor() {
@@ -3055,7 +3059,7 @@ class MisStCreator {
     console.log("trueSomeArgs = " + trueSomeArgs, autoGlobe.executed++);
     let funcUno = trueFunc
       ? decodeURIComponent(func)
-      : autoGlobe.proSort();
+      : autoGlobe.functionRegistry.proSort();
     console.log("funcUno = " + funcUno, autoGlobe.executed++);
     let funcDos = trueSomeArgs ? decodeURIComponent(someArgs) : trueSomeArgs;
     // autoGlobe.numVarRnd = randNum(funcUno.toString()); 
@@ -3347,7 +3351,7 @@ class MisStCreator {
               let funcUnoMis = rndE.parameter["func"];
               let funcDosMis = rndE.parameter["args"];
               let payLoad = null; // Initialize payLoad
-              let recurCall = autoGlobe.proSort();
+              let recurCall = autoGlobe.functionRegistry.proSort();
 
               // Ensure globalThis[funcUnoMis] exists before calling
               if (

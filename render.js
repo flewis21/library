@@ -366,7 +366,7 @@ class Renderer {
           // this.htmlPayL = htmlPayL;
           // let htmlPL = blob?.htmlPL;
           // this.htmlPL = htmlPL;
-          html = mIndex?.html;
+          html = mIndex?.getContent();
           htmlPayL = mIndex?.htmlPayL;
           htmlPL = mIndex?.htmlPL;
           // let renderIt = startRenderer("<div>Hello World!</div>", pLData,dataOR.title);
@@ -384,6 +384,7 @@ class Renderer {
                 if (true) {
                   let blob = renderTemplate(pLData, dataOR?.driveA || dataOR, title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
                   this.mCDN = blob;
+                  html = blob.getContent()
                 }
               }
               else {
@@ -394,6 +395,7 @@ class Renderer {
                   this.mInfo = matchTemp;
                   let mCDN = contentCDN(matchTemp.searchString, dataOR?.driveA?.pL || dataOR?.pL,  title || dataOR?.driveA?.pL?.title || dataOR?.payL?.title || dataOR?.driveA?.payL?.title);
                   this.mCDN = mCDN;
+                  html = mCDN
                 }
               }
             }

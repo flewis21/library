@@ -350,7 +350,7 @@ function dtlsBridge(func, time) {
           [
             [
               "func",
-              autoGlobe.proSort()[Math.floor(Math.random() * Math.floor(autoGlobe.proSort().length))],
+              autoGlobe.functionRegistry.proSort()[Math.floor(Math.random() * Math.floor(autoGlobe.functionRegistry.proSort().length))],
             ],
           ],
         ],
@@ -369,7 +369,7 @@ function dtlsBridge(func, time) {
       ", = " +
       time,
   );
-  var appList = autoGlobe.proSort();
+  var appList = autoGlobe.functionRegistry.proSort();
   var lowCapFunc = [func].join("").toLowerCase().split(",");
   var funFirst = crmT(lowCapFunc[0]);
   if (crmCalc(lowCapFunc[0]) === true) {

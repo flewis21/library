@@ -436,7 +436,7 @@ var formsUrls = function(fileX, folderX, time) {
           var sfi = searchSplitStr[i];
           var fxi = currentSplitStr.indexOf(sfi);
           if (fxi > -1) {
-            var myObj = convertToObjects([[fxi]], [sfi], start)[0];
+            var myObj = convertToObjects([[fxi]], [sfi], autoGlobe.functionRegistry.start)[0];
           }
           fileXIndex.push(myObj);
         }

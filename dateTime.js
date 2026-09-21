@@ -1,6 +1,6 @@
 function dateTime(date) {
   console.log(
-    autoP.functionRegistry.time +
+    autoGlobe.functionRegistry.time +
       "\n" +
       arguments.callee.name +
       "\ndate is !" +
@@ -159,7 +159,7 @@ function dateTime(date) {
   dateTime.timeDefault = new Date(date).toLocaleTimeString();
   dateTime.dateAgenda = dateAgenda();
   dateTime.timePicker = HtmlService.createHtmlOutput(
-    ContentApp.appContent(
+    contentApp(
       `
   <html id="dateTimeTimePicker">
     <head>
@@ -190,7 +190,7 @@ function dateTime(date) {
     ),
   ).getContent();
   dateTime.datePicker = HtmlService.createHtmlOutput(
-    ContentApp.appContent(
+    contentApp(
       `
   <html id="dateTimeDatePicker">
     <head>

@@ -25,6 +25,6 @@ function donorsChoice() {
           <a href="${inventoryUrl}" class="nav__link"  data-link>Inventory</a>
         </nav>
       </div>
-      <?!= includeBlob(${autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * Math.floor(5))]}).getContent(); ?>`
+      <?!= renderFile(${autoGlobe.functionRegistry.getHtmlList()[Math.floor(Math.random() * Math.floor(5))]}).getContent(); ?>`
   return ht
 }

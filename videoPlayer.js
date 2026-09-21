@@ -1058,7 +1058,7 @@ function videoPage(search) {
   var youPlayer = videoPlayer(content);
   var content = HtmlService.createTemplate(`
   ${
-    ContentApp.appContent(
+    contentApp(
       `
     <?!= playerPlayer ?><?!= yTPlayer.getContent() ?>`,
       { playerPlayer: youPlayer },
