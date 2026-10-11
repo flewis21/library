@@ -1902,7 +1902,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
   let ssNewFile, ssId;
 
   if (!fileX) {
-    let fileX = testlt(); // Also use let here
+    let fileX = autoGlobe.functionRegistry.proSort()[Math.floor(Math.random() * autoGlobe.functionRegistry.proSort().length)]; // Also use let here
     console.log("testlt ", fileX);
   }
 
@@ -1922,7 +1922,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       );
       var sheet = ss.getSheets()[0].activate();
       if (!sheetName) {
-        var sheetName = testlt();
+        var sheetName = autoGlobe.functionRegistry.proSort()[Math.floor(Math.random() * autoGlobe.functionRegistry.proSort().length)];
       }
       console.log(
         "boilerplate sheetParameters: line 1679\nspreadSheetCreate(sheetName: " +
@@ -1932,7 +1932,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       var ws = sheet.setName([sheetName][0]);
       var headers = [];
       if (!rowHeaders) {
-        var rowHeaders = [testlt()];
+        var rowHeaders = [autoGlobe.functionRegistry.proSort()[Math.floor(Math.random() * autoGlobe.functionRegistry.proSort().length)]];
       }
       console.log(
         "boilerplate sheetParameters: line 1690\nspreadSheetCreate(rowHeaders: " +
@@ -1946,7 +1946,7 @@ function spreadSheetCreate(fileX, sheetName, rowHeaders, data, time) {
       var dataArray = [];
       if (!data) {
         var data = JSON.parse(
-          convertToObjects([[autoGlobeFN.paramsList[Math.floor(Math.random() * autoGlobeFN.paramsList.length)].name]], ["name"], start),
+          convertToObjects([[autoGlobe.functionRegistry.paramsList[Math.floor(Math.random() * autoGlobe.functionRegistry.paramsList.length)].name]], ["name"], autoGlobe.functionRegistry.start),
         )[0];
       }
       console.log(
@@ -2224,14 +2224,14 @@ var submitDomain = function(formData) {
   }
 }
 
-function taxiService() {
-  const server = http.createServer(requestListener);
-  server.listen(port, host, () => {
-    console.log(
-      `"that function: " + arguments.callee.caller.name + "\nthis function: " + ${arguments.callee.name} + "\nServer is running on http://${host}:${port}`,
-    );
-  });
-}
+// function taxiService() {
+//   const server = http.createServer(requestListener);
+//   server.listen(port, host, () => {
+//     console.log(
+//       `"that function: " + arguments.callee.caller.name + "\nthis function: " + ${arguments.callee.name} + "\nServer is running on http://${host}:${port}`,
+//     );
+//   });
+// }
 
 function tutorial(text) {
   var html = contentApp(`

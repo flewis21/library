@@ -191,8 +191,8 @@ function edgarData(text) {
   // SEC Edgar Filings Widget
   let h = {};
   var tmp = [];
-  let jsonData = Utilities.jsonParse([
-    urlDataSource(text, null, { muteHttpExceptions: true }),
+  let jsonData = JSON.parse([
+    urlDataSource(false, text),
   ]);
   let objParts = {};
   for (var i = 0; i < jsonData.length; i++) {

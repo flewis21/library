@@ -630,7 +630,7 @@ function newEPAData(rawData) {
   // const ss = spreadSheetCreate("EPAData", "pesticides", [data].slice(0), [data].slice(1))
 }
 
-function oldEPA(rndTitle) {
+function oldEPA(itemName) {
   var wAppUrl = getScriptUrl();
   var urlPlayer = wAppUrl + "?func=misBing&args=";
   var urlProduct = wAppUrl + "?func=misBing&args=";
@@ -639,7 +639,7 @@ function oldEPA(rndTitle) {
   var urlPcCode = wAppUrl + "?func=misBing&args=";
   var arrayMath = [`acme`];
   var product =
-    rndTitle ||
+    itemName ||
     arrayMath.toString().split(" ")[
       Math.floor(
         Math.random() * Math.floor(arrayMath.toString().split(" ").length),
@@ -677,7 +677,7 @@ function oldEPA(rndTitle) {
   } catch (error) {
     if (uniqueCo.length > 0) {
       // var randNum = Math.floor(Math.random() * (Math.floor(uniqueCo["items"].length)));
-      const titleKings = needCapital(rndTitle);
+      const titleKings = needCapital(itemName);
       var uniqueCoArray = [];
       for (var i = 0, l = uniqueCo.length; i < l; i++) {
         uniqueCo[i].map((item) => {

@@ -1153,11 +1153,13 @@ let fileFold = function(folderX, fileX, time) {
           tree = pyroFolder.getFiles();
           if (tree?.hasNext()) {
             nameTree = tree?.next();
-            try {
-              JSON.parse(nameTree);
-            } 
-            catch (check) {
-              console.log(check);
+            if (!Array.isArray(nameTree) && typeof nameTree === "objext") {
+              try {
+                JSON.parse(nameTree);
+              } 
+              catch (check) {
+                console.log(check);
+              }
             }
             if (nameTree) {
               myName = nameTree.getName();
@@ -1610,7 +1612,7 @@ function rndUrls() {
 
 function shareDrive() {
   console.log(
-    "DEBUG : line \n(: " + +") ",
+    "DEBUG : line 1613\nshareDrive(: " + +") ",
   );
   console.log(autoGlobe.functionRegistry.time + "\nshareDrive()");
   var dApp = DriveApp;

@@ -67,12 +67,46 @@ function allTime(rndKey, arrD, time) {
       [coKey].join(""),
     time + ")",
   );
+  let randomVideo = false;
+  let randomVidKey = false;
+  let youtubeUrl = false;
+  let vidPlaylist = function (playlist) {
+    let playListSorted = playlist;
+    if (typeof playlist === "object" && Array.isArray(playlist)) {
+      randomVidKey = Math.floor(
+        Math.random() * Math.floor(playlist.length),
+      );
+      playListSorted = playlist?.sort((a, b) => a - b);
+    }
+    let videoObject = covObjects(playListSorted, ["youtubeID"], time);
+    console.log("videoObject = " + videoObject, executed++);
+    console.log(
+      "allTime: \nvar " +
+        JSON.stringify(videoObject) +
+        " = covObjects(" +
+        playListSorted,
+      ["youtubeID"],
+      time + ")",
+    );
+    if (typeof videoObject[0]["youtubeID"] !== "undefined") {
+      let uniqueVidKey = [videoObject].entries().next().value;
+      console.log(
+        "allTime: \nvar " +
+          uniqueVidKey +
+          " = " + [videoObject].entries().next().value,
+      );
+      let randomVid = uniqueVidKey[1][randomVidKey];
+      let rVideo = randomVid["youtubeID"];
+      return rVideo;
+    }
+  };
   if (seoArray && Array.isArray(seoArray)) {
+    let randomPlaylist = false;
     if (!seoArray.keys().next()) {
-      var idArray = seoArray.playList;
-      var randomPlaylist = [];
+      let idArray = seoArray.playList;
+      randomPlaylist = [];
       for (var i = 1, l = idArray.length; i < l; i++) {
-        const randomVidKey = Math.floor(
+        randomVidKey = Math.floor(
           Math.random() * Math.floor(idArray.length),
         );
         randomPlaylist.push(
@@ -81,39 +115,12 @@ function allTime(rndKey, arrD, time) {
           }),
         );
       }
-      var vidPlaylist = function () {
-        const randomVidKey = Math.floor(
-          Math.random() * Math.floor(randomPlaylist.length),
-        );
-        var playListSorted = randomPlaylist.sort((a, b) => a - b);
-        var videoObject = covObjects(playListSorted, ["youtubeID"], time);
-        console.log("videoObject = " + videoObject, executed++);
-        console.log(
-          "allTime: \nvar " +
-            JSON.stringify(videoObject) +
-            " = covObjects(" +
-            playListSorted,
-          ["youtubeID"],
-          time + ")",
-        );
-        if (typeof videoObject["youtubeID"] !== "undefined") {
-          var uniqueVidKey = [videoObject].entries().next().value;
-          console.log(
-            "allTime: \nvar " +
-              uniqueVidKey +
-              " = "[videoObject].entries().next().value,
-          );
-          var randomVid = uniqueVidKey[1][randomVidKey];
-          var rVideo = randomVid["youtubeID"];
-          return rVideo;
-        }
-      };
-      var sortaPlay = randomPlaylist.sort((a, b) => a - b);
+      let sortaPlay = randomPlaylist.sort((a, b) => a - b);
       console.log("sortaPlay = " + sortaPlay, executed++);
-      var randomVideo =
-        vidPlaylist() ||
+      randomVideo =
+        vidPlaylist(randomPlaylist) ||
         sortaPlay[Math.floor(Math.random() * Math.floor(sortaPlay.length))];
-      var youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
+      youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
       return {
         title: rndKey || coKey,
         rndVideoId: randomVideo,
@@ -121,6 +128,16 @@ function allTime(rndKey, arrD, time) {
         videoUrl: youtubeUrl,
       };
     }
+  }
+  else {
+    randomVideo =
+      vidPlaylist(Array(String(seoArray)));
+    return {
+      title: rndKey || coKey,
+      rndVideoId: randomVideo,
+      videoPlaylist: seoArray,
+      videoUrl: youtubeUrl,
+    };
   }
 }
 

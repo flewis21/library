@@ -1,4 +1,3 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   let iframeHTML = null;
   let fullList = [];
@@ -73,37 +72,37 @@
   let lastVolume = 100;
   let seekBar, volumeSlider;
   function onYouTubeIframeAPIReady() {
-        iframePlayer = new YT.Player("iframePlayer", {
-          height: "1405",
-          width: "2105",
-          //  videoId: 'OTeQee-gxa4',
-          playerVars: {
-            autoplay: 1,
-            loop: 1,
-            controls: 0,
-            showinfo: 0,
-            // wmode: "transparent",
-            rel: 0,
-            autohide: 1,
-            playsinline: 1,
-            enablejsapi: 1,
-            mute: 0,
-            vq: "hd1080",
-            iv_load_policy: 3,
-            cc_load_policy: 1,
-            listType: "playlist",
-            list: againCap,
-          },
-          events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
-            onError: onPlayerError,
-          },
-        });
+    iframePlayer = new YT.Player("iframePlayer", {
+      height: "1405",
+      width: "2105",
+      //  videoId: 'OTeQee-gxa4',
+      playerVars: {
+        autoplay: 1,
+        loop: 1,
+        controls: 0,
+        showinfo: 0,
+        // wmode: "transparent",
+        rel: 0,
+        autohide: 1,
+        playsinline: 1,
+        enablejsapi: 1,
+        mute: 0,
+        vq: "hd1080",
+        iv_load_policy: 3,
+        cc_load_policy: 1,
+        listType: "playlist",
+        list: againCap,
+      },
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange,
+        onError: onPlayerError,
+      },
+    });
     function onPlayerReady(event) {
         playVideo();
     }
-  $('.user-icon').click(function(event){
+    $('.user-icon').click(function(event) {
       let confirmation = window.confirm(
         "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
       );
@@ -125,7 +124,7 @@
         console.log(ifPlayerDisplay)
         ifPlayerDisplay.style.display = 'none';
       }
-  });
+    });
 
     // 5. The API calls this function when the player's state changes.
     //    The function indicates that when playing a video (state=1),
@@ -261,3 +260,4 @@
     }
   }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

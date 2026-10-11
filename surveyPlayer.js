@@ -21,7 +21,7 @@ function surveyPlayer(searchString, joinString) {
 
   // var rndFol = furtFolder();
 
-  var currentFileUrl = new ClassifyFiles(searchString) // fileBrowser(rndFol).url;
+  var currentFileUrl = classFiles(searchString) // fileBrowser(rndFol).url;
 
   // var eFolder = DriveApp.getFoldersByName(rndFol).next();
   // var folderFile = eFolder.getFilesByName("Code Editor");
@@ -30,7 +30,7 @@ function surveyPlayer(searchString, joinString) {
 
   var rndStrObj = rndStr[Math.floor(Math.random() * Math.floor(rndStr.length))];
 
-  var dataTree = new DriveFiles(rndStrObj["Description"]);
+  var dataTree = filesGlobal(rndStrObj["Description"]);
 
   // while (folderFile.hasNext()) {
   //   var myFile = folderFile.next();

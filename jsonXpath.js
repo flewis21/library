@@ -509,8 +509,8 @@ function urlDataSource(url, cokey, time, xpath, maxRetries = 3) {
     var cokey = rndStrObj["Description"];
   }
 
-  if (typeof url === "undefined" || !new ValidUrlResult(url).validatedResult.hostname) {
-    var rndFol = new ClassifyFiles(cokey);
+  if (typeof url === "undefined" || !vaURL(url).validatedResult.hostname) {
+    var rndFol = classFiles(cokey);
     var url = rndFol.urlTest; //fileBrowser(rndFol).url;
   }
   let response;

@@ -1,0 +1,19 @@
+
+    <script>
+      function calcResearch() {
+           function serverside(func, args) {
+            return new Promise((resolve, reject) => {
+              google.script.run
+              .withSuccessHandler(result => {
+                  resolve(result)})
+              .withFailureHandler(error => {
+                  console.log(document.getElementById("test").innerHTML)
+                  reject(error)})
+              .runBoilerplate([func], [args])})}; 
+            serverside("breakthrough", [])
+            .then((search) => {
+              document.getElementById("calculatediv").innerHTML = search})
+            .catch((err) => {
+              console.log(err)
+            })}
+    </script>

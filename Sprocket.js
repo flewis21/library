@@ -657,8 +657,8 @@ function dtlsMain(file) {
     return down - up
   })[Math.floor(Math.random() * autoGlobe.functionRegistry.folderTree.length)];
   let mFil = file || itemCalc().sort((a, b) => {
-    let up = autoGlobe.getZuluFreqPriority(a.Description);
-    let down = autoGlobe.getZuluFreqPriority(b.Description);
+    let up = autoGlobe.functionRegistry.getZuluFreqPriority(a.Description);
+    let down = autoGlobe.functionRegistry.getZuluFreqPriority(b.Description);
     return up - down
   })[Math.floor(Math.random() * 26)].Description;
   let isProduct = matchManager(mFold, mFil, autoGlobe.functionRegistry.time).forms[Math.floor(Math.random() * 26)];

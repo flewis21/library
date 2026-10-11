@@ -1199,10 +1199,10 @@ var rndWord = function () {
       let priorityA = 0;
       let priorityB = 0;
       if (Math.random() < 0.5) {
-        priorityA = autoGlobe.getZuluFreqPriority(a);
+        priorityA = autoGlobe.functionRegistry.getZuluFreqPriority(a);
       }
       if (Math.random() < 0.5) {
-        priorityB = autoGlobe.freqPriority.get(b);
+        priorityB = autoGlobe.functionRegistry.freqPriority.get(b);
       }
       return priorityA - priorityB;
     })

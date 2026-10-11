@@ -1,5 +1,5 @@
 function jsonEndpoint(e) {
-  return ContentApp.appContent(
+  return contentApp(
     '<?= "Hello World" ?><div class="clubhouse"><? var schedule = dateTime(); ?><?!= schedule ?></div>',
   );
 }

@@ -106,7 +106,7 @@ var createFunctionResult = function (funcUno, funcDos) {
         if (keyObject && keyObject.length > 0) {
           console.log("This execution is initiating JSON Parse on a(n) " , typeof funcDos);
           try {
-            if (!objVal) {
+            if (!objVal && !Array.isArray(funcDos) && typeof funcDos === "object") {
               try {
                 parsedFuncArgs = JSON.parse(funcDos);
               }
@@ -3043,7 +3043,7 @@ function wwwDe(url) {
     } else {
       feed = response["app"];
       //UrlFetchApp.fetch(url).getContentText();
-      feed = feed.replace(
+      feed = feed?.replace(
         /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
         "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
       );
@@ -3055,7 +3055,7 @@ function wwwDe(url) {
     };
     feed = getUrlResponse(url, options);
     //UrlFetchApp.fetch(url).getContentText();
-    feed = feed.replace(
+    feed = feed?.replace(
       /(&lt;img.*?alt="(.*?)".*?&gt;)/g,
       "$1" + new Array(10).join("&lt;br /&gt;") + "$2",
     );

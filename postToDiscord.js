@@ -32,7 +32,7 @@ function postToDrive(fileName, base64Data) {
     const bytes = Utilities?.base64Decode(base64Data)
     const blob = Utilities?.newBlob(bytes, contentType, fileName);
     const file = DriveApp?.createFile(blob);
-    let isVUrl = new ValidUrlResult(file.getUrl()).validatedResult
+    let isVUrl = vaURL(file.getUrl()).validatedResult
     return { success: true, url: isVUrl.url };
   }
   catch (err) {

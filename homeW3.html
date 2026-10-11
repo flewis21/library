@@ -1,0 +1,45 @@
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", homeW3) 
+      function homeW3() {
+      function serverside(func, args) {
+        return new Promise((resolve, reject) => {
+          google.script.run
+          .withSuccessHandler((result) => {
+              resolve(result)})
+          .withFailureHandler((error) => {
+              console.log(error)
+              console.log(document.getElementById("test").innerHTML)
+              reject(error)})
+          .runBoilerplate([func], [args])})};
+        
+        const htmlStructure = document.getElementById("divSEOC").innerHTML
+        const results = document.getElementById("w3Search")
+        const strValue = results.value
+        results.addEventListener("change",(e) => 
+        {
+
+            var cap = e.target.value
+            document.getElementById("w3Search").value = ""
+            document.getElementById("divSEOC").innerHTML = "... waiting for " + cap
+            serverside("portBing", cap)
+            .then((vid) => {
+
+            
+              if (vid) {
+
+                    
+                      document.getElementById("divSEOC").innerHTML = htmlStructure
+                      document.getElementById("w3Res").src = vid;}
+              })
+            .catch((er) => {
+
+            
+              console.log(er)
+              document.getElementById("divSEOC").innerHTML = JSON.stringify(er)
+              })
+
+            
+        })}
+    </script>

@@ -22,6 +22,7 @@ const google_apis_pre_connect = HtmlService.createHtmlOutputFromFile("googleApis
 // (
 //   `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
 // );
+const g_static_charts = HtmlService.createHtmlOutputFromFile("gstaticCharts");
 const g_static_pre_connect = HtmlService.createHtmlOutputFromFile("gstaticPreConnect");
 // (
 //   `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
@@ -138,6 +139,8 @@ const global_section = HtmlService.createHtmlOutputFromFile("globalSection");
 // (
 //   `section {background-color: #bbbbbb;margin-top: 10px;padding: 5px;}`,
 // );
+const ren_blob_body = HtmlService.createHtmlOutputFromFile("renBlobBody");
+const ren_blob_global_body = HtmlService.createHtmlOutputFromFile("renBlobGlobalBody");
 const table_display = HtmlService.createHtmlOutputFromFile("tableDisplay");
 // (
 //   `table {width: 100% !important; /* Example: set table width */border-collapse: separate !important; /* Override default collapse if present */border-spacing: 0 !important; /* Remove spacing between cells */}`,
@@ -2698,6 +2701,8 @@ const sp_y_t_player = HtmlService.createHtmlOutputFromFile("sPYTPlayer");
 //     </script>
 // `);
 
+const taxi_service = HtmlService.createHtmlOutputFromFile("taxiService");
+
 const update_func = HtmlService.createHtmlOutputFromFile("updateFunc");
 // (
 //   `
@@ -3222,12 +3227,15 @@ class StyleHtml {
     this.myGNUFreeJS = HtmlService.createHtmlOutput(
       `${link_visited.getContent() + link_active.getContent()}`,
     );
+    this.budgetRender = HtmlService.createHtmlOutput(
+      `${desktop_container.getContent() + mobile_section.getContent() + responsive_section.getContent() + nav_middle_nav.getContent() + nav_middle_search_box_input.getContent() + nav_middle_search_box.getContent() + nav_left_menu_ico.getContent() + nav_left_logo.getContent() + nav_right_user_ico.getContent() + nav_right_img.getContent() + flex_div.getContent() + index_beta.getContent() + index_beta_color.getContent() + index_beta_color_box_shadow.getContent() + json_input.getContent()}`,
+    );
     this.runIt = HtmlService.createHtmlOutput(
       `${y_t_player.getContent() + custom_stream_player.getContent() + collapse_menu.getContent() + domain_lookup.getContent() + domain_submit.getContent() + document_ready_select.getContent() + js_query.getContent() + materialize_js.getContent() + luxon_js.getContent() + tabulator_js.getContent() + next_clicked_video.getContent() + busy_calendar.getContent() + iframe_query.getContent()}`
     );
     this.abcIt = HtmlService.createHtmlOutput(
       `
-        ${utf_8.getContent() + b_top.getContent() + xua_compatible.getContent() + view_port.getContent() + google_signin_client.getContent() + font_awesome.getContent() + google_apis_pre_connect.getContent() + g_static_pre_connect.getContent() + google_apis_css.getContent() + materialize_css.getContent() + tabulator_css.getContent() + google_apis_icon.getContent() + google_charts_loader.getContent() + google_apis_on_api_load.getContent() + google_apis_defer.getContent()}
+        ${utf_8.getContent() + b_top.getContent() + xua_compatible.getContent() + view_port.getContent() + google_signin_client.getContent() + font_awesome.getContent() + google_apis_pre_connect.getContent() + g_static_charts.getContent() + g_static_pre_connect.getContent() + google_apis_css.getContent() + materialize_css.getContent() + tabulator_css.getContent() + google_apis_icon.getContent() + google_charts_loader.getContent() + google_apis_on_api_load.getContent() + google_apis_defer.getContent()}
     `);
     this.spRunIt = HtmlService.createHtmlOutput(
       `
@@ -3248,10 +3256,22 @@ class StyleHtml {
     this.wDERunIt = HtmlService.createHtmlOutput( 
       `
         ${search_find.getContent() + user_run.getContent() + canvas_snap.getContent()}
+    `);
+    this.budgetRunIt = HtmlService.createHtmlOutput(
+      `${y_t_player.getContent() + js_query.getContent() + materialize_js.getContent()}`
+    );
+    this.datePickFix = HtmlService.createHtmlOutput(
+      `
+        ${date_picker_display.getContent() + date_picker_display_table.getContent() + datePickerDisplayTR.getContent() + date_picker_display_tbody.getContent() + date_picker_display_thead.getContent() + date_picker_color.getContent() + date_picker_day.getContent() + date_picker_table_td_is_selected.getContent() + date_picker_table_td_is_today.getContent()}
     `)
   }
 };
 let stylesSleep = new StyleHtml();
+
+function getStyles() {
+  let styleSleep = new StyleHtml();
+  return styleSleep;
+}
 
 var builtStyling = function (e) {
   var content = stylesSleep.renderFile.getContent();

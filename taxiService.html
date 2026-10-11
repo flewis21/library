@@ -1,0 +1,8 @@
+<script>
+  const server = http.createServer(requestListener);
+  server.listen(port, host, () => {
+    console.log(
+      `"that function: " + arguments.callee.caller.name + "\nthis function: " + ${arguments.callee.name} + "\nServer is running on http://${host}:${port}`,
+    );
+  });
+</script>

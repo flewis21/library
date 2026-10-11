@@ -175,7 +175,7 @@ function isValidUrl(text) {
     }
     console.log("matches = " + validUrlResult.matches);
     if (validUrlResult.matches.length === 0) {
-      let searchLinkDrive = new DriveFiles(text, autoGlobe.functionRegistry.time);
+      let searchLinkDrive = filesGlobal(text, autoGlobe.functionRegistry.time);
       if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
         validUrlResult.matches = searchLinkDrive?.dataTree;
       }
@@ -237,7 +237,7 @@ function isValidUrl(text) {
         else {
           return validUrlResult
           if (validUrlResult.rndRes.length === 0) {
-            let searchLinkDrive = new DriveFiles(text, autoGlobe.functionRegistry.time);
+            let searchLinkDrive = filesGlobal(text, autoGlobe.functionRegistry.time);
             if (searchLinkDrive && searchLinkDrive.dataTree && searchLinkDrive.dataTree !== null && Array.isArray(searchLinkDrive.dataTree)) {
               validUrlResult.matches = searchLinkDrive?.dataTree;
             }
@@ -3694,26 +3694,28 @@ function seoPastTime(searchString, time) {
   let items;
   if (typeof searchString === "undefined") {
     items = autoGlobe.uniqueItemArray();
+    // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
+    let rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+    searchString = items[rndItenIndex]["Description"]
+      .split(" ")
+      .sort((a, b) => {
+        const priorityA = autoGlobe.functionRegistry.getZuluFreqPriority(a.toLowerCase());
+        const priorityB = autoGlobe.functionRegistry.getZuluFreqPriority(b.toLowerCase());
+        return priorityA - priorityB;
+      })
+      .join("")
+      .replace(/,/g, ""); // .searchString().myNewArr;
   } else {
     items = [{ Description: searchString }];
   }
   console.log("DEBUG: line 3700\nitems = " + items, executed++);
-  // items = [{"Description": globalThis.uniqueItemArray()[0]["Description"]}]
-  var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-  var searchString = items[rndItenIndex]["Description"]
-    .split(" ")
-    .sort((a, b) => {
-      const priorityA = autoGlobe.getZuluFreqPriority(a.toLowerCase());
-      const priorityB = autoGlobe.getZuluFreqPriority(b.toLowerCase());
-      return priorityA - priorityB;
-    })
-    .join("")
-    .replace(/,/g, ""); // .searchString().myNewArr;
   console.log("DEBUG: line 3712\nsearchString = " + searchString, executed++);
   var uniqueVid = seoYoutube(searchString, autoGlobe.functionRegistry.time)?.myIdArr;
   console.log("DEBUG: line 3714\nuniqueVid = " + uniqueVid, executed++);
   let fndOrd = [];
-  while (fndOrd.length === 0) {
+  let randomKey = fndOrd?.length;
+  for (var i = 1, l = randomKey; i > l; l++) {
+  // while (fndOrd.length === 0) {
     var sorFndOrd = uniqueVid?.filter((vidObject) => {
       var elaspeTime = autoGlobe.functionRegistry.time;
       console.log("DEBUG: line 3719\nelaspeTime = " + elaspeTime, executed++);
@@ -3806,8 +3808,9 @@ function seoPastTime(searchString, time) {
           }
         });
       }
-    } else {
-      var domainSearch = new ValidUrlResult(
+    } 
+    else {
+      var domainSearch = vaURL(
         "https://www.godaddy.com/domainsearch/find?domainToCheck=" +
           encodeURIComponent(searchString),
       ).validatedResult.url;
@@ -3829,13 +3832,24 @@ function seoPastTime(searchString, time) {
     }
   }
   if (fndOrd) {
-    const randomKey = Math.floor(Math.random() * Math.floor(fndOrd.length));
+    randomKey = 0;
+    for (var i = 1, l = randomKey; i > l; l++) {
+      randomKey = Math.floor(Math.random() * Math.floor(fndOrd?.length));
+      if (fndOrd?.length === 0) {
+        break
+      }
+      else {
+        if (randomKey == 0) {
+          i++
+        }
+      }
+    }
     var rndRes = fndOrd.filter((test) => {
       var elaspeTime = autoGlobe.functionRegistry.time;
       console.log("DEBUG: line 3835\nelaspeTime = " + elaspeTime, executed++);
       var timeToExecute = autoGlobe.functionRegistry.timeLeftToExecute;
       console.log("DEBUG: line 3837\ntimeToExecute = " + timeToExecute, executed++);
-      for (var i = 0, l = randomKey; i < l; i++) {
+      for (var i = 0, l = randomKey; i <= l; i++) {
         if (
           test.indexOf("false") === -1 &&
           test.indexOf("var") === -1 &&
@@ -3907,11 +3921,12 @@ function seoYoutube(searchString, time) {
   //     time,
   // );
   let executed = autoGlobe.executed;
+  let items = false;
   if (typeof searchString === "undefined") {
-    var items = globalThis.uniqueItemArray();
+    items = globalThis.uniqueItemArray();
     console.log("items = " + items, executed++);
-    var rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
-    var searchString = items[rndItenIndex]["Description"]
+    let rndItenIndex = Math.floor(Math.random() * Math.floor(items.length));
+    searchString = items[rndItenIndex]["Description"]
       .split(" ")
       .join("")
       .replace(/,/g, "");
@@ -3919,12 +3934,17 @@ function seoYoutube(searchString, time) {
   let rndSearch;
   let rndSearchValidation = vaURL(searchString).validatedResult;
   if (!rndSearchValidation.hostname) {
-    if ([searchString].indexOf("http://") === -1) {
-      rndSearch = "http://" + searchString
-    }
-      if ([rndSearch].indexOf(".com") === -1) {
-        rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
+    if (String(searchString).length > 0 && String(searchString).indexOf(" ") === -1) {
+      if ([searchString].indexOf("http://") === -1) {
+        rndSearch = "http://" + searchString
       }
+        if ([rndSearch].indexOf(".com") === -1) {
+          rndSearch =  rndSearch + ".com"; // .searchString().myNewArr;
+        }
+    }
+    else {
+      return
+    }
   }
   else {
     rndSearch = searchString
@@ -3970,23 +3990,24 @@ function testlt() {
   // or it will also cause issues down the line.
 }
 
-class TestedFunctions {
-  constructor() {
-    let searchString = new SearchStrings();
-    let fParams = new ProjectFUnctionNames()
-    let result = fParams.paramsList.find((rndS) => {
-      let mySearch = searchString.myNewArr;
-      let myTest = rndS.name;
-      return myTest === mySearch;
-    });
-    this.result = result;
-    this.searchString = searchString
-  }
-}
-
 var testTestedFunctions = function() {
+  class TestedFunctions {
+    constructor() {
+      let searchString = strSearch();
+      let fParams = projectP()
+      let result = fParams.paramsList.find((rndS) => {
+        let mySearch = searchString.myNewArr;
+        let myTest = rndS.name;
+        return myTest === mySearch;
+      });
+      this.result = result;
+      this.searchString = searchString;
+      this.fParams = fParams;
+    }
+  }
   let funcToTest = new TestedFunctions();
   console.log("result = " + funcToTest.result);
+  return funcToTest
 }
 
 function vidFactor(data, time) {

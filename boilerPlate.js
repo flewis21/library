@@ -563,7 +563,7 @@ function substanceVegas(
   console.log();
 }
 
-function testArray(content) {
+function testArray(json) {
   console.log(
     autoGlobe.functionRegistry.time +
       "\n" +
@@ -573,14 +573,14 @@ function testArray(content) {
       ", = " +
       !content,
   );
-  json = content;
+  // let json = content;
   // console.log(json)
   // console.log(json.length)
-  var pathArray = [];
+  let pathArray = [];
   // console.log(pathArray);
   try {
-    for (var i = 0; i < json.length; i++) {
-      pathArray.push([JSON.stringify(i).split("/")]);
+    for (var i = 0; i < json?.length; i++) {
+      pathArray.push([JSON.stringify(json[i]).split("/")]);
       // console.log(json[i])
     }
   } catch (error) {

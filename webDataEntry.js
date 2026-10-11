@@ -26,10 +26,15 @@ class XStation {
     }
   }
 }
-let cXStation = new XStation();
+
+function cXStation() {
+  let checkStat = new XStation();
+  return checkStat;
+}
 
 
 function checkxStation() {
+  let myStat = cXStation();
   let html = HtmlService.createTemplate(
     contentApp(
       `<html id='test'>
@@ -66,7 +71,7 @@ function checkxStation() {
       </html>`,
       {
         breakUrl: getUrl(ScriptApp),
-        list: cXStation.list.map(function (r) {
+        list: myStat.list.map(function (r) {
           return r[0];
         }),
         // runIt: function () {

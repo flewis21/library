@@ -436,7 +436,7 @@ function doGetPost(e) {
   args = barArgs || ["jFundamentals"];
   if (renderFile(args)) {
     return RenderTemplate.templateRender(
-      ContentApp.appContent(`<?!= appL ?>`, {
+      contentApp(`<?!= appL ?>`, {
         appL:
           libFunc ||
           HtmlService.createHtmlOutput(
@@ -482,7 +482,7 @@ function handleRequest(e) {
   } else if (e && e.parameter && e.parameter.action === "submitForm") {
     return handleFormSubmission(e);
   } else {
-    throw new Error("Error completing your request ");
+    console.error("Error completing your request ");
     // return ContentService.createTextOutput("Invalid Request").setMimeType(
     //   ContentService.MimeType.TEXT,
     // );
@@ -1593,7 +1593,8 @@ var globalHandleGetData = function (rawFuncResult) {
             try {
               const parsedJson = JSON.parse(content);
               return { type: "jsonData", data: parsedJson };
-            } catch (jsonError) {
+            } 
+            catch (jsonError) {
               // Not JSON, treat as HTML or plain text
               if (content.trim().startsWith("<") && content.trim().endsWith(">")) {
                 // More robust HTML check
@@ -2013,7 +2014,7 @@ var globalHandleGetData = function (rawFuncResult) {
   // };
   data["timestamp"] = new Date();
   data["pL"] = payLoad;
-  data["title"] = new ValidUrlResult(getScriptUrl()).validatedResult.pathname.split("/")[3];
+  data["title"] = vaURL(getScriptUrl()).validatedResult.pathname.split("/")[3];
 
   return data;
 };
@@ -2296,7 +2297,7 @@ function misBing(e, time) {
 } //webApp closed    // })Global object closed
 
 function userClicked() {
-  return ContentApp.appContent(
+  return contentApp(
     `<script>
     
   console.log(autoGlobe.functionRegistry.time + "\n" + arguments.callee.name);
@@ -2399,7 +2400,7 @@ function userClicked() {
 //                 });
 //             },
 //             })
-//        return RenderTemplate.templateRender(ContentApp.appContent(content))
+//        return RenderTemplate.templateRender(contentApp(content))
 //             }
 
 // var doGet = function(e)
@@ -2580,7 +2581,7 @@ function userClicked() {
 //      })
 //      )//: contentFile('uiAccess');
 //    Route.path("production", includeApp);
-//    return RenderTemplate.templateRender(Route["production"]("<?!= index ?>"))//, { properties: ContentApp.appContent("\n \n  <? var style = stylesSleep ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: stylesSleep, })
+//    return RenderTemplate.templateRender(Route["production"]("<?!= index ?>"))//, { properties: contentApp("\n \n  <? var style = stylesSleep ?> <?!= style ?>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"row menu-img pulse btn-large amber scale-transition scale-out scale-in\">\n  \n <? var webAppUrls = navBar(\"https://www.sec.gov/files/company_tickers.json\", \"Edgar\", \"https://avaddc.com/agency/the-paul-rue-agency/4022/\", \"Defensive Driving\", \"https://script.google.com/macros/s/AKfycbyKOcrgL3g9dTOJSBvjTJD8_S_QGd0_S8j2PwNdKO-3ctWo0uV8UN1bgOTJwFK493qC/exec\", \"Portfolio Beta\", \"https://script.google.com/macros/s/AKfycbxTu7GwOomQ4H97GFSCYfujxWdumQJxT3EkYcrS1fpOr_UFTc-K4BELWHKHC-jVSSx0/exec\", \"B Roll\"); ?>\n  <?!= webAppUrls ?>\n  </div>\n  </div>\n  <div class=\"row menu-img\">\n  <div class=\"container menu-img col s12\">\n  <div class=\"container menu-img col s12\">\n <p id=\"p1\">\n  "), htmlStyle: stylesSleep, })
 //   } else
 //   {//     switch (e.parameter["default"])
 //     {//       case "posHtml":
