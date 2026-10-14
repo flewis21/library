@@ -43,6 +43,7 @@
                                           // window.location.href = decodeURIComponent(redirectURL);
 
                                           // Call the redirect function after the page load
+                                          console.log("event redirect function resources", redirectURL);
                                           let confirmation = window.confirm(
                                             "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                                           );
@@ -284,6 +285,7 @@
             if (matchesContent.length > 0) {
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
+                  console.log("event document main resources", matchesContent.length);
                   let confirmation = window.confirm(
                     "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
@@ -413,6 +415,7 @@
                 }
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
+                  console.log("event document supplimentary resources", contentAvailable.length);
                   let confirmation = window.confirm(
                     "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
@@ -644,6 +647,7 @@
                               input.value = suggestion.description;
                               let confirmation;
                               if (suggestion.youtubeURL) {
+                                console.log("event fetchSuggestions main resources", suggestion.youtubeURL);
                                 confirmation = window.confirm(
                                   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                                 );
@@ -663,6 +667,7 @@
                               }
                               else {
                                 if (suggestion.webAddressUrl) {
+                                  console.log("event fetchSuggestions supplimentary resources", suggestion.webAddressUrl);
                                   confirmation = window.confirm(
                                     "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
                                   );
@@ -1016,7 +1021,7 @@
                           try {
                             // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                             // Access the actual array from the done
-                            console.log("event: " + typeof done, JSON.stringify(done));
+                            console.log("event:  vidPlaylist main resources" + typeof done, JSON.stringify(done));
                             if (done && typeof done === "object") {
                               // alert(JSON.stringify(done.data));
                               // alert(Object.keys(done.data).length);
@@ -1041,19 +1046,19 @@
                                   // alert(l);
                                   for (i,l;i<l;i++) {
                                     if (typeof done.data[key] === "object") {
-                                      console.log("event: " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
+                                      console.log("event: vidPlaylist complimentary resources" + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
                                       tempObj.description = done.data[key][i]?.description;
                                       tData = done.data[key][i]?.videoId;
                                     }
                                     else {
                                       if (typeof done.data[key] === "string") {
-                                        console.log("event: " + typeof done.data[key], String(done.data[key]));
+                                        console.log("event: vidPlaylist complimentary resources" + typeof done.data[key], String(done.data[key]));
                                         tempObj.description = String(event.target.value);
                                         tData = done.data[key];
                                       }
                                     }
                                     let dLoc =  null;
-                                    if (String(tData) && String(tData).indexOf("http") === -1) {
+                                    if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 12) {
                                       // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                       dLoc =  "https://www.youtube.com/watch?v=";
                                       tempObj.youtubeUrl = dLoc + tData;

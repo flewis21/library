@@ -411,7 +411,9 @@ function resUrlData(searchString) {
           return
         }
       }
-      let uriSearch = encodeURIComponent(String(searchString));
+      let splSearch = String(searchString).split("?");
+      let uriSearchA = encodeURIComponent(String(splSearch[0]));
+      let uriSearchB = encodeURIComponent(String(splSearch[1].substring(1,splSearch[1].length)));
       let searchArr = [];
       autoGlobe.vidData.forEach((term)  =>  {
         if (String(term).includes(searchString || uriSearch)) {
@@ -485,7 +487,7 @@ function resUrlData(searchString) {
       }
       else {
         if (searchArr.length === 0) {
-          searchLink = `http://www.bing.com/search?q=(${uriSearch})%20intitle%3A%20-%20YouTube+AND+${uriSearch}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+          searchLink = `http://www.bing.com/search?q=(${uriSearchB})%20intitle%3A%20-%20YouTube+AND+${uriSearchA}?*&PC=U316&top=50&skip=0&FORM=CHROMN`;
           fndOrdObj.hardUrl = searchLink;
           const options = { muteHTTPExceptions: true };
           let retries = 0;
@@ -637,7 +639,9 @@ function resUrlData(searchString) {
           this.fndOrdObj = fndOrdObj;
           this.searchString = searchString;
           this.urlSearched = urlSearched;
-          this.uriSearch = uriSearch;
+          this.splSearch = splSearch;
+          this.uriSearchA = uriSearchA;
+          this.uriSearchB = uriSearchB;
           this.searchArr = searchArr;
           this.searchLink = searchLink;
         }

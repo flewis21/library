@@ -4044,10 +4044,10 @@ function misStC(func, someArgs) {
                                             }
                                           }
                                           resolvedArgs.push(args[declaredParamName]);
-                                        } 
+                                        }
                                         else {
-                                          if (["itemName"].includes(declaredParamName)) {
-                                            let itemNameArray = ["itemName"]
+                                          if (["itemName","mainFile"].includes(declaredParamName)) {
+                                            let itemNameArray = ["itemName","mainFile"]
                                             let rndItemIndex = Math.floor(
                                               Math.random() *
                                                 Math.floor(autoGlobe.uniqueItemArray().length),

@@ -2754,7 +2754,7 @@ function geneFrame(reference) {
 function mainMan(mainFile) {
   if (mainFile) {
     // var mainFile = "wild"
-    var stringSplit = [mainFile].split(" ");
+    var stringSplit = String(mainFile).split(" ");
     var lowerCaseS = [];
     testData([stringSplit])?.map((increase) => {
       if (lowerCaseS.indexOf(increase) === -1) {

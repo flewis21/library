@@ -4041,11 +4041,12 @@ function vidFactor(data, time) {
 
 function vidPlaylist(tunPlay) {
   let vidResObj = {};
-  var randomPlaylist = [];
+  let randomPlaylist = false;
   if (!tunPlay) {
+    randomPlaylist = [];
     autoGlobe.functionRegistry.vidTree();
-    var vidSheetVals = autoGlobe.functionRegistry.getVideoList();
-    var vidKeys = Object.keys(vidSheetVals);
+    let vidSheetVals = autoGlobe.functionRegistry.getVideoList();
+    let vidKeys = Object.keys(vidSheetVals);
     vidKeys.forEach((key) => {
       let vidObj = vidSheetVals[key];
       let videoId = vidObj["Video"];
@@ -4059,46 +4060,47 @@ function vidPlaylist(tunPlay) {
     //   return vidResObj;
     // }
     vidResObj.hardUrl = nptUrl;
-    let listObj = nptVideo?.playList;
-    if (listObj && listObj?.length > 0) {
-      listObj.forEach((itemList) => {
-          randomPlaylist.push(itemList);
-      });
-      var randomVidKey = Math.floor(
-        Math.random() * Math.floor(randomPlaylist?.length),
-      );
-      var playListSorted = randomPlaylist.sort((a, b) => a - b);
-      vidResObj.playlistArr = playListSorted;
-      var videoObject = covObjects(playListSorted, ["youtubeID"]);
-      if (
-        videoObject?.length > 0 &&
-        typeof videoObject[randomVidKey]["youtubeID"] !== "undefined"
-      ) {
-        var uniqueVidKey = [videoObject].entries().next().value;
-        var randomVid = uniqueVidKey[1][randomVidKey];
-        var rVideo = randomVid["youtubeID"];
-        var randomVideo =
-          rVideo ||
-          playListSorted[
-            Math.floor(Math.random() * Math.floor(playListSorted?.length))
-          ];
-          vidResObj.videoItem = randomVideo;
-      }
-      let youtubeUrl = null;
-      let itHasHttp = String(randomVideo).indexOf("http");
-      if (itHasHttp === -1) {
-        youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
-      }
-      else {
-        youtubeUrl = randomVideo;
-      }
-      vidResObj.videoItemUrl = youtubeUrl;
-      return vidResObj;
+    randomPlaylist = nptVideo?.playList;
+  }
+  if (randomPlaylist && randomPlaylist?.length > 0) {
+    // listObj.forEach((itemList) => {
+    //     randomPlaylist.push(itemList);
+    // });
+    let randomVidKey = Math.floor(
+      Math.random() * Math.floor(randomPlaylist?.length),
+    );
+    let playListSorted = randomPlaylist.sort((a, b) => a - b);
+    vidResObj.playlistArr = playListSorted;
+    let videoObject = covObjects(playListSorted, ["youtubeID"]);
+    let randomVideo = false;
+    if (
+      videoObject?.length > 0 &&
+      typeof videoObject[randomVidKey]["youtubeID"] !== "undefined"
+    ) {
+      let uniqueVidKey = [videoObject].entries().next().value;
+      let randomVid = uniqueVidKey[1][randomVidKey];
+      let rVideo = randomVid["youtubeID"];
+      randomVideo  =
+        rVideo ||
+        playListSorted[
+          Math.floor(Math.random() * Math.floor(playListSorted?.length))
+        ];
+      vidResObj.videoItem = randomVideo;
+    }
+    let youtubeUrl = null;
+    let itHasHttp = String(randomVideo)?.indexOf("http");
+    if (itHasHttp === -1) {
+      youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
     }
     else {
-      return vidResObj;
+      youtubeUrl = randomVideo;
     }
+    vidResObj.videoItemUrl = youtubeUrl;
+    // return vidResObj;
   }
+  // else {
+  return vidResObj;
+  // }
 }
 
 function wwAccess(rName, rFunc, rArgs) {
