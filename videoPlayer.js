@@ -399,9 +399,13 @@ function resUrlData(searchString) {
       let noSearch = false;
       let uItems = false;
       let urlSearched = false;
+      let vidsNo = false;
+      let uItemsNo = false;
       if (typeof searchString === "undefined") {
         uItems = autoGlobe.uniqueItemArray()
-        noSearch = autoGlobe.vidSheetVals[Math.floor(Math.random() * Object.keys(autoGlobe.vidSheetVals?.length)?.length)].Description || uItems[Math.floor(Math.random() * Object.keys(uItems?.length)?.length)].Description;
+        uItemsNo = uItems[Math.floor(Math.random() * Object.keys(uItems?.length)?.length)].Description;
+        vidsNo = autoGlobe.vidSheetVals[Math.floor(Math.random() * Object.keys(autoGlobe.vidSheetVals)?.length)].Description;
+        noSearch = [uItemsNo, vidsNo][Math.floor(Math.random(Math.floor(2)))];
         searchString = noSearch || strSearch.myNewArr;
       }
       else {
@@ -413,10 +417,10 @@ function resUrlData(searchString) {
       }
       let splSearch = String(searchString).split("?");
       let uriSearchA = encodeURIComponent(String(splSearch[0]));
-      let uriSearchB = encodeURIComponent(String(splSearch[1].substring(1,splSearch[1].length)));
+      let uriSearchB = encodeURIComponent(String(splSearch[1]?.substring(1,splSearch[1].length)));
       let searchArr = [];
       autoGlobe.vidData.forEach((term)  =>  {
-        if (String(term).includes(searchString || uriSearch)) {
+        if (String(term).includes(searchString || ((uriSearchA && uriSearchB) || uriSearchA || uriSearchB))) {
           searchArr.push(term)
         }
       });
@@ -487,7 +491,7 @@ function resUrlData(searchString) {
       }
       else {
         if (searchArr.length === 0) {
-          searchLink = `http://www.bing.com/search?q=(${uriSearchB})%20intitle%3A%20-%20YouTube+AND+${uriSearchA}?*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+          searchLink = `http://www.bing.com/search?q=(${(uriSearchB)})%20intitle%3A%20-%20YouTube+AND+${(uriSearchA)}?*&PC=U316&top=50&skip=0&FORM=CHROMN`;
           fndOrdObj.hardUrl = searchLink;
           const options = { muteHTTPExceptions: true };
           let retries = 0;
@@ -625,7 +629,7 @@ function resUrlData(searchString) {
               name: "videoSheet",
               number: parseInt("001", 8),
               videoid: searchLink,
-              videodescription: String(searchString),
+              videodescription: String(uriSearchA),
             }),
           );
           // if (typeof fndOrd === "object") {
@@ -646,6 +650,8 @@ function resUrlData(searchString) {
           this.searchLink = searchLink;
         }
         if (noSearch) {
+          this.uItemsNo = uItemsNo;
+          this.vidsNo = vidsNo;
           this.noSearch = noSearch;
         }
         if (false) {
