@@ -43,7 +43,7 @@
           // window.location.href = decodeURIComponent(redirectURL);
 
           // Call the redirect function after the page load
-          console.log("event redirect function resources", redirectURL);
+          console.log("event redirect function resources", JSON.stringify(redirectURL));
           let confirmation = window.confirm(
             "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
           );
@@ -370,7 +370,7 @@
                 });
                 console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
-                if (contentAvailable.length < matchContent.length) {
+                if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
                   console.log("event Match to return length greater than available resources: ", matchContent.length);
                   while (contentAvailable.length < matchContent.length) {
                     contentAvailable = matchContent.sort((a,b) => {
@@ -1037,7 +1037,7 @@
                                   }
                                   else {
                                     if (typeof done.data[key] === "string") {
-                                      l =  String(done.data[key])?.length;
+                                      l =  Array(String(done.data[key]))?.length;
                                     }
                                   }
                                   let tempObj = {};
@@ -1045,14 +1045,14 @@
                                   // let tempList = [];
                                   // alert(l);
                                   for (i,l;i<l;i++) {
-                                    if (typeof done.data[key] === "object") {
-                                      console.log("event: vidPlaylist object complimentary resources" + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
+                                    if (typeof done.data[key] === "object" && typeof done.data[key] !== "string") {
+                                      console.log("event: vidPlaylist object complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
                                       tempObj.description = done.data[key][i]?.description;
                                       tData = done.data[key][i]?.videoId;
                                     }
                                     else {
-                                      if (typeof done.data[key] === "string") {
-                                        console.log("event: vidPlaylist string complimentary resources" + typeof done.data[key], String(done.data[key]));
+                                      if (typeof done.data[key] === "string" && typeof done.data[key] !== "object") {
+                                        console.log("event: vidPlaylist string complimentary resources " + typeof done.data[key], String(done.data[key]));
                                         tempObj.description = String(event.target.value);
                                         tData = done.data[key];
                                       }

@@ -5390,7 +5390,7 @@ let geneicType = function (e) {
               };
             }
             if (true) {
-              eQueryObject = {parameter: {q: autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}}
+              eQueryObject = {parameter: {q: "app? " + autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}} // {parameter: {q: autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}}
               handles = startRenderer(eQueryObject);
               data = 
                 {
