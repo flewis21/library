@@ -491,7 +491,7 @@ function resUrlData(searchString) {
       }
       else {
         if (searchArr.length === 0) {
-          searchLink = `http://www.bing.com/search?q=(${(uriSearchB)})%20intitle%3A%20-%20YouTube+AND+${(uriSearchA)}?*&PC=U316&top=50&skip=0&FORM=CHROMN`;
+          searchLink = `http://www.bing.com/search?q=(${(uriSearchA)}?)%20intitle%3A%20-%20YouTube+AND+${(uriSearchB)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
           fndOrdObj.hardUrl = searchLink;
           const options = { muteHTTPExceptions: true };
           let retries = 0;

@@ -201,6 +201,7 @@
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
+            console.log("event localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
             searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
             localStorage.setItem("gsSearch", searchBackEnd);
             againContent = localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch");
@@ -210,9 +211,9 @@
                 // console.log("result index: " + index);
                 let tubeUrl = val.youtubeUrl
                 if (tubeUrl && tubeUrl !== null) {
-                  console.log("local storage all results: " + againContent);
+                  console.log("Main local storage all results: " + againContent);
                   // personalizedList.push(val);
-                  return tubeUrl
+                  return new URL(tubeUrl)
                 }
               }
             }).filter((mapResult) => {
@@ -225,10 +226,11 @@
             //   remoteSuggestionsCache[againContent] = [];
             // }
             // console.log("matches to return: " + JSON.stringify(matchesContent));
-            console.log("event allContentAvailable resources", allContentAvailable.length);
+            // console.log("event allContentAvailable resources", allContentAvailable.length);
             // console.log(allContentAvailable.length < matchesContent.length);
-            if (allContentAvailable.length < matchesContent.length) {
-              console.log("event Matches to return length greater than available resources: ", matchesContent.length);
+            if (matchesContent.length > 0 && allContentAvailable.length < matchesContent.length) {
+              console.log("event main matches to return resources: ", matchesContent.length);
+              console.log("event main content resources", allContentAvailable.length);
               while (allContentAvailable.length < matchesContent.length) {
                 allContentAvailable = matchesContent.sort((a,b) => {
                   let i = Math.random()
@@ -269,20 +271,18 @@
                   break
                 }
               }
-            }
-            input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
-            // let openYTPlayer = document.getElementById("mainUjpg");
-            // openYTPlayer.click();
-            // fetchSuggestions(String(againContent));
-            // let openYTPlayer = document.createElement("a");
-            // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
-            // openYTPlayer.id = "openYTPLAYER";
-            // openYTPlayer.classList.add("user-icon");
-            // openYTPlayer.rel = "noopener noreferrer";
-            // document.body.appendChild(openYTPlayer);
-            // document.getElementById("openYTPLAYER").click();
-            // document.getElementById("openYTPLAYER").remove();
-            if (matchesContent.length > 0) {
+              input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
+              // let openYTPlayer = document.getElementById("mainUjpg");
+              // openYTPlayer.click();
+              // fetchSuggestions(String(againContent));
+              // let openYTPlayer = document.createElement("a");
+              // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
+              // openYTPlayer.id = "openYTPLAYER";
+              // openYTPlayer.classList.add("user-icon");
+              // openYTPlayer.rel = "noopener noreferrer";
+              // document.body.appendChild(openYTPlayer);
+              // document.getElementById("openYTPLAYER").click();
+              // document.getElementById("openYTPLAYER").remove();
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
                   console.log("event document main resources", matchesContent.length);
@@ -360,7 +360,7 @@
                     // console.log("result index: " + index);
                     let webUrl = val.webAddressUrl
                     if (webUrl && webUrl !== null) {
-                      console.log("local storage all results: " + againContent);
+                      console.log("Supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
                       return webUrl
                     }
@@ -368,10 +368,11 @@
                 }).filter((mapResult) => {
                   return mapResult != null
                 });
-                console.log("event contentAvailable resources", contentAvailable.length);
+                // console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
                 if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
-                  console.log("event Match to return length greater than available resources: ", matchContent.length);
+                  console.log("event supplimentary matches to return resources: ", matchContent.length);
+                  console.log("event supplimentary content resources: ", contentAvailable.length);
                   while (contentAvailable.length < matchContent.length) {
                     contentAvailable = matchContent.sort((a,b) => {
                       let i = Math.random()
@@ -380,6 +381,7 @@
                       let zSorted = b;
                       // console.log(againContent + ": zSorted = " + zSorted);
                       if (i < .3) {
+                        console.log(`event supplimentary content ${i} < .3: `);
                         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                         if (matchA > -1) {
                           // console.log(againContent + ": matchA = " + matchA);
@@ -387,7 +389,8 @@
                         }
                       }
                       else {
-                        if (i > .3 && i < .5 ) {
+                        if (i > .3 && i < .5) {
+                          console.log(`event supplimentary content ${i} > .3 && ${i} < .5: `);
                           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                           if (matchB === -1) {
                             // console.log(againContent + ": matchB = " + matchB);
@@ -396,11 +399,13 @@
                         }
                         else {
                           if (i > .5 && i < .8) {
+                            console.log(`event supplimentary content ${i} > .5 && ${i} < .8: `);
                             // console.log(againContent + ": matchC = " + zSorted);
                             return zSorted;
                           }
                           else {
                             if (i > .8) {
+                              console.log(`event supplimentary content ${i} > .8: `);
                               // console.log(againContent + ": matchD = " + tSorted);
                               return tSorted;
                             }
@@ -413,74 +418,76 @@
                     }
                   }
                 }
-              $('a').click(function(event){
-                if ($(this).attr('href') === "javascript:void(0)") {
-                  console.log("event document supplimentary resources", contentAvailable.length);
-                  let confirmation = window.confirm(
-                    "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                  );
-                  if (confirmation) {
-                    event.preventDefault();
-                    let linkFollow = document.createElement("a");
-                    linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
-                    if (matchContent.length > 0) {
-                      // console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
-                    }
-                    else {
-                      if (matchContent.length === 0) {
-                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                if (contentAvailable.length > 0) {
+                  $('a').click(function(event){
+                    if ($(this).attr('href') === "javascript:void(0)") {
+                      console.log("event document supplimentary resources", contentAvailable.length);
+                      let confirmation = window.confirm(
+                        "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                      );
+                      if (confirmation) {
+                        event.preventDefault();
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
+                        if (matchContent.length > 0) {
+                          // console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
+                        }
+                        else {
+                          if (matchContent.length === 0) {
+                            linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                          }
+                        }
+                        console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // If the user preses the "Enter" key on the keyboard. 
+                        // if (event.key === 'Enter')  {
+                        //   serverside("getVI", [])
+                        //   .then((response) => {
+                        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                        //     // Access the actual array from the response
+                        //     if (response && typeof response === "object") {
+                        //       fullList = [];
+                        //       for (var key in response) {
+                        //         alert(JSON.stringify(response[key]));
+                        //         let i = 0;
+                        //         let l = response[key].length;
+                        //         alert(l);
+                        //         for (i,l;i<l;i++) {
+                        //           let tempObj = {};
+                        //           tempObj.description = response[key][i].description;
+                        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                        //             let tData = response[key][i].videoId;
+                        //             let dLoc =  null;
+                        //             dLoc =  "https://www.youtube.com/watch?v=";
+                        //             tempObj.youtubeUrl = dLoc + tData;
+                        //           }
+                        //           else {
+                        //             tempObj.youtubeUrl = response[key][i].videoId;
+                        //           }
+                        //           fullList.push(tempObj);
+                        //         }
+                        //       }
+                        //     } 
+                        //     else {
+                        //       console.warn("Expected an array in response from getVI, received:", response);
+                        //       Fallback to empty array if the structure is not as expected
+                        //       fullList = [];
+                        //     }
+                        //   })
+                        //   .catch(error => {
+                        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                        //   });
+                        // }
                       }
-                    }
-                    console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                    // If the user preses the "Enter" key on the keyboard. 
-                    // if (event.key === 'Enter')  {
-                    //   serverside("getVI", [])
-                    //   .then((response) => {
-                    //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                    //     // Access the actual array from the response
-                    //     if (response && typeof response === "object") {
-                    //       fullList = [];
-                    //       for (var key in response) {
-                    //         alert(JSON.stringify(response[key]));
-                    //         let i = 0;
-                    //         let l = response[key].length;
-                    //         alert(l);
-                    //         for (i,l;i<l;i++) {
-                    //           let tempObj = {};
-                    //           tempObj.description = response[key][i].description;
-                    //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-                    //             let tData = response[key][i].videoId;
-                    //             let dLoc =  null;
-                    //             dLoc =  "https://www.youtube.com/watch?v=";
-                    //             tempObj.youtubeUrl = dLoc + tData;
-                    //           }
-                    //           else {
-                    //             tempObj.youtubeUrl = response[key][i].videoId;
-                    //           }
-                    //           fullList.push(tempObj);
-                    //         }
-                    //       }
-                    //     } 
-                    //     else {
-                    //       console.warn("Expected an array in response from getVI, received:", response);
-                    //       Fallback to empty array if the structure is not as expected
-                    //       fullList = [];
-                    //     }
-                    //   })
-                    //   .catch(error => {
-                    //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-                    //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                    //   });
-                    // }
-                  }
-                } 
-              });
+                    } 
+                  });
+                }
               }
             }
           })
@@ -1045,7 +1052,7 @@
                                   // let tempList = [];
                                   // alert(l);
                                   for (i,l;i<l;i++) {
-                                    if (typeof done.data[key] === "object" && typeof done.data[key] !== "string") {
+                                    if (typeof done.data[key] === "object" && Array.isArray(done.data[key]) && typeof done.data[key] !== "string") {
                                       console.log("event: vidPlaylist object complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
                                       tempObj.description = done.data[key][i]?.description;
                                       tData = done.data[key][i]?.videoId;
