@@ -36,7 +36,7 @@
         // var redirectURL = params.get("url");
         let redirectURL = false;
         if (myArr.indexOf((myObj?.youtubeURL || myObj?.webAddressUrl)) < 0) {
-          redirectURL = myObj?.youtubeURL || myObj?.webAddressUrl;
+          redirectURL = (myObj?.youtubeURL || myObj?.webAddressUrl);
         }
         if (redirectURL) {
           myArr.push(redirectURL)
@@ -56,7 +56,7 @@
             // }
             // else {
             //   if (matchesContent.length === 0) {
-                linkFollow.href = new URL(myObj?.youtubeURL || myObj?.webAddressUrl) ; // localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl) ; // localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
             //   }
             // }
             console.log("the match: " + linkFollow.href);
@@ -113,10 +113,11 @@
           console.error("No redirect URL provided.");
           homePage
           .then((load) => {
+            alert(JSON.stringify(load));
             localStorage.setItem("ssSearch", event.target.value);
             // console.log("Data; Url for reLoad ", load.data);
             let linkFollow = document.createElement("a");
-            linkFollow.href = new URL(load.data);
+            linkFollow.href = load.data;
             // console.log("the match: " + linkFollow.href);
             linkFollow.id = "linkFOLLOW";
             linkFollow.target = "_self";
@@ -201,7 +202,7 @@
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
-            console.log("event localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
+            console.log("event getVI loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
             searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
             localStorage.setItem("gsSearch", searchBackEnd);
             againContent = localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch");
@@ -209,11 +210,11 @@
               if (String(val.description).indexOf(againContent) > -1) {
                 // console.log(againContent + ": result description: " + val.description);
                 // console.log("result index: " + index);
-                let tubeUrl = val.youtubeUrl
+                let tubeUrl = val.youtubeUrl;
                 if (tubeUrl && tubeUrl !== null) {
-                  console.log("Main local storage all results: " + againContent);
+                  console.log("event getVI loaded addresses main local storage all results: " + againContent);
                   // personalizedList.push(val);
-                  return new URL(tubeUrl)
+                  return tubeUrl
                 }
               }
             }).filter((mapResult) => {
@@ -229,8 +230,8 @@
             // console.log("event allContentAvailable resources", allContentAvailable.length);
             // console.log(allContentAvailable.length < matchesContent.length);
             if (matchesContent.length > 0 && allContentAvailable.length < matchesContent.length) {
-              console.log("event main matches to return resources: ", matchesContent.length);
-              console.log("event main content resources", allContentAvailable.length);
+              console.log("event getVI loaded addresses main matches to return resources: ", matchesContent.length);
+              console.log("event getVI loaded addresses main content resources", allContentAvailable.length);
               while (allContentAvailable.length < matchesContent.length) {
                 allContentAvailable = matchesContent.sort((a,b) => {
                   let i = Math.random()
@@ -285,7 +286,7 @@
               // document.getElementById("openYTPLAYER").remove();
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
-                  console.log("event document main resources", matchesContent.length);
+                  console.log("event getVI loaded addresses main resources", matchesContent.length);
                   let confirmation = window.confirm(
                     "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
@@ -358,9 +359,9 @@
                   if (String(val.description).indexOf(againContent) > -1) {
                     // console.log(againContent + ": result description: " + val.description);
                     // console.log("result index: " + index);
-                    let webUrl = val.webAddressUrl
+                    let webUrl = val.webAddressUrl;
                     if (webUrl && webUrl !== null) {
-                      console.log("Supplimentary local storage all results: " + againContent);
+                      console.log("event getVI loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
                       return webUrl
                     }
@@ -371,8 +372,8 @@
                 // console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
                 if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
-                  console.log("event supplimentary matches to return resources: ", matchContent.length);
-                  console.log("event supplimentary content resources: ", contentAvailable.length);
+                  console.log("event getVI loaded addresses supplimentary matches to return resources: ", matchContent.length);
+                  console.log("event getVI loaded addresses supplimentary content resources: ", contentAvailable.length);
                   while (contentAvailable.length < matchContent.length) {
                     contentAvailable = matchContent.sort((a,b) => {
                       let i = Math.random()
@@ -381,7 +382,7 @@
                       let zSorted = b;
                       // console.log(againContent + ": zSorted = " + zSorted);
                       if (i < .3) {
-                        console.log(`event supplimentary content ${i} < .3: `);
+                        console.log(`event getVI loaded addresses supplimentary content ${i} < .3: `);
                         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                         if (matchA > -1) {
                           // console.log(againContent + ": matchA = " + matchA);
@@ -390,7 +391,7 @@
                       }
                       else {
                         if (i > .3 && i < .5) {
-                          console.log(`event supplimentary content ${i} > .3 && ${i} < .5: `);
+                          console.log(`event getVI loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
                           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                           if (matchB === -1) {
                             // console.log(againContent + ": matchB = " + matchB);
@@ -399,13 +400,13 @@
                         }
                         else {
                           if (i > .5 && i < .8) {
-                            console.log(`event supplimentary content ${i} > .5 && ${i} < .8: `);
+                            console.log(`event getVI loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
                             // console.log(againContent + ": matchC = " + zSorted);
                             return zSorted;
                           }
                           else {
                             if (i > .8) {
-                              console.log(`event supplimentary content ${i} > .8: `);
+                              console.log(`event getVI loaded addresses supplimentary content ${i} > .8: `);
                               // console.log(againContent + ": matchD = " + tSorted);
                               return tSorted;
                             }
@@ -421,7 +422,7 @@
                 if (contentAvailable.length > 0) {
                   $('a').click(function(event){
                     if ($(this).attr('href') === "javascript:void(0)") {
-                      console.log("event document supplimentary resources", contentAvailable.length);
+                      console.log("event getVI loaded addresses supplimentary resources", contentAvailable.length);
                       let confirmation = window.confirm(
                         "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                       );
@@ -502,361 +503,363 @@
             // return
           }
           else {
-          // input.addEventListener("focus", (event) => {
-          // let qTemp;
-          // if (String(event.target.value).length >= 1) {
-            // suggestionsDiv.innerHTML = '';
-          
-          // Filter the local list instead of making a server call
-          contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
-          // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-          suggestContent = contentList.filter(item => 
-            String(item.description).toLowerCase().includes(query.toLowerCase())
-          );
-          
-          window.scrollTo(0,0);
-          // let confirmation = null;
-          let suggestL = suggestContent?.length;
-          let userClicked = false;
-          let install = 0;
-          if (suggestL > 0) {
-            // let i = 0;
-            // let l = suggestContent.length
-            // while (userClicked === false) {
-              // for (i,l;i<l;i++) {
-                suggestContent?.forEach((suggestion, index) => {
-                  // console.log(suggestion)
-                  // let suggestion = suggestContent[i]
-                  // const div = document.createElement('div');
-                  // div.textContent = suggestion.description;
-                  // div.classList.add("card-panel", "receipt", "btn-large");
-                  // div.addEventListener('click', () => {
-                  //   input.value = suggestion.description;
-                  //   let confirmation;
-                  //   if (suggestion.youtubeURL) {
-                  //     confirmation = window.confirm(
-                  //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                  //     );
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   else {
-                  //     if (suggestion.webAddressUrl) {
-                  //       confirmation = window.confirm(
-                  //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                  //       );
-                  //     }
-                  //     if (confirmation) {
-                  //       if (suggestion.youtubeURL) {
-                  //         window.open(suggestion.youtubeUrl, "_blank");
-                  //       }
-                  //       else {
-                  //         if (suggestion.webAddressUrl) {
-                  //           window.open(suggestion.webAddressUrl, "_blank");
-                  //           // document.location.href = suggestion.webAddressUrl;
-                  //         }
-                  //       }
-                  //     }
-                  //     suggestionsDiv.innerHTML = '';
-                  //     return;
-                  //   }
-                  //   install++
-                  //   userClicked = install;
-                  //   console.log(" User clicked; Left-Click Button ", userClicked);
-                  // });
-                  // suggestionsDiv.appendChild(div);
-                  input.addEventListener('keydown', (event) => {
-                    // if (!event.key === 'Enter') {
-                    //   // suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
+            // input.addEventListener("focus", (event) => {
+            // let qTemp;
+            // if (String(event.target.value).length >= 1) {
+              // suggestionsDiv.innerHTML = '';
+            
+            // Filter the local list instead of making a server call
+            contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
+            // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+            suggestContent = contentList.filter(item => 
+              String(item.description).toLowerCase().includes(query.toLowerCase())
+            );
+            
+            window.scrollTo(0,0);
+            // let confirmation = null;
+            let suggestL = suggestContent?.length;
+            let userClicked = false;
+            let install = 0;
+            if (suggestL > 0) {
+              // let i = 0;
+              // let l = suggestContent.length
+              // while (userClicked === false) {
+                // for (i,l;i<l;i++) {
+                  suggestContent?.forEach((suggestion, index) => {
+                    // console.log(suggestion)
+                    // let suggestion = suggestContent[i]
+                    // const div = document.createElement('div');
+                    // div.textContent = suggestion.description;
+                    // div.classList.add("card-panel", "receipt", "btn-large");
+                    // div.addEventListener('click', () => {
+                    //   input.value = suggestion.description;
+                    //   let confirmation;
+                    //   if (suggestion.youtubeURL) {
+                    //     confirmation = window.confirm(
+                    //       "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                    //     );
+                    //     if (confirmation) {
                     //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
+                    //         window.open(suggestion.youtubeUrl, "_blank");
                     //       }
                     //       else {
                     //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
+                    //           window.open(suggestion.webAddressUrl, "_blank");
+                    //           // document.location.href = suggestion.webAddressUrl;
                     //         }
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl, "_blank");
-                    //             return;
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               window.open(suggestion.webAddressUrl, "_blank");
-                    //               // document.location.href = suggestion.webAddressUrl;
-                    //               return;
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //           return;
-                    //         }
-                    //         // else {
-                    //         //   if (!confirmation) {
-                    //         //     // suggestionsDiv.innerHTML = '';
-                    //         //     input.blur();
-                    //         //     return;
-                    //         //   }
-                    //         // }
                     //       }
-                    //       return;
                     //     }
-                    //     // userClicked++
-                    //     // console.log(" User clicked; Tab ", userClicked);
-                    //     // return
-                    //   // });
-                    // }
-                    if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
-                      input.addEventListener("input", (event) => {
-                          if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
-                            const div = document.createElement('div');
-                            div.textContent = suggestion.description;
-                            div.classList.add("receipt", "btn-large");
-                            div.addEventListener('click', () => {
-                              input.value = suggestion.description;
-                              let confirmation;
-                              if (suggestion.youtubeURL) {
-                                console.log("event fetchSuggestions main resources", suggestion.youtubeURL);
-                                confirmation = window.confirm(
-                                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                                );
-                                if (confirmation) {
-                                  if (suggestion.youtubeURL) {
-                                    window.open(suggestion.youtubeUrl, "_blank");
-                                  }
-                                  else {
-                                    if (suggestion.webAddressUrl) {
-                                      window.open(suggestion.webAddressUrl, "_blank");
-                                      // document.location.href = suggestion.webAddressUrl;
-                                    }
-                                  }
-                                }
-                                suggestionsDiv.innerHTML = '';
-                                return;
-                              }
-                              else {
-                                if (suggestion.webAddressUrl) {
-                                  console.log("event fetchSuggestions supplimentary resources", suggestion.webAddressUrl);
-                                  confirmation = window.confirm(
-                                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                                  );
-                                }
-                                if (confirmation) {
-                                  if (suggestion.youtubeURL) {
-                                    window.open(suggestion.youtubeUrl, "_blank");
-                                  }
-                                  else {
-                                    if (suggestion.webAddressUrl) {
-                                      window.open(suggestion.webAddressUrl, "_blank");
-                                      // document.location.href = suggestion.webAddressUrl;
-                                    }
-                                  }
-                                }
-                                suggestionsDiv.innerHTML = '';
-                                return;
-                              }
-                              install++
-                              userClicked = install;
-                              console.log(" User clicked; Left-Click Button ", userClicked);
-                            });
-                            suggestionsDiv.appendChild(div);
-                            // return
-                          }
-                      })
-                    } 
-                    else {
+                    //     suggestionsDiv.innerHTML = '';
+                    //     return;
+                    //   }
+                    //   else {
+                    //     if (suggestion.webAddressUrl) {
+                    //       confirmation = window.confirm(
+                    //         "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                    //       );
+                    //     }
+                    //     if (confirmation) {
+                    //       if (suggestion.youtubeURL) {
+                    //         window.open(suggestion.youtubeUrl, "_blank");
+                    //       }
+                    //       else {
+                    //         if (suggestion.webAddressUrl) {
+                    //           window.open(suggestion.webAddressUrl, "_blank");
+                    //           // document.location.href = suggestion.webAddressUrl;
+                    //         }
+                    //       }
+                    //     }
+                    //     suggestionsDiv.innerHTML = '';
+                    //     return;
+                    //   }
+                    //   install++
+                    //   userClicked = install;
+                    //   console.log(" User clicked; Left-Click Button ", userClicked);
+                    // });
+                    // suggestionsDiv.appendChild(div);
+                    input.addEventListener('keydown', (event) => {
                       // if (!event.key === 'Enter') {
-                      // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
-                        // if (index && suIndexLen < suggestContent?.length) {
-                        //   while (suIndexLen < suggestContent?.length) {
-                        //     input.blur();
-                        //     input.disabled = true
-                            let suIndexLen = index + 1;
-                      input.addEventListener("change", (event) => {
-                        let openYTPlayer = document.getElementById("mainUjpg");
-                        // openYTPlayer.click();
-                        // homePage
-                        // .then((load) => {
-                        //   localStorage.setItem("ssSearch", event.target.value);
-                        //   // console.log("Data; Url for reLoad ", load.data);
-                        //   let linkFollow = document.createElement("a");
-                        //   linkFollow.href = load.data + "?q=" + webUrl;
-                        //   // console.log("the match: " + linkFollow.href);
-                        //   linkFollow.id = "linkFOLLOW";
-                        //   linkFollow.target = "_blank";
-                        //   linkFollow.rel = "noopener noreferrer";
-                        //   document.body.appendChild(linkFollow);
-                        //   document.getElementById("linkFOLLOW").click();
-                        //   document.getElementById("linkFOLLOW").remove();
-                        //   // window.location.href = load.data
-                        //   // input.value = event.target.value;
-                        //   // input.disabled = false;
-                        //   // input.focus();
-                        // })
-                        // .catch((fail) => {
-                        //   console.log("Failed to load ", fail);
-                        //   input.disabled = false;
-                        //   input.focus();
-                        //   let openYTPlayer = document.getElementById("mainUjpg");
-                        //   openYTPlayer.click();
-                        // });
-                      })
-                            // if (suIndexLen >= suggestContent?.length) {
-                              // input.addEventListener("input", (event) => {
-                              // })
+                      //   // suggestions?.forEach(suggestion => {
+                      //     // console.log(suggestion)
+                      //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
+                      //       if (suggestion.youtubeURL) {
+                      //         let confirmation = window.confirm(
+                      //           suggestion?.youtubeUrl,
+                      //         );
+                      //         if (confirmation) {
+                      //           if (suggestion.youtubeURL) {
+                      //             window.open(suggestion.youtubeUrl, "_blank");
+                      //             return;
+                      //           }
+                      //           else {
+                      //             if (suggestion.webAddressUrl) {
+                      //               window.open(suggestion.webAddressUrl, "_blank");
+                      //               // document.location.href = suggestion.webAddressUrl;
+                      //               return;
+                      //             }
+                      //           }
+                      //           suggestionsDiv.innerHTML = '';
+                      //           return;
+                      //         }
+                      //         // else {
+                      //         //   if (!confirmation) {
+                      //         //     // suggestionsDiv.innerHTML = '';
+                      //         //     input.blur();
+                      //         //     return;
+                      //         //   }
+                      //         // }
+                      //       }
+                      //       else {
+                      //         if (suggestion.webAddressUrl) {
+                      //           let confirmation = window.confirm(
+                      //             suggestion?.webAddressUrl,
+                      //           );
+                      //         }
+                      //         if (confirmation) {
+                      //           if (suggestion.youtubeURL) {
+                      //             window.open(suggestion.youtubeUrl, "_blank");
+                      //             return;
+                      //           }
+                      //           else {
+                      //             if (suggestion.webAddressUrl) {
+                      //               window.open(suggestion.webAddressUrl, "_blank");
+                      //               // document.location.href = suggestion.webAddressUrl;
+                      //               return;
+                      //             }
+                      //           }
+                      //           suggestionsDiv.innerHTML = '';
+                      //           return;
+                      //         }
+                      //         // else {
+                      //         //   if (!confirmation) {
+                      //         //     // suggestionsDiv.innerHTML = '';
+                      //         //     input.blur();
+                      //         //     return;
+                      //         //   }
+                      //         // }
+                      //       }
+                      //       return;
+                      //     }
+                      //     // userClicked++
+                      //     // console.log(" User clicked; Tab ", userClicked);
+                      //     // return
+                      //   // });
+                      // }
+                      if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
+                        input.addEventListener("input", (event) => {
+                            if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
+                              window.scrollTo(0,0);
+                              const div = document.createElement('div');
+                              div.textContent = suggestion.description;
+                              div.classList.add("receipt", "btn-large");
+                              div.addEventListener('click', () => {
+                                input.value = suggestion.description;
+                                let confirmation;
+                                if (suggestion.youtubeURL) {
+                                  console.log("event user input loaded addresses fetchSuggestions main resources", suggestion.youtubeURL);
+                                  confirmation = window.confirm(
+                                    "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                                  );
+                                  if (confirmation) {
+                                    if (suggestion.youtubeURL) {
+                                      window.open(suggestion.youtubeUrl, "_blank");
+                                    }
+                                    else {
+                                      if (suggestion.webAddressUrl) {
+                                        window.open(suggestion.webAddressUrl, "_blank");
+                                        // document.location.href = suggestion.webAddressUrl;
+                                      }
+                                    }
+                                  }
+                                  suggestionsDiv.innerHTML = '';
+                                  return;
+                                }
+                                else {
+                                  if (suggestion.webAddressUrl) {
+                                    console.log("event user input loaded addresses fetchSuggestions supplimentary resources", suggestion.webAddressUrl);
+                                    confirmation = window.confirm(
+                                      "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                                    );
+                                  }
+                                  if (confirmation) {
+                                    if (suggestion.youtubeURL) {
+                                      window.open(suggestion.youtubeUrl, "_blank");
+                                    }
+                                    else {
+                                      if (suggestion.webAddressUrl) {
+                                        window.open(suggestion.webAddressUrl, "_blank");
+                                        // document.location.href = suggestion.webAddressUrl;
+                                      }
+                                    }
+                                  }
+                                  suggestionsDiv.innerHTML = '';
+                                  return;
+                                }
+                                install++
+                                userClicked = install;
+                                console.log(" User clicked; Left-Click Button ", userClicked);
+                              });
+                              suggestionsDiv.appendChild(div);
+                              // return
+                            }
+                        })
+                      } 
+                      else {
+                        // if (!event.key === 'Enter') {
+                        // if (suggestion && suggestion?.description?.toLowerCase().indexOf(event?.target?.value?.toLowerCase()) === -1) {
+                          // if (index && suIndexLen < suggestContent?.length) {
+                          //   while (suIndexLen < suggestContent?.length) {
+                          //     input.blur();
+                          //     input.disabled = true
+                        let suIndexLen = index + 1;
+                        input.addEventListener("change", (event) => {
+                          window.scrollTo(0,0);
+                          let openYTPlayer = document.getElementById("mainUjpg");
+                          // openYTPlayer.click();
+                          // homePage
+                          // .then((load) => {
+                          //   localStorage.setItem("ssSearch", event.target.value);
+                          //   // console.log("Data; Url for reLoad ", load.data);
+                          //   let linkFollow = document.createElement("a");
+                          //   linkFollow.href = load.data + "?q=" + webUrl;
+                          //   // console.log("the match: " + linkFollow.href);
+                          //   linkFollow.id = "linkFOLLOW";
+                          //   linkFollow.target = "_blank";
+                          //   linkFollow.rel = "noopener noreferrer";
+                          //   document.body.appendChild(linkFollow);
+                          //   document.getElementById("linkFOLLOW").click();
+                          //   document.getElementById("linkFOLLOW").remove();
+                          //   // window.location.href = load.data
+                          //   // input.value = event.target.value;
+                          //   // input.disabled = false;
+                          //   // input.focus();
+                          // })
+                          // .catch((fail) => {
+                          //   console.log("Failed to load ", fail);
+                          //   input.disabled = false;
+                          //   input.focus();
+                          //   let openYTPlayer = document.getElementById("mainUjpg");
+                          //   openYTPlayer.click();
+                          // });
+                        })
+                              // if (suIndexLen >= suggestContent?.length) {
+                                // input.addEventListener("input", (event) => {
+                                // })
+                              // }
                             // }
+                            // return
                           // }
-                          // return
                         // }
+                        // }
+                      }
+
+
+                      // // Filter the local list instead of making a server call
+                      // localList = remoteSuggestionsCache[againCap] || [];
+                      // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+                      // suggestions = localList.filter(item => 
+                      //   String(item.description).toLowerCase().includes(query.toLowerCase())
+                      // );
+
+                      // window.scrollTo(0,0);
+                      // // let confirmation = null;
+                      // if (suggestions?.length > 0) {
+                      //   suggestions?.forEach(suggestion => {
+                      //     // console.log(suggestion)
+                      //     const div = document.createElement('div');
+                      //     div.textContent = suggestion.description;
+                      //     div.classList.add("card-panel", "receipt", "btn-large");
+                      //     div.addEventListener('click', () => {
+                      //       input.value = suggestion.description;
+                      //       if (suggestion.youtubeURL) {
+                      //         let confirmation = window.confirm(
+                      //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                      //         );
+                      //         if (confirmation) {
+                      //           if (suggestion.youtubeURL) {
+                      //             window.open(suggestion.youtubeUrl);
+                      //           }
+                      //           else {
+                      //             if (suggestion.webAddressUrl) {
+                      //               document.location.href = suggestion.webAddressUrl;
+                      //             }
+                      //           }
+                      //         }
+                      //         suggestionsDiv.innerHTML = '';
+                      //       }
+                      //       else {
+                      //         if (suggestion.webAddressUrl) {
+                      //           let confirmation = window.confirm(
+                      //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                      //           );
+                      //           if (confirmation) {
+                      //             if (suggestion.youtubeURL) {
+                      //               window.open(suggestion.youtubeUrl);
+                      //             }
+                      //             else {
+                      //               if (suggestion.webAddressUrl) {
+                      //                 document.location.href = suggestion.webAddressUrl;
+                      //               }
+                      //             }
+                      //           }
+                      //           suggestionsDiv.innerHTML = '';
+                      //         }
+                      //       }
+                      //     });
+                      //     suggestionsDiv.appendChild(div);
+                      //   });
                       // }
+                      // if (event.key === 'Tab') {
+                      //   suggestions?.forEach(suggestion => {
+                      //     // console.log(suggestion)
+                      //     if (suggestion && suggestion?.description.includes(event.target.value)) {
+                      //       if (suggestion.youtubeURL) {
+                      //         let confirmation = window.confirm(
+                      //           suggestion?.youtubeUrl,
+                      //         );
+                      //       }
+                      //       else {
+                      //         if (suggestion.webAddressUrl) {
+                      //           let confirmation = window.confirm(
+                      //             suggestion?.webAddressUrl,
+                      //           );
+                      //         }
+                      //       }
+                      //       if (confirmation) {
+                      //         if (suggestion.youtubeURL) {
+                      //           window.open(suggestion.youtubeUrl);
+                      //         }
+                      //         else {
+                      //           if (suggestion.webAddressUrl) {
+                      //             document.location.href = suggestion.webAddressUrl;
+                      //           }
+                      //         }
+                      //         suggestionsDiv.innerHTML = '';
+                      //       }
+                      //       else {
+                      //         suggestionsDiv.innerHTML = '';
+                      //         input.blur();
+                      //       }
+                      //     }
+                      //     return
+                      //   });
                       // }
-                    }
-
-
-                    // // Filter the local list instead of making a server call
-                    // localList = remoteSuggestionsCache[againCap] || [];
-                    // // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-                    // suggestions = localList.filter(item => 
-                    //   String(item.description).toLowerCase().includes(query.toLowerCase())
-                    // );
-
-                    // window.scrollTo(0,0);
-                    // // let confirmation = null;
-                    // if (suggestions?.length > 0) {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     const div = document.createElement('div');
-                    //     div.textContent = suggestion.description;
-                    //     div.classList.add("card-panel", "receipt", "btn-large");
-                    //     div.addEventListener('click', () => {
-                    //       input.value = suggestion.description;
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                    //         );
-                    //         if (confirmation) {
-                    //           if (suggestion.youtubeURL) {
-                    //             window.open(suggestion.youtubeUrl);
-                    //           }
-                    //           else {
-                    //             if (suggestion.webAddressUrl) {
-                    //               document.location.href = suggestion.webAddressUrl;
-                    //             }
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                    //           );
-                    //           if (confirmation) {
-                    //             if (suggestion.youtubeURL) {
-                    //               window.open(suggestion.youtubeUrl);
-                    //             }
-                    //             else {
-                    //               if (suggestion.webAddressUrl) {
-                    //                 document.location.href = suggestion.webAddressUrl;
-                    //               }
-                    //             }
-                    //           }
-                    //           suggestionsDiv.innerHTML = '';
-                    //         }
-                    //       }
-                    //     });
-                    //     suggestionsDiv.appendChild(div);
-                    //   });
-                    // }
-                    // if (event.key === 'Tab') {
-                    //   suggestions?.forEach(suggestion => {
-                    //     // console.log(suggestion)
-                    //     if (suggestion && suggestion?.description.includes(event.target.value)) {
-                    //       if (suggestion.youtubeURL) {
-                    //         let confirmation = window.confirm(
-                    //           suggestion?.youtubeUrl,
-                    //         );
-                    //       }
-                    //       else {
-                    //         if (suggestion.webAddressUrl) {
-                    //           let confirmation = window.confirm(
-                    //             suggestion?.webAddressUrl,
-                    //           );
-                    //         }
-                    //       }
-                    //       if (confirmation) {
-                    //         if (suggestion.youtubeURL) {
-                    //           window.open(suggestion.youtubeUrl);
-                    //         }
-                    //         else {
-                    //           if (suggestion.webAddressUrl) {
-                    //             document.location.href = suggestion.webAddressUrl;
-                    //           }
-                    //         }
-                    //         suggestionsDiv.innerHTML = '';
-                    //       }
-                    //       else {
-                    //         suggestionsDiv.innerHTML = '';
-                    //         input.blur();
-                    //       }
-                    //     }
-                    //     return
-                    //   });
-                    // }
-                    // return;
-                    // install++
-                    // userClicked = install;
-                    // console.log("User clicked; Tab or Enter: ", userClicked)
+                      // return;
+                      // install++
+                      // userClicked = install;
+                      // console.log("User clicked; Tab or Enter: ", userClicked)
+                    });
                   });
-                });
-                // if (userClicked) {
-                //   break;
+                  // if (userClicked) {
+                  //   break;
+                  // }
                 // }
               // }
-            // }
-          }
-          else {
-            if (suggestContent.length === 0) {
-              suggestionsDiv.innerHTML = '';
             }
+            else {
+              if (suggestContent.length === 0) {
+                suggestionsDiv.innerHTML = '';
+              }
             }
           }
             // localStorage.setItem("gsSearch", input.value);
@@ -898,7 +901,7 @@
         // }, 300);
         
         if (input && suggestionsDiv) {
-          againContent = localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch");
+          againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
           input.disabled = false;
           input.addEventListener('input', (event) => {
               // if (event?.target?.value.length <= 3) {
@@ -987,601 +990,430 @@
 
           input.addEventListener('keydown', (event) => {
             let enterClicked = 0;
-              if (event.key === 'Enter') {
-                console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
-                // if (String(event.target.value).length < 1) {
-                //   return
-                // }
-                // let filContent = suggestions.filter(item => 
-                //     String(item).toLowerCase() === event.target.value.toLowerCase()
-                //   );
-                // if (filContent.length > 0) {
-                //   return filContent[Math.floor(Math.random() * Math.floor(filContent.length))]
-                // }
-                // else {
-                  // if (filContent.length === 0) {
-                    // console.log(suggestContent?.length + " | event; suggestions index: ", suIndexLen);
-                    // input.focus();
-                    // input.disabled = false;
-                    // suggestions?.forEach((suggestion) => {
-                      // event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
-                      // if (String(suggestion.description).toLowerCase().includes(event.target.value.toLowerCase())) { // && (!suggestions || suggestions?.length === 0)) {
-                        input.blur();
-                        input.disabled = true
-                        // localStorage.setItem("gsSearch", event.target.value);
-                        // const div = document.createElement('div');
-                        // div.textContent = suggestion.description;
-                        // div.classList.add("receipt", "btn-large", "user-icon");
-                        // div.addEventListener('click', () => {})
-                        // suggestionsDiv.appendChild(div);
-                        // let openYTPlayer = document.createElement("a");
-                        // openYTPlayer.href = "javascript:void(0)";
-                        // openYTPlayer.id = "openYTPLAYER";
-                        // openYTPlayer.classList.add("user-icon");
-                        // openYTPlayer.rel = "noopener noreferrer";
-                        // document.body.appendChild(openYTPlayer);
-                        // document.getElementById("openYTPLAYER").click();
-                        // document.getElementById("openYTPLAYER").remove();
-                        // qTemp = query
-                        serverside("vidPlaylist", [String(event.target.value)])
-                        .then((done) => {
-                          try {
-                            // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
-                            // Access the actual array from the done
-                            console.log("event:  vidPlaylist main resources" + typeof done, JSON.stringify(done));
-                            if (done && typeof done === "object") {
-                              // alert(JSON.stringify(done.data));
-                              // alert(Object.keys(done.data).length);
-                              let doneAlert = Object.keys(done.data)?.length;
-                              if (done.data && doneAlert > 0) {
-                                personalizedList = [];
-                                let reUrlList = [];
-                                for (var key in done.data) {
-                                  let i = 0;
-                                  let l = false;
-                                  if (typeof done.data[key] === "object") {
-                                    l =  done.data[key]?.length;
+            if (event.key === 'Enter') {
+              console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
+              // if (String(event.target.value).length < 1) {
+              //   return
+              // }
+              // let filContent = suggestions.filter(item => 
+              //     String(item).toLowerCase() === event.target.value.toLowerCase()
+              //   );
+              // if (filContent.length > 0) {
+              //   return filContent[Math.floor(Math.random() * Math.floor(filContent.length))]
+              // }
+              // else {
+                // if (filContent.length === 0) {
+                  // console.log(suggestContent?.length + " | event; suggestions index: ", suIndexLen);
+                  // input.focus();
+                  // input.disabled = false;
+                  // suggestions?.forEach((suggestion) => {
+                    // event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                    // if (String(suggestion.description).toLowerCase().includes(event.target.value.toLowerCase())) { // && (!suggestions || suggestions?.length === 0)) {
+                      input.blur();
+                      input.disabled = true
+                      // localStorage.setItem("gsSearch", event.target.value);
+                      // const div = document.createElement('div');
+                      // div.textContent = suggestion.description;
+                      // div.classList.add("receipt", "btn-large", "user-icon");
+                      // div.addEventListener('click', () => {})
+                      // suggestionsDiv.appendChild(div);
+                      // let openYTPlayer = document.createElement("a");
+                      // openYTPlayer.href = "javascript:void(0)";
+                      // openYTPlayer.id = "openYTPLAYER";
+                      // openYTPlayer.classList.add("user-icon");
+                      // openYTPlayer.rel = "noopener noreferrer";
+                      // document.body.appendChild(openYTPlayer);
+                      // document.getElementById("openYTPLAYER").click();
+                      // document.getElementById("openYTPLAYER").remove();
+                      // qTemp = query
+                      serverside("vidPlaylist", [String(event.target.value)])
+                      .then((done) => {
+                        try {
+                          // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
+                          // Access the actual array from the done
+                          console.log("event: vidPlaylist document loaded addresses main resources" + typeof done, JSON.stringify(done));
+                          if (done && typeof done === "object") {
+                            // alert(JSON.stringify(done.data));
+                            // alert(Object.keys(done.data).length);
+                            let doneAlert = Object.keys(done.data)?.length;
+                            if (done.data && doneAlert > 0) {
+                              personalizedList = [];
+                              let reUrlList = [];
+                              for (var key in done.data) {
+                                let i = 0;
+                                let l = false;
+                                if (typeof done.data[key] === "object") {
+                                  l =  done.data[key]?.length;
+                                }
+                                else {
+                                  if (typeof done.data[key] === "string") {
+                                    l =  Array(String(done.data[key]))?.length;
+                                  }
+                                }
+                                let tempObj = {};
+                                let tData = false;
+                                // let tempList = [];
+                                // alert(l);
+                                for (i,l;i<l;i++) {
+                                  if (typeof done.data[key] === "object" && Array.isArray(done.data[key]) && typeof done.data[key] !== "string") {
+                                    console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
+                                    tempObj.description = done.data[key][i]?.description;
+                                    tData = done.data[key][i]?.videoId;
                                   }
                                   else {
-                                    if (typeof done.data[key] === "string") {
-                                      l =  Array(String(done.data[key]))?.length;
+                                    if (typeof done.data[key] === "string" && typeof done.data[key] !== "object") {
+                                      console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
+                                      tempObj.description = String(event.target.value);
+                                      tData = done.data[key];
                                     }
                                   }
-                                  let tempObj = {};
-                                  let tData = false;
-                                  // let tempList = [];
-                                  // alert(l);
-                                  for (i,l;i<l;i++) {
-                                    if (typeof done.data[key] === "object" && Array.isArray(done.data[key]) && typeof done.data[key] !== "string") {
-                                      console.log("event: vidPlaylist object complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
-                                      tempObj.description = done.data[key][i]?.description;
-                                      tData = done.data[key][i]?.videoId;
-                                    }
-                                    else {
-                                      if (typeof done.data[key] === "string" && typeof done.data[key] !== "object") {
-                                        console.log("event: vidPlaylist string complimentary resources " + typeof done.data[key], String(done.data[key]));
-                                        tempObj.description = String(event.target.value);
-                                        tData = done.data[key];
-                                      }
-                                    }
-                                    let dLoc =  null;
-                                    if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 12) {
-                                      // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                      dLoc =  "https://www.youtube.com/watch?v=";
-                                      tempObj.youtubeUrl = new URL(dLoc + tData);
-                                    }
-                                    else {
-                                      // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                      tempObj.webAddressUrl = new URL(tData);
-                                    }
-                                    // tempList.push(tempObj);
-                                    personalizedList.push(tempObj);
-                                    if (personalizedList.length > 0) {
-                                      // personalizedList.map((unObj) => {
-                                      //   // return unObj != tempObj
-                                      //   let unTube = unObj?.youtubeURL;
-                                      //   let tempTube = tempObj?.youtubeURL;
-                                      //   let unWeb = unObj?.webAddressUrl;
-                                      //   let tempWeb = tempObj?.webAddressUrl;
-                                      //   if (unTube && unTube !== null) {
-                                      //     if (tempTube && tempTube !== null) {
-                                      //       if (tempTube !== unTube) {
-                                      //         return unObj
-                                      //       }
-                                      //       else {
-                                      //         if (tempTube === unTube) {
-                                      //           return null
-                                      //         }
-                                      //       }
-                                      //     }
-                                      //   }
-                                      //   else {
-                                      //     if (unWeb && unWeb !== null) {
-                                      //       if (tempWeb && tempWeb !== null) {
-                                      //         if (tempWeb !== unWeb) {
-                                      //           return unObj
-                                      //         }
-                                      //         else {
-                                      //           if (tempWeb === unWeb) {
-                                      //             return null
-                                      //           }
-                                      //         }
-                                      //       }
-                                      //     }
-                                      //   }
-                                      // }).filter((psSweep) => {
-                                      //   return psSweep != null
-                                      // });
-                                    }
-                                    // window.onload = redirect;
+                                  let dLoc =  null;
+                                  if (
+                                        String(tData) && String(tData).indexOf("http") === -1 && 
+                                        String(tData).length === 12
+                                      ) {
+                                    // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                    dLoc =  "https://www.youtube.com/watch?v=";
+                                    tempObj.youtubeUrl = dLoc + tData;
                                     redirect(tempObj, reUrlList);
                                   }
-                                  // personalizedList.push(tempList);
+                                  else {
+                                    // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                    try {
+                                      tempObj.webAddressUrl = new URL(tData);
+                                      redirect(tempObj, reUrlList);
+                                    }
+                                    catch (err) {
+                                      console.error(err);
+                                    }
+                                  }
+                                  // tempList.push(tempObj);
+                                  personalizedList.push(tempObj);
+                                  // if (personalizedList.length > 0) {
+                                    // personalizedList.map((unObj) => {
+                                    //   // return unObj != tempObj
+                                    //   let unTube = unObj?.youtubeURL;
+                                    //   let tempTube = tempObj?.youtubeURL;
+                                    //   let unWeb = unObj?.webAddressUrl;
+                                    //   let tempWeb = tempObj?.webAddressUrl;
+                                    //   if (unTube && unTube !== null) {
+                                    //     if (tempTube && tempTube !== null) {
+                                    //       if (tempTube !== unTube) {
+                                    //         return unObj
+                                    //       }
+                                    //       else {
+                                    //         if (tempTube === unTube) {
+                                    //           return null
+                                    //         }
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //   else {
+                                    //     if (unWeb && unWeb !== null) {
+                                    //       if (tempWeb && tempWeb !== null) {
+                                    //         if (tempWeb !== unWeb) {
+                                    //           return unObj
+                                    //         }
+                                    //         else {
+                                    //           if (tempWeb === unWeb) {
+                                    //             return null
+                                    //           }
+                                    //         }
+                                    //       }
+                                    //     }
+                                    //   }
+                                    // }).filter((psSweep) => {
+                                    //   return psSweep != null
+                                    // });
+                                  // }
+                                  // window.onload = redirect;
                                 }
+                                // personalizedList.push(tempList);
                               }
-                            } 
-                            else {
-                              console.warn("Expected an array in done from vidPlaylist, received:", done);
-                              // Fallback to empty array if the structure is not as expected
-                              personalizedList = [];
-                              input.disabled = false
-                              fetchSuggestions(String(event.target.value));
-                              // let openYTPlayer = document.getElementById("mainUjpg");
-                              // openYTPlayer.click();
                             }
-                            console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
-                            console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
-                          }
-                          catch (error) {
-                            console.log("Error in script call: " + error.stack);
+                          } 
+                          else {
+                            console.warn("Expected an array in done from vidPlaylist, received:", done);
+                            // Fallback to empty array if the structure is not as expected
+                            personalizedList = [];
                             input.disabled = false
+                            fetchSuggestions(String(event.target.value));
                             // let openYTPlayer = document.getElementById("mainUjpg");
                             // openYTPlayer.click();
                           }
-                        })
-                        .catch((err) => {
-                          console.error("Error on server side: ", err.stack);
+                          console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
+                          console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
+                        }
+                        catch (error) {
+                          console.log("Error in script call: " + error.stack);
                           input.disabled = false
                           // let openYTPlayer = document.getElementById("mainUjpg");
                           // openYTPlayer.click();
-                        });
-                        // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
-                        // if (personalizedList.length === 0) {
-                          // serverside("getVI", [])
-                          // .then((response) => {
-                          //   // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                          //   // Access the actual array from the response
-                          //   if (response && typeof response === "object") {
-                          //     for (var key in response) {
-                          //       // alert(JSON.stringify(response[key]));
-                          //       let i = 0;
-                          //       let l = response[key].length;
-                          //       // alert(l);
-                          //       for (i,l;i<l;i++) {
-                          //         let tempObj = {};
-                          //         tempObj.description = response[key][i]?.description;
-                          //         if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
-                          //           let tData = response[key][i].videoId;
-                          //           let dLoc =  null;
-                          //           dLoc =  "https://www.youtube.com/watch?v=";
-                          //           tempObj.youtubeUrl = dLoc + tData;
-                          //         }
-                          //         else {
-                          //           tempObj.webAddressUrl = response[key][i].videoId;
-                          //         }
-                          //         personalizedList.push(tempObj);
-                          //       }
-                          //     }
-                          //   } else {
-                          //     console.warn("Expected an array in response from getVI, received:", response);
-                          //     // Fallback to empty array if the structure is not as expected
-                          //     personalizedList = [];
-                          //   }
-                          //   remoteSuggestionsCache[againCap] = matchesToReturn;
-                          //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                          //     if (!againCap === event.target.value) {
-                          //       localStorage.setItem("gsSearch", event.target.value);
-                          //       againCap = localStorage.getItem("gsSearch");
-                          //     }
-                          //     if (String(val.description).indexOf(againCap) > -1) {
-                          //       // console.log(againCap + ": result description: " + val?.description);
-                          //       // console.log("result index: " + index);
-                          //       let tubeUrl = val.youtubeUrl
-                          //       if (tubeUrl && tubeUrl !== null) {
-                          //         console.log("local storage all results: " + againCap);
-                          //         personalizedList.push(val);
-                          //         return tubeUrl
-                          //       }
-                          //     }
-                          //   }).filter((mapResult) => {
-                          //     return mapResult != null
-                          //   });
-                          //   remoteSuggestionsCache[againCap] = matchesToReturn;
-                          //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                          //   console.log("all matches length greater than intents: ");
-                          //   console.log(allMatchesAvailable.length < matchesToReturn.length);
-                          //   while (allMatchesAvailable.length < matchesToReturn.length) {
-                          //     allMatchesAvailable = remoteSuggestionsCache[againCap].sort((a,b) => {
-                          //       let i = Math.random()
-                          //       let tSorted = a;
-                          //       // console.log(againCap + ": tSorted = " + tSorted);
-                          //       let zSorted = b;
-                          //       // console.log(againCap + ": zSorted = " + zSorted);
-                          //       if (i < .3) {
-                          //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                          //         if (matchA > -1) {
-                          //           // console.log(againCap + ": matchA = " + matchA);
-                          //           return zSorted;
-                          //         }
-                          //       }
-                          //       else {
-                          //         if (i > .3 && i < .5 ) {
-                          //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                          //           if (matchB === -1) {
-                          //             // console.log(againCap + ": matchB = " + matchB);
-                          //             return tSorted;
-                          //           }
-                          //         }
-                          //         else {
-                          //           if (i > .5 && i < .8) {
-                          //             // console.log(againCap + ": matchC = " + zSorted);
-                          //             return zSorted;
-                          //           }
-                          //           else {
-                          //             if (i > .8) {
-                          //               // console.log(againCap + ": matchD = " + tSorted);
-                          //               return tSorted;
-                          //             }
-                          //           }
-                          //         }
-                          //       }
-                          //     });
-                          //     if (matchesToReturn === null || matchesToReturn.length === 0) {
-                          //       break
-                          //     }
-                          //   }
-                          //   input.value = againCap;
-                          // });
-                        // }
-                        // return;
+                        }
+                      })
+                      .catch((err) => {
+                        console.error("Error on server side: ", err.stack);
+                        input.disabled = false
+                        // let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                      });
+                      // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
+                      // if (personalizedList.length === 0) {
+                        // serverside("getVI", [])
+                        // .then((response) => {
+                        //   // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                        //   // Access the actual array from the response
+                        //   if (response && typeof response === "object") {
+                        //     for (var key in response) {
+                        //       // alert(JSON.stringify(response[key]));
+                        //       let i = 0;
+                        //       let l = response[key].length;
+                        //       // alert(l);
+                        //       for (i,l;i<l;i++) {
+                        //         let tempObj = {};
+                        //         tempObj.description = response[key][i]?.description;
+                        //         if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
+                        //           let tData = response[key][i].videoId;
+                        //           let dLoc =  null;
+                        //           dLoc =  "https://www.youtube.com/watch?v=";
+                        //           tempObj.youtubeUrl = dLoc + tData;
+                        //         }
+                        //         else {
+                        //           tempObj.webAddressUrl = response[key][i].videoId;
+                        //         }
+                        //         personalizedList.push(tempObj);
+                        //       }
+                        //     }
+                        //   } else {
+                        //     console.warn("Expected an array in response from getVI, received:", response);
+                        //     // Fallback to empty array if the structure is not as expected
+                        //     personalizedList = [];
+                        //   }
+                        //   remoteSuggestionsCache[againCap] = matchesToReturn;
+                        //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                        //     if (!againCap === event.target.value) {
+                        //       localStorage.setItem("gsSearch", event.target.value);
+                        //       againCap = localStorage.getItem("gsSearch");
+                        //     }
+                        //     if (String(val.description).indexOf(againCap) > -1) {
+                        //       // console.log(againCap + ": result description: " + val?.description);
+                        //       // console.log("result index: " + index);
+                        //       let tubeUrl = val.youtubeUrl
+                        //       if (tubeUrl && tubeUrl !== null) {
+                        //         console.log("local storage all results: " + againCap);
+                        //         personalizedList.push(val);
+                        //         return tubeUrl
+                        //       }
+                        //     }
+                        //   }).filter((mapResult) => {
+                        //     return mapResult != null
+                        //   });
+                        //   remoteSuggestionsCache[againCap] = matchesToReturn;
+                        //   // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                        //   console.log("all matches length greater than intents: ");
+                        //   console.log(allMatchesAvailable.length < matchesToReturn.length);
+                        //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                        //     allMatchesAvailable = remoteSuggestionsCache[againCap].sort((a,b) => {
+                        //       let i = Math.random()
+                        //       let tSorted = a;
+                        //       // console.log(againCap + ": tSorted = " + tSorted);
+                        //       let zSorted = b;
+                        //       // console.log(againCap + ": zSorted = " + zSorted);
+                        //       if (i < .3) {
+                        //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                        //         if (matchA > -1) {
+                        //           // console.log(againCap + ": matchA = " + matchA);
+                        //           return zSorted;
+                        //         }
+                        //       }
+                        //       else {
+                        //         if (i > .3 && i < .5 ) {
+                        //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                        //           if (matchB === -1) {
+                        //             // console.log(againCap + ": matchB = " + matchB);
+                        //             return tSorted;
+                        //           }
+                        //         }
+                        //         else {
+                        //           if (i > .5 && i < .8) {
+                        //             // console.log(againCap + ": matchC = " + zSorted);
+                        //             return zSorted;
+                        //           }
+                        //           else {
+                        //             if (i > .8) {
+                        //               // console.log(againCap + ": matchD = " + tSorted);
+                        //               return tSorted;
+                        //             }
+                        //           }
+                        //         }
+                        //       }
+                        //     });
+                        //     if (matchesToReturn === null || matchesToReturn.length === 0) {
+                        //       break
+                        //     }
+                        //   }
+                        //   input.value = againCap;
+                        // });
                       // }
+                      // return;
+                    // }
+                // })
+                // }
+                // userClicked++
+                // console.log(" User clicked;  Enter: ", userClicked);
+                // return
+                // break
+                // if (userClicked) {
+                  // homePage
+                  // .then((load) => {
+                  //   localStorage.setItem("ssSearch", event.target.value);
+                  //   // console.log("Data; Url for reLoad ", load.data);
+                  //   let linkFollow = document.createElement("a");
+                  //   linkFollow.href = new URL(load.data);
+                  //   // console.log("the match: " + linkFollow.href);
+                  //   linkFollow.id = "linkFOLLOW";
+                  //   linkFollow.target = "_self";
+                  //   linkFollow.rel = "noopener noreferrer";
+                  //   document.body.appendChild(linkFollow);
+                  //   document.getElementById("linkFOLLOW").click();
+                  //   document.getElementById("linkFOLLOW").remove();
+                  //   // window.location.href = load.data
+                  //   // input.value = event.target.value;
+                  //   input.disabled = false;
+                  //   input.focus();
                   // })
-                  // }
-                  // userClicked++
-                  // console.log(" User clicked;  Enter: ", userClicked);
-                  // return
-                  // break
-                  // if (userClicked) {
-                    // homePage
-                    // .then((load) => {
-                    //   localStorage.setItem("ssSearch", event.target.value);
-                    //   // console.log("Data; Url for reLoad ", load.data);
-                    //   let linkFollow = document.createElement("a");
-                    //   linkFollow.href = new URL(load.data);
-                    //   // console.log("the match: " + linkFollow.href);
-                    //   linkFollow.id = "linkFOLLOW";
-                    //   linkFollow.target = "_self";
-                    //   linkFollow.rel = "noopener noreferrer";
-                    //   document.body.appendChild(linkFollow);
-                    //   document.getElementById("linkFOLLOW").click();
-                    //   document.getElementById("linkFOLLOW").remove();
-                    //   // window.location.href = load.data
-                    //   // input.value = event.target.value;
-                    //   input.disabled = false;
-                    //   input.focus();
-                    // })
-                    // .catch((fail) => {
-                    //   console.log("Failed to load ", fail);
-                    //   input.disabled = false;
-                    //   input.focus();
-                    // });
-                    // break;
-                  // }
-                  // }
+                  // .catch((fail) => {
+                  //   console.log("Failed to load ", fail);
+                  //   input.disabled = false;
+                  //   input.focus();
+                  // });
+                  // break;
                 // }
-                // if (qTemp) {
-                //   return
                 // }
-                if (personalizedList?.tempObj && Object.keys(personalizedList?.tempObj).length > 0) {
-                  remoteSuggestionsCache[againCap] = personalizedList;
-                  remoteIntent = remoteSuggestionsCache[againCap][Math.floor(Math.random() * done.data.length)].description;
-                  localStorage.setItem("rsSearch", remoteIntent);
-                  againCap = localStorage.getItem("rsSearch");
-                  matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
-                    if (String(val.description).indexOf(againCap) > -1) {
-                      // console.log(againCap + ": result description: " + val.description);
-                      // console.log("result index: " + index);
-                      let tubeUrl = val.youtubeUrl;
-                      let webUrl = val.webAddressUrl;
-                      while (webUrl && webUrl !== null) {
-                        console.log("local storage web results: " + againCap);
-                        // window.open(new URL(webUrl), "_self");
-                        // let linkFollow = document.createElement("a");
-                        // linkFollow.href = new URL(webUrl);
-                        // // console.log("the match: " + linkFollow.href);
-                        // linkFollow.id = "linkFOLLOW";
-                        // linkFollow.target = "_self";
-                        // linkFollow.rel = "noopener noreferrer";
-                        // document.body.appendChild(linkFollow);
-                        // document.getElementById("linkFOLLOW").click();
-                        // document.getElementById("linkFOLLOW").remove();
-                        homePage
-                        .then((load) => {
-                          localStorage.setItem("ssSearch", event.target.value);
-                          // console.log("Data; Url for reLoad ", load.data);
-                          let linkFollow = document.createElement("a");
-                          linkFollow.href = load.data + "?q=" + webUrl;
-                          // console.log("the match: " + linkFollow.href);
-                          linkFollow.id = "linkFOLLOW";
-                          linkFollow.target = "_blank";
-                          linkFollow.rel = "noopener noreferrer";
-                          document.body.appendChild(linkFollow);
-                          document.getElementById("linkFOLLOW").click();
-                          document.getElementById("linkFOLLOW").remove();
-                          // window.location.href = load.data
-                          // input.value = event.target.value;
-                          // input.disabled = false;
-                          // input.focus();
-                        })
-                        .catch((fail) => {
-                          console.log("Failed to load ", fail);
-                          input.disabled = false;
-                          input.focus();
-                          let openYTPlayer = document.getElementById("mainUjpg");
-                          openYTPlayer.click();
-                        });
-                      }
-                  //     else {
-                  //       if (tubeUrl && tubeUrl !== null) {
-                  //         console.log("local storage all results: " + againCap);
-                  //         // personalizedList.push(val);
-                  //         // window.open(tubeUrl, "_self")
-                          return tubeUrl
-                  //       }
-                  //     }
+              // }
+              // if (qTemp) {
+              //   return
+              // }
+              if (personalizedList?.tempObj && Object.keys(personalizedList?.tempObj).length > 0) {
+                remoteSuggestionsCache[againCap] = personalizedList;
+                remoteIntent = remoteSuggestionsCache[againCap][Math.floor(Math.random() * done.data.length)].description;
+                localStorage.setItem("rsSearch", remoteIntent);
+                againCap = localStorage.getItem("rsSearch");
+                matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
+                  if (String(val.description).indexOf(againCap) > -1) {
+                    // console.log(againCap + ": result description: " + val.description);
+                    // console.log("result index: " + index);
+                    let tubeUrl = val.youtubeUrl;
+                    let webUrl = val.webAddressUrl;
+                    while (webUrl && webUrl !== null) {
+                      console.log("document loaded addresses local storage web results: " + againCap);
+                      // window.open(new URL(webUrl), "_self");
+                      // let linkFollow = document.createElement("a");
+                      // linkFollow.href = new URL(webUrl);
+                      // // console.log("the match: " + linkFollow.href);
+                      // linkFollow.id = "linkFOLLOW";
+                      // linkFollow.target = "_self";
+                      // linkFollow.rel = "noopener noreferrer";
+                      // document.body.appendChild(linkFollow);
+                      // document.getElementById("linkFOLLOW").click();
+                      // document.getElementById("linkFOLLOW").remove();
+                      homePage
+                      .then((load) => {
+                        localStorage.setItem("ssSearch", event.target.value);
+                        // console.log("Data; Url for reLoad ", load.data);
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = load.data + "?q=" + webUrl;
+                        // console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // window.location.href = load.data
+                        // input.value = event.target.value;
+                        // input.disabled = false;
+                        // input.focus();
+                      })
+                      .catch((fail) => {
+                        console.log("Failed to load ", fail);
+                        input.disabled = false;
+                        input.focus();
+                        let openYTPlayer = document.getElementById("mainUjpg");
+                        openYTPlayer.click();
+                      });
                     }
-                  }).filter((mapResult) => {
-                    return mapResult != null
-                  });
-                  // // if (matchesToReturn.length > 0) {
-                  // //   remoteSuggestionsCache[againCap] = personalizedList;
-                  // // }
-                  // // else {
-                  // //   remoteSuggestionsCache[againCap] = [];
-                  // // }
-                  // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                  // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-                  // // console.log(allMatchesAvailable.length < matchesToReturn.length);
-                  // if (allMatchesAvailable.length < matchesToReturn.length) {
-                  //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-                  //   while (allMatchesAvailable.length < matchesToReturn.length) {
-                  //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                  //       let i = Math.random()
-                  //       let tSorted = a;
-                  //       // console.log(againCap + ": tSorted = " + tSorted);
-                  //       let zSorted = b;
-                  //       // console.log(againCap + ": zSorted = " + zSorted);
-                  //       if (i < .3) {
-                  //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                  //         if (matchA > -1) {
-                  //           // console.log(againCap + ": matchA = " + matchA);
-                  //           // window.open(zSorted, "_blank");
-                  //           return zSorted;
-                  //         }
-                  //       }
-                  //       else {
-                  //         if (i > .3 && i < .5 ) {
-                  //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                  //           if (matchB === -1) {
-                  //             // console.log(againCap + ": matchB = " + matchB);
-                  //             // window.open(tSorted, "_blank");
-                  //             return tSorted;
-                  //           }
-                  //         }
-                  //         else {
-                  //           if (i > .5 && i < .8) {
-                  //             // console.log(againCap + ": matchC = " + zSorted);
-                  //             // window.open(zSorted, "_blank");
-                  //             return zSorted;
-                  //           }
-                  //           else {
-                  //             if (i > .8) {
-                  //               // console.log(againCap + ": matchD = " + tSorted);
-                  //               // window.open(tSorted, "_blank");
-                  //               return tSorted;
-                  //             }
-                  //           }
-                  //         }
-                  //       }
-                  //     });
-                  //     if (matchesToReturn === null || matchesToReturn.length === 0) {
-                  //       break
-                  //     }
-                  //   }
-                  // }
-                  // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
-                  // // fetchSuggestions(input.value);
-                  // if (matchesToReturn.length > 0) {
-                  //   $('a').click(function(event){
-                  //     if ($(this).attr('href') === "javascript:void(0)") {
-                  //       let confirmation = window.confirm(
-                  //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                  //       );
-                  //       if (confirmation) {
-                  //         event.preventDefault();
-                  //         var linkFollow = document.createElement("a");
-                  //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                  //         // if (matchesToReturn.length > 0) {
-                  //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
-                  //         // }
-                  //         // else {
-                  //         //   if (matchesToReturn.length === 0) {
-                  //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                  //         //   }
-                  //         // }
-                  //         console.log("the match: " + linkFollow.href);
-                  //         linkFollow.id = "linkFOLLOW";
-                  //         linkFollow.target = "_top";
-                  //         linkFollow.rel = "noopener noreferrer";
-                  //         document.body.appendChild(linkFollow);
-                  //         document.getElementById("linkFOLLOW").click();
-                  //         document.getElementById("linkFOLLOW").remove();
-                  //         // If the user preses the "Enter" key on the keyboard. 
-                  //         // if (event.key === 'Enter')  {
-                  //         // serverside("getVI", [])
-                  //         // .then((response) => {
-                  //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                  //           // Access the actual array from the response
-                  //           // if (response && typeof response === "object") {
-                  //           //   fullList = [];
-                  //           //   for (var key in response) {
-                  //               // alert(JSON.stringify(response[key]));
-                  //               // let i = 0;
-                  //               // let l = response[key].length;
-                  //               // alert(l);
-                  //           //     for (i,l;i<l;i++) {
-                  //           //       let tempObj = {};
-                  //           //       tempObj.description = response[key][i].description;
-                  //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
-                  //           //         let tData = response[key][i].videoId;
-                  //           //         let dLoc =  null;
-                  //           //         dLoc =  "https://www.youtube.com/watch?v=";
-                  //           //         tempObj.youtubeUrl = dLoc + tData;
-                  //           //       }
-                  //           //       else {
-                  //           //         tempObj.youtubeUrl = response[key][i].videoId;
-                  //           //       }
-                  //           //       fullList.push(tempObj);
-                  //           //     }
-                  //           //   }
-                  //           // } 
-                  //           // else {
-                  //           //   console.warn("Expected an array in response from getVI, received:", response);
-                  //             // Fallback to empty array if the structure is not as expected
-                  //         //     fullList = [];
-                  //         //   }
-                  //         // })
-                  //         // .catch(error => {
-                  //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
-                  //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                  //         // });
-                  //       }
-                  //     }
-                  //   });
-                  // }
-                  // else {
-                  //   if (matchesToReturn.length === 0) {
-                  //     return
-                  //   }
-                  // }
-                }
-                else {
-                      if (enterClicked <= 1) {
-                        homePage
-                        .then((load) => {
-                          let openYTPlayer = document.getElementById("mainUjpg");
-                          openYTPlayer.click();
-                          enterClicked++;
-                          localStorage.setItem("ssSearch", String(event.target.value));
-                          // console.log("Data; Url for reLoad ", load.data);
-                          let linkFollow = document.createElement("a");
-                          linkFollow.href = load.data;
-                          // console.log("the match: " + linkFollow.href);
-                          linkFollow.id = "linkFOLLOW";
-                          linkFollow.target = "_self";
-                          linkFollow.rel = "noopener noreferrer";
-                          document.body.appendChild(linkFollow);
-                          document.getElementById("linkFOLLOW").click();
-                          document.getElementById("linkFOLLOW").remove();
-                          // window.location.href = load.data
-                          // input.value = event.target.value;
-                          // input.disabled = false;
-                          // input.focus();
-                        })
-                        .catch((fail) => {
-                          console.log("Failed to load ", fail);
-                          input.disabled = false;
-                          input.focus();
-                            let openYTPlayer = document.getElementById("mainUjpg");
-                            openYTPlayer.click();
-                          enterClicked++;
-                        });
-                          }
-                  // fetchSuggestions(String(event.target.value));
-                //   matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                //     // if (event.target.value !== againCap) {
-                //     //   localStorage.setItem("gsSearch", event.target.value);
-                //     //   againCap = localStorage.getItem("gsSearch");
-                //     // }
-                //     if (String(val.description).indexOf(event.target.value) > -1) {
-                //       console.log(event.target.value + ": result description: " + val?.description);
-                //       // console.log("result index: " + index);
-                //       let tubeUrl = val.youtubeUrl
+                //     else {
                 //       if (tubeUrl && tubeUrl !== null) {
-                //         console.log("local storage all results: " + event.target.value);
-                //         personalizedList.push(val);
-                //         return tubeUrl
+                //         console.log("local storage all results: " + againCap);
+                //         // personalizedList.push(val);
+                //         // window.open(tubeUrl, "_self")
+                        return tubeUrl
                 //       }
                 //     }
-                //   }).filter((mapResult) => {
-                //     return mapResult != null
-                //   });
-                //   if (matchesToReturn.length > 0) {
-                //     // remoteSuggestionsCache[againCap] = personalizedList;
-                //     allMatchesAvailable = [];
-                //   }
-                //   // else {
-                //   //   remoteSuggestionsCache[againCap] = [];
-                //   // }
-                //   console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                //   console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-                //   // console.log(allMatchesAvailable.length < matchesToReturn.length);
-                //   if (allMatchesAvailable.length < matchesToReturn.length) {
-                //     console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-                //     while (allMatchesAvailable.length < matchesToReturn.length) {
-                //       allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                //         let i = Math.random()
-                //         let tSorted = a;
-                //         // console.log(againCap + ": tSorted = " + tSorted);
-                //         let zSorted = b;
-                //         // console.log(againCap + ": zSorted = " + zSorted);
-                //         if (i < .3) {
-                //           let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                //           if (matchA > -1) {
-                //             // console.log(againCap + ": matchA = " + matchA);
-                //             return zSorted;
+                  }
+                }).filter((mapResult) => {
+                  return mapResult != null
+                });
+                // // if (matchesToReturn.length > 0) {
+                // //   remoteSuggestionsCache[againCap] = personalizedList;
+                // // }
+                // // else {
+                // //   remoteSuggestionsCache[againCap] = [];
+                // // }
+                // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                // // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                // if (allMatchesAvailable.length < matchesToReturn.length) {
+                //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                //       let i = Math.random()
+                //       let tSorted = a;
+                //       // console.log(againCap + ": tSorted = " + tSorted);
+                //       let zSorted = b;
+                //       // console.log(againCap + ": zSorted = " + zSorted);
+                //       if (i < .3) {
+                //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                //         if (matchA > -1) {
+                //           // console.log(againCap + ": matchA = " + matchA);
+                //           // window.open(zSorted, "_blank");
+                //           return zSorted;
+                //         }
+                //       }
+                //       else {
+                //         if (i > .3 && i < .5 ) {
+                //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                //           if (matchB === -1) {
+                //             // console.log(againCap + ": matchB = " + matchB);
+                //             // window.open(tSorted, "_blank");
+                //             return tSorted;
                 //           }
                 //         }
                 //         else {
-                //           if (i > .3 && i < .5 ) {
-                //             let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                //             if (matchB === -1) {
-                //               // console.log(againCap + ": matchB = " + matchB);
+                //           if (i > .5 && i < .8) {
+                //             // console.log(againCap + ": matchC = " + zSorted);
+                //             // window.open(zSorted, "_blank");
+                //             return zSorted;
+                //           }
+                //           else {
+                //             if (i > .8) {
+                //               // console.log(againCap + ": matchD = " + tSorted);
+                //               // window.open(tSorted, "_blank");
                 //               return tSorted;
                 //             }
                 //           }
-                //           else {
-                //             if (i > .5 && i < .8) {
-                //               // console.log(againCap + ": matchC = " + zSorted);
-                //               return zSorted;
-                //             }
-                //             else {
-                //               if (i > .8) {
-                //                 // console.log(againCap + ": matchD = " + tSorted);
-                //                 return tSorted;
-                //               }
-                //             }
-                //           }
                 //         }
-                //       });
-                //       // if (matchesToReturn === null || matchesToReturn.length === 0) {
-                //       //   break
-                //       // }
+                //       }
+                //     });
+                //     if (matchesToReturn === null || matchesToReturn.length === 0) {
+                //       break
                 //     }
-                //     //   input.value = againCap;
                 //   }
-                }
-                // if (matchesToReturn !== null || matchesToReturn.length !== 0) {
+                // }
+                // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                // // fetchSuggestions(input.value);
+                // if (matchesToReturn.length > 0) {
                 //   $('a').click(function(event){
                 //     if ($(this).attr('href') === "javascript:void(0)") {
                 //       let confirmation = window.confirm(
@@ -1591,27 +1423,206 @@
                 //         event.preventDefault();
                 //         var linkFollow = document.createElement("a");
                 //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                //         // linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+                //         // if (matchesToReturn.length > 0) {
+                //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+                //         // }
+                //         // else {
+                //         //   if (matchesToReturn.length === 0) {
+                //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                //         //   }
+                //         // }
+                //         console.log("the match: " + linkFollow.href);
                 //         linkFollow.id = "linkFOLLOW";
-                //         linkFollow.target = "_blank";
+                //         linkFollow.target = "_top";
                 //         linkFollow.rel = "noopener noreferrer";
                 //         document.body.appendChild(linkFollow);
                 //         document.getElementById("linkFOLLOW").click();
                 //         document.getElementById("linkFOLLOW").remove();
+                //         // If the user preses the "Enter" key on the keyboard. 
+                //         // if (event.key === 'Enter')  {
+                //         // serverside("getVI", [])
+                //         // .then((response) => {
+                //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                //           // Access the actual array from the response
+                //           // if (response && typeof response === "object") {
+                //           //   fullList = [];
+                //           //   for (var key in response) {
+                //               // alert(JSON.stringify(response[key]));
+                //               // let i = 0;
+                //               // let l = response[key].length;
+                //               // alert(l);
+                //           //     for (i,l;i<l;i++) {
+                //           //       let tempObj = {};
+                //           //       tempObj.description = response[key][i].description;
+                //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
+                //           //         let tData = response[key][i].videoId;
+                //           //         let dLoc =  null;
+                //           //         dLoc =  "https://www.youtube.com/watch?v=";
+                //           //         tempObj.youtubeUrl = dLoc + tData;
+                //           //       }
+                //           //       else {
+                //           //         tempObj.youtubeUrl = response[key][i].videoId;
+                //           //       }
+                //           //       fullList.push(tempObj);
+                //           //     }
+                //           //   }
+                //           // } 
+                //           // else {
+                //           //   console.warn("Expected an array in response from getVI, received:", response);
+                //             // Fallback to empty array if the structure is not as expected
+                //         //     fullList = [];
+                //         //   }
+                //         // })
+                //         // .catch(error => {
+                //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
+                //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                //         // });
                 //       }
                 //     }
                 //   });
                 // }
+                // else {
+                //   if (matchesToReturn.length === 0) {
+                //     return
+                //   }
+                // }
               }
+              else {
+                if (enterClicked <= 1) {
+                  homePage
+                  .then((load) => {
+                    let openYTPlayer = document.getElementById("mainUjpg");
+                    openYTPlayer.click();
+                    enterClicked++;
+                    localStorage.setItem("ssSearch", String(event.target.value));
+                    // console.log("Data; Url for reLoad ", load.data);
+                    let linkFollow = document.createElement("a");
+                    linkFollow.href = load.data;
+                    // console.log("the match: " + linkFollow.href);
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_self";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                    // window.location.href = load.data
+                    // input.value = event.target.value;
+                    // input.disabled = false;
+                    // input.focus();
+                  })
+                  .catch((fail) => {
+                    console.log("Failed to load ", fail);
+                    input.disabled = false;
+                    input.focus();
+                      let openYTPlayer = document.getElementById("mainUjpg");
+                      openYTPlayer.click();
+                    enterClicked++;
+                  });
+                }
+                // fetchSuggestions(String(event.target.value));
+                // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                //   // if (event.target.value !== againCap) {
+                //   //   localStorage.setItem("gsSearch", event.target.value);
+                //   //   againCap = localStorage.getItem("gsSearch");
+                //   // }
+                //   if (String(val.description).indexOf(event.target.value) > -1) {
+                //     console.log(event.target.value + ": result description: " + val?.description);
+                //     // console.log("result index: " + index);
+                //     let tubeUrl = val.youtubeUrl
+                //     if (tubeUrl && tubeUrl !== null) {
+                //       console.log("local storage all results: " + event.target.value);
+                //       personalizedList.push(val);
+                //       return tubeUrl
+                //     }
+                //   }
+                // }).filter((mapResult) => {
+                //   return mapResult != null
+                // });
+                // if (matchesToReturn.length > 0) {
+                //   // remoteSuggestionsCache[againCap] = personalizedList;
+                //   allMatchesAvailable = [];
+                // }
+                // // else {
+                // //   remoteSuggestionsCache[againCap] = [];
+                // // }
+                // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                // // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                // if (allMatchesAvailable.length < matchesToReturn.length) {
+                //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                //       let i = Math.random()
+                //       let tSorted = a;
+                //       // console.log(againCap + ": tSorted = " + tSorted);
+                //       let zSorted = b;
+                //       // console.log(againCap + ": zSorted = " + zSorted);
+                //       if (i < .3) {
+                //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                //         if (matchA > -1) {
+                //           // console.log(againCap + ": matchA = " + matchA);
+                //           return zSorted;
+                //         }
+                //       }
+                //       else {
+                //         if (i > .3 && i < .5 ) {
+                //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                //           if (matchB === -1) {
+                //             // console.log(againCap + ": matchB = " + matchB);
+                //             return tSorted;
+                //           }
+                //         }
+                //         else {
+                //           if (i > .5 && i < .8) {
+                //             // console.log(againCap + ": matchC = " + zSorted);
+                //             return zSorted;
+                //           }
+                //           else {
+                //             if (i > .8) {
+                //               // console.log(againCap + ": matchD = " + tSorted);
+                //               return tSorted;
+                //             }
+                //           }
+                //         }
+                //       }
+                //     });
+                //     // if (matchesToReturn === null || matchesToReturn.length === 0) {
+                //     //   break
+                //     // }
+                //   }
+                //   //   input.value = againCap;
+                // }
+              }
+              // if (matchesToReturn !== null || matchesToReturn.length !== 0) {
+              //   $('a').click(function(event){
+              //     if ($(this).attr('href') === "javascript:void(0)") {
+              //       let confirmation = window.confirm(
+              //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+              //       );
+              //       if (confirmation) {
+              //         event.preventDefault();
+              //         var linkFollow = document.createElement("a");
+              //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+              //         // linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * done.data["playlistArr"].length)].youtubeUrl;
+              //         linkFollow.id = "linkFOLLOW";
+              //         linkFollow.target = "_blank";
+              //         linkFollow.rel = "noopener noreferrer";
+              //         document.body.appendChild(linkFollow);
+              //         document.getElementById("linkFOLLOW").click();
+              //         document.getElementById("linkFOLLOW").remove();
+              //       }
+              //     }
+              //   });
+              // }
+            }
             if (event.key === 'Escape') {
-                suggestionsDiv.innerHTML = '';
-                input.blur();
+              suggestionsDiv.innerHTML = '';
+              input.blur();
             }
           });
-
         } 
         else {
-            console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
+          console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
         }
 
       });

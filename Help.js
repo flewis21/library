@@ -4089,7 +4089,9 @@ function vidPlaylist(tunPlay) {
     }
     let youtubeUrl = null;
     let itHasHttp = String(randomVideo)?.indexOf("http");
-    if (itHasHttp === -1) {
+    let itHasSpaces = String(randomVideo)?.indexOf(" ");
+    let itsLength = String(randomVideo)?.length;
+    if (itHasHttp === -1 && itHasSpaces === -1 && itsLength === 12) {
       youtubeUrl = "http://www.youtube.com/watch?v=" + randomVideo;
     }
     else {

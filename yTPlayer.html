@@ -113,16 +113,24 @@
           playVideo();
         }
         else {
-          loadPlaylist();
-          setShuffle();
-          nextVideo();
-          playVideo();
+          // loadPlaylist();
+          // setShuffle();
+          // nextVideo();
+          // playVideo();
+          if (ifPlayerDisplay.style.display === 'block') {
+            ifPlayerDisplay.style.display = 'none'
+            playVideo();
+          }
         }
       }
       else {
         // stopVideo();
-        console.log(ifPlayerDisplay)
-        ifPlayerDisplay.style.display = 'none';
+        // console.log(ifPlayerDisplay);
+        // ifPlayerDisplay.style.display = 'none';
+        loadPlaylist();
+        setShuffle();
+        nextVideo();
+        playVideo();
       }
     });
 
