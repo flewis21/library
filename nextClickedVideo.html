@@ -49,23 +49,51 @@
           );
           if (confirmation) {
             // event.preventDefault();
-            var linkFollow = document.createElement("a");
+            // fetchSuggestions(myObj.description)
+            homePage
+            .then((load) => {
+              // alert(JSON.stringify(load));
+              localStorage.setItem("ssSearch", (myObj.description));
+              // console.log("Data; Url for reLoad ", load.data);
+              let linkFollow = document.createElement("a");
+              linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl);
+              // console.log("the match: " + linkFollow.href);
+              linkFollow.id = "linkFOLLOW";
+              linkFollow.target = "_blank";
+              linkFollow.rel = "noopener noreferrer";
+              document.body.appendChild(linkFollow);
+              document.getElementById("linkFOLLOW").click();
+              document.getElementById("linkFOLLOW").remove();
+              // window.location.href = load.data
+              // input.value = event.target.value;
+              // input.disabled = false;
+              // input.focus();
+            })
+            .catch((fail) => {
+              console.log("Failed to load ", fail);
+              input.disabled = false;
+              // let openYTPlayer = document.getElementById("mainUjpg");
+              // openYTPlayer.click();
+              input.focus();
+              return
+            });
+            // var linkFollow = document.createElement("a");
             // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
             // if (matchesContent.length > 0) {
             //   // console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
             // }
             // else {
             //   if (matchesContent.length === 0) {
-                linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl) ; // localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                // linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl) ; // localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
             //   }
             // }
-            console.log("the match: " + linkFollow.href);
-            linkFollow.id = "linkFOLLOW";
-            linkFollow.target = "_blank";
-            linkFollow.rel = "noopener noreferrer";
-            document.body.appendChild(linkFollow);
-            document.getElementById("linkFOLLOW").click();
-            document.getElementById("linkFOLLOW").remove();
+            // console.log("the match: " + linkFollow.href);
+            // linkFollow.id = "linkFOLLOW";
+            // linkFollow.target = "_top";
+            // linkFollow.rel = "noopener noreferrer";
+            // document.body.appendChild(linkFollow);
+            // document.getElementById("linkFOLLOW").click();
+            // document.getElementById("linkFOLLOW").remove();
             // If the user preses the "Enter" key on the keyboard. 
             // if (event.key === 'Enter')  {
             //   serverside("getVI", [])
@@ -113,8 +141,8 @@
           console.error("No redirect URL provided.");
           homePage
           .then((load) => {
-            alert(JSON.stringify(load));
-            localStorage.setItem("ssSearch", event.target.value);
+            // alert(JSON.stringify(load));
+            localStorage.setItem("ssSearch", load.data);
             // console.log("Data; Url for reLoad ", load.data);
             let linkFollow = document.createElement("a");
             linkFollow.href = load.data;
@@ -214,6 +242,33 @@
                 if (tubeUrl && tubeUrl !== null) {
                   console.log("event getVI loaded addresses main local storage all results: " + againContent);
                   // personalizedList.push(val);
+                  homePage
+                  .then(() => {
+                    // alert(JSON.stringify(load));
+                    localStorage.setItem("ssSearch", tubeUrl);
+                    // console.log("Data; Url for reLoad ", load.data);
+                    let linkFollow = document.createElement("a");
+                    linkFollow.href = tubeUrl; // load.data;
+                    // console.log("the match: " + linkFollow.href);
+                    linkFollow.id = "linkFOLLOW";
+                    linkFollow.target = "_blank";
+                    linkFollow.rel = "noopener noreferrer";
+                    document.body.appendChild(linkFollow);
+                    document.getElementById("linkFOLLOW").click();
+                    document.getElementById("linkFOLLOW").remove();
+                    // window.location.href = load.data
+                    // input.value = event.target.value;
+                    // input.disabled = false;
+                    // input.focus();
+                  })
+                  .catch((fail) => {
+                    console.log("Failed to load ", fail);
+                    input.disabled = false;
+                    // let openYTPlayer = document.getElementById("mainUjpg");
+                    // openYTPlayer.click();
+                    input.focus();
+                    return
+                  });
                   return tubeUrl
                 }
               }
@@ -240,6 +295,7 @@
                   let zSorted = b;
                   // console.log(againContent + ": zSorted = " + zSorted);
                   if (i < .3) {
+                    console.log(`event getVI loaded addresses main content ${i} < .3: `);
                     let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                     if (matchA > -1) {
                       // console.log(againContent + ": matchA = " + matchA);
@@ -248,6 +304,7 @@
                   }
                   else {
                     if (i > .3 && i < .5 ) {
+                      console.log(`event getVI loaded addresses main content ${i} > .3 && ${i} < .5: `);
                       let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                       if (matchB === -1) {
                         // console.log(againContent + ": matchB = " + matchB);
@@ -256,11 +313,13 @@
                     }
                     else {
                       if (i > .5 && i < .8) {
+                        console.log(`event getVI loaded addresses main content ${i} > .5 && ${i} < .8: `);
                         // console.log(againContent + ": matchC = " + zSorted);
                         return zSorted;
                       }
                       else {
                         if (i > .8) {
+                          console.log(`event getVI loaded addresses main content ${i} > .8: `);
                           // console.log(againContent + ": matchD = " + tSorted);
                           return tSorted;
                         }
@@ -363,6 +422,33 @@
                     if (webUrl && webUrl !== null) {
                       console.log("event getVI loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
+                      homePage
+                      .then(() => {
+                        // alert(JSON.stringify(load));
+                        localStorage.setItem("ssSearch", webUrl);
+                        // console.log("Data; Url for reLoad ", load.data);
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = webUrl; // load.data;
+                        // console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // window.location.href = load.data
+                        // input.value = event.target.value;
+                        // input.disabled = false;
+                        // input.focus();
+                      })
+                      .catch((fail) => {
+                        console.log("Failed to load ", fail);
+                        input.disabled = false;
+                        // let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        input.focus();
+                        return
+                      });
                       return webUrl
                     }
                   }
@@ -662,12 +748,66 @@
                                   );
                                   if (confirmation) {
                                     if (suggestion.youtubeURL) {
-                                      window.open(suggestion.youtubeUrl, "_blank");
+                                      // window.open(suggestion.youtubeUrl, "_blank");
+                                      homePage
+                                      .then(() => {
+                                        // alert(JSON.stringify(load));
+                                        localStorage.setItem("ssSearch", suggestion.youtubeURL);
+                                        // console.log("Data; Url for reLoad ", load.data);
+                                        let linkFollow = document.createElement("a");
+                                        linkFollow.href = suggestion.youtubeURL; // load.data;
+                                        // console.log("the match: " + linkFollow.href);
+                                        linkFollow.id = "linkFOLLOW";
+                                        linkFollow.target = "_top";
+                                        linkFollow.rel = "noopener noreferrer";
+                                        document.body.appendChild(linkFollow);
+                                        document.getElementById("linkFOLLOW").click();
+                                        document.getElementById("linkFOLLOW").remove();
+                                        // window.location.href = load.data
+                                        // input.value = event.target.value;
+                                        // input.disabled = false;
+                                        // input.focus();
+                                      })
+                                      .catch((fail) => {
+                                        console.log("Failed to load ", fail);
+                                        input.disabled = false;
+                                        // let openYTPlayer = document.getElementById("mainUjpg");
+                                        // openYTPlayer.click();
+                                        input.focus();
+                                        return
+                                      });
                                     }
                                     else {
                                       if (suggestion.webAddressUrl) {
-                                        window.open(suggestion.webAddressUrl, "_blank");
+                                        // window.open(suggestion.webAddressUrl, "_blank");
                                         // document.location.href = suggestion.webAddressUrl;
+                                        homePage
+                                        .then(() => {
+                                          // alert(JSON.stringify(load));
+                                          localStorage.setItem("ssSearch", suggestion.webAddressUrl);
+                                          // console.log("Data; Url for reLoad ", load.data);
+                                          let linkFollow = document.createElement("a");
+                                          linkFollow.href = suggestion.webAddressUrl; // load.data;
+                                          // console.log("the match: " + linkFollow.href);
+                                          linkFollow.id = "linkFOLLOW";
+                                          linkFollow.target = "_top";
+                                          linkFollow.rel = "noopener noreferrer";
+                                          document.body.appendChild(linkFollow);
+                                          document.getElementById("linkFOLLOW").click();
+                                          document.getElementById("linkFOLLOW").remove();
+                                          // window.location.href = load.data
+                                          // input.value = event.target.value;
+                                          // input.disabled = false;
+                                          // input.focus();
+                                        })
+                                        .catch((fail) => {
+                                          console.log("Failed to load ", fail);
+                                          input.disabled = false;
+                                          // let openYTPlayer = document.getElementById("mainUjpg");
+                                          // openYTPlayer.click();
+                                          input.focus();
+                                          return
+                                        });
                                       }
                                     }
                                   }
@@ -683,11 +823,65 @@
                                   }
                                   if (confirmation) {
                                     if (suggestion.youtubeURL) {
-                                      window.open(suggestion.youtubeUrl, "_blank");
+                                      // window.open(suggestion.youtubeUrl, "_blank");
+                                      homePage
+                                      .then(() => {
+                                        // alert(JSON.stringify(load));
+                                        localStorage.setItem("ssSearch", suggestion.youtubeURL);
+                                        // console.log("Data; Url for reLoad ", load.data);
+                                        let linkFollow = document.createElement("a");
+                                        linkFollow.href = suggestion.youtubeURL; // load.data;
+                                        // console.log("the match: " + linkFollow.href);
+                                        linkFollow.id = "linkFOLLOW";
+                                        linkFollow.target = "_top";
+                                        linkFollow.rel = "noopener noreferrer";
+                                        document.body.appendChild(linkFollow);
+                                        document.getElementById("linkFOLLOW").click();
+                                        document.getElementById("linkFOLLOW").remove();
+                                        // window.location.href = load.data
+                                        // input.value = event.target.value;
+                                        // input.disabled = false;
+                                        // input.focus();
+                                      })
+                                      .catch((fail) => {
+                                        console.log("Failed to load ", fail);
+                                        input.disabled = false;
+                                        // let openYTPlayer = document.getElementById("mainUjpg");
+                                        // openYTPlayer.click();
+                                        input.focus();
+                                        return
+                                      });
                                     }
                                     else {
                                       if (suggestion.webAddressUrl) {
-                                        window.open(suggestion.webAddressUrl, "_blank");
+                                        // window.open(suggestion.webAddressUrl, "_blank");
+                                        homePage
+                                        .then(() => {
+                                          // alert(JSON.stringify(load));
+                                          localStorage.setItem("ssSearch", suggestion.webAddressUrl);
+                                          // console.log("Data; Url for reLoad ", load.data);
+                                          let linkFollow = document.createElement("a");
+                                          linkFollow.href = suggestion.webAddressUrl; // load.data;
+                                          // console.log("the match: " + linkFollow.href);
+                                          linkFollow.id = "linkFOLLOW";
+                                          linkFollow.target = "_top";
+                                          linkFollow.rel = "noopener noreferrer";
+                                          document.body.appendChild(linkFollow);
+                                          document.getElementById("linkFOLLOW").click();
+                                          document.getElementById("linkFOLLOW").remove();
+                                          // window.location.href = load.data
+                                          // input.value = event.target.value;
+                                          // input.disabled = false;
+                                          // input.focus();
+                                        })
+                                        .catch((fail) => {
+                                          console.log("Failed to load ", fail);
+                                          input.disabled = false;
+                                          // let openYTPlayer = document.getElementById("mainUjpg");
+                                          // openYTPlayer.click();
+                                          input.focus();
+                                          return
+                                        });
                                         // document.location.href = suggestion.webAddressUrl;
                                       }
                                     }
@@ -991,7 +1185,7 @@
           input.addEventListener('keydown', (event) => {
             let enterClicked = 0;
             if (event.key === 'Enter') {
-              console.log("event; input event: ", JSON.stringify(Object.keys(event.target)))
+              console.log("event; input event: ", JSON.stringify(Object.keys(event.target.value)))
               // if (String(event.target.value).length < 1) {
               //   return
               // }
@@ -1031,7 +1225,7 @@
                         try {
                           // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
                           // Access the actual array from the done
-                          console.log("event: vidPlaylist document loaded addresses main resources" + typeof done, JSON.stringify(done));
+                          console.log("event: vidPlaylist document loaded addresses main resources " + typeof done, JSON.stringify(done));
                           if (done && typeof done === "object") {
                             // alert(JSON.stringify(done.data));
                             // alert(Object.keys(done.data).length);
@@ -1055,13 +1249,13 @@
                                 // let tempList = [];
                                 // alert(l);
                                 for (i,l;i<l;i++) {
-                                  if (typeof done.data[key] === "object" && Array.isArray(done.data[key]) && typeof done.data[key] !== "string") {
+                                  if (typeof done.data[key] === "object" && (Array.isArray(done.data[key]) && done.data[key].length > 0) && typeof done.data[key] !== "string") {
                                     console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
                                     tempObj.description = done.data[key][i]?.description;
                                     tData = done.data[key][i]?.videoId;
                                   }
                                   else {
-                                    if (typeof done.data[key] === "string" && typeof done.data[key] !== "object") {
+                                    if ((typeof done.data[key] === "string" && String(done.data[key]).length > 0) && typeof done.data[key] !== "object") {
                                       console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
                                       tempObj.description = String(event.target.value);
                                       tData = done.data[key];
@@ -1074,8 +1268,13 @@
                                       ) {
                                     // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                     dLoc =  "https://www.youtube.com/watch?v=";
-                                    tempObj.youtubeUrl = dLoc + tData;
-                                    redirect(tempObj, reUrlList);
+                                    try {
+                                      tempObj.youtubeUrl = dLoc + tData;
+                                      redirect(tempObj, reUrlList);
+                                    }
+                                    catch (err) {
+                                      console.warn(err);
+                                    }
                                   }
                                   else {
                                     // console.log(tData + " index of http = " + String(tData).indexOf("http"));
@@ -1084,7 +1283,7 @@
                                       redirect(tempObj, reUrlList);
                                     }
                                     catch (err) {
-                                      console.error(err);
+                                      console.warn(err);
                                     }
                                   }
                                   // tempList.push(tempObj);
@@ -1131,6 +1330,7 @@
                                 // personalizedList.push(tempList);
                               }
                             }
+                            input.disabled = false
                           } 
                           else {
                             console.warn("Expected an array in done from vidPlaylist, received:", done);
@@ -1142,7 +1342,9 @@
                             // openYTPlayer.click();
                           }
                           console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
-                          console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
+                          // console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
+                          // input.disabled = false
+                          redirect(personalizedList, []);
                         }
                         catch (error) {
                           console.log("Error in script call: " + error.stack);
@@ -1305,7 +1507,7 @@
                     // console.log("result index: " + index);
                     let tubeUrl = val.youtubeUrl;
                     let webUrl = val.webAddressUrl;
-                    while (webUrl && webUrl !== null) {
+                    if (webUrl && webUrl !== null) {
                       console.log("document loaded addresses local storage web results: " + againCap);
                       // window.open(new URL(webUrl), "_self");
                       // let linkFollow = document.createElement("a");
@@ -1318,11 +1520,11 @@
                       // document.getElementById("linkFOLLOW").click();
                       // document.getElementById("linkFOLLOW").remove();
                       homePage
-                      .then((load) => {
-                        localStorage.setItem("ssSearch", event.target.value);
+                      .then(() => {
+                        localStorage.setItem("ssSearch", val);
                         // console.log("Data; Url for reLoad ", load.data);
                         let linkFollow = document.createElement("a");
-                        linkFollow.href = load.data + "?q=" + webUrl;
+                        linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
                         // console.log("the match: " + linkFollow.href);
                         linkFollow.id = "linkFOLLOW";
                         linkFollow.target = "_blank";
@@ -1343,14 +1545,52 @@
                         openYTPlayer.click();
                       });
                     }
-                //     else {
-                //       if (tubeUrl && tubeUrl !== null) {
-                //         console.log("local storage all results: " + againCap);
-                //         // personalizedList.push(val);
-                //         // window.open(tubeUrl, "_self")
-                        return tubeUrl
-                //       }
-                //     }
+                    else {
+                      // if (tubeUrl && tubeUrl !== null) {
+                      //   console.log("local storage all results: " + againCap);
+                      //   // personalizedList.push(val);
+                      //   // window.open(tubeUrl, "_self")
+                      if (tubeUrl && tubeUrl !== null) {
+                        console.log("document loaded addresses local storage web results: " + againCap);
+                        // window.open(new URL(webUrl), "_self");
+                        // let linkFollow = document.createElement("a");
+                        // linkFollow.href = new URL(webUrl);
+                        // // console.log("the match: " + linkFollow.href);
+                        // linkFollow.id = "linkFOLLOW";
+                        // linkFollow.target = "_self";
+                        // linkFollow.rel = "noopener noreferrer";
+                        // document.body.appendChild(linkFollow);
+                        // document.getElementById("linkFOLLOW").click();
+                        // document.getElementById("linkFOLLOW").remove();
+                        homePage
+                        .then(() => {
+                          localStorage.setItem("ssSearch", val);
+                          // console.log("Data; Url for reLoad ", load.data);
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
+                          // console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_blank";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // window.location.href = load.data
+                          // input.value = event.target.value;
+                          // input.disabled = false;
+                          // input.focus();
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
+                          input.disabled = false;
+                          input.focus();
+                          let openYTPlayer = document.getElementById("mainUjpg");
+                          openYTPlayer.click();
+                        });
+                      }
+                      return tubeUrl
+                    }
+                    // }
                   }
                 }).filter((mapResult) => {
                   return mapResult != null
@@ -1488,7 +1728,7 @@
                 // }
               }
               else {
-                if (enterClicked <= 1) {
+                if (enterClicked === 1) {
                   homePage
                   .then((load) => {
                     let openYTPlayer = document.getElementById("mainUjpg");
@@ -1514,8 +1754,8 @@
                     console.log("Failed to load ", fail);
                     input.disabled = false;
                     input.focus();
-                      let openYTPlayer = document.getElementById("mainUjpg");
-                      openYTPlayer.click();
+                    let openYTPlayer = document.getElementById("mainUjpg");
+                    openYTPlayer.click();
                     enterClicked++;
                   });
                 }
