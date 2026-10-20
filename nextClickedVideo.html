@@ -29,6 +29,7 @@
           console.log("Timeout error: " + error.stack)
         }
       }
+      const div = document.createElement('div');
       const homePage = serverside("getScriptUrl", []);
       function redirect(myObj, myArr) {
         // Get the original request URL from the URL parameters
@@ -43,40 +44,204 @@
           // window.location.href = decodeURIComponent(redirectURL);
 
           // Call the redirect function after the page load
-          console.log("event redirect function resources", JSON.stringify(redirectURL));
-          let confirmation = window.confirm(
-            "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-          );
-          if (confirmation) {
+          console.log("event redirect function _blank main resources", JSON.stringify(redirectURL));
+          // let confirmation = window.confirm(
+          //   "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+          // );
+          // if (confirmation) {
             // event.preventDefault();
             // fetchSuggestions(myObj.description)
-            homePage
-            .then((load) => {
-              // alert(JSON.stringify(load));
-              localStorage.setItem("ssSearch", (myObj.description));
-              // console.log("Data; Url for reLoad ", load.data);
-              let linkFollow = document.createElement("a");
-              linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl);
-              // console.log("the match: " + linkFollow.href);
-              linkFollow.id = "linkFOLLOW";
-              linkFollow.target = "_blank";
-              linkFollow.rel = "noopener noreferrer";
-              document.body.appendChild(linkFollow);
-              document.getElementById("linkFOLLOW").click();
-              document.getElementById("linkFOLLOW").remove();
-              // window.location.href = load.data
-              // input.value = event.target.value;
-              // input.disabled = false;
-              // input.focus();
-            })
-            .catch((fail) => {
-              console.log("Failed to load ", fail);
-              input.disabled = false;
-              // let openYTPlayer = document.getElementById("mainUjpg");
-              // openYTPlayer.click();
-              input.focus();
-              return
+            // homePage
+            // .then((load) => {
+            //   alert(JSON.stringify(load));
+            //   localStorage.setItem("ssSearch", (myObj.description));
+            //   console.log("Data; Url for reLoad ", load.data);
+            //   let linkFollow = document.createElement("a");
+            //   linkFollow.href = (myObj?.youtubeURL || myObj?.webAddressUrl);
+            //   console.log("the match: " + linkFollow.href);
+            //   linkFollow.id = "linkFOLLOW";
+            //   linkFollow.target = "_blank";
+            //   linkFollow.rel = "noopener noreferrer";
+            //   document.body.appendChild(linkFollow);
+            //   document.getElementById("linkFOLLOW").click();
+            //   document.getElementById("linkFOLLOW").remove();
+            //   window.location.href = load.data
+            //   input.value = event.target.value;
+            //   input.disabled = false;
+            //   input.focus();
+            // })
+            // .catch((fail) => {
+            //   console.log("Failed to load ", fail);
+            //   input.disabled = false;
+            //   let openYTPlayer = document.getElementById("mainUjpg");
+            //   openYTPlayer.click();
+            //   input.focus();
+            //   return
+            // });
+            window.scrollTo(0,0);
+            div.textContent = myObj.description;
+            div.classList.add("receipt", "btn-large");
+            div.addEventListener('click', () => {
+              input.value = myObj.description;
+              let confirmation;
+              if (myObj.youtubeURL) {
+                console.log("event user input _top loaded addresses fetchmyObjs main resources", myObj.youtubeURL);
+                confirmation = window.confirm(
+                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                );
+                if (confirmation) {
+                  if (myObj.youtubeURL) {
+                    // window.open(myObj.youtubeUrl, "_blank");
+                    homePage
+                    .then(() => {
+                      // alert(JSON.stringify(load));
+                      localStorage.setItem("ssSearch", myObj.description);
+                      againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                      // console.log("Data; Url for reLoad ", load.data);
+                      let linkFollow = document.createElement("a");
+                      linkFollow.href = myObj.youtubeURL; // load.data;
+                      // console.log("the match: " + linkFollow.href);
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_top";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                      // window.location.href = load.data
+                      // input.value = event.target.value;
+                      // input.disabled = false;
+                      // input.focus();
+                    })
+                    .catch((fail) => {
+                      console.log("Failed to load ", fail);
+                      input.disabled = false;
+                      // let openYTPlayer = document.getElementById("mainUjpg");
+                      // openYTPlayer.click();
+                      input.focus();
+                      return
+                    });
+                  }
+                  else {
+                    if (myObj.webAddressUrl) {
+                      // window.open(myObj.webAddressUrl, "_blank");
+                      // document.location.href = myObj.webAddressUrl;
+                      homePage
+                      .then(() => {
+                        // alert(JSON.stringify(load));
+                        localStorage.setItem("ssSearch", myObj.description);
+                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                        // console.log("Data; Url for reLoad ", load.data);
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = myObj.webAddressUrl; // load.data;
+                        // console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_top";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // window.location.href = load.data
+                        // input.value = event.target.value;
+                        // input.disabled = false;
+                        // input.focus();
+                      })
+                      .catch((fail) => {
+                        console.log("Failed to load ", fail);
+                        input.disabled = false;
+                        // let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        input.focus();
+                        return
+                      });
+                    }
+                  }
+                }
+                suggestionsDiv.innerHTML = '';
+                return;
+              }
+              else {
+                if (myObj.webAddressUrl) {
+                  console.log("event user input _top loaded addresses fetchmyObjs supplimentary resources", myObj.webAddressUrl);
+                  confirmation = window.confirm(
+                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                  );
+                }
+                if (confirmation) {
+                  if (myObj.youtubeURL) {
+                    // window.open(myObj.youtubeUrl, "_blank");
+                    homePage
+                    .then(() => {
+                      // alert(JSON.stringify(load));
+                      localStorage.setItem("ssSearch", myObj.description);
+                      againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                      // console.log("Data; Url for reLoad ", load.data);
+                      let linkFollow = document.createElement("a");
+                      linkFollow.href = myObj.youtubeURL; // load.data;
+                      // console.log("the match: " + linkFollow.href);
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_top";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                      // window.location.href = load.data
+                      // input.value = event.target.value;
+                      // input.disabled = false;
+                      // input.focus();
+                    })
+                    .catch((fail) => {
+                      console.log("Failed to load ", fail);
+                      input.disabled = false;
+                      // let openYTPlayer = document.getElementById("mainUjpg");
+                      // openYTPlayer.click();
+                      input.focus();
+                      return
+                    });
+                  }
+                  else {
+                    if (myObj.webAddressUrl) {
+                      // window.open(myObj.webAddressUrl, "_blank");
+                      homePage
+                      .then(() => {
+                        // alert(JSON.stringify(load));
+                        localStorage.setItem("ssSearch", myObj.description);
+                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                        // console.log("Data; Url for reLoad ", load.data);
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = myObj.webAddressUrl; // load.data;
+                        // console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_top";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // window.location.href = load.data
+                        // input.value = event.target.value;
+                        // input.disabled = false;
+                        // input.focus();
+                      })
+                      .catch((fail) => {
+                        console.log("Failed to load ", fail);
+                        input.disabled = false;
+                        // let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        input.focus();
+                        return
+                      });
+                      // document.location.href = myObj.webAddressUrl;
+                    }
+                  }
+                }
+                suggestionsDiv.innerHTML = '';
+                return;
+              }
+              // install++
+              // userClicked = install;
+              // console.log(" User clicked; Left-Click Button ", userClicked);
             });
+            suggestionsDiv.appendChild(div);
+            // return
             // var linkFollow = document.createElement("a");
             // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
             // if (matchesContent.length > 0) {
@@ -134,15 +299,16 @@
             //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
             //   });
             // }
-          }
+          // }
         } 
         else {
           // Handle the case where the URL parameter is missing
+          console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj.description));
           console.error("No redirect URL provided.");
           homePage
           .then((load) => {
             // alert(JSON.stringify(load));
-            localStorage.setItem("ssSearch", load.data);
+            localStorage.setItem("ssSearch", myObj.description);
             // console.log("Data; Url for reLoad ", load.data);
             let linkFollow = document.createElement("a");
             linkFollow.href = load.data;
@@ -212,7 +378,12 @@
                 for (i,l;i<l;i++) {
                   let tempObj = {};
                   tempObj.description = response[key][i].description;
-                  if (String(response[key][i].videoId) && String(response[key][i].videoId).indexOf("http") === -1) {
+                  if 
+                    (
+                      String(response[key][i].videoId) && 
+                      String(response[key][i].videoId).indexOf("http") === -1 && 
+                      String(response[key][i].videoId).length === 12
+                    ) {
                     let tData = response[key][i].videoId;
                     let dLoc =  null;
                     dLoc =  "https://www.youtube.com/watch?v=";
@@ -230,22 +401,23 @@
               fullList = [];
             }
             localSuggestionsCache["allMatches"] = fullList;
-            console.log("event getVI loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
-            searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].description;
-            localStorage.setItem("gsSearch", searchBackEnd);
-            againContent = localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch");
+            console.log("event getVI _blank loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
+            // searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].description;
+            // localStorage.setItem("gsSearch", searchBackEnd);
+            // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
             matchesContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againContent) > -1) {
                 // console.log(againContent + ": result description: " + val.description);
                 // console.log("result index: " + index);
                 let tubeUrl = val.youtubeUrl;
                 if (tubeUrl && tubeUrl !== null) {
-                  console.log("event getVI loaded addresses main local storage all results: " + againContent);
+                  console.log("event getVI _blank loaded addresses main local storage all results: " + againContent);
                   // personalizedList.push(val);
                   homePage
                   .then(() => {
                     // alert(JSON.stringify(load));
-                    localStorage.setItem("ssSearch", tubeUrl);
+                    localStorage.setItem("ssSearch", val.description);
+                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                     // console.log("Data; Url for reLoad ", load.data);
                     let linkFollow = document.createElement("a");
                     linkFollow.href = tubeUrl; // load.data;
@@ -285,8 +457,8 @@
             // console.log("event allContentAvailable resources", allContentAvailable.length);
             // console.log(allContentAvailable.length < matchesContent.length);
             if (matchesContent.length > 0 && allContentAvailable.length < matchesContent.length) {
-              console.log("event getVI loaded addresses main matches to return resources: ", matchesContent.length);
-              console.log("event getVI loaded addresses main content resources", allContentAvailable.length);
+              console.log("event getVI _blank loaded addresses main matches to return resources: ", matchesContent.length);
+              console.log("event getVI _blank loaded addresses main content resources", allContentAvailable.length);
               while (allContentAvailable.length < matchesContent.length) {
                 allContentAvailable = matchesContent.sort((a,b) => {
                   let i = Math.random()
@@ -295,7 +467,7 @@
                   let zSorted = b;
                   // console.log(againContent + ": zSorted = " + zSorted);
                   if (i < .3) {
-                    console.log(`event getVI loaded addresses main content ${i} < .3: `);
+                    console.log(`event getVI _blank loaded addresses main content ${i} < .3: `);
                     let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                     if (matchA > -1) {
                       // console.log(againContent + ": matchA = " + matchA);
@@ -304,7 +476,7 @@
                   }
                   else {
                     if (i > .3 && i < .5 ) {
-                      console.log(`event getVI loaded addresses main content ${i} > .3 && ${i} < .5: `);
+                      console.log(`event getVI _blank loaded addresses main content ${i} > .3 && ${i} < .5: `);
                       let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                       if (matchB === -1) {
                         // console.log(againContent + ": matchB = " + matchB);
@@ -313,13 +485,13 @@
                     }
                     else {
                       if (i > .5 && i < .8) {
-                        console.log(`event getVI loaded addresses main content ${i} > .5 && ${i} < .8: `);
+                        console.log(`event getVI _blank loaded addresses main content ${i} > .5 && ${i} < .8: `);
                         // console.log(againContent + ": matchC = " + zSorted);
                         return zSorted;
                       }
                       else {
                         if (i > .8) {
-                          console.log(`event getVI loaded addresses main content ${i} > .8: `);
+                          console.log(`event getVI _blank loaded addresses main content ${i} > .8: `);
                           // console.log(againContent + ": matchD = " + tSorted);
                           return tSorted;
                         }
@@ -345,7 +517,7 @@
               // document.getElementById("openYTPLAYER").remove();
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
-                  console.log("event getVI loaded addresses main resources", matchesContent.length);
+                  console.log("event getVI _blank loaded addresses main resources", matchesContent.length);
                   let confirmation = window.confirm(
                     "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
@@ -420,12 +592,13 @@
                     // console.log("result index: " + index);
                     let webUrl = val.webAddressUrl;
                     if (webUrl && webUrl !== null) {
-                      console.log("event getVI loaded addresses supplimentary local storage all results: " + againContent);
+                      console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
                       homePage
                       .then(() => {
                         // alert(JSON.stringify(load));
-                        localStorage.setItem("ssSearch", webUrl);
+                        localStorage.setItem("ssSearch", val.description);
+                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                         // console.log("Data; Url for reLoad ", load.data);
                         let linkFollow = document.createElement("a");
                         linkFollow.href = webUrl; // load.data;
@@ -458,8 +631,8 @@
                 // console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
                 if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
-                  console.log("event getVI loaded addresses supplimentary matches to return resources: ", matchContent.length);
-                  console.log("event getVI loaded addresses supplimentary content resources: ", contentAvailable.length);
+                  console.log("event getVI _blank loaded addresses supplimentary matches to return resources: ", matchContent.length);
+                  console.log("event getVI _blank loaded addresses supplimentary content resources: ", contentAvailable.length);
                   while (contentAvailable.length < matchContent.length) {
                     contentAvailable = matchContent.sort((a,b) => {
                       let i = Math.random()
@@ -468,7 +641,7 @@
                       let zSorted = b;
                       // console.log(againContent + ": zSorted = " + zSorted);
                       if (i < .3) {
-                        console.log(`event getVI loaded addresses supplimentary content ${i} < .3: `);
+                        console.log(`event getVI _blank loaded addresses supplimentary content ${i} < .3: `);
                         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                         if (matchA > -1) {
                           // console.log(againContent + ": matchA = " + matchA);
@@ -477,7 +650,7 @@
                       }
                       else {
                         if (i > .3 && i < .5) {
-                          console.log(`event getVI loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
+                          console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
                           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                           if (matchB === -1) {
                             // console.log(againContent + ": matchB = " + matchB);
@@ -486,13 +659,13 @@
                         }
                         else {
                           if (i > .5 && i < .8) {
-                            console.log(`event getVI loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
+                            console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
                             // console.log(againContent + ": matchC = " + zSorted);
                             return zSorted;
                           }
                           else {
                             if (i > .8) {
-                              console.log(`event getVI loaded addresses supplimentary content ${i} > .8: `);
+                              console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .8: `);
                               // console.log(againContent + ": matchD = " + tSorted);
                               return tSorted;
                             }
@@ -505,10 +678,11 @@
                     }
                   }
                 }
+                input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0);
                 if (contentAvailable.length > 0) {
                   $('a').click(function(event){
                     if ($(this).attr('href') === "javascript:void(0)") {
-                      console.log("event getVI loaded addresses supplimentary resources", contentAvailable.length);
+                      console.log("event getVI _blank loaded addresses supplimentary resources", contentAvailable.length);
                       let confirmation = window.confirm(
                         "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                       );
@@ -595,7 +769,7 @@
               // suggestionsDiv.innerHTML = '';
             
             // Filter the local list instead of making a server call
-            contentList = remoteSuggestionsCache[againCap] || localSuggestionsCache["allMatches"] || [];
+            contentList = remoteSuggestionsCache[againContent] || localSuggestionsCache["allMatches"] || [];
             // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
             suggestContent = contentList.filter(item => 
               String(item.description).toLowerCase().includes(query.toLowerCase())
@@ -735,14 +909,14 @@
                         input.addEventListener("input", (event) => {
                             if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
                               window.scrollTo(0,0);
-                              const div = document.createElement('div');
+                              // const div = document.createElement('div');
                               div.textContent = suggestion.description;
                               div.classList.add("receipt", "btn-large");
                               div.addEventListener('click', () => {
                                 input.value = suggestion.description;
                                 let confirmation;
                                 if (suggestion.youtubeURL) {
-                                  console.log("event user input loaded addresses fetchSuggestions main resources", suggestion.youtubeURL);
+                                  console.log("event user input _top loaded addresses fetchSuggestions main resources", suggestion.youtubeURL);
                                   confirmation = window.confirm(
                                     "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                                   );
@@ -752,7 +926,8 @@
                                       homePage
                                       .then(() => {
                                         // alert(JSON.stringify(load));
-                                        localStorage.setItem("ssSearch", suggestion.youtubeURL);
+                                        localStorage.setItem("ssSearch", suggestion.description);
+                                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                                         // console.log("Data; Url for reLoad ", load.data);
                                         let linkFollow = document.createElement("a");
                                         linkFollow.href = suggestion.youtubeURL; // load.data;
@@ -784,7 +959,8 @@
                                         homePage
                                         .then(() => {
                                           // alert(JSON.stringify(load));
-                                          localStorage.setItem("ssSearch", suggestion.webAddressUrl);
+                                          localStorage.setItem("ssSearch", suggestion.description);
+                                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                                           // console.log("Data; Url for reLoad ", load.data);
                                           let linkFollow = document.createElement("a");
                                           linkFollow.href = suggestion.webAddressUrl; // load.data;
@@ -816,7 +992,7 @@
                                 }
                                 else {
                                   if (suggestion.webAddressUrl) {
-                                    console.log("event user input loaded addresses fetchSuggestions supplimentary resources", suggestion.webAddressUrl);
+                                    console.log("event user input _top loaded addresses fetchSuggestions supplimentary resources", suggestion.webAddressUrl);
                                     confirmation = window.confirm(
                                       "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
                                     );
@@ -827,7 +1003,8 @@
                                       homePage
                                       .then(() => {
                                         // alert(JSON.stringify(load));
-                                        localStorage.setItem("ssSearch", suggestion.youtubeURL);
+                                        localStorage.setItem("ssSearch", suggestion.description);
+                                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                                         // console.log("Data; Url for reLoad ", load.data);
                                         let linkFollow = document.createElement("a");
                                         linkFollow.href = suggestion.youtubeURL; // load.data;
@@ -858,7 +1035,8 @@
                                         homePage
                                         .then(() => {
                                           // alert(JSON.stringify(load));
-                                          localStorage.setItem("ssSearch", suggestion.webAddressUrl);
+                                          localStorage.setItem("ssSearch", suggestion.description);
+                                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                                           // console.log("Data; Url for reLoad ", load.data);
                                           let linkFollow = document.createElement("a");
                                           linkFollow.href = suggestion.webAddressUrl; // load.data;
@@ -1185,7 +1363,7 @@
           input.addEventListener('keydown', (event) => {
             let enterClicked = 0;
             if (event.key === 'Enter') {
-              console.log("event; input event: ", JSON.stringify(Object.keys(event.target.value)))
+              console.log("event; input event: ", JSON.stringify(event.target.value))
               // if (String(event.target.value).length < 1) {
               //   return
               // }
@@ -1233,61 +1411,172 @@
                             if (done.data && doneAlert > 0) {
                               personalizedList = [];
                               let reUrlList = [];
-                              for (var key in done.data) {
+                              for (let key in done.data) {
                                 let i = 0;
                                 let l = false;
-                                if (typeof done.data[key] === "object") {
-                                  l =  done.data[key]?.length;
+                                if (typeof done.data[key] === "object" && !Array.isArray(done.data[key])) {
+                                  l =  Object.keys(done.data[key])?.length;
                                 }
                                 else {
-                                  if (typeof done.data[key] === "string") {
-                                    l =  Array(String(done.data[key]))?.length;
+                                  if (typeof done.data[key] === "object" && Array.isArray(done.data[key])) {
+                                    l =  done.data[key]?.length;
+                                  }
+                                  else {
+                                    if (typeof done.data[key] === "string") {
+                                      l =  Array(String(done.data[key]))?.length;
+                                    }
                                   }
                                 }
                                 let tempObj = {};
+                                let reTempUrlList = [];
                                 let tData = false;
                                 // let tempList = [];
                                 // alert(l);
                                 for (i,l;i<l;i++) {
-                                  if (typeof done.data[key] === "object" && (Array.isArray(done.data[key]) && done.data[key].length > 0) && typeof done.data[key] !== "string") {
-                                    console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key][i], JSON.stringify(done.data[key][i]));
+                                  let dLoc =  false;
+                                  if 
+                                    (
+                                      typeof done.data[key] === "object" && 
+                                      (
+                                        !Array.isArray(done.data[key]) && 
+                                        Object.keys(done.data[key]).length > 0
+                                      )
+                                    ) {
+                                    console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
                                     tempObj.description = done.data[key][i]?.description;
-                                    tData = done.data[key][i]?.videoId;
-                                  }
-                                  else {
-                                    if ((typeof done.data[key] === "string" && String(done.data[key]).length > 0) && typeof done.data[key] !== "object") {
-                                      console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
-                                      tempObj.description = String(event.target.value);
-                                      tData = done.data[key];
+                                    if (reUrlList?.indexOf(done.data[key][i]?.videoId) > -1) {
+                                      console.warn(done.data[key][i]?.videoId + " already in data",);
+                                    }
+                                    else {
+                                      if (reUrlList?.indexOf(done.data[key][i]?.videoId) === -1) {
+                                        tData = done.data[key][i]?.videoId;
+                                        reUrlList.push(tData);
+                                        if (
+                                              String(tData) && String(tData).indexOf("http") === -1 && 
+                                              String(tData).length === 12
+                                            ) {
+                                          // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                          dLoc =  "https://www.youtube.com/watch?v=";
+                                          try {
+                                            tempObj.youtubeUrl = dLoc + tData;
+                                            redirect(tempObj, reTempUrlList);
+                                          }
+                                          catch (err) {
+                                            console.warn(err);
+                                          }
+                                        }
+                                        else {
+                                          if (String(tData) && String(tData).indexOf("http") > -1) {
+                                            // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                            try {
+                                              tempObj.webAddressUrl = new URL(tData);
+                                              redirect(tempObj, reTempUrlList);
+                                            }
+                                            catch (err) {
+                                              console.warn(err);
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
                                   }
-                                  let dLoc =  null;
-                                  if (
-                                        String(tData) && String(tData).indexOf("http") === -1 && 
-                                        String(tData).length === 12
+                                  else {
+                                    if 
+                                      (
+                                        typeof done.data[key] === "object" && 
+                                        (
+                                          Array.isArray(done.data[key]) && 
+                                          done.data[key]?.length > 0
+                                        )
                                       ) {
-                                    // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                    dLoc =  "https://www.youtube.com/watch?v=";
-                                    try {
-                                      tempObj.youtubeUrl = dLoc + tData;
-                                      redirect(tempObj, reUrlList);
+                                      console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
+                                      tempObj.description = String(event.target.value);
+                                      if (reUrlList?.indexOf(done.data[key][i]) > -1) {
+                                        console.warn(done.data[key][i] + " already in data",);
+                                      }
+                                      else {
+                                        if (reUrlList?.indexOf(done.data[key][i]) === -1) {
+                                          tData = done.data[key][i];
+                                          reUrlList.push(tData);
+                                          if (
+                                                String(tData) && String(tData).indexOf("http") === -1 && 
+                                                String(tData).length === 12
+                                              ) {
+                                            // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                            dLoc =  "https://www.youtube.com/watch?v=";
+                                            try {
+                                              tempObj.youtubeUrl = dLoc + tData;
+                                              redirect(tempObj, reTempUrlList);
+                                            }
+                                            catch (err) {
+                                              console.warn(err);
+                                            }
+                                          }
+                                          else {
+                                            if (String(tData) && String(tData).indexOf("http") > -1) {
+                                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                              try {
+                                                tempObj.webAddressUrl = new URL(tData);
+                                                redirect(tempObj, reTempUrlList);
+                                              }
+                                              catch (err) {
+                                                console.warn(err);
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
-                                    catch (err) {
-                                      console.warn(err);
-                                    }
-                                  }
-                                  else {
-                                    // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                    try {
-                                      tempObj.webAddressUrl = new URL(tData);
-                                      redirect(tempObj, reUrlList);
-                                    }
-                                    catch (err) {
-                                      console.warn(err);
+                                    else {
+                                      if 
+                                        (
+                                          (
+                                            typeof done.data[key] === "string" && 
+                                            String(done.data[key]).length > 0
+                                          )
+                                        ) {
+                                        console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
+                                        tempObj.description = String(event.target.value);
+                                        if (reUrlList?.indexOf(done.data[key]) > -1) {
+                                          console.warn(done.data[key] + " already in data",);
+                                        }
+                                        else {
+                                          if (reUrlList?.indexOf(done.data[key]) === -1) {
+                                            tData = done.data[key];
+                                            reUrlList.push(tData);
+                                            if (
+                                                  String(tData) && String(tData).indexOf("http") === -1 && 
+                                                  String(tData).length === 12
+                                                ) {
+                                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                              dLoc =  "https://www.youtube.com/watch?v=";
+                                              try {
+                                                tempObj.youtubeUrl = dLoc + tData;
+                                                redirect(tempObj, reTempUrlList);
+                                              }
+                                              catch (err) {
+                                                console.warn(err);
+                                              }
+                                            }
+                                            else {
+                                              if (String(tData) && String(tData).indexOf("http") > -1) {
+                                                // console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                                try {
+                                                  tempObj.webAddressUrl = new URL(tData);
+                                                  redirect(tempObj, reTempUrlList);
+                                                }
+                                                catch (err) {
+                                                  console.warn(err);
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
                                   }
                                   // tempList.push(tempObj);
-                                  personalizedList.push(tempObj);
+                                  // personalizedList.push(tempObj);
                                   // if (personalizedList.length > 0) {
                                     // personalizedList.map((unObj) => {
                                     //   // return unObj != tempObj
@@ -1328,6 +1617,7 @@
                                   // window.onload = redirect;
                                 }
                                 // personalizedList.push(tempList);
+                                personalizedList.push(tempObj);
                               }
                             }
                             input.disabled = false
@@ -1344,10 +1634,14 @@
                           console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
                           // console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
                           // input.disabled = false
-                          redirect(personalizedList, []);
+                          // for (let key in personalizedList) {
+                          //   redirect(personalizedList[key], []);
+                          // }
                         }
                         catch (error) {
                           console.log("Error in script call: " + error.stack);
+                          // Fallback to empty array if the structure is not as expected
+                          personalizedList = [];
                           input.disabled = false
                           // let openYTPlayer = document.getElementById("mainUjpg");
                           // openYTPlayer.click();
@@ -1355,6 +1649,8 @@
                       })
                       .catch((err) => {
                         console.error("Error on server side: ", err.stack);
+                        // Fallback to empty array if the structure is not as expected
+                        personalizedList = [];
                         input.disabled = false
                         // let openYTPlayer = document.getElementById("mainUjpg");
                         // openYTPlayer.click();
@@ -1496,19 +1792,19 @@
               // if (qTemp) {
               //   return
               // }
-              if (personalizedList?.tempObj && Object.keys(personalizedList?.tempObj).length > 0) {
-                remoteSuggestionsCache[againCap] = personalizedList;
-                remoteIntent = remoteSuggestionsCache[againCap][Math.floor(Math.random() * done.data.length)].description;
+              if (personalizedList && Object.keys(personalizedList)[1] && Object.keys(personalizedList)[1].length > 0) {
+                remoteSuggestionsCache[againContent] = Object.keys(personalizedList)[1];
+                remoteIntent = remoteSuggestionsCache[againContent][Math.floor(Math.random() * done.data.length)].description;
                 localStorage.setItem("rsSearch", remoteIntent);
-                againCap = localStorage.getItem("rsSearch");
-                matchesToReturn = remoteSuggestionsCache[againCap].map((val) => {   //, index) => {
-                  if (String(val.description).indexOf(againCap) > -1) {
+                againContent = localStorage.getItem("rsSearch");
+                matchesToReturn = remoteSuggestionsCache[againContent].map((val) => {   //, index) => {
+                  if (String(val.description).indexOf(againContent) > -1) {
                     // console.log(againCap + ": result description: " + val.description);
                     // console.log("result index: " + index);
                     let tubeUrl = val.youtubeUrl;
                     let webUrl = val.webAddressUrl;
                     if (webUrl && webUrl !== null) {
-                      console.log("document loaded addresses local storage web results: " + againCap);
+                      console.log("document _blank loaded addresses local storage web results: " + againContent);
                       // window.open(new URL(webUrl), "_self");
                       // let linkFollow = document.createElement("a");
                       // linkFollow.href = new URL(webUrl);
@@ -1521,7 +1817,8 @@
                       // document.getElementById("linkFOLLOW").remove();
                       homePage
                       .then(() => {
-                        localStorage.setItem("ssSearch", val);
+                        localStorage.setItem("ssSearch", val.description);
+                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                         // console.log("Data; Url for reLoad ", load.data);
                         let linkFollow = document.createElement("a");
                         linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
@@ -1551,7 +1848,7 @@
                       //   // personalizedList.push(val);
                       //   // window.open(tubeUrl, "_self")
                       if (tubeUrl && tubeUrl !== null) {
-                        console.log("document loaded addresses local storage web results: " + againCap);
+                        console.log("document _blank loaded addresses local storage web results: " + againContent);
                         // window.open(new URL(webUrl), "_self");
                         // let linkFollow = document.createElement("a");
                         // linkFollow.href = new URL(webUrl);
@@ -1564,7 +1861,8 @@
                         // document.getElementById("linkFOLLOW").remove();
                         homePage
                         .then(() => {
-                          localStorage.setItem("ssSearch", val);
+                          localStorage.setItem("ssSearch", val.description);
+                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                           // console.log("Data; Url for reLoad ", load.data);
                           let linkFollow = document.createElement("a");
                           linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
@@ -1729,12 +2027,14 @@
               }
               else {
                 if (enterClicked === 1) {
+                  console.log("document _self loaded addresses Enter key results: " + event.target.value);
                   homePage
                   .then((load) => {
                     let openYTPlayer = document.getElementById("mainUjpg");
                     openYTPlayer.click();
                     enterClicked++;
                     localStorage.setItem("ssSearch", String(event.target.value));
+                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                     // console.log("Data; Url for reLoad ", load.data);
                     let linkFollow = document.createElement("a");
                     linkFollow.href = load.data;
