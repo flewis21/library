@@ -413,34 +413,54 @@
                 if (tubeUrl && tubeUrl !== null) {
                   console.log("event getVI _blank loaded addresses main local storage all results: " + againContent);
                   // personalizedList.push(val);
-                  homePage
-                  .then(() => {
-                    // alert(JSON.stringify(load));
-                    localStorage.setItem("ssSearch", val.description);
-                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                    // console.log("Data; Url for reLoad ", load.data);
-                    let linkFollow = document.createElement("a");
-                    linkFollow.href = tubeUrl; // load.data;
-                    // console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                    // window.location.href = load.data
-                    // input.value = event.target.value;
-                    // input.disabled = false;
-                    // input.focus();
-                  })
-                  .catch((fail) => {
-                    console.log("Failed to load ", fail);
-                    input.disabled = false;
-                    // let openYTPlayer = document.getElementById("mainUjpg");
-                    // openYTPlayer.click();
-                    input.focus();
-                    return
+                  window.scrollTo(0,0);
+                  div.textContent = val.description;
+                  div.classList.add("receipt", "btn-large");
+                  div.addEventListener('click', () => {
+                    input.value = val.description;
+                    let confirmation;
+                    if (val.youtubeURL) {
+                      console.log("event user input _top loaded addresses fetchvals main resources", val.youtubeURL);
+                      confirmation = window.confirm(
+                        "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                      );
+                      if (confirmation) {
+                        if (val.youtubeURL) {
+                          homePage
+                          .then(() => {
+                            // alert(JSON.stringify(load));
+                            localStorage.setItem("ssSearch", val.description);
+                            againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                            // console.log("Data; Url for reLoad ", load.data);
+                            let linkFollow = document.createElement("a");
+                            linkFollow.href = tubeUrl; // load.data;
+                            // console.log("the match: " + linkFollow.href);
+                            linkFollow.id = "linkFOLLOW";
+                            linkFollow.target = "_top";
+                            linkFollow.rel = "noopener noreferrer";
+                            document.body.appendChild(linkFollow);
+                            document.getElementById("linkFOLLOW").click();
+                            document.getElementById("linkFOLLOW").remove();
+                            // window.location.href = load.data
+                            // input.value = event.target.value;
+                            // input.disabled = false;
+                            // input.focus();
+                          })
+                          .catch((fail) => {
+                            console.log("Failed to load ", fail);
+                            input.disabled = false;
+                            // let openYTPlayer = document.getElementById("mainUjpg");
+                            // openYTPlayer.click();
+                            input.focus();
+                            return
+                          });
+                        }
+                      }
+                      suggestionsDiv.innerHTML = '';
+                      return;
+                    }
                   });
+                  suggestionsDiv.appendChild(div);
                   return tubeUrl
                 }
               }
@@ -594,34 +614,54 @@
                     if (webUrl && webUrl !== null) {
                       console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
-                      homePage
-                      .then(() => {
-                        // alert(JSON.stringify(load));
-                        localStorage.setItem("ssSearch", val.description);
-                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                        // console.log("Data; Url for reLoad ", load.data);
-                        let linkFollow = document.createElement("a");
-                        linkFollow.href = webUrl; // load.data;
-                        // console.log("the match: " + linkFollow.href);
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                        // window.location.href = load.data
-                        // input.value = event.target.value;
-                        // input.disabled = false;
-                        // input.focus();
-                      })
-                      .catch((fail) => {
-                        console.log("Failed to load ", fail);
-                        input.disabled = false;
-                        // let openYTPlayer = document.getElementById("mainUjpg");
-                        // openYTPlayer.click();
-                        input.focus();
-                        return
+                      window.scrollTo(0,0);
+                      div.textContent = val.description;
+                      div.classList.add("receipt", "btn-large");
+                      div.addEventListener('click', () => {
+                        input.value = val.description;
+                        let confirmation;
+                        if (val.webAddressUrl) {
+                          console.log("event user input _top loaded addresses fetchvals main resources", val.webAddressUrl);
+                          confirmation = window.confirm(
+                            "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                          );
+                          if (confirmation) {
+                            if (val.webAddressUrl) {
+                              homePage
+                              .then(() => {
+                                // alert(JSON.stringify(load));
+                                localStorage.setItem("ssSearch", val.description);
+                                againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                                // console.log("Data; Url for reLoad ", load.data);
+                                let linkFollow = document.createElement("a");
+                                linkFollow.href = webUrl; // load.data;
+                                // console.log("the match: " + linkFollow.href);
+                                linkFollow.id = "linkFOLLOW";
+                                linkFollow.target = "_top";
+                                linkFollow.rel = "noopener noreferrer";
+                                document.body.appendChild(linkFollow);
+                                document.getElementById("linkFOLLOW").click();
+                                document.getElementById("linkFOLLOW").remove();
+                                // window.location.href = load.data
+                                // input.value = event.target.value;
+                                // input.disabled = false;
+                                // input.focus();
+                              })
+                              .catch((fail) => {
+                                console.log("Failed to load ", fail);
+                                input.disabled = false;
+                                // let openYTPlayer = document.getElementById("mainUjpg");
+                                // openYTPlayer.click();
+                                input.focus();
+                                return
+                              });
+                            }
+                          }
+                          suggestionsDiv.innerHTML = '';
+                          return;
+                        }
                       });
+                      suggestionsDiv.appendChild(div);
                       return webUrl
                     }
                   }
