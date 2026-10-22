@@ -120,6 +120,8 @@
                       input.focus();
                       return
                     });
+                    // suggestionsDiv.innerHTML = '';
+                    return;
                   }
                   else {
                     if (myObj.webAddressUrl) {
@@ -153,11 +155,11 @@
                         input.focus();
                         return
                       });
+                      // suggestionsDiv.innerHTML = '';
+                      // return;
                     }
                   }
                 }
-                suggestionsDiv.innerHTML = '';
-                return;
               }
               else {
                 if (myObj.webAddressUrl) {
@@ -197,6 +199,8 @@
                       input.focus();
                       return
                     });
+                    // suggestionsDiv.innerHTML = '';
+                    // return;
                   }
                   else {
                     if (myObj.webAddressUrl) {
@@ -229,18 +233,17 @@
                         input.focus();
                         return
                       });
+                      // suggestionsDiv.innerHTML = '';
+                      // return;
                       // document.location.href = myObj.webAddressUrl;
                     }
                   }
                 }
-                suggestionsDiv.innerHTML = '';
-                return;
               }
               // install++
               // userClicked = install;
               // console.log(" User clicked; Left-Click Button ", userClicked);
             });
-            suggestionsDiv.appendChild(div);
             // return
             // var linkFollow = document.createElement("a");
             // linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
@@ -382,7 +385,7 @@
                     (
                       String(response[key][i].videoId) && 
                       String(response[key][i].videoId).indexOf("http") === -1 && 
-                      String(response[key][i].videoId).length === 12
+                      String(response[key][i].videoId).length === 11
                     ) {
                     let tData = response[key][i].videoId;
                     let dLoc =  null;
@@ -419,13 +422,13 @@
                   div.addEventListener('click', () => {
                     input.value = val.description;
                     let confirmation;
-                    if (val.youtubeURL) {
-                      console.log("event user input _top loaded addresses fetchvals main resources", val.youtubeURL);
+                    if (tubeUrl) {
+                      console.log("event getVI user input _blank loaded Youtube fetchvals main resources", tubeUrl);
                       confirmation = window.confirm(
                         "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                       );
                       if (confirmation) {
-                        if (val.youtubeURL) {
+                        if (tubeUrl) {
                           homePage
                           .then(() => {
                             // alert(JSON.stringify(load));
@@ -436,7 +439,7 @@
                             linkFollow.href = tubeUrl; // load.data;
                             // console.log("the match: " + linkFollow.href);
                             linkFollow.id = "linkFOLLOW";
-                            linkFollow.target = "_top";
+                            linkFollow.target = "_blank";
                             linkFollow.rel = "noopener noreferrer";
                             document.body.appendChild(linkFollow);
                             document.getElementById("linkFOLLOW").click();
@@ -454,19 +457,19 @@
                             input.focus();
                             return
                           });
+                          // suggestionsDiv.innerHTML = '';
+                          return;
                         }
                       }
-                      suggestionsDiv.innerHTML = '';
-                      return;
                     }
                   });
-                  suggestionsDiv.appendChild(div);
                   return tubeUrl
                 }
               }
             }).filter((mapResult) => {
               return mapResult != null
             });
+            suggestionsDiv.appendChild(div);
             // if (matchesContent.length > 0) {
             //   remoteSuggestionsCache[againContent] = personalizedList;
             // }
@@ -537,71 +540,113 @@
               // document.getElementById("openYTPLAYER").remove();
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
-                  console.log("event getVI _blank loaded addresses main resources", matchesContent.length);
+                  console.log("event getVI _top loaded addresses main resources", matchesContent.length);
                   let confirmation = window.confirm(
                     "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                   );
                   if (confirmation) {
                     event.preventDefault();
-                    let linkFollow = document.createElement("a");
-                    linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
-                    if (matchesContent.length > 0) {
-                      // console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
-                    }
-                    else {
-                      if (matchesContent.length === 0) {
-                        linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                      }
-                    }
-                    console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_blank";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                    // If the user preses the "Enter" key on the keyboard. 
-                    // if (event.key === 'Enter')  {
-                    //   serverside("getVI", [])
-                    //   .then((response) => {
-                    //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                    //     // Access the actual array from the response
-                    //     if (response && typeof response === "object") {
-                    //       fullList = [];
-                    //       for (var key in response) {
-                    //         alert(JSON.stringify(response[key]));
-                    //         let i = 0;
-                    //         let l = response[key].length;
-                    //         alert(l);
-                    //         for (i,l;i<l;i++) {
-                    //           let tempObj = {};
-                    //           tempObj.description = response[key][i].description;
-                    //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-                    //             let tData = response[key][i].videoId;
-                    //             let dLoc =  null;
-                    //             dLoc =  "https://www.youtube.com/watch?v=";
-                    //             tempObj.youtubeUrl = dLoc + tData;
-                    //           }
-                    //           else {
-                    //             tempObj.youtubeUrl = response[key][i].videoId;
-                    //           }
-                    //           fullList.push(tempObj);
-                    //         }
-                    //       }
-                    //     } 
-                    //     else {
-                    //       console.warn("Expected an array in response from getVI, received:", response);
-                    //       Fallback to empty array if the structure is not as expected
-                    //       fullList = [];
-                    //     }
-                    //   })
-                    //   .catch(error => {
-                    //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-                    //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                    //   });
-                    // }
+                    window.scrollTo(0,0);
+                    let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                    div.textContent = val.description;
+                    div.classList.add("receipt", "btn-large");
+                    div.addEventListener('click', () => {
+                      homePage
+                      .then(() => {
+                        let linkFollow = document.createElement("a");
+                        linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
+                        if (val && (val?.youtubeURL || val?.webAddressUrl)) {
+                          localStorage.setItem("ssSearch", val?.description);
+                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                          input.value = val?.description;
+                          let thUrl = (val?.youtubeURL || val?.webAddressUrl);
+                          if 
+                            (
+                              thUrl && 
+                              thUrl !== null && 
+                              typeof thUrl === "string"
+                            ) {
+                            if 
+                              (
+                                String(thUrl).indexOf("http") === -1 && 
+                                String(thUrl).length === 11
+                              ) {
+                                thUrl = "https://www.youtube.com/watch?v=" + thUrl;
+                            }
+                            // else {
+                            // }
+                          }
+                          console.log("event user input _top Youtube addresses fetchvals main resources", thUrl);
+                          linkFollow.href = thUrl;
+                        }
+                        // if (matchesContent.length > 0) {
+                        //   console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
+                        // }
+                        // else {
+                        //   if (matchesContent.length === 0) {
+                        //   }
+                        // }
+                        console.log("the match: " + linkFollow.href);
+                        linkFollow.id = "linkFOLLOW";
+                        linkFollow.target = "_blank";
+                        linkFollow.rel = "noopener noreferrer";
+                        document.body.appendChild(linkFollow);
+                        document.getElementById("linkFOLLOW").click();
+                        document.getElementById("linkFOLLOW").remove();
+                        // If the user preses the "Enter" key on the keyboard. 
+                        // if (event.key === 'Enter')  {
+                        //   serverside("getVI", [])
+                        //   .then((response) => {
+                        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                        //     // Access the actual array from the response
+                        //     if (response && typeof response === "object") {
+                        //       fullList = [];
+                        //       for (var key in response) {
+                        //         alert(JSON.stringify(response[key]));
+                        //         let i = 0;
+                        //         let l = response[key].length;
+                        //         alert(l);
+                        //         for (i,l;i<l;i++) {
+                        //           let tempObj = {};
+                        //           tempObj.description = response[key][i].description;
+                        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                        //             let tData = response[key][i].videoId;
+                        //             let dLoc =  null;
+                        //             dLoc =  "https://www.youtube.com/watch?v=";
+                        //             tempObj.youtubeUrl = dLoc + tData;
+                        //           }
+                        //           else {
+                        //             tempObj.youtubeUrl = response[key][i].videoId;
+                        //           }
+                        //           fullList.push(tempObj);
+                        //         }
+                        //       }
+                        //     } 
+                        //     else {
+                        //       console.warn("Expected an array in response from getVI, received:", response);
+                        //       Fallback to empty array if the structure is not as expected
+                        //       fullList = [];
+                        //     }
+                        //   })
+                        //   .catch(error => {
+                        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                        //   });
+                        // }
+                        return
+                      })
+                      .catch((fail) => {
+                        console.log("Failed to load ", fail);
+                        input.disabled = false;
+                        // let openYTPlayer = document.getElementById("mainUjpg");
+                        // openYTPlayer.click();
+                        input.focus();
+                        return
+                      });
+                    });
                   }
                 } 
+                // return
               });
             }
             else {
@@ -611,7 +656,21 @@
                     // console.log(againContent + ": result description: " + val.description);
                     // console.log("result index: " + index);
                     let webUrl = val.webAddressUrl;
-                    if (webUrl && webUrl !== null) {
+                    if 
+                      (
+                        webUrl && 
+                        webUrl !== null && 
+                        typeof webUrl === "string"
+                      ) {
+                      if 
+                        (
+                          String(webUrl).indexOf("http") === -1 && 
+                          String(webUrl).length === 11
+                        ) {
+                          webUrl = "https://www.youtube.com/watch?v=" + webUrl;
+                      }
+                      // else {
+                      // }
                       console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
                       window.scrollTo(0,0);
@@ -620,13 +679,13 @@
                       div.addEventListener('click', () => {
                         input.value = val.description;
                         let confirmation;
-                        if (val.webAddressUrl) {
-                          console.log("event user input _top loaded addresses fetchvals main resources", val.webAddressUrl);
+                        if (webUrl) {
+                          console.log("event getVI user input _top loaded addresses fetchvals main resources", webUrl);
                           confirmation = window.confirm(
-                            "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                            "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                           );
                           if (confirmation) {
-                            if (val.webAddressUrl) {
+                            if (webUrl) {
                               homePage
                               .then(() => {
                                 // alert(JSON.stringify(load));
@@ -646,6 +705,8 @@
                                 // input.value = event.target.value;
                                 // input.disabled = false;
                                 // input.focus();
+                                // suggestionsDiv.innerHTML = '';
+                                return;
                               })
                               .catch((fail) => {
                                 console.log("Failed to load ", fail);
@@ -655,19 +716,19 @@
                                 input.focus();
                                 return
                               });
+                              // suggestionsDiv.innerHTML = '';
+                              // return;
                             }
                           }
-                          suggestionsDiv.innerHTML = '';
-                          return;
                         }
                       });
-                      suggestionsDiv.appendChild(div);
                       return webUrl
                     }
                   }
                 }).filter((mapResult) => {
                   return mapResult != null
                 });
+                suggestionsDiv.appendChild(div);
                 // console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
                 if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
@@ -722,75 +783,118 @@
                 if (contentAvailable.length > 0) {
                   $('a').click(function(event){
                     if ($(this).attr('href') === "javascript:void(0)") {
-                      console.log("event getVI _blank loaded addresses supplimentary resources", contentAvailable.length);
+                      console.log("event getVI _top loaded addresses supplimentary resources", contentAvailable.length);
                       let confirmation = window.confirm(
                         "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
                       );
                       if (confirmation) {
                         event.preventDefault();
-                        let linkFollow = document.createElement("a");
-                        linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
-                        if (matchContent.length > 0) {
-                          // console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
-                        }
-                        else {
-                          if (matchContent.length === 0) {
-                            linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                          }
-                        }
-                        console.log("the match: " + linkFollow.href);
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                        // If the user preses the "Enter" key on the keyboard. 
-                        // if (event.key === 'Enter')  {
-                        //   serverside("getVI", [])
-                        //   .then((response) => {
-                        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                        //     // Access the actual array from the response
-                        //     if (response && typeof response === "object") {
-                        //       fullList = [];
-                        //       for (var key in response) {
-                        //         alert(JSON.stringify(response[key]));
-                        //         let i = 0;
-                        //         let l = response[key].length;
-                        //         alert(l);
-                        //         for (i,l;i<l;i++) {
-                        //           let tempObj = {};
-                        //           tempObj.description = response[key][i].description;
-                        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-                        //             let tData = response[key][i].videoId;
-                        //             let dLoc =  null;
-                        //             dLoc =  "https://www.youtube.com/watch?v=";
-                        //             tempObj.youtubeUrl = dLoc + tData;
-                        //           }
-                        //           else {
-                        //             tempObj.youtubeUrl = response[key][i].videoId;
-                        //           }
-                        //           fullList.push(tempObj);
-                        //         }
-                        //       }
-                        //     } 
-                        //     else {
-                        //       console.warn("Expected an array in response from getVI, received:", response);
-                        //       Fallback to empty array if the structure is not as expected
-                        //       fullList = [];
-                        //     }
-                        //   })
-                        //   .catch(error => {
-                        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-                        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                        //   });
-                        // }
+                        window.scrollTo(0,0);
+                        let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                        div.textContent = val.description;
+                        div.classList.add("receipt", "btn-large");
+                        div.addEventListener('click', () => {
+                          homePage
+                          .then(() => {
+                            let linkFollow = document.createElement("a");
+                            linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
+                            if (val && val?.youtubeURL) {
+                              localStorage.setItem("ssSearch", val?.description);
+                              againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                              input.value = val?.description;
+                              let thUrl = val.youtubeURL;
+                              if 
+                                (
+                                  thUrl && 
+                                  thUrl !== null && 
+                                  typeof thUrl === "string"
+                                ) {
+                                if 
+                                  (
+                                    String(thUrl).indexOf("http") === -1 && 
+                                    String(thUrl).length === 11
+                                  ) {
+                                    thUrl = "https://www.youtube.com/watch?v=" + thUrl;
+                                }
+                                // else {
+                                // }
+                              }
+                              console.log("event getVI user input _top loaded Youtube fetchvals supplimentary resources", thUrl);
+                              linkFollow.href = thUrl;
+                            }
+                            // if (matchContent.length > 0) {
+                            //   console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
+                            // }
+                            // else {
+                            //   if (matchContent.length === 0) {
+                            //   }
+                            // }
+                            console.log("the match: " + linkFollow.href);
+                            linkFollow.id = "linkFOLLOW";
+                            linkFollow.target = "_top";
+                            linkFollow.rel = "noopener noreferrer";
+                            document.body.appendChild(linkFollow);
+                            document.getElementById("linkFOLLOW").click();
+                            document.getElementById("linkFOLLOW").remove();
+                            // If the user preses the "Enter" key on the keyboard. 
+                            // if (event.key === 'Enter')  {
+                            //   serverside("getVI", [])
+                            //   .then((response) => {
+                            //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                            //     // Access the actual array from the response
+                            //     if (response && typeof response === "object") {
+                            //       fullList = [];
+                            //       for (var key in response) {
+                            //         alert(JSON.stringify(response[key]));
+                            //         let i = 0;
+                            //         let l = response[key].length;
+                            //         alert(l);
+                            //         for (i,l;i<l;i++) {
+                            //           let tempObj = {};
+                            //           tempObj.description = response[key][i].description;
+                            //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                            //             let tData = response[key][i].videoId;
+                            //             let dLoc =  null;
+                            //             dLoc =  "https://www.youtube.com/watch?v=";
+                            //             tempObj.youtubeUrl = dLoc + tData;
+                            //           }
+                            //           else {
+                            //             tempObj.youtubeUrl = response[key][i].videoId;
+                            //           }
+                            //           fullList.push(tempObj);
+                            //         }
+                            //       }
+                            //     } 
+                            //     else {
+                            //       console.warn("Expected an array in response from getVI, received:", response);
+                            //       Fallback to empty array if the structure is not as expected
+                            //       fullList = [];
+                            //     }
+                            //   })
+                            //   .catch(error => {
+                            //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                            //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                            //   });
+                            // }
+                            return
+                          })
+                          .catch((fail) => {
+                            console.log("Failed to load ", fail);
+                            input.disabled = false;
+                            // let openYTPlayer = document.getElementById("mainUjpg");
+                            // openYTPlayer.click();
+                            input.focus();
+                            return
+                          });
+                        });
+                        // return
                       }
                     } 
                   });
                 }
               }
             }
+            // suggestionsDiv.appendChild(div);
           })
           .catch(error => {
             console.error("Error fetching address suggestions for artiicleIndex :", error);
@@ -1314,7 +1418,7 @@
         
         if (input && suggestionsDiv) {
           againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
-          input.disabled = false;
+          input.disabled = true;
           input.addEventListener('input', (event) => {
               // if (event?.target?.value.length <= 3) {
               //   suggestionsDiv.innerHTML = '';
@@ -1447,22 +1551,51 @@
                           if (done && typeof done === "object") {
                             // alert(JSON.stringify(done.data));
                             // alert(Object.keys(done.data).length);
-                            let doneAlert = Object.keys(done.data)?.length;
-                            if (done.data && doneAlert > 0) {
+                            let doneAlert = false;
+                            if 
+                              (
+                                done.data &&
+                                done.data !== null &&
+                                typeof done.data === "object" && 
+                                (
+                                  !Array.isArray(done.data)
+                                )
+                              ) {
+                                doneAlert = Object.keys(done.data)?.length;
+                              }
+                            if (done.data && doneAlert && doneAlert > 0) {
                               personalizedList = [];
                               let reUrlList = [];
                               for (let key in done.data) {
                                 let i = 0;
                                 let l = false;
-                                if (typeof done.data[key] === "object" && !Array.isArray(done.data[key])) {
+                                if 
+                                  (
+                                    done.data[key] &&
+                                    done.data[key] !== null &&
+                                    typeof done.data[key] === "object" && 
+                                    !Array.isArray(done.data[key])
+                                  ) {
                                   l =  Object.keys(done.data[key])?.length;
                                 }
                                 else {
-                                  if (typeof done.data[key] === "object" && Array.isArray(done.data[key])) {
+                                  if 
+                                    (
+                                      done.data[key] &&
+                                      done.data[key] !== null &&
+                                      typeof done.data[key] === "object" && 
+                                      Array.isArray(done.data[key]
+                                    )) {
                                     l =  done.data[key]?.length;
                                   }
                                   else {
-                                    if (typeof done.data[key] === "string") {
+                                    if 
+                                      (
+                                        done.data[key] &&
+                                        done.data[key] !== null &&
+                                        done.data[key] !== "undefined" &&
+                                        typeof done.data[key] === "string"
+                                      ) {
                                       l =  Array(String(done.data[key]))?.length;
                                     }
                                   }
@@ -1476,6 +1609,8 @@
                                   let dLoc =  false;
                                   if 
                                     (
+                                      done.data[key] &&
+                                      done.data[key] !== null &&
                                       typeof done.data[key] === "object" && 
                                       (
                                         !Array.isArray(done.data[key]) && 
@@ -1493,13 +1628,13 @@
                                         reUrlList.push(tData);
                                         if (
                                               String(tData) && String(tData).indexOf("http") === -1 && 
-                                              String(tData).length === 12
+                                              String(tData).length === 11
                                             ) {
                                           // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                           dLoc =  "https://www.youtube.com/watch?v=";
                                           try {
                                             tempObj.youtubeUrl = dLoc + tData;
-                                            redirect(tempObj, reTempUrlList);
+                                            redirect(tempObj, reUrlList);
                                           }
                                           catch (err) {
                                             console.warn(err);
@@ -1510,7 +1645,7 @@
                                             // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                             try {
                                               tempObj.webAddressUrl = new URL(tData);
-                                              redirect(tempObj, reTempUrlList);
+                                              redirect(tempObj, reUrlList);
                                             }
                                             catch (err) {
                                               console.warn(err);
@@ -1523,6 +1658,8 @@
                                   else {
                                     if 
                                       (
+                                        done.data[key] &&
+                                        done.data[key] !== null &&
                                         typeof done.data[key] === "object" && 
                                         (
                                           Array.isArray(done.data[key]) && 
@@ -1540,13 +1677,13 @@
                                           reUrlList.push(tData);
                                           if (
                                                 String(tData) && String(tData).indexOf("http") === -1 && 
-                                                String(tData).length === 12
+                                                String(tData).length === 11
                                               ) {
                                             // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                             dLoc =  "https://www.youtube.com/watch?v=";
                                             try {
                                               tempObj.youtubeUrl = dLoc + tData;
-                                              redirect(tempObj, reTempUrlList);
+                                              redirect(tempObj, reUrlList);
                                             }
                                             catch (err) {
                                               console.warn(err);
@@ -1557,7 +1694,7 @@
                                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                               try {
                                                 tempObj.webAddressUrl = new URL(tData);
-                                                redirect(tempObj, reTempUrlList);
+                                                redirect(tempObj, reUrlList);
                                               }
                                               catch (err) {
                                                 console.warn(err);
@@ -1571,6 +1708,8 @@
                                       if 
                                         (
                                           (
+                                            done.data[key] &&
+                                            done.data[key] !== null &&
                                             typeof done.data[key] === "string" && 
                                             String(done.data[key]).length > 0
                                           )
@@ -1586,13 +1725,13 @@
                                             reUrlList.push(tData);
                                             if (
                                                   String(tData) && String(tData).indexOf("http") === -1 && 
-                                                  String(tData).length === 12
+                                                  String(tData).length === 11
                                                 ) {
                                               // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                               dLoc =  "https://www.youtube.com/watch?v=";
                                               try {
                                                 tempObj.youtubeUrl = dLoc + tData;
-                                                redirect(tempObj, reTempUrlList);
+                                                redirect(tempObj, reUrlList);
                                               }
                                               catch (err) {
                                                 console.warn(err);
@@ -1603,7 +1742,7 @@
                                                 // console.log(tData + " index of http = " + String(tData).indexOf("http"));
                                                 try {
                                                   tempObj.webAddressUrl = new URL(tData);
-                                                  redirect(tempObj, reTempUrlList);
+                                                  redirect(tempObj, reUrlList);
                                                 }
                                                 catch (err) {
                                                   console.warn(err);
@@ -1660,6 +1799,7 @@
                                 personalizedList.push(tempObj);
                               }
                             }
+                            suggestionsDiv.appendChild(div);
                             input.disabled = false
                           } 
                           else {
