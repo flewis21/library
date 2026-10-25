@@ -83,13 +83,13 @@
             div.classList.add("receipt", "btn-large");
             div.addEventListener('click', () => {
               input.value = myObj.description;
-              let confirmation;
+              // let confirmation;
               if (myObj.youtubeURL) {
                 console.log("event user input _top loaded addresses fetchmyObjs main resources", myObj.youtubeURL);
-                confirmation = window.confirm(
-                  "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                );
-                if (confirmation) {
+                // confirmation = window.confirm(
+                //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                // );
+                // if (confirmation) {
                   if (myObj.youtubeURL) {
                     // window.open(myObj.youtubeUrl, "_blank");
                     homePage
@@ -159,16 +159,16 @@
                       // return;
                     }
                   }
-                }
+                // }
               }
               else {
                 if (myObj.webAddressUrl) {
                   console.log("event user input _top loaded addresses fetchmyObjs supplimentary resources", myObj.webAddressUrl);
-                  confirmation = window.confirm(
-                    "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
-                  );
+                  // confirmation = window.confirm(
+                  //   "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
+                  // );
                 }
-                if (confirmation) {
+                // if (confirmation) {
                   if (myObj.youtubeURL) {
                     // window.open(myObj.youtubeUrl, "_blank");
                     homePage
@@ -238,7 +238,7 @@
                       // document.location.href = myObj.webAddressUrl;
                     }
                   }
-                }
+                // }
               }
               // install++
               // userClicked = install;
@@ -421,13 +421,13 @@
                   div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
                     input.value = val.description;
-                    let confirmation;
+                    // let confirmation;
                     if (tubeUrl) {
                       console.log("event getVI user input _blank loaded Youtube fetchvals main resources", tubeUrl);
-                      confirmation = window.confirm(
-                        "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                      );
-                      if (confirmation) {
+                      // confirmation = window.confirm(
+                      //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                      // );
+                      // if (confirmation) {
                         if (tubeUrl) {
                           homePage
                           .then(() => {
@@ -460,16 +460,16 @@
                           // suggestionsDiv.innerHTML = '';
                           return;
                         }
-                      }
+                      // }
                     }
                   });
+                  suggestionsDiv.appendChild(div);
                   return tubeUrl
                 }
               }
             }).filter((mapResult) => {
               return mapResult != null
             });
-            suggestionsDiv.appendChild(div);
             // if (matchesContent.length > 0) {
             //   remoteSuggestionsCache[againContent] = personalizedList;
             // }
@@ -541,10 +541,10 @@
               $('a').click(function(event){
                 if ($(this).attr('href') === "javascript:void(0)") {
                   console.log("event getVI _top loaded addresses main resources", matchesContent.length);
-                  let confirmation = window.confirm(
-                    "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                  );
-                  if (confirmation) {
+                  // let confirmation = window.confirm(
+                  //   "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  // );
+                  // if (confirmation) {
                     event.preventDefault();
                     window.scrollTo(0,0);
                     let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
@@ -644,7 +644,8 @@
                         return
                       });
                     });
-                  }
+                    suggestionsDiv.appendChild(div);
+                  // }
                 } 
                 // return
               });
@@ -678,13 +679,13 @@
                       div.classList.add("receipt", "btn-large");
                       div.addEventListener('click', () => {
                         input.value = val.description;
-                        let confirmation;
+                        // let confirmation;
                         if (webUrl) {
                           console.log("event getVI user input _top loaded addresses fetchvals main resources", webUrl);
-                          confirmation = window.confirm(
-                            "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                          );
-                          if (confirmation) {
+                          // confirmation = window.confirm(
+                          //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                          // );
+                          // if (confirmation) {
                             if (webUrl) {
                               homePage
                               .then(() => {
@@ -719,16 +720,17 @@
                               // suggestionsDiv.innerHTML = '';
                               // return;
                             }
-                          }
+                          // }
                         }
                       });
+                      suggestionsDiv.appendChild(div);
                       return webUrl
                     }
                   }
                 }).filter((mapResult) => {
                   return mapResult != null
                 });
-                suggestionsDiv.appendChild(div);
+                // suggestionsDiv.appendChild(div);
                 // console.log("event contentAvailable resources", contentAvailable.length);
                 // console.log(contentAvailable.length < matchContent.length);
                 if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
@@ -784,10 +786,10 @@
                   $('a').click(function(event){
                     if ($(this).attr('href') === "javascript:void(0)") {
                       console.log("event getVI _top loaded addresses supplimentary resources", contentAvailable.length);
-                      let confirmation = window.confirm(
-                        "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                      );
-                      if (confirmation) {
+                      // let confirmation = window.confirm(
+                      //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                      // );
+                      // if (confirmation) {
                         event.preventDefault();
                         window.scrollTo(0,0);
                         let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
@@ -887,8 +889,9 @@
                             return
                           });
                         });
+                        suggestionsDiv.appendChild(div);
                         // return
-                      }
+                      // }
                     } 
                   });
                 }
@@ -1050,7 +1053,7 @@
                       //   // });
                       // }
                       if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
-                        input.addEventListener("input", (event) => {
+                        // input.addEventListener("input", (event) => {
                             if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
                               window.scrollTo(0,0);
                               // const div = document.createElement('div');
@@ -1218,7 +1221,7 @@
                               suggestionsDiv.appendChild(div);
                               // return
                             }
-                        })
+                        // })
                       } 
                       else {
                         // if (!event.key === 'Enter') {
@@ -1228,9 +1231,9 @@
                           //     input.blur();
                           //     input.disabled = true
                         let suIndexLen = index + 1;
-                        input.addEventListener("change", (event) => {
-                          window.scrollTo(0,0);
-                          let openYTPlayer = document.getElementById("mainUjpg");
+                        // input.addEventListener("change", (event) => {
+                          // window.scrollTo(0,0);
+                          // let openYTPlayer = document.getElementById("mainUjpg");
                           // openYTPlayer.click();
                           // homePage
                           // .then((load) => {
@@ -1257,7 +1260,7 @@
                           //   let openYTPlayer = document.getElementById("mainUjpg");
                           //   openYTPlayer.click();
                           // });
-                        })
+                        // })
                               // if (suIndexLen >= suggestContent?.length) {
                                 // input.addEventListener("input", (event) => {
                                 // })
@@ -1375,6 +1378,7 @@
             else {
               if (suggestContent.length === 0) {
                 suggestionsDiv.innerHTML = '';
+                return;
               }
             }
           }
@@ -1504,10 +1508,10 @@
           //   });
           // });
 
-          input.addEventListener('keydown', (event) => {
-            let enterClicked = 0;
-            if (event.key === 'Enter') {
-              console.log("event; input event: ", JSON.stringify(event.target.value))
+          // input.addEventListener('keydown', (event) => {
+            // let enterClicked = 0;
+            // if (event.key === 'Enter') {
+              console.log("event; input event: ", JSON.stringify(input.value))
               // if (String(event.target.value).length < 1) {
               //   return
               // }
@@ -1542,7 +1546,7 @@
                       // document.getElementById("openYTPLAYER").click();
                       // document.getElementById("openYTPLAYER").remove();
                       // qTemp = query
-                      serverside("vidPlaylist", [String(event.target.value)])
+                      serverside("vidPlaylist", [String(againContent)])
                       .then((done) => {
                         try {
                           // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
@@ -1667,7 +1671,7 @@
                                         )
                                       ) {
                                       console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
-                                      tempObj.description = String(event.target.value);
+                                      tempObj.description = String(againContent);
                                       if (reUrlList?.indexOf(done.data[key][i]) > -1) {
                                         console.warn(done.data[key][i] + " already in data",);
                                       }
@@ -1715,7 +1719,7 @@
                                           )
                                         ) {
                                         console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
-                                        tempObj.description = String(event.target.value);
+                                        tempObj.description = String(againContent);
                                         if (reUrlList?.indexOf(done.data[key]) > -1) {
                                           console.warn(done.data[key] + " already in data",);
                                         }
@@ -1995,32 +1999,39 @@
                       // document.body.appendChild(linkFollow);
                       // document.getElementById("linkFOLLOW").click();
                       // document.getElementById("linkFOLLOW").remove();
-                      homePage
-                      .then(() => {
-                        localStorage.setItem("ssSearch", val.description);
-                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                        // console.log("Data; Url for reLoad ", load.data);
-                        let linkFollow = document.createElement("a");
-                        linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
-                        // console.log("the match: " + linkFollow.href);
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                        // window.location.href = load.data
-                        // input.value = event.target.value;
-                        // input.disabled = false;
-                        // input.focus();
-                      })
-                      .catch((fail) => {
-                        console.log("Failed to load ", fail);
-                        input.disabled = false;
-                        input.focus();
-                        let openYTPlayer = document.getElementById("mainUjpg");
-                        openYTPlayer.click();
+                      window.scrollTo(0,0);
+                      div.textContent = val.description;
+                      div.classList.add("receipt", "btn-large");
+                      div.addEventListener('click', () => {
+                        input.value = val.description;
+                        homePage
+                        .then(() => {
+                          localStorage.setItem("ssSearch", val.description);
+                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                          // console.log("Data; Url for reLoad ", load.data);
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
+                          // console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_blank";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // window.location.href = load.data
+                          // input.value = event.target.value;
+                          // input.disabled = false;
+                          // input.focus();
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
+                          input.disabled = false;
+                          input.focus();
+                          // let openYTPlayer = document.getElementById("mainUjpg");
+                          // openYTPlayer.click();
+                        });
                       });
+                      suggestionsDiv.appendChild(div);
                     }
                     else {
                       // if (tubeUrl && tubeUrl !== null) {
@@ -2039,32 +2050,39 @@
                         // document.body.appendChild(linkFollow);
                         // document.getElementById("linkFOLLOW").click();
                         // document.getElementById("linkFOLLOW").remove();
-                        homePage
-                        .then(() => {
-                          localStorage.setItem("ssSearch", val.description);
-                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                          // console.log("Data; Url for reLoad ", load.data);
-                          let linkFollow = document.createElement("a");
-                          linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
-                          // console.log("the match: " + linkFollow.href);
-                          linkFollow.id = "linkFOLLOW";
-                          linkFollow.target = "_blank";
-                          linkFollow.rel = "noopener noreferrer";
-                          document.body.appendChild(linkFollow);
-                          document.getElementById("linkFOLLOW").click();
-                          document.getElementById("linkFOLLOW").remove();
-                          // window.location.href = load.data
-                          // input.value = event.target.value;
-                          // input.disabled = false;
-                          // input.focus();
-                        })
-                        .catch((fail) => {
-                          console.log("Failed to load ", fail);
-                          input.disabled = false;
-                          input.focus();
-                          let openYTPlayer = document.getElementById("mainUjpg");
-                          openYTPlayer.click();
+                        window.scrollTo(0,0);
+                        div.textContent = val.description;
+                        div.classList.add("receipt", "btn-large");
+                        div.addEventListener('click', () => {
+                          input.value = val.description;
+                          homePage
+                          .then(() => {
+                            localStorage.setItem("ssSearch", val.description);
+                            againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                            // console.log("Data; Url for reLoad ", load.data);
+                            let linkFollow = document.createElement("a");
+                            linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
+                            // console.log("the match: " + linkFollow.href);
+                            linkFollow.id = "linkFOLLOW";
+                            linkFollow.target = "_blank";
+                            linkFollow.rel = "noopener noreferrer";
+                            document.body.appendChild(linkFollow);
+                            document.getElementById("linkFOLLOW").click();
+                            document.getElementById("linkFOLLOW").remove();
+                            // window.location.href = load.data
+                            // input.value = event.target.value;
+                            // input.disabled = false;
+                            // input.focus();
+                          })
+                          .catch((fail) => {
+                            console.log("Failed to load ", fail);
+                            input.disabled = false;
+                            input.focus();
+                            let openYTPlayer = document.getElementById("mainUjpg");
+                            openYTPlayer.click();
+                          });
                         });
+                        suggestionsDiv.appendChild(div);
                       }
                       return tubeUrl
                     }
@@ -2206,39 +2224,47 @@
                 // }
               }
               else {
-                if (enterClicked === 1) {
-                  console.log("document _self loaded addresses Enter key results: " + event.target.value);
-                  homePage
-                  .then((load) => {
-                    let openYTPlayer = document.getElementById("mainUjpg");
-                    openYTPlayer.click();
-                    enterClicked++;
-                    localStorage.setItem("ssSearch", String(event.target.value));
-                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                    // console.log("Data; Url for reLoad ", load.data);
-                    let linkFollow = document.createElement("a");
-                    linkFollow.href = load.data;
-                    // console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_self";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
-                    // window.location.href = load.data
-                    // input.value = event.target.value;
-                    // input.disabled = false;
-                    // input.focus();
-                  })
-                  .catch((fail) => {
-                    console.log("Failed to load ", fail);
-                    input.disabled = false;
-                    input.focus();
-                    let openYTPlayer = document.getElementById("mainUjpg");
-                    openYTPlayer.click();
-                    enterClicked++;
+                // if (enterClicked === 1) {  
+                if (String(againContent).length > 0) {
+                  console.log("document _self loaded addresses Enter key results: " + againContent);
+                  window.scrollTo(0,0);
+                  div.textContent = againContent;
+                  div.classList.add("receipt", "btn-large");
+                  div.addEventListener('click', () => {
+                    homePage
+                    .then((load) => {
+                      let openYTPlayer = document.getElementById("mainUjpg");
+                      openYTPlayer.click();
+                      enterClicked++;
+                      localStorage.setItem("ssSearch", String(againContent));
+                      againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                      // console.log("Data; Url for reLoad ", load.data);
+                      let linkFollow = document.createElement("a");
+                      linkFollow.href = "javascript:void(0)";
+                      // console.log("the match: " + linkFollow.href);
+                      linkFollow.id = "linkFOLLOW";
+                      linkFollow.target = "_blank";
+                      linkFollow.rel = "noopener noreferrer";
+                      document.body.appendChild(linkFollow);
+                      document.getElementById("linkFOLLOW").click();
+                      document.getElementById("linkFOLLOW").remove();
+                      // window.location.href = load.data
+                      // input.value = event.target.value;
+                      // input.disabled = false;
+                      // input.focus();
+                    })
+                    .catch((fail) => {
+                      console.log("Failed to load ", fail);
+                      input.disabled = false;
+                      input.focus();
+                      let openYTPlayer = document.getElementById("mainUjpg");
+                      openYTPlayer.click();
+                      enterClicked++;
+                    });
                   });
-                }
+                  suggestionsDiv.appendChild(div);  
+                }  
+                // }
                 // fetchSuggestions(String(event.target.value));
                 // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
                 //   // if (event.target.value !== againCap) {
@@ -2334,12 +2360,12 @@
               //     }
               //   });
               // }
-            }
-            if (event.key === 'Escape') {
-              suggestionsDiv.innerHTML = '';
-              input.blur();
-            }
-          });
+            // }
+            // if (event.key === 'Escape') {
+              // suggestionsDiv.innerHTML = '';
+              // input.blur();
+            // }
+          // });
         } 
         else {
           console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
