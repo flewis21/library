@@ -412,25 +412,43 @@
               if (String(val.description).indexOf(againContent) > -1) {
                 // console.log(againContent + ": result description: " + val.description);
                 // console.log("result index: " + index);
-                let tubeUrl = val.youtubeUrl;
-                if (tubeUrl && tubeUrl !== null) {
+                let tubeUrl = val?.youtubeUrl;
+                if 
+                  (
+                    tubeUrl && 
+                    tubeUrl !== null && 
+                    typeof tubeUrl === "string"
+                  ) {
                   console.log("event getVI _blank loaded addresses main local storage all results: " + againContent);
                   // personalizedList.push(val);
                   window.scrollTo(0,0);
+                  input.value = val?.description;
                   div.textContent = val.description;
                   div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
                     input.value = val.description;
                     // let confirmation;
                     if (tubeUrl) {
-                      console.log("event getVI user input _blank loaded Youtube fetchvals main resources", tubeUrl);
-                      // confirmation = window.confirm(
-                      //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
-                      // );
+                      if 
+                        (
+                          String(tubeUrl).indexOf("http") === -1 && 
+                          String(tubeUrl).length === 11
+                        ) {
+                          tubeUrl = "https://www.youtube.com/watch?v=" + tubeUrl;
+                          console.log("event getVI user input _blank loaded Youtube fetchvals main resources", tubeUrl);
+                          // confirmation = window.confirm(
+                          //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
+                          // );
+                      }
+                      // else {
+                      // }
                       // if (confirmation) {
-                        if (tubeUrl) {
+                        // if (tubeUrl) {
                           homePage
-                          .then(() => {
+                          .then((load) => {
+                            if (String(tubeUrl).indexOf("http") === -1) {
+                              tubeUrl = load.data + "?q=" + tubeUrl
+                            }
                             // alert(JSON.stringify(load));
                             localStorage.setItem("ssSearch", val.description);
                             againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
@@ -459,14 +477,15 @@
                           });
                           // suggestionsDiv.innerHTML = '';
                           return;
-                        }
+                        // }
                       // }
                     }
                   });
                   suggestionsDiv.appendChild(div);
-                  return tubeUrl
                 }
+                return tubeUrl
               }
+            // }
             }).filter((mapResult) => {
               return mapResult != null
             });
@@ -493,7 +512,7 @@
                     console.log(`event getVI _blank loaded addresses main content ${i} < .3: `);
                     let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                     if (matchA > -1) {
-                      // console.log(againContent + ": matchA = " + matchA);
+                      console.log(againContent + ": matchA = " + matchA);
                       return zSorted;
                     }
                   }
@@ -502,20 +521,20 @@
                       console.log(`event getVI _blank loaded addresses main content ${i} > .3 && ${i} < .5: `);
                       let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                       if (matchB === -1) {
-                        // console.log(againContent + ": matchB = " + matchB);
+                        console.log(againContent + ": matchB = " + matchB);
                         return tSorted;
                       }
                     }
                     else {
                       if (i > .5 && i < .8) {
                         console.log(`event getVI _blank loaded addresses main content ${i} > .5 && ${i} < .8: `);
-                        // console.log(againContent + ": matchC = " + zSorted);
+                        console.log(againContent + ": matchC = " + zSorted);
                         return zSorted;
                       }
                       else {
                         if (i > .8) {
                           console.log(`event getVI _blank loaded addresses main content ${i} > .8: `);
-                          // console.log(againContent + ": matchD = " + tSorted);
+                          console.log(againContent + ": matchD = " + tSorted);
                           return tSorted;
                         }
                       }
@@ -548,17 +567,23 @@
                     event.preventDefault();
                     window.scrollTo(0,0);
                     let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                    input.value = val?.description;
+                    localStorage.setItem("ssSearch", input.value);
+                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                    if (input.value?.length > 3) {
+                      fetchSuggestions(input.value?.value);
+                    }
                     div.textContent = val.description;
                     div.classList.add("receipt", "btn-large");
                     div.addEventListener('click', () => {
                       homePage
-                      .then(() => {
+                      .then((load) => {
                         let linkFollow = document.createElement("a");
                         linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
                         if (val && (val?.youtubeURL || val?.webAddressUrl)) {
-                          localStorage.setItem("ssSearch", val?.description);
-                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                          input.value = val?.description;
+                          // localStorage.setItem("ssSearch", val?.description);
+                          // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                          // input.value = val?.description;
                           let thUrl = (val?.youtubeURL || val?.webAddressUrl);
                           if 
                             (
@@ -573,8 +598,11 @@
                               ) {
                                 thUrl = "https://www.youtube.com/watch?v=" + thUrl;
                             }
-                            // else {
-                            // }
+                            else {
+                              if (String(thUrl).indexOf("http") === -1) {
+                                thUrl = load.data + "?q=" + thUrl
+                              }
+                            }
                           }
                           console.log("event user input _top Youtube addresses fetchvals main resources", thUrl);
                           linkFollow.href = thUrl;
@@ -663,33 +691,37 @@
                         webUrl !== null && 
                         typeof webUrl === "string"
                       ) {
-                      if 
-                        (
-                          String(webUrl).indexOf("http") === -1 && 
-                          String(webUrl).length === 11
-                        ) {
-                          webUrl = "https://www.youtube.com/watch?v=" + webUrl;
-                      }
-                      // else {
-                      // }
                       console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + againContent);
                       // personalizedList.push(val);
                       window.scrollTo(0,0);
+                      input.value = val?.description;
                       div.textContent = val.description;
                       div.classList.add("receipt", "btn-large");
                       div.addEventListener('click', () => {
                         input.value = val.description;
                         // let confirmation;
                         if (webUrl) {
-                          console.log("event getVI user input _top loaded addresses fetchvals main resources", webUrl);
-                          // confirmation = window.confirm(
-                          //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                          // );
+                          if 
+                            (
+                              String(webUrl).indexOf("http") === -1 && 
+                              String(webUrl).length === 11
+                            ) {
+                              webUrl = "https://www.youtube.com/watch?v=" + webUrl;
+                              console.log("event getVI user input _top loaded addresses fetchvals main resources", webUrl);
+                              // confirmation = window.confirm(
+                              //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                              // );
+                          }
+                          // else {
+                          // }
                           // if (confirmation) {
-                            if (webUrl) {
+                            // if (webUrl) {
                               homePage
-                              .then(() => {
+                              .then((load) => {
                                 // alert(JSON.stringify(load));
+                                if (String(webUrl).indexOf("http") === -1) {
+                                  webUrl = load.data + "?q=" + webUrl
+                                }
                                 localStorage.setItem("ssSearch", val.description);
                                 againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                                 // console.log("Data; Url for reLoad ", load.data);
@@ -719,7 +751,7 @@
                               });
                               // suggestionsDiv.innerHTML = '';
                               // return;
-                            }
+                            // }
                           // }
                         }
                       });
@@ -747,7 +779,7 @@
                         console.log(`event getVI _blank loaded addresses supplimentary content ${i} < .3: `);
                         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
                         if (matchA > -1) {
-                          // console.log(againContent + ": matchA = " + matchA);
+                          console.log(againContent + ": matchA = " + matchA);
                           return zSorted;
                         }
                       }
@@ -756,20 +788,20 @@
                           console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
                           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
                           if (matchB === -1) {
-                            // console.log(againContent + ": matchB = " + matchB);
+                            console.log(againContent + ": matchB = " + matchB);
                             return tSorted;
                           }
                         }
                         else {
                           if (i > .5 && i < .8) {
                             console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
-                            // console.log(againContent + ": matchC = " + zSorted);
+                            console.log(againContent + ": matchC = " + zSorted);
                             return zSorted;
                           }
                           else {
                             if (i > .8) {
                               console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .8: `);
-                              // console.log(againContent + ": matchD = " + tSorted);
+                              console.log(againContent + ": matchD = " + tSorted);
                               return tSorted;
                             }
                           }
@@ -793,17 +825,23 @@
                         event.preventDefault();
                         window.scrollTo(0,0);
                         let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                        input.value = val?.description;
+                        localStorage.setItem("ssSearch", input.value);
+                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                        if (input.value?.length > 3) {
+                          fetchSuggestions(input.value?.value);
+                        }
                         div.textContent = val.description;
                         div.classList.add("receipt", "btn-large");
                         div.addEventListener('click', () => {
                           homePage
-                          .then(() => {
+                          .then((load) => {
                             let linkFollow = document.createElement("a");
                             linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
                             if (val && val?.youtubeURL) {
-                              localStorage.setItem("ssSearch", val?.description);
-                              againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                              input.value = val?.description;
+                              // localStorage.setItem("ssSearch", val?.description);
+                              // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                              // input.value = val?.description;
                               let thUrl = val.youtubeURL;
                               if 
                                 (
@@ -818,8 +856,11 @@
                                   ) {
                                     thUrl = "https://www.youtube.com/watch?v=" + thUrl;
                                 }
-                                // else {
-                                // }
+                                else {
+                                  if (String(thUrl).indexOf("http") === -1) {
+                                    thUrl = load.data + "?q=" + thUrl
+                                  }
+                                }
                               }
                               console.log("event getVI user input _top loaded Youtube fetchvals supplimentary resources", thUrl);
                               linkFollow.href = thUrl;
@@ -1056,6 +1097,7 @@
                         // input.addEventListener("input", (event) => {
                             if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
                               window.scrollTo(0,0);
+                              input.value = suggestion?.description;
                               // const div = document.createElement('div');
                               div.textContent = suggestion.description;
                               div.classList.add("receipt", "btn-large");
@@ -1424,6 +1466,8 @@
           againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
           input.disabled = true;
           input.addEventListener('input', (event) => {
+            localStorage.setItem("ssSearch", event?.target?.value);
+            againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
               // if (event?.target?.value.length <= 3) {
               //   suggestionsDiv.innerHTML = '';
               // }
@@ -2000,6 +2044,7 @@
                       // document.getElementById("linkFOLLOW").click();
                       // document.getElementById("linkFOLLOW").remove();
                       window.scrollTo(0,0);
+                      input.value = val?.description;
                       div.textContent = val.description;
                       div.classList.add("receipt", "btn-large");
                       div.addEventListener('click', () => {
@@ -2051,6 +2096,7 @@
                         // document.getElementById("linkFOLLOW").click();
                         // document.getElementById("linkFOLLOW").remove();
                         window.scrollTo(0,0);
+                        input.value = val?.description;
                         div.textContent = val.description;
                         div.classList.add("receipt", "btn-large");
                         div.addEventListener('click', () => {
@@ -2228,6 +2274,7 @@
                 if (String(againContent).length > 0) {
                   console.log("document _self loaded addresses Enter key results: " + againContent);
                   window.scrollTo(0,0);
+                  input.value = againContent;
                   div.textContent = againContent;
                   div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
