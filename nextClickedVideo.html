@@ -36,8 +36,27 @@
         // var params = new URLSearchParams(window.location.search);
         // var redirectURL = params.get("url");
         let redirectURL = false;
-        if (myArr.indexOf((myObj?.youtubeURL || myObj?.webAddressUrl)) < 0) {
-          redirectURL = (myObj?.youtubeURL || myObj?.webAddressUrl);
+        if (typeof myObj !== "string") {
+        if 
+          (
+            myObj &&
+            typeof myObj === "object" &&
+            !Array.isArray(myObj) 
+          ) {
+          let myKeyObj = Object.keys(myObj);
+          if 
+            (
+              myKeyObj &&
+              typeof myKeyObj === "object" &&
+              Array.isArray(myKeyObj)
+            ) {
+              if (myKeyObj.length > 0) {
+                if (myArr.indexOf((myObj?.youtubeURL || myObj?.webAddressUrl)) < 0) {
+                  redirectURL = (myObj?.youtubeURL || myObj?.webAddressUrl);
+                }
+              }
+            }
+          }
         }
         if (redirectURL) {
           myArr.push(redirectURL)
@@ -215,7 +234,7 @@
                         linkFollow.href = myObj.webAddressUrl; // load.data;
                         // console.log("the match: " + linkFollow.href);
                         linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_top";
+                        linkFollow.target = "_blank";
                         linkFollow.rel = "noopener noreferrer";
                         document.body.appendChild(linkFollow);
                         document.getElementById("linkFOLLOW").click();
@@ -306,12 +325,35 @@
         } 
         else {
           // Handle the case where the URL parameter is missing
-          console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj.description));
+          if (typeof myObj !== "string") {
+          if 
+            (
+              myObj &&
+              typeof myObj === "object" &&
+              !Array.isArray(myObj) 
+            ) {
+            let myKeyObj = Object.keys(myObj);
+            if 
+              (
+                myKeyObj &&
+                typeof myKeyObj === "object" &&
+                Array.isArray(myKeyObj)
+              ) {
+                if (myKeyObj.length > 0) {
+                  console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj.description));
+                  localStorage.setItem("ssSearch", myObj?.description);
+                }
+              }
+            }
+          }
+          else {
+            console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj));
+            localStorage.setItem("ssSearch", myObj);
+          }
           console.error("No redirect URL provided.");
           homePage
           .then((load) => {
             // alert(JSON.stringify(load));
-            localStorage.setItem("ssSearch", myObj.description);
             // console.log("Data; Url for reLoad ", load.data);
             let linkFollow = document.createElement("a");
             linkFollow.href = load.data;
@@ -358,6 +400,7 @@
         let searchBackEnd = null;
         let searchIntent = null;
         let fullList = [];
+        let reUrlList = [];
         let contentList = [];
         let suggestContent = "";
         let localList = [];
@@ -571,7 +614,8 @@
                     localStorage.setItem("ssSearch", input.value);
                     againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                     if (input.value?.length > 3) {
-                      fetchSuggestions(input.value?.value);
+                      redirect(againContent, reUrlList);
+                      fetchSuggestions(againContent);
                     }
                     div.textContent = val.description;
                     div.classList.add("receipt", "btn-large");
@@ -829,7 +873,8 @@
                         localStorage.setItem("ssSearch", input.value);
                         againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                         if (input.value?.length > 3) {
-                          fetchSuggestions(input.value?.value);
+                          redirect(againContent, reUrlList);
+                          fetchSuggestions(againContent);
                         }
                         div.textContent = val.description;
                         div.classList.add("receipt", "btn-large");
@@ -939,8 +984,10 @@
               }
             }
             // suggestionsDiv.appendChild(div);
+            input.disabled = false;
           })
           .catch(error => {
+            input.disabled = false;
             console.error("Error fetching address suggestions for artiicleIndex :", error);
             suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
           });
@@ -1479,12 +1526,12 @@
                 // else {
                   // if (String(againContent?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
                     if (event?.target?.value?.length > 3) {
-                      fetchSuggestions(event?.target?.value);
-                    }
+                      // fetchSuggestions(event?.target?.value);
+                    // }
                   // }
                 // }
               // }
-          });
+          // });
 
 
             // input.addEventListener('keydown', (event) => {
@@ -1555,9 +1602,13 @@
           // input.addEventListener('keydown', (event) => {
             // let enterClicked = 0;
             // if (event.key === 'Enter') {
-              console.log("event; input event: ", JSON.stringify(input.value))
-              // if (String(event.target.value).length < 1) {
-              //   return
+              // if (String(input?.value).length < 1) {
+              //   return;
+              // }
+              // else {
+                // if (String(input?.value).length >= 3) {
+                  console.log("event; input event: ", JSON.stringify(event?.target?.value));
+                // }
               // }
               // let filContent = suggestions.filter(item => 
               //     String(item).toLowerCase() === event.target.value.toLowerCase()
@@ -1590,7 +1641,7 @@
                       // document.getElementById("openYTPLAYER").click();
                       // document.getElementById("openYTPLAYER").remove();
                       // qTemp = query
-                      serverside("vidPlaylist", [String(againContent)])
+                      serverside("vidPlaylist", [String(event?.target?.value)])
                       .then((done) => {
                         try {
                           // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
@@ -1613,7 +1664,7 @@
                               }
                             if (done.data && doneAlert && doneAlert > 0) {
                               personalizedList = [];
-                              let reUrlList = [];
+                              reUrlList = [];
                               for (let key in done.data) {
                                 let i = 0;
                                 let l = false;
@@ -1715,7 +1766,7 @@
                                         )
                                       ) {
                                       console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
-                                      tempObj.description = String(againContent);
+                                      tempObj.description = String(event?.target?.value);
                                       if (reUrlList?.indexOf(done.data[key][i]) > -1) {
                                         console.warn(done.data[key][i] + " already in data",);
                                       }
@@ -1763,7 +1814,7 @@
                                           )
                                         ) {
                                         console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
-                                        tempObj.description = String(againContent);
+                                        tempObj.description = String(event?.target?.value);
                                         if (reUrlList?.indexOf(done.data[key]) > -1) {
                                           console.warn(done.data[key] + " already in data",);
                                         }
@@ -2015,7 +2066,7 @@
                   // });
                   // break;
                 // }
-                // }
+                }
               // }
               // if (qTemp) {
               //   return
@@ -2271,19 +2322,19 @@
               }
               else {
                 // if (enterClicked === 1) {  
-                if (String(againContent).length > 0) {
-                  console.log("document _self loaded addresses Enter key results: " + againContent);
+                if (String(event?.target?.value).length > 0) {
+                  console.log("document _self loaded addresses Enter key results: " + event?.target?.value);
                   window.scrollTo(0,0);
-                  input.value = againContent;
-                  div.textContent = againContent;
+                  input.value = event?.target?.value;
+                  div.textContent = event?.target?.value;
                   div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
                     homePage
                     .then((load) => {
                       let openYTPlayer = document.getElementById("mainUjpg");
                       openYTPlayer.click();
-                      enterClicked++;
-                      localStorage.setItem("ssSearch", String(againContent));
+                      // enterClicked++;
+                      localStorage.setItem("ssSearch", String(event?.target?.value));
                       againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
                       // console.log("Data; Url for reLoad ", load.data);
                       let linkFollow = document.createElement("a");
@@ -2306,7 +2357,7 @@
                       input.focus();
                       let openYTPlayer = document.getElementById("mainUjpg");
                       openYTPlayer.click();
-                      enterClicked++;
+                      // enterClicked++;
                     });
                   });
                   suggestionsDiv.appendChild(div);  
@@ -2412,7 +2463,7 @@
               // suggestionsDiv.innerHTML = '';
               // input.blur();
             // }
-          // });
+          });
         } 
         else {
           console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");

@@ -57,7 +57,7 @@
       document.addEventListener("DOMContentLoaded", autoList);
       function autoList() {
         var htmFileList = [];
-        serverside("convertToJS", ["rndText"]).then((li) => {
+        serverside("htmlFreqP", []).then((li) => {
           li.forEach((it) => {
             htmFileList.push(it);
           });
