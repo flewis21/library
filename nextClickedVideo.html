@@ -450,7 +450,7 @@
             console.log("event getVI _blank loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
             // searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].description;
             // localStorage.setItem("gsSearch", searchBackEnd);
-            // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+            againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
             matchesContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
               if (String(val.description).indexOf(againContent) > -1) {
                 // console.log(againContent + ": result description: " + val.description);
@@ -1527,6 +1527,7 @@
                   // if (String(againContent?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
                     if (event?.target?.value?.length > 3) {
                       // fetchSuggestions(event?.target?.value);
+                      redirect(againContent, reUrlList);
                     // }
                   // }
                 // }
@@ -2073,6 +2074,7 @@
               // }
               if (personalizedList && Object.keys(personalizedList)[1] && Object.keys(personalizedList)[1].length > 0) {
                 remoteSuggestionsCache[againContent] = Object.keys(personalizedList)[1];
+                console.log("document _blank loaded addresses remoteSuggestionsCache[againContent] resources: ", JSON.stringify(remoteSuggestionsCache[againContent]));
                 remoteIntent = remoteSuggestionsCache[againContent][Math.floor(Math.random() * done.data.length)].description;
                 localStorage.setItem("rsSearch", remoteIntent);
                 againContent = localStorage.getItem("rsSearch");
