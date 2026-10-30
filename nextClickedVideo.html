@@ -29,6 +29,7 @@
           console.log("Timeout error: " + error.stack)
         }
       }
+      let againContent = null;
       const div = document.createElement('div');
       const homePage = serverside("getScriptUrl", []);
       function redirect(myObj, myArr) {
@@ -98,8 +99,8 @@
             //   return
             // });
             window.scrollTo(0,0);
-            div.textContent = myObj.description;
-            div.classList.add("receipt", "btn-large");
+            // div.textContent = myObj.description;
+            // div.classList.add("receipt", "btn-large");
             div.addEventListener('click', () => {
               input.value = myObj.description;
               // let confirmation;
@@ -325,7 +326,7 @@
         } 
         else {
           // Handle the case where the URL parameter is missing
-          if (typeof myObj !== "string") {
+          if (typeof myObj === "string") {
           if 
             (
               myObj &&
@@ -339,9 +340,11 @@
                 typeof myKeyObj === "object" &&
                 Array.isArray(myKeyObj)
               ) {
-                if (myKeyObj.length > 0) {
+                if (myKeyObj?.length > 0) {
                   console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj.description));
                   localStorage.setItem("ssSearch", myObj?.description);
+                  againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                  // fetchSuggestions(myObj?.description);
                 }
               }
             }
@@ -349,6 +352,8 @@
           else {
             console.log("event redirect function _self supplimentary resources", JSON.stringify(myObj));
             localStorage.setItem("ssSearch", myObj);
+            againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+            // fetchSuggestions(myObj);
           }
           console.error("No redirect URL provided.");
           homePage
@@ -389,7 +394,8 @@
         const remoteSuggestionsCache = {};
         const localListsCache = {};
         let personalizedList = [];
-        let againContent = null;
+        let digestList = [];
+        let resultsDigest = [];
         let againCap = null;
         let matchesContent = null;
         let matchContent = null;
@@ -451,9 +457,16 @@
             // searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * localSuggestionsCache["allMatches"].length)].description;
             // localStorage.setItem("gsSearch", searchBackEnd);
             againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-            matchesContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-              if (String(val.description).indexOf(againContent) > -1) {
-                // console.log(againContent + ": result description: " + val.description);
+            console.log("event getVI _blank loaded addresses local storage resources", (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch")));
+            const fetchResults = debounce((query) => {
+              digestList = localSuggestionsCache["allMatches"];
+              console.log("event getVI _blank loaded addresses cache", JSON.stringify(digestList));
+              resultsDigest = digestList.filter(item => 
+                String(item.description).toLowerCase().includes(String(query).toLowerCase())
+              );
+              console.log("event getVI _blank loaded addresses digest", resultsDigest);
+              matchesContent = resultsDigest?.map((val) => {   //, index) => {
+                // console.log(query + ": result description: " + val.description);
                 // console.log("result index: " + index);
                 let tubeUrl = val?.youtubeUrl;
                 if 
@@ -462,12 +475,12 @@
                     tubeUrl !== null && 
                     typeof tubeUrl === "string"
                   ) {
-                  console.log("event getVI _blank loaded addresses main local storage all results: " + againContent);
+                  console.log("event getVI _blank loaded addresses main local storage all results: " + query);
                   // personalizedList.push(val);
                   window.scrollTo(0,0);
-                  input.value = val?.description;
-                  div.textContent = val.description;
-                  div.classList.add("receipt", "btn-large");
+                  // input.value = val?.description;
+                  // div.textContent = val.description;
+                  // div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
                     input.value = val.description;
                     // let confirmation;
@@ -527,206 +540,204 @@
                   suggestionsDiv.appendChild(div);
                 }
                 return tubeUrl
-              }
-            // }
-            }).filter((mapResult) => {
-              return mapResult != null
-            });
-            // if (matchesContent.length > 0) {
-            //   remoteSuggestionsCache[againContent] = personalizedList;
-            // }
-            // else {
-            //   remoteSuggestionsCache[againContent] = [];
-            // }
-            // console.log("matches to return: " + JSON.stringify(matchesContent));
-            // console.log("event allContentAvailable resources", allContentAvailable.length);
-            // console.log(allContentAvailable.length < matchesContent.length);
-            if (matchesContent.length > 0 && allContentAvailable.length < matchesContent.length) {
-              console.log("event getVI _blank loaded addresses main matches to return resources: ", matchesContent.length);
-              console.log("event getVI _blank loaded addresses main content resources", allContentAvailable.length);
-              while (allContentAvailable.length < matchesContent.length) {
-                allContentAvailable = matchesContent.sort((a,b) => {
-                  let i = Math.random()
-                  let tSorted = a;
-                  // console.log(againContent + ": tSorted = " + tSorted);
-                  let zSorted = b;
-                  // console.log(againContent + ": zSorted = " + zSorted);
-                  if (i < .3) {
-                    console.log(`event getVI _blank loaded addresses main content ${i} < .3: `);
-                    let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                    if (matchA > -1) {
-                      console.log(againContent + ": matchA = " + matchA);
-                      return zSorted;
-                    }
-                  }
-                  else {
-                    if (i > .3 && i < .5 ) {
-                      console.log(`event getVI _blank loaded addresses main content ${i} > .3 && ${i} < .5: `);
-                      let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                      if (matchB === -1) {
-                        console.log(againContent + ": matchB = " + matchB);
-                        return tSorted;
+              // }
+              }).filter((mapResult) => {
+                return mapResult != null
+              });
+              // if (matchesContent.length > 0) {
+              //   remoteSuggestionsCache[query] = personalizedList;
+              // }
+              // else {
+              //   remoteSuggestionsCache[query] = [];
+              // }
+              // console.log("matches to return: " + JSON.stringify(matchesContent));
+              // console.log("event allContentAvailable resources", allContentAvailable.length);
+              // console.log(allContentAvailable.length < matchesContent.length);
+              if (matchesContent.length > 0 && allContentAvailable.length < matchesContent.length) {
+                console.log("event getVI _blank loaded addresses main matches to return resources: ", matchesContent.length);
+                console.log("event getVI _blank loaded addresses main content resources", allContentAvailable.length);
+                while (allContentAvailable.length < matchesContent.length) {
+                  allContentAvailable = matchesContent.sort((a,b) => {
+                    let i = Math.random()
+                    let tSorted = a;
+                    // console.log(query + ": tSorted = " + tSorted);
+                    let zSorted = b;
+                    // console.log(query + ": zSorted = " + zSorted);
+                    if (i < .3) {
+                      console.log(`event getVI _blank loaded addresses main content ${i} < .3: `);
+                      let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                      if (matchA > -1) {
+                        console.log(query + ": matchA = " + matchA);
+                        return zSorted;
                       }
                     }
                     else {
-                      if (i > .5 && i < .8) {
-                        console.log(`event getVI _blank loaded addresses main content ${i} > .5 && ${i} < .8: `);
-                        console.log(againContent + ": matchC = " + zSorted);
-                        return zSorted;
-                      }
-                      else {
-                        if (i > .8) {
-                          console.log(`event getVI _blank loaded addresses main content ${i} > .8: `);
-                          console.log(againContent + ": matchD = " + tSorted);
+                      if (i > .3 && i < .5 ) {
+                        console.log(`event getVI _blank loaded addresses main content ${i} > .3 && ${i} < .5: `);
+                        let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                        if (matchB === -1) {
+                          console.log(query + ": matchB = " + matchB);
                           return tSorted;
                         }
                       }
+                      else {
+                        if (i > .5 && i < .8) {
+                          console.log(`event getVI _blank loaded addresses main content ${i} > .5 && ${i} < .8: `);
+                          console.log(query + ": matchC = " + zSorted);
+                          return zSorted;
+                        }
+                        else {
+                          if (i > .8) {
+                            console.log(`event getVI _blank loaded addresses main content ${i} > .8: `);
+                            console.log(query + ": matchD = " + tSorted);
+                            return tSorted;
+                          }
+                        }
+                      }
                     }
+                  });
+                  if (matchesContent === null || matchesContent.length === 0) {
+                    break
                   }
-                });
-                if (matchesContent === null || matchesContent.length === 0) {
-                  break
                 }
-              }
-              input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0,2);
-              // let openYTPlayer = document.getElementById("mainUjpg");
-              // openYTPlayer.click();
-              // fetchSuggestions(String(againContent));
-              // let openYTPlayer = document.createElement("a");
-              // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
-              // openYTPlayer.id = "openYTPLAYER";
-              // openYTPlayer.classList.add("user-icon");
-              // openYTPlayer.rel = "noopener noreferrer";
-              // document.body.appendChild(openYTPlayer);
-              // document.getElementById("openYTPLAYER").click();
-              // document.getElementById("openYTPLAYER").remove();
-              $('a').click(function(event){
-                if ($(this).attr('href') === "javascript:void(0)") {
-                  console.log("event getVI _top loaded addresses main resources", matchesContent.length);
-                  // let confirmation = window.confirm(
-                  //   "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                  // );
-                  // if (confirmation) {
-                    event.preventDefault();
-                    window.scrollTo(0,0);
-                    let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
-                    input.value = val?.description;
-                    localStorage.setItem("ssSearch", input.value);
-                    againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                    if (input.value?.length > 3) {
-                      redirect(againContent, reUrlList);
-                      fetchSuggestions(againContent);
-                    }
-                    div.textContent = val.description;
-                    div.classList.add("receipt", "btn-large");
-                    div.addEventListener('click', () => {
-                      homePage
-                      .then((load) => {
-                        let linkFollow = document.createElement("a");
-                        linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
-                        if (val && (val?.youtubeURL || val?.webAddressUrl)) {
-                          // localStorage.setItem("ssSearch", val?.description);
-                          // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                          // input.value = val?.description;
-                          let thUrl = (val?.youtubeURL || val?.webAddressUrl);
-                          if 
-                            (
-                              thUrl && 
-                              thUrl !== null && 
-                              typeof thUrl === "string"
-                            ) {
+                input.value = String(query).slice(Math.floor(Math.random() * String(query).length)).slice(0,2);
+                // let openYTPlayer = document.getElementById("mainUjpg");
+                // openYTPlayer.click();
+                fetchSuggestions(String(query));
+                // let openYTPlayer = document.createElement("a");
+                // openYTPlayer.href = encodeURIComponent("javascript:void(0)");
+                // openYTPlayer.id = "openYTPLAYER";
+                // openYTPlayer.classList.add("user-icon");
+                // openYTPlayer.rel = "noopener noreferrer";
+                // document.body.appendChild(openYTPlayer);
+                // document.getElementById("openYTPLAYER").click();
+                // document.getElementById("openYTPLAYER").remove();
+                $('a').click(function(event){
+                  if ($(this).attr('href') === "javascript:void(0)") {
+                    console.log("event getVI _blank loaded addresses main resources", matchesContent.length);
+                    // let confirmation = window.confirm(
+                    //   "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                    // );
+                    // if (confirmation) {
+                      event.preventDefault();
+                      window.scrollTo(0,0);
+                      let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                      input.value = val?.description;
+                      localStorage.setItem("ssSearch", input.value);
+                      againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                      fetchSuggestions(String(againContent));
+                      if (input.value?.length > 3) {
+                        redirect(query, reUrlList);
+                      }
+                      div.textContent = val.description;
+                      div.classList.add("receipt", "btn-large");
+                      div.addEventListener('click', () => {
+                        homePage
+                        .then((load) => {
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = allContentAvailable[Math.floor(Math.random() * allContentAvailable.length)];
+                          if (val && (val?.youtubeURL || val?.webAddressUrl)) {
+                            // localStorage.setItem("ssSearch", val?.description);
+                            // query = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                            // input.value = val?.description;
+                            let thUrl = (val?.youtubeURL || val?.webAddressUrl);
                             if 
                               (
-                                String(thUrl).indexOf("http") === -1 && 
-                                String(thUrl).length === 11
+                                thUrl && 
+                                thUrl !== null && 
+                                typeof thUrl === "string"
                               ) {
-                                thUrl = "https://www.youtube.com/watch?v=" + thUrl;
-                            }
-                            else {
-                              if (String(thUrl).indexOf("http") === -1) {
-                                thUrl = load.data + "?q=" + thUrl
+                              if 
+                                (
+                                  String(thUrl).indexOf("http") === -1 && 
+                                  String(thUrl).length === 11
+                                ) {
+                                  thUrl = "https://www.youtube.com/watch?v=" + thUrl;
+                              }
+                              else {
+                                if (String(thUrl).indexOf("http") === -1) {
+                                  thUrl = load.data + "?q=" + thUrl
+                                }
                               }
                             }
+                            console.log("event user input _top Youtube addresses fetchvals main resources", thUrl);
+                            linkFollow.href = thUrl;
                           }
-                          console.log("event user input _top Youtube addresses fetchvals main resources", thUrl);
-                          linkFollow.href = thUrl;
-                        }
-                        // if (matchesContent.length > 0) {
-                        //   console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
-                        // }
-                        // else {
-                        //   if (matchesContent.length === 0) {
-                        //   }
-                        // }
-                        console.log("the match: " + linkFollow.href);
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_blank";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                        // If the user preses the "Enter" key on the keyboard. 
-                        // if (event.key === 'Enter')  {
-                        //   serverside("getVI", [])
-                        //   .then((response) => {
-                        //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                        //     // Access the actual array from the response
-                        //     if (response && typeof response === "object") {
-                        //       fullList = [];
-                        //       for (var key in response) {
-                        //         alert(JSON.stringify(response[key]));
-                        //         let i = 0;
-                        //         let l = response[key].length;
-                        //         alert(l);
-                        //         for (i,l;i<l;i++) {
-                        //           let tempObj = {};
-                        //           tempObj.description = response[key][i].description;
-                        //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-                        //             let tData = response[key][i].videoId;
-                        //             let dLoc =  null;
-                        //             dLoc =  "https://www.youtube.com/watch?v=";
-                        //             tempObj.youtubeUrl = dLoc + tData;
-                        //           }
-                        //           else {
-                        //             tempObj.youtubeUrl = response[key][i].videoId;
-                        //           }
-                        //           fullList.push(tempObj);
-                        //         }
-                        //       }
-                        //     } 
-                        //     else {
-                        //       console.warn("Expected an array in response from getVI, received:", response);
-                        //       Fallback to empty array if the structure is not as expected
-                        //       fullList = [];
-                        //     }
-                        //   })
-                        //   .catch(error => {
-                        //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-                        //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                        //   });
-                        // }
-                        return
-                      })
-                      .catch((fail) => {
-                        console.log("Failed to load ", fail);
-                        input.disabled = false;
-                        // let openYTPlayer = document.getElementById("mainUjpg");
-                        // openYTPlayer.click();
-                        input.focus();
-                        return
+                          // if (matchesContent.length > 0) {
+                          //   console.log("all available matches to return sorted: " + JSON.stringify(allContentAvailable));
+                          // }
+                          // else {
+                          //   if (matchesContent.length === 0) {
+                          //   }
+                          // }
+                          console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_blank";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // If the user preses the "Enter" key on the keyboard. 
+                          // if (event.key === 'Enter')  {
+                          //   serverside("getVI", [])
+                          //   .then((response) => {
+                          //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                          //     // Access the actual array from the response
+                          //     if (response && typeof response === "object") {
+                          //       fullList = [];
+                          //       for (var key in response) {
+                          //         alert(JSON.stringify(response[key]));
+                          //         let i = 0;
+                          //         let l = response[key].length;
+                          //         alert(l);
+                          //         for (i,l;i<l;i++) {
+                          //           let tempObj = {};
+                          //           tempObj.description = response[key][i].description;
+                          //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                          //             let tData = response[key][i].videoId;
+                          //             let dLoc =  null;
+                          //             dLoc =  "https://www.youtube.com/watch?v=";
+                          //             tempObj.youtubeUrl = dLoc + tData;
+                          //           }
+                          //           else {
+                          //             tempObj.youtubeUrl = response[key][i].videoId;
+                          //           }
+                          //           fullList.push(tempObj);
+                          //         }
+                          //       }
+                          //     } 
+                          //     else {
+                          //       console.warn("Expected an array in response from getVI, received:", response);
+                          //       Fallback to empty array if the structure is not as expected
+                          //       fullList = [];
+                          //     }
+                          //   })
+                          //   .catch(error => {
+                          //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                          //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                          //   });
+                          // }
+                          return
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
+                          input.disabled = false;
+                          // let openYTPlayer = document.getElementById("mainUjpg");
+                          // openYTPlayer.click();
+                          input.focus();
+                          return
+                        });
                       });
-                    });
-                    suggestionsDiv.appendChild(div);
-                  // }
-                } 
-                // return
-              });
-            }
-            else {
-              if (matchesContent.length === 0) {
-                matchContent = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                  if (String(val.description).indexOf(againContent) > -1) {
-                    // console.log(againContent + ": result description: " + val.description);
+                      suggestionsDiv.appendChild(div);
+                    // }
+                  } 
+                  // return
+                });
+              }
+              else {
+                if (matchesContent.length === 0) {
+                  matchContent = resultsDigest?.map((val) => {   //, index) => {
+                    // console.log(query + ": result description: " + val.description);
                     // console.log("result index: " + index);
                     let webUrl = val.webAddressUrl;
                     if 
@@ -735,12 +746,12 @@
                         webUrl !== null && 
                         typeof webUrl === "string"
                       ) {
-                      console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + againContent);
+                      console.log("event getVI _blank loaded addresses supplimentary local storage all results: " + query);
                       // personalizedList.push(val);
                       window.scrollTo(0,0);
-                      input.value = val?.description;
-                      div.textContent = val.description;
-                      div.classList.add("receipt", "btn-large");
+                      // input.value = val?.description;
+                      // div.textContent = val.description;
+                      // div.classList.add("receipt", "btn-large");
                       div.addEventListener('click', () => {
                         input.value = val.description;
                         // let confirmation;
@@ -802,186 +813,190 @@
                       suggestionsDiv.appendChild(div);
                       return webUrl
                     }
-                  }
-                }).filter((mapResult) => {
-                  return mapResult != null
-                });
-                // suggestionsDiv.appendChild(div);
-                // console.log("event contentAvailable resources", contentAvailable.length);
-                // console.log(contentAvailable.length < matchContent.length);
-                if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
-                  console.log("event getVI _blank loaded addresses supplimentary matches to return resources: ", matchContent.length);
-                  console.log("event getVI _blank loaded addresses supplimentary content resources: ", contentAvailable.length);
-                  while (contentAvailable.length < matchContent.length) {
-                    contentAvailable = matchContent.sort((a,b) => {
-                      let i = Math.random()
-                      let tSorted = a;
-                      // console.log(againContent + ": tSorted = " + tSorted);
-                      let zSorted = b;
-                      // console.log(againContent + ": zSorted = " + zSorted);
-                      if (i < .3) {
-                        console.log(`event getVI _blank loaded addresses supplimentary content ${i} < .3: `);
-                        let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                        if (matchA > -1) {
-                          console.log(againContent + ": matchA = " + matchA);
-                          return zSorted;
-                        }
-                      }
-                      else {
-                        if (i > .3 && i < .5) {
-                          console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
-                          let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                          if (matchB === -1) {
-                            console.log(againContent + ": matchB = " + matchB);
-                            return tSorted;
+                  }).filter((mapResult) => {
+                    return mapResult != null
+                  });
+                  // suggestionsDiv.appendChild(div);
+                  // console.log("event contentAvailable resources", contentAvailable.length);
+                  // console.log(contentAvailable.length < matchContent.length);
+                  if (matchContent.length > 0 && contentAvailable.length < matchContent.length) {
+                    console.log("event getVI _blank loaded addresses supplimentary matches to return resources: ", matchContent.length);
+                    console.log("event getVI _blank loaded addresses supplimentary content resources: ", contentAvailable.length);
+                    while (contentAvailable.length < matchContent.length) {
+                      contentAvailable = matchContent.sort((a,b) => {
+                        let i = Math.random()
+                        let tSorted = a;
+                        // console.log(query + ": tSorted = " + tSorted);
+                        let zSorted = b;
+                        // console.log(query + ": zSorted = " + zSorted);
+                        if (i < .3) {
+                          console.log(`event getVI _blank loaded addresses supplimentary content ${i} < .3: `);
+                          let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                          if (matchA > -1) {
+                            console.log(query + ": matchA = " + matchA);
+                            return zSorted;
                           }
                         }
                         else {
-                          if (i > .5 && i < .8) {
-                            console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
-                            console.log(againContent + ": matchC = " + zSorted);
-                            return zSorted;
-                          }
-                          else {
-                            if (i > .8) {
-                              console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .8: `);
-                              console.log(againContent + ": matchD = " + tSorted);
+                          if (i > .3 && i < .5) {
+                            console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .3 && ${i} < .5: `);
+                            let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                            if (matchB === -1) {
+                              console.log(query + ": matchB = " + matchB);
                               return tSorted;
                             }
                           }
+                          else {
+                            if (i > .5 && i < .8) {
+                              console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .5 && ${i} < .8: `);
+                              console.log(query + ": matchC = " + zSorted);
+                              return zSorted;
+                            }
+                            else {
+                              if (i > .8) {
+                                console.log(`event getVI _blank loaded addresses supplimentary content ${i} > .8: `);
+                                console.log(query + ": matchD = " + tSorted);
+                                return tSorted;
+                              }
+                            }
+                          }
                         }
+                      });
+                      if (matchContent === null || matchContent.length === 0) {
+                        break
                       }
-                    });
-                    if (matchContent === null || matchContent.length === 0) {
-                      break
                     }
                   }
-                }
-                input.value = String(againContent).slice(Math.floor(Math.random() * String(againContent).length)).slice(0);
-                if (contentAvailable.length > 0) {
-                  $('a').click(function(event){
-                    if ($(this).attr('href') === "javascript:void(0)") {
-                      console.log("event getVI _top loaded addresses supplimentary resources", contentAvailable.length);
-                      // let confirmation = window.confirm(
-                      //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                      // );
-                      // if (confirmation) {
-                        event.preventDefault();
-                        window.scrollTo(0,0);
-                        let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
-                        input.value = val?.description;
-                        localStorage.setItem("ssSearch", input.value);
-                        againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                        if (input.value?.length > 3) {
-                          redirect(againContent, reUrlList);
-                          fetchSuggestions(againContent);
-                        }
-                        div.textContent = val.description;
-                        div.classList.add("receipt", "btn-large");
-                        div.addEventListener('click', () => {
-                          homePage
-                          .then((load) => {
-                            let linkFollow = document.createElement("a");
-                            linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
-                            if (val && val?.youtubeURL) {
-                              // localStorage.setItem("ssSearch", val?.description);
-                              // againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
-                              // input.value = val?.description;
-                              let thUrl = val.youtubeURL;
-                              if 
-                                (
-                                  thUrl && 
-                                  thUrl !== null && 
-                                  typeof thUrl === "string"
-                                ) {
+                  input.value = String(query).slice(Math.floor(Math.random() * String(query).length)).slice(0);
+                  fetchSuggestions(String(query));
+                  if (contentAvailable.length > 0) {
+                    $('a').click(function(event){
+                      if ($(this).attr('href') === "javascript:void(0)") {
+                        console.log("event getVI _top loaded addresses supplimentary resources", contentAvailable.length);
+                        // let confirmation = window.confirm(
+                        //   "Opening a NEW web page with a DIFFERENT website. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                        // );
+                        // if (confirmation) {
+                          event.preventDefault();
+                          window.scrollTo(0,0);
+                          let val = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)];
+                          input.value = val?.description;
+                          localStorage.setItem("ssSearch", input.value);
+                          againContent = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                          fetchSuggestions(String(againContent));
+                          if (query?.length > 3) {
+                            redirect(query, reUrlList);
+                          }
+                          div.textContent = val.description;
+                          div.classList.add("receipt", "btn-large");
+                          div.addEventListener('click', () => {
+                            homePage
+                            .then((load) => {
+                              let linkFollow = document.createElement("a");
+                              linkFollow.href = contentAvailable[Math.floor(Math.random() * contentAvailable.length)];
+                              if (val && val?.youtubeURL) {
+                                // localStorage.setItem("ssSearch", val?.description);
+                                // query = localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch");
+                                // input.value = val?.description;
+                                let thUrl = val.youtubeURL;
                                 if 
                                   (
-                                    String(thUrl).indexOf("http") === -1 && 
-                                    String(thUrl).length === 11
+                                    thUrl && 
+                                    thUrl !== null && 
+                                    typeof thUrl === "string"
                                   ) {
-                                    thUrl = "https://www.youtube.com/watch?v=" + thUrl;
-                                }
-                                else {
-                                  if (String(thUrl).indexOf("http") === -1) {
-                                    thUrl = load.data + "?q=" + thUrl
+                                  if 
+                                    (
+                                      String(thUrl).indexOf("http") === -1 && 
+                                      String(thUrl).length === 11
+                                    ) {
+                                      thUrl = "https://www.youtube.com/watch?v=" + thUrl;
+                                  }
+                                  else {
+                                    if (String(thUrl).indexOf("http") === -1) {
+                                      thUrl = load.data + "?q=" + thUrl
+                                    }
                                   }
                                 }
+                                console.log("event getVI user input _top loaded Youtube fetchvals supplimentary resources", thUrl);
+                                linkFollow.href = thUrl;
                               }
-                              console.log("event getVI user input _top loaded Youtube fetchvals supplimentary resources", thUrl);
-                              linkFollow.href = thUrl;
-                            }
-                            // if (matchContent.length > 0) {
-                            //   console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
-                            // }
-                            // else {
-                            //   if (matchContent.length === 0) {
-                            //   }
-                            // }
-                            console.log("the match: " + linkFollow.href);
-                            linkFollow.id = "linkFOLLOW";
-                            linkFollow.target = "_top";
-                            linkFollow.rel = "noopener noreferrer";
-                            document.body.appendChild(linkFollow);
-                            document.getElementById("linkFOLLOW").click();
-                            document.getElementById("linkFOLLOW").remove();
-                            // If the user preses the "Enter" key on the keyboard. 
-                            // if (event.key === 'Enter')  {
-                            //   serverside("getVI", [])
-                            //   .then((response) => {
-                            //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                            //     // Access the actual array from the response
-                            //     if (response && typeof response === "object") {
-                            //       fullList = [];
-                            //       for (var key in response) {
-                            //         alert(JSON.stringify(response[key]));
-                            //         let i = 0;
-                            //         let l = response[key].length;
-                            //         alert(l);
-                            //         for (i,l;i<l;i++) {
-                            //           let tempObj = {};
-                            //           tempObj.description = response[key][i].description;
-                            //           if (String(response[key][i].videoId).indexOf("http") === -1) {
-                            //             let tData = response[key][i].videoId;
-                            //             let dLoc =  null;
-                            //             dLoc =  "https://www.youtube.com/watch?v=";
-                            //             tempObj.youtubeUrl = dLoc + tData;
-                            //           }
-                            //           else {
-                            //             tempObj.youtubeUrl = response[key][i].videoId;
-                            //           }
-                            //           fullList.push(tempObj);
-                            //         }
-                            //       }
-                            //     } 
-                            //     else {
-                            //       console.warn("Expected an array in response from getVI, received:", response);
-                            //       Fallback to empty array if the structure is not as expected
-                            //       fullList = [];
-                            //     }
-                            //   })
-                            //   .catch(error => {
-                            //     console.error("Error fetching address suggestions for artiicleIndex :", error);
-                            //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                            //   });
-                            // }
-                            return
-                          })
-                          .catch((fail) => {
-                            console.log("Failed to load ", fail);
-                            input.disabled = false;
-                            // let openYTPlayer = document.getElementById("mainUjpg");
-                            // openYTPlayer.click();
-                            input.focus();
-                            return
+                              // if (matchContent.length > 0) {
+                              //   console.log("all available matches to return sorted: " + JSON.stringify(contentAvailable));
+                              // }
+                              // else {
+                              //   if (matchContent.length === 0) {
+                              //   }
+                              // }
+                              console.log("the match: " + linkFollow.href);
+                              linkFollow.id = "linkFOLLOW";
+                              linkFollow.target = "_top";
+                              linkFollow.rel = "noopener noreferrer";
+                              document.body.appendChild(linkFollow);
+                              document.getElementById("linkFOLLOW").click();
+                              document.getElementById("linkFOLLOW").remove();
+                              // If the user preses the "Enter" key on the keyboard. 
+                              // if (event.key === 'Enter')  {
+                              //   serverside("getVI", [])
+                              //   .then((response) => {
+                              //     // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                              //     // Access the actual array from the response
+                              //     if (response && typeof response === "object") {
+                              //       fullList = [];
+                              //       for (var key in response) {
+                              //         alert(JSON.stringify(response[key]));
+                              //         let i = 0;
+                              //         let l = response[key].length;
+                              //         alert(l);
+                              //         for (i,l;i<l;i++) {
+                              //           let tempObj = {};
+                              //           tempObj.description = response[key][i].description;
+                              //           if (String(response[key][i].videoId).indexOf("http") === -1) {
+                              //             let tData = response[key][i].videoId;
+                              //             let dLoc =  null;
+                              //             dLoc =  "https://www.youtube.com/watch?v=";
+                              //             tempObj.youtubeUrl = dLoc + tData;
+                              //           }
+                              //           else {
+                              //             tempObj.youtubeUrl = response[key][i].videoId;
+                              //           }
+                              //           fullList.push(tempObj);
+                              //         }
+                              //       }
+                              //     } 
+                              //     else {
+                              //       console.warn("Expected an array in response from getVI, received:", response);
+                              //       Fallback to empty array if the structure is not as expected
+                              //       fullList = [];
+                              //     }
+                              //   })
+                              //   .catch(error => {
+                              //     console.error("Error fetching address suggestions for artiicleIndex :", error);
+                              //     suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                              //   });
+                              // }
+                              return
+                            })
+                            .catch((fail) => {
+                              console.log("Failed to load ", fail);
+                              input.disabled = false;
+                              // let openYTPlayer = document.getElementById("mainUjpg");
+                              // openYTPlayer.click();
+                              input.focus();
+                              return
+                            });
                           });
-                        });
-                        suggestionsDiv.appendChild(div);
-                        // return
-                      // }
-                    } 
-                  });
+                          suggestionsDiv.appendChild(div);
+                          // return
+                        // }
+                      } 
+                    });
+                  }
                 }
               }
+            }, 300);
+            if (againContent) {
+              fetchResults(againContent);
             }
             // suggestionsDiv.appendChild(div);
             input.disabled = false;
@@ -1072,7 +1087,7 @@
                     //   console.log(" User clicked; Left-Click Button ", userClicked);
                     // });
                     // suggestionsDiv.appendChild(div);
-                    input.addEventListener('keydown', (event) => {
+                    // input.addEventListener('keydown', (event) => {
                       // if (!event.key === 'Enter') {
                       //   // suggestions?.forEach(suggestion => {
                       //     // console.log(suggestion)
@@ -1142,7 +1157,7 @@
                       // }
                       if (suggestion && suggestion?.description?.toLowerCase()?.includes(query?.toLowerCase())) {
                         // input.addEventListener("input", (event) => {
-                            if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(event.target.value)?.toLowerCase())) {
+                            if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(query)?.toLowerCase())) {
                               window.scrollTo(0,0);
                               input.value = suggestion?.description;
                               // const div = document.createElement('div');
@@ -1223,7 +1238,7 @@
                                       }
                                     }
                                   }
-                                  suggestionsDiv.innerHTML = '';
+                                  // suggestionsDiv.innerHTML = '';
                                   return;
                                 }
                                 else {
@@ -1300,7 +1315,7 @@
                                       }
                                     }
                                   }
-                                  suggestionsDiv.innerHTML = '';
+                                  // suggestionsDiv.innerHTML = '';
                                   return;
                                 }
                                 install++
@@ -1456,7 +1471,7 @@
                       // install++
                       // userClicked = install;
                       // console.log("User clicked; Tab or Enter: ", userClicked)
-                    });
+                    // });
                   });
                   // if (userClicked) {
                   //   break;
@@ -1512,7 +1527,7 @@
         if (input && suggestionsDiv) {
           againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
           input.disabled = true;
-          input.addEventListener('input', (event) => {
+          input.addEventListener('change', (event) => {
             localStorage.setItem("ssSearch", event?.target?.value);
             againContent = (localStorage.getItem("ssSearch") || localStorage.getItem("gsSearch"));
               // if (event?.target?.value.length <= 3) {
@@ -1527,6 +1542,7 @@
                   // if (String(againContent?.toLowerCase())?.indexOf(event?.target?.value?.toLowerCase()) > -1) {
                     if (event?.target?.value?.length > 3) {
                       // fetchSuggestions(event?.target?.value);
+                      // suggestionsDiv.innerHTML = '';
                       redirect(againContent, reUrlList);
                     // }
                   // }
@@ -1899,15 +1915,17 @@
                                 personalizedList.push(tempObj);
                               }
                             }
-                            suggestionsDiv.appendChild(div);
+                            // suggestionsDiv.appendChild(div);
+                            fetchSuggestions(String(event.target.value));
                             input.disabled = false
                           } 
                           else {
                             console.warn("Expected an array in done from vidPlaylist, received:", done);
                             // Fallback to empty array if the structure is not as expected
                             personalizedList = [];
-                            input.disabled = false
                             fetchSuggestions(String(event.target.value));
+                            input.disabled = false
+                            // fetchSuggestions(String(event.target.value));
                             // let openYTPlayer = document.getElementById("mainUjpg");
                             // openYTPlayer.click();
                           }
@@ -2068,6 +2086,9 @@
                   // break;
                 // }
                 }
+                else {
+                  return
+                }
               // }
               // if (qTemp) {
               //   return
@@ -2075,17 +2096,23 @@
               if (personalizedList && Object.keys(personalizedList)[1] && Object.keys(personalizedList)[1].length > 0) {
                 remoteSuggestionsCache[againContent] = Object.keys(personalizedList)[1];
                 console.log("document _blank loaded addresses remoteSuggestionsCache[againContent] resources: ", JSON.stringify(remoteSuggestionsCache[againContent]));
-                remoteIntent = remoteSuggestionsCache[againContent][Math.floor(Math.random() * done.data.length)].description;
+                remoteIntent = remoteSuggestionsCache[againContent][Math.floor(Math.random() * remoteSuggestionsCache[againContent].length)].description;
                 localStorage.setItem("rsSearch", remoteIntent);
                 againContent = localStorage.getItem("rsSearch");
-                matchesToReturn = remoteSuggestionsCache[againContent].map((val) => {   //, index) => {
-                  if (String(val.description).indexOf(againContent) > -1) {
+                const fetchRemote = debounce((query) => {
+                  digestList = remoteSuggestionsCache[query];
+                  console.log("event getVI _blank loaded addresses cache", JSON.stringify(digestList));
+                  resultsDigest = digestList.filter(item => 
+                    String(item.description).toLowerCase().includes(String(query).toLowerCase())
+                  );
+                  console.log("event getVI _blank loaded addresses digest", resultsDigest);
+                  matchesToReturn = resultsDigest.map((val) => {   //, index) => {
                     // console.log(againCap + ": result description: " + val.description);
                     // console.log("result index: " + index);
                     let tubeUrl = val.youtubeUrl;
                     let webUrl = val.webAddressUrl;
                     if (webUrl && webUrl !== null) {
-                      console.log("document _blank loaded addresses local storage web results: " + againContent);
+                      console.log("document _blank loaded addresses local storage web results: " + query);
                       // window.open(new URL(webUrl), "_self");
                       // let linkFollow = document.createElement("a");
                       // linkFollow.href = new URL(webUrl);
@@ -2097,9 +2124,9 @@
                       // document.getElementById("linkFOLLOW").click();
                       // document.getElementById("linkFOLLOW").remove();
                       window.scrollTo(0,0);
-                      input.value = val?.description;
+                      // input.value = val?.description;
                       div.textContent = val.description;
-                      div.classList.add("receipt", "btn-large");
+                      // div.classList.add("receipt", "btn-large");
                       div.addEventListener('click', () => {
                         input.value = val.description;
                         homePage
@@ -2137,7 +2164,7 @@
                       //   // personalizedList.push(val);
                       //   // window.open(tubeUrl, "_self")
                       if (tubeUrl && tubeUrl !== null) {
-                        console.log("document _blank loaded addresses local storage web results: " + againContent);
+                        console.log("document _blank loaded addresses local storage web results: " + query);
                         // window.open(new URL(webUrl), "_self");
                         // let linkFollow = document.createElement("a");
                         // linkFollow.href = new URL(webUrl);
@@ -2149,9 +2176,9 @@
                         // document.getElementById("linkFOLLOW").click();
                         // document.getElementById("linkFOLLOW").remove();
                         window.scrollTo(0,0);
-                        input.value = val?.description;
+                        // input.value = val?.description;
                         div.textContent = val.description;
-                        div.classList.add("receipt", "btn-large");
+                        // div.classList.add("receipt", "btn-large");
                         div.addEventListener('click', () => {
                           input.value = val.description;
                           homePage
@@ -2186,150 +2213,153 @@
                       return tubeUrl
                     }
                     // }
-                  }
-                }).filter((mapResult) => {
-                  return mapResult != null
-                });
-                // // if (matchesToReturn.length > 0) {
-                // //   remoteSuggestionsCache[againCap] = personalizedList;
-                // // }
-                // // else {
-                // //   remoteSuggestionsCache[againCap] = [];
-                // // }
-                // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-                // // console.log(allMatchesAvailable.length < matchesToReturn.length);
-                // if (allMatchesAvailable.length < matchesToReturn.length) {
-                //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-                //   while (allMatchesAvailable.length < matchesToReturn.length) {
-                //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                //       let i = Math.random()
-                //       let tSorted = a;
-                //       // console.log(againCap + ": tSorted = " + tSorted);
-                //       let zSorted = b;
-                //       // console.log(againCap + ": zSorted = " + zSorted);
-                //       if (i < .3) {
-                //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                //         if (matchA > -1) {
-                //           // console.log(againCap + ": matchA = " + matchA);
-                //           // window.open(zSorted, "_blank");
-                //           return zSorted;
-                //         }
-                //       }
-                //       else {
-                //         if (i > .3 && i < .5 ) {
-                //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                //           if (matchB === -1) {
-                //             // console.log(againCap + ": matchB = " + matchB);
-                //             // window.open(tSorted, "_blank");
-                //             return tSorted;
-                //           }
-                //         }
-                //         else {
-                //           if (i > .5 && i < .8) {
-                //             // console.log(againCap + ": matchC = " + zSorted);
-                //             // window.open(zSorted, "_blank");
-                //             return zSorted;
-                //           }
-                //           else {
-                //             if (i > .8) {
-                //               // console.log(againCap + ": matchD = " + tSorted);
-                //               // window.open(tSorted, "_blank");
-                //               return tSorted;
-                //             }
-                //           }
-                //         }
-                //       }
-                //     });
-                //     if (matchesToReturn === null || matchesToReturn.length === 0) {
-                //       break
-                //     }
-                //   }
-                // }
-                // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
-                // // fetchSuggestions(input.value);
-                // if (matchesToReturn.length > 0) {
-                //   $('a').click(function(event){
-                //     if ($(this).attr('href') === "javascript:void(0)") {
-                //       let confirmation = window.confirm(
-                //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                //       );
-                //       if (confirmation) {
-                //         event.preventDefault();
-                //         var linkFollow = document.createElement("a");
-                //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                //         // if (matchesToReturn.length > 0) {
-                //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
-                //         // }
-                //         // else {
-                //         //   if (matchesToReturn.length === 0) {
-                //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                //         //   }
-                //         // }
-                //         console.log("the match: " + linkFollow.href);
-                //         linkFollow.id = "linkFOLLOW";
-                //         linkFollow.target = "_top";
-                //         linkFollow.rel = "noopener noreferrer";
-                //         document.body.appendChild(linkFollow);
-                //         document.getElementById("linkFOLLOW").click();
-                //         document.getElementById("linkFOLLOW").remove();
-                //         // If the user preses the "Enter" key on the keyboard. 
-                //         // if (event.key === 'Enter')  {
-                //         // serverside("getVI", [])
-                //         // .then((response) => {
-                //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                //           // Access the actual array from the response
-                //           // if (response && typeof response === "object") {
-                //           //   fullList = [];
-                //           //   for (var key in response) {
-                //               // alert(JSON.stringify(response[key]));
-                //               // let i = 0;
-                //               // let l = response[key].length;
-                //               // alert(l);
-                //           //     for (i,l;i<l;i++) {
-                //           //       let tempObj = {};
-                //           //       tempObj.description = response[key][i].description;
-                //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
-                //           //         let tData = response[key][i].videoId;
-                //           //         let dLoc =  null;
-                //           //         dLoc =  "https://www.youtube.com/watch?v=";
-                //           //         tempObj.youtubeUrl = dLoc + tData;
-                //           //       }
-                //           //       else {
-                //           //         tempObj.youtubeUrl = response[key][i].videoId;
-                //           //       }
-                //           //       fullList.push(tempObj);
-                //           //     }
-                //           //   }
-                //           // } 
-                //           // else {
-                //           //   console.warn("Expected an array in response from getVI, received:", response);
-                //             // Fallback to empty array if the structure is not as expected
-                //         //     fullList = [];
-                //         //   }
-                //         // })
-                //         // .catch(error => {
-                //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
-                //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                //         // });
-                //       }
-                //     }
-                //   });
-                // }
-                // else {
-                //   if (matchesToReturn.length === 0) {
-                //     return
-                //   }
-                // }
+                  }).filter((mapResult) => {
+                    return mapResult != null
+                  });
+                  // // if (matchesToReturn.length > 0) {
+                  // //   remoteSuggestionsCache[againCap] = personalizedList;
+                  // // }
+                  // // else {
+                  // //   remoteSuggestionsCache[againCap] = [];
+                  // // }
+                  // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                  // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                  // // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                  // if (allMatchesAvailable.length < matchesToReturn.length) {
+                  //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                  //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                  //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                  //       let i = Math.random()
+                  //       let tSorted = a;
+                  //       // console.log(againCap + ": tSorted = " + tSorted);
+                  //       let zSorted = b;
+                  //       // console.log(againCap + ": zSorted = " + zSorted);
+                  //       if (i < .3) {
+                  //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                  //         if (matchA > -1) {
+                  //           // console.log(againCap + ": matchA = " + matchA);
+                  //           // window.open(zSorted, "_blank");
+                  //           return zSorted;
+                  //         }
+                  //       }
+                  //       else {
+                  //         if (i > .3 && i < .5 ) {
+                  //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                  //           if (matchB === -1) {
+                  //             // console.log(againCap + ": matchB = " + matchB);
+                  //             // window.open(tSorted, "_blank");
+                  //             return tSorted;
+                  //           }
+                  //         }
+                  //         else {
+                  //           if (i > .5 && i < .8) {
+                  //             // console.log(againCap + ": matchC = " + zSorted);
+                  //             // window.open(zSorted, "_blank");
+                  //             return zSorted;
+                  //           }
+                  //           else {
+                  //             if (i > .8) {
+                  //               // console.log(againCap + ": matchD = " + tSorted);
+                  //               // window.open(tSorted, "_blank");
+                  //               return tSorted;
+                  //             }
+                  //           }
+                  //         }
+                  //       }
+                  //     });
+                  //     if (matchesToReturn === null || matchesToReturn.length === 0) {
+                  //       break
+                  //     }
+                  //   }
+                  // }
+                  // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                  // // fetchSuggestions(input.value);
+                  // if (matchesToReturn.length > 0) {
+                  //   $('a').click(function(event){
+                  //     if ($(this).attr('href') === "javascript:void(0)") {
+                  //       let confirmation = window.confirm(
+                  //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                  //       );
+                  //       if (confirmation) {
+                  //         event.preventDefault();
+                  //         var linkFollow = document.createElement("a");
+                  //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+                  //         // if (matchesToReturn.length > 0) {
+                  //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+                  //         // }
+                  //         // else {
+                  //         //   if (matchesToReturn.length === 0) {
+                  //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                  //         //   }
+                  //         // }
+                  //         console.log("the match: " + linkFollow.href);
+                  //         linkFollow.id = "linkFOLLOW";
+                  //         linkFollow.target = "_top";
+                  //         linkFollow.rel = "noopener noreferrer";
+                  //         document.body.appendChild(linkFollow);
+                  //         document.getElementById("linkFOLLOW").click();
+                  //         document.getElementById("linkFOLLOW").remove();
+                  //         // If the user preses the "Enter" key on the keyboard. 
+                  //         // if (event.key === 'Enter')  {
+                  //         // serverside("getVI", [])
+                  //         // .then((response) => {
+                  //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                  //           // Access the actual array from the response
+                  //           // if (response && typeof response === "object") {
+                  //           //   fullList = [];
+                  //           //   for (var key in response) {
+                  //               // alert(JSON.stringify(response[key]));
+                  //               // let i = 0;
+                  //               // let l = response[key].length;
+                  //               // alert(l);
+                  //           //     for (i,l;i<l;i++) {
+                  //           //       let tempObj = {};
+                  //           //       tempObj.description = response[key][i].description;
+                  //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
+                  //           //         let tData = response[key][i].videoId;
+                  //           //         let dLoc =  null;
+                  //           //         dLoc =  "https://www.youtube.com/watch?v=";
+                  //           //         tempObj.youtubeUrl = dLoc + tData;
+                  //           //       }
+                  //           //       else {
+                  //           //         tempObj.youtubeUrl = response[key][i].videoId;
+                  //           //       }
+                  //           //       fullList.push(tempObj);
+                  //           //     }
+                  //           //   }
+                  //           // } 
+                  //           // else {
+                  //           //   console.warn("Expected an array in response from getVI, received:", response);
+                  //             // Fallback to empty array if the structure is not as expected
+                  //         //     fullList = [];
+                  //         //   }
+                  //         // })
+                  //         // .catch(error => {
+                  //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
+                  //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                  //         // });
+                  //       }
+                  //     }
+                  //   });
+                  // }
+                  // else {
+                  //   if (matchesToReturn.length === 0) {
+                  //     return
+                  //   }
+                  // }
+                }, 300);
+                if (againContent) {
+                  fetchRemote(againContent);
+                }
               }
               else {
                 // if (enterClicked === 1) {  
                 if (String(event?.target?.value).length > 0) {
                   console.log("document _self loaded addresses Enter key results: " + event?.target?.value);
                   window.scrollTo(0,0);
-                  input.value = event?.target?.value;
-                  div.textContent = event?.target?.value;
-                  div.classList.add("receipt", "btn-large");
+                  // input.value = event?.target?.value;
+                  // div.textContent = event?.target?.value;
+                  // div.classList.add("receipt", "btn-large");
                   div.addEventListener('click', () => {
                     homePage
                     .then((load) => {
