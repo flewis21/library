@@ -81,6 +81,8 @@
         console.log("event getVI _blank loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
         searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * Math.floor(localSuggestionsCache["allMatches"].length))];
         localStorage.setItem("gsSearch", searchBackEnd?.description);
+        localStorage.setItem("rsSearch", "");
+        localStorage.setItem("ssSearch", "");
         // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
         console.log("event getVI _blank loaded addresses local storage resources", searchBackEnd?.description);
         fetchSuggestions(searchBackEnd?.description);
@@ -974,6 +976,8 @@
                       homePage
                       .then((load) => {
                         localStorage.setItem("ssSearch", query);
+                        localStorage.setItem("rsSearch", "");
+                        localStorage.setItem("gsSearch", "");
                         // console.log("Data; Url for reLoad ", load.data);
                         let linkFollow = document.createElement("a");
                         linkFollow.href = load.data + "?q=" + query;
@@ -1165,6 +1169,8 @@
         if (String(event?.target?.value).length > 0) {
           homeSideResults = serverside("vidPlaylist", [String(event?.target?.value)]);
           localStorage.setItem("ssSearch", event?.target?.value);
+          localStorage.setItem("rsSearch", "");
+          localStorage.setItem("gsSearch", "");
           // againContent = (localStorage?.getItem("ssSearch" || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch")));
           // redirect([{description: event?.target?.value}], reUrlList);
           fetchSuggestions(event?.target?.value);
@@ -1282,6 +1288,8 @@
                       input.blur();
                       input.disabled = true
                       localStorage.setItem("gsSearch", event.target.value);
+                      localStorage.setItem("rsSearch", "");
+                      localStorage.setItem("ssSearch", "");
                       // const div = document.createElement('div');
                       // div.textContent = suggestion.description;
                       // div.classList.add("receipt", "btn-large", "user-icon");
@@ -1867,6 +1875,8 @@
                                 openYTPlayer.click();
                                 // enterClicked++;
                                 localStorage.setItem("ssSearch", String(event?.target?.value));
+                                localStorage.setItem("rsSearch", "");
+                                localStorage.setItem("gsSearch", "");
                                 // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
                                 // console.log("Data; Url for reLoad ", load.data);
                                 let linkFollow = document.createElement("a");
@@ -1992,6 +2002,8 @@
                               openYTPlayer.click();
                               // enterClicked++;
                               localStorage.setItem("ssSearch", String(event?.target?.value));
+                              localStorage.setItem("rsSearch", "");
+                              localStorage.setItem("gsSearch", "");
                               // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
                               // console.log("Data; Url for reLoad ", load.data);
                               let linkFollow = document.createElement("a");
@@ -2475,7 +2487,6 @@
               event.preventDefault();
               window.scrollTo(0,0);
               let val = resultsDigest[Math.floor(Math.random() * resultsDigest?.length)];
-              redirect(Array(val), reUrlList);
               input.value = val?.description;
               // localStorage.setItem("ssSearch", input.value);
               // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
@@ -2485,9 +2496,9 @@
                 // localStorage.setItem("ssSearch", input.value);
                 // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
               }
-              div.textContent = val.description;
-              div.classList.add("receipt", "btn-large", "black");
-              div.addEventListener('click', () => {
+              // div.textContent = val.description;
+              // div.classList.add("receipt", "btn-large", "black");
+              // div.addEventListener('click', () => {
                 homePage
                 .then((load) => {
                   let linkFollow = document.createElement("a");
@@ -2583,8 +2594,8 @@
                   input.focus();
                   return
                 });
-              });
-              suggestionsDiv.appendChild(div);
+              // });
+              // suggestionsDiv.appendChild(div);
             // }
           } 
           // return
@@ -2735,16 +2746,15 @@
                     event.preventDefault();
                     window.scrollTo(0,0);
                     let val = resultsDigest[Math.floor(Math.random() * resultsDigest?.length)];
-                    redirect(Array(val), reUrlList);
                     input.value = val?.description;
                     // localStorage.setItem("ssSearch", input.value);
                     // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
                     // fetchSuggestions(String(input.value));
-                    if (input.value?.length > 3) {
-                      input.value = input.value;
+                    // if (input.value?.length > 3) {
+                    //   input.value = input.value;
                       // localStorage.setItem("ssSearch", input.value);
                       // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
-                    }
+                    // }
                     div.textContent = val.description;
                     div.classList.add("receipt", "btn-large", "green");
                     div.addEventListener('click', () => {
@@ -2870,6 +2880,7 @@
     gsTemp = String(localStorage?.getItem("gsSearch")).toLowerCase();
     console.log("event; redirect gsSearch", gsTemp);
     console.log("event redirect _blank and _top loaded addresses digest " + String(localStorage?.getItem("gsSearch")).toLowerCase() || String(localStorage.getItem("rsSearch")).toLowerCase() || String(localStorage?.getItem("ssSearch")).toLowerCase(), resultsDigest);
+    let urlTmp = [];
     resultsDigest?.forEach((suggestion, index) => {
       // Get the original request URL from the URL parameters
       // var params = new URLSearchParams(window.location.search);
@@ -3163,6 +3174,7 @@
 
         // Call the redirect function after the page load
         console.log("event redirect function _blank and _top main resources", redirectURL);
+        urlTmp.push(suggestion);
         // fetchResults(Array(suggestion));
         // let confirmation = window.confirm(
         //   "Opening a page. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
@@ -3217,36 +3229,39 @@
               if (myKeyObj?.length > 0) {
                 console.log("event redirect function _self supplimentary STRING resources", JSON.stringify(suggestion?.description));
                 localStorage.setItem("ssSearch", suggestion?.description);
+                localStorage.setItem("rsSearch", "");
+                localStorage.setItem("gsSearch", "");
+                urlTmp.push(suggestion);
                 // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
-                if (againContent) {
-                  homePage
-                  .then((load) => {
+                // if (againContent) {
+                  // homePage
+                  // .then((load) => {
                     // alert(JSON.stringify(load));
                     // console.log("Data; Url for reLoad ", load.data);
-                    let linkFollow = document.createElement("a");
-                    linkFollow.href = load.data;
+                    // let linkFollow = document.createElement("a");
+                    // linkFollow.href = load.data;
                     // console.log("the match: " + linkFollow.href);
-                    linkFollow.id = "linkFOLLOW";
-                    linkFollow.target = "_self";
-                    linkFollow.rel = "noopener noreferrer";
-                    document.body.appendChild(linkFollow);
-                    document.getElementById("linkFOLLOW").click();
-                    document.getElementById("linkFOLLOW").remove();
+                    // linkFollow.id = "linkFOLLOW";
+                    // linkFollow.target = "_self";
+                    // linkFollow.rel = "noopener noreferrer";
+                    // document.body.appendChild(linkFollow);
+                    // document.getElementById("linkFOLLOW").click();
+                    // document.getElementById("linkFOLLOW").remove();
                     // window.location.href = load.data
                     // input.value = event.target.value;
                     // input.disabled = false;
                     // input.focus();
-                  })
-                  .catch((fail) => {
-                    console.log("Failed to load ", fail);
-                    input.disabled = false;
+                  // })
+                  // .catch((fail) => {
+                    // console.log("Failed to load ", fail);
+                    // input.disabled = false;
                     // let openYTPlayer = document.getElementById("mainUjpg");
                     // openYTPlayer.click();
-                    input.focus();
-                    return
-                  });
+                    // input.focus();
+                    // return
+                  // });
                   // fetchSuggestions(againContent);
-                };
+                // };
                 // fetchSuggestions(suggestion?.description);
               }
             }
@@ -3255,6 +3270,8 @@
         else {
           console.log("event redirect function _self supplimentary resources", JSON.stringify(suggestion));
           localStorage.setItem("ssSearch", suggestion);
+          localStorage.setItem("rsSearch", "");
+          localStorage.setItem("gsSearch", "");
           // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
           if (againContent) {
             homePage
@@ -3290,6 +3307,7 @@
         console.error("No redirect URL provided.");
       }
     });
+    fetchResults(urlTmp);
   }
 
   // input.addEventListener('keydown', (event) => {
