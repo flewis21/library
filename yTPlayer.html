@@ -103,14 +103,15 @@
         playVideo();
     }
     $('.user-icon').click(function(event) {
-      let confirmation = window.confirm(
-        "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
-      );
+      // let confirmation = window.confirm(
+      //   "Opening a NEW youtube playList. Click OK to continue. Or Click CANCEL",
+      // );
       let ifPlayerDisplay = document.getElementById('iframePlayer');
-      if (confirmation) {
+      // if (confirmation) {
         if (ifPlayerDisplay.style.display === 'none') {
           ifPlayerDisplay.style.display = 'block'
           playVideo();
+          return
         }
         else {
           // loadPlaylist();
@@ -120,18 +121,19 @@
           if (ifPlayerDisplay.style.display === 'block') {
             ifPlayerDisplay.style.display = 'none'
             playVideo();
+            return
           }
         }
-      }
-      else {
+      // }
+      // else {
         // stopVideo();
         // console.log(ifPlayerDisplay);
         // ifPlayerDisplay.style.display = 'none';
-        loadPlaylist();
-        setShuffle();
-        nextVideo();
-        playVideo();
-      }
+        // loadPlaylist();
+        // setShuffle();
+        // nextVideo();
+        // playVideo();
+      // }
     });
 
     // 5. The API calls this function when the player's state changes.
@@ -199,7 +201,7 @@
     function onPlayerError() {
       if (iframePlayer && iframePlayer.destroy) {
         iframePlayer.destroy;
-        // onYouTubeIframeAPIReady();
+        onYouTubeIframeAPIReady();
       }
     }
     function stopVideo() {

@@ -39,11 +39,15 @@
 
     if (!input || !suggestionsDiv) {
       console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
+      let openYTPlayer = document.getElementById("mainUjpg");
+      openYTPlayer.click();
       return;
     }
 
     serverside("getVI", [])
       .then((response) => {
+        let openYTPlayer = document.getElementById("mainUjpg");
+        openYTPlayer.click();
         // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
         // Access the actual array from the response
         if (response && typeof response === "object") {
@@ -72,7 +76,8 @@
               fullList.push(tempObj);
             }
           }
-        } else {
+        } 
+        else {
           console.warn("Expected an array in response from getVI, received:", response);
           // Fallback to empty array if the structure is not as expected
           fullList = [];
@@ -631,29 +636,37 @@
         input.disabled = false;
       })
       .catch(error => {
+        let openYTPlayer = document.getElementById("mainUjpg");
+        openYTPlayer.click();
         input.disabled = false;
         console.error("Error fetching address suggestions for artiicleIndex :", error);
         suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
       });
       
     const fetchSuggestions = debounce((query) => {
+        
+      // Filter the local list instead of making a server call
+      contentList = remoteSuggestionsCache[againContent] || localSuggestionsCache["allMatches"] || [];
+      console.log("event fetchSuggestions loaded addresses contentList resources", contentList.length);
+      // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
+      suggestContent = contentList.filter(item => 
+        String(item.description).toLowerCase().includes(query.toLowerCase())
+      );
+
       if (String(query).length <= 3) {
-        window.scrollTo(0,0);
-        return
+        // let openYTPlayer = document.getElementById("mainUjpg");
+        // openYTPlayer.click();
+        redirect(suggestContent, reUrlList);
+        // window.scrollTo(0,0);
+        // return
       }
       else {
+        // let openYTPlayer = document.getElementById("mainUjpg");
+        // openYTPlayer.click();
         // input.addEventListener("focus", (event) => {
         // let qTemp;
         // if (String(event.target.value).length >= 1) {
           // suggestionsDiv.innerHTML = '';
-        
-        // Filter the local list instead of making a server call
-        contentList = remoteSuggestionsCache[againContent] || localSuggestionsCache["allMatches"] || [];
-        console.log("event fetchSuggestions loaded addresses contentList resources", contentList.length);
-        // console.log("localSuggestionsCache["allMatches"][0] || [] ", localList.length)
-        suggestContent = contentList.filter(item => 
-          String(item.description).toLowerCase().includes(query.toLowerCase())
-        );
         
         window.scrollTo(0,0);
         // let confirmation = null;
@@ -971,8 +984,6 @@
                     alert(" Invalid " + suIndexLen);
                     // input.addEventListener("change", (event) => {
                       window.scrollTo(0,0);
-                      let openYTPlayer = document.getElementById("mainUjpg");
-                      openYTPlayer.click();
                       homePage
                       .then((load) => {
                         localStorage.setItem("ssSearch", query);
@@ -997,8 +1008,6 @@
                         console.log("Failed to load ", fail);
                         input.disabled = false;
                         input.focus();
-                        let openYTPlayer = document.getElementById("mainUjpg");
-                        openYTPlayer.click();
                       });
                     // })
                           // if (suIndexLen >= suggestContent?.length) {
@@ -1163,6 +1172,8 @@
     // }, 300);
     
     if (input && suggestionsDiv) {
+      let openYTPlayer = document.getElementById("mainUjpg");
+      openYTPlayer.click();
       // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
       input.disabled = true;
       input.addEventListener('input', (event) => {
@@ -1578,8 +1589,6 @@
                             input.disabled = false
                             // redirect(personalizedList, reUrlList);
                             // fetchSuggestions(String(event.target.value));
-                            // let openYTPlayer = document.getElementById("mainUjpg");
-                            // openYTPlayer.click();
                           }
                           // console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
                           // fetchSuggestions(event?.target?.value);
@@ -1653,8 +1662,6 @@
                             //           console.log("Failed to load ", fail);
                             //           input.disabled = false;
                             //           input.focus();
-                            //           // let openYTPlayer = document.getElementById("mainUjpg");
-                            //           // openYTPlayer.click();
                             //         });
                             //       });
                             //       suggestionsDiv.appendChild(div);
@@ -1705,8 +1712,6 @@
                             //             console.log("Failed to load ", fail);
                             //             input.disabled = false;
                             //             input.focus();
-                            //             let openYTPlayer = document.getElementById("mainUjpg");
-                            //             openYTPlayer.click();
                             //           });
                             //         });
                             //         suggestionsDiv.appendChild(div);
@@ -1859,8 +1864,6 @@
                           // Fallback to empty array if the structure is not as expected
                           personalizedList = [];
                           input.disabled = false
-                          // let openYTPlayer = document.getElementById("mainUjpg");
-                          // openYTPlayer.click();
                           // if (enterClicked === 1) {  
                           if (String(event?.target?.value).length > 0) {
                             console.log("document _self loaded addresses Enter key results: " + event?.target?.value);
@@ -1871,8 +1874,6 @@
                             div.addEventListener('click', () => {
                               homePage
                               .then((load) => {
-                                let openYTPlayer = document.getElementById("mainUjpg");
-                                openYTPlayer.click();
                                 // enterClicked++;
                                 localStorage.setItem("ssSearch", String(event?.target?.value));
                                 localStorage.setItem("rsSearch", "");
@@ -1897,8 +1898,6 @@
                                 console.log("Failed to load ", fail);
                                 input.disabled = false;
                                 input.focus();
-                                let openYTPlayer = document.getElementById("mainUjpg");
-                                openYTPlayer.click();
                                 // enterClicked++;
                               });
                             });
@@ -1985,8 +1984,6 @@
                         // Fallback to empty array if the structure is not as expected
                         personalizedList = [];
                         input.disabled = false
-                        // let openYTPlayer = document.getElementById("mainUjpg");
-                        // openYTPlayer.click();
                         // redirect(personalizedList, reUrlList);
                         // if (enterClicked === 1) {  
                         if (String(event?.target?.value).length > 0) {
@@ -1998,8 +1995,6 @@
                           div.addEventListener('click', () => {
                             homePage
                             .then((load) => {
-                              let openYTPlayer = document.getElementById("mainUjpg");
-                              openYTPlayer.click();
                               // enterClicked++;
                               localStorage.setItem("ssSearch", String(event?.target?.value));
                               localStorage.setItem("rsSearch", "");
@@ -2024,8 +2019,6 @@
                               console.log("Failed to load ", fail);
                               input.disabled = false;
                               input.focus();
-                              let openYTPlayer = document.getElementById("mainUjpg");
-                              openYTPlayer.click();
                               // enterClicked++;
                             });
                           });
@@ -2278,9 +2271,10 @@
       });
     } 
     else {
+      let openYTPlayer = document.getElementById("mainUjpg");
+      openYTPlayer.click();
       console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
     }
-
   });
 
   function serverside(func, args) {
@@ -2465,7 +2459,7 @@
             break
           }
         }
-        input.value = String(input.value).slice(Math.floor(Math.random() * String(input.value).length)).slice(0,2);
+        // input.value = String(input.value).slice(Math.floor(Math.random() * String(input.value).length)).slice(0,2);
         // let openYTPlayer = document.getElementById("mainUjpg");
         // openYTPlayer.click();
         // redirect(String(input.value), reUrlList);
