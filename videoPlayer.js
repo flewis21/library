@@ -417,7 +417,7 @@ function resUrlData(searchString) {
       }
       let splSearch = String(searchString).split("?");
       let uriSearchA = encodeURIComponent(String(splSearch[0]));
-      let uriSearchB = encodeURIComponent(String(splSearch[1]?.substring(1,splSearch[1].length)));
+      let uriSearchB = encodeURIComponent(String(splSearch[1]?.substring(1,splSearch[1].length))) || "";
       let searchArr = [];
       autoGlobe.vidData.forEach((term)  =>  {
         if (String(term).includes(searchString || ((uriSearchA && uriSearchB) || uriSearchA || uriSearchB))) {

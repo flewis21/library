@@ -1789,7 +1789,7 @@ var  renderFile = function(file, argsObject, title) {
                   </nav>
                   <div id="artiicleIndexSuggestions" class="autocomplete-suggestions card-panel transparent static-fix"></div>
                     <header class="banner card-panel transparent static-fix">
-                      <div id="iframePlayer" class="row transparent" style="display: none"></div>
+                      <div id="iframePlayer" class="row transparent responsive-section modal container" style="display: none"></div>
                       <h1>Blog</h1>
                       <label id="loadingLab">
                         <strong>
@@ -1817,7 +1817,7 @@ var  renderFile = function(file, argsObject, title) {
                                         <h2>Owe</h2>
                                         <aside class="card-panel transparent vid-list">
                                           <article class="transparent toolbar-icon z-index: 5">
-                                            <div class="row">
+                                            <div class="row container">
                                               <?!= renTemp ?>
                                             </div>
                                           </article>

@@ -4,20 +4,21 @@
   let resultsDigest = [];
   let personalizedList = [];
   let reUrlList = [];
-  let againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
   let rsTemp = String(localStorage.getItem("rsSearch")).toLowerCase();
   console.log("event; getVI rsSearch", rsTemp);
   let ssTemp = String(localStorage?.getItem("ssSearch")).toLowerCase();
   console.log("event; getVI ssSearch", ssTemp);
   let gsTemp = String(localStorage?.getItem("gsSearch")).toLowerCase();
   console.log("event; getVI gsSearch", gsTemp);
+  let againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
   let matchesContent = [];
   let matchContent = [];
   let allContentAvailable = [];
   let contentAvailable = [];
+  const openYTPlayer = document.getElementById("mainUjpg");
   const div = document.createElement('div');
   const homePage = serverside("getScriptUrl", []);
-  let homeSideResults = serverside("vidPlaylist", [String(againContent)]);
+  // let homeSideResults = serverside("vidPlaylist", [String(againContent)]);
   const nVid = document.querySelectorAll(".userClickedNext");
   const input = document.getElementById("artiicleIndex");
   const suggestionsDiv = document.getElementById("artiicleIndexSuggestions");
@@ -39,39 +40,38 @@
 
     if (!input || !suggestionsDiv) {
       console.error("Input element artiicleIndex or suggestions div artiicleIndexSuggestions not found for autocomplete setup.");
-      let openYTPlayer = document.getElementById("mainUjpg");
       openYTPlayer.click();
       return;
     }
 
     serverside("getVI", [])
       .then((response) => {
-        let openYTPlayer = document.getElementById("mainUjpg");
-        openYTPlayer.click();
+        // let openYTPlayer = document.getElementById("mainUjpg");
+        // openYTPlayer.click();
         // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
         // Access the actual array from the response
         if (response && typeof response === "object") {
           for (var key in response) {
             // alert(JSON.stringify(response[key]));
             let i = 0;
-            let l = response[key].length;
+            let l = response[key]?.length;
             // alert(l);
             for (i,l;i<l;i++) {
               let tempObj = {};
-              tempObj.description = response[key][i].description;
+              tempObj.description = response[key][i]?.description;
               if 
                 (
                   String(response[key][i].videoId) && 
-                  String(response[key][i].videoId).indexOf("http") === -1 && 
-                  String(response[key][i].videoId).length === 11
+                  String(response[key][i].videoId)?.indexOf("http") === -1 && 
+                  String(response[key][i].videoId)?.length === 11
                 ) {
-                let tData = response[key][i].videoId;
+                let tData = response[key][i]?.videoId;
                 let dLoc =  null;
                 dLoc =  "https://www.youtube.com/watch?v=";
                 tempObj.youtubeUrl = dLoc + tData;
               }
               else {
-                tempObj.webAddressUrl = response[key][i].videoId;
+                tempObj.webAddressUrl = response[key][i]?.videoId;
               }
               fullList.push(tempObj);
             }
@@ -83,14 +83,14 @@
           fullList = [];
         }
         localSuggestionsCache["allMatches"] = fullList;
-        console.log("event getVI _blank loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"].length);
-        searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * Math.floor(localSuggestionsCache["allMatches"].length))];
-        localStorage.setItem("gsSearch", searchBackEnd?.description);
-        localStorage.setItem("rsSearch", "");
-        localStorage.setItem("ssSearch", "");
+        console.log("event getVI _blank loaded addresses localSuggestionsCache resources", localSuggestionsCache["allMatches"]?.length);
+        // searchBackEnd = localSuggestionsCache["allMatches"][Math.floor(Math.random() * Math.floor(localSuggestionsCache["allMatches"].length))];
+        // localStorage.setItem("gsSearch", "");
+        // localStorage.setItem("rsSearch", "");
+        // localStorage.setItem("ssSearch", "");
         // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
-        console.log("event getVI _blank loaded addresses local storage resources", searchBackEnd?.description);
-        fetchSuggestions(searchBackEnd?.description);
+        console.log("event getVI _blank loaded addresses local storage resources", "");
+        // fetchSuggestions("");
         // const fetchResults = debounce((query) => {
         //   digestList = localSuggestionsCache["allMatches"];
         //   // console.log("event getVI _blank loaded addresses cache", JSON.stringify(digestList));
@@ -636,8 +636,7 @@
         input.disabled = false;
       })
       .catch(error => {
-        let openYTPlayer = document.getElementById("mainUjpg");
-        openYTPlayer.click();
+        // openYTPlayer.click();
         input.disabled = false;
         console.error("Error fetching address suggestions for artiicleIndex :", error);
         suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
@@ -656,9 +655,9 @@
       if (String(query).length <= 3) {
         // let openYTPlayer = document.getElementById("mainUjpg");
         // openYTPlayer.click();
-        redirect(suggestContent, reUrlList);
+        // redirect(suggestContent, reUrlList);
         // window.scrollTo(0,0);
-        // return
+        return
       }
       else {
         // let openYTPlayer = document.getElementById("mainUjpg");
@@ -803,9 +802,10 @@
                     // input.addEventListener("input", (event) => {
                         if (suggestion && suggestion?.description?.toLowerCase()?.includes(String(query)?.toLowerCase())) {
                           window.scrollTo(0,0);
-                          input.value = suggestion?.description;
+                          // input.value = suggestion?.description;
                           // const div = document.createElement('div');
                           // redirect(Array(suggestion), reUrlList);
+                          // openYTPlayer.click();
                           resultsTmp.push(suggestion);
                           // div.textContent = suggestion.description;
                           // div.classList.add("receipt", "btn-large");
@@ -972,6 +972,7 @@
                           // return
                         }
                     // })
+                    // fetchResults(resultsTmp);
                   } 
                   else {
                     // if (!event.key === 'Enter') {
@@ -980,45 +981,47 @@
                       //   while (suIndexLen < suggestContent?.length) {
                       //     input.blur();
                       //     input.disabled = true
-                    let suIndexLen = index + 1;
-                    alert(" Invalid " + suIndexLen);
-                    // input.addEventListener("change", (event) => {
-                      window.scrollTo(0,0);
-                      homePage
-                      .then((load) => {
-                        localStorage.setItem("ssSearch", query);
-                        localStorage.setItem("rsSearch", "");
-                        localStorage.setItem("gsSearch", "");
-                        // console.log("Data; Url for reLoad ", load.data);
-                        let linkFollow = document.createElement("a");
-                        linkFollow.href = load.data + "?q=" + query;
-                        // console.log("the match: " + linkFollow.href);
-                        linkFollow.id = "linkFOLLOW";
-                        linkFollow.target = "_self";
-                        linkFollow.rel = "noopener noreferrer";
-                        document.body.appendChild(linkFollow);
-                        document.getElementById("linkFOLLOW").click();
-                        document.getElementById("linkFOLLOW").remove();
-                        // window.location.href = load.data
-                        // input.value = event.target.value;
-                        // input.disabled = false;
-                        // input.focus();
-                      })
-                      .catch((fail) => {
-                        console.log("Failed to load ", fail);
-                        input.disabled = false;
-                        input.focus();
-                      });
-                    // })
-                          // if (suIndexLen >= suggestContent?.length) {
-                            // input.addEventListener("input", (event) => {
-                            // })
+                    if (suggestion && suggestion?.description) {
+                      let suIndexLen = index + 1;
+                      alert(" Invalid " + suIndexLen);
+                      // input.addEventListener("change", (event) => {
+                        window.scrollTo(0,0);
+                        homePage
+                        .then((load) => {
+                          localStorage.setItem("ssSearch", suggestion?.description);
+                          localStorage.setItem("rsSearch", "");
+                          localStorage.setItem("gsSearch", "");
+                          // console.log("Data; Url for reLoad ", load.data);
+                          let linkFollow = document.createElement("a");
+                          linkFollow.href = load.data + "?q=" + suggestion?.description;
+                          // console.log("the match: " + linkFollow.href);
+                          linkFollow.id = "linkFOLLOW";
+                          linkFollow.target = "_self";
+                          linkFollow.rel = "noopener noreferrer";
+                          document.body.appendChild(linkFollow);
+                          document.getElementById("linkFOLLOW").click();
+                          document.getElementById("linkFOLLOW").remove();
+                          // window.location.href = load.data
+                          // input.value = event.target.value;
+                          // input.disabled = false;
+                          // input.focus();
+                        })
+                        .catch((fail) => {
+                          console.log("Failed to load ", fail);
+                          input.disabled = false;
+                          input.focus();
+                        });
+                      // })
+                            // if (suIndexLen >= suggestContent?.length) {
+                              // input.addEventListener("input", (event) => {
+                              // })
+                            // }
                           // }
+                          // return
                         // }
-                        // return
                       // }
-                    // }
-                    // }
+                      // }
+                    }
                   }
 
 
@@ -1118,6 +1121,7 @@
                   // console.log("User clicked; Tab or Enter: ", userClicked)
                 // });
               });
+              openYTPlayer.click();
               fetchResults(resultsTmp);
               // if (userClicked) {
               //   break;
@@ -1128,7 +1132,8 @@
         else {
           if (suggestContent.length === 0) {
             suggestionsDiv.innerHTML = '';
-            redirect(contentList, reUrlList);
+            // openYTPlayer.click();
+            fetchResults(contentList);
             // return;
           }
         }
@@ -1172,19 +1177,21 @@
     // }, 300);
     
     if (input && suggestionsDiv) {
-      let openYTPlayer = document.getElementById("mainUjpg");
-      openYTPlayer.click();
+      // let homeSideResults = serverside("vidPlaylist", [String(gsTemp || ssTemp || rsTemp)]);
+      // let openYTPlayer = document.getElementById("mainUjpg");
+      // openYTPlayer.click();
       // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
       input.disabled = true;
       input.addEventListener('input', (event) => {
         if (String(event?.target?.value).length > 0) {
-          homeSideResults = serverside("vidPlaylist", [String(event?.target?.value)]);
           localStorage.setItem("ssSearch", event?.target?.value);
           localStorage.setItem("rsSearch", "");
           localStorage.setItem("gsSearch", "");
           // againContent = (localStorage?.getItem("ssSearch" || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch")));
           // redirect([{description: event?.target?.value}], reUrlList);
-          fetchSuggestions(event?.target?.value);
+          // openYTPlayer.click();
+          // homeSideResults
+          // fetchSuggestions(event?.target?.value);
             // if (event?.target?.value.length <= 3) {
             //   suggestionsDiv.innerHTML = '';
             // }
@@ -1296,9 +1303,9 @@
                   // suggestions?.forEach((suggestion) => {
                     // event.target.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
                     // if (String(suggestion.description).toLowerCase().includes(event.target.value.toLowerCase())) { // && (!suggestions || suggestions?.length === 0)) {
-                      input.blur();
                       input.disabled = true
-                      localStorage.setItem("gsSearch", event.target.value);
+                      input.blur();
+                      localStorage.setItem("gsSearch", event?.target?.value);
                       localStorage.setItem("rsSearch", "");
                       localStorage.setItem("ssSearch", "");
                       // const div = document.createElement('div');
@@ -1315,8 +1322,8 @@
                       // document.getElementById("openYTPLAYER").click();
                       // document.getElementById("openYTPLAYER").remove();
                       // qTemp = query
-                      // serverside("vidPlaylist", [String(event?.target?.value)])
-                      homeSideResults
+                      serverside("vidPlaylist", [String(event?.target?.value)])
+                      // homeSideResults
                       .then((done) => {
                         try {
                           // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
@@ -1328,49 +1335,49 @@
                             let doneAlert = false;
                             if 
                                 (
-                                  done.data &&
-                                  done.data !== null &&
-                                  typeof done.data === "object" && 
+                                  done?.data &&
+                                  done?.data !== null &&
+                                  typeof done?.data === "object" && 
                                   (
-                                    !Array.isArray(done.data)
+                                    !Array.isArray(done?.data)
                                   )
                                 ) {
-                                  doneAlert = Object.keys(done.data)?.length;
+                                  doneAlert = Object.keys(done?.data)?.length;
                                 }
-                            if (done.data && (doneAlert && doneAlert > 0)) {
+                            if (doneAlert && doneAlert > 0) {
                               // personalizedList = [];
                               // reUrlList = [];
-                              for (let key in done.data) {
+                              for (let key in done?.data) {
                                 let i = 0;
                                 let l = false;
                                 if 
                                     (
-                                      done.data[key] &&
-                                      done.data[key] !== null &&
-                                      typeof done.data[key] === "object" && 
-                                      !Array.isArray(done.data[key])
+                                      done?.data[key] &&
+                                      done?.data[key] !== null &&
+                                      typeof done?.data[key] === "object" && 
+                                      !Array.isArray(done?.data[key])
                                     ) {
-                                    l =  Object.keys(done.data[key])?.length;
+                                    l =  Object.keys(done?.data[key])?.length;
                                   }
                                 else {
                                   if 
                                       (
-                                        done.data[key] &&
-                                        done.data[key] !== null &&
-                                        typeof done.data[key] === "object" && 
-                                        Array.isArray(done.data[key]
+                                        done?.data[key] &&
+                                        done?.data[key] !== null &&
+                                        typeof done?.data[key] === "object" && 
+                                        Array.isArray(done?.data[key]
                                       )) {
-                                      l =  done.data[key]?.length;
+                                      l =  done?.data[key]?.length;
                                     }
                                   else {
                                     if 
                                         (
-                                          done.data[key] &&
-                                          done.data[key] !== null &&
-                                          done.data[key] !== "undefined" &&
-                                          typeof done.data[key] === "string"
+                                          done?.data[key] &&
+                                          done?.data[key] !== null &&
+                                          done?.data[key] !== "undefined" &&
+                                          typeof done?.data[key] === "string"
                                         ) {
-                                        l =  Array(String(done.data[key]))?.length;
+                                        l =  Array(String(done?.data[key]))?.length;
                                       }
                                   }
                                 }
@@ -1383,22 +1390,22 @@
                                   let dLoc =  false;
                                   if 
                                       (
-                                        done.data[key] &&
-                                        done.data[key] !== null &&
-                                        typeof done.data[key] === "object" && 
+                                        done?.data[key] &&
+                                        done?.data[key] !== null &&
+                                        typeof done?.data[key] === "object" && 
                                           (
-                                            !Array.isArray(done.data[key]) && 
-                                            Object.keys(done.data[key]).length > 0
+                                            !Array.isArray(done?.data[key]) && 
+                                            Object.keys(done?.data[key])?.length > 0
                                           )
                                       ) {
-                                      console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
-                                      tempObj.description = done.data[key][i]?.description;
-                                      if (reUrlList?.indexOf(done.data[key][i]?.videoId) > -1) {
-                                        console.warn(done.data[key][i]?.videoId + " already in data",);
+                                      console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done?.data[key], JSON.stringify(done?.data[key]));
+                                      tempObj.description = done?.data[key][i]?.description;
+                                      if (reUrlList?.indexOf(done?.data[key][i]?.videoId) > -1) {
+                                        console.warn(done?.data[key][i]?.videoId + " already in data",);
                                       }
                                       else {
-                                        if (reUrlList?.indexOf(done.data[key][i]?.videoId) === -1) {
-                                          tData = done.data[key][i]?.videoId;
+                                        if (reUrlList?.indexOf(done?.data[key][i]?.videoId) === -1) {
+                                          tData = done?.data[key][i]?.videoId;
                                           reUrlList.push(tData);
                                           if 
                                               (
@@ -1433,22 +1440,22 @@
                                   else {
                                     if 
                                         (
-                                          done.data[key] &&
-                                          done.data[key] !== null &&
-                                          typeof done.data[key] === "object" && 
+                                          done?.data[key] &&
+                                          done?.data[key] !== null &&
+                                          typeof done?.data[key] === "object" && 
                                             (
-                                              Array.isArray(done.data[key]) && 
-                                              done.data[key]?.length > 0
+                                              Array.isArray(done?.data[key]) && 
+                                              done?.data[key]?.length > 0
                                             )
                                         ) {
-                                        console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done.data[key], JSON.stringify(done.data[key]));
+                                        console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done?.data[key], JSON.stringify(done?.data[key]));
                                         tempObj.description = String(event?.target?.value);
-                                        if (reUrlList?.indexOf(done.data[key][i]) > -1) {
-                                          console.warn(done.data[key][i] + " already in data",);
+                                        if (reUrlList?.indexOf(done?.data[key][i]) > -1) {
+                                          console.warn(done?.data[key][i] + " already in data",);
                                         }
                                         else {
-                                          if (reUrlList?.indexOf(done.data[key][i]) === -1) {
-                                            tData = done.data[key][i];
+                                          if (reUrlList?.indexOf(done?.data[key][i]) === -1) {
+                                            tData = done?.data[key][i];
                                             reUrlList.push(tData);
                                             if 
                                                 (
@@ -1484,20 +1491,20 @@
                                       if 
                                           (
                                             (
-                                              done.data[key] &&
-                                              done.data[key] !== null &&
-                                              typeof done.data[key] === "string" && 
-                                              String(done.data[key]).length > 0
+                                              done?.data[key] &&
+                                              done?.data[key] !== null &&
+                                              typeof done?.data[key] === "string" && 
+                                              String(done?.data[key])?.length > 0
                                             )
                                           ) {
-                                          console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done.data[key], String(done.data[key]));
+                                          console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done?.data[key], String(done?.data[key]));
                                           tempObj.description = String(event?.target?.value);
-                                          if (reUrlList?.indexOf(done.data[key]) > -1) {
-                                            console.warn(done.data[key] + " already in data",);
+                                          if (reUrlList?.indexOf(done?.data[key]) > -1) {
+                                            console.warn(done?.data[key] + " already in data",);
                                           }
                                           else {
-                                            if (reUrlList?.indexOf(done.data[key]) === -1) {
-                                              tData = done.data[key];
+                                            if (reUrlList?.indexOf(done?.data[key]) === -1) {
+                                              tData = done?.data[key];
                                               reUrlList.push(tData);
                                               if 
                                                   (
@@ -1592,7 +1599,8 @@
                           }
                           // console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
                           // fetchSuggestions(event?.target?.value);
-                          redirect(personalizedList, reUrlList);
+                          // openYTPlayer.click();
+                          // redirect(personalizedList, reUrlList);
                           // fetchResults(personalizedList);
                           // console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
                           // input.disabled = false
@@ -1603,10 +1611,11 @@
                             remoteSuggestionsCache[againContent] = personalizedList;
                             console.log("document _blank loaded addresses remoteSuggestionsCache[againContent] resources: ", JSON.stringify(remoteSuggestionsCache[againContent]));
                             remoteIntent = remoteSuggestionsCache[againContent][Math.floor(Math.random() * remoteSuggestionsCache[againContent].length)].description;
-                            // localStorage.setItem("rsSearch", remoteIntent);
+                            localStorage.setItem("rsSearch", remoteIntent);
+                            localStorage.setItem("ssSearch", "");
+                            localStorage.setItem("gsSearch", "");
                             // againContent = (localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch" || localStorage?.getItem("gsSearch")));
                             // fetchSuggestions(remoteIntent);
-                            redirect(personalizedList, reUrlList);
                             // fetchResults(personalizedList);
                             // const fetchRemote = debounce((query) => {
                             //   digestList = remoteSuggestionsCache[againContent];
@@ -1881,7 +1890,7 @@
                                 // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
                                 // console.log("Data; Url for reLoad ", load.data);
                                 let linkFollow = document.createElement("a");
-                                linkFollow.href = load.data + "?q=" + event?.target?.value;
+                                linkFollow.href = load.data + "?r=" + event?.target?.value;
                                 // console.log("the match: " + linkFollow.href);
                                 linkFollow.id = "linkFOLLOW";
                                 linkFollow.target = "_blank";
@@ -2198,6 +2207,8 @@
                         // });
                       // }
                       // return;
+              openYTPlayer.click();
+              redirect(personalizedList, reUrlList);
             }
           })
               // }
@@ -2271,7 +2282,6 @@
       });
     } 
     else {
-      let openYTPlayer = document.getElementById("mainUjpg");
       openYTPlayer.click();
       console.error("Input element 'artiicleIndex' or suggestions div 'artiicleIndexSuggestions' not found for autocomplete setup.");
     }
@@ -2315,10 +2325,10 @@
       gsTemp = String(localStorage?.getItem("gsSearch")).toLowerCase();
       console.log("event; fetchResults gsSearch", gsTemp);
       digestList = query;
-      console.log("event fetchResults loaded addresses digestList resources", digestList.length);
+      console.log("event fetchResults loaded addresses digestList resources", digestList?.length);
       // console.log("event fetchResults _blank loaded addresses cache", JSON.stringify(digestList));
       resultsDigest = digestList?.filter((item) => {
-          return String(item.description).toLowerCase().includes(String(localStorage?.getItem("gsSearch")).toLowerCase() || String(localStorage.getItem("rsSearch")).toLowerCase() || String(localStorage?.getItem("ssSearch")).toLowerCase());
+          return String(item.description).toLowerCase().includes(gsTemp || rsTemp || ssTemp);
         }
       );
       // fetchSuggestions(againContent);
@@ -2336,8 +2346,8 @@
           ) {
           // personalizedList.push(val);
           window.scrollTo(0,0);
-          input.value = val?.description;
-          console.log("event fetchResults _blank loaded addresses main local storage all results: " + input.value);
+          // input.value = val?.description;
+          console.log("event fetchResults _blank loaded addresses main local storage all results: " + input?.value);
           // div.textContent = val.description;
           // div.classList.add("receipt", "btn-large");
           // div.addEventListener('click', () => {
@@ -2481,12 +2491,12 @@
               event.preventDefault();
               window.scrollTo(0,0);
               let val = resultsDigest[Math.floor(Math.random() * resultsDigest?.length)];
-              input.value = val?.description;
+              // input.value = val?.description;
               // localStorage.setItem("ssSearch", input.value);
               // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
               // fetchSuggestions(String(input.value));
               if (input.value?.length > 3) {
-                input.value = input.value;
+                // input.value = input.value;
                 // localStorage.setItem("ssSearch", input.value);
                 // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
               }
@@ -2517,7 +2527,7 @@
                       }
                       else {
                         if (String(thUrl).indexOf("http") === -1) {
-                          thUrl = load.data + "?q=" + thUrl
+                          thUrl = load.data + "?b=" + thUrl
                         }
                       }
                     }
@@ -2596,7 +2606,7 @@
         });
       }
       else {
-        if (matchesContent.length === 0) {
+        if (matchesContent.length === 0 || matchesContent?.length > 17) {
           matchContent = resultsDigest?.map((val) => {   //, index) => {
             // console.log(input.value + ": result description: " + val.description);
             // console.log("result index: " + index);
@@ -2609,7 +2619,7 @@
               ) {
               // personalizedList.push(val);
               window.scrollTo(0,0);
-              input.value = val?.description;
+              // input.value = val?.description;
               console.log("event fetchResults _blank loaded addresses supplimentary local storage all results: " + input.value);
               // div.textContent = val.description;
               // div.classList.add("receipt", "btn-large");
@@ -2740,7 +2750,7 @@
                     event.preventDefault();
                     window.scrollTo(0,0);
                     let val = resultsDigest[Math.floor(Math.random() * resultsDigest?.length)];
-                    input.value = val?.description;
+                    // input.value = val?.description;
                     // localStorage.setItem("ssSearch", input.value);
                     // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
                     // fetchSuggestions(String(input.value));
@@ -2749,9 +2759,9 @@
                       // localStorage.setItem("ssSearch", input.value);
                       // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
                     // }
-                    div.textContent = val.description;
-                    div.classList.add("receipt", "btn-large", "green");
-                    div.addEventListener('click', () => {
+                    // div.textContent = val.description;
+                    // div.classList.add("receipt", "btn-large", "green");
+                    // div.addEventListener('click', () => {
                       homePage
                       .then((load) => {
                         let linkFollow = document.createElement("a");
@@ -2776,7 +2786,7 @@
                             }
                             else {
                               if (String(thUrl).indexOf("http") === -1) {
-                                thUrl = load.data + "?q=" + thUrl
+                                thUrl = load.data + "?g=" + thUrl
                               }
                             }
                           }
@@ -2847,8 +2857,8 @@
                         input.focus();
                         return
                       });
-                    });
-                    suggestionsDiv.appendChild(div);
+                    // });
+                    // suggestionsDiv.appendChild(div);
                     // return
                   // }
                 } 
@@ -2861,19 +2871,19 @@
     return fetchAgain(againVar)
   }
   function redirect(myObj, myArr) {
-    digestList = myObj;
-    console.log("event redirect _blank and _top loaded addresses cache", JSON.stringify(digestList));
-    resultsDigest = digestList.filter((item) => {
-        return String(item.description).toLowerCase().includes(String(localStorage?.getItem("gsSearch")).toLowerCase() || String(localStorage.getItem("rsSearch")).toLowerCase() || String(localStorage?.getItem("ssSearch")).toLowerCase());
-      }
-    );
     rsTemp = String(localStorage.getItem("rsSearch")).toLowerCase();
     console.log("event; redirect rsSearch", rsTemp);
     ssTemp = String(localStorage?.getItem("ssSearch")).toLowerCase();
     console.log("event; redirect ssSearch", ssTemp);
     gsTemp = String(localStorage?.getItem("gsSearch")).toLowerCase();
     console.log("event; redirect gsSearch", gsTemp);
-    console.log("event redirect _blank and _top loaded addresses digest " + String(localStorage?.getItem("gsSearch")).toLowerCase() || String(localStorage.getItem("rsSearch")).toLowerCase() || String(localStorage?.getItem("ssSearch")).toLowerCase(), resultsDigest);
+    digestList = myObj;
+    console.log("event redirect _blank and _top loaded addresses cache", JSON.stringify(digestList));
+    resultsDigest = digestList.filter((item) => {
+        return String(item.description).toLowerCase().includes(gsTemp || rsTemp || ssTemp);
+      }
+    );
+    console.log("event redirect _blank and _top loaded addresses digest " + (gsTemp || rsTemp || ssTemp), JSON.stringify(resultsDigest));
     let urlTmp = [];
     resultsDigest?.forEach((suggestion, index) => {
       // Get the original request URL from the URL parameters
@@ -3207,67 +3217,12 @@
       else {
         // Handle the case where the URL parameter is missing
         if (typeof suggestion === "string") {
-        if 
-          (
-            suggestion &&
-            typeof suggestion === "object" &&
-            !Array.isArray(suggestion) 
-          ) {
-          let myKeyObj = Object.keys(suggestion);
-          if 
-            (
-              myKeyObj &&
-              typeof myKeyObj === "object" &&
-              Array.isArray(myKeyObj)
-            ) {
-              if (myKeyObj?.length > 0) {
-                console.log("event redirect function _self supplimentary STRING resources", JSON.stringify(suggestion?.description));
-                localStorage.setItem("ssSearch", suggestion?.description);
-                localStorage.setItem("rsSearch", "");
-                localStorage.setItem("gsSearch", "");
-                urlTmp.push(suggestion);
-                // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
-                // if (againContent) {
-                  // homePage
-                  // .then((load) => {
-                    // alert(JSON.stringify(load));
-                    // console.log("Data; Url for reLoad ", load.data);
-                    // let linkFollow = document.createElement("a");
-                    // linkFollow.href = load.data;
-                    // console.log("the match: " + linkFollow.href);
-                    // linkFollow.id = "linkFOLLOW";
-                    // linkFollow.target = "_self";
-                    // linkFollow.rel = "noopener noreferrer";
-                    // document.body.appendChild(linkFollow);
-                    // document.getElementById("linkFOLLOW").click();
-                    // document.getElementById("linkFOLLOW").remove();
-                    // window.location.href = load.data
-                    // input.value = event.target.value;
-                    // input.disabled = false;
-                    // input.focus();
-                  // })
-                  // .catch((fail) => {
-                    // console.log("Failed to load ", fail);
-                    // input.disabled = false;
-                    // let openYTPlayer = document.getElementById("mainUjpg");
-                    // openYTPlayer.click();
-                    // input.focus();
-                    // return
-                  // });
-                  // fetchSuggestions(againContent);
-                // };
-                // fetchSuggestions(suggestion?.description);
-              }
-            }
-          }
-        }
-        else {
-          console.log("event redirect function _self supplimentary resources", JSON.stringify(suggestion));
+          console.log("event redirect function _self supplimentary STRING resources", String(suggestion));
           localStorage.setItem("ssSearch", suggestion);
           localStorage.setItem("rsSearch", "");
           localStorage.setItem("gsSearch", "");
           // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
-          if (againContent) {
+          if (rsTemp || ssTemp || gsTemp) {
             homePage
             .then((load) => {
               // alert(JSON.stringify(load));
@@ -3296,8 +3251,65 @@
             });
             // fetchSuggestions(againContent);
           }
+          else {
+          }
           // fetchSuggestions(suggestion);
         }
+        else {
+          if 
+            (
+              suggestion &&
+              typeof suggestion === "object" &&
+              !Array.isArray(suggestion) 
+            ) {
+            let myKeyObj = Object.keys(suggestion);
+            if 
+              (
+                myKeyObj &&
+                typeof myKeyObj === "object" &&
+                Array.isArray(myKeyObj)
+              ) {
+                if (myKeyObj?.length > 0) {
+                  console.log("event redirect function _self supplimentary resources", JSON.stringify(suggestion?.description));
+                  localStorage.setItem("ssSearch", suggestion?.description);
+                  localStorage.setItem("rsSearch", "");
+                  localStorage.setItem("gsSearch", "");
+                  urlTmp.push(suggestion);
+                  // againContent = (localStorage?.getItem("ssSearch") || localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch"));
+                  // if (againContent) {
+                    // homePage
+                    // .then((load) => {
+                      // alert(JSON.stringify(load));
+                      // console.log("Data; Url for reLoad ", load.data);
+                      // let linkFollow = document.createElement("a");
+                      // linkFollow.href = load.data;
+                      // console.log("the match: " + linkFollow.href);
+                      // linkFollow.id = "linkFOLLOW";
+                      // linkFollow.target = "_self";
+                      // linkFollow.rel = "noopener noreferrer";
+                      // document.body.appendChild(linkFollow);
+                      // document.getElementById("linkFOLLOW").click();
+                      // document.getElementById("linkFOLLOW").remove();
+                      // window.location.href = load.data
+                      // input.value = event.target.value;
+                      // input.disabled = false;
+                      // input.focus();
+                    // })
+                    // .catch((fail) => {
+                      // console.log("Failed to load ", fail);
+                      // input.disabled = false;
+                      // let openYTPlayer = document.getElementById("mainUjpg");
+                      // openYTPlayer.click();
+                      // input.focus();
+                      // return
+                    // });
+                    // fetchSuggestions(againContent);
+                  // };
+                  // fetchSuggestions(suggestion?.description);
+                }
+              }
+            }
+        } 
         console.error("No redirect URL provided.");
       }
     });
