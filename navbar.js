@@ -21,7 +21,7 @@ function navBar(
   const navBar = contentApp(
     "\n <div>\n    <?!= ref1 ?><?!= ref2 ?><?!= ref3 ?><?!= ref4 ?><?!= ref5 ?><?!= ref6 ?><?!= ref7 ?><?!= ref8 ?><?!= ref9 ?>\n  <?!= test ?>\n   </div>\n  ",
     {
-      ref1: ContentApp.appContent(
+      ref1: contentApp(
         "\n <a href=".concat(
           ref1,
           ' class="nav__link" data-link>'.concat(title1, "</a>"),
@@ -31,7 +31,7 @@ function navBar(
           title1: title1,
         },
       ),
-      ref2: ContentApp.appContent(
+      ref2: contentApp(
         "\n <a href=".concat(
           ref2,
           ' class="nav__link" data-link>'.concat(title2, "</a>"),
@@ -41,7 +41,7 @@ function navBar(
           title2: title2,
         },
       ),
-      ref3: ContentApp.appContent(
+      ref3: contentApp(
         "\n <a href=".concat(
           ref3,
           ' class="nav__link" data-link>'.concat(title3, "</a>"),
@@ -51,7 +51,7 @@ function navBar(
           title3: title3,
         },
       ),
-      ref4: ContentApp.appContent(
+      ref4: contentApp(
         "\n <a href=".concat(
           ref4,
           ' class="nav__link" data-link>'.concat(title4, "</a>"),
@@ -61,7 +61,7 @@ function navBar(
           title4: title4,
         },
       ),
-      ref5: ContentApp.appContent(
+      ref5: contentApp(
         "\n <a href=".concat(
           ref5,
           ' class="nav__link" data-link>'.concat(title5, "</a>"),
@@ -71,7 +71,7 @@ function navBar(
           title5: title5,
         },
       ),
-      ref6: ContentApp.appContent(
+      ref6: contentApp(
         "\n <a href=".concat(
           ref6,
           ' class="nav__link" data-link>'.concat(title6, "</a>"),
@@ -81,7 +81,7 @@ function navBar(
           title6: title6,
         },
       ),
-      ref7: ContentApp.appContent(
+      ref7: contentApp(
         "\n <a href=".concat(
           ref7,
           ' class="nav__link" data-link>'.concat(title7, "</a>"),
@@ -91,7 +91,7 @@ function navBar(
           title7: title7,
         },
       ),
-      ref8: ContentApp.appContent(
+      ref8: contentApp(
         "\n <a href=".concat(
           ref8,
           ' class="nav__link" data-link>'.concat(title8, "</a>"),
@@ -101,7 +101,7 @@ function navBar(
           title8: title8,
         },
       ),
-      ref9: ContentApp.appContent(
+      ref9: contentApp(
         "\n <a href=".concat(
           ref9,
           ' class="nav__link" data-link>'.concat(title9, "</a>"),
@@ -111,7 +111,7 @@ function navBar(
           title9: title9,
         },
       ),
-      test: ContentApp.appContent(
+      test: contentApp(
         "\n  <script>\n  ".concat(
           tagBuilder(
             "data",
@@ -128,5 +128,5 @@ function navBar(
   // "\n  <head>\n  <base target=\"_parent\"></base>\n  <meta charset=\"UTF-8\"></meta>\n  <meta content=\"width=device-width, initial-scale=1.0\" name=\"viewport\"></meta>\n <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\"></link>\n  <link href=\"https://fonts.googleapis.com/icon?fam ily=Material+Icons\" rel=\"stylesheet\"></link>\n  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css\" rel=\"stylesheet\"></link>\n\n  </head>\n <body>\n\n <div class=\"navbar\">\n  <nav class=\"nav\">\n  <a href=\"".concat(ref2, "\" class=\"nav__link\" data-link><?!= title2 ?></a>\n  <a href=\"".concat(ref3, "\" class=\"nav__link\" data-link><?!= title3 ?></a>\n  <a href=\"".concat(ref4, "\" class=\"nav__link\" data-link><?!= title4 ?></a>\n  <a href=\"".concat(ref5, "\" class=\"nav__link\" data-link><?!= title5 ?></a>\n  <a href=\"".concat(ref6, "\"  class=\"nav__link\"  data-link><?!= title6 ?></a>\n  <a href=\"".concat(ref7, "\"  class=\"nav__link\"  data-link><?!= title7 ?></a>\n  <a href=\"".concat(ref8, "\"  class=\"nav__link\"  data-link><?!= title8 ?></a>\n  <a href=\"".concat(ref9, "\"  class=\"nav__link\"  data-link><?!= title9 ?></a>\n  </nav>\n\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js\"></script>\n </body>\n\n  "))))))))), { title1: title1, title2: title2, title3: title3, title4: title4, title5: title5, title6: title6, title7: title7, title8: title8, title9: title9 }
   // )
   // ,"")});
-  return ContentApp.appContent(navBar); //:contentFile('uiAccess');
+  return contentApp(navBar); //:contentFile('uiAccess');
 }
