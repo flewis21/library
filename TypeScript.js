@@ -5390,7 +5390,8 @@ let geneicType = function (e) {
               };
             }
             if (true) {
-              eQueryObject = {parameter: {q: "app? " + autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}} // {parameter: {q: autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"]}}
+              let queTmp = autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"];
+              eQueryObject = {parameter: {q: "tt? Dr. Jeckyl and Mr. Hyde ai"}};
               handles = startRenderer(eQueryObject);
               data = 
                 {

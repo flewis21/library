@@ -152,12 +152,13 @@
         setTimeout(2000, playVideo)
         // playVideo();
       } else if (event.data == YT.PlayerState.ENDED) {
-        // loadPlaylist();
+        stopVideo();
+        loadPlaylist();
         changeBorderColor(event.data);
-        // setShuffle();
+        setShuffle();
         // playVideo();
         // setShuffle();
-        // nextVideo();
+        nextVideo();
         setTimeout(2000, nextVideo);
         setTimeout(2000, playVideo);
       } else if (event.data == YT.PlayerState.PAUSED) {

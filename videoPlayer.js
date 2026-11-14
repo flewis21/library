@@ -931,15 +931,17 @@ function needPastTime(searchString) {
                 return;
               } 
               else {
-                rndRes.push(test);
-                updateQuote(
-                  JSON.stringify({
-                    name: "videoSheet",
-                    number: 001,
-                    videoid: test,
-                    videodescription: String(searchString),
-                  }),
-                );
+                if (String(test)?.length > 0) {
+                  rndRes.push(test);
+                  updateQuote(
+                    JSON.stringify({
+                      name: "videoSheet",
+                      number: 001,
+                      videoid: test,
+                      videodescription: String(searchString),
+                    }),
+                  );
+                }
               }
             }
           }
