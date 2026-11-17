@@ -1338,20 +1338,50 @@ function freqP(t, v) {
       }
     }
     trueVfalse (t) {
-      if (
-        typeof t === null ||
-        t === null ||
-        typeof t === "undefined" ||
-        t === "undefined" ||
-        typeof t === false ||
-        t === false ||
-        t === 0 ||
-        t.length === 0 ||
-        t === ""
-      ) {
+      if (t == null || typeof t === "undefined" || t == false) {
         return false;
-      } else {
-        return true;
+      } 
+      else {
+        if (typeof t === "object") {
+          if (!Array.isArray(t)) {
+            let objTmp = Object.keys(t);
+            if (objTmp && objTmp?.length === 0) {
+              return false;
+            }
+            else {
+              if (objTmp && objTmp?.length > 0) {
+                return true;
+              }
+            }
+          }
+          else {
+            if (Array.isArray(t)) {
+              if (t.length === 0) {
+                return false;
+              }
+              else {
+                if (t.length > 0) {
+                  return true;
+                }
+              }
+            }
+          }
+        }
+        else {
+          if (typeof t === "string") {
+            if (String(t).length === 0 || String(t) === "undefined") {
+              return false;
+            }
+            else {
+              if (String(t).length > 0 || String(t) !== "undefined") {
+                return true;
+              }
+            }
+          }
+          else {
+            return true;
+          }
+        }
       }
     };
     res() {
@@ -1367,7 +1397,7 @@ function freqP(t, v) {
       this.v = v;
       this.mapKeys = {};
       for (let key in this.t) {
-        this.mapKeys[key] = this.v || typeof this.t[key];
+        this.mapKeys[key] = this?.v || typeof this?.t[key] || false;
       }
     }
     static mapout (t, v) {
@@ -3293,7 +3323,7 @@ function misStC(func, someArgs) {
           let allErrors = {};
           let arrDRnd = null;
           let fParams = autoGlobe.functionRegistry.paramsList; // Assuming gsFParams is globally accessible
-          console.log("fParams = " + fParams.slice(0, 1), autoGlobe.executed++);
+          console.log("fParams = " + JSON.stringify(fParams.slice(0, 1)), autoGlobe.executed++);
           console.log("global functions list length:", Object.keys(fParams).length);
           let resCount = 0;
 
@@ -3635,10 +3665,10 @@ function misStC(func, someArgs) {
                         //   console.log("Check/Balance for " + result.toString());
                         // }
                         try {
-                          console.log("DEBUG: line 3498\nCheck/Balance for " + JSON.parse(result?.toString()));
+                          console.log("DEBUG: line 3498\nCheck/Balance for " + JSON.parse(String(result)));
                         } 
                         catch (check) {
-                          console.log("DEBUG: line 3501\nCheck/Balance for " + result?.toString());
+                          console.log("DEBUG: line 3501\nCheck/Balance for " + String(result));
                         }
 
                         args[declaredParamName] = {
@@ -5390,18 +5420,19 @@ let geneicType = function (e) {
               };
             }
             if (true) {
-              let queTmp = autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"];
-              eQueryObject = {parameter: {q: "tt? Dr. Jeckyl and Mr. Hyde ai"}};
+              let queD = autoGlobe.domainSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.domainSheetVals.length))]["Domain"];
+              let queP = autoGlobe.vidSheetVals[Math.floor(Math.random() * Math.floor(autoGlobe.vidSheetVals.length))]["Description"];
+              eQueryObject = {parameter: {q: [queD, queP][Math.floor(Math.random() * Math.floor(2))]}};
               handles = startRenderer(eQueryObject);
-              data = 
-                {
-                argsObject: handles
+              data = handles;
+                // {
+                // argsObject: handles
                   // {
                   //   func: handles.funcUno,
                   //   args: handles.funcDos,
                   //   res: handles.funcUno + "," + handles.funcDos,
                   // }
-                } //,String(handles.funcDos);
+                // } //,String(handles.funcDos);
               let dataErrors = data?.allErrors;
               let dataFunc = data?.argsObject?.func;
               let dataArgs = data?.argsObject?.args;
@@ -5418,7 +5449,7 @@ let geneicType = function (e) {
               }
               else {
                 console.log(typeof data + " | event; FuncHandle returned: data = " + JSON.stringify(data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app), autoGlobe.executed++);
-                base = data?.argsObject?.func || data?.argsObject?.res || data?.tempObj?.argsObject?.app || data?.argsObject?.mCDN || data?.tempObj;
+                base = data?.argsObject?.func || data?.argsObject?.res || data?.pLData?.argsObject?.res || data?.pLData?.data?.app || data?.tempObj?.argsObject?.app || data?.mCDN || data?.argsObject?.mCDN || data?.mIndex || data?.pLData?.hardUrl || data?.tempObj;
                 if (!base) {
                   if (data && data?.argsObject && (data?.argsObject["func"] && data?.argsObject["args"])) {
                     base = createFunctionResult(data?.argsObject["func"], data?.argsObject["args"]);

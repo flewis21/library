@@ -1444,7 +1444,7 @@ var seoTwitter = function (folderX, searchString, time) {
   var minFold = fileFold(foldData[randomFolderCount]);
   console.log("DEBUG: line 1447\nminFold = " + minFold, executed++);
   var rndString =
-    minFold[Math.floor(Math.random() * Math.floor(minFold.length))];
+    minFold[Math.floor(Math.random() * Math.floor(minFold?.length))];
   if (!searchString) {
     var searchString = rndString;
   } else if (searchString === "searchString") {

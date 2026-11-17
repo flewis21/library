@@ -384,12 +384,15 @@ function funcHandle(e) {
                     if (typeof globalThis[e.parameter[objData[0]]] !== "function") {
                       argsEd = false;
                       if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") > -1) {
-                          argsEd = e.parameter[objData[0]]
+                          argsEd = Array(e.parameter[objData[0]]);
                       }
                       else {
                         if (e.parameter[objData[0]] && e.parameter[objData[0]]?.indexOf(",") === -1) {
-                          if (String(e.parameter[objData[0]])?.indexOf("http") === -1 && String(e.parameter[objData[0]])?.indexOf(" ") === -1) {
+                          if (String(e.parameter[objData[0]])?.indexOf("http") === -1 && String(e.parameter[objData[0]])?.indexOf("/") === -1 && String(e.parameter[objData[0]])?.indexOf(" ") === -1) {
                             e.parameter[objData[0]] = String("http://" + e.parameter[objData[0]]);
+                            if (String(e.parameter[objData[0]])?.indexOf(".") === -1) {
+                              e.parameter[objData[0]] = String(e.parameter[objData[0]] + ".com");
+                            }
                           }
                           tempObj = resUrlData(e.parameter[objData[0]],
                               // {
@@ -399,7 +402,7 @@ function funcHandle(e) {
                               );
                           mapArr[e.parameter[objData[0]]] = [] // || tempObj?.argsObject?.link || tempObj?.argsObject?.func] = [];
                           if (tempObj && Object.keys(tempObj).length > 0) { //?.argsObject?.args) {
-                            argsEd = freqP(mapArr, [String(tempObj?.data?.app) || tempObj?.playlist || tempObj?.hardUrl]).mapKeys; // ?.argsObject?.args]).mapKeys;
+                            argsEd = freqP(mapArr, [tempObj?.hardUrl || tempObj?.playlist || String(tempObj?.data?.app)]).mapKeys; // ?.argsObject?.args]).mapKeys;
                             // tempForm = createFormFunction(e.parameter[objData[0]]);
                             // tempUrlData = resUrlData();
                           }
@@ -418,7 +421,7 @@ function funcHandle(e) {
                         console.log("e = " + JSON.stringify(e), executed++);
                       } 
                       else {
-                        if (typeof argsEd === "object" && argsEd !== null) {
+                        if (typeof argsEd === "object" && argsEd !== null && !Array.isArray(argsEd)) {
                           argsAP = Object.values(argsEd);
                           if (argsAP && argsAP.length > 0) {
                             e = objectOfS(

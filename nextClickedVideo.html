@@ -4,10 +4,10 @@
   let resultsDigest = [];
   let personalizedList = [];
   let reUrlList = [];
-  let rsTemp = "";
-  let ssTemp = "";
-  let gsTemp = "";
-  let againContent = "";
+  let rsTemp;
+  let ssTemp;
+  let gsTemp;
+  let againContent;
   let matchesContent = [];
   let matchContent = [];
   let allContentAvailable = [];
@@ -686,13 +686,15 @@
                     div.addEventListener('click', () => {
                       // input.value = suggestion.description;
                       // let confirmation;
-                      if ((suggestion.youtubeURL && suggestion.youtubeURL !== "undefined")) {
+                      if ((suggestion.youtubeUrl && suggestion.youtubeUrl !== "undefined")) {
                         // confirmation = window.confirm(
                         //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                         // );
                         // if (confirmation) {
-                          if ((suggestion.youtubeURL && suggestion.youtubeURL !== "undefined")) {
-                            window.open(suggestion.youtubeUrl, "_blank");
+                          if ((suggestion.youtubeUrl && suggestion.youtubeUrl !== "undefined")) {
+                            // window.open(suggestion.youtubeUrl, "_blank");
+                            console.log("event; fetchResults againContent", againContent);
+                            fetchResults(Array(suggestion));
                           }
                           else {
                             if ((suggestion.webAddressUrl && suggestion.webAddressUrl !== "undefined")) {
@@ -711,8 +713,10 @@
                           // );
                         // }
                           // if (confirmation) {
-                          if ((suggestion.youtubeURL && suggestion.youtubeURL !== "undefined")) {
-                            window.open(suggestion.youtubeUrl, "_blank");
+                          if ((suggestion.youtubeUrl && suggestion.youtubeUrl !== "undefined")) {
+                            // window.open(suggestion.youtubeUrl, "_blank");
+                            console.log("event; fetchResults againContent", againContent);
+                            fetchResults(Array(suggestion));
                           }
                           else {
                             if ((suggestion.webAddressUrl && suggestion.webAddressUrl !== "undefined")) {
@@ -733,12 +737,12 @@
                       //   // suggestions?.forEach(suggestion => {
                       //     // console.log(suggestion)
                       //     if (suggestion && suggestion?.description.toLowerCase().includes(event.target.value.toLowerCase())) {
-                      //       if (suggestion.youtubeURL) {
+                      //       if (suggestion.youtubeUrl            ) {
                       //         let confirmation = window.confirm(
                       //           suggestion?.youtubeUrl,
                       //         );
                       //         if (confirmation) {
-                      //           if (suggestion.youtubeURL) {
+                      //           if (suggestion.youtubeUrl) {
                       //             window.open(suggestion.youtubeUrl, "_blank");
                       //             return;
                       //           }
@@ -767,7 +771,7 @@
                       //           );
                       //         }
                       //         if (confirmation) {
-                      //           if (suggestion.youtubeURL) {
+                      //           if (suggestion.youtubeUrl) {
                       //             window.open(suggestion.youtubeUrl, "_blank");
                       //             return;
                       //           }
@@ -810,13 +814,13 @@
                               // div.addEventListener('click', () => {
                               //   input.value = suggestion.description;
                                 // let confirmation;
-                                // if (suggestion.youtubeURL) {
+                                // if (suggestion.youtubeUrl) {
                                 //   console.log("event user input _top loaded addresses fetchSuggestions main resources", suggestion.youtubeURL);
                                   // confirmation = window.confirm(
                                   //   "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                                   // );
                                   // if (confirmation) {
-                                    // if (suggestion.youtubeURL) {
+                                    // if (suggestion.youtubeUrl) {
                                       // window.open(suggestion.youtubeUrl, "_blank");
                                       // homePage
                                       // .then(() => {
@@ -825,7 +829,7 @@
                                         // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
                                         // console.log("Data; Url for reLoad ", load.data);
                                         // let linkFollow = document.createElement("a");
-                                        // linkFollow.href = suggestion.youtubeURL; // load.data;
+                                        // linkFollow.href = suggestion.youtubeUrl; // load.data;
                                         // console.log("the match: " + linkFollow.href);
                                         // linkFollow.id = "linkFOLLOW";
                                         // linkFollow.target = "_blank";
@@ -893,7 +897,7 @@
                                     // );
                                   // }
                                   // if (confirmation) {
-                                    // if (suggestion.youtubeURL) {
+                                    // if (suggestion.youtubeUrl) {
                                       // window.open(suggestion.youtubeUrl, "_blank");
                                       // homePage
                                       // .then(() => {
@@ -902,7 +906,7 @@
                                         // againContent = (localStorage?.getItem("gsSearch") || localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch"));
                                         // console.log("Data; Url for reLoad ", load.data);
                                         // let linkFollow = document.createElement("a");
-                                        // linkFollow.href = suggestion.youtubeURL; // load.data;
+                                        // linkFollow.href = suggestion.youtubeUrl; // load.data;
                                         // console.log("the match: " + linkFollow.href);
                                         // linkFollow.id = "linkFOLLOW";
                                         // linkFollow.target = "_blank";
@@ -1045,12 +1049,12 @@
                       //     div.classList.add("card-panel", "receipt", "btn-large");
                       //     div.addEventListener('click', () => {
                       //       input.value = suggestion.description;
-                      //       if (suggestion.youtubeURL) {
+                      //       if (suggestion.youtubeUrl) {
                       //         let confirmation = window.confirm(
                       //           "Open YOUTUBE VIDEO? Click OK to continue, CANCEL to remain on this page",
                       //         );
                       //         if (confirmation) {
-                      //           if (suggestion.youtubeURL) {
+                      //           if (suggestion.youtubeUrl) {
                       //             window.open(suggestion.youtubeUrl);
                       //           }
                       //           else {
@@ -1067,7 +1071,7 @@
                       //             "Open WEB PAGE? Click OK to continue, CANCEL to remain on this page",
                       //           );
                       //           if (confirmation) {
-                      //             if (suggestion.youtubeURL) {
+                      //             if (suggestion.youtubeUrl) {
                       //               window.open(suggestion.youtubeUrl);
                       //             }
                       //             else {
@@ -1087,7 +1091,7 @@
                       //   suggestions?.forEach(suggestion => {
                       //     // console.log(suggestion)
                       //     if (suggestion && suggestion?.description.includes(event.target.value)) {
-                      //       if (suggestion.youtubeURL) {
+                      //       if (suggestion.youtubeUrl) {
                       //         let confirmation = window.confirm(
                       //           suggestion?.youtubeUrl,
                       //         );
@@ -1100,7 +1104,7 @@
                       //         }
                       //       }
                       //       if (confirmation) {
-                      //         if (suggestion.youtubeURL) {
+                      //         if (suggestion.youtubeUrl) {
                       //           window.open(suggestion.youtubeUrl);
                       //         }
                       //         else {
@@ -1191,6 +1195,7 @@
       // input.disabled = true;
       input.addEventListener('input', (event) => {
         if (String(event?.target?.value)) {
+          againContent = String(event?.target?.value);
           fetchSuggestions(event?.target?.value)
           return
         }
@@ -1329,619 +1334,640 @@
                     // document.body.appendChild(openYTPlayer);
                     // document.getElementById("openYTPLAYER").click();
                     // document.getElementById("openYTPLAYER").remove();
-                    // qTemp = query
-                    serverside("classFiles", [String(event?.target?.value)])
-                    // homeSideResults
-                    // .then((done) => {
-                    //   try {
-                        // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
-                        // Access the actual array from the done
-                        // console.log("event: vidPlaylist document loaded addresses main resources " + typeof done, JSON.stringify(done));
-                        // if (done && typeof done === "object") {
-                          // alert(JSON.stringify(done.data));
-                          // alert(Object.keys(done.data).length);
-                          // let doneAlert = false;
-                          // if (done?.data && done?.data !== null && typeof done?.data === "object" && (!Array.isArray(done?.data))) {
-                          //   doneAlert = Object.keys(done?.data)?.length;
-                          //   console.log("event: vidPlaylist object keys resources " + typeof done?.data, JSON.stringify(Object.keys(done?.data)));
+                    // qTemp = query 
+                    // const homeSideResults = ;
+                    serverside("getVIVals", [String(event?.target?.value)])
+                    .then(() => {
+                      serverside("vidPlaylist", [String(event?.target?.value)])
+                      .then((done) => {
+                        try {
+                          // Rename 'vidIds' to 'done' or 'payload' to avoid confusion
+                          // Access the actual array from the done
+                          console.log("event: vidPlaylist document loaded addresses main resources " + typeof done, JSON.stringify(done));
+                          if (done && typeof done === "object") {
+                            // alert(JSON.stringify(done.data));
+                            // alert(Object.keys(done.data).length);
+                            let doneAlert = false;
+                            if (done?.data && done?.data !== null && typeof done?.data === "object" && (!Array.isArray(done?.data))) {
+                              doneAlert = Object.keys(done?.data)?.length;
+                              console.log("event: vidPlaylist object keys resources " + typeof done?.data, JSON.stringify(Object.keys(done?.data)));
+                            }
+                            else {
+                              if (done?.data && done?.data !== null && typeof done?.data === "object" && (Array.isArray(done?.data))) {
+                                doneAlert = done?.data?.length;
+                                console.log("event: vidPlaylist resources " + typeof done?.data, JSON.stringify(done?.data));
+                              }
+                            }
+                            if (doneAlert && doneAlert > 0) {
+                              personalizedList = [];
+                              reUrlList = [];
+                              for (let key in done?.data) {
+                                let i = 0;
+                                let l = false;
+                                if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (!Array.isArray(done?.data[key]))) {
+                                  l =  Object.keys(done?.data[key])?.length;
+                                }
+                                else {
+                                  if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (Array.isArray(done?.data[key]))) {
+                                    l =  done?.data[key]?.length;
+                                  }
+                                  else {
+                                    if (done?.data[key] && done?.data[key] !== null && done?.data[key] !== "undefined" && typeof done?.data[key] === "string") {
+                                      l =  Array(String(done?.data[key]))?.length;
+                                    }
+                                  }
+                                }
+                                for (i,l;i<l;i++) {
+                                  let tempObj = {};
+                                  let reTempUrlList = [];
+                                  let tData = false;
+                                  let tempList = [];
+                                  // alert(l);
+                                  let dLoc =  false;
+                                  if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (!Array.isArray(done?.data[key]) && Object.keys(done?.data[key])?.length > 0)) {
+                                    console.log("event: vidPlaylist object key data resources " + typeof done?.data[key], JSON.stringify(done?.data[key]));
+                                    tempObj.description = done?.data[key][i]?.description;
+                                    if ((done?.data[key][i]?.youtubeURL && done?.data[key][i]?.youtubeURL !== "undefined") || (done?.data[key][i]?.webAddressUrl && done?.data[key][i]?.webAddressURL !== "undefined")) {
+                                      if (reUrlList?.indexOf(done?.data[key][i]?.videoId) > -1) {
+                                        console.warn("key " + key + " contains duplicate videoId already in data",);
+                                      }
+                                      else {
+                                        if (reUrlList?.indexOf(done?.data[key][i]?.videoId) === -1) {
+                                          tData = done?.data[key][i]?.videoId;
+                                          reUrlList.push(tData);
+                                          if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
+                                            console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                            dLoc =  "https://www.youtube.com/watch?v=";
+                                            try {
+                                              tempObj.youtubeUrl = dLoc + tData;
+                                              redirect(tempObj, reUrlList);
+                                            }
+                                            catch (err) {
+                                              console.warn(err);
+                                            }
+                                          }
+                                          else {
+                                            if (String(tData) && String(tData).indexOf("http") > -1) {
+                                              console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                              try {
+                                                tempObj.webAddressUrl = new URL(tData).href;
+                                                redirect(tempObj, reUrlList);
+                                              }
+                                              catch (err) {
+                                                console.warn(err);
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  else {
+                                    if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (Array.isArray(done?.data[key]) && done?.data[key]?.length > 0)) {
+                                      console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done?.data[key], key);
+                                      tempObj.description = String(event?.target?.value);
+                                      if (String(done?.data[key][i])?.length > 0) {
+                                        if (reUrlList?.indexOf(done?.data[key][i]) > -1) {
+                                          console.warn("key " + key + " contains duplicates already in data",);
+                                        }
+                                        else {
+                                          if (reUrlList?.indexOf(done?.data[key][i]) === -1) {
+                                            tData = done?.data[key][i];
+                                            reUrlList.push(tData);
+                                            if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
+                                              console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                              dLoc =  "https://www.youtube.com/watch?v=";
+                                              try {
+                                                tempObj.youtubeUrl = dLoc + tData;
+                                                redirect(tempObj, reUrlList);
+                                              }
+                                              catch (err) {
+                                                console.warn(err);
+                                              }
+                                            }
+                                            else {
+                                              if (String(tData) && String(tData).indexOf("http") > -1) {
+                                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                                try {
+                                                  tempObj.webAddressUrl = new URL(tData).href;
+                                                  redirect(tempObj, reUrlList);
+                                                }
+                                                catch (err) {
+                                                  console.warn(err);
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                    else {
+                                      if ((done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "string" && String(done?.data[key])?.length > 0)) {
+                                        console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done?.data[key], String(done?.data[key]));
+                                        tempObj.description = String(event?.target?.value);
+                                        // if (done?.data[key][i]?.youtubeURL || done?.data[key][i]?.webAddressUrl) {}
+                                        // if (String(done?.data[key][i])?.length > 0) {}
+                                        if (reUrlList?.indexOf(done?.data[key]) > -1) {
+                                          console.warn("key " + key + " contains duplicates already in data",);
+                                        }
+                                        else {
+                                          if (reUrlList?.indexOf(done?.data[key]) === -1) {
+                                            tData = done?.data[key];
+                                            reUrlList.push(tData);
+                                            if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
+                                              console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                              dLoc =  "https://www.youtube.com/watch?v=";
+                                              try {
+                                                tempObj.youtubeUrl = dLoc + tData;
+                                                redirect(tempObj, reUrlList);
+                                              }
+                                              catch (err) {
+                                                console.warn(err);
+                                              }
+                                            }
+                                            else {
+                                              if (String(tData) && String(tData).indexOf("http") > -1) {
+                                                console.log(tData + " index of http = " + String(tData).indexOf("http"));
+                                                try {
+                                                  tempObj.webAddressUrl = new URL(tData).href;
+                                                  redirect(tempObj, reUrlList);
+                                                }
+                                                catch (err) {
+                                                  console.warn(err);
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  // tempList.push(tempObj);
+                                  // personalizedList.push(tempObj);
+                                  // if (personalizedList.length > 0) {
+                                    // personalizedList.map((unObj) => {
+                                    //   // return unObj != tempObj
+                                    //   let unTube = unObj?.youtubeURL;
+                                    //   let tempTube = tempObj?.youtubeURL;
+                                    //   let unWeb = unObj?.webAddressUrl;
+                                    //   let tempWeb = tempObj?.webAddressUrl;
+                                    //   if (unTube && unTube !== null) {
+                                    //     if (tempTube && tempTube !== null) {
+                                    //       if (tempTube !== unTube) {
+                                    //         return unObj
+                                    //       }
+                                    //       else {
+                                    //         if (tempTube === unTube) {
+                                    //           return null
+                                    //         }
+                                    //       }
+                                    //     }
+                                    //   }
+                                    //   else {
+                                    //     if (unWeb && unWeb !== null) {
+                                    //       if (tempWeb && tempWeb !== null) {
+                                    //         if (tempWeb !== unWeb) {
+                                    //           return unObj
+                                    //         }
+                                    //         else {
+                                    //           if (tempWeb === unWeb) {
+                                    //             return null
+                                    //           }
+                                    //         }
+                                    //       }
+                                    //     }
+                                    //   }
+                                    // }).filter((psSweep) => {
+                                    //   return psSweep != null
+                                    // });
+                                  // }
+                                  // window.onload = redirect;
+                                  personalizedList.push(tempObj);
+                                }
+                                // personalizedList.push(tempList);
+                              }
+                            }
+                            else {
+                              if (!doneAlert) {
+                                throw new Error(
+                                  "Error on server side: " +
+                                    error.toString() +
+                                    "\n" +
+                                    error.stack,
+                                  )
+                              }
+                            }
+                            // suggestionsDiv.appendChild(div);
+                            // fetchSuggestions(String(event.target.value));
+                            // input.disabled = false
+                            // redirect(personalizedList, reUrlList);
+                          } 
+                          else {
+                            console.warn("Expected an array in done from vidPlaylist, received:", done);
+                            // Fallback to empty array if the structure is not as expected
+                            personalizedList = [];
+                            // fetchSuggestions(String(event.target.value));
+                            // input.disabled = false
+                            // redirect(contentList, reUrlList);
+                            // fetchSuggestions(String(event.target.value));
+                          }
+                          // console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
+                          // fetchSuggestions(event?.target?.value);
+                          // openYTPlayer.click();
+                          // redirect(personalizedList, reUrlList);
+                          // fetchResults(personalizedList);
+                          // console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
+                          // input.disabled = false
+                          // for (let key in personalizedList) {
+                          //   redirect(personalizedList[key], []);
                           // }
-                          // if (doneAlert && doneAlert > 0) {
-                            // personalizedList = [];
-                            // reUrlList = [];
-                            // for (let key in done?.data) {
-                            //   let i = 0;
-                            //   let l = false;
-                            //   if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (!Array.isArray(done?.data[key]))) {
-                            //     l =  Object.keys(done?.data[key])?.length;
-                            //   }
-                            //   else {
-                            //     if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (Array.isArray(done?.data[key]))) {
-                            //       l =  done?.data[key]?.length;
+                          if (personalizedList && personalizedList?.length > 0) {
+                            // fetchSuggestions(gsTemp || ssTemp || rsTemp);
+                            // remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"] = personalizedList;
+                            // console.log("document _blank loaded addresses remoteSuggestionsCache[" + (gsTemp || ssTemp || rsTemp) || "partialMatches" + "] resources: ", JSON.stringify(remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"]));
+                            // remoteIntent = remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"][Math.floor(Math.random() * remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"].length)].description;
+                            // localStorage.setItem("rsSearch", remoteIntent);
+                            // localStorage.setItem("ssSearch", "");
+                            // localStorage.setItem("gsSearch", "");
+                            // redirect(remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp)], reUrlList);
+                            // input.disabled = false;
+                            // return
+                            // againContent = (localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch" || localStorage?.getItem("gsSearch")));
+                            againContent = String(event?.target?.value);
+                            console.log("event; fetchResults againContent", againContent);
+                            fetchResults(personalizedList);
+                            // redirect(remoteSuggestionsCache[againContent], reUrlList);
+                            // const fetchRemote = debounce((query) => {
+                            //   digestList = remoteSuggestionsCache[againContent];
+                            //   console.log("event getVI _blank loaded addresses cache", JSON.stringify(digestList));
+                            //   resultsDigest = digestList?.filter((item) => {
+                            //       return String(item?.description)?.toLowerCase()?.includes(String(query)?.toLowerCase());
+                            //     }
+                            //   );
+                            //   console.log("event getVI _blank loaded addresses digest", resultsDigest);
+                            //   matchesToReturn = resultsDigest?.map((val) => {   //, index) => {
+                            //     // console.log(againCap + ": result description: " + val.description);
+                            //     // console.log("result index: " + index);
+                            //     let tubeUrl = val.youtubeUrl;
+                            //     let webUrl = val.webAddressUrl;
+                            //     if (webUrl && webUrl !== null) {
+                            //       console.log("document _blank loaded addresses local storage web results: " + query);
+                            //       // window.open(new URL(webUrl), "_self");
+                            //       // let linkFollow = document.createElement("a");
+                            //       // linkFollow.href = new URL(webUrl);
+                            //       // // console.log("the match: " + linkFollow.href);
+                            //       // linkFollow.id = "linkFOLLOW";
+                            //       // linkFollow.target = "_self";
+                            //       // linkFollow.rel = "noopener noreferrer";
+                            //       // document.body.appendChild(linkFollow);
+                            //       // document.getElementById("linkFOLLOW").click();
+                            //       // document.getElementById("linkFOLLOW").remove();
+                            //       window.scrollTo(0,0);
+                            //       // input.value = val?.description;
+                            //       div.textContent = val.description;
+                            //       // div.classList.add("receipt", "btn-large");
+                            //       div.addEventListener('click', () => {
+                            //         input.value = val.description;
+                            //         homePage
+                            //         .then(() => {
+                            //           localStorage.setItem("ssSearch", val.description);
+                            //           againContent = (localStorage?.getItem("ssSearch" || localStorage.getItem("rsSearch") || localStorage?.getItem("gsSearch")));
+                            //           // console.log("Data; Url for reLoad ", load.data);
+                            //           let linkFollow = document.createElement("a");
+                            //           linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
+                            //           // console.log("the match: " + linkFollow.href);
+                            //           linkFollow.id = "linkFOLLOW";
+                            //           linkFollow.target = "_blank";
+                            //           linkFollow.rel = "noopener noreferrer";
+                            //           document.body.appendChild(linkFollow);
+                            //           document.getElementById("linkFOLLOW").click();
+                            //           document.getElementById("linkFOLLOW").remove();
+                            //           // window.location.href = load.data
+                            //           // input.value = event.target.value;
+                            //           // input.disabled = false;
+                            //           // input.focus();
+                            //         })
+                            //         .catch((fail) => {
+                            //           console.log("Failed to load ", fail);
+                            //           input.disabled = false;
+                            //           input.focus();
+                            //         });
+                            //       });
+                            //       suggestionsDiv.appendChild(div);
                             //     }
                             //     else {
-                            //       if (done?.data[key] && done?.data[key] !== null && done?.data[key] !== "undefined" && typeof done?.data[key] === "string") {
-                            //         l =  Array(String(done?.data[key]))?.length;
+                            //       // if (tubeUrl && tubeUrl !== null) {
+                            //       //   console.log("local storage all results: " + againCap);
+                            //       //   // personalizedList.push(val);
+                            //       //   // window.open(tubeUrl, "_self")
+                            //       if (tubeUrl && tubeUrl !== null) {
+                            //         console.log("document _blank loaded addresses local storage web results: " + query);
+                            //         // window.open(new URL(webUrl), "_self");
+                            //         // let linkFollow = document.createElement("a");
+                            //         // linkFollow.href = new URL(webUrl);
+                            //         // // console.log("the match: " + linkFollow.href);
+                            //         // linkFollow.id = "linkFOLLOW";
+                            //         // linkFollow.target = "_self";
+                            //         // linkFollow.rel = "noopener noreferrer";
+                            //         // document.body.appendChild(linkFollow);
+                            //         // document.getElementById("linkFOLLOW").click();
+                            //         // document.getElementById("linkFOLLOW").remove();
+                            //         window.scrollTo(0,0);
+                            //         // input.value = val?.description;
+                            //         div.textContent = val.description;
+                            //         // div.classList.add("receipt", "btn-large");
+                            //         div.addEventListener('click', () => {
+                            //           input.value = val.description;
+                            //           homePage
+                            //           .then(() => {
+                            //             localStorage.setItem("ssSearch", val.description);
+                            //             againContent = (localStorage?.getItem("ssSearch" || localStorage.getItem("rsSearch") || localStorage?.getItem("gsSearch")));
+                            //             // console.log("Data; Url for reLoad ", load.data);
+                            //             let linkFollow = document.createElement("a");
+                            //             linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
+                            //             // console.log("the match: " + linkFollow.href);
+                            //             linkFollow.id = "linkFOLLOW";
+                            //             linkFollow.target = "_blank";
+                            //             linkFollow.rel = "noopener noreferrer";
+                            //             document.body.appendChild(linkFollow);
+                            //             document.getElementById("linkFOLLOW").click();
+                            //             document.getElementById("linkFOLLOW").remove();
+                            //             // window.location.href = load.data
+                            //             // input.value = event.target.value;
+                            //             // input.disabled = false;
+                            //             // input.focus();
+                            //           })
+                            //           .catch((fail) => {
+                            //             console.log("Failed to load ", fail);
+                            //             input.disabled = false;
+                            //             input.focus();
+                            //           });
+                            //         });
+                            //         suggestionsDiv.appendChild(div);
                             //       }
+                            //       return tubeUrl
                             //     }
-                            //   }
-                            //   for (i,l;i<l;i++) {
-                            //     let tempObj = {};
-                            //     let reTempUrlList = [];
-                            //     let tData = false;
-                                // let tempList = [];
-                                // alert(l);
-                                // let dLoc =  false;
-                                // if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (!Array.isArray(done?.data[key]) && Object.keys(done?.data[key])?.length > 0)) {
-                                //   console.log("event: vidPlaylist object key data resources " + typeof done?.data[key], JSON.stringify(done?.data[key]));
-                                //   tempObj.description = done?.data[key][i]?.description;
-                                //   if ((done?.data[key][i]?.youtubeURL && done?.data[key][i]?.youtubeURL !== "undefined") || (done?.data[key][i]?.webAddressUrl && done?.data[key][i]?.webAddressURL !== "undefined")) {
-                                //     if (reUrlList?.indexOf(done?.data[key][i]?.videoId) > -1) {
-                                //       console.warn("key " + key + " contains duplicate videoId already in data",);
-                                //     }
-                                //     else {
-                                //       if (reUrlList?.indexOf(done?.data[key][i]?.videoId) === -1) {
-                                //         tData = done?.data[key][i]?.videoId;
-                                //         reUrlList.push(tData);
-                                //         if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
-                                          // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                          // dLoc =  "https://www.youtube.com/watch?v=";
-                                          // try {
-                                          //   tempObj.youtubeUrl = dLoc + tData;
-                                            // redirect(tempObj, reUrlList);
-                                        //   }
-                                        //   catch (err) {
-                                        //     console.warn(err);
-                                        //   }
-                                        // }
-                                        // else {
-                                        //   if (String(tData) && String(tData).indexOf("http") > -1) {
-                                            // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                            // try {
-                                            //   tempObj.webAddressUrl = new URL(tData).href;
-                                              // redirect(tempObj, reUrlList);
-                                //             }
-                                //             catch (err) {
-                                //               console.warn(err);
-                                //             }
-                                //           }
-                                //         }
-                                //       }
-                                //     }
-                                //   }
-                                // }
-                                // else {
-                                //   if (done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "object" && (Array.isArray(done?.data[key]) && done?.data[key]?.length > 0)) {
-                                //     console.log("event: vidPlaylist object document loaded addresses complimentary resources " + typeof done?.data[key], key);
-                                //     tempObj.description = String(event?.target?.value);
-                                //     if (String(done?.data[key][i])?.length > 0) {
-                                //       if (reUrlList?.indexOf(done?.data[key][i]) > -1) {
-                                //         console.warn("key " + key + " contains duplicates already in data",);
-                                //       }
-                                //       else {
-                                //         if (reUrlList?.indexOf(done?.data[key][i]) === -1) {
-                                //           tData = done?.data[key][i];
-                                //           reUrlList.push(tData);
-                                //           if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
-                                            // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                            // dLoc =  "https://www.youtube.com/watch?v=";
-                                            // try {
-                                            //   tempObj.youtubeUrl = dLoc + tData;
-                                              // redirect(tempObj, reUrlList);
-                                          //   }
-                                          //   catch (err) {
-                                          //     console.warn(err);
-                                          //   }
-                                          // }
-                                          // else {
-                                          //   if (String(tData) && String(tData).indexOf("http") > -1) {
-                                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                              // try {
-                                              //   tempObj.webAddressUrl = new URL(tData).href;
-                                                // redirect(tempObj, reUrlList);
-                                  //             }
-                                  //             catch (err) {
-                                  //               console.warn(err);
-                                  //             }
-                                  //           }
-                                  //         }
-                                  //       }
-                                  //     }
-                                  //   }
-                                  // }
-                                  // else {
-                                  //   if ((done?.data[key] && done?.data[key] !== null && typeof done?.data[key] === "string" && String(done?.data[key])?.length > 0)) {
-                                  //     console.log("event: vidPlaylist string document loaded addresses complimentary resources " + typeof done?.data[key], String(done?.data[key]));
-                                  //     tempObj.description = String(event?.target?.value);
-                                      // if (done?.data[key][i]?.youtubeURL || done?.data[key][i]?.webAddressUrl) {}
-                                      // if (String(done?.data[key][i])?.length > 0) {}
-                                      // if (reUrlList?.indexOf(done?.data[key]) > -1) {
-                                      //   console.warn("key " + key + " contains duplicates already in data",);
-                                      // }
-                                      // else {
-                                      //   if (reUrlList?.indexOf(done?.data[key]) === -1) {
-                                      //     tData = done?.data[key];
-                                      //     reUrlList.push(tData);
-                                      //     if (String(tData) && String(tData).indexOf("http") === -1 && String(tData).length === 11) {
-                                            // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                            // dLoc =  "https://www.youtube.com/watch?v=";
-                                            // try {
-                                            //   tempObj.youtubeUrl = dLoc + tData;
-                                              // redirect(tempObj, reUrlList);
-                                          //   }
-                                          //   catch (err) {
-                                          //     console.warn(err);
-                                          //   }
-                                          // }
-                                          // else {
-                                          //   if (String(tData) && String(tData).indexOf("http") > -1) {
-                                              // console.log(tData + " index of http = " + String(tData).indexOf("http"));
-                                              // try {
-                                              //   tempObj.webAddressUrl = new URL(tData).href;
-                                                // redirect(tempObj, reUrlList);
-                                //               }
-                                //               catch (err) {
-                                //                 console.warn(err);
-                                //               }
-                                //             }
-                                //           }
-                                //         }
-                                //       }
-                                //     }
-                                //   }
-                                // }
-                                // tempList.push(tempObj);
-                                // personalizedList.push(tempObj);
-                                // if (personalizedList.length > 0) {
-                                  // personalizedList.map((unObj) => {
-                                  //   // return unObj != tempObj
-                                  //   let unTube = unObj?.youtubeURL;
-                                  //   let tempTube = tempObj?.youtubeURL;
-                                  //   let unWeb = unObj?.webAddressUrl;
-                                  //   let tempWeb = tempObj?.webAddressUrl;
-                                  //   if (unTube && unTube !== null) {
-                                  //     if (tempTube && tempTube !== null) {
-                                  //       if (tempTube !== unTube) {
-                                  //         return unObj
-                                  //       }
-                                  //       else {
-                                  //         if (tempTube === unTube) {
-                                  //           return null
-                                  //         }
-                                  //       }
-                                  //     }
-                                  //   }
-                                  //   else {
-                                  //     if (unWeb && unWeb !== null) {
-                                  //       if (tempWeb && tempWeb !== null) {
-                                  //         if (tempWeb !== unWeb) {
-                                  //           return unObj
-                                  //         }
-                                  //         else {
-                                  //           if (tempWeb === unWeb) {
-                                  //             return null
-                                  //           }
-                                  //         }
-                                  //       }
-                                  //     }
-                                  //   }
-                                  // }).filter((psSweep) => {
-                                  //   return psSweep != null
-                                  // });
-                                // }
-                                // window.onload = redirect;
-                                // personalizedList.push(tempObj);
-                              // }
-                              // personalizedList.push(tempList);
-                          //   }
-                          // }
-                          // suggestionsDiv.appendChild(div);
-                          // fetchSuggestions(String(event.target.value));
-                          // input.disabled = false
-                          // redirect(personalizedList, reUrlList);
-                        // } 
-                        // else {
-                        //   console.warn("Expected an array in done from vidPlaylist, received:", done);
+                            //     // }
+                            //   }).filter((mapResult) => {
+                            //     return mapResult != null
+                            //   });
+                            //   // // if (matchesToReturn.length > 0) {
+                            //   // //   remoteSuggestionsCache[againCap] = personalizedList;
+                            //   // // }
+                            //   // // else {
+                            //   // //   remoteSuggestionsCache[againCap] = [];
+                            //   // // }
+                            //   // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                            //   // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                            //   // // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                            //   // if (allMatchesAvailable.length < matchesToReturn.length) {
+                            //   //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                            //   //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                            //   //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                            //   //       let i = Math.random()
+                            //   //       let tSorted = a;
+                            //   //       // console.log(againCap + ": tSorted = " + tSorted);
+                            //   //       let zSorted = b;
+                            //   //       // console.log(againCap + ": zSorted = " + zSorted);
+                            //   //       if (i < .3) {
+                            //   //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                            //   //         if (matchA > -1) {
+                            //   //           // console.log(againCap + ": matchA = " + matchA);
+                            //   //           // window.open(zSorted, "_blank");
+                            //   //           return zSorted;
+                            //   //         }
+                            //   //       }
+                            //   //       else {
+                            //   //         if (i > .3 && i < .5 ) {
+                            //   //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                            //   //           if (matchB === -1) {
+                            //   //             // console.log(againCap + ": matchB = " + matchB);
+                            //   //             // window.open(tSorted, "_blank");
+                            //   //             return tSorted;
+                            //   //           }
+                            //   //         }
+                            //   //         else {
+                            //   //           if (i > .5 && i < .8) {
+                            //   //             // console.log(againCap + ": matchC = " + zSorted);
+                            //   //             // window.open(zSorted, "_blank");
+                            //   //             return zSorted;
+                            //   //           }
+                            //   //           else {
+                            //   //             if (i > .8) {
+                            //   //               // console.log(againCap + ": matchD = " + tSorted);
+                            //   //               // window.open(tSorted, "_blank");
+                            //   //               return tSorted;
+                            //   //             }
+                            //   //           }
+                            //   //         }
+                            //   //       }
+                            //   //     });
+                            //   //     if (matchesToReturn === null || matchesToReturn.length === 0) {
+                            //   //       break
+                            //   //     }
+                            //   //   }
+                            //   // }
+                            //   // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
+                            //   // // fetchSuggestions(input.value);
+                            //   // if (matchesToReturn.length > 0) {
+                            //   //   $('a').click(function(event){
+                            //   //     if ($(this).attr('href') === "javascript:void(0)") {
+                            //   //       let confirmation = window.confirm(
+                            //   //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
+                            //   //       );
+                            //   //       if (confirmation) {
+                            //   //         event.preventDefault();
+                            //   //         var linkFollow = document.createElement("a");
+                            //   //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
+                            //   //         // if (matchesToReturn.length > 0) {
+                            //   //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
+                            //   //         // }
+                            //   //         // else {
+                            //   //         //   if (matchesToReturn.length === 0) {
+                            //   //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
+                            //   //         //   }
+                            //   //         // }
+                            //   //         console.log("the match: " + linkFollow.href);
+                            //   //         linkFollow.id = "linkFOLLOW";
+                            //   //         linkFollow.target = "_top";
+                            //   //         linkFollow.rel = "noopener noreferrer";
+                            //   //         document.body.appendChild(linkFollow);
+                            //   //         document.getElementById("linkFOLLOW").click();
+                            //   //         document.getElementById("linkFOLLOW").remove();
+                            //   //         // If the user preses the "Enter" key on the keyboard. 
+                            //   //         // if (event.key === 'Enter')  {
+                            //   //         // serverside("getVI", [])
+                            //   //         // .then((response) => {
+                            //   //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
+                            //   //           // Access the actual array from the response
+                            //   //           // if (response && typeof response === "object") {
+                            //   //           //   fullList = [];
+                            //   //           //   for (var key in response) {
+                            //   //               // alert(JSON.stringify(response[key]));
+                            //   //               // let i = 0;
+                            //   //               // let l = response[key].length;
+                            //   //               // alert(l);
+                            //   //           //     for (i,l;i<l;i++) {
+                            //   //           //       let tempObj = {};
+                            //   //           //       tempObj.description = response[key][i].description;
+                            //   //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
+                            //   //           //         let tData = response[key][i].videoId;
+                            //   //           //         let dLoc =  null;
+                            //   //           //         dLoc =  "https://www.youtube.com/watch?v=";
+                            //   //           //         tempObj.youtubeUrl = dLoc + tData;
+                            //   //           //       }
+                            //   //           //       else {
+                            //   //           //         tempObj.youtubeUrl = response[key][i].videoId;
+                            //   //           //       }
+                            //   //           //       fullList.push(tempObj);
+                            //   //           //     }
+                            //   //           //   }
+                            //   //           // } 
+                            //   //           // else {
+                            //   //           //   console.warn("Expected an array in response from getVI, received:", response);
+                            //   //             // Fallback to empty array if the structure is not as expected
+                            //   //         //     fullList = [];
+                            //   //         //   }
+                            //   //         // })
+                            //   //         // .catch(error => {
+                            //   //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
+                            //   //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
+                            //   //         // });
+                            //   //       }
+                            //   //     }
+                            //   //   });
+                            //   // }
+                            //   // else {
+                            //   //   if (matchesToReturn.length === 0) {
+                            //   //     return
+                            //   //   }
+                            //   // }
+                            // }, 300);
+                            // if (againContent) {
+                            //   fetchRemote(againContent);
+                            // }
+                          }
+                        }
+                        catch (error) {
+                          // console.log("Error in script call: " + error.stack);
+                          // redirect(contentList, reUrlList);
                           // Fallback to empty array if the structure is not as expected
                           // personalizedList = [];
-                          // fetchSuggestions(String(event.target.value));
                           // input.disabled = false
-                          // redirect(contentList, reUrlList);
+                          // if (enterClicked === 1) {  
+                          // if (String(event?.target?.value).length > 0) {
+                            // .then(() => {
+                              console.log("document _self loaded addresses Enter key results: " + event?.target?.value);
+                              window.scrollTo(0,0);
+                              input.value = event?.target?.value;
+                              div.textContent = event?.target?.value;
+                              div.classList.add("receipt", "btn-large", "red");
+                              div.addEventListener('click', () => {
+                                // localStorage.setItem("gsSearch", event?.target?.value);
+                                // localStorage.setItem("rsSearch", "");
+                                // localStorage.setItem("ssSearch", "");
+                                homePage
+                                .then((load) => {
+                                  let linkFollow = document.createElement("a");
+                                  linkFollow.href = load.data + "?func=classFiles&args=" + event?.target?.value;
+                                  console.log("the match: " + linkFollow.href);
+                                  linkFollow.id = "linkFOLLOW";
+                                  linkFollow.target = "_self";
+                                  linkFollow.rel = "noopener noreferrer";
+                                  document.body.appendChild(linkFollow);
+                                  document.getElementById("linkFOLLOW").click();
+                                  document.getElementById("linkFOLLOW").remove();
+                                })
+                                .catch((fail) => {
+                                  console.log("Failed to load ", fail);
+                                  input.disabled = false;
+                                  input.focus();
+                                  // enterClicked++;
+                                });
+                              });
+                              suggestionsDiv.appendChild(div);  
+                            // })
+                          // }  
+                          // }
                           // fetchSuggestions(String(event.target.value));
-                        // }
-                        // console.log("event: " + typeof personalizedList, JSON.stringify(personalizedList));
-                        // fetchSuggestions(event?.target?.value);
-                        // openYTPlayer.click();
-                        // redirect(personalizedList, reUrlList);
-                        // fetchResults(personalizedList);
-                        // console.log("event: " + typeof personalizedList?.tempObj, JSON.stringify(personalizedList?.tempObj));
-                        // input.disabled = false
-                        // for (let key in personalizedList) {
-                        //   redirect(personalizedList[key], []);
-                        // }
-                        // if (personalizedList && personalizedList?.length > 0) {
-                          // fetchSuggestions(gsTemp || ssTemp || rsTemp);
-                          // remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"] = personalizedList;
-                          // console.log("document _blank loaded addresses remoteSuggestionsCache[" + (gsTemp || ssTemp || rsTemp) || "partialMatches" + "] resources: ", JSON.stringify(remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"]));
-                          // remoteIntent = remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"][Math.floor(Math.random() * remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp) || "partialMatches"].length)].description;
-                          // localStorage.setItem("rsSearch", remoteIntent);
-                          // localStorage.setItem("ssSearch", "");
-                          // localStorage.setItem("gsSearch", "");
-                          // redirect(remoteSuggestionsCache[(gsTemp || ssTemp || rsTemp)], reUrlList);
-                          // input.disabled = false;
-                          // return
-                          // againContent = (localStorage.getItem("rsSearch") || localStorage?.getItem("ssSearch" || localStorage?.getItem("gsSearch")));
-                          // fetchResults(remoteSuggestionsCache[againContent]);
-                          // redirect(remoteSuggestionsCache[againContent], reUrlList);
-                          // const fetchRemote = debounce((query) => {
-                          //   digestList = remoteSuggestionsCache[againContent];
-                          //   console.log("event getVI _blank loaded addresses cache", JSON.stringify(digestList));
-                          //   resultsDigest = digestList?.filter((item) => {
-                          //       return String(item?.description)?.toLowerCase()?.includes(String(query)?.toLowerCase());
-                          //     }
-                          //   );
-                          //   console.log("event getVI _blank loaded addresses digest", resultsDigest);
-                          //   matchesToReturn = resultsDigest?.map((val) => {   //, index) => {
-                          //     // console.log(againCap + ": result description: " + val.description);
+                          // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
+                          //   // if (event.target.value !== againCap) {
+                          //   //   localStorage.setItem("gsSearch", event.target.value);
+                          //   //   againCap = (localStorage?.getItem("gsSearch") || localStorage?.getItem("ssSearch") || localStorage.getItem("rsSearch"));
+                          //   // }
+                          //   if (String(val.description).indexOf(event.target.value) > -1) {
+                          //     console.log(event.target.value + ": result description: " + val?.description);
                           //     // console.log("result index: " + index);
-                          //     let tubeUrl = val.youtubeUrl;
-                          //     let webUrl = val.webAddressUrl;
-                          //     if (webUrl && webUrl !== null) {
-                          //       console.log("document _blank loaded addresses local storage web results: " + query);
-                          //       // window.open(new URL(webUrl), "_self");
-                          //       // let linkFollow = document.createElement("a");
-                          //       // linkFollow.href = new URL(webUrl);
-                          //       // // console.log("the match: " + linkFollow.href);
-                          //       // linkFollow.id = "linkFOLLOW";
-                          //       // linkFollow.target = "_self";
-                          //       // linkFollow.rel = "noopener noreferrer";
-                          //       // document.body.appendChild(linkFollow);
-                          //       // document.getElementById("linkFOLLOW").click();
-                          //       // document.getElementById("linkFOLLOW").remove();
-                          //       window.scrollTo(0,0);
-                          //       // input.value = val?.description;
-                          //       div.textContent = val.description;
-                          //       // div.classList.add("receipt", "btn-large");
-                          //       div.addEventListener('click', () => {
-                          //         input.value = val.description;
-                          //         homePage
-                          //         .then(() => {
-                          //           localStorage.setItem("ssSearch", val.description);
-                          //           againContent = (localStorage?.getItem("ssSearch" || localStorage.getItem("rsSearch") || localStorage?.getItem("gsSearch")));
-                          //           // console.log("Data; Url for reLoad ", load.data);
-                          //           let linkFollow = document.createElement("a");
-                          //           linkFollow.href = webUrl; // load.data + "?q=" + webUrl;
-                          //           // console.log("the match: " + linkFollow.href);
-                          //           linkFollow.id = "linkFOLLOW";
-                          //           linkFollow.target = "_blank";
-                          //           linkFollow.rel = "noopener noreferrer";
-                          //           document.body.appendChild(linkFollow);
-                          //           document.getElementById("linkFOLLOW").click();
-                          //           document.getElementById("linkFOLLOW").remove();
-                          //           // window.location.href = load.data
-                          //           // input.value = event.target.value;
-                          //           // input.disabled = false;
-                          //           // input.focus();
-                          //         })
-                          //         .catch((fail) => {
-                          //           console.log("Failed to load ", fail);
-                          //           input.disabled = false;
-                          //           input.focus();
-                          //         });
-                          //       });
-                          //       suggestionsDiv.appendChild(div);
-                          //     }
-                          //     else {
-                          //       // if (tubeUrl && tubeUrl !== null) {
-                          //       //   console.log("local storage all results: " + againCap);
-                          //       //   // personalizedList.push(val);
-                          //       //   // window.open(tubeUrl, "_self")
-                          //       if (tubeUrl && tubeUrl !== null) {
-                          //         console.log("document _blank loaded addresses local storage web results: " + query);
-                          //         // window.open(new URL(webUrl), "_self");
-                          //         // let linkFollow = document.createElement("a");
-                          //         // linkFollow.href = new URL(webUrl);
-                          //         // // console.log("the match: " + linkFollow.href);
-                          //         // linkFollow.id = "linkFOLLOW";
-                          //         // linkFollow.target = "_self";
-                          //         // linkFollow.rel = "noopener noreferrer";
-                          //         // document.body.appendChild(linkFollow);
-                          //         // document.getElementById("linkFOLLOW").click();
-                          //         // document.getElementById("linkFOLLOW").remove();
-                          //         window.scrollTo(0,0);
-                          //         // input.value = val?.description;
-                          //         div.textContent = val.description;
-                          //         // div.classList.add("receipt", "btn-large");
-                          //         div.addEventListener('click', () => {
-                          //           input.value = val.description;
-                          //           homePage
-                          //           .then(() => {
-                          //             localStorage.setItem("ssSearch", val.description);
-                          //             againContent = (localStorage?.getItem("ssSearch" || localStorage.getItem("rsSearch") || localStorage?.getItem("gsSearch")));
-                          //             // console.log("Data; Url for reLoad ", load.data);
-                          //             let linkFollow = document.createElement("a");
-                          //             linkFollow.href = tubeUrl; // load.data + "?q=" + webUrl;
-                          //             // console.log("the match: " + linkFollow.href);
-                          //             linkFollow.id = "linkFOLLOW";
-                          //             linkFollow.target = "_blank";
-                          //             linkFollow.rel = "noopener noreferrer";
-                          //             document.body.appendChild(linkFollow);
-                          //             document.getElementById("linkFOLLOW").click();
-                          //             document.getElementById("linkFOLLOW").remove();
-                          //             // window.location.href = load.data
-                          //             // input.value = event.target.value;
-                          //             // input.disabled = false;
-                          //             // input.focus();
-                          //           })
-                          //           .catch((fail) => {
-                          //             console.log("Failed to load ", fail);
-                          //             input.disabled = false;
-                          //             input.focus();
-                          //           });
-                          //         });
-                          //         suggestionsDiv.appendChild(div);
-                          //       }
+                          //     let tubeUrl = val.youtubeUrl
+                          //     if (tubeUrl && tubeUrl !== null) {
+                          //       console.log("local storage all results: " + event.target.value);
+                          //       personalizedList.push(val);
                           //       return tubeUrl
                           //     }
-                          //     // }
-                          //   }).filter((mapResult) => {
-                          //     return mapResult != null
-                          //   });
-                          //   // // if (matchesToReturn.length > 0) {
-                          //   // //   remoteSuggestionsCache[againCap] = personalizedList;
-                          //   // // }
-                          //   // // else {
-                          //   // //   remoteSuggestionsCache[againCap] = [];
-                          //   // // }
-                          //   // // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                          //   // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-                          //   // // console.log(allMatchesAvailable.length < matchesToReturn.length);
-                          //   // if (allMatchesAvailable.length < matchesToReturn.length) {
-                          //   //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-                          //   //   while (allMatchesAvailable.length < matchesToReturn.length) {
-                          //   //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                          //   //       let i = Math.random()
-                          //   //       let tSorted = a;
-                          //   //       // console.log(againCap + ": tSorted = " + tSorted);
-                          //   //       let zSorted = b;
-                          //   //       // console.log(againCap + ": zSorted = " + zSorted);
-                          //   //       if (i < .3) {
-                          //   //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                          //   //         if (matchA > -1) {
-                          //   //           // console.log(againCap + ": matchA = " + matchA);
-                          //   //           // window.open(zSorted, "_blank");
-                          //   //           return zSorted;
-                          //   //         }
-                          //   //       }
-                          //   //       else {
-                          //   //         if (i > .3 && i < .5 ) {
-                          //   //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                          //   //           if (matchB === -1) {
-                          //   //             // console.log(againCap + ": matchB = " + matchB);
-                          //   //             // window.open(tSorted, "_blank");
-                          //   //             return tSorted;
-                          //   //           }
-                          //   //         }
-                          //   //         else {
-                          //   //           if (i > .5 && i < .8) {
-                          //   //             // console.log(againCap + ": matchC = " + zSorted);
-                          //   //             // window.open(zSorted, "_blank");
-                          //   //             return zSorted;
-                          //   //           }
-                          //   //           else {
-                          //   //             if (i > .8) {
-                          //   //               // console.log(againCap + ": matchD = " + tSorted);
-                          //   //               // window.open(tSorted, "_blank");
-                          //   //               return tSorted;
-                          //   //             }
-                          //   //           }
-                          //   //         }
-                          //   //       }
-                          //   //     });
-                          //   //     if (matchesToReturn === null || matchesToReturn.length === 0) {
-                          //   //       break
-                          //   //     }
-                          //   //   }
-                          //   // }
-                          //   // input.value = String(againCap).slice(Math.floor(Math.random() * String(againCap).length)).slice(0,2);
-                          //   // // fetchSuggestions(input.value);
-                          //   // if (matchesToReturn.length > 0) {
-                          //   //   $('a').click(function(event){
-                          //   //     if ($(this).attr('href') === "javascript:void(0)") {
-                          //   //       let confirmation = window.confirm(
-                          //   //         "Opening a NEW youtube page with a DIFFERENT video. Click OK to continue to the destination. Or Click CANCEL to remain on this page",
-                          //   //       );
-                          //   //       if (confirmation) {
-                          //   //         event.preventDefault();
-                          //   //         var linkFollow = document.createElement("a");
-                          //   //         linkFollow.href = allMatchesAvailable[Math.floor(Math.random() * allMatchesAvailable.length)];
-                          //   //         // if (matchesToReturn.length > 0) {
-                          //   //         //   // console.log("all available matches to return sorted: " + JSON.stringify(allMatchesAvailable));
-                          //   //         // }
-                          //   //         // else {
-                          //   //         //   if (matchesToReturn.length === 0) {
-                          //   //         //     linkFollow.href = localSuggestionsCache["allMatches"][Math.floor(Math.random() * response.data.length)].youtubeUrl;
-                          //   //         //   }
-                          //   //         // }
-                          //   //         console.log("the match: " + linkFollow.href);
-                          //   //         linkFollow.id = "linkFOLLOW";
-                          //   //         linkFollow.target = "_top";
-                          //   //         linkFollow.rel = "noopener noreferrer";
-                          //   //         document.body.appendChild(linkFollow);
-                          //   //         document.getElementById("linkFOLLOW").click();
-                          //   //         document.getElementById("linkFOLLOW").remove();
-                          //   //         // If the user preses the "Enter" key on the keyboard. 
-                          //   //         // if (event.key === 'Enter')  {
-                          //   //         // serverside("getVI", [])
-                          //   //         // .then((response) => {
-                          //   //           // Rename 'vidIds' to 'response' or 'payload' to avoid confusion
-                          //   //           // Access the actual array from the response
-                          //   //           // if (response && typeof response === "object") {
-                          //   //           //   fullList = [];
-                          //   //           //   for (var key in response) {
-                          //   //               // alert(JSON.stringify(response[key]));
-                          //   //               // let i = 0;
-                          //   //               // let l = response[key].length;
-                          //   //               // alert(l);
-                          //   //           //     for (i,l;i<l;i++) {
-                          //   //           //       let tempObj = {};
-                          //   //           //       tempObj.description = response[key][i].description;
-                          //   //           //       if (String(response[key][i].videoId).indexOf("http") === -1) {
-                          //   //           //         let tData = response[key][i].videoId;
-                          //   //           //         let dLoc =  null;
-                          //   //           //         dLoc =  "https://www.youtube.com/watch?v=";
-                          //   //           //         tempObj.youtubeUrl = dLoc + tData;
-                          //   //           //       }
-                          //   //           //       else {
-                          //   //           //         tempObj.youtubeUrl = response[key][i].videoId;
-                          //   //           //       }
-                          //   //           //       fullList.push(tempObj);
-                          //   //           //     }
-                          //   //           //   }
-                          //   //           // } 
-                          //   //           // else {
-                          //   //           //   console.warn("Expected an array in response from getVI, received:", response);
-                          //   //             // Fallback to empty array if the structure is not as expected
-                          //   //         //     fullList = [];
-                          //   //         //   }
-                          //   //         // })
-                          //   //         // .catch(error => {
-                          //   //         //   console.error("Error fetching address suggestions for artiicleIndex :", error);
-                          //   //         //   suggestionsDiv.innerHTML = '<div>Error fetching suggestions.</div>';
-                          //   //         // });
-                          //   //       }
-                          //   //     }
-                          //   //   });
-                          //   // }
-                          //   // else {
-                          //   //   if (matchesToReturn.length === 0) {
-                          //   //     return
-                          //   //   }
-                          //   // }
-                          // }, 300);
-                          // if (againContent) {
-                          //   fetchRemote(againContent);
+                          //   }
+                          // }).filter((mapResult) => {
+                          //   return mapResult != null
+                          // });
+                          // if (matchesToReturn.length > 0) {
+                          //   // remoteSuggestionsCache[againCap] = personalizedList;
+                          //   allMatchesAvailable = [];
                           // }
-                      //   }
-                      // }
-                      // catch (error) {
-                      //   console.log("Error in script call: " + error.stack);
-                      //   redirect(contentList, reUrlList);
-                        // Fallback to empty array if the structure is not as expected
-                        // personalizedList = [];
-                        // input.disabled = false
-                        // if (enterClicked === 1) {  
-                        // if (String(event?.target?.value).length > 0) {
-                          .then(() => {
-                            console.log("document _self loaded addresses Enter key results: " + event?.target?.value);
-                            window.scrollTo(0,0);
-                            input.value = event?.target?.value;
-                            div.textContent = event?.target?.value;
-                            div.classList.add("receipt", "btn-large", "red");
-                            div.addEventListener('click', () => {
-                              // localStorage.setItem("gsSearch", event?.target?.value);
-                              // localStorage.setItem("rsSearch", "");
-                              // localStorage.setItem("ssSearch", "");
-                              homePage
-                              .then((load) => {
-                                let linkFollow = document.createElement("a");
-                                linkFollow.href = load.data + "?r=" + event?.target?.value;
-                                console.log("the match: " + linkFollow.href);
-                                linkFollow.id = "linkFOLLOW";
-                                linkFollow.target = "_self";
-                                linkFollow.rel = "noopener noreferrer";
-                                document.body.appendChild(linkFollow);
-                                document.getElementById("linkFOLLOW").click();
-                                document.getElementById("linkFOLLOW").remove();
-                              })
-                              .catch((fail) => {
-                                console.log("Failed to load ", fail);
-                                input.disabled = false;
-                                input.focus();
-                                // enterClicked++;
-                              });
-                            });
-                            suggestionsDiv.appendChild(div);  
-                          })
-                        // }  
-                        // }
-                        // fetchSuggestions(String(event.target.value));
-                        // matchesToReturn = localSuggestionsCache["allMatches"].map((val) => {   //, index) => {
-                        //   // if (event.target.value !== againCap) {
-                        //   //   localStorage.setItem("gsSearch", event.target.value);
-                        //   //   againCap = (localStorage?.getItem("gsSearch") || localStorage?.getItem("ssSearch") || localStorage.getItem("rsSearch"));
-                        //   // }
-                        //   if (String(val.description).indexOf(event.target.value) > -1) {
-                        //     console.log(event.target.value + ": result description: " + val?.description);
-                        //     // console.log("result index: " + index);
-                        //     let tubeUrl = val.youtubeUrl
-                        //     if (tubeUrl && tubeUrl !== null) {
-                        //       console.log("local storage all results: " + event.target.value);
-                        //       personalizedList.push(val);
-                        //       return tubeUrl
-                        //     }
-                        //   }
-                        // }).filter((mapResult) => {
-                        //   return mapResult != null
-                        // });
-                        // if (matchesToReturn.length > 0) {
-                        //   // remoteSuggestionsCache[againCap] = personalizedList;
-                        //   allMatchesAvailable = [];
-                        // }
-                        // // else {
-                        // //   remoteSuggestionsCache[againCap] = [];
-                        // // }
-                        // console.log("matches to return: " + JSON.stringify(matchesToReturn));
-                        // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
-                        // // console.log(allMatchesAvailable.length < matchesToReturn.length);
-                        // if (allMatchesAvailable.length < matchesToReturn.length) {
-                        //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
-                        //   while (allMatchesAvailable.length < matchesToReturn.length) {
-                        //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
-                        //       let i = Math.random()
-                        //       let tSorted = a;
-                        //       // console.log(againCap + ": tSorted = " + tSorted);
-                        //       let zSorted = b;
-                        //       // console.log(againCap + ": zSorted = " + zSorted);
-                        //       if (i < .3) {
-                        //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
-                        //         if (matchA > -1) {
-                        //           // console.log(againCap + ": matchA = " + matchA);
-                        //           return zSorted;
-                        //         }
-                        //       }
-                        //       else {
-                        //         if (i > .3 && i < .5 ) {
-                        //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
-                        //           if (matchB === -1) {
-                        //             // console.log(againCap + ": matchB = " + matchB);
-                        //             return tSorted;
-                        //           }
-                        //         }
-                        //         else {
-                        //           if (i > .5 && i < .8) {
-                        //             // console.log(againCap + ": matchC = " + zSorted);
-                        //             return zSorted;
-                        //           }
-                        //           else {
-                        //             if (i > .8) {
-                        //               // console.log(againCap + ": matchD = " + tSorted);
-                        //               return tSorted;
-                        //             }
-                        //           }
-                        //         }
-                        //       }
-                        //     });
-                        //     // if (matchesToReturn === null || matchesToReturn.length === 0) {
-                        //     //   break
-                        //     // }
-                        //   }
-                        //   //   input.value = againCap;
-                        // }
-                      // }
-                      // input.disabled = false;
-                    // })
-                    // .catch((err) => {
-                    //   console.error("Error on server side: ", err.stack);
+                          // // else {
+                          // //   remoteSuggestionsCache[againCap] = [];
+                          // // }
+                          // console.log("matches to return: " + JSON.stringify(matchesToReturn));
+                          // console.log("event allMatchesAvailable resources", allMatchesAvailable.length);
+                          // // console.log(allMatchesAvailable.length < matchesToReturn.length);
+                          // if (allMatchesAvailable.length < matchesToReturn.length) {
+                          //   console.log("event Matches to return length greater than available resources: ", matchesToReturn.length);
+                          //   while (allMatchesAvailable.length < matchesToReturn.length) {
+                          //     allMatchesAvailable = matchesToReturn.sort((a,b) => {
+                          //       let i = Math.random()
+                          //       let tSorted = a;
+                          //       // console.log(againCap + ": tSorted = " + tSorted);
+                          //       let zSorted = b;
+                          //       // console.log(againCap + ": zSorted = " + zSorted);
+                          //       if (i < .3) {
+                          //         let matchA = zSorted.toLowerCase().localeCompare(tSorted.toLowerCase());
+                          //         if (matchA > -1) {
+                          //           // console.log(againCap + ": matchA = " + matchA);
+                          //           return zSorted;
+                          //         }
+                          //       }
+                          //       else {
+                          //         if (i > .3 && i < .5 ) {
+                          //           let matchB = tSorted.toLowerCase().localeCompare(zSorted.toLowerCase());
+                          //           if (matchB === -1) {
+                          //             // console.log(againCap + ": matchB = " + matchB);
+                          //             return tSorted;
+                          //           }
+                          //         }
+                          //         else {
+                          //           if (i > .5 && i < .8) {
+                          //             // console.log(againCap + ": matchC = " + zSorted);
+                          //             return zSorted;
+                          //           }
+                          //           else {
+                          //             if (i > .8) {
+                          //               // console.log(againCap + ": matchD = " + tSorted);
+                          //               return tSorted;
+                          //             }
+                          //           }
+                          //         }
+                          //       }
+                          //     });
+                          //     // if (matchesToReturn === null || matchesToReturn.length === 0) {
+                          //     //   break
+                          //     // }
+                          //   }
+                          //   //   input.value = againCap;
+                          // }
+                        }
+                        // input.disabled = false;
+                      })
+                    })
+                    .catch((err) => {
+                      // console.error("Error on server side: ", err.stack);
                       // Fallback to empty array if the structure is not as expected
                       // personalizedList = [];
                       // redirect(personalizedList, reUrlList);
@@ -2061,7 +2087,7 @@
                       //   }
                       //   //   input.value = againCap;
                       // }
-                    // });
+                    });
                     // if (event.target.value && suggestions && suggestions?.length === 0 && input.disabled === true) {
                     // if (personalizedList.length === 0) {
                       // serverside("getVI", [])
@@ -2276,10 +2302,11 @@
       digestList = query;
       console.log("event fetchResults loaded addresses digestList resources", digestList?.length);
       // console.log("event fetchResults _blank loaded addresses cache", JSON.stringify(digestList));
-      if (digestList?.length > 0) {
+      try {
         resultsDigest = digestList?.filter((item) => {
-            return String(item.description).toLowerCase().includes(gsTemp || rsTemp || ssTemp);
-          }
+          console.log()
+          return String(item.description).toLowerCase().includes(String(againContent)?.toLowerCase());
+        }
         );
         // fetchSuggestions(againContent);
         // redirect(resultsDigest, reUrlList);
@@ -2791,7 +2818,12 @@
           }
         }
       }
-      else {
+      catch(error) {
+        console.error("Error on front end: " +
+          error.toString() +
+          "\n" +
+          error.stack,
+        );
         if (digestList?.length === 0) {
           return
         }

@@ -417,7 +417,10 @@ function resUrlData(searchString) {
       }
       let splSearch = String(searchString).split("?");
       let uriSearchA = encodeURIComponent(String(splSearch[0]));
-      let uriSearchB = encodeURIComponent(String(splSearch[1]?.substring(1,splSearch[1].length))) || "";
+      let uriSearchB = "";
+      if (splSearch?.length > 1) {
+        uriSearchB = encodeURIComponent(String(splSearch[1]?.substring(1,splSearch[1].length)));
+      }
       let searchArr = [];
       autoGlobe.vidData.forEach((term)  =>  {
         if (String(term).includes(searchString || ((uriSearchA && uriSearchB) || uriSearchA || uriSearchB))) {
@@ -492,7 +495,7 @@ function resUrlData(searchString) {
       else {
         if (searchArr.length === 0) {
           searchLink = `http://www.bing.com/search?q=(${(uriSearchA)}?)%20intitle%3A%20-%20YouTube+AND+${(uriSearchB)}*&PC=U316&top=50&skip=0&FORM=CHROMN`;
-          fndOrdObj.hardUrl = searchLink;
+          // fndOrdObj.hardUrl = searchLink;
           const options = { muteHTTPExceptions: true };
           let retries = 0;
           let maxRetries = 1;
@@ -607,6 +610,7 @@ function resUrlData(searchString) {
             });
           }
           if (true) {
+            this.hardUrl = searchLink;
             if (false) {
               this.options = options;
               this.retries = retries;
@@ -636,6 +640,7 @@ function resUrlData(searchString) {
           //   break;
           // }
           // }
+          // return fndOrdObj
         }
       }
       if (true) {

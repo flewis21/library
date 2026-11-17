@@ -200,7 +200,7 @@
     }
 
     function onPlayerError() {
-      if (iframePlayer && iframePlayer.destroy) {
+      if (iframePlayer) {
         iframePlayer.destroy;
         onYouTubeIframeAPIReady();
       }

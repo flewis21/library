@@ -217,6 +217,40 @@ var getVI = function () {
   return videoData;
 };
 
+var getVIVals = function (vidDescription) {
+  let videoDataVals = getVI();
+  let descriptionData = [];
+  let inValsKeys = Object.keys(videoDataVals);
+  inValsKeys.forEach((key) => {
+    let videoObj = videoDataVals[key];
+    let objDesc = videoObj?.description;
+    let isDesc = autoGlobe.trueVfalse(objDesc);
+    if (isDesc) {
+      if (typeof objDesc === "string") {
+        if (objDesc?.indexOf(vidDescription) > -1) {
+          let isData = autoGlobe.trueVfalse(videoObj?.videoId);
+          if (isData) {
+            descriptionData.push(videoObj)        
+          }
+        }
+      }
+      else {
+        if (typeof objDesc === "number") {
+          if (String(objDesc)?.indexOf(vidDescription) > -1) {
+            let isData = autoGlobe.trueVfalse(videoObj?.videoId);
+            if (isData) {
+              descriptionData.push(videoObj)        
+            }
+          }
+        }
+      }
+    }
+    // let videoId = videoObj["Video"];
+    // videoData.push(tempObj);
+  });
+  return descriptionData;
+};
+
 var objectOfS = function (keys, values, time) {
   /**
    * Creates an object of objects from key-value pairs.

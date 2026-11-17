@@ -621,21 +621,30 @@ function coUtility(rndClient) {
         client +
         ".toString().toLowerCase())",
     );
-  } else {
+  } 
+  else {
     var coName = allInvestors();
     console.log(
       autoGlobe.functionRegistry.time + "\ncoUtility: \nvar coName = allInvestors()",
     );
   }
-  if (typeof coName["cik"] === "undefined") {
-    uniqueCo.push({ rndTitle: coName["title"] });
-  } else {
-    uniqueCo.push({
-      rndCik: coName["cik"],
-      rndTicker: coName["ticker"],
-      rndTitle: coName["title"],
-      secUrl: coName["edgarUrl"],
-    });
+  if (coName && typeof coName === "object" && !Array.isArray(coName)) {
+    if (typeof coName["cik"] === "undefined") {
+      uniqueCo.push({ rndTitle: coName["title"] });
+    } 
+    else {
+      uniqueCo.push({
+        rndCik: coName["cik"],
+        rndTicker: coName["ticker"],
+        rndTitle: coName["title"],
+        secUrl: coName["edgarUrl"],
+      });
+    }
+  }
+  else {
+    if (coName) {
+      uniqueCo.push({ rndTitle: coName });
+    }
   }
   return uniqueCo;
 }

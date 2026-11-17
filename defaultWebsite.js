@@ -81,13 +81,13 @@ var createFunctionResult = function (funcUno, funcDos) {
   // --- BEGIN Refactored payLoad processing ---
 
   try {
-    let objVal = truDos? funcDos?.toString(): false;
+    let objVal = truDos? funcDos?.toString():funcUno?.toString();
     console.log("objVal\n" + [objVal]);
     let truVal = autoGlobe.trueVfalse(objVal);
     console.log("truVal\n" + [truVal]);
     let rawUrlResult = null;
     let isObjValUrl = null;
-    if (truVal && objVal?.indexOf(",") === -1) {
+    if (truVal && (objVal?.indexOf(",") === -1 && objVal?.indexOf(" ") === -1)) {
       isObjValUrl = vaURL(objVal).validatedResult;
       if (Array.isArray(isObjValUrl?.matches)) {
         rawUrlResult = autoGlobe.trueVfalse(isObjValUrl?.matches[0]);
